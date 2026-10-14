@@ -1,0 +1,11 @@
+.geo {
+  position: absolute;
+  inset: 0;
+  color: var(--blue-dark);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.circuit {
+  color: var(--blue-dark);
+}

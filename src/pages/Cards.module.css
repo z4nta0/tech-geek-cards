@@ -1,0 +1,180 @@
+.hero {
+  position: relative;
+  background: var(--ivory);
+  padding: calc(var(--nav-height) + var(--sp-9)) 0 var(--sp-10);
+  overflow: hidden;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--sp-9);
+}
+
+.heroText { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.heroLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.heroLine { display: inline-block; width: 28px; height: 1.5px; background: var(--orange); }
+
+.heroTitle { color: var(--ink); }
+.accent    { color: var(--orange); }
+
+.heroSub {
+  font-size: 1.05rem;
+  color: var(--ink-mid);
+  max-width: 480px;
+}
+
+/* Card stack */
+.cardStack {
+  position: relative;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stackCard {
+  position: absolute;
+  width: 200px;
+  height: 160px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--ivory-dark);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.stackCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+}
+
+/* ── Tabs ── */
+.tabs {
+  background: var(--white);
+  border-bottom: 1px solid var(--ivory-dark);
+  padding: 0;
+}
+
+.tabsInner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabsInner::-webkit-scrollbar { display: none; }
+
+.tab {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  padding: var(--sp-5) var(--sp-5);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+  background: transparent;
+}
+
+.tab:hover { color: var(--ink); }
+
+.tab.tabActive {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+
+/* ── Grid ── */
+.cardsSection { background: var(--ivory); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-5);
+}
+
+/* ── Custom CTA ── */
+.customCta {
+  background: var(--ink);
+  padding: var(--sp-7) 0;
+}
+
+.customCtaInner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.customCtaIcon {
+  width: 64px;
+  height: 64px;
+  background: rgba(242,100,25,0.12);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.customCtaTitle {
+  font-size: 1.2rem;
+  color: var(--ivory);
+  margin-bottom: var(--sp-2);
+}
+
+.customCtaDesc {
+  color: var(--ink-light);
+  font-size: 0.9rem;
+  max-width: 400px;
+}
+
+.customCtaBtn {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--orange);
+  color: var(--white);
+  padding: 14px var(--sp-6);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: background var(--duration-fast);
+}
+
+.customCtaBtn:hover { background: var(--orange-dark); }
+
+@media (max-width: 1024px) {
+  .heroInner { grid-template-columns: 1fr; }
+  .cardStack { display: none; }
+  .grid      { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid              { grid-template-columns: 1fr; }
+  .customCtaInner    { flex-direction: column; align-items: flex-start; }
+  .customCtaBtn      { margin-left: 0; width: 100%; text-align: center; justify-content: center; display: flex; }
+}

@@ -1,0 +1,87 @@
+.enterFullscreen {
+
+    z-index: 999;
+
+}
+
+
+
+.exitFullscreen {
+
+    z-index: 0;
+
+}
+
+
+
+.buttonContainerDiv {
+
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    opacity: 0.1;
+    transform: translateX(-50%);
+    z-index: 999;
+
+}
+
+
+
+.buttonContainerDiv:hover {
+
+    opacity: 1;
+
+}
+
+
+
+.animationButtons {
+
+    padding: 8px 28px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    width: 180px;
+    background: #fdeee4;
+    color: #a05040;
+    border: 1px solid #c08060;
+    border-radius: 20px;
+    cursor: pointer;
+
+}
+
+
+
+.animationButtons:nth-child(1) {
+
+    margin-right: 8px;
+
+}
+
+
+
+.animationButtons:nth-child(2) {
+
+    margin-left: 6px;
+
+}
+
+
+
+@media (orientation: portrait) {
+
+    .animationButtons:nth-child(1) {
+
+        margin-right: 0;
+
+    }
+
+
+
+    .animationButtons:nth-child(2) {
+
+        margin-left: 0;
+
+    }
+
+}
