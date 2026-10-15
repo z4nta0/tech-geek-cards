@@ -128,7 +128,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-			<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: The cards were built under TechGeek.support's base styles, whose line height was looser than the family's. How: This holds the card, restoring the old line height around it. */ }
+			<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
 
 
 				<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }

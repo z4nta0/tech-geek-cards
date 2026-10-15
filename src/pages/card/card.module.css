@@ -21,12 +21,10 @@
 
 /* #region carStaDiv */
 
-.carStaDiv { /* What: Card Stage Div. Why: The cards were drawn under TechGeek.support's base styles, whose body line height was 1.6, and the family's base sets a taller one, which spread their lines apart. How: This restores 1.6 around the card, a literal kept only until the cards are converted to the family's tokens, and hands each card the margin that clears the floating bar. */
+.carStaDiv { /* What: Card Stage Div. Why: Every card has to keep its lettering clear of the floating bar. How: This hands each card the margin that clears it. */
 
 
-	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together, plus a gap above it, which a converted card reads as its bottom margin. */
-
-	line-height : 1.6;
+	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together, plus a gap above it, which each card reads as its bottom margin. */
 
 
 }
@@ -82,7 +80,7 @@
 	position      : fixed;
 	translate     : -50% 0;
 	white-space   : nowrap;
-	z-index       : 1000;                                                                                             /* What: Card Clearing Layer. Why: The cards' own layers reach 999, and the bar has to stay above all of them. How: This sits one layer above the highest, to come down when the cards' layers are reworked. */
+	z-index       : 1;                                                                                                /* What: Card Clearing Layer. Why: The bar has to stay above the card it floats over. How: Every card's root is fixed, so its own layers stay inside it, and one layer above the stage is enough. */
 
 
 }
