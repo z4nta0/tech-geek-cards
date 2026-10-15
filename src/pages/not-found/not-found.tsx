@@ -94,6 +94,8 @@ function NotFouCom () : JSX.Element {
 						aria-hidden='true'
 					>404</div>{ /* What: Error Code Div Element. Why: A large 404 tells a visitor at a glance what happened. How: This shows the number, hidden from screen readers since the heading says the same. */ }
 
+
+
 					<svg
 						className={ cssModObj.envDraSvg }
 
@@ -134,6 +136,8 @@ function NotFouCom () : JSX.Element {
 							y='40'
 						/>{ /* What: Envelope Stamp Rect Element. Why: A stamp sits in the corner, its dashed edge standing for perforations. How: This draws a berry stamp in the upper right. */ }
 
+
+
 						<g transform='rotate( -8 92 108 )'>{ /* What: Stamp Tilt Group Element. Why: A rubber stamp lands at an angle. How: This tips the stamp eight degrees around its own center, inside the envelope's lower half. */ }
 
 
@@ -170,6 +174,8 @@ function NotFouCom () : JSX.Element {
 
 
 					</svg>
+
+
 
 					<h1 className={ cssModObj.nofTitHea }>Lost in the mail</h1>{ /* What: Not-Found Title Heading Element. Why: The page's heading says what went wrong, in the site's mail theme. How: This shows it as the page's h1. */ }
 

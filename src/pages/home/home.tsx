@@ -202,7 +202,7 @@ function HomPagCom () : JSX.Element {
 							<h1 className={ cssModObj.herTitHea }>Cards that <span className={ cssModObj.herAccSpa }>come alive</span>.</h1>{ /* What: Hero Title Heading Element. Why: The heading says what makes these cards different. How: This shows the page's h1, its last words underlined in a berry squiggle. */ }
 
 							<p className={ cssModObj.herLeaPar }>{ /* What: Hero Lead Paragraph Element. Why: A short paragraph says what a visitor can do here. How: This sums up the cards and the three steps. */ }
-								Animated, interactive greeting cards for birthdays, holidays, and the people who matter. Pick one, add their name, and send the link.
+								Animated, interactive greeting cards for birthdays, holidays, and the people who matter. Pick one, add their name (if applicable), and send the link.
 							</p>
 
 							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row that wraps. */ }

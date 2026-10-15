@@ -822,6 +822,8 @@
 
 }
 
+/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
+
 
 /* #region feaHeaDiv */
 
@@ -966,6 +968,8 @@
 
 
 }
+
+/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
 
 
 /* #region posShaDiv */
