@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * home.module.css = Home Module
  *
@@ -46,9 +45,9 @@
 
 
 
-/* #region herSec */
+/* #region homHerSec */
 
-.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, clips the confetti, and cuts scallops into its bottom edge with a mask. */
+.homHerSec { /* What: Home Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, clips the confetti, and cuts scallops into its bottom edge with a mask. */
 
 
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
@@ -170,7 +169,7 @@
 
 
 	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -310,7 +309,7 @@
 
 	aspect-ratio : 6 / 5;
 	justify-self : center;
-	max-width    : calc( var( --ver-rhy-p13 ) * 1rem ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+	max-width    : calc( var( --ver-rhy-p13 ) * 1rem ); /* Vertical Rhythm Base Plus 13 ~= 563.794px */
 	position     : relative;
 	width        : 100%;
 
@@ -348,7 +347,7 @@
 .envCarIma { /* What: Envelope Card Image. Why: Each card stands in the envelope in a white border, rises out of it in turn, and fans wider on hover. How: This sizes and places the card above the pocket, pivoting from its bottom edge, plays the rise, and eases its turn and shift. */
 
 
-	animation        : envCarImaRiseIn var( --dur-ani-p04 ) var( --mot-ove-eas ) both;                                        /* Duration Animation Base Plus 4 ~= 486.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
+	animation        : envCarImaEnterRiseIn var( --dur-ani-p04 ) var( --mot-ove-eas ) both;                                        /* Duration Animation Base Plus 4 ~= 486.1ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
 	border           : calc( var( --ver-rhy-m03 ) * 1rem ) solid var( --bac-sur-col );                                        /* Vertical Rhythm Base Minus 3 ~= 6.268px, Background Surface Color = #FFFFFF */
 	border-radius    : var( --rad-bor-xsm );                                                                                  /* Radius Border Extra Small ~= 3.572px */
 	bottom           : 30%;
@@ -374,7 +373,7 @@
 .envCarIma:nth-of-type( 2 ) { /* What: Middle Envelope Card Image. Why: The middle card stands tallest in the fan and rises second. How: This lifts it and starts its rise one beat later. */
 
 
-	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.1ms */
+	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
 	translate       : 0 -10%;
 
 
@@ -382,7 +381,7 @@
 .envCarIma:nth-of-type( 3 ) { /* What: Right Envelope Card Image. Why: The last card leans right in the fan and rises last. How: This turns it right and shifts it out, starting its rise two beats later. */
 
 
-	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) * 2 ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.1ms */
+	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) * 2 ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
 	rotate          : 14deg;
 	translate       : 34% 6%;
 
@@ -425,8 +424,7 @@
 
 
 }
-
-@keyframes envCarImaRiseIn { /* What: Envelope Card Rise In. Why: The cards come out of the envelope as the page opens. How: This raises each card from low in the pocket, fading it in, the overshoot easing letting it settle. */
+@keyframes envCarImaEnterRiseIn { /* What: Envelope Card Image Enter Rise In. Why: The cards come out of the envelope as the page opens. How: This raises each card from low in the pocket, fading it in, the overshoot easing letting it settle. */
 
 
 	from {
@@ -520,7 +518,7 @@
 .conPieSpa { /* What: Confetti Piece Span. Why: Confetti bursts around the envelope as the cards come out. How: This places a small shape, sized and colored by its position below, and pops it in after the cards have risen. */
 
 
-	animation     : conPieSpaPopIn var( --dur-ani-p02 ) var( --mot-bou-eas ) calc( var( --dur-ani-p04 ) + var( --dur-ani-p03 ) ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.0ms, Duration Animation Base Plus 3 ~= 366.9ms */
+	animation     : conPieSpaEnterPopIn var( --dur-ani-p02 ) var( --mot-bou-eas ) calc( var( --dur-ani-p04 ) + var( --dur-ani-p03 ) ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Plus 3 ~= 366.9ms */
 	border-radius : 50%;
 	height        : calc( var( --ver-rhy-m02 ) * 1rem );                                                                               /* Vertical Rhythm Base Minus 2 ~= 8.304px */
 	position      : absolute;
@@ -603,8 +601,7 @@
 
 
 }
-
-@keyframes conPieSpaPopIn { /* What: Confetti Piece Pop In. Why: Each piece of confetti bursts into place once. How: This grows it from nothing with a springy bounce. */
+@keyframes conPieSpaEnterPopIn { /* What: Confetti Piece Span Enter Pop In. Why: Each piece of confetti bursts into place once. How: This grows it from nothing with a springy bounce. */
 
 
 	from {
@@ -632,13 +629,13 @@
 
 /* #endregion herInnDiv */
 
-/* #endregion herSec */
+/* #endregion homHerSec */
 
 
 
-/* #region hiwSec */
+/* #region homHiwSec */
 
-.hiwSec { /* What: How-It-Works Section. Why: The steps get room above and below. How: This pads the section top and bottom. */
+.homHiwSec { /* What: Home How-It-Works Section. Why: The steps get room above and below. How: This pads the section top and bottom. */
 
 
 	padding : var( --spa-ver-p07 ) 0; /* Spacing Vertical Base Plus 7 ~= 104.323px */
@@ -796,7 +793,7 @@
 .steDesPar { /* What: Step Description Paragraph. Why: The step's line stays a comfortable length. How: This caps it at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -807,13 +804,13 @@
 
 /* #endregion secInnDiv */
 
-/* #endregion hiwSec */
+/* #endregion homHiwSec */
 
 
 
-/* #region feaSec */
+/* #region homFeaSec */
 
-.feaSec { /* What: Featured Section. Why: The featured cards get room below before the banner. How: This pads the section's bottom. */
+.homFeaSec { /* What: Home Featured Section. Why: The featured cards get room below before the banner. How: This pads the section's bottom. */
 
 
 	padding-bottom : var( --spa-ver-p07 ); /* Spacing Vertical Base Plus 7 ~= 104.323px */
@@ -950,13 +947,13 @@
 
 }
 
-/* #endregion feaSec */
+/* #endregion homFeaSec */
 
 
 
-/* #region comSec */
+/* #region homComSec */
 
-.comSec { /* What: Commission Section. Why: The banner gets room below before the footer. How: This pads the section's bottom. */
+.homComSec { /* What: Home Commission Section. Why: The banner gets room below before the footer. How: This pads the section's bottom. */
 
 
 	padding-bottom : var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 8 ~= 138.199px */
@@ -1033,7 +1030,7 @@
 .posTexPar { /* What: Postcard Text Paragraph. Why: The banner's line stays a comfortable length. How: This caps it at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -1068,7 +1065,7 @@
 
 /* #endregion posShaDiv */
 
-/* #endregion comSec */
+/* #endregion homComSec */
 
 /* #endregion pagEntDiv */
 

@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * about.module.css = About Module
  *
@@ -46,9 +45,9 @@
 
 
 
-/* #region herSec */
+/* #region aboHerSec */
 
-.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
+.aboHerSec { /* What: About Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
 
 
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
@@ -106,20 +105,20 @@
 
 
 	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
 
 /* #endregion herInnDiv */
 
-/* #endregion herSec */
+/* #endregion aboHerSec */
 
 
 
-/* #region stoSec */
+/* #region aboStoSec */
 
-.stoSec { /* What: Story Section. Why: The story gets room above and below. How: This pads the section top and bottom. */
+.aboStoSec { /* What: About Story Section. Why: The story gets room above and below. How: This pads the section top and bottom. */
 
 
 	padding : var( --spa-ver-p07 ) 0 var( --spa-ver-p06 ); /* Spacing Vertical Base Plus 7 ~= 104.323px, Spacing Vertical Base Plus 6 ~= 78.751px */
@@ -181,7 +180,7 @@
 .stoTexPar { /* What: Story Text Paragraph. Why: The story's paragraphs stay a comfortable length. How: This caps them at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -275,13 +274,13 @@
 
 /* #endregion stoInnDiv */
 
-/* #endregion stoSec */
+/* #endregion aboStoSec */
 
 
 
-/* #region famSec */
+/* #region aboFamSec */
 
-.famSec { /* What: Family Section. Why: The sister sites get room below before the footer. How: This pads the section's bottom. */
+.aboFamSec { /* What: About Family Section. Why: The sister sites get room below before the footer. How: This pads the section's bottom. */
 
 
 	padding-bottom : var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 8 ~= 138.199px */
@@ -388,7 +387,7 @@
 .famDesPar { /* What: Family Description Paragraph. Why: The line about the site stays a comfortable length. How: This caps it at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -599,7 +598,7 @@
 
 /* #endregion secInnDiv */
 
-/* #endregion famSec */
+/* #endregion aboFamSec */
 
 /* #endregion pagEntDiv */
 

@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './confetti-circuit.module.css'; // What: CSS Module Object. Why: The pattern's positioning and confetti colors live in its own module. How: This maps each class name in confetti-circuit.module.css to its hashed module class.

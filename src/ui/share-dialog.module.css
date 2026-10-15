@@ -1,14 +1,13 @@
 
 
 
-
 /**
  * share-dialog.module.css = Share Dialog Module
  *
  * @summary
  * Styles for ShaDiaCom: a white rounded panel that pops in over a dimmed
  * backdrop with a gentle overshoot and fades out when closed, a round close
- * button in its corner, a berry eyebrow over the card's title, labelled
+ * button in its corner, a berry eyebrow over the card's title, labeled
  * fields whose focus ring eases in, an orange Copy Link button whose label
  * fades in afresh each time it changes, an outlined share sheet button, a
  * preview text link with a nudging arrow, and the copy status line. Every
@@ -34,7 +33,7 @@
 	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow */
 	color         : var( --tex-mai-col );                                                           /* Text Main Color = #1A1A2E */
 	margin        : auto;
-	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.199, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, about 493.2px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
+	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, about 493.2px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
 	padding       : 0;
 	width         : calc( 100% - var( --gut-sid-pad ) * 2 );                                        /* Gutter Side Padding, about 19.304px - 44.876px */
 
@@ -51,14 +50,14 @@
 .shaDiaDia.shaDiaDiaClosing { /* What: Closing Share Dialog Dialog. Why: The panel should leave the way it came, and the dialog only closes once it has. How: This fades and shrinks the panel away, its animation's end closing the dialog; the base class stays chained so it outranks the reduced-motion rule. */
 
 
-	animation : shaDiaDiaCloseFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.1ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+	animation : shaDiaDiaCloseFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
 
 
 }
 .shaDiaDia.shaDiaDiaClosing::backdrop { /* What: Closing Share Dialog Backdrop. Why: The dimming should lift with the panel. How: This fades the backdrop out over the same time. */
 
 
-	animation : shaDiaDiaShadeFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.1ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+	animation : shaDiaDiaShadeFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
 
 
 }
@@ -85,7 +84,6 @@
 
 
 }
-
 @keyframes shaDiaDiaOpenPopIn { /* What: Share Dialog Open Pop In. Why: The panel arrives with a small, lively pop. How: This grows it from 94% and about 8px low, fading it in, the overshoot easing carrying it just past full size. */
 
 
@@ -109,7 +107,6 @@
 
 
 }
-
 @keyframes shaDiaDiaCloseFadeOut { /* What: Share Dialog Close Fade Out. Why: The panel leaves quietly. How: This shrinks it to 96% while fading it out. */
 
 
@@ -133,7 +130,6 @@
 
 
 }
-
 @keyframes shaDiaDiaShadeFadeIn { /* What: Share Dialog Shade Fade In. Why: The dimming eases in. How: This fades the backdrop from transparent. */
 
 
@@ -147,7 +143,6 @@
 
 
 }
-
 @keyframes shaDiaDiaShadeFadeOut { /* What: Share Dialog Shade Fade Out. Why: The dimming eases out. How: This fades the backdrop to transparent. */
 
 
@@ -410,7 +405,7 @@
 .copLabSpa { /* What: Copy Label Span. Why: The label's change to Copied is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
 
 
-	animation : copLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	animation : copLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 	display   : inline-block;
 
 
@@ -428,7 +423,6 @@
 
 
 }
-
 @keyframes copLabSpaSwapFadeIn { /* What: Copy Label Swap Fade In. Why: A new label should arrive softly. How: This fades it in from about 3.6px low. */
 
 

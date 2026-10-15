@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * card-tile.module.css = Card Tile Module
  *
@@ -278,7 +277,7 @@
 .carDesPar { /* What: Card Description Paragraph. Why: The line about the card should stay a comfortable length. How: This caps it at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }

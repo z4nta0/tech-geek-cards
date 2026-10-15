@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './share-dialog.module.css'; // What: CSS Module Object. Why: The dialog's panel, fields, and buttons are styled in its own module. How: This maps each class name in share-dialog.module.css to its hashed module class.
@@ -212,9 +211,9 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 		<dialog
 			ref={ diaEleRef }
 
-			className={ ` ${ cssModObj.shaDiaDia }   ${ cloBoo ? cssModObj.shaDiaDiaClosing : '' } ` }
+			className={` ${ cssModObj.shaDiaDia }   ${ cloBoo ? cssModObj.shaDiaDiaClosing : '' } `}
 
-			aria-labelledby='shaTitHea'
+			aria-labeledby='shaTitHea'
 
 			onAnimationEnd={ ( aniEveObj ) => { if ( aniEveObj.animationName === cssModObj.shaDiaDiaCloseFadeOut ) { diaEleRef.current?.close(); onCloFun(); } } } // What: Closing Animation End Handler. Why: The dialog should only close once its panel's closing animation has played. How: When the panel's own closing keyframe ends, this closes the element and tells the page, which unmounts it; every other animation's end, the backdrop's and the copy label's included, is ignored.
 			onCancel={ ( canEveObj : SyntheticEvent ) => { canEveObj.preventDefault(); cloDiaFun(); } } // What: Cancel Handler. Why: Escape would close the dialog at once, skipping its animation. How: This stops the browser's own close and starts the animated one.
@@ -246,7 +245,7 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 						width='16'
 
 						aria-hidden='true'
-					>{ /* What: Close Icon SVG Element. Why: A cross reads as close. How: This draws two crossing lines, hidden from screen readers since the button is labelled. */ }
+					>{ /* What: Close Icon SVG Element. Why: A cross reads as close. How: This draws two crossing lines, hidden from screen readers since the button is labeled. */ }
 
 
 						<path d='M 3 3 L 13 13 M 13 3 L 3 13' />{ /* What: Close Cross Path Element. Why: The cross is the icon. How: This draws both strokes. */ }
@@ -260,7 +259,7 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 				<p className={ cssModObj.shaEyePar }>Ready to send</p>{ /* What: Share Eyebrow Paragraph Element. Why: A small label sets the dialog's purpose above its title. How: This shows it in berry mono capitals. */ }
 
 				<h2
-					id='shaTitHea' // What: Share Title Heading Identifier. Why: The dialog is named by its heading. How: The dialog's aria-labelledby points here, and only one share dialog exists at a time.
+					id='shaTitHea' // What: Share Title Heading Identifier. Why: The dialog is named by its heading. How: The dialog's aria-labeledby points here, and only one share dialog exists at a time.
 
 					className={ cssModObj.shaTitHea }
 				>{ carRecObj.titStr }</h2>{ /* What: Share Title Heading Element. Why: The dialog says which card is being sent. How: This shows the card's title. */ }
@@ -318,7 +317,7 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 					<input
 						id='carLinInp'
 
-						className={ ` ${ cssModObj.fieTexInp }   ${ cssModObj.fieLinInp } ` }
+						className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieLinInp } `}
 
 						readOnly
 						type='text'

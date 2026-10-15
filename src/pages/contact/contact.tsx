@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './contact.module.css'; // What: CSS Module Object. Why: Contact's hero, form, and sidebar are styled in its own module. How: This maps each class name in contact.module.css to its hashed module class.
@@ -229,7 +228,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.herSec }>{ /* What: Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
+				<section className={ cssModObj.conHerSec }>{ /* What: Contact Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
 
 
 
@@ -257,7 +256,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.conSec }>{ /* What: Contact Section Element. Why: The form and the sidebar are the page's content. How: This holds them in the site's centered column. */ }
+				<section className={ cssModObj.conBodSec }>{ /* What: Contact Body Section Element. Why: The form and the sidebar are the page's content. How: This holds them in the site's centered column. */ }
 
 
 
@@ -386,7 +385,7 @@ function ConPagCom () : JSX.Element {
 									<select
 										id='conTopSel'
 
-										className={ ` ${ cssModObj.fieTexInp }   ${ cssModObj.fieTopSel } ` }
+										className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieTopSel } `}
 
 										name='topic'
 
@@ -408,7 +407,7 @@ function ConPagCom () : JSX.Element {
 											>{ topOptStr }</option> // What: Topic Option Element. Why: Each topic is one choice. How: This offers the topic, its text as its value.
 
 
-										) ) }
+										))}
 
 
 									</select>
@@ -428,7 +427,7 @@ function ConPagCom () : JSX.Element {
 									<textarea
 										id='conMesTex'
 
-										className={ ` ${ cssModObj.fieTexInp }   ${ cssModObj.fieMesTex } ` }
+										className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieMesTex } `}
 
 										name='message'
 

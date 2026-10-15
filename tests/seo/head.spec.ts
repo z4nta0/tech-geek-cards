@@ -47,8 +47,8 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
 
 // #region Constants
 
-const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one, add a name, and send the link.'; // What: Home Description String. Why: The raw page and the social tags carry the home page's description. How: This is the exact text they should hold.
-const LIV_URL_STR = 'https://techgeek.cards/';                                                                                                // What: Live URL String. Why: The canonical links, structured data, social tags, and sitemap all name the live site. How: This is its address.
+const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one, add a name, and send the link.'; // What: Home Description String. Why: The raw page carries the home page's description, and every other page must swap it for its own. How: This is the exact text it should hold.
+const LIV_URL_STR = 'https://techgeek.cards/';                                                                                                // What: Live URL String. Why: The canonical links, structured data, robots.txt, and sitemap all name the live site. How: This is its address.
 
 
 
@@ -106,11 +106,10 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
  * @summary
  * Checks that the page showing now has the head its row describes: its exact
  * title, exactly one description, z4nta0 as author, and, unless it's a card,
- * one h1. A page
- * with a canonical address has that one canonical link, a description of 100
- * to 125 characters, and no robots tag; a page without one has a noindex
- * robots tag and no canonical link. Counting the tags also catches a
- * navigation that left the previous page's tags behind.
+ * one h1. A page with a canonical address has that one canonical link, a
+ * description of 100 to 125 characters, and no robots tag; a page without one
+ * has a noindex robots tag and no canonical link. Counting the tags also
+ * catches a navigation that left the previous page's tags behind.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -200,7 +199,7 @@ for ( const heaRowObj of PAG_HEA_ARR ) { // What: Page Head Loop. Why: Every pag
 
 
 
-test( 'moving between pages swaps their head tags', async ( { page : curPagObj } ) => { // What: Navigation Head Test. Why: React adds and removes each page's tags as visitors move around, and a leftover description or canonical link would mislabel the next page. How: This walks from Home through Work and About to Contact by the footer's links, checking each head.
+test( 'moving between pages swaps their head tags', async ( { page : curPagObj } ) => { // What: Navigation Head Test. Why: React adds and removes each page's tags as visitors move around, and a leftover description or canonical link would mislabel the next page. How: This walks from Home through the Gallery and About to Contact by the footer's links, checking each head.
 
 
 	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The walk starts on the home page. How: This loads the root path.
@@ -230,7 +229,7 @@ test( 'moving between pages swaps their head tags', async ( { page : curPagObj }
 
 
 
-test( 'the structured data describes z4nta0 and matches the pages', async ( { page : curPagObj } ) => { // What: Structured Data Test. Why: Search engines may show z4nta0's details from the JSON-LD, so every claim has to match what the pages show. How: This reads the data and checks the person, the site, the profiles, and the email against the pages.
+test( 'the structured data describes z4nta0 and matches the pages', async ( { page : curPagObj } ) => { // What: Structured Data Test. Why: Search engines may show z4nta0's details from the JSON-LD, so every claim has to match what the pages show. How: This reads the data and checks the person, the site, and the profiles against the pages.
 
 
 	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The profiles in the data have to be the ones the footer links to. How: This loads the home page.

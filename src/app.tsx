@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import { AboPagCom    } from './pages/about/about.tsx';          // What: About Page Component. Why: The About route says who makes the cards and introduces the sister sites. How: The about route renders it.

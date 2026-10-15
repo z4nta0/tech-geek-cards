@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './gallery.module.css'; // What: CSS Module Object. Why: The Gallery's hero, controls, and grid are styled in its own module. How: This maps each class name in gallery.module.css to its hashed module class.
@@ -143,7 +142,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.herSec }>{ /* What: Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
+				<section className={ cssModObj.galHerSec }>{ /* What: Gallery Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
 
 
 
@@ -171,7 +170,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.galSec }>{ /* What: Gallery Section Element. Why: The controls and the cards are the page's content. How: This holds the controls, the count, and the grid or the empty message. */ }
+				<section className={ cssModObj.galLisSec }>{ /* What: Gallery List Section Element. Why: The controls and the cards are the page's content. How: This holds the controls, the count, and the grid or the empty message. */ }
 
 
 
@@ -231,7 +230,7 @@ function GalPagCom () : JSX.Element {
 									>{ occNamStr }</button> // What: Occasion Filter Button Element. Why: Each button chooses its occasion. How: This chooses it, reporting whether it's the chosen one through aria-pressed.
 
 
-								) ) }
+								))}
 
 
 							</div>
@@ -270,7 +269,7 @@ function GalPagCom () : JSX.Element {
 									/> // What: Card Tile Component. Why: Each card shows as a tile. How: This renders the card's tile, its Share opening the dialog for it.
 
 
-								) ) }
+								))}
 
 
 

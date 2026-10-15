@@ -42,7 +42,7 @@ import type { Page          } from '@playwright/test'; // What: Page. Why: Every
 
 // #region Constants
 
-const SET_WAI_NUM = 400; // What: Settle Wait Number. Why: Each look is read once its transition has finished, and the longest transition on a link or button, anything inside one, or the overlay holding the project cards' links runs about 277ms (the bar links' underline, the menu toggle's bars, and that overlay). How: This is the pause, in milliseconds, after each hover, press, or focus, leaving over 100ms of margin for a slow frame or a short delay.
+const SET_WAI_NUM = 400; // What: Settle Wait Number. Why: Each look is read once its transition has finished, and the longest transition on a link or button, or anything inside one, runs about 277ms (the bar links' underline, the menu toggle's bars, and the card tiles' tilt). How: This is the pause, in milliseconds, after each hover, press, or focus, leaving over 100ms of margin for a slow frame or a short delay.
 
 // #endregion Constants
 
@@ -106,8 +106,8 @@ function cliBloFun () : void {
  * link and button that's visible, not taken out of the tab order with tabindex
  * -1, not inside inert content, and, while a modal dialog is open (the share
  * dialog), inside that dialog, since the browser makes the page behind it
- * unreachable without marking it inert. Handles are taken once, so nothing that
- * changes while the checks scroll can shift the list.
+ * unreachable without marking it inert. Handles are taken once, so nothing
+ * that changes while the checks scroll can shift the list.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -132,7 +132,21 @@ async function conLisFun ( curPagObj : Page ) : Promise< ElementHandle< Element 
 	for ( const conCurObj of await curPagObj.$$( 'a, button' ) ) { // What: Control Loop. Why: Every link and button is judged on its own. How: This keeps each one a visitor can reach.
 
 
-		const conReaBoo = await conCurObj.evaluate( ( conCurEle ) => conCurEle.getAttribute( 'tabindex' ) !== '-1' && !conCurEle.closest( '[inert]' ) && ( !document.querySelector( 'dialog:modal' ) || !!conCurEle.closest( 'dialog:modal' ) ) ); // What: Control Reachable Boolean. Why: A control outside the tab order, inside inert content, or behind an open modal dialog can't be reached. How: This checks all three inside the page, keeping only the dialog's own controls while one is open.
+		const conReaBoo = await conCurObj.evaluate( ( conCurEle ) => { // What: Control Reachable Boolean. Why: A control outside the tab order, inside inert content, or behind an open modal dialog can't be reached. How: This checks all three inside the page, keeping only the dialog's own controls while one is open.
+
+
+			const diaInsBoo = !document.querySelector( 'dialog:modal' ) || !!conCurEle.closest( 'dialog:modal' ); // What: Dialog Inside Boolean. Why: An open modal dialog leaves only its own controls reachable. How: This is true when no modal dialog is open, or the control sits inside the open one.
+			const ineOutBoo = !conCurEle.closest( '[inert]' );                                                    // What: Inert Outside Boolean. Why: Inert content can't be reached. How: This is true when the control sits outside any inert element.
+			const tabOrdBoo = conCurEle.getAttribute( 'tabindex' ) !== '-1';                                      // What: Tab Order Boolean. Why: A control taken out of the tab order can't be reached by keyboard. How: This is true unless the control carries tabindex -1.
+
+			const reaConBoo = diaInsBoo && ineOutBoo && tabOrdBoo; // What: Reachable Control Boolean. Why: A control counts only when all three hold. How: This combines them.
+
+
+
+			return reaConBoo; // What: Reachable Control Return. Why: The loop keeps only reachable controls. How: This hands the answer back out of the page.
+
+
+		} );
 
 
 		if ( conReaBoo && await conCurObj.isVisible() ) conHanArr.push( conCurObj ); // What: Reachable Control Record. Why: Only controls a visitor can see and reach are checked. How: This keeps the control when it's both.
@@ -162,8 +176,8 @@ async function conLisFun ( curPagObj : Page ) : Promise< ElementHandle< Element 
  * color, transform, the separate scale, translate, and rotate properties,
  * which this site's tiles and buttons use, and opacity) for the control and
  * every element inside it, so a change to its icon lines or its label counts
- * as the control's own.
- * Passed to Playwright's evaluate, so it can't read anything from this file.
+ * as the control's own. Passed to Playwright's evaluate, so it can't read
+ * anything from this file.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -173,7 +187,7 @@ async function conLisFun ( curPagObj : Page ) : Promise< ElementHandle< Element 
  *
  * @example
  * ```ts
- * handle.evaluate(sigEleFun) // => 'rgb(...),rgba(...),rgb(...),none,1|...'
+ * handle.evaluate(sigEleFun) // => 'rgb(...),rgba(...),...,none,1|...'
  * ```
  *
 */

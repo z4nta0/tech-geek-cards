@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import birPreUrl from '../assets/happy-birthday-card-preview-image.webp';     // What: Birthday Preview URL. Why: The Happy Birthday card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.

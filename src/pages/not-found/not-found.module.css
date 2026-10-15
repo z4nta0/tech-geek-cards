@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * not-found.module.css = Not Found Module
  *
@@ -77,6 +76,10 @@
 
 }
 
+
+
+/* #region envDraSvg */
+
 .envDraSvg { /* What: Envelope Drawing SVG. Why: The lost envelope lies tipped across the number. How: This sizes it, pulls it up over the number, tilts it, and lifts it above the number. */
 
 
@@ -114,10 +117,13 @@
 
 }
 
+
+/* #region retSenGro */
+
 .retSenGro { /* What: Return Sender Group. Why: A rubber stamp across the envelope lands with a bit of force, the page's flair. How: This scales the stamp's box and words from their own center and thunks them down once after the page arrives. */
 
 
-	animation        : retSenGroThunkIn var( --dur-ani-p02 ) var( --mot-bou-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.0ms */
+	animation        : retSenGroEnterThunkIn var( --dur-ani-p02 ) var( --mot-bou-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms */
 	transform-box    : fill-box;
 	transform-origin : center;
 
@@ -136,8 +142,7 @@
 
 
 }
-
-@keyframes retSenGroThunkIn { /* What: Return Sender Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from 160% and transparent to full size, the bounce easing giving it a small rebound. */
+@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from 160% and transparent to full size, the bounce easing giving it a small rebound. */
 
 
 	from {
@@ -179,6 +184,12 @@
 
 
 }
+
+/* #endregion retSenGro */
+
+/* #endregion envDraSvg */
+
+
 
 .nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color, a step below a full page heading. How: This sets its color and the base plus 4 size. */
 

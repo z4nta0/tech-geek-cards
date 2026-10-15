@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './about.module.css'; // What: CSS Module Object. Why: About's hero, story, and family sections are styled in its own module. How: This maps each class name in about.module.css to its hashed module class.
@@ -119,7 +118,7 @@ function AboPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.herSec }>{ /* What: Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
+				<section className={ cssModObj.aboHerSec }>{ /* What: About Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
 
 
 
@@ -147,7 +146,7 @@ function AboPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.stoSec }>{ /* What: Story Section Element. Why: The page explains how the cards are made. How: This holds the paragraphs and the fact list. */ }
+				<section className={ cssModObj.aboStoSec }>{ /* What: About Story Section Element. Why: The page explains how the cards are made. How: This holds the paragraphs and the fact list. */ }
 
 
 
@@ -187,7 +186,7 @@ function AboPagCom () : JSX.Element {
 								>{ facTexStr }</li> // What: Fact Item Element. Why: Each fact is one line, led by a dot of confetti. How: This shows the fact's text.
 
 
-							) ) }
+							))}
 
 
 						</ul>
@@ -201,7 +200,7 @@ function AboPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.famSec }>{ /* What: Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the heading, the three site cards, and the closing buttons. */ }
+				<section className={ cssModObj.aboFamSec }>{ /* What: About Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the heading, the three site cards, and the closing buttons. */ }
 
 
 
@@ -253,7 +252,7 @@ function AboPagCom () : JSX.Element {
 								</li>
 
 
-							) ) }
+							))}
 
 
 						</ul>

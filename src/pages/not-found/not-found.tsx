@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './not-found.module.css'; // What: CSS Module Object. Why: The 404 page's own layout, drawing, and button styles live in its own module. How: This maps each class name in not-found.module.css to its hashed module class.
@@ -135,8 +134,7 @@ function NotFouCom () : JSX.Element {
 							y='40'
 						/>{ /* What: Envelope Stamp Rect Element. Why: A stamp sits in the corner, its dashed edge standing for perforations. How: This draws a berry stamp in the upper right. */ }
 
-
-						<g transform='rotate( -8 92 108 )'>{ /* What: Return Sender Tilt Group Element. Why: A rubber stamp lands at an angle. How: This tips the stamp eight degrees around its own center, inside the envelope's lower half. */ }
+						<g transform='rotate( -8 92 108 )'>{ /* What: Stamp Tilt Group Element. Why: A rubber stamp lands at an angle. How: This tips the stamp eight degrees around its own center, inside the envelope's lower half. */ }
 
 
 							<g className={ cssModObj.retSenGro }>{ /* What: Return Sender Group Element. Why: The stamp's frame and words land together, the page's flair. How: This thunks both down once after the page arrives. */ }

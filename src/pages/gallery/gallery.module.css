@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * gallery.module.css = Gallery Module
  *
@@ -44,9 +43,9 @@
 
 
 
-/* #region herSec */
+/* #region galHerSec */
 
-.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
+.galHerSec { /* What: Gallery Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
 
 
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
@@ -104,20 +103,20 @@
 
 
 	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
 
 /* #endregion herInnDiv */
 
-/* #endregion herSec */
+/* #endregion galHerSec */
 
 
 
-/* #region galSec */
+/* #region galLisSec */
 
-.galSec { /* What: Gallery Section. Why: The controls and the cards get room above and below. How: This pads the section top and bottom. */
+.galLisSec { /* What: Gallery List Section. Why: The controls and the cards get room above and below. How: This pads the section top and bottom. */
 
 
 	padding : var( --spa-ver-p05 ) 0 var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 5 ~= 59.447px, Spacing Vertical Base Plus 8 ~= 138.199px */
@@ -163,7 +162,7 @@
 	flex           : 1 1 auto;
 	flex-direction : column;
 	gap            : var( --spa-ver-m03 );                /* Spacing Vertical Base Minus 3 ~= 6.268px */
-	max-width      : calc( var( --ver-rhy-p12 ) * 1rem ); /* Vertical Rhythm Base Plus 12 ~= 425.896px */
+	max-width      : calc( var( --ver-rhy-p12 ) * 1rem ); /* Vertical Rhythm Base Plus 12 ~= 425.596px */
 
 
 }
@@ -507,7 +506,7 @@
 
 /* #endregion secInnDiv */
 
-/* #endregion galSec */
+/* #endregion galLisSec */
 
 /* #endregion pagEntDiv */
 

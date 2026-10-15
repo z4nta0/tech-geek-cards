@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * card.module.css = Card Module
  *
@@ -64,7 +63,7 @@
 
 
 	align-items   : center;
-	animation     : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) var( --dur-ani-p05 ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Animation Base Plus 5 ~= 643.8ms */
+	animation     : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) var( --dur-ani-p05 ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Animation Base Plus 5 ~= 643.9ms */
 	background    : var( --bac-inv-col );                                                                             /* Background Inverse Color = #1A1A2E */
 	border-radius : 999px;
 	bottom        : var( --spa-ver-bas );                                                                             /* Spacing Vertical Base ~= 14.572px */

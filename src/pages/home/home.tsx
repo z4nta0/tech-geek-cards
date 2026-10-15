@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './home.module.css'; // What: CSS Module Object. Why: Home's hero, steps, featured cards, and banner are styled in its own module. How: This maps each class name in home.module.css to its hashed module class.
@@ -179,7 +178,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.herSec }>{ /* What: Hero Section Element. Why: The page opens on the site's pitch and a playful picture of what it offers. How: This holds the motif, the text, and the envelope, its bottom edge cut in scallops like a stamp's. */ }
+				<section className={ cssModObj.homHerSec }>{ /* What: Home Hero Section Element. Why: The page opens on the site's pitch and a playful picture of what it offers. How: This holds the motif, the text, and the envelope, its bottom edge cut in scallops like a stamp's. */ }
 
 
 
@@ -260,7 +259,7 @@ function HomPagCom () : JSX.Element {
 								/> // What: Envelope Card Image Element. Why: A still of each card sits in the fan. How: This shows the card's preview in a white border, its alt left empty since the stage is decoration.
 
 
-							) ) }
+							))}
 
 							<div className={ cssModObj.envFroDiv }>{ /* What: Envelope Front Div Element. Why: The envelope's front pocket holds the cards' lower edges. How: This draws the front with a V cut into its top, carrying the stamp. */ }
 
@@ -302,7 +301,7 @@ function HomPagCom () : JSX.Element {
 								/> // What: Confetti Piece Span Element. Why: Each piece of confetti is its own small shape. How: This renders an empty span the module shapes and places.
 
 
-							) ) }
+							))}
 
 
 						</div>
@@ -319,8 +318,8 @@ function HomPagCom () : JSX.Element {
 				<section
 					id='how-it-works' // What: How It Works Identifier. Why: The hero's How It Works button jumps here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's id appears in the address.
 
-					className={ cssModObj.hiwSec }
-				>{ /* What: How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }
+					className={ cssModObj.homHiwSec }
+				>{ /* What: Home How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }
 
 
 
@@ -358,7 +357,7 @@ function HomPagCom () : JSX.Element {
 								</li>
 
 
-							) ) }
+							))}
 
 
 						</ol>
@@ -372,7 +371,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.feaSec }>{ /* What: Featured Section Element. Why: A taste of the Gallery invites a visitor in. How: This holds the section's header and four random cards. */ }
+				<section className={ cssModObj.homFeaSec }>{ /* What: Home Featured Section Element. Why: A taste of the Gallery invites a visitor in. How: This holds the section's header and four random cards. */ }
 
 
 
@@ -417,7 +416,7 @@ function HomPagCom () : JSX.Element {
 								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its Share opening the dialog for it.
 
 
-							) ) }
+							))}
 
 
 
@@ -432,7 +431,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.comSec }>{ /* What: Commission Section Element. Why: A visitor may want a card made just for them. How: This holds the postcard banner. */ }
+				<section className={ cssModObj.homComSec }>{ /* What: Home Commission Section Element. Why: A visitor may want a card made just for them. How: This holds the postcard banner. */ }
 
 
 
@@ -464,7 +463,7 @@ function HomPagCom () : JSX.Element {
 									</p>
 
 									<Link
-										className={ ` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } ` }
+										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
 									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Element. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, its text a step smaller on phones so the long label doesn't wrap the button tall. */ }

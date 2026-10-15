@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import cssModObj from './card.module.css'; // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.

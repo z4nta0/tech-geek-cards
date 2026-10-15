@@ -1,7 +1,6 @@
 
 
 
-
 /**
  * contact.module.css = Contact Module
  *
@@ -46,9 +45,9 @@
 
 
 
-/* #region herSec */
+/* #region conHerSec */
 
-.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
+.conHerSec { /* What: Contact Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
 
 
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
@@ -106,20 +105,20 @@
 
 
 	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
 
 /* #endregion herInnDiv */
 
-/* #endregion herSec */
+/* #endregion conHerSec */
 
 
 
-/* #region conSec */
+/* #region conBodSec */
 
-.conSec { /* What: Contact Section. Why: The form and sidebar get room above and below. How: This pads the section top and bottom. */
+.conBodSec { /* What: Contact Body Section. Why: The form and sidebar get room above and below. How: This pads the section top and bottom. */
 
 
 	padding : var( --spa-ver-p05 ) 0 var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 5 ~= 59.447px, Spacing Vertical Base Plus 8 ~= 138.199px */
@@ -201,7 +200,7 @@
 .thaTexPar { /* What: Thank Text Paragraph. Why: The line about what happens next stays a comfortable length. How: This caps it at the paragraph measure. */
 
 
-	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
 
 
 }
@@ -603,7 +602,7 @@
 
 /* #endregion conInnDiv */
 
-/* #endregion conSec */
+/* #endregion conBodSec */
 
 /* #endregion pagEntDiv */
 
