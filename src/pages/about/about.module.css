@@ -231,10 +231,10 @@
 
 }
 
-.facIteIte { /* What: Fact Item Item. Why: Each fact reads as one line led by a dot of confetti. How: This lines up the dot and the text in the main text color. */
+.facIteIte { /* What: Fact Item Item. Why: Each fact reads as one line led by a dot of confetti. How: This lines up the dot beside the text's first line in the main text color. */
 
 
-	align-items : center;
+	align-items : start;
 	color       : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
 	display     : flex;
 	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
@@ -243,15 +243,16 @@
 
 
 }
-.facIteIte::before { /* What: Fact Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle, colored by the fact's position below. */
+.facIteIte::before { /* What: Fact Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle centered on the first line, colored by the fact's position below. */
 
 
-	background    : var( --acc-mai-col );                /* Accent Main Color = #F26419 */
+	background    : var( --acc-mai-col );                              /* Accent Main Color = #F26419 */
 	border-radius : 50%;
 	content       : '';
 	flex-shrink   : 0;
-	height        : calc( var( --ver-rhy-m01 ) * 1rem ); /* Vertical Rhythm Base Minus 1 = 11px */
-	width         : calc( var( --ver-rhy-m01 ) * 1rem ); /* Vertical Rhythm Base Minus 1 = 11px */
+	height        : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
+	margin-top    : calc( ( 1lh - var( --ver-rhy-m01 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 1 = 11px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact or tip that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
+	width         : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
 
 
 }
