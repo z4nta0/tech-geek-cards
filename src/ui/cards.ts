@@ -195,7 +195,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 
 
 		altStr : 'The Happy Thanksgiving card, with its greeting in an autumn scene.',
-		carCom : lazy( () => import( '../cards/HappyThanksgivingCard.tsx' ) ),
+		carCom : lazy( () => import( '../cards/happy-thanksgiving/happy-thanksgiving-card.tsx' ).then( ( modObj ) => ( { default : modObj.ThaCarCom } ) ) ),
 		cusBoo : false,
 		desStr : 'A festive Thanksgiving card with warm, autumn animations and effects.',
 		froBoo : false,
