@@ -37,6 +37,10 @@ field to the share dialog).
   card through a key, so every card restarts from its first frame the same
   way without code of its own; the cards' own Replay and Toggle Fullscreen
   buttons were removed.
+- **Unlisted cards end in `-prank`** (decided by the user 2026-10-15): a
+  card kept off the Gallery and Home, reached only by its own link, gets an
+  address ending in `-prank` (`/christmas-prank`), so every unlisted card is
+  named the same way, and the README's Unlisted cards section lists each one.
 - **The special Father's Day card** (`/fathers-day-special`) stays unlisted,
   since the user made it for their own father (decided 2026-10-14).
 - **The Christmas cards** (decided by the user 2026-10-15): one component,
