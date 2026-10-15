@@ -31,66 +31,19 @@ import type { OccNamTyp } from '../../ui/cards.ts'; // What: Occasion Name Type.
  * @summary
  * The page listing every card: a hero, a search field and occasion filter
  * buttons, a line saying how many cards match, the matching cards as tiles,
- * and a note inviting a custom card. The grid always keeps even rows, since
- * the number of cards changes with the search and the filter: the page
- * picks, for wide and for medium screens, the largest column count that
- * divides the number of cards shown, and hands both counts to the grid as
- * data attributes its module reads. Any card can be shared from its tile
- * through the share dialog.
+ * and a note inviting a custom card. The grid is exempt from even rows, as
+ * TechGeek.dev's Work grid is, since its cards change with the search and the
+ * filter and grow as cards are added: full rows read as three, two, or one
+ * columns, and a short last row sits centered. Any card can be shared from its
+ * tile through the share dialog.
  *
  * Sections:
- *  - Helpers
  *  - Components
  *  - Exports
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
-
-
-
-// #region Helpers
-
-// #region colCouFun
-
-/**
- * colCouFun = Column Count Function
- *
- * @summary
- * Finds the largest number of columns, no more than a given maximum, that
- * divides a number of cards evenly, so every row of the grid holds the same
- * number of cards. One column always divides, so the answer is at least one.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param carCouNum - Card Count Number: How many cards the grid shows.
- * @param maxColNum - Maximum Column Number: The most columns the screen
- *                    width allows.
- *
- * @returns The column count, from 1 to maxColNum.
- *
- * @example
- * ```ts
- * colCouFun(4, 3) // => 2
- * ```
- *
-*/
-
-function colCouFun ( carCouNum : number, maxColNum : number ) : number {
-
-
-	for ( let colNumNum = maxColNum; colNumNum > 1; colNumNum-- ) if ( carCouNum % colNumNum === 0 ) return colNumNum; // What: Divisor Search Loop. Why: The widest even layout is wanted. How: This counts down from the maximum and returns the first count that divides the cards evenly.
-
-
-
-	return 1; // What: Single Column Return. Why: One column divides any count. How: This is the answer when no larger count fits.
-
-
-}
-
-// #endregion colCouFun
-
-// #endregion Helpers
 
 
 
@@ -156,10 +109,6 @@ function GalPagCom () : JSX.Element {
 
 
 	} );
-
-
-	const colWidNum = colCouFun( shoCarArr.length, 3 ); // What: Column Wide Number. Why: Wide screens fit up to three tiles across, in even rows. How: This finds the largest count up to three that divides the cards shown.
-	const colMedNum = colCouFun( shoCarArr.length, 2 ); // What: Column Medium Number. Why: Tablets fit up to two tiles across, in even rows. How: This finds the largest count up to two that divides the cards shown.
 
 
 
@@ -305,12 +254,7 @@ function GalPagCom () : JSX.Element {
 						{ shoCarArr.length > 0 ? ( // What: Results Check. Why: The grid only makes sense with cards to show. How: This renders the grid when any card matches, or the empty message when none does.
 
 
-							<div
-								className={ cssModObj.galGriDiv }
-
-								data-grid-medium-columns={ colMedNum } // What: Grid Medium Columns Attribute. Why: Tablets keep even rows for any number of cards. How: The module sets this many columns on medium screens.
-								data-grid-wide-columns={ colWidNum }   // What: Grid Wide Columns Attribute. Why: Wide screens keep even rows for any number of cards. How: The module sets this many columns on wide screens.
-							>{ /* What: Gallery Grid Div Element. Why: The cards sit in even rows at every width. How: This lays them out in the column counts its attributes name, one column on phones. */ }
+							<div className={ cssModObj.galGriDiv }>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three, two, or one across. */ }
 
 
 

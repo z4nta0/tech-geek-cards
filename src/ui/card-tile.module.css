@@ -27,9 +27,9 @@
 
 
 	display        : flex;
+	flex           : 0 0 var( --car-til-wid, auto );                                                                       /* Card Tile Width, set by its parent */ /* What: Card Tile Flex. Why: The Gallery's wrapping rows size each tile to a column's share, while a grid of tiles, as on Home, ignores it. How: This fixes the tile's basis to the width its parent hands it, or its own size where none is set. */
 	flex-direction : column;
 	gap            : var( --spa-ver-p01 );                                                                                 /* Spacing Vertical Base Plus 1 ~= 19.304px */
-	height         : 100%;
 	position       : relative;
 	transition     : scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 

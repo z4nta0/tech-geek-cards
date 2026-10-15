@@ -74,6 +74,16 @@ the family's fonts and colors.
   content cap, gutter, and hero gap), kept by the user 2026-10-14 after
   looking at the initial version; responsiveness still to be tested by hand.
 
+## Card Grids exception
+Decided by the user 2026-10-14, as on TechGeek.dev's Work page. The Gallery's
+grid is exempt from the user-level Card Grids rule: its cards change with the
+search and the filter and grow as cards are added, so even rows can't be kept.
+It steps through three, two, and one columns at 1,024px and 640px as a
+centered wrapping row, each tile taking a column's share through
+`--car-til-wid`, so a short last row sits centered. Every other card grid on
+the site keeps even rows (Home's four featured cards go four, two, and one
+across).
+
 ## Directory structure
 ```
 src/

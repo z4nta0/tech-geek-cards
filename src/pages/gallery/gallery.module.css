@@ -6,14 +6,12 @@
  * gallery.module.css = Gallery Module
  *
  * @summary
- * Styles for GalPagCom: a hero on the warm sunken ivory with the site's
- * motif and a scalloped bottom edge, as on Home; a search field and a row of
- * occasion pills whose chosen pill fills with ink; the result count; a grid
- * that sets the column counts the page hands it, so its rows stay even for
- * any number of cards, with every tile capped at about 564px so a lone card
- * never stretches; the empty message; and the custom card note. The page
- * fades up as it opens, and every transition holds still under reduced
- * motion.
+ * Styles for GalPagCom: a hero on the warm sunken ivory with the site's motif
+ * and a scalloped bottom edge, as on Home; a search field and a row of
+ * occasion pills whose chosen pill fills with ink; the result count; a grid of
+ * tiles in centered rows, three, two, or one across, a short last row sitting
+ * centered; the empty message; and the custom card note. The page fades up as
+ * it opens, and every transition holds still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -344,51 +342,25 @@
 
 }
 
-.galGriDiv { /* What: Gallery Grid Div. Why: The cards sit in even rows, centered, whatever their number. How: This lays them out in a centered grid whose column count the attributes below set, each tile capped at about 564px. */
+.galGriDiv { /* What: Gallery Grid Div. Why: The cards line up in columns, and since the list changes with the search and the filter and grows as cards are added, a short last row should sit centered rather than leave empty slots at one side, which the Card Grids exception allows, as on TechGeek.dev's Work page. How: This wraps the tiles in rows with gaps, centering each row, and hands every tile a third of the row less the gaps, so full rows look like a three-column grid. */
 
 
-	display         : grid;
+	--car-til-wid : calc( ( 100% - var( --spa-hor-p03 ) * 2 ) / 3 ); /* Spacing Horizontal Base Plus 3 ~= 33.876px */ /* What: Card Tile Width. Why: Each tile takes one column's share of the row. How: The card tile reads it as its flex basis, a third of the row less the two gaps between three tiles. */
+
+	display         : flex;
+	flex-wrap       : wrap;
 	gap             : var( --spa-ver-p04 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	justify-content : center;
-
-
-}
-.galGriDiv[data-grid-wide-columns='1'] { /* What: One Column Wide Gallery Grid Div. Why: A count no larger number divides shows in one column. How: This sets one capped column. */
-
-
-	grid-template-columns : minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
-
-
-}
-.galGriDiv[data-grid-wide-columns='2'] { /* What: Two Column Wide Gallery Grid Div. Why: An even count three doesn't divide shows two across. How: This sets two capped columns. */
-
-
-	grid-template-columns : repeat( 2, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
-
-
-}
-.galGriDiv[data-grid-wide-columns='3'] { /* What: Three Column Wide Gallery Grid Div. Why: A count three divides shows three across on wide screens. How: This sets three capped columns. */
-
-
-	grid-template-columns : repeat( 3, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
 
 
 }
 @media ( max-width : 1024px ) { /* What: Tablet Gallery Grid Div. Why: Three tiles across are too narrow for their text on tablets. How: This applies at 1,024px and below. */
 
 
-	.galGriDiv[data-grid-medium-columns='1'] { /* What: One Column Medium Gallery Grid Div. Why: An odd count shows in one column on tablets. How: This sets one capped column. */
+	.galGriDiv { /* What: Two Column Gallery Grid Div. Why: Two tiles fit side by side on a tablet. How: This hands each tile half the row less the gap. */
 
 
-		grid-template-columns : minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
-
-
-	}
-
-	.galGriDiv[data-grid-medium-columns='2'] { /* What: Two Column Medium Gallery Grid Div. Why: An even count shows two across on tablets. How: This sets two capped columns. */
-
-
-		grid-template-columns : repeat( 2, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+		--car-til-wid : calc( ( 100% - var( --spa-hor-p03 ) ) / 2 ); /* Spacing Horizontal Base Plus 3 ~= 33.876px */
 
 
 	}
@@ -398,10 +370,10 @@
 @media ( max-width : 640px ) { /* What: Phone Gallery Grid Div. Why: Two tiles across are too narrow on phones. How: This applies at 640px and below. */
 
 
-	.galGriDiv[data-grid-medium-columns] { /* What: One Column Phone Gallery Grid Div. Why: Each tile takes the full width. How: This sets one full-width column, whatever the counts. */
+	.galGriDiv { /* What: One Column Gallery Grid Div. Why: One tile fits across a phone. How: This hands each tile the full row. */
 
 
-		grid-template-columns : 1fr;
+		--car-til-wid : 100%;
 
 
 	}
