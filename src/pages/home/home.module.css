@@ -236,6 +236,20 @@
 
 }
 
+@media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, Request a Custom Card, wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
+
+
+	.butPriAnc--postcard { /* What: Postcard Button Primary Anchor. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
+
+
+		font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
+
+
+	}
+
+
+}
+
 .butSecAnc { /* What: Button Secondary Anchor. Why: The second way onward sits back from the first. How: This sets an outlined button in mono capitals, easing its border, color, lift, press, and focus. */
 
 
