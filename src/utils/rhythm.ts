@@ -73,6 +73,36 @@ const durMilFun = ( durSteStr : string ) : number => cdnPowFun( 18 + steOffFun( 
 
 
 
+// #region durSecFun
+
+/**
+ * durSecFun = Duration Second Function
+ *
+ * @summary
+ * The length of one duration step in seconds, for GSAP, which takes its
+ * durations in seconds while the duration scale is in milliseconds. It names
+ * steps the same way durMilFun does.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param durSteStr - Duration Step String: The step's name, e.g. 'bas', 'p04',
+ *                    or 'm01'.
+ *
+ * @returns The step's length in seconds.
+ *
+ * @example
+ * ```ts
+ * durSecFun('p04') // => about 0.486
+ * ```
+ *
+*/
+
+const durSecFun = ( durSteStr : string ) : number => durMilFun( durSteStr ) / 1000; // What: Duration Second Function. Why: GSAP takes durations in seconds, while the duration scale is in milliseconds. How: This converts a step's length to seconds.
+
+// #endregion durSecFun
+
+
+
 // #region rhyPxlFun
 
 /**
@@ -121,7 +151,7 @@ const rhyPxlFun = ( rhySteStr : string ) : number => { // What: Rhythm Pixel Fun
 
 // #region Exports
 
-export { cdnPowFun, durMilFun, rhyPxlFun }; // What: Named Exports. Why: Every animated card reads the stylesheet's scales through the same helpers. How: This exports cdnPowFun, durMilFun, and rhyPxlFun by name.
+export { cdnPowFun, durMilFun, durSecFun, rhyPxlFun }; // What: Named Exports. Why: Every animated card reads the stylesheet's scales through the same helpers. How: This exports cdnPowFun, durMilFun, durSecFun, and rhyPxlFun by name.
 
 // #endregion Exports
 
