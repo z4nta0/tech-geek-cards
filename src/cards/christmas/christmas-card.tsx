@@ -8,10 +8,9 @@ import snoManUrl from './snowman.webp';              // What: Snowman URL. Why: 
 
 
 import { cdnPowFun          } from '../../utils/rhythm.ts';   // What: Core-Design-Number Power Function. Why: The glitch's skew sits on the scale as a power of the core design number. How: This returns that power.
-import { CustomEase         } from 'gsap/CustomEase';         // What: Custom Ease. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers each easing token as a named GSAP ease.
 import { durMilFun          } from '../../utils/rhythm.ts';   // What: Duration Millisecond Function. Why: Every duration in the timeline is a step on the duration scale. How: This returns a step's length in milliseconds.
+import { gsaEasFun          } from '../../ui/gsap-ease.ts';   // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap               } from 'gsap';                    // What: GSAP. Why: The card plays as one long timeline of wipes, text effects, and glitches. How: This is the animation library that builds and plays it.
-import { motEasFun          } from '../../utils/motion.ts';   // What: Motion Easing Function. Why: The timeline's curves should match the stylesheet's. How: This reads an easing token's curve.
 import { redMotFun          } from '../../utils/motion.ts';   // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the final scene at once. How: This reports whether reduced motion is on.
 import { rhyPxlFun          } from '../../utils/rhythm.ts';   // What: Rhythm Pixel Function. Why: The lettering's slides and the glitch's shift are spacing steps. How: This returns a step's size in pixels.
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'; // What: Scramble Text Plugin. Why: The hacked heading types itself out through random characters. How: This GSAP plugin animates text that way.
@@ -183,55 +182,6 @@ const griSizFun = () : GsfRetTyp => { // What: Grid Size Function. Why: The wipe
 };
 
 // #endregion griSizFun
-
-
-
-// #region gsaEasFun
-
-/**
- * gsaEasFun = GSAP Easing Function
- *
- * @summary
- * Registers one of the stylesheet's --mot-*-eas curves as a named GSAP ease,
- * since GSAP can't read a CSS cubic-bezier, and returns the name the
- * timeline uses. The curve is read through motEasFun, so the timeline always
- * eases the way the stylesheet says; the standard family's plain ease keyword
- * becomes its cubic-bezier equivalent. Registering a name again replaces it,
- * so calling this on every replay is harmless.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param easFamStr - Easing Family String: The family's 3-letter name, e.g.
- *                    'dec' or 'ino'.
- *
- * @returns The ease's GSAP name.
- * @see {@link easNamStr}
- *
- * @example
- * ```ts
- * gsaEasFun('dec') // => 'mot-dec-eas'
- * ```
- *
-*/
-
-const gsaEasFun = ( easFamStr : string ) : string => { // What: GSAP Easing Function. Why: The timeline's curves come from the stylesheet. How: This registers the family's curve with CustomEase and returns its name.
-
-
-	const easNamStr = `mot-${ easFamStr }-eas`;                                                           // What: Easing Name String. Why: The GSAP name matches the token it comes from. How: This names it after the token.
-	const easValStr = motEasFun( easFamStr );                                                             // What: Easing Value String. Why: The curve is the stylesheet's own. How: This reads the token's value.
-	const bezValStr = ( easValStr === 'ease' ? '.25, .1, .25, 1' : easValStr ).replace( /[^\d.,]/g, '' ); // What: Bezier Value String. Why: CustomEase takes a cubic-bezier's four numbers. How: This swaps the ease keyword for its own four, then keeps only the digits, dots, and commas.
-
-
-	CustomEase.create( easNamStr, bezValStr ); // What: Ease Registration Call. Why: The timeline refers to the curve by name. How: This registers it with GSAP.
-
-
-
-	return easNamStr;
-
-
-};
-
-// #endregion gsaEasFun
 
 
 
@@ -569,7 +519,7 @@ function ChrCarCom ( { prkBoo = false } : CccProTyp ) : JSX.Element {
 
 // #region Module Init
 
-gsap.registerPlugin( CustomEase, ScrambleTextPlugin, SplitText, useGSAP ); // What: Plugin Registration Call. Why: GSAP's plugins and React hook have to be registered before the timeline uses them. How: This registers all four once, when the card's code loads.
+gsap.registerPlugin( ScrambleTextPlugin, SplitText, useGSAP ); // What: Plugin Registration Call. Why: GSAP's plugins and React hook have to be registered before the timeline uses them. How: This registers all three once, when the card's code loads.
 
 // #endregion Module Init
 
