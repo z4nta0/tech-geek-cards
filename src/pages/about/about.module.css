@@ -6,13 +6,14 @@
  * about.module.css = About Module
  *
  * @summary
- * Styles for AboPagCom: a hero on the warm sunken ivory with the site's
- * motif and a scalloped bottom edge, as on Home; the story's paragraphs
- * beside a white card listing its main points, each led by a dot of
- * confetti; and the three sister sites as equal cards, this site's own on a
- * pale berry with a You Are Here label, the others with a link whose arrow
- * nudges on hover; then the closing buttons. The page fades up as it opens,
- * and every transition holds still under reduced motion.
+ * Styles for AboPagCom: a hero on the warm sunken ivory with the site's motif
+ * and a scalloped bottom edge, as on Home; the story's paragraphs beside a
+ * white card listing its main points, each led by a dot of confetti, two by
+ * two once it drops under the story on a tablet; and the three sister sites as
+ * equal cards, this site's own on a pale berry with a You Are Here label, the
+ * others with a link whose arrow nudges on hover; then the closing buttons.
+ * The page fades up as it opens, and every transition holds still under
+ * reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -190,16 +191,42 @@
 
 /* #region facLisUno */
 
-.facLisUno { /* What: Fact List Unordered. Why: The main points sit in a white card beside the story. How: This draws the card with a quiet border and stacks the facts. */
+.facLisUno { /* What: Fact List Unordered. Why: The main points sit in a white card beside the story. How: This draws the card with a quiet border and stacks the facts in one column. */
 
 
-	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
-	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
-	border-radius  : var( --rad-bor-lar );                            /* Radius Border Large ~= 14.572px */
-	display        : flex;
-	flex-direction : column;
-	gap            : var( --spa-ver-bas );                            /* Spacing Vertical Base ~= 14.572px */
-	padding        : var( --spa-ver-p03 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	background            : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border                : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius         : var( --rad-bor-lar );                            /* Radius Border Large ~= 14.572px */
+	display               : grid;
+	gap                   : var( --spa-ver-bas ) var( --spa-hor-p02 );       /* Spacing Vertical Base ~= 14.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	grid-template-columns : 1fr;
+	padding               : var( --spa-ver-p03 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+
+
+}
+@media ( max-width : 768px ) { /* What: Tablet Fact List Unordered. Why: Once the card drops under the story it spans the whole column, too wide for one short fact per row. How: This applies at 768px and below, where the story stacks. */
+
+
+	.facLisUno { /* What: Two Column Fact List Unordered. Why: Four facts fill the wide card evenly two by two. How: This sets two columns. */
+
+
+		grid-template-columns : repeat( 2, 1fr );
+
+
+	}
+
+
+}
+@media ( max-width : 640px ) { /* What: Phone Fact List Unordered. Why: Two facts across crowd a phone. How: This applies at 640px and below. */
+
+
+	.facLisUno { /* What: One Column Fact List Unordered. Why: Each fact takes its own line again. How: This sets one column. */
+
+
+		grid-template-columns : 1fr;
+
+
+	}
 
 
 }
