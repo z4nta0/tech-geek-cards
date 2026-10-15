@@ -23,17 +23,16 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * this domain, while the 404 page and the unlisted card carry noindex and no
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
- * author, and, apart from the cards, has one h1 (each card gets its own as
- * it's converted); moving between pages swaps the tags rather than piling them
- * up. The raw page, read without running the site's script the way link
- * checkers read it, carries the home page's full title and description. The
- * structured data describes this domain as a WebSite whose author is z4nta0,
- * the same Person TechGeek.dev describes, with the GitHub and LinkedIn
- * profiles the footer links to. Every icon the head links to is served, the
- * PNGs at the size their links promise. robots.txt lets every crawler in and
- * names the sitemap, which lists every indexed page. The social preview checks
- * come back once each card has its own preview card. Adapted from
- * TechGeek.dev.
+ * author, and, apart from the cards still to be converted, has one h1; moving
+ * between pages swaps the tags rather than piling them up. The raw page, read
+ * without running the site's script the way link checkers read it, carries the
+ * home page's full title and description. The structured data describes this
+ * domain as a WebSite whose author is z4nta0, the same Person TechGeek.dev
+ * describes, with the GitHub and LinkedIn profiles the footer links to. Every
+ * icon the head links to is served, the PNGs at the size their links promise.
+ * robots.txt lets every crawler in and names the sitemap, which lists every
+ * indexed page. The social preview checks come back once each card has its own
+ * preview card. Adapted from TechGeek.dev.
  *
  * Sections:
  *  - Constants
@@ -86,6 +85,7 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
 	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : false, patStr : '/fourth-of-july',      titStr : 'Fourth of July Card | TechGeek.cards'                     },
 	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : false, patStr : '/happy-halloween',     titStr : 'Happy Halloween Card | TechGeek.cards'                    },
 	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : false, patStr : '/happy-thanksgiving',  titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
+	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',     titStr : 'Merry Christmas Card | TechGeek.cards'                    },
 	{ canStr : null,                                 heaBoo : false, patStr : '/fathers-day-special', titStr : "Father's Day Special Card | TechGeek.cards"               }
 
 

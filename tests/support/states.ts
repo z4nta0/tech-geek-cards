@@ -63,11 +63,12 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * STA_REC_ARR = State Record Array
  *
  * @summary
- * Every state the checks visit: each route (Home, Gallery, About, and Contact)
- * and the 404 page at a phone width (390px) and a desktop width (1,440px), the
- * mobile menu open at the phone width, since the menu is only reachable there,
- * and the share dialog open on the Gallery at both widths. Every row shares
- * the {@link StaRecTyp} shape, so its fields carry no comments of their own:
+ * Every state the checks visit: each route (Home, Gallery, About, Contact, and
+ * each converted card's page) and the 404 page at a phone width (390px) and a
+ * desktop width (1,440px), the mobile menu open at the phone width, since the
+ * menu is only reachable there, and the share dialog open on the Gallery at
+ * both widths. Every row shares the {@link StaRecTyp} shape, so its fields
+ * carry no comments of their own:
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
  *    one.
@@ -83,16 +84,18 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every check walks the same list of states, so a new state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
 
 
-	{ heiNum : 900, ideStr : 'home-desktop',      patStr : '/',        widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
-	{ heiNum : 844, ideStr : 'home-phone',        patStr : '/',        widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
-	{ heiNum : 900, ideStr : 'gallery-desktop',   patStr : '/gallery', widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
-	{ heiNum : 844, ideStr : 'gallery-phone',     patStr : '/gallery', widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
-	{ heiNum : 900, ideStr : 'about-desktop',     patStr : '/about',   widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
-	{ heiNum : 844, ideStr : 'about-phone',       patStr : '/about',   widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
-	{ heiNum : 900, ideStr : 'contact-desktop',   patStr : '/contact', widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
-	{ heiNum : 844, ideStr : 'contact-phone',     patStr : '/contact', widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
-	{ heiNum : 900, ideStr : 'not-found-desktop', patStr : '/missing', widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
-	{ heiNum : 844, ideStr : 'not-found-phone',   patStr : '/missing', widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
+	{ heiNum : 900, ideStr : 'home-desktop',      patStr : '/',                widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
+	{ heiNum : 844, ideStr : 'home-phone',        patStr : '/',                widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
+	{ heiNum : 900, ideStr : 'gallery-desktop',   patStr : '/gallery',         widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
+	{ heiNum : 844, ideStr : 'gallery-phone',     patStr : '/gallery',         widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
+	{ heiNum : 900, ideStr : 'about-desktop',     patStr : '/about',           widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
+	{ heiNum : 844, ideStr : 'about-phone',       patStr : '/about',           widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
+	{ heiNum : 900, ideStr : 'contact-desktop',   patStr : '/contact',         widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
+	{ heiNum : 844, ideStr : 'contact-phone',     patStr : '/contact',         widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
+	{ heiNum : 900, ideStr : 'not-found-desktop', patStr : '/missing',         widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
+	{ heiNum : 844, ideStr : 'not-found-phone',   patStr : '/missing',         widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
+	{ heiNum : 900, ideStr : 'christmas-desktop', patStr : '/merry-christmas', widNum : 1440 }, // What: Christmas Desktop State. Why: The Christmas card is the first converted card, so its page joins every check. How: This loads it at 1,440px, where reduced motion shows its finished snowy scene.
+	{ heiNum : 844, ideStr : 'christmas-phone',   patStr : '/merry-christmas', widNum : 390  }, // What: Christmas Phone State. Why: The card's lettering shrinks and the floating bar crowds it on a phone. How: This loads it at 390px.
 
 	{ // What: Menu Phone State. Why: The open menu holds the phone's only copy of the page links. How: This loads the home page at 390px and opens the menu through its toggle button.
 

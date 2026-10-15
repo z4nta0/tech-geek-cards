@@ -9,8 +9,9 @@
  * fonts.css, tokens.css, and base.css, which hold the TechGeek family's
  * tokens, base element styles, and shared keyframes. It adds the one color
  * role this site brings to the family, the confetti berry, and sets the
- * layout values every site sets for itself. Everything else lives in each
- * component's own CSS module.
+ * layout values every site sets for itself, plus an ease-in-out curve for
+ * this site's heavy animation. Everything else lives in each component's own
+ * CSS module.
  *
  * Sections:
  *  - Tokens
@@ -23,7 +24,7 @@
 
 /* #region Tokens */
 
-:root { /* What: Root Tokens. Why: The package's color roles and layout values are defaults a site builds on. How: This adds the berry accent family and sets this site's content cap, side gutter, hero gap, and bar height on the root. */
+:root { /* What: Root Tokens. Why: The package's color roles and layout values are defaults a site builds on. How: This adds the berry accent family and the ease-in-out curve, and sets this site's content cap, side gutter, hero gap, and bar height on the root. */
 
 
 	/* #region Color Tokens */
@@ -44,6 +45,14 @@
 	--nav-bar-hei : calc( var( --ver-rhy-p06 ) * 1rem );                                       /* What: Navigation Bar Height ~= 78.751px. Why: Content has to clear the fixed bar. How: The bar sets its height from it, and the heroes offset by it, on the p06 rhythm step, the same height as TechGeek.dev's bar. */
 
 	/* #endregion Layout Tokens */
+
+
+
+	/* #region Motion Tokens */
+
+	--mot-ino-eas : cubic-bezier( .83, 0, .17, 1 ); /* What: Motion In-Out Easing. Why: This site's animations need a curve that starts and ends slowly with a sharp middle, which the family's five curves don't include, and no other TechGeek site needs one. How: This is the quint ease-in-out, matching GSAP's power4.inOut, and a GSAP timeline reads it through CustomEase. */
+
+	/* #endregion Motion Tokens */
 
 
 }

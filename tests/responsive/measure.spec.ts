@@ -15,13 +15,14 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * measure.spec.ts = Measure Spec
  *
  * @summary
- * Checks the text measure rule on every route, the 404 page, and the open
- * phone menu, in whichever engine the project runs: no line of a paragraph
- * may run past 75 characters, or past 60 for small text (anything set below
- * the 14.572px body size, such as captions and labels). Each paragraph's text
- * is walked one character at a time and split into its rendered lines by
- * where each character lands, so the count is what a reader actually sees
- * at that width. The widths run from 320px to 1,920px, with the site's
+ * Checks the text measure rule on every route, each converted card, the 404
+ * page, and the open phone menu, in whichever engine the project runs: no line
+ * of a paragraph may run past 75 characters, or past 60 for small text
+ * (anything set below the 14.572px body size, such as captions and labels).
+ * Each paragraph's text is walked one character at a time and split into its
+ * rendered lines by where each character lands, so the count is what a reader
+ * actually sees at that width, skipping a visually hidden copy meant only for
+ * screen readers. The widths run from 320px to 1,920px, with the site's
  * breakpoints and the pixel past each, since a column is at its widest just
  * before a layout switches. Only the upper limits are checked, since narrow
  * screens make shorter lines unavoidable.
@@ -44,12 +45,13 @@ type MeaCasTyp = { ideStr : string, menBoo : boolean, patStr : string }; // What
 const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page and the open menu hold paragraphs. How: Each row names a case, whether it opens the menu, and its path.
 
 
-	{ ideStr : 'home',      menBoo : false, patStr : '/'        }, // What: Home Case. Why: The home page holds the hero's lead, the steps, the card descriptions, and the banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',   menBoo : false, patStr : '/gallery' }, // What: Gallery Case. Why: The Gallery holds every card's description and the custom card note. How: This measures it as loaded.
-	{ ideStr : 'about',     menBoo : false, patStr : '/about'   }, // What: About Case. Why: The About page holds the story and the sister sites' descriptions. How: This measures it as loaded.
-	{ ideStr : 'contact',   menBoo : false, patStr : '/contact' }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
-	{ ideStr : 'not-found', menBoo : false, patStr : '/missing' }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
-	{ ideStr : 'menu',      menBoo : true,  patStr : '/'        }  // What: Menu Case. Why: The open menu ends on its tagline. How: This measures the home page with the menu open.
+	{ ideStr : 'home',      menBoo : false, patStr : '/'                }, // What: Home Case. Why: The home page holds the hero's lead, the steps, the card descriptions, and the banner. How: This measures it as loaded.
+	{ ideStr : 'gallery',   menBoo : false, patStr : '/gallery'         }, // What: Gallery Case. Why: The Gallery holds every card's description and the custom card note. How: This measures it as loaded.
+	{ ideStr : 'about',     menBoo : false, patStr : '/about'           }, // What: About Case. Why: The About page holds the story and the sister sites' descriptions. How: This measures it as loaded.
+	{ ideStr : 'contact',   menBoo : false, patStr : '/contact'         }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
+	{ ideStr : 'not-found', menBoo : false, patStr : '/missing'         }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
+	{ ideStr : 'christmas', menBoo : false, patStr : '/merry-christmas' }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
+	{ ideStr : 'menu',      menBoo : true,  patStr : '/'                }  // What: Menu Case. Why: The open menu ends on its tagline. How: This measures the home page with the menu open.
 
 
 ];
@@ -129,7 +131,12 @@ function meaProFun ( limSetObj : { bodNum : number, sizNum : number, smaNum : nu
 		for ( let texCurNod = texWalObj.nextNode(); texCurNod; texCurNod = texWalObj.nextNode() ) { // What: Text Node Loop. Why: Every character of the paragraph is placed on a line. How: This walks each text node.
 
 
-			const texValStr = texCurNod.textContent ?? ''; // What: Text Value String. Why: Each character is read in turn. How: This holds the node's text.
+			const texBoxObj = texCurNod.parentElement!.getBoundingClientRect(); // What: Text Box Object. Why: Text in a visually hidden box is for screen readers, not a line anyone sees. How: This reads the box of the element holding the node. // What: Non-Null Note. Why: TypeScript can't see the parent. How: A text node walked inside a paragraph always has a parent element.
+			const texValStr = texCurNod.textContent ?? '';                      // What: Text Value String. Why: Each character is read in turn. How: This holds the node's text.
+
+
+			if ( texBoxObj.width <= 1 && texBoxObj.height <= 1 ) continue; // What: Visually Hidden Guard. Why: A screen-reader copy sits on one unwrapped line in a one-pixel box, which no visitor reads. How: This skips a node whose element is that small.
+
 
 
 			for ( let chaIndNum = 0; chaIndNum < texValStr.length; chaIndNum++ ) { // What: Character Loop. Why: Each character lands on one line. How: This measures each in turn.

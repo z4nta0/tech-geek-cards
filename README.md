@@ -50,7 +50,7 @@ npm run test:seo            # titles, descriptions, canonical links, robots, str
 
 Each suite runs in Chromium, Firefox, and WebKit against its own dev server on port 5195, so a dev server already running on 5173 is left alone. The states the suites visit are every page and the 404 page at phone and desktop widths, the open phone menu, and the share dialog open on the Gallery. Reports land in `tests/output/` (git-ignored); `npx playwright show-report tests/output/report` opens the HTML report. The rendering suite's approved screenshots live in `tests/rendering/baselines/` and match to the pixel, so after a change meant to alter how a page looks, review the diff in the report, then run `npm run test:rendering -- --update-snapshots` and commit the new baselines with the change. Chromium and WebKit capture with the faint confetti circuit pattern hidden, since they draw it slightly differently from run to run; Firefox still checks it. The baselines were captured on Linux, and font rendering differs between systems, so on macOS or Windows refresh them locally before relying on the comparison. If a browser is missing, `npx playwright install chromium firefox webkit` installs all three.
 
-The cards themselves are only checked by the SEO and navigation suites for now; each joins the other suites as it's converted to the site's rules.
+Converted cards join every suite, starting with the Christmas card at both widths, checked at its finished scene under reduced motion. The cards still to be converted are only checked by the SEO and navigation suites; each joins the others as it's converted to the site's rules.
 
 ## Build
 
@@ -72,18 +72,18 @@ The originals in `design/images/originals/` are large and kept out of git, so a 
 
 ## Adding a card
 
-1. Put the card's component in `src/cards/`, its illustrations in `src/assets/<card-name>/`, and its fonts in `src/assets/fonts/` as Latin WOFF2 files.
-2. Add the originals of its illustrations and its preview to `design/images/originals/`, list them in `design/images/render.mts`, and run `npm run images`.
+1. Give the card its own folder, `src/cards/<card-name>/`, holding its component, its CSS module, any script only it uses, its illustrations, and its fonts as Latin WOFF2 files. `src/cards/christmas/` is the first converted card and the pattern to follow.
+2. Add the originals of its illustrations and its preview to `design/images/originals/`, list them in `design/images/render.mts`, and run `npm run images`. The preview lands in `src/assets/`, since the Gallery and Home show it too.
 3. Give it a row in `CAR_REC_ARR` in `src/ui/cards.ts`: its title, occasion, descriptions, preview, address, and component. The row makes its tile, its page, and its share dialog; nothing else needs a route.
-4. Add its address to `public/sitemap.xml` and its row to the SEO suite's page list, then run the tests.
+4. Add its address to `public/sitemap.xml`, its row to the SEO suite's page list, its desktop and phone states to `tests/support/states.ts`, and its case to the two responsive suites, then run the tests and approve its new screenshots.
 
 ## Project structure
 
 ```
 src/
 ├── assets/            Card previews, illustrations, and fonts
-├── cards/             The cards themselves, each loaded only when its page opens
-├── hooks/             The cards' window size hook
+├── cards/             The cards themselves, each loaded only when its page opens; a converted card has its own folder, such as christmas/
+├── hooks/             The unconverted cards' window size hook
 ├── pages/
 │   ├── home/          Home page and its .module.css
 │   ├── gallery/       Gallery page and its .module.css
@@ -92,7 +92,8 @@ src/
 │   ├── card/          The page every card plays in, with its floating bar
 │   └── not-found/     The 404 page every unknown path shows, with its .module.css
 ├── ui/                What more than one page uses: the card catalog (cards.ts), the card tile, the share dialog, the confetti circuit pattern, and page-links.ts, the pages the bar and footer link to
-├── styles/            styles.css: this site's berry color and layout values, loaded after the design package's stylesheets
+├── styles/            styles.css: this site's berry color, ease-in-out curve, and layout values, loaded after the design package's stylesheets
+├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
 public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the birthday card's old preview image, kept until each card has its own

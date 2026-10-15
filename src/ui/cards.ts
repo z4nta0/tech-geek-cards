@@ -4,6 +4,7 @@
 // #region Imports
 
 import birPreUrl from '../assets/happy-birthday-card-preview-image.webp';     // What: Birthday Preview URL. Why: The Happy Birthday card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
+import chrPreUrl from '../assets/christmas-card-preview-image.webp';          // What: Christmas Preview URL. Why: The Merry Christmas card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import fatPreUrl from '../assets/fathers-day-card-preview-image.webp';        // What: Father's Preview URL. Why: The Father's Day cards' tiles show a still of them. How: Vite fingerprints the file and hands back its address.
 import fouPreUrl from '../assets/fourth-of-july-card-preview-image.webp';     // What: Fourth Preview URL. Why: The Fourth of July card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import halPreUrl from '../assets/happy-halloween-card-preview-image.webp';    // What: Halloween Preview URL. Why: The Halloween card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
@@ -194,6 +195,23 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 		seaStr : 'Send an animated Happy Thanksgiving card with warm autumn colors and festive animations. Free to share with a link.',
 		sluStr : 'happy-thanksgiving',
 		titStr : 'Happy Thanksgiving'
+
+
+	},
+
+	{ // What: Merry Christmas Card Row. Why: The Christmas card is a prank that turns into a greeting, made out to them by name. How: Its link takes the name as ?name=, and its component is a named export, so the lazy import hands it back as the default.
+
+
+		altStr : 'The Merry Christmas card, with its greeting over a snowy cabin.',
+		carCom : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : modObj.ChrCarCom } ) ) ),
+		cusBoo : true,
+		desStr : 'A prank Christmas card: a fake hacked screen that glitches into a snowy cabin, made out to them by name.',
+		imaStr : chrPreUrl,
+		lisBoo : true,
+		occStr : 'Holiday',
+		seaStr : 'Send an animated Merry Christmas card that starts as a fake hack and ends in falling snow with their name. Free to share.',
+		sluStr : 'merry-christmas',
+		titStr : 'Merry Christmas'
 
 
 	},

@@ -72,7 +72,12 @@ the family's fonts and colors.
   and the Family occasion, never buttons or links, which stay orange.
 - **Fonts**: the family's three, none added, since each card brings its own.
 - **Occasions**: Birthday (orange), Family (berry: Mother's and Father's
-  Day), and Holiday (blue: Fourth of July, Halloween, Thanksgiving).
+  Day), and Holiday (blue: Fourth of July, Halloween, Thanksgiving, and
+  Christmas).
+- **Motion token**: `--mot-ino-eas` (in-out, the quint curve matching GSAP's
+  `power4.inOut`), decided by the user 2026-10-15 for this site only, since
+  it's far more animated than its siblings. It sits in `styles.css`'s Motion
+  Tokens, not the design package.
 - **Horizontal layout**: TechGeek.dev's (the horizontal rhythm, the same
   content cap, gutter, and hero gap), kept by the user 2026-10-14 after
   looking at the initial version; responsiveness still to be tested by hand.
@@ -95,13 +100,57 @@ src/
                          card/ (the page every card plays in)
   ui/                    the card catalog (cards.ts), the card tile, the
                          share dialog, the motif, and the page list
-  cards/                 the cards themselves, copied unchanged (see below)
-  hooks/                 the cards' window size hook, copied unchanged
+  cards/                 the cards; a converted card has its own folder
+                         (christmas/), the rest are copied unchanged (see
+                         below)
+  hooks/                 the unconverted cards' window size hook
+  utils/                 motion.ts and rhythm.ts, the reduced-motion check,
+                         easing tokens, and scale steps for GSAP
   assets/                card previews, illustrations, and fonts
   styles/                styles.css: the berry role and the layout values
 ```
 `design/` holds the image and icon render scripts and the git-ignored image
 originals (about 89 MB, never committed, decided by the user 2026-10-14).
+
+## Converted cards
+Decided with the user 2026-10-15, converting the Christmas card first; the
+rest follow the same pattern.
+- **Each card gets a comparison table** before it's converted: every number
+  it uses beside its nearest step on our scale, with the difference. Every
+  number is then snapped, and any that doesn't work out is reverted.
+- **One folder per card**: `src/cards/<name>/` holds the card's main file,
+  named in full (`christmas-card.tsx`, the way a tab's main file keeps its
+  `tab-` name), its CSS module, any script only it uses (`snowfall.ts`), its
+  rendered illustrations, and its fonts. Its preview stays in `src/assets/`,
+  since Home and the Gallery show it. The originals go in
+  `design/images/originals/<name>-card/`; a full-screen background renders
+  to the `stage` box, twice 1920 by 1080.
+- **Fonts** are Fontsource's Latin WOFF2 files, declared with `@font-face` in
+  the card's own module, so they load only with the card.
+- **The component is a named export**, and the catalog's lazy import maps it
+  to the default React.lazy needs.
+- **GSAP timelines follow the scale**: durations through `durMilFun` (steps
+  below `m03` included, for glitches), distances through `rhyPxlFun`, angles
+  through `cdnPowFun`, and curves from the easing tokens, registered with
+  GSAP's CustomEase (the Christmas card's `gsaEasFun`, which moves to `ui/`
+  once a second card needs it). Under reduced motion the timeline jumps to
+  its end and any JS motion (the snow) never starts.
+- **Lettering pinned to the bottom** takes `--car-bar-mar` as its bottom
+  margin, which the card page sets to clear the floating bar.
+- **Text split by SplitText**: a heading keeps SplitText's own label, but a
+  paragraph can't take one, so its visible copy is split with `aria :
+  'none'` and marked `aria-hidden`, beside a visually hidden copy of the
+  whole text.
+- **Base styles to override**: the design package's `p` sets the secondary
+  text color, and its headings set weight 700 to 800 and tight letter
+  spacing, so a card's lettering resets those it doesn't want.
+- **Shadows on split text** go on the whole heading or paragraph as a
+  `filter: drop-shadow()`, never a `text-shadow` on every letter, which made
+  WebKit's frames take up to 700ms and stalled the timeline.
+- **Tests**: each converted card joins every suite at 1,440px and 390px,
+  captured at its finished scene under reduced motion.
+- **Known issue**: on a phone the floating bar (about 459px wide) is wider
+  than the screen and hangs off both sides; it needs its own fix.
 
 ## Legacy cards
 The cards in `src/cards/` (and `src/hooks/useWinSiz.ts`) are TechGeek.support's
@@ -144,8 +193,8 @@ per suite and engine in `tests/playwright.config.ts`, which starts its own dev
 server on port 5195 (never the user's 5173, nor the siblings' 5190 through
 5194) and stops it afterwards. Every suite runs in Chromium, Firefox, and WebKit. The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
-and 1,440px, the phone menu, and the share dialog open on the Gallery at both
-widths.
+and 1,440px, each converted card, the phone menu, and the share dialog open
+on the Gallery at both widths.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
   accessibility scan.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
@@ -161,7 +210,8 @@ widths.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
-- **Not covered yet**: the card pages in the accessibility, interaction,
-  rendering, and responsive suites, and their one-h1 check in the SEO suite,
-  which join as each card is converted; and the social preview checks, which
-  return with the per-card preview images.
+- **Not covered yet**: the unconverted card pages in the accessibility,
+  interaction, rendering, and responsive suites, and their one-h1 check in
+  the SEO suite, which join as each card is converted (the Christmas card
+  already has); and the social preview checks, which return with the
+  per-card preview images.

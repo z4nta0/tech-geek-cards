@@ -24,8 +24,10 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  * twice the largest size the site shows it at, never scaled up, and encoded
  * at 0.85 quality, the lowest that showed no difference from the original at
  * 3x zoom. The card illustrations are shown at up to 1920 by 1080, larger
- * than their originals, so they keep their full size. Everything is written
- * as WebP into src/assets, except the birthday card's social preview, which
+ * than their originals, so they keep their full size, while a full-screen
+ * background covers twice that stage. Everything is written as WebP into
+ * src/assets, or into a converted card's own folder for images only it shows,
+ * except the birthday card's social preview, which
  * link scrapers need as a JPEG at exactly 1200 by 630, written into public/.
  * Run it with npm run images whenever an image is added or replaced, or a
  * display size changes.
@@ -51,7 +53,8 @@ const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. 
 	'portrait' : { cutBoo : false, heiNum : 640,      widNum : 560      }, // What: Portrait Box. Why: The About portrait fills a 280 by 320 frame. How: This covers twice that.
 	'preview'  : { cutBoo : false, heiNum : 930,      widNum : 1240     }, // What: Preview Box. Why: A card preview fills a 4:3 frame up to about 620px wide. How: This covers twice that.
 	'project'  : { cutBoo : false, heiNum : 698,      widNum : 1240     }, // What: Project Box. Why: A project screenshot fills a 16:9 frame up to about 620px wide. How: This covers twice that.
-	'social'   : { cutBoo : true,  heiNum : 630,      widNum : 1200     }  // What: Social Box. Why: Link previews expect a 1200 by 630 image. How: This cuts the original to exactly that.
+	'social'   : { cutBoo : true,  heiNum : 630,      widNum : 1200     }, // What: Social Box. Why: Link previews expect a 1200 by 630 image. How: This cuts the original to exactly that.
+	'stage'    : { cutBoo : false, heiNum : 2160,     widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1920 by 1080. How: This covers twice that.
 
 
 };
@@ -67,10 +70,13 @@ const IMA_REC_ARR : ImaRecTyp[] = [ // What: Image Record Array. Why: Every imag
 
 	...[ 'ease-my-life', 'hair-designs', 'reese-roofing', 'seal-and-shield', 'tech-geek', 'the-bernie-bears', 'tonys-toppers' ].map( ( proNamStr ) => ( { boxStr : 'project', outStr : `src/assets/${ proNamStr }-website.webp`, souStr : `${ proNamStr }-website.png` } ) ), // What: Project Screenshot Rows. Why: Every project card shows a screenshot of its site. How: This builds one row per project.
 
-	...[ 'fathers-day', 'fourth-of-july', 'happy-birthday', 'happy-halloween', 'happy-thanksgiving', 'mothers-day' ].map( ( carNamStr ) => ( { boxStr : 'preview', outStr : `src/assets/${ carNamStr }-card-preview-image.webp`, souStr : `${ carNamStr }-card-preview-image.png` } ) ), // What: Card Preview Rows. Why: Every card in the catalog shows a preview. How: This builds one row per card.
+	...[ 'christmas', 'fathers-day', 'fourth-of-july', 'happy-birthday', 'happy-halloween', 'happy-thanksgiving', 'mothers-day' ].map( ( carNamStr ) => ( { boxStr : 'preview', outStr : `src/assets/${ carNamStr }-card-preview-image.webp`, souStr : `${ carNamStr }-card-preview-image.png` } ) ), // What: Card Preview Rows. Why: Every card in the catalog shows a preview. How: This builds one row per card.
 
-	{ boxStr : 'portrait', outStr : 'src/assets/self-portrait.webp',                     souStr : 'self-portrait.jpg'          }, // What: Portrait Row. Why: The About page shows the portrait. How: This fits it to the portrait box.
-	{ boxStr : 'social',   outStr : 'public/happy-birthday-card-preview-image.jpg',      souStr : 'og-happy-birthday-card.png' }  // What: Social Preview Row. Why: The birthday card's link preview is fetched by its fixed URL. How: This cuts it to the social box as a JPEG in public/.
+	{ boxStr : 'card',     outStr : 'src/cards/christmas/snowman.webp',             souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is shown at about 115px wide, smaller than its original. How: This keeps it at full size.
+	{ boxStr : 'stage',    outStr : 'src/cards/christmas/pirate-background.webp',   souStr : 'christmas-card/pirate-background.jpg' }, // What: Christmas Pirate Background Row. Why: The hacked scene fills the screen. How: This fits it to the stage box.
+	{ boxStr : 'stage',    outStr : 'src/cards/christmas/snowy-background.webp',    souStr : 'christmas-card/snowy-background.jpg'  }, // What: Christmas Snowy Background Row. Why: The snowy scene fills the screen. How: This fits it to the stage box.
+	{ boxStr : 'portrait', outStr : 'src/assets/self-portrait.webp',                souStr : 'self-portrait.jpg'                    }, // What: Portrait Row. Why: The About page shows the portrait. How: This fits it to the portrait box.
+	{ boxStr : 'social',   outStr : 'public/happy-birthday-card-preview-image.jpg', souStr : 'og-happy-birthday-card.png'           }  // What: Social Preview Row. Why: The birthday card's link preview is fetched by its fixed URL. How: This cuts it to the social box as a JPEG in public/.
 
 
 ];

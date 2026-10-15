@@ -52,12 +52,13 @@ type LayCasTyp = { // What: Layout Case Type. Why: Each test measures one page i
 const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page and the open menu are measured the same way. How: Each row names a case, its path, and whether it opens the menu.
 
 
-	{ ideStr : 'home',      menBoo : false, patStr : '/'        }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',   menBoo : false, patStr : '/gallery' }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and every card tile. How: This measures it as loaded.
-	{ ideStr : 'about',     menBoo : false, patStr : '/about'   }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
-	{ ideStr : 'contact',   menBoo : false, patStr : '/contact' }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
-	{ ideStr : 'not-found', menBoo : false, patStr : '/missing' }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
-	{ ideStr : 'menu',      menBoo : true,  patStr : '/'        }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the home page with the menu open.
+	{ ideStr : 'home',      menBoo : false, patStr : '/'                }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
+	{ ideStr : 'gallery',   menBoo : false, patStr : '/gallery'         }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and every card tile. How: This measures it as loaded.
+	{ ideStr : 'about',     menBoo : false, patStr : '/about'           }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
+	{ ideStr : 'contact',   menBoo : false, patStr : '/contact'         }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
+	{ ideStr : 'not-found', menBoo : false, patStr : '/missing'         }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
+	{ ideStr : 'christmas', menBoo : false, patStr : '/merry-christmas' }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
+	{ ideStr : 'menu',      menBoo : true,  patStr : '/'                }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the home page with the menu open.
 
 
 ];

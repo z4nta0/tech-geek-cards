@@ -82,5 +82,13 @@
 
 	</url>
 
+	<url><!-- What: Merry Christmas URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/merry-christmas</loc><!-- What: Merry Christmas Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
 
 </urlset>
