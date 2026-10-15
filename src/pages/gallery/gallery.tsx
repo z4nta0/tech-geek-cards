@@ -87,7 +87,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then add a name and send the link.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then send the one you like to a friend.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
@@ -99,12 +99,15 @@ function GalPagCom () : JSX.Element {
 
 		const carTexStr = `${ carRecObj.titStr } ${ carRecObj.occStr } ${ carRecObj.desStr }`.toLowerCase(); // What: Card Text String. Why: A search word may appear in the title, the occasion, or the description. How: This joins and lowercases all three.
 
+		const lisCarBoo = carRecObj.lisBoo;                                                    // What: Listed Card Boolean. Why: An unlisted card is reached only by its own link. How: This is true when the card is listed.
 		const occMatBoo = actOccStr === 'All' || carRecObj.occStr === actOccStr;               // What: Occasion Match Boolean. Why: The filter narrows the cards to one occasion. How: This is true on All, or when the card's occasion is the chosen one.
 		const seaMatBoo = seaWorArr.every( ( seaWorStr ) => carTexStr.includes( seaWorStr ) ); // What: Search Match Boolean. Why: Every word typed should narrow the cards. How: This is true when the card's text holds each word.
 
+		const carMatBoo = lisCarBoo && occMatBoo && seaMatBoo; // What: Card Match Boolean. Why: A card shows only when it's listed and matches both the filter and the search. How: This combines the three checks.
 
 
-		return carRecObj.lisBoo && occMatBoo && seaMatBoo; // What: Card Match Return. Why: A card shows only when it's listed and matches both. How: This combines the three checks.
+
+		return carMatBoo; // What: Card Match Return. Why: The filter keeps the cards that match. How: This hands back the combined check.
 
 
 	} );
@@ -141,9 +144,7 @@ function GalPagCom () : JSX.Element {
 			<div className={ cssModObj.pagEntDiv }>{ /* What: Page Enter Div Element. Why: The page fades up into view as it opens. How: This wraps every section and plays the shared entrance. */ }
 
 
-
 				<section className={ cssModObj.galHerSec }>{ /* What: Gallery Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
-
 
 
 					<ConCirCom patOpaStr='var( --cdn-pow-007-rec )' />{ /* What: Confetti Circuit Component. Why: The hero carries the site's motif behind its content. How: This draws the pattern at about 14% strength. */ }{ /* Core-Design-Number to the Power of 7 Reciprocal ~= 0.140 */ }
@@ -165,7 +166,6 @@ function GalPagCom () : JSX.Element {
 					</div>
 
 
-
 				</section>
 
 
@@ -173,9 +173,7 @@ function GalPagCom () : JSX.Element {
 				<section className={ cssModObj.galLisSec }>{ /* What: Gallery List Section Element. Why: The controls and the cards are the page's content. How: This holds the controls, the count, and the grid or the empty message. */ }
 
 
-
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
-
 
 
 						<div className={ cssModObj.conBarDiv }>{ /* What: Controls Bar Div Element. Why: The search and the filter sit together above the cards. How: This sets them in a row that wraps. */ }
@@ -238,13 +236,12 @@ function GalPagCom () : JSX.Element {
 
 						</div>
 
+
 						<p
 							className={ cssModObj.resCouPar }
 
 							role='status'
 						>{ `${ shoCarArr.length } ${ shoCarArr.length === 1 ? 'card' : 'cards' }` }</p>{ /* What: Result Count Paragraph Element. Why: A visitor, and a screen reader, should know how many cards match. How: This live region shows the count, announcing each change. */ }
-
-
 
 						<h2 className={ cssModObj.galHidHea }>Cards</h2>{ /* What: Gallery Hidden Heading Element. Why: The tiles' titles are h3s, and the page's headings should step down in order from its h1. How: This names the cards section with an h2 that only screen readers and the outline see. */ }
 
@@ -254,7 +251,6 @@ function GalPagCom () : JSX.Element {
 
 
 							<div className={ cssModObj.galGriDiv }>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three, two, or one across. */ }
-
 
 
 								{ shoCarArr.map( ( carRecObj ) => ( // What: Card Map Call. Why: Every matching card gets a tile. How: This renders one per card.
@@ -270,7 +266,6 @@ function GalPagCom () : JSX.Element {
 
 
 								))}
-
 
 
 							</div>
@@ -308,9 +303,7 @@ function GalPagCom () : JSX.Element {
 					</div>
 
 
-
 				</section>
-
 
 
 			</div>
@@ -321,11 +314,11 @@ function GalPagCom () : JSX.Element {
 
 
 				<ShaDiaCom
-					key={ shaCarObj.sluStr }
+					key={ shaCarObj.sluStr } // What: Dialog Remount Key. Why: A different card shared while one dialog is still mounted should get a fresh dialog, with its own empty name field and status. How: This keys the dialog by the card's address, so React remounts it whenever the card changes.
 
 					carRecObj={ shaCarObj }
 
-					onCloFun={ () => setShaCarObj( null ) }
+					onDiaCloFun={ () => setShaCarObj( null ) }
 				/> // What: Share Dialog Component. Why: The visitor sends the card from here. How: This opens the dialog for the card, keyed by it so each card starts fresh, unmounting it once it closes.
 
 

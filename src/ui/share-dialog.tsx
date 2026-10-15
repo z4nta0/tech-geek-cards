@@ -47,7 +47,7 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
 
 // #region Components
 
-type SdcProTyp = { carRecObj : CarRecTyp, onCloFun : () => void }; // What: Share-Dialog-Component Props Type. Why: The dialog shares one card and tells its page when it has closed. How: This types ShaDiaCom's props.
+type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: Share-Dialog-Component Props Type. Why: The dialog shares one card and tells its page when it has closed. How: This types ShaDiaCom's props.
 
 // #region ShaDiaCom
 
@@ -62,32 +62,31 @@ type SdcProTyp = { carRecObj : CarRecTyp, onCloFun : () => void }; // What: Shar
  * hand); typing a new name resets that message. The share sheet button only
  * renders where navigator.share exists, and a dismissed sheet is ignored.
  * Closing sets the closing class, whose animation's end closes the element
- * and calls onCloFun, so the page can unmount the dialog; under reduced
+ * and calls onDiaCloFun, so the page can unmount the dialog; under reduced
  * motion that animation runs for a hundredth of a millisecond, so its end
  * still fires.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.carRecObj - Card Record Object: The card being shared.
- * @param props.onCloFun  - On Close Function: Called once the dialog has
- *                          finished closing.
+ * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
+ * @param props.onDiaCloFun - On Dialog Close Function: Called once the dialog
+ *                            has finished closing.
  *
  * @returns The dialog element.
  *
  * @example
  * ```tsx
- * ShaDiaCom({ carRecObj, onCloFun }) // => <ShaDiaCom />
+ * ShaDiaCom({ carRecObj, onDiaCloFun }) // => <ShaDiaCom />
  * ```
  *
 */
 
-function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
+function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 
 	const diaEleRef = useRef< HTMLDialogElement >( null ); // What: Dialog Element Reference. Why: Opening and closing are methods on the dialog element. How: This holds the rendered dialog.
 
-
-	const [ cloBoo,    setCloBoo    ] = useState( false );                                  // What: Closing Boolean And Setter. Why: The dialog plays its closing animation before it actually closes. How: This turns the closing class on.
+	const [ isaCloBoo, setIsaCloBoo ] = useState( false );                                  // What: Is-A Closing Boolean And Setter. Why: The dialog plays its closing animation before it actually closes. How: This turns the closing class on.
 	const [ copStaStr, setCopStaStr ] = useState< 'copied' | 'failed' | 'idle' >( 'idle' ); // What: Copy Status String And Setter. Why: The dialog says whether the link was copied. How: This starts idle, and Copy Link sets it.
 	const [ namValStr, setNamValStr ] = useState( '' );                                     // What: Name Value String And Setter. Why: A customizable card's link carries the name typed. How: This holds the name field's text.
 
@@ -111,12 +110,15 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 
 
-	const canShaBoo = typeof navigator.share === 'function';          // What: Can Share Boolean. Why: Only some browsers, mostly on phones, offer a share sheet. How: This checks whether navigator.share exists.
+	const canShaBoo = typeof navigator.share === 'function'; // What: Can Share Boolean. Why: Only some browsers, mostly on phones, offer a share sheet. How: This checks whether navigator.share exists.
+
+
+
 	const prePatStr = `${ linUrlObj.pathname }${ linUrlObj.search }`; // What: Preview Path String. Why: The preview link should open the card exactly as it will arrive. How: This keeps the link's path and its name parameter.
 
 
 
-	const cloDiaFun = () => setCloBoo( true ); // What: Close Dialog Function. Why: Every way of closing plays the closing animation first. How: This turns the closing class on, and the animation's end does the rest.
+	const cloDiaFun = () => setIsaCloBoo( true ); // What: Close Dialog Function. Why: Every way of closing plays the closing animation first. How: This turns the closing class on, and the animation's end does the rest.
 
 
 
@@ -158,7 +160,7 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 		}
 
-		catch { setCopStaStr( 'failed' ); }
+		catch { setCopStaStr( 'failed' ); } // What: Copy Failure Fallback. Why: The clipboard can refuse in an older browser or without permission. How: This sets the failed status, which asks the visitor to copy the link by hand.
 
 
 	};
@@ -194,9 +196,23 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 	const natShaFun = async () : Promise< void > => { // What: Native Share Function. Why: Phones can send a link straight to an app. How: This opens the share sheet with the card's title and link.
 
 
-		try { await navigator.share( { text : `A ${ carRecObj.titStr } card for you!`, title : carRecObj.titStr, url : linUrlObj.href } ); }
+		try {
 
-		catch { return; }
+
+			await navigator.share({ // What: Share Sheet Call. Why: The device's own sheet lists the apps the visitor can send with. How: This opens it with the card's message, title, and link, waiting until it closes.
+
+
+				text  : `A ${ carRecObj.titStr } card for you!`, // What: Text. Why: Some apps send a message along with the link. How: This names the card as a short note to the recipient.
+				title : carRecObj.titStr,                        // What: Title. Why: The sheet and some apps show a title for what's being shared. How: This is the card's name.
+				url   : linUrlObj.href                           // What: URL. Why: The link is what the recipient opens. How: This is the card's full link, with the name when there is one.
+
+
+			});
+
+
+		}
+
+		catch { return; } // What: Dismissed Sheet Ignore. Why: Closing the sheet without sharing rejects the promise, which isn't an error. How: This ignores it.
 
 
 	};
@@ -211,14 +227,36 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 		<dialog
 			ref={ diaEleRef }
 
-			className={` ${ cssModObj.shaDiaDia }   ${ cloBoo ? cssModObj.shaDiaDiaClosing : '' } `}
+			className={` ${ cssModObj.shaDiaDia }   ${ isaCloBoo ? cssModObj.shaDiaDiaClosing : '' } `}
 
-			aria-labeledby='shaTitHea'
+			aria-labelledby='shaTitHea'
 
-			onAnimationEnd={ ( aniEveObj ) => { if ( aniEveObj.animationName === cssModObj.shaDiaDiaCloseFadeOut ) { diaEleRef.current?.close(); onCloFun(); } } } // What: Closing Animation End Handler. Why: The dialog should only close once its panel's closing animation has played. How: When the panel's own closing keyframe ends, this closes the element and tells the page, which unmounts it; every other animation's end, the backdrop's and the copy label's included, is ignored.
-			onCancel={ ( canEveObj : SyntheticEvent ) => { canEveObj.preventDefault(); cloDiaFun(); } } // What: Cancel Handler. Why: Escape would close the dialog at once, skipping its animation. How: This stops the browser's own close and starts the animated one.
+			onAnimationEnd={ ( aniEveObj ) => { // What: Closing Animation End Handler. Why: The dialog should only close once its panel's closing animation has played. How: When the panel's own closing keyframe ends, this closes the element and tells the page, which unmounts it; every other animation's end, the backdrop's, the copy label's, and the status message's included, is ignored.
+
+
+				if ( aniEveObj.animationName === cssModObj.shaDiaDiaCloseFadeOut ) { // What: Closing Keyframe Check. Why: Animation end events bubble up from the backdrop, the copy label, and the status message too. How: This acts only when the panel's own closing keyframe has ended.
+
+
+					diaEleRef.current?.close(); // What: Dialog Close Call. Why: The closing animation has played. How: This closes the native dialog, releasing the page behind it.
+
+					onDiaCloFun(); // What: Closed Callback Call. Why: The page mounts the dialog and has to unmount it. How: This tells the page the dialog has finished closing.
+
+
+				}
+
+
+			} }
+			onCancel={ ( canEveObj : SyntheticEvent ) => { // What: Cancel Handler. Why: Escape would close the dialog at once, skipping its animation. How: This stops the browser's own close and starts the animated one.
+
+
+				canEveObj.preventDefault(); // What: Native Close Prevention Call. Why: The browser would close the dialog before its animation plays. How: This stops the browser's own close.
+
+				cloDiaFun(); // What: Animated Close Call. Why: Escape should still close the dialog. How: This starts the closing animation, whose end closes it.
+
+
+			} }
 			onClick={ ( cliEveObj ) => { if ( cliEveObj.target === cliEveObj.currentTarget ) cloDiaFun(); } } // What: Backdrop Click Handler. Why: A click outside the panel should close the dialog. How: The panel fills the dialog, so a click landing on the dialog element itself was on the backdrop, and this closes it.
-		>{ /* What: Share Dialog Element. Why: Sharing a card happens in a modal over the page. How: This is the native dialog ShaDiaCom opens as a modal, styled as a rounded panel. */ }
+		>{ /* What: Share Dialog Dialog Element. Why: Sharing a card happens in a modal over the page. How: This is the native dialog ShaDiaCom opens as a modal, styled as a rounded panel. */ }
 
 
 			<div className={ cssModObj.shaInnDiv }>{ /* What: Share Inner Div Element. Why: The panel's content fills the dialog, so clicks inside it never count as backdrop clicks. How: This stacks the dialog's content with padding. */ }
@@ -236,6 +274,8 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 
 					<svg
+						className={ cssModObj.shaCloSvg }
+
 						fill='none'
 						height='16'
 						stroke='currentColor'
@@ -245,7 +285,7 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 						width='16'
 
 						aria-hidden='true'
-					>{ /* What: Close Icon SVG Element. Why: A cross reads as close. How: This draws two crossing lines, hidden from screen readers since the button is labeled. */ }
+					>{ /* What: Share Close SVG Element. Why: A cross reads as close. How: This draws two crossing lines, hidden from screen readers since the button is labeled, and lets presses through to the button. */ }
 
 
 						<path d='M 3 3 L 13 13 M 13 3 L 3 13' />{ /* What: Close Cross Path Element. Why: The cross is the icon. How: This draws both strokes. */ }
@@ -256,10 +296,11 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 				</button>
 
+
 				<p className={ cssModObj.shaEyePar }>Ready to send</p>{ /* What: Share Eyebrow Paragraph Element. Why: A small label sets the dialog's purpose above its title. How: This shows it in berry mono capitals. */ }
 
 				<h2
-					id='shaTitHea' // What: Share Title Heading Identifier. Why: The dialog is named by its heading. How: The dialog's aria-labeledby points here, and only one share dialog exists at a time.
+					id='shaTitHea' // What: Share Title Heading Identifier. Why: The dialog is named by its heading. How: The dialog's aria-labelledby points here, and only one share dialog exists at a time.
 
 					className={ cssModObj.shaTitHea }
 				>{ carRecObj.titStr }</h2>{ /* What: Share Title Heading Element. Why: The dialog says which card is being sent. How: This shows the card's title. */ }
@@ -290,14 +331,22 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 							aria-describedby='recNamHin'
 
-							onChange={ ( chaEveObj ) => { setNamValStr( chaEveObj.target.value ); setCopStaStr( 'idle' ); } } // What: Name Change Handler. Why: A changed name makes a new link, so an earlier Copied no longer applies. How: This stores the text and resets the copy status.
-						/>{ /* What: Recipient Name Input Element. Why: The card can greet its recipient by name. How: This takes up to 30 characters, added to the link as it's typed. */ }
+							onChange={ ( chaEveObj ) => { // What: Name Change Handler. Why: A changed name makes a new link, so an earlier Copied no longer applies. How: This stores the text and resets the copy status.
+
+
+								setNamValStr( chaEveObj.target.value ); // What: Name Value Set Call. Why: The field is controlled. How: This stores the text typed.
+
+								setCopStaStr( 'idle' ); // What: Copy Status Reset Call. Why: The copied link no longer matches the new name. How: This sets the status back to idle.
+
+
+							} }
+						/>{ /* What: Field Text Input Element. Why: The card can greet its recipient by name. How: This takes up to 30 characters, added to the link as it's typed. */ }
 
 						<p
 							id='recNamHin'
 
 							className={ cssModObj.fieHinPar }
-						>It appears on the card as it opens.</p>{ /* What: Recipient Name Hint Paragraph Element. Why: The visitor should know where the name shows up. How: This explains it under the field, read with it by screen readers. */ }
+						>It appears on the card as it opens.</p>{ /* What: Field Hint Paragraph Element. Why: The visitor should know where the name shows up. How: This explains it under the field, read with it by screen readers. */ }
 
 
 					</div>
@@ -317,14 +366,14 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 					<input
 						id='carLinInp'
 
-						className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieLinInp } `}
+						className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieTexInpLink } `}
 
 						readOnly
 						type='text'
 						value={ linUrlObj.href }
 
 						onFocus={ ( focEveObj ) => focEveObj.currentTarget.select() } // What: Link Focus Handler. Why: Someone copying by hand wants the whole link. How: This selects it all when the field gains focus.
-					/>{ /* What: Card Link Input Element. Why: The link should be visible, and copyable by hand if the button can't. How: This shows the link read-only in mono. */ }
+					/>{ /* What: Field Text Input Element. Why: The link should be visible, and copyable by hand if the button can't. How: This shows the link read-only in mono. */ }
 
 
 				</div>
@@ -364,11 +413,13 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 
 					) }
 
+
+
 					<Link
 						className={ cssModObj.shaPreAnc }
 
 						to={ prePatStr }
-					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Share Preview Anchor Element. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same name in its address, its arrow hidden from screen readers. */ }
+					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Preview Card Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same name in its address, its arrow hidden from screen readers. */ }
 
 
 				</div>
@@ -377,7 +428,17 @@ function ShaDiaCom ( { carRecObj, onCloFun } : SdcProTyp ) : JSX.Element {
 					className={ cssModObj.shaStaPar }
 
 					role='status'
-				>{ copStaStr === 'copied' ? 'Link copied. Paste it into a text, an email, or a message.' : copStaStr === 'failed' ? 'Your browser blocked copying. Select the link above and copy it.' : '' }</p>{ /* What: Share Status Paragraph Element. Why: The result of a copy should be announced and seen. How: This live region says the link was copied, or how to copy it by hand. */ }
+				>{ /* What: Share Status Paragraph Element. Why: The result of a copy should be announced and seen. How: This live region holds the message saying the link was copied, or how to copy it by hand. */ }
+
+
+					<span
+						key={ copStaStr } // What: Status Message Key. Why: The message should fade in afresh each time it changes. How: A new key remounts the span, replaying its entrance.
+
+						className={ cssModObj.shaStaSpa }
+					>{ copStaStr === 'copied' ? 'Link copied. Paste it into a text, an email, or a message.' : copStaStr === 'failed' ? 'Your browser blocked copying. Select the link above and copy it.' : '' }</span>{ /* What: Share Status Span Element. Why: The message is the result of the press, so it should arrive visibly. How: This shows the copy result, fading in each time it changes. */ }
+
+
+				</p>
 
 
 			</div>

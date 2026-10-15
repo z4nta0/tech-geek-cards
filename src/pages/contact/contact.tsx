@@ -99,7 +99,34 @@ function ConPagCom () : JSX.Element {
 
 
 
+	// #region chaFieFun
+
+	/**
+	 * chaFieFun = Change Field Function
+	 *
+	 * @summary
+	 * Writes one field's edit into the form's state. The edited field's name
+	 * attribute picks the key it writes, so every field's name has to match a
+	 * key of EMP_FOR_OBJ (name, email, topic, message, or bot-field); a field
+	 * named anything else would add a stray key that never posts. The previous
+	 * fields are copied, so the other fields keep their values.
+	 *
+	 * @author z4nta0 <https://github.com/z4nta0>
+	 *
+	 * @param chaEveObj - Change Event Object: The edited field's change event.
+	 *
+	 * @returns This function does not return anything.
+	 *
+	 * @example
+	 * ```ts
+	 * chaFieFun(chaEveObj) // => void
+	 * ```
+	 *
+	*/
+
 	const chaFieFun = ( chaEveObj : ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > ) => setForDatObj( ( preForObj ) => ( { ...preForObj, [ chaEveObj.target.name ] : chaEveObj.target.value } ) ); // What: Change Field Function. Why: Every field updates the same form object. How: This copies the form and sets the changed field by its name.
+
+	// #endregion chaFieFun
 
 
 
@@ -200,7 +227,7 @@ function ConPagCom () : JSX.Element {
 
 		}
 
-		finally { setIsaLoaBoo( false ); }
+		finally { setIsaLoaBoo( false ); } // What: Loading Flag Clear Call. Why: Sending is over whether it worked or not. How: This clears the loading flag.
 
 
 	};
@@ -227,9 +254,7 @@ function ConPagCom () : JSX.Element {
 			<div className={ cssModObj.pagEntDiv }>{ /* What: Page Enter Div Element. Why: The page fades up into view as it opens. How: This wraps every section and plays the shared entrance. */ }
 
 
-
 				<section className={ cssModObj.conHerSec }>{ /* What: Contact Hero Section Element. Why: The page opens on its heading over the site's motif. How: This holds the motif and the hero's text, its bottom edge cut in scallops like a stamp's. */ }
-
 
 
 					<ConCirCom patOpaStr='var( --cdn-pow-007-rec )' />{ /* What: Confetti Circuit Component. Why: The hero carries the site's motif behind its content. How: This draws the pattern at about 14% strength. */ }{ /* Core-Design-Number to the Power of 7 Reciprocal ~= 0.140 */ }
@@ -251,7 +276,6 @@ function ConPagCom () : JSX.Element {
 					</div>
 
 
-
 				</section>
 
 
@@ -259,9 +283,7 @@ function ConPagCom () : JSX.Element {
 				<section className={ cssModObj.conBodSec }>{ /* What: Contact Body Section Element. Why: The form and the sidebar are the page's content. How: This holds them in the site's centered column. */ }
 
 
-
 					<div className={ cssModObj.conInnDiv }>{ /* What: Contact Inner Div Element. Why: The form and the sidebar sit side by side on wide screens. How: This lays them out in two columns, stacking on phones. */ }
-
 
 
 						{ isaSenBoo ? ( // What: Sent Check. Why: A sent message replaces the form with a thank-you. How: This renders the thank-you once sent, and the form until then.
@@ -308,8 +330,29 @@ function ConPagCom () : JSX.Element {
 									aria-hidden='true'
 								>{ /* What: Bot Field Paragraph Element. Why: The honeypot has to exist in the form without a person ever seeing it. How: This hides it off screen and from screen readers. */ }
 
-									<label>Leave this field blank <input autoComplete='off' name='bot-field' tabIndex={ -1 } value={ forDatObj[ 'bot-field' ] } onChange={ chaFieFun } /></label>
+
+									<label>{ /* What: Honeypot Label Element. Why: A hidden field still needs a label. How: This wraps the honeypot input in its label text. */ }
+
+
+										Leave this field blank
+
+										<input
+											name='bot-field'
+
+											autoComplete='off'
+											value={ forDatObj[ 'bot-field' ] }
+
+											tabIndex={ -1 }
+
+											onChange={ chaFieFun }
+										/>{ /* What: Bot Field Input Element. Why: A filled honeypot marks a bot. How: This writes into the form's bot-field through the shared change handler and posts with the other fields. */ }
+
+
+									</label>
+
+
 								</p>
+
 
 								<div className={ cssModObj.fieRowDiv }>{ /* What: Field Row Div Element. Why: The name and email sit side by side on wide screens. How: This lays them out in two columns, stacking on phones. */ }
 
@@ -336,12 +379,10 @@ function ConPagCom () : JSX.Element {
 											value={ forDatObj.name }
 
 											onChange={ chaFieFun }
-										/>{ /* What: Name Input Element. Why: The reply should greet the visitor by name. How: This takes their name, required. */ }
+										/>{ /* What: Field Text Input Element. Why: The name field takes the visitor's name, so the reply can greet the visitor by name. How: This takes their name, required. */ }
 
 
 									</div>
-
-
 
 									<div className={ cssModObj.fieGroDiv }>{ /* What: Field Group Div Element. Why: A label and its field read as one unit. How: This stacks them. */ }
 
@@ -365,13 +406,14 @@ function ConPagCom () : JSX.Element {
 											value={ forDatObj.email }
 
 											onChange={ chaFieFun }
-										/>{ /* What: Email Input Element. Why: The reply goes back to this address. How: This takes their email, required and checked for its format. */ }
+										/>{ /* What: Field Text Input Element. Why: The email field takes the address the reply goes back to this address. How: This takes their email, required and checked for its format. */ }
 
 
 									</div>
 
 
 								</div>
+
 
 								<div className={ cssModObj.fieGroDiv }>{ /* What: Field Group Div Element. Why: A label and its field read as one unit. How: This stacks them. */ }
 
@@ -385,14 +427,14 @@ function ConPagCom () : JSX.Element {
 									<select
 										id='conTopSel'
 
-										className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieTopSel } `}
+										className={ cssModObj.fieTopSel }
 
 										name='topic'
 
 										value={ forDatObj.topic }
 
 										onChange={ chaFieFun }
-									>{ /* What: Topic Select Element. Why: Knowing the topic helps answer the message. How: This offers the topics, starting unchosen. */ }
+									>{ /* What: Field Topic Select Element. Why: Knowing the topic helps answer the message. How: This offers the topics, starting unchosen. */ }
 
 
 										<option value=''>Choose a topic</option>{ /* What: Placeholder Option Element. Why: The menu starts without a choice, since the topic is optional. How: This shows a prompt with an empty value. */ }
@@ -427,7 +469,7 @@ function ConPagCom () : JSX.Element {
 									<textarea
 										id='conMesTex'
 
-										className={` ${ cssModObj.fieTexInp }   ${ cssModObj.fieMesTex } `}
+										className={ cssModObj.fieMesTex }
 
 										name='message'
 
@@ -437,7 +479,7 @@ function ConPagCom () : JSX.Element {
 										value={ forDatObj.message }
 
 										onChange={ chaFieFun }
-									/>{ /* What: Message Textarea Element. Why: The message is the point of the form. How: This takes it, required, six rows tall. */ }
+									/>{ /* What: Field Message Textarea Element. Why: The message is the point of the form. How: This takes it, required, six rows tall. */ }
 
 
 								</div>
@@ -498,13 +540,10 @@ function ConPagCom () : JSX.Element {
 						</aside>
 
 
-
 					</div>
 
 
-
 				</section>
-
 
 
 			</div>

@@ -44,7 +44,6 @@
 }
 
 
-
 /* #region conHerSec */
 
 .conHerSec { /* What: Contact Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
@@ -53,7 +52,7 @@
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
 
 	background     : var( --bac-sun-col );                                /* Background Sunken Color = #EDE6D8 */
-	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
+	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* Hero Scallop Radius ~= 14.572px */ /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
 	padding-bottom : var( --spa-ver-p06 );                                /* Spacing Vertical Base Plus 6 ~= 78.751px */
 	padding-top    : calc( var( --nav-bar-hei ) + var( --her-gap-pad ) ); /* Navigation Bar Height ~= 78.751px, Hero Gap Padding, about 59.447px - 138.199px */
 	position       : relative;
@@ -72,7 +71,7 @@
 	flex-direction : column;
 	gap            : var( --spa-ver-bas );   /* Spacing Vertical Base ~= 14.572px */
 	margin         : 0 auto;
-	max-width      : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 	position       : relative;
 	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
@@ -137,7 +136,7 @@
 	gap                   : var( --spa-ver-p04 ) var( --spa-hor-p05 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 5 ~= 59.447px */
 	grid-template-columns : 2fr 1fr;
 	margin                : 0 auto;
-	max-width             : var( --con-max-wid );                      /* Container Maximum Width, about 1,449px */
+	max-width             : var( --con-max-wid );                      /* Container Maximum Width ~= 1,449.365px */
 	padding               : 0 var( --gut-sid-pad );                    /* Gutter Side Padding, about 19.304px - 44.876px */
 
 
@@ -254,6 +253,7 @@
 /* #endregion thaYouDiv */
 
 
+
 /* #region conForFor */
 
 .conForFor { /* What: Contact Form Form. Why: The form sits in a white card with its fields stacked. How: This draws the card and stacks the fields with even gaps. */
@@ -279,6 +279,7 @@
 
 
 }
+
 
 
 /* #region fieRowDiv */
@@ -332,7 +333,9 @@
 
 }
 
-.fieTexInp { /* What: Field Text Input. Why: The fields are full-width ivory boxes whose border answers the pointer and whose focus ring eases in. How: This sets an ivory box with a quiet border and rounded corners, easing its border and focus ring. */
+.fieTexInp,
+.fieTopSel,
+.fieMesTex { /* What: Field Controls. Why: The text input, the topic select, and the message textarea are full-width ivory boxes whose border answers the pointer and whose focus ring eases in. How: This sets each one an ivory box with a quiet border and rounded corners, easing its border and focus ring. */
 
 
 	background     : var( --bac-pag-col );                            /* Background Page Color = #F5F0E8 */
@@ -349,45 +352,38 @@
 
 
 }
-.fieTexInp::placeholder { /* What: Field Text Input Placeholder. Why: The sample text should read as a hint, not an entry. How: This sets it in the muted text color. */
+.fieTexInp::placeholder,
+.fieMesTex::placeholder { /* What: Field Control Placeholders. Why: The sample text should read as a hint, not an entry. How: This sets it in the muted text color. */
 
 
 	color : var( --tex-mut-col ); /* Text Muted Color = #646482 */
 
 
 }
-.fieTexInp:hover { /* What: Hovered Field Text Input. Why: A field responds to the pointer. How: This turns its border the strong blue. */
+.fieTexInp:hover,
+.fieTopSel:hover,
+.fieMesTex:hover { /* What: Hovered Field Controls. Why: A field responds to the pointer. How: This turns its border the strong blue. */
 
 
 	border-color : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
 
 
 }
-.fieTexInp:focus-visible { /* What: Focused Field Text Input. Why: The field being typed in should be obvious. How: This turns its border orange while the shared focus ring grows in around it. */
+.fieTexInp:focus-visible,
+.fieTopSel:focus-visible,
+.fieMesTex:focus-visible { /* What: Focused Field Controls. Why: The field being typed in should be obvious. How: This turns its border orange while the shared focus ring grows in around it. */
 
 
 	border-color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
 
 
 }
-.fieTexInp.fieTopSel { /* What: Field Topic Select. Why: The menu opens on a click, so it shows the pointer. How: This sets the pointer cursor. */
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Field Controls. Why: Someone who asked for less motion should see the border and ring simply change. How: This applies only when the reduced-motion preference is set. */
 
 
-	cursor : pointer;
-
-
-}
-.fieTexInp.fieMesTex { /* What: Field Message Textarea. Why: A long message may need more room, but only downward. How: This lets the visitor resize it vertically. */
-
-
-	resize : vertical;
-
-
-}
-@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Field Text Input. Why: Someone who asked for less motion should see the border and ring simply change. How: This applies only when the reduced-motion preference is set. */
-
-
-	.fieTexInp { /* What: Motionless Field Text Input. Why: The border and ring should switch at once. How: This turns the transition off. */
+	.fieTexInp,
+	.fieTopSel,
+	.fieMesTex { /* What: Motionless Field Controls. Why: The border and ring should switch at once. How: This turns the transition off. */
 
 
 		transition : none;
@@ -398,18 +394,50 @@
 
 }
 
+.fieTopSel { /* What: Field Topic Select. Why: The menu opens on a click, so it shows the pointer. How: This sets the pointer cursor. */
+
+
+	cursor : pointer;
+
+
+}
+
+.fieMesTex { /* What: Field Message Textarea. Why: A long message may need more room, but only downward. How: This lets the visitor resize it vertically. */
+
+
+	resize : vertical;
+
+
+}
+
 /* #endregion fieGroDiv */
 
 /* #endregion fieRowDiv */
 
-.errMesPar { /* What: Error Message Paragraph. Why: A failed send has to stand out. How: This sets dark red text on a pale red panel with a red edge. */
 
 
-	background    : var( --err-tin-col );                            /* Error Tint Color = #fdf0ee */
-	border        : var( --bor-wid-bas ) solid var( --err-mai-col ); /* Border Width Base ~= 1.160px, Error Main Color = #e8b4ae */
-	border-radius : var( --rad-bor-sma );                            /* Radius Border Small ~= 8.304px */
-	color         : var( --err-dar-col );                            /* Error Dark Color = #c0392b */
-	padding       : var( --spa-ver-m01 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
+.errMesPar { /* What: Error Message Paragraph. Why: A failed send has to stand out, and its arrival should be seen. How: This fades it up into view with the shared entrance, as dark red text on a pale red panel with a red edge. */
+
+
+	animation     : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	background    : var( --err-tin-col );                                                        /* Error Tint Color = #fdf0ee */
+	border        : var( --bor-wid-bas ) solid var( --err-mai-col );                             /* Border Width Base ~= 1.160px, Error Main Color = #e8b4ae */
+	border-radius : var( --rad-bor-sma );                                                        /* Radius Border Small ~= 8.304px */
+	color         : var( --err-dar-col );                                                        /* Error Dark Color = #c0392b */
+	padding       : var( --spa-ver-m01 ) var( --spa-hor-bas );                                   /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Error Message Paragraph. Why: Someone who asked for less motion shouldn't see the error slide in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.errMesPar { /* What: Motionless Error Message Paragraph. Why: The error should simply appear. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
 
 
 }
@@ -469,6 +497,7 @@
 }
 
 /* #endregion conForFor */
+
 
 
 /* #region conSidAsi */

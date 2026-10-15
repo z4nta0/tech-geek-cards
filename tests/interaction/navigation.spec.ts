@@ -25,7 +25,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers dr
  * own bar link scrolls back to the top, a phone menu link does the same,
  * back returns the visitor to where they were rather than to the top, the
  * Send a Card button switches to the Gallery without reloading the site, and
- * a card tile opens its card, whose More Cards link leads back.
+ * a card tile opens its card, whose More cards link leads back.
  *
  * Sections:
  *  - Constants
@@ -238,7 +238,7 @@ test( 'the Send a Card button opens the Gallery without reloading the site', asy
 
 
 
-test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the birthday card from its tile without a reload, checks the card's page, then follows More Cards back to the Gallery at its top.
+test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the birthday card from its tile without a reload, checks the card's page, then follows More cards back to the Gallery at its top.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The tiles sit three across at desktop width. How: This sizes the page before it loads.
@@ -255,9 +255,9 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 	expect( await curPagObj.evaluate( () => document.documentElement.hasAttribute( 'data-test-reload-marker' ) ) ).toBe( true ); // What: No Reload Assertion. Why: The router should switch to the card within the same document. How: This checks the mark is still on the root element.
 
-	await curPagObj.getByRole( 'link', { exact : true, name : 'More cards' } ).click(); // What: More Cards Click. Why: The card's bar leads back to the Gallery. How: This clicks More Cards.
+	await curPagObj.getByRole( 'link', { exact : true, name : 'More cards' } ).click(); // What: More Cards Click. Why: The card's bar leads back to the Gallery. How: This clicks More cards.
 
-	await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Return Assertion. Why: More Cards has to reach the Gallery. How: This waits for the address to change back.
+	await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Return Assertion. Why: More cards has to reach the Gallery. How: This waits for the address to change back.
 
 	await expect.poll( () => curPagObj.evaluate( () => window.scrollY ) ).toBe( 0 ); // What: Top Assertion. Why: A link opens its page at the top. How: This polls until the Gallery sits at its top.
 

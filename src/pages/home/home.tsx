@@ -45,16 +45,16 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
 
 // #region Constants
 
-const HER_CAR_ARR = [ 'happy-halloween', 'happy-birthday', 'mothers-day' ].map( ( sluStr ) => CAR_REC_ARR.find( ( carRecObj ) => carRecObj.sluStr === sluStr )! ); // What: Hero Card Array. Why: The envelope holds three cards with different colors, so the fan reads as variety. How: This looks up the three cards by their slugs, left to right. // What: Non-Null Note. Why: find's return type allows undefined. How: Each slug is a row in the catalog, so every lookup finds its card.
+const HER_CAR_ARR = [ 'happy-halloween', 'happy-birthday', 'mothers-day' ].map( ( carSluStr ) => CAR_REC_ARR.find( ( carRecObj ) => carRecObj.sluStr === carSluStr )! ); // What: Hero Card Array. Why: The envelope holds three cards with different colors, so the fan reads as variety. How: This looks up the three cards by their slugs, left to right. // What: Non-Null Note. Why: find's return type allows undefined. How: Each slug is a row in the catalog, so every lookup finds its card.
 
 
 
 const STE_REC_ARR = [ // What: Step Record Array. Why: How It Works walks through the same three steps every visit. How: Each row holds a step's title and description.
 
 
-	{ desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.',                               titStr : 'Pick a card'    }, // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
-	{ desStr : "Add their name to the cards that take one, and it's part of the card as it opens.",                    titStr : 'Make it theirs' }, // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
-	{ desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.', titStr : 'Send the link'  }  // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
+	{ titStr : 'Pick a card',    desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.' }, // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
+	{ titStr : 'Make it theirs', desStr : "Add their name to the cards that take one, and it's part of the card as it opens." }, // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
+	{ titStr : 'Send the link',  desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.' } // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
 
 
 ];
@@ -177,9 +177,7 @@ function HomPagCom () : JSX.Element {
 			<div className={ cssModObj.pagEntDiv }>{ /* What: Page Enter Div Element. Why: The page fades up into view as it opens. How: This wraps every section and plays the shared entrance. */ }
 
 
-
 				<section className={ cssModObj.homHerSec }>{ /* What: Home Hero Section Element. Why: The page opens on the site's pitch and a playful picture of what it offers. How: This holds the motif, the text, and the envelope, its bottom edge cut in scallops like a stamp's. */ }
-
 
 
 					<ConCirCom patOpaStr='var( --cdn-pow-007-rec )' />{ /* What: Confetti Circuit Component. Why: The hero carries the site's motif behind its content. How: This draws the pattern at about 14% strength. */ }{ /* Core-Design-Number to the Power of 7 Reciprocal ~= 0.140 */ }
@@ -193,13 +191,11 @@ function HomPagCom () : JSX.Element {
 
 
 							<p className={ cssModObj.herEyePar }>{ /* What: Hero Eyebrow Paragraph Element. Why: A small label says what the site is before the heading does. How: This shows a berry dot and the label in mono capitals. */ }
-
 								<span
 									className={ cssModObj.herDotSpa }
 
 									aria-hidden='true'
 								/>{ /* What: Hero Dot Span Element. Why: A dot of confetti leads the label. How: This draws a small berry circle, hidden from screen readers. */ }
-
 								Hand-coded greeting cards
 							</p>
 
@@ -216,7 +212,9 @@ function HomPagCom () : JSX.Element {
 									className={ cssModObj.butPriAnc }
 
 									to='/gallery'
-								>Browse the Gallery</Link>{ /* What: Button Primary Anchor Element. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
+								>Browse the Gallery</Link>{ /* What: Browse Gallery Link. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
+
+
 
 								<a
 									className={ cssModObj.butSecAnc }
@@ -261,6 +259,8 @@ function HomPagCom () : JSX.Element {
 
 							))}
 
+
+
 							<div className={ cssModObj.envFroDiv }>{ /* What: Envelope Front Div Element. Why: The envelope's front pocket holds the cards' lower edges. How: This draws the front with a V cut into its top, carrying the stamp. */ }
 
 
@@ -291,6 +291,8 @@ function HomPagCom () : JSX.Element {
 
 							</div>
 
+
+
 							{ [ 1, 2, 3, 4, 5, 6 ].map( ( pieIndNum ) => ( // What: Confetti Piece Map Call. Why: Confetti bursts out with the cards. How: This renders six pieces, each placed, shaped, and colored by its position in the module.
 
 
@@ -310,7 +312,6 @@ function HomPagCom () : JSX.Element {
 					</div>
 
 
-
 				</section>
 
 
@@ -322,13 +323,13 @@ function HomPagCom () : JSX.Element {
 				>{ /* What: Home How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }
 
 
-
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
 
 
 						<p className={ cssModObj.secEyePar }>How it works</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
 
 						<h2 className={ cssModObj.secTitHea }>Pick it. Personalize it. Send it.</h2>{ /* What: Section Title Heading Element. Why: The heading sums up the three steps. How: This shows the section's h2. */ }
+
 
 						<ol className={ cssModObj.steLisOrd }>{ /* What: Step List Ordered Element. Why: The steps happen in order. How: This lays the three steps out in a row, stacking on phones. */ }
 
@@ -340,7 +341,7 @@ function HomPagCom () : JSX.Element {
 									key={ steRecObj.titStr }
 
 									className={ cssModObj.steIteIte }
-								>{ /* What: Step Item Element. Why: Each step is a small card. How: This holds the step's number, title, and description, lifting on hover. */ }
+								>{ /* What: Step Item Item Element. Why: Each step is a small card. How: This holds the step's number, title, and description, lifting on hover. */ }
 
 
 									<span
@@ -366,13 +367,11 @@ function HomPagCom () : JSX.Element {
 					</div>
 
 
-
 				</section>
 
 
 
 				<section className={ cssModObj.homFeaSec }>{ /* What: Home Featured Section Element. Why: A taste of the Gallery invites a visitor in. How: This holds the section's header and four random cards. */ }
-
 
 
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
@@ -391,17 +390,19 @@ function HomPagCom () : JSX.Element {
 
 							</div>
 
+
+
 							<Link
 								className={ cssModObj.allCarAnc }
 
 								to='/gallery'
-							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: All Cards Anchor Element. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
+							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: See All Cards Link. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
 
 
 						</div>
 
-						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four, two, or one across. */ }
 
+						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four, two, or one across. */ }
 
 
 							{ feaCarArr.map( ( carRecObj ) => ( // What: Featured Card Map Call. Why: Every featured card gets a tile. How: This renders one per picked card.
@@ -419,12 +420,10 @@ function HomPagCom () : JSX.Element {
 							))}
 
 
-
 						</div>
 
 
 					</div>
-
 
 
 				</section>
@@ -434,17 +433,13 @@ function HomPagCom () : JSX.Element {
 				<section className={ cssModObj.homComSec }>{ /* What: Home Commission Section Element. Why: A visitor may want a card made just for them. How: This holds the postcard banner. */ }
 
 
-
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
-
 
 
 						<div className={ cssModObj.posShaDiv }>{ /* What: Postcard Shadow Div Element. Why: The postcard's shadow has to follow its perforated edge. How: This casts a drop shadow from the masked card inside it. */ }
 
 
-
 							<div className={ cssModObj.posCarDiv }>{ /* What: Postcard Card Div Element. Why: The invitation reads as a postcard, the site's mail motif. How: This draws a white card with a perforated edge, its motif faint behind the text. */ }
-
 
 
 								<ConCirCom patOpaStr='var( --cdn-pow-009-rec )' />{ /* What: Confetti Circuit Component. Why: The postcard carries the site's motif. How: This draws the pattern faintly behind its text. */ }{ /* Core-Design-Number to the Power of 9 Reciprocal ~= 0.080 */ }
@@ -462,11 +457,13 @@ function HomPagCom () : JSX.Element {
 										I build one-of-a-kind cards for anniversaries, graduations, retirements, or any day worth celebrating, with your words and your people in them.
 									</p>
 
+
+
 									<Link
 										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
-									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Element. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
+									>Request a Custom Card</Link>{ /* What: Request Custom Card Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
 
 
 								</div>
@@ -478,7 +475,7 @@ function HomPagCom () : JSX.Element {
 									viewBox='0 0 160 120'
 
 									aria-hidden='true'
-								>{ /* What: Postmark SVG Element. Why: A postmark and its wavy cancel lines finish the postcard look. How: This draws two rings and three waves, hidden from screen readers as decoration. */ }
+								>{ /* What: Postcard Mark SVG Element. Why: A postmark and its wavy cancel lines finish the postcard look. How: This draws two rings and three waves, hidden from screen readers as decoration. */ }
 
 
 									<circle
@@ -511,17 +508,13 @@ function HomPagCom () : JSX.Element {
 							</div>
 
 
-
 						</div>
-
 
 
 					</div>
 
 
-
 				</section>
-
 
 
 			</div>
@@ -532,11 +525,11 @@ function HomPagCom () : JSX.Element {
 
 
 				<ShaDiaCom
-					key={ shaCarObj.sluStr }
+					key={ shaCarObj.sluStr } // What: Dialog Remount Key. Why: A different card shared while one dialog is still mounted should get a fresh dialog, with its own empty name field and status. How: This keys the dialog by the card's address, so React remounts it whenever the card changes.
 
 					carRecObj={ shaCarObj }
 
-					onCloFun={ () => setShaCarObj( null ) }
+					onDiaCloFun={ () => setShaCarObj( null ) }
 				/> // What: Share Dialog Component. Why: The visitor sends the card from here. How: This opens the dialog for the card, keyed by it so each card starts fresh, unmounting it once it closes.
 
 

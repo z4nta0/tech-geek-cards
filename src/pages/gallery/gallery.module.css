@@ -42,7 +42,6 @@
 }
 
 
-
 /* #region galHerSec */
 
 .galHerSec { /* What: Gallery Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
@@ -51,7 +50,7 @@
 	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
 
 	background     : var( --bac-sun-col );                                /* Background Sunken Color = #EDE6D8 */
-	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
+	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* Hero Scallop Radius ~= 14.572px */ /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
 	padding-bottom : var( --spa-ver-p06 );                                /* Spacing Vertical Base Plus 6 ~= 78.751px */
 	padding-top    : calc( var( --nav-bar-hei ) + var( --her-gap-pad ) ); /* Navigation Bar Height ~= 78.751px, Hero Gap Padding, about 59.447px - 138.199px */
 	position       : relative;
@@ -70,7 +69,7 @@
 	flex-direction : column;
 	gap            : var( --spa-ver-bas );   /* Spacing Vertical Base ~= 14.572px */
 	margin         : 0 auto;
-	max-width      : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 	position       : relative;
 	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
@@ -131,7 +130,7 @@
 
 
 	margin    : 0 auto;
-	max-width : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	max-width : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding   : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 
 
@@ -313,6 +312,8 @@
 /* #endregion occFilDiv */
 
 /* #endregion conBarDiv */
+
+
 
 .resCouPar { /* What: Result Count Paragraph. Why: The count is a quiet note between the controls and the cards. How: This sets it in muted mono at the base size with room above and below. */
 

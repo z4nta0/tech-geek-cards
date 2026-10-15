@@ -64,7 +64,7 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.carRecObj - Card Record Object: The card this page plays.
+ * @param props.carRecObj - Card Record Object: {@link CarRecTyp}
  *
  * @returns The page's head tags, the card, the floating bar, and the share
  *          dialog when it's open.
@@ -82,12 +82,17 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 	const CarComCom = carRecObj.carCom; // What: Card Component Component. Why: JSX only renders a component held in a capitalized name. How: This holds the card's lazy component.
 
 
+
 	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: Replay starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
 	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after Share is pressed. How: This starts closed.
 
 
 
 	usePagDesFun( carRecObj.seaStr ); // What: Page Description Call. Why: Search listings should describe this card, not repeat the home page. How: This swaps the one description tag's text for the card's own search description while it shows.
+
+
+
+	const carLoaEle = <p className={ cssModObj.carLoaPar }>Opening your card…</p>; // What: Card Loading Element. Why: The card's code arrives on demand, so the visitor should know it's on its way. How: Suspense shows this muted paragraph, centered on the screen, until the card's component has loaded.
 
 
 
@@ -125,7 +130,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 			<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: The cards were built under TechGeek.support's base styles, whose line height was looser than the family's. How: This holds the card, restoring the old line height around it. */ }
 
 
-				<Suspense fallback={ <p className={ cssModObj.carLoaPar }>Opening your card…</p> }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+				<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
 
 
 					<CarComCom key={ repCouNum } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the replay count so Replay mounts it fresh and it plays again from the start. */ }
@@ -149,13 +154,17 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barHomAnc }
 
 					to='/'
-				>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></Link>{ /* What: Bar Home Anchor Element. Why: The site's name leads back to its home page. How: This routes home, showing the wordmark with its ending in orange. */ }
+				>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></Link>{ /* What: Home Link. Why: The site's name leads back to its home page. How: This routes home, showing the wordmark with its ending in orange. */ }
+
+
 
 				<Link
 					className={ cssModObj.barGalAnc }
 
 					to='/gallery'
-				>More cards</Link>{ /* What: Bar Gallery Anchor Element. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
+				>More cards</Link>{ /* What: More Cards Link. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
+
+
 
 				<button
 					className={ cssModObj.barRepBut }
@@ -176,12 +185,15 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 			</nav>
 
+
+
 			{ shaOpeBoo && ( // What: Share Dialog Check. Why: The dialog only exists while it's open. How: This mounts it after Share is pressed.
 
 
 				<ShaDiaCom
 					carRecObj={ carRecObj }
-					onCloFun={ () => setShaOpeBoo( false ) }
+
+					onDiaCloFun={ () => setShaOpeBoo( false ) }
 				/> // What: Share Dialog Component. Why: The visitor sends the card from here. How: This opens the dialog for this card, unmounting it once it closes.
 
 

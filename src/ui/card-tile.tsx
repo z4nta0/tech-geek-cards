@@ -58,7 +58,7 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.carRecObj   - Card Record Object: The card this tile shows.
+ * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
  * @param props.onShaCarFun - On Share Card Function: Called with the card
  *                            when its Share button is pressed, so the page
  *                            can open its share dialog.
@@ -81,7 +81,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 		<article
 			className={ cssModObj.carTilArt }
 
-			data-card-occasion={ carRecObj.occStr } // What: Card Occasion Attribute. Why: Each occasion's tag takes its own color. How: The module styles the tag by this attribute's value.
+			data-card-occasion-name={ carRecObj.occStr } // What: Card Occasion Name Attribute. Why: Each occasion's tag takes its own color. How: The module styles the tag by this attribute's value.
 		>{ /* What: Card Tile Article Element. Why: Each card is a self-contained item in its grid. How: This holds the stamp frame and the tile's text, lifting as one on hover. */ }
 
 
@@ -109,11 +109,10 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 			</div>
 
 
-
 			<div className={ cssModObj.carBodDiv }>{ /* What: Card Body Div Element. Why: The card's details sit under its stamp. How: This stacks the tags, title, description, and actions. */ }
 
 
-				<div className={ cssModObj.carTagDiv }>{ /* What: Card Tags Div Element. Why: A visitor sees at a glance what the card is for and whether it takes a name. How: This lines up the tags. */ }
+				<div className={ cssModObj.carTagDiv }>{ /* What: Card Tag Div Element. Why: A visitor sees at a glance what the card is for and whether it takes a name. How: This lines up the tags. */ }
 
 
 					<span className={ cssModObj.occTagSpa }>{ carRecObj.occStr }</span>{ /* What: Occasion Tag Span Element. Why: The card's occasion is its main grouping. How: This shows the occasion in its own color. */ }
@@ -136,7 +135,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 						className={ cssModObj.carTitAnc }
 
 						to={ `/${ carRecObj.sluStr }` }
-					>{ carRecObj.titStr }</Link>{ /* What: Card Title Anchor Element. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
+					>{ carRecObj.titStr }</Link>{ /* What: Card Title Link. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
 
 
 				</h3>

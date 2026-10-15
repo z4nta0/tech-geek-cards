@@ -31,7 +31,7 @@ Birthday, through `?name=`).
   (`/happy-birthday`), which plays the card full screen with a small floating
   bar instead of the site's bar and footer.
 - **The floating bar** (decided by the user 2026-10-14): the wordmark (home),
-  More Cards, Replay, and Share, the same on every card. Replay remounts the
+  More cards, Replay, and Share, the same on every card. Replay remounts the
   card through a key, so every card restarts from its first frame the same
   way without code of its own; the cards' own Replay and Toggle Fullscreen
   buttons were removed.
@@ -49,7 +49,10 @@ Birthday, through `?name=`).
 - **Link previews**: every card gets its own preview image and tags (decided
   by the user 2026-10-14), which needs each card's page prerendered or given
   its own HTML shell. Until that's built, the site has no Open Graph or
-  Twitter tags at all.
+  Twitter tags at all. In the same step, the tile previews (1653x930 now,
+  more than twice their largest display size) are rendered at about
+  1200x675, with the intrinsic `width` and `height` updated in
+  `ui/card-tile.tsx` and `pages/home/home.tsx`.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
 
@@ -146,7 +149,7 @@ widths.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
   accessibility scan.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
-  round trip from its tile and back through More Cards), interaction
+  round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
   specified when none is chosen).
 - `npm run test:rendering`: full-page screenshots against

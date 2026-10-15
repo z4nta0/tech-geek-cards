@@ -85,9 +85,9 @@ const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: 
  * Every card the site offers, one record per card in the order the Gallery
  * lists them. Each record has the same fields, described one by one on
  * CarRecTyp above: altStr, carCom, cusBoo, desStr, imaStr, lisBoo, occStr,
- * seaStr, sluStr, and titStr. Both Father's Day cards share one preview, and the
- * special one stays unlisted, reachable only by its own address, as it was
- * on TechGeek.support.
+ * seaStr, sluStr, and titStr. Both Father's Day cards share one preview, and
+ * the special one stays unlisted, reachable only by its own address, as it
+ * was on TechGeek.support.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

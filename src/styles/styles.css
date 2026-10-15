@@ -28,7 +28,7 @@
 
 	/* #region Color Tokens */
 
-	--act-dar-col : oklch( from var( --act-mai-col ) calc( l - 0.15 ) c h ); /* What: Accent-Tertiary Dark Color. Why: The bright berry is too light to read as text on the ivory. How: Berry text, such as the hero's accent word, reads this darker shade of it. */
+	--act-dar-col : oklch( from var( --act-mai-col ) calc( l - 0.15 ) c h ); /* What: Accent-Tertiary Dark Color ~= #b11157. Why: The bright berry is too light to read as text on the ivory. How: Berry text, such as the hero's accent word, reads this darker shade of it. */
 	--act-mai-col : #E64E82;                                                 /* What: Accent-Tertiary Main Color = #E64E82. Why: Confetti needs a third, celebratory color beside the family's orange and blue, and it gives TechGeek.cards a color of its own. How: Confetti pieces, the berry dots, the stamps' hearts, and the 404's rubber stamp are drawn in it, never buttons or links, which stay orange; ink text on it reaches 4.69:1. */
 	--act-tin-col : #FAD3E0;                                                 /* What: Accent-Tertiary Tint Color = #FAD3E0. Why: Some tiles and tags sit on a pale berry. How: The Family occasion tag and the hero envelope's lining read it. */
 

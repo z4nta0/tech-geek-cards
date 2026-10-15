@@ -52,7 +52,7 @@
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Tile Article. Why: Someone who asked for less motion shouldn't see the tile glide. How: This applies only when the reduced-motion preference is set. */
 
 
-	.carTilArt { /* What: Motionless Card Tile Article. Why: The lift, press, and ring should simply switch, still applying at once. How: This turns the transition off. */
+	.carTilArt { /* What: Motionless Card Tile Article. Why: The lift and press should simply switch, still applying at once. How: This turns the transition off. */
 
 
 		transition : none;
@@ -113,7 +113,7 @@
 	--sta-hol-rad : calc( var( --ver-rhy-m04 ) * 1rem ); /* Vertical Rhythm Base Minus 4 ~= 4.732px */ /* What: Stamp Hole Radius. Why: The perforations, the border's width, and the spacing between holes all scale from one size. How: The padding and the mask below read it. */
 
 	background : var( --bac-sur-col );             /* Background Surface Color = #FFFFFF */
-	mask       : radial-gradient( var( --sta-hol-rad ), transparent 98%, #000 ) round calc( var( --sta-hol-rad ) * -1.5 ) calc( var( --sta-hol-rad ) * -1.5 ) / calc( var( --sta-hol-rad ) * 3 ) calc( var( --sta-hol-rad ) * 3 ), linear-gradient( #000 0 0 ) content-box; /* What: Perforation Mask. Why: A stamp's edge is a row of round holes. How: The first layer repeats a hole every three radii across the frame, rounding the spacing so whole holes meet each corner, and the second layer keeps the content box solid, so the holes only show in the white border. */
+	mask       : radial-gradient( var( --sta-hol-rad ), transparent 98%, #000 ) round calc( var( --sta-hol-rad ) * -1.5 ) calc( var( --sta-hol-rad ) * -1.5 ) / calc( var( --sta-hol-rad ) * 3 ) calc( var( --sta-hol-rad ) * 3 ), linear-gradient( #000 0 0 ) content-box; /* Stamp Hole Radius ~= 4.732px */ /* What: Perforation Mask. Why: A stamp's edge is a row of round holes. How: The first layer repeats a hole every three radii across the frame, rounding the spacing so whole holes meet each corner, and the second layer keeps the content box solid, so the holes only show in the white border. */
 	padding    : calc( var( --sta-hol-rad ) * 2 ); /* Stamp Hole Radius, doubled, ~= 9.464px */
 
 
@@ -151,7 +151,7 @@
 
 /* #region carTagDiv */
 
-.carTagDiv { /* What: Card Tags Div. Why: The tags sit in a row that wraps on a narrow tile. How: This lines them up with small gaps. */
+.carTagDiv { /* What: Card Tag Div. Why: The tags sit in a row that wraps on a narrow tile. How: This lines them up with small gaps. */
 
 
 	display   : flex;
@@ -174,7 +174,7 @@
 
 
 }
-.carTilArt[data-card-occasion='Birthday'] .occTagSpa { /* What: Birthday Occasion Tag Span. Why: Each occasion has its own color, and birthdays take the family's orange. How: This sets dark orange text on a pale orange pill. */
+.carTilArt[data-card-occasion-name='Birthday'] .occTagSpa { /* What: Birthday Occasion Tag Span. Why: Each occasion has its own color, and birthdays take the family's orange. How: This sets dark orange text on a pale orange pill. */
 
 
 	background : var( --acc-tin-col ); /* Accent Tint Color = #FDDCC8 */
@@ -182,15 +182,15 @@
 
 
 }
-.carTilArt[data-card-occasion='Family'] .occTagSpa { /* What: Family Occasion Tag Span. Why: Each occasion has its own color, and family days take this site's berry. How: This sets dark berry text on a pale berry pill. */
+.carTilArt[data-card-occasion-name='Family'] .occTagSpa { /* What: Family Occasion Tag Span. Why: Each occasion has its own color, and family days take this site's berry. How: This sets dark berry text on a pale berry pill. */
 
 
 	background : var( --act-tin-col ); /* Accent-Tertiary Tint Color = #FAD3E0 */
-	color      : var( --act-dar-col ); /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color      : var( --act-dar-col ); /* Accent-Tertiary Dark Color ~= #b11157 */
 
 
 }
-.carTilArt[data-card-occasion='Holiday'] .occTagSpa { /* What: Holiday Occasion Tag Span. Why: Each occasion has its own color, and holidays take the family's blue. How: This sets dark blue text on a pale blue pill. */
+.carTilArt[data-card-occasion-name='Holiday'] .occTagSpa { /* What: Holiday Occasion Tag Span. Why: Each occasion has its own color, and holidays take the family's blue. How: This sets dark blue text on a pale blue pill. */
 
 
 	background : var( --acs-tin-col ); /* Accent-Secondary Tint Color = #B8D9EC */
@@ -274,6 +274,7 @@
 
 /* #endregion carTitHea */
 
+
 .carDesPar { /* What: Card Description Paragraph. Why: The line about the card should stay a comfortable length. How: This caps it at the paragraph measure. */
 
 
@@ -281,6 +282,7 @@
 
 
 }
+
 
 
 /* #region carActDiv */
@@ -344,6 +346,7 @@
 }
 
 /* #endregion opeCueSpa */
+
 
 .carShaBut { /* What: Card Share Button. Why: Share sits above the stretched title link, as an outlined pill. How: This lifts it a layer over the link and sets it in mono capitals, easing its border, color, lift, press, and focus. */
 

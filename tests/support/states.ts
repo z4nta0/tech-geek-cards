@@ -67,13 +67,14 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * and the 404 page at a phone width (390px) and a desktop width (1,440px), the
  * mobile menu open at the phone width, since the menu is only reachable there,
  * and the share dialog open on the Gallery at both widths. Every row shares
- * the {@link StaRecTyp} shape, so its fields carry no comments of their own: -
- * `actFun` (Function): Action Function, run after the page loads to open
- * something on it, such as the menu. Only the menu and dialog rows have   one.
- * - `heiNum` (Number): Height Number, the viewport height in CSS pixels. -
- * `ideStr` (String): Identifier String, the state's name in test titles. -
- * `patStr` (String): Path String, the route loaded from the dev server. -
- * `widNum` (Number): Width Number, the viewport width in CSS pixels.
+ * the {@link StaRecTyp} shape, so its fields carry no comments of their own:
+ *  - `actFun` (Function): Action Function, run after the page loads to open
+ *    something on it, such as the menu. Only the menu and dialog rows have
+ *    one.
+ *  - `heiNum` (Number): Height Number, the viewport height in CSS pixels.
+ *  - `ideStr` (String): Identifier String, the state's name in test titles.
+ *  - `patStr` (String): Path String, the route loaded from the dev server.
+ *  - `widNum` (Number): Width Number, the viewport width in CSS pixels.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

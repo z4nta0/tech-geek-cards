@@ -95,7 +95,7 @@ src/
 ├── styles/            styles.css: this site's berry color and layout values, loaded after the design package's stylesheets
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
-public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, and Netlify's _headers and _redirects
+public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the birthday card's old preview image, kept until each card has its own
 tests/
 ├── accessibility/     axe-core scan and scripted checks
 ├── interaction/       navigation, phone menu, contact form, and hover, press, and focus feedback checks
@@ -113,7 +113,7 @@ design/                Source artwork and the scripts that render it, not served
 ## Design notes
 
 - **Theme:** "Confetti Circuit": circuit traces that end in bursts of confetti, joining the family's technical side to this site's celebrating one, with a little stationery borrowed in: card previews in perforated postage-stamp frames, heroes ending in a stamp's scalloped edge, an open envelope on Home with cards fanning out of it, and a postcard banner.
-- **Type pairing:** The family's three self-hosted fonts from the design package: Syne for headings, body text, and the wordmark, DM Mono for labels and buttons, and Lora's italic for the occasional pull quote. Each card brings its own fonts to match its theme.
+- **Type pairing:** The family's three self-hosted fonts from the design package: Syne for headings, body text, and the wordmark, DM Mono for labels and buttons, and Lora's italic for the phone menu's tagline. Each card brings its own fonts to match its theme.
 - **Palette:** The family's warm ivory page (`#F5F0E8`), deep ink (`#1A1A2E`), bright orange (`#F26419`), and soft blue (`#7DB9D8`), plus one color of this site's own, a berry pink (`#E64E82`), used only for confetti, dots, stamps, and labels, never for buttons or links. Text in those hues reads darker shades of each so it meets contrast. Occasions take one color each: orange for Birthday, berry for Family, and blue for Holiday.
 - **Scale:** Every size, from type to spacing to motion, is a step on one scale built from the plastic ratio (about 1.32) on an 11px base, and layout widths grow with the screen between fixed bounds.
 - **Motion:** Each page fades up into place, Home's cards rise out of their envelope one after another and fan wider on hover, and confetti pops in around them. Links, buttons, and tiles respond to hover, press, and keyboard focus with a color shift, a small lift or press-in, and a focus ring that eases in, and the share dialog pops in over a dimmed page. All of it turns off when a visitor's system asks for reduced motion, leaving only the instant color and position changes.

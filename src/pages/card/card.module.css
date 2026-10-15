@@ -9,14 +9,16 @@
  * card's code arrives, and the floating bar, a dark ink pill pinned to the
  * bottom center of the screen above the card, rising into view a moment
  * after the card opens, holding the wordmark, a More Cards link, a Replay
- * button, and an orange Share button. Every animation and transition holds still under
- * reduced motion.
+ * button, and an orange Share button. Every animation and transition holds
+ * still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
 
 
+
+/* #region carStaDiv */
 
 .carStaDiv { /* What: Card Stage Div. Why: The cards were drawn under TechGeek.support's base styles, whose body line height was 1.6, and the family's base sets a taller one, which spread their lines apart. How: This restores 1.6 around the card, a literal kept only until the cards are converted to the family's tokens. */
 
@@ -25,8 +27,6 @@
 
 
 }
-
-
 
 .carLoaPar { /* What: Card Loading Paragraph. Why: The visitor should know the card is on its way. How: This centers the message on the full screen in muted mono and fades it up. */
 
@@ -55,6 +55,8 @@
 
 }
 
+/* #endregion carStaDiv */
+
 
 
 /* #region carBarNav */
@@ -62,16 +64,18 @@
 .carBarNav { /* What: Card Bar Nav. Why: The bar floats over the card without covering much of it, and arrives after the card so it doesn't steal its opening. How: This pins a dark ink pill to the bottom center above the card's layers, lining up its links and button, and fades it up after a short delay. */
 
 
+	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The family's dark orange ring would vanish on the ink. How: The bright orange keeps the bar's focus rings visible, since the base styles draw every ring in this color. */
+
 	align-items   : center;
 	animation     : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) var( --dur-ani-p05 ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Animation Base Plus 5 ~= 643.9ms */
 	background    : var( --bac-inv-col );                                                                             /* Background Inverse Color = #1A1A2E */
 	border-radius : 999px;
 	bottom        : var( --spa-ver-bas );                                                                             /* Spacing Vertical Base ~= 14.572px */
-	box-shadow    : var( --ele-lar-sha );                                                                             /* Elevation Large Shadow */
+	box-shadow    : var( --ele-lar-sha );                                                                             /* Elevation Large Shadow, about 0 11px 44.9px plus 0 3.6px 11px -2.7px */
 	display       : flex;
 	gap           : var( --spa-hor-bas );                                                                             /* Spacing Horizontal Base ~= 14.572px */
 	left          : 50%;
-	padding       : var( --spa-ver-m03 ) var( --spa-ver-m03 ) var( --spa-ver-m03 ) var( --spa-hor-p01 );              /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
+	padding       : var( --spa-ver-m03 ) var( --spa-hor-m03 ) var( --spa-ver-m03 ) var( --spa-hor-p01 );              /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
 	position      : fixed;
 	translate     : -50% 0;
 	white-space   : nowrap;
@@ -99,12 +103,11 @@
 .barHomAnc { /* What: Bar Home Anchor. Why: The wordmark reads as the site's name and leads home. How: This sets it in the bold display face on the ink, easing its color, dimming, and focus. */
 
 
-	color         : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
-	font-family   : var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
-	font-size     : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
-	font-weight   : 800;
-	outline-color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
-	transition    : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	color       : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+	font-family : var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight : 800;
+	transition  : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -146,6 +149,7 @@
 
 /* #endregion barHomAnc */
 
+
 .barGalAnc { /* What: Bar Gallery Anchor. Why: More Cards is a quiet text link on the ink. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
 
 
@@ -154,7 +158,6 @@
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
-	outline-color  : var( --acc-mai-col );                   /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
 	text-transform : uppercase;
 	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
@@ -196,7 +199,6 @@
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
-	outline-color  : var( --acc-mai-col );                   /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
 	text-transform : uppercase;
 	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
@@ -240,7 +242,6 @@
 	font-size      : var( --fon-siz-bas );                      /* Font Size Base = 1rem */
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
-	outline-color  : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
 	padding        : var( --spa-ver-m02 ) var( --spa-hor-p01 ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Plus 1 ~= 19.304px */
 	text-transform : uppercase;
 	transition     : background var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
