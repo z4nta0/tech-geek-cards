@@ -79,14 +79,14 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
 	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',              titStr : 'About the Maker | TechGeek.cards'                         },
 	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',            titStr : 'Contact | TechGeek.cards'                                 },
 	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',       titStr : 'Page Not Found | TechGeek.cards'                          },
-	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : false, patStr : '/happy-birthday',     titStr : 'Happy Birthday Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : false, patStr : '/mothers-day',        titStr : "Mother's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : false, patStr : '/fathers-day',        titStr : "Father's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : false, patStr : '/fourth-of-july',     titStr : 'Fourth of July Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : false, patStr : '/happy-halloween',    titStr : 'Happy Halloween Card | TechGeek.cards'                    },
-	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : false, patStr : '/happy-thanksgiving', titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
+	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',     titStr : 'Happy Birthday Card | TechGeek.cards'                     },
+	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',        titStr : "Mother's Day Card | TechGeek.cards"                       },
+	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',        titStr : "Father's Day Card | TechGeek.cards"                       },
+	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',     titStr : 'Fourth of July Card | TechGeek.cards'                     },
+	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',    titStr : 'Happy Halloween Card | TechGeek.cards'                    },
+	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving', titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
 	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',    titStr : 'Merry Christmas Card | TechGeek.cards'                    },
-	{ canStr : null,                                 heaBoo : false, patStr : '/fathers-day-prank',  titStr : "Father's Day Special Card | TechGeek.cards"               },
+	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',  titStr : "Father's Day Special Card | TechGeek.cards"               },
 	{ canStr : null,                                 heaBoo : true,  patStr : '/christmas-prank',    titStr : 'Christmas Prank Card | TechGeek.cards'                    }
 
 
@@ -139,7 +139,7 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 	await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveCount( 1 ); // What: Single Description Assertion. Why: Two descriptions leave search engines to guess. How: This checks there's exactly one, index.html's, on every page.
 
-	if ( heaRowObj.heaBoo ) await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toHaveCount( 1 ); // What: Single Heading Assertion. Why: One h1 tells search engines and screen readers what the page is about. How: This checks there's exactly one, on every page but the cards, whose own h1 comes with each card's conversion.
+	if ( heaRowObj.heaBoo ) await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toHaveCount( 1 ); // What: Single Heading Assertion. Why: One h1 tells search engines and screen readers what the page is about. How: This checks there's exactly one on every page the row marks, now every page and every card.
 
 
 

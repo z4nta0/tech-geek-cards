@@ -52,13 +52,19 @@ type LayCasTyp = { // What: Layout Case Type. Why: Each test measures one page i
 const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page and the open menu are measured the same way. How: Each row names a case, its path, and whether it opens the menu.
 
 
-	{ ideStr : 'home',      menBoo : false, patStr : '/'                }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',   menBoo : false, patStr : '/gallery'         }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and every card tile. How: This measures it as loaded.
-	{ ideStr : 'about',     menBoo : false, patStr : '/about'           }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
-	{ ideStr : 'contact',   menBoo : false, patStr : '/contact'         }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
-	{ ideStr : 'not-found', menBoo : false, patStr : '/missing'         }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
-	{ ideStr : 'christmas', menBoo : false, patStr : '/merry-christmas' }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
-	{ ideStr : 'menu',      menBoo : true,  patStr : '/'                }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the home page with the menu open.
+	{ ideStr : 'home',           menBoo : false, patStr : '/'                   }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
+	{ ideStr : 'gallery',        menBoo : false, patStr : '/gallery'            }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and every card tile. How: This measures it as loaded.
+	{ ideStr : 'about',          menBoo : false, patStr : '/about'              }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
+	{ ideStr : 'contact',        menBoo : false, patStr : '/contact'            }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
+	{ ideStr : 'not-found',      menBoo : false, patStr : '/missing'            }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
+	{ ideStr : 'christmas',      menBoo : false, patStr : '/merry-christmas'    }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
+	{ ideStr : 'birthday',       menBoo : false, patStr : '/happy-birthday'     }, // What: Birthday Case. Why: The Birthday card's message and cake. How: This measures its message, cake, and balloons, still under reduced motion.
+	{ ideStr : 'mothers-day',    menBoo : false, patStr : '/mothers-day'        }, // What: Mother's Day Case. Why: The Mother's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
+	{ ideStr : 'fathers-day',    menBoo : false, patStr : '/fathers-day'        }, // What: Father's Day Case. Why: The Father's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
+	{ ideStr : 'fourth-of-july', menBoo : false, patStr : '/fourth-of-july'     }, // What: Fourth Of July Case. Why: The Fourth of July card's flag and lettering center above the bar. How: This measures its finished flag and lettering, which reduced motion shows at once.
+	{ ideStr : 'halloween',      menBoo : false, patStr : '/happy-halloween'    }, // What: Halloween Case. Why: The Halloween card's heading, ghosts, and pumpkins share the screen. How: This measures its finished scene, which reduced motion shows at once.
+	{ ideStr : 'thanksgiving',   menBoo : false, patStr : '/happy-thanksgiving' }, // What: Thanksgiving Case. Why: The Thanksgiving card's illustrations and message stack on a phone. How: This measures its finished illustrations and message, which reduced motion shows at once.
+	{ ideStr : 'menu',           menBoo : true,  patStr : '/'                   }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the home page with the menu open.
 
 
 ];
@@ -136,10 +142,13 @@ function layProFun () : string[] {
 	const texSpiFun = ( texCurEle : Element ) => { // What: Text Spill Function. Why: Only the element's own text running out of its box is a spill, not a decoration drawn past it on purpose, such as an underline or highlight reaching past an italic line. How: This measures every line of the element's own text and reports whether any runs more than a pixel past either inner edge of its box.
 
 
-		const boxRecObj = texCurEle.getBoundingClientRect();     // What: Box Rect Object. Why: The text is measured against the element's own box. How: This measures the box.
-		const boxLefNum = boxRecObj.left + texCurEle.clientLeft; // What: Box Left Number. Why: Text may reach the padding but not the border. How: This is the inner left edge, just inside the left border.
-		const boxRigNum = boxLefNum + texCurEle.clientWidth;     // What: Box Right Number. Why: Text may reach the padding but not the border. How: This is the inner right edge, the inner width past the left one.
-		const ranTexObj = document.createRange();                // What: Range Text Object. Why: A range measures text by its lines rather than by the element's box. How: This creates one to point at each text node in turn.
+		const boxRecObj = texCurEle.getBoundingClientRect(); // What: Box Rect Object. Why: The text is measured against the element's own box. How: This measures the box.
+		const ranTexObj = document.createRange();            // What: Range Text Object. Why: A range measures text by its lines rather than by the element's box. How: This creates one to point at each text node in turn.
+
+		const sizRatNum = texCurEle instanceof HTMLElement && texCurEle.offsetWidth ? boxRecObj.width / texCurEle.offsetWidth : 1; // What: Size Ratio Number. Why: An element grown by a transform (a card's greeting) is drawn larger than its layout width, while its border and inner width are read unscaled. How: This is its drawn width over its layout width, 1 when it isn't scaled.
+
+		const boxLefNum = boxRecObj.left + texCurEle.clientLeft * sizRatNum; // What: Box Left Number. Why: Text may reach the padding but not the border. How: This is the inner left edge, just inside the left border, scaled as drawn.
+		const boxRigNum = boxLefNum + texCurEle.clientWidth * sizRatNum;     // What: Box Right Number. Why: Text may reach the padding but not the border. How: This is the inner right edge, the inner width past the left one, scaled as drawn.
 
 
 		for ( const chiCurNod of texCurEle.childNodes ) { // What: Text Node Loop. Why: Only the element's own text counts, since each child element is measured on its own. How: This walks the element's direct children.
@@ -166,6 +175,10 @@ function layProFun () : string[] {
 
 
 
+	const visHidFun = ( hidCurEle : Element | null ) : boolean => !!hidCurEle && ( ( hidCurEle.getBoundingClientRect().width <= 1 && hidCurEle.getBoundingClientRect().height <= 1 ) || visHidFun( hidCurEle.parentElement ) ); // What: Visually Hidden Function. Why: A screen-reader copy sits in a one-pixel clipped box, where its text runs past by design and no visitor sees it. How: This reports whether the element or any ancestor is a box of one pixel or less.
+
+
+
 	if ( document.documentElement.scrollWidth > vieWidNum ) proLisArr.push( `the page scrolls sideways by ${ document.documentElement.scrollWidth - vieWidNum }px` ); // What: Sideways Scroll Check. Why: Nobody should have to scroll sideways to read the page. How: This records how far the page reaches past the visible width.
 
 
@@ -179,8 +192,9 @@ function layProFun () : string[] {
 		const zerWidBoo = !recCurObj.width;                   // What: Zero Width Boolean. Why: An element with no width takes no room. How: This checks its box has no width.
 		const zerHeiBoo = !recCurObj.height;                  // What: Zero Height Boolean. Why: An element with no height takes no room. How: This checks its box has no height.
 		const hidStyBoo = styCurObj.visibility !== 'visible'; // What: Hidden Style Boolean. Why: A hidden element doesn't show. How: This checks its computed visibility.
+		const visHidBoo = visHidFun( layCurEle );             // What: Visually Hidden Boolean. Why: A screen-reader copy doesn't show either. How: This checks for a one-pixel box at or above the element.
 
-		const invEleBoo = zerWidBoo || zerHeiBoo || hidStyBoo; // What: Invisible Element Boolean. Why: Any one of these means the element can't break the layout. How: This combines them.
+		const invEleBoo = zerWidBoo || zerHeiBoo || hidStyBoo || visHidBoo; // What: Invisible Element Boolean. Why: Any one of these means the element can't break the layout. How: This combines them.
 
 
 		if ( invEleBoo ) continue; // What: Invisible Element Guard. Why: An element that takes no room or doesn't show can't break the layout. How: This skips it.

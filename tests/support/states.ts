@@ -46,6 +46,7 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 	heiNum  : number,                                  // What: Height Number. Why: The viewport's height decides what's on screen. How: This is the viewport height in CSS pixels.
 	ideStr  : string,                                  // What: Identifier String. Why: Each test names the state it checks. How: This becomes part of the test title.
 	patStr  : string,                                  // What: Path String. Why: Each state opens one route. How: This is the path loaded from the dev server.
+	redBoo? : boolean,                                 // What: Reduced Boolean. Why: A card plays for up to two minutes, so it never sits still long enough to check. How: When true, the page loads under reduced motion, opening on the card's finished scene, and the preference is switched back off once it's open.
 	widNum  : number                                   // What: Width Number. Why: Layouts and menus change with width. How: This is the viewport width in CSS pixels.
 
 
@@ -75,6 +76,8 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  *  - `heiNum` (Number): Height Number, the viewport height in CSS pixels.
  *  - `ideStr` (String): Identifier String, the state's name in test titles.
  *  - `patStr` (String): Path String, the route loaded from the dev server.
+ *  - `redBoo` (Boolean): Reduced Boolean, true on a card's rows, which load
+ *    under reduced motion so the card opens finished, then switch it off.
  *  - `widNum` (Number): Width Number, the viewport width in CSS pixels.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -84,18 +87,30 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every check walks the same list of states, so a new state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
 
 
-	{ heiNum : 900, ideStr : 'home-desktop',      patStr : '/',                widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
-	{ heiNum : 844, ideStr : 'home-phone',        patStr : '/',                widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
-	{ heiNum : 900, ideStr : 'gallery-desktop',   patStr : '/gallery',         widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
-	{ heiNum : 844, ideStr : 'gallery-phone',     patStr : '/gallery',         widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
-	{ heiNum : 900, ideStr : 'about-desktop',     patStr : '/about',           widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
-	{ heiNum : 844, ideStr : 'about-phone',       patStr : '/about',           widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
-	{ heiNum : 900, ideStr : 'contact-desktop',   patStr : '/contact',         widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
-	{ heiNum : 844, ideStr : 'contact-phone',     patStr : '/contact',         widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
-	{ heiNum : 900, ideStr : 'not-found-desktop', patStr : '/missing',         widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
-	{ heiNum : 844, ideStr : 'not-found-phone',   patStr : '/missing',         widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
-	{ heiNum : 900, ideStr : 'christmas-desktop', patStr : '/merry-christmas', widNum : 1440 }, // What: Christmas Desktop State. Why: The Christmas card is the first converted card, so its page joins every check. How: This loads it at 1,440px, where reduced motion shows its finished snowy scene.
-	{ heiNum : 844, ideStr : 'christmas-phone',   patStr : '/merry-christmas', widNum : 390  }, // What: Christmas Phone State. Why: The card's lettering shrinks and the floating bar crowds it on a phone. How: This loads it at 390px.
+	{ heiNum : 900, ideStr : 'home-desktop',           patStr : '/',                   redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
+	{ heiNum : 844, ideStr : 'home-phone',             patStr : '/',                   redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
+	{ heiNum : 900, ideStr : 'gallery-desktop',        patStr : '/gallery',            redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
+	{ heiNum : 844, ideStr : 'gallery-phone',          patStr : '/gallery',            redBoo : false, widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
+	{ heiNum : 900, ideStr : 'about-desktop',          patStr : '/about',              redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
+	{ heiNum : 844, ideStr : 'about-phone',            patStr : '/about',              redBoo : false, widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
+	{ heiNum : 900, ideStr : 'contact-desktop',        patStr : '/contact',            redBoo : false, widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
+	{ heiNum : 844, ideStr : 'contact-phone',          patStr : '/contact',            redBoo : false, widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
+	{ heiNum : 900, ideStr : 'not-found-desktop',      patStr : '/missing',            redBoo : false, widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
+	{ heiNum : 844, ideStr : 'not-found-phone',        patStr : '/missing',            redBoo : false, widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
+	{ heiNum : 900, ideStr : 'christmas-desktop',      patStr : '/merry-christmas',    redBoo : true,  widNum : 1440 }, // What: Christmas Desktop State. Why: The Christmas card is the first converted card, so its page joins every check. How: This loads it at 1,440px, where reduced motion shows its finished snowy scene.
+	{ heiNum : 844, ideStr : 'christmas-phone',        patStr : '/merry-christmas',    redBoo : true,  widNum : 390  }, // What: Christmas Phone State. Why: The card's lettering shrinks and the floating bar crowds it on a phone. How: This loads it at 390px.
+	{ heiNum : 900, ideStr : 'birthday-desktop',       patStr : '/happy-birthday',     redBoo : true,  widNum : 1440 }, // What: Birthday Desktop State. Why: The Birthday card's message and cake, and converted cards join every check. How: This loads it at 1,440px, where it shows its message, cake, and balloons, still under reduced motion.
+	{ heiNum : 844, ideStr : 'birthday-phone',         patStr : '/happy-birthday',     redBoo : true,  widNum : 390  }, // What: Birthday Phone State. Why: The Birthday card's message and cake, and converted cards join every check. How: This loads it at 390px, where it shows its message, cake, and balloons, still under reduced motion.
+	{ heiNum : 900, ideStr : 'mothers-day-desktop',    patStr : '/mothers-day',        redBoo : true,  widNum : 1440 }, // What: Mother's Day Desktop State. Why: The Mother's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
+	{ heiNum : 844, ideStr : 'mothers-day-phone',      patStr : '/mothers-day',        redBoo : true,  widNum : 390  }, // What: Mother's Day Phone State. Why: The Mother's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
+	{ heiNum : 900, ideStr : 'fathers-day-desktop',    patStr : '/fathers-day',        redBoo : true,  widNum : 1440 }, // What: Father's Day Desktop State. Why: The Father's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
+	{ heiNum : 844, ideStr : 'fathers-day-phone',      patStr : '/fathers-day',        redBoo : true,  widNum : 390  }, // What: Father's Day Phone State. Why: The Father's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
+	{ heiNum : 900, ideStr : 'fourth-of-july-desktop', patStr : '/fourth-of-july',     redBoo : true,  widNum : 1440 }, // What: Fourth Of July Desktop State. Why: The Fourth of July card's flag and lettering center above the bar, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished flag and lettering, which reduced motion shows at once.
+	{ heiNum : 844, ideStr : 'fourth-of-july-phone',   patStr : '/fourth-of-july',     redBoo : true,  widNum : 390  }, // What: Fourth Of July Phone State. Why: The Fourth of July card's flag and lettering center above the bar, and converted cards join every check. How: This loads it at 390px, where it shows its finished flag and lettering, which reduced motion shows at once.
+	{ heiNum : 900, ideStr : 'halloween-desktop',      patStr : '/happy-halloween',    redBoo : true,  widNum : 1440 }, // What: Halloween Desktop State. Why: The Halloween card's heading, ghosts, and pumpkins share the screen, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished scene, which reduced motion shows at once.
+	{ heiNum : 844, ideStr : 'halloween-phone',        patStr : '/happy-halloween',    redBoo : true,  widNum : 390  }, // What: Halloween Phone State. Why: The Halloween card's heading, ghosts, and pumpkins share the screen, and converted cards join every check. How: This loads it at 390px, where it shows its finished scene, which reduced motion shows at once.
+	{ heiNum : 900, ideStr : 'thanksgiving-desktop',   patStr : '/happy-thanksgiving', redBoo : true,  widNum : 1440 }, // What: Thanksgiving Desktop State. Why: The Thanksgiving card's illustrations and message stack on a phone, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished illustrations and message, which reduced motion shows at once.
+	{ heiNum : 844, ideStr : 'thanksgiving-phone',     patStr : '/happy-thanksgiving', redBoo : true,  widNum : 390  }, // What: Thanksgiving Phone State. Why: The Thanksgiving card's illustrations and message stack on a phone, and converted cards join every check. How: This loads it at 390px, where it shows its finished illustrations and message, which reduced motion shows at once.
 
 	{ // What: Menu Phone State. Why: The open menu holds the phone's only copy of the page links. How: This loads the home page at 390px and opens the menu through its toggle button.
 
@@ -343,6 +358,14 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 	await curPagObj.setViewportSize( { height : staRecObj.heiNum, width : staRecObj.widNum } ); // What: Viewport Size Call. Why: The state's layout depends on its width. How: This sizes the page before it loads, so breakpoints apply from the first paint.
 
+	const redPreBoo = await curPagObj.evaluate( () => matchMedia( '(prefers-reduced-motion: reduce)' ).matches ); // What: Reduced Preset Boolean. Why: A test that asked for reduced motion itself has to keep it. How: This reads the preference before the state touches it.
+
+
+
+	if ( staRecObj.redBoo ) await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Card Finish Emulation. Why: A card would otherwise still be playing when it's checked. How: This loads the card under reduced motion, which opens it on its finished scene.
+
+
+
 	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's dev server.
 
 	await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Text measured before its web font loads would have the wrong size and wrapping. How: This waits until every font face has loaded.
@@ -350,6 +373,10 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 	await revPagFun( curPagObj ); // What: Page Reveal Call. Why: Lazy images stay blank until scrolled near. How: This scrolls through the page and back to the top.
 
 	await curPagObj.evaluate( () => Promise.all( Array.from( document.images, ( imaCurEle ) => imaCurEle.decode() ) ) ); // What: Images Decoded Wait. Why: A check shouldn't measure or capture the page before its images are drawn. How: This waits until every image on the page has finished decoding.
+
+
+
+	if ( staRecObj.redBoo && !redPreBoo ) await curPagObj.emulateMedia( { reducedMotion : 'no-preference' } ); // What: Card Motion Restore. Why: The card is finished, but its controls still have to ease their hover and focus looks. How: This turns the preference back off, unless the test asked for reduced motion itself.
 
 
 

@@ -115,10 +115,8 @@ src/
                          card/ (the page every card plays in)
   ui/                    the card catalog (cards.ts), the card tile, the
                          share dialog, the motif, and the page list
-  cards/                 the cards; a converted card has its own folder
-                         (christmas/), the rest are copied unchanged (see
-                         below)
-  hooks/                 the unconverted cards' window size hook
+  cards/                 one folder per card (christmas/, mothers-day/, ...)
+  ui/family-card.tsx     the engine the three Family cards share
   utils/                 motion.ts and rhythm.ts, the reduced-motion check,
                          easing tokens, and scale steps for GSAP
   assets/                card previews, illustrations, and fonts
@@ -147,8 +145,8 @@ rest follow the same pattern.
 - **GSAP timelines follow the scale**: durations through `durMilFun` (steps
   below `m03` included, for glitches), distances through `rhyPxlFun`, angles
   through `cdnPowFun`, and curves from the easing tokens, registered with
-  GSAP's CustomEase (the Christmas card's `gsaEasFun`, which moves to `ui/`
-  once a second card needs it). Under reduced motion the timeline jumps to
+  GSAP's CustomEase through `ui/gsap-ease.ts`'s `gsaEasFun`; GSAP takes
+  seconds, so durations usually come through `durSecFun`. Under reduced motion the timeline jumps to
   its end and any JS motion (the snow) never starts.
 - **Lettering pinned to the bottom** takes `--car-bar-mar` as its bottom
   margin, which the card page sets to clear the floating bar.
@@ -164,38 +162,31 @@ rest follow the same pattern.
   WebKit's frames take up to 700ms and stalled the timeline.
 - **Tests**: each converted card joins every suite at 1,440px and 390px,
   captured at its finished scene under reduced motion.
+- **No z-index between a card and the bar**: every card's root is fixed, so
+  its own layers stay inside it, and the floating bar sits one layer above
+  the stage.
+- **JS motion cleans up after itself**: every loop (snow, leaves, confetti,
+  balloons, fireworks) returns a stop function the card's `useGSAP` cleanup
+  calls, steps by elapsed time so 60Hz and 120Hz screens match, and never
+  starts under reduced motion.
+- **The Family cards** (Mother's Day, Father's Day, and the Father's Day
+  prank) are one engine, `ui/family-card.tsx`, each card only a record of its
+  lines, photos, grid order, and greeting plus a theme class setting
+  `--fam-bac-col`, `--fam-tex-col`, and `--fam-tex-fon`. The heart is a CSS
+  mask (`ui/family-heart.svg`), so no orientation code or remount is needed,
+  the grid's photos open in a dialog, and the greeting's growth is capped to
+  fit the screen. Its halo is three plain glows: more layers made WebKit
+  stall while each letter typed.
 
-## Legacy cards
-The cards in `src/cards/` (and `src/hooks/useWinSiz.ts`) are TechGeek.support's
-code, still unconverted to the formatting, naming, and token rules. Changes so
-far, each to keep them working in the new frame:
-- `react-router-dom` became `react-router` in the birthday card.
-- Their TTF fonts became Fontsource's Latin WOFF2 files (1,055 KB to 231 KB).
-- Their 24 inline `rem` sizes became the same pixel values (rem times 16),
-  since the family's root is 11px where theirs was 16px.
-- The card page restores their 1.6 line height around them (`carStaDiv`).
-- Their own Replay and Toggle Fullscreen buttons, the code behind them, and
-  their styles were removed (2026-10-14); the toggle only switched each card
-  between fixed and relative positioning, and each keeps its full-screen
-  default. Fourth of July's stylesheet held nothing else, so it's gone.
-
-**Converting them** (decided by the user 2026-10-14): the cards are gone
-through one by one, with the user, before the site is done. Everything moves
-onto the family's tokens: font sizes onto the font size scale (replacing the
-interim pixel values above), headings' line heights equal to their font
-size (the m01 step, 1), and every other value onto its scale, while each
-card keeps its own custom fonts, since nearly every card has a font to match
-its own theme. Pale previews (Mother's and Father's Day) are redone in the
-same pass.
-
-Still to do in their conversion pass: the rules themselves; one h1 per card,
-its main greeting (most have none, and Halloween's and Thanksgiving's already
-have theirs); ESLint's 10 findings in them (loose types, a variable read
-before it's declared, a stray expression); their z-indexes up to 999, which
-force the floating bar to 1000; reduced-motion variants; the typing cursor on
-the Mother's and Father's Day cards now taking the card's font instead of
-Syne; and names outside Latin (the extended Latin font files, loaded only when
-a name needs them).
+## Card conversion pass
+Every card was converted on 2026-10-15, the Christmas card with the user and
+the rest while the user was away, for review together afterwards. Every style
+value was snapped to its nearest token whatever the distance (decided by the
+user 2026-10-15), and each value more than 10% from its original was listed
+for that review. The interim pieces are gone: the copied hook, the 1.6 line
+height on the card page, and the floating bar's z-index of 1000. Still open:
+names outside Latin (the extended Latin font files, loaded only when a name
+needs them).
 
 ## Test suites
 Added 2026-10-14, adapted from TechGeek.dev's (see its CLAUDE.md for what
@@ -223,8 +214,6 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
-- **Not covered yet**: the unconverted card pages in the accessibility,
-  interaction, rendering, and responsive suites, and their one-h1 check in
-  the SEO suite, which join as each card is converted (the Christmas card
-  already has); and the social preview checks, which return with the
-  per-card preview images.
+- **Not covered yet**: the two prank pages (Christmas and Father's Day), which
+  share their listed cards' code, and the social preview checks, which
+  return with the per-card preview images.

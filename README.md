@@ -72,7 +72,7 @@ The originals in `design/images/originals/` are large and kept out of git, so a 
 
 ## Adding a card
 
-1. Give the card its own folder, `src/cards/<card-name>/`, holding its component, its CSS module, any script only it uses, its illustrations, and its fonts as Latin WOFF2 files. `src/cards/christmas/` is the first converted card and the pattern to follow.
+1. Give the card its own folder, `src/cards/<card-name>/`, holding its component, its CSS module, any script only it uses, its illustrations, and its fonts as Latin WOFF2 files. `src/cards/christmas/` is the pattern to follow; a Mother's or Father's Day style card is just a record handed to `src/ui/family-card.tsx`.
 2. Add the originals of its illustrations and its preview to `design/images/originals/`, list them in `design/images/render.mts`, and run `npm run images`. The preview lands in `src/assets/`, since the Gallery and Home show it too.
 3. Give it a row in `CAR_REC_ARR` in `src/ui/cards.ts`: its title, occasion, descriptions, preview, address, and component. The row makes its tile, its page, and its share dialog; nothing else needs a route.
 4. Add its address to `public/sitemap.xml`, its row to the SEO suite's page list, its desktop and phone states to `tests/support/states.ts`, and its case to the two responsive suites, then run the tests and approve its new screenshots.
@@ -82,8 +82,7 @@ The originals in `design/images/originals/` are large and kept out of git, so a 
 ```
 src/
 ├── assets/            Card previews, illustrations, and fonts
-├── cards/             The cards themselves, each loaded only when its page opens; a converted card has its own folder, such as christmas/
-├── hooks/             The unconverted cards' window size hook
+├── cards/             The cards themselves, each in its own folder (christmas/, mothers-day/, ...) and loaded only when its page opens
 ├── pages/
 │   ├── home/          Home page and its .module.css
 │   ├── gallery/       Gallery page and its .module.css
@@ -91,7 +90,7 @@ src/
 │   ├── contact/       Contact page and its .module.css
 │   ├── card/          The page every card plays in, with its floating bar
 │   └── not-found/     The 404 page every unknown path shows, with its .module.css
-├── ui/                What more than one page uses: the card catalog (cards.ts), the card tile, the share dialog, the confetti circuit pattern, and page-links.ts, the pages the bar and footer link to
+├── ui/                What more than one page or card uses: the card catalog (cards.ts), the card tile, the share dialog, the confetti circuit pattern, page-links.ts (the pages the bar and footer link to), gsap-ease.ts, and family-card.tsx, the engine the three Family cards share
 ├── styles/            styles.css: this site's berry color, ease-in-out curve, and layout values, loaded after the design package's stylesheets
 ├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines
 ├── app.tsx            Root component and the route table
