@@ -105,7 +105,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 
 
 		altStr : 'The Happy Birthday card, with its greeting over a festive scene.',
-		carCom : lazy( () => import( '../cards/HappyBirthdayCard.tsx' ) ),
+		carCom : lazy( () => import( '../cards/happy-birthday/happy-birthday-card.tsx' ).then( ( modObj ) => ( { default : modObj.BirCarCom } ) ) ),
 		cusBoo : true,
 		desStr : 'An animated birthday card with confetti, balloons, and a message, made out to them by name.',
 		froBoo : false,

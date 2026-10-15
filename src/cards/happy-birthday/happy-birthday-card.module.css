@@ -1,0 +1,370 @@
+
+
+
+/**
+ * happy-birthday-card.module.css = Happy Birthday Card Module
+ *
+ * @summary
+ * Styles for BirCarCom, a full-screen night sky in deep purples, stacked in
+ * painting order: a scatter of faint stars, the balloons balloons.ts floats
+ * up, the greeting, wish, cake, and invitation centered above the floating
+ * bar, and on top the canvas confetti.ts throws confetti on. The greeting
+ * pops in Luckiest Guy, its Happy line glowing white and its Birthday and
+ * name lines in a rainbow, and the wish is set in Mystery Quest, both
+ * declared here so they load with the card; Mystery Quest's file is shared
+ * with the Thanksgiving card. The candle flames flicker through CSS, and
+ * stand still under reduced motion; everything else is played by the GSAP
+ * timeline and the two loops, which skip their motion under reduced motion.
+ * No layer needs a z-index, since each paints over the one before it.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Luckiest Guy Font Face. Why: The greeting reads as a bold, bouncy cartoon. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Luckiest Guy';
+	font-weight  : 400;
+	src          : url( './luckiest-guy-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+@font-face { /* What: Mystery Quest Font Face. Why: The wish reads as playful handwriting. How: This loads the font's Latin regular weight from the shared fonts folder, where the Thanksgiving card reads it too. */
+
+
+	font-display : swap;
+	font-family  : 'Mystery Quest';
+	font-weight  : 400;
+	src          : url( '../../assets/fonts/mystery-quest-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+/* #region birCarDiv */
+
+.birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
+
+
+	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
+	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
+
+	-webkit-user-select : none;
+	background          : linear-gradient( calc( var( --cdn-pow-017 ) * 1deg ), #1A0533 0%, #2D0A5E calc( var( --cdn-pow-003-rec ) * 100% ), #0A1A4A 100% ); /* Core-Design-Number to the Power of 17 ~= 119.151deg, Core-Design-Number to the Power of 3 Reciprocal ~= 43.0% */
+	color               : #FFFFFF;
+	cursor              : pointer;
+	inset               : 0;
+	overflow            : hidden;
+	position            : fixed;
+	user-select         : none;
+
+
+}
+
+
+/* #region staSkyDiv */
+
+.staSkyDiv { /* What: Star Sky Div. Why: Stars are scattered over the whole night sky. How: This covers the card for the stars to sit in. */
+
+
+	inset    : 0;
+	position : absolute;
+
+
+}
+
+.staDotSpa { /* What: Star Dot Span. Why: Each star is a tiny white dot. How: This rounds a small white square, placed by the card at its percentage spot, centered on that spot. */
+
+
+	background-color : #FFFFFF;
+	border-radius    : 50%;
+	height           : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.537px */
+	position         : absolute;
+	translate        : -50% -50%;
+	width            : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.537px */
+
+
+}
+.staDotSpa--big { /* What: Big Star Dot Span. Why: Every fifth star shines larger. How: This sizes it a couple of steps up. */
+
+
+	height : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+	width  : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+
+
+}
+
+/* #endregion staSkyDiv */
+
+
+
+/* #region balSkyDiv */
+
+.balSkyDiv { /* What: Balloon Sky Div. Why: Balloons rise across the whole card. How: This covers the card for balloons.ts to move them in. */
+
+
+	inset    : 0;
+	position : absolute;
+
+
+}
+
+
+/* #region balFloSvg */
+
+.balFloSvg { /* What: Balloon Float SVG. Why: Each balloon floats a little see-through over the stars, sized to the screen. How: This pins it to the card's top left for balloons.ts to move by transform, sets its height between two steps with the screen's smaller side, and keeps it on its own layer, since it moves the whole time it's shown. */
+
+
+	height      : clamp( calc( var( --ver-rhy-p05 ) * 1rem ), 12vmin, calc( var( --ver-rhy-p08 ) * 1rem ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Vertical Rhythm Base Plus 8 ~= 138.199px */ /* What: Fluid Balloon Height. Why: The balloons should take the same share of any screen, but not shrink to specks on a phone. How: This grows them with the screen's smaller side between the two steps. */
+	left        : 0;
+	opacity     : var( --cdn-pow-001-rec );                                                                  /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	overflow    : visible;
+	position    : absolute;
+	top         : 0;
+	will-change : transform;
+	width       : auto;
+
+
+}
+
+.balShiEll { /* What: Balloon Shine Ellipse. Why: The glint should be faint. How: This sets its opacity low. */
+
+
+	opacity : var( --cdn-pow-004-rec ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
+
+
+}
+
+.balStrLin { /* What: Balloon String Line. Why: The string should read as thin and soft. How: This sets its opacity to about half. */
+
+
+	opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+
+
+}
+
+/* #endregion balFloSvg */
+
+/* #endregion balSkyDiv */
+
+
+
+/* #region birMesDiv */
+
+.birMesDiv { /* What: Birthday Message Div. Why: The greeting, wish, cake, and invitation stack in the middle of the card, clear of the floating bar. How: This centers a column over the card, with the bar's margin as its bottom padding so the column centers in the space above it. */
+
+
+	align-items     : center;
+	display         : flex;
+	flex-direction  : column;
+	inset           : 0;
+	justify-content : center;
+	padding         : var( --spa-ver-p02 ) var( --spa-hor-p02 );  /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the side padding's step outside the card page. */
+	position        : absolute;
+	text-align      : center;
+
+
+}
+
+
+/* #region birTitHea */
+
+.birTitHea { /* What: Birthday Title Heading. Why: The greeting leads the card in a bold cartoon face. How: This sets Luckiest Guy at its own weight with lines as tall as the text, a little space below. */
+
+
+	font-family    : var( --bir-dis-fon ); /* Birthday Display Font = 'Luckiest Guy', main font */
+	font-weight    : 400;                  /* What: Regular Weight. Why: Luckiest Guy has no bold, and a heading's bold would draw a fake one. How: This keeps the font's own weight. */
+	letter-spacing : normal;
+	line-height    : var( --ver-rhy-m01 ); /* Vertical Rhythm Base Minus 1 = 1 */
+	margin-bottom  : var( --spa-ver-m02 ); /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	max-width      : 100%;
+
+
+}
+
+.titTopSpa { /* What: Title Top Span. Why: Happy opens the greeting in white with a warm glow. How: This sets the line a step smaller than Birthday, growing with the screen, with a soft gold shadow. */
+
+
+	display     : block;
+	font-size   : clamp( var( --fon-siz-p04 ), 10vw, var( --fon-siz-p06 ) );                                                             /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
+	text-shadow : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) rgb( 255 180 0 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Plus 1 ~= 19.304px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Line Glow. Why: The line glows gold. How: The shadow is cast by the whole line, which pops in as one piece rather than letter by letter. */
+
+
+}
+
+.titMaiSpa { /* What: Title Main Span. Why: Birthday, and the name when there is one, are the greeting's biggest lines, in a rainbow. How: This sets each line growing with the screen, its letters cut out of a left-to-right rainbow, and lets a long name break anywhere rather than run off a phone. */
+
+
+	-webkit-background-clip : text;
+	background-clip         : text;
+	background-image        : linear-gradient( calc( var( --cdn-pow-016 ) * 1deg ), #FFD93D, #FF6B6B, #A78BFA, #4D96FF, #6BCB77 ); /* Core-Design-Number to the Power of 16 ~= 89.945deg */
+	color                   : transparent;
+	display                 : block;
+	font-size               : clamp( var( --fon-siz-p05 ), 13vw, var( --fon-siz-p07 ) );                                           /* Font Size Base Plus 5 ~= 44.876px, Font Size Base Plus 7 ~= 78.751px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
+	letter-spacing          : calc( var( --cdn-pow-015-rec ) * 1em );                                                              /* Core-Design-Number to the Power of 15 Reciprocal ~= 0.015em */
+	overflow-wrap           : anywhere;
+
+
+}
+
+/* #endregion birTitHea */
+
+
+.birSubPar { /* What: Birthday Subtitle Paragraph. Why: The wish follows the greeting in playful handwriting. How: This sets Mystery Quest in soft white, growing with the screen, within the small text measure. */
+
+
+	color         : rgb( 255 255 255 / var( --cdn-pow-001-rec ) );            /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Soft White. Why: The base paragraph rule sets the secondary text color, but the wish sits on the night sky. How: This sets a slightly see-through white. */
+	font-family   : var( --bir-dec-fon );                                     /* Birthday Decorative Font = 'Mystery Quest', main font */
+	font-size     : clamp( var( --fon-siz-p01 ), 4vw, var( --fon-siz-p03 ) ); /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish should read comfortably on a big screen without crowding a phone. How: This grows it with the screen between the two steps. */
+	line-height   : var( --ver-rhy-p01 );                                     /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-bottom : var( --spa-ver-p02 );                                     /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	max-width     : var( --tex-wid-sma );                                     /* Text Width Small ~= 22.047em */
+
+
+}
+
+
+
+/* #region birCakSvg */
+
+.birCakSvg { /* What: Birthday Cake SVG. Why: The cake sits under the wish at a set size. How: This sizes the drawing, its width following its own proportions, never lets the column squeeze it, and lets the flames flicker past its edges. */
+
+
+	flex-shrink : 0;
+	height      : clamp( calc( var( --ver-rhy-p08 ) * 1rem ), 20vmin, calc( var( --ver-rhy-p09 ) * 1rem ) ); /* Vertical Rhythm Base Plus 8 ~= 138.199px, Vertical Rhythm Base Plus 9 ~= 183.074px */ /* What: Fluid Cake Height. Why: A cake sized for a phone looks lost on a big screen. How: This grows it with the screen's smaller side between the two steps. */
+	overflow    : visible;
+	width       : auto;
+
+
+}
+
+.cakShaEll { /* What: Cake Shadow Ellipse. Why: The shadow under the cake should be soft. How: This sets it about half see-through. */
+
+
+	opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+
+
+}
+
+.cakHigRec { /* What: Cake Highlight Rect. Why: The light along a tier's top should be faint. How: This sets the band mostly see-through. */
+
+
+	opacity : var( --cdn-pow-003-rec ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430 */
+
+
+}
+.cakHigRec--top { /* What: Top Cake Highlight Rect. Why: The top tier's highlight was drawn a little stronger. How: This raises its opacity a step. */
+
+
+	opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+
+
+}
+
+
+/* #region cakFlaGro */
+
+.cakFlaGro { /* What: Cake Flame Group. Why: Each candle's flame flickers like a real one. How: This squashes and widens the flame from its base and back, over and over, the first flame at the quickest pace. */
+
+
+	animation        : cakFlaGroBurnFlicker var( --dur-ani-m01 ) var( --mot-sta-eas ) infinite alternate; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Standard Easing = ease */
+	transform-box    : fill-box;
+	transform-origin : center bottom;
+
+
+}
+.cakFlaGro--second { /* What: Second Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the middle flame a step and starts it a moment later. */
+
+
+	animation-delay    : var( --dur-ani-m02 ); /* Duration Animation Base Minus 2 ~= 89.9ms */
+	animation-duration : var( --dur-ani-bas ); /* Duration Animation Base ~= 157.8ms */
+
+
+}
+.cakFlaGro--third { /* What: Third Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the last flame another step and starts it later still. */
+
+
+	animation-delay    : var( --dur-ani-bas ); /* Duration Animation Base ~= 157.8ms */
+	animation-duration : var( --dur-ani-p01 ); /* Duration Animation Base Plus 1 ~= 209.1ms */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Cake Flame Group. Why: Someone who asked for less motion shouldn't see the flames flicker. How: This applies only when the reduced-motion preference is set. */
+
+
+	.cakFlaGro { /* What: Still Cake Flame Group. Why: The flames should simply burn. How: This turns the flicker off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes cakFlaGroBurnFlicker { /* What: Cake Flame Group Burn Flicker. Why: A candle flame dances as it burns. How: This squashes the flame to about three quarters of its height and widens it by about a third, played back and forth. */
+
+
+	to {
+
+
+		transform : scale( var( --cdn-pow-001 ), var( --cdn-pow-001-rec ) ); /* Core-Design-Number to the Power of 1 ~= 1.325, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+	}
+
+
+}
+
+.flaMidEll { /* What: Flame Middle Ellipse. Why: The flame's red heart should blend into its yellow. How: This makes it a little see-through. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+
+/* #endregion cakFlaGro */
+
+/* #endregion birCakSvg */
+
+
+
+.birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets small, slightly spaced main-font text in a quiet white, a little below the cake. */
+
+
+	color          : rgb( 255 255 255 / var( --cdn-pow-002-rec ) ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */
+	font-size      : var( --fon-siz-p01 );                          /* Font Size Base Plus 1 ~= 14.572px */
+	letter-spacing : calc( var( --cdn-pow-012-rec ) * 1em );        /* Core-Design-Number to the Power of 12 Reciprocal ~= 0.034em */
+	line-height    : var( --ver-rhy-p01 );                          /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-top     : var( --spa-ver-m02 );                          /* Spacing Vertical Base Minus 2 ~= 8.304px */
+
+
+}
+
+/* #endregion birMesDiv */
+
+
+
+.birConCan { /* What: Birthday Confetti Canvas. Why: Confetti flies over everything, but taps have to reach the card. How: This covers the card and lets the pointer pass through. */
+
+
+	height         : 100%;
+	inset          : 0;
+	pointer-events : none;
+	position       : absolute;
+	width          : 100%;
+
+
+}
+
+/* #endregion birCarDiv */
+
+
