@@ -239,7 +239,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 		lisBoo : false,
 		occStr : 'Family',
 		seaStr : "A playful animated Father's Day card for a dad with a wild side, coded by hand and shared with a single link. Free to send.",
-		sluStr : 'fathers-day-special',
+		sluStr : 'fathers-day-prank',
 		titStr : "Father's Day Special"
 
 

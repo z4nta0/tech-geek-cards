@@ -128,7 +128,7 @@ Every card opens full screen at its own address (`/happy-birthday`), with a smal
 These cards have their own pages but stay out of the Gallery, Home, and search results (they carry `noindex` and aren't in the sitemap), so they're reached only by their links. Any new unlisted card gets an address ending in `-prank`.
 
 - **Christmas Prank** (`/christmas-prank`): the full Christmas card, which opens on a fake hacked screen that glitches into the snowy Merry Christmas scene. Made for the maker's family, it's signed From, Mr. Awesome unless the link says otherwise.
-- **Father's Day Special** (`/fathers-day-special`): a playful Father's Day card for a dad with a wild side, made for the maker's own father.
+- **Father's Day Special** (`/fathers-day-prank`): a playful Father's Day card for a dad with a wild side, made for the maker's own father.
 
 ## Search and the contact form
 

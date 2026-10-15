@@ -41,7 +41,7 @@ field to the share dialog).
   card kept off the Gallery and Home, reached only by its own link, gets an
   address ending in `-prank` (`/christmas-prank`), so every unlisted card is
   named the same way, and the README's Unlisted cards section lists each one.
-- **The special Father's Day card** (`/fathers-day-special`) stays unlisted,
+- **The special Father's Day card** (`/fathers-day-prank`) stays unlisted,
   since the user made it for their own father (decided 2026-10-14).
 - **The Christmas cards** (decided by the user 2026-10-15): one component,
   two catalog rows. The listed Merry Christmas card (`/merry-christmas`) is
