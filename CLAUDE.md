@@ -124,11 +124,12 @@ a name needs them).
 
 ## Test suites
 Added 2026-10-14, adapted from TechGeek.dev's (see its CLAUDE.md for what
-each check does). Playwright suites live in `tests/`, one project per suite
-and engine in `tests/playwright.config.ts`, which starts its own dev server on
-port 5195 (never the usual 5173, nor the siblings' 5190 through 5194) and
-stops it afterwards, so a dev server already on 5195 has to be stopped
-first. Every suite runs in Chromium, Firefox, and WebKit. The states the
+each check does). The user always has their own dev server running on the
+usual 5173 (decided 2026-10-14), so Claude never starts one to look at the
+site and uses theirs instead. Playwright suites live in `tests/`, one project
+per suite and engine in `tests/playwright.config.ts`, which starts its own dev
+server on port 5195 (never the user's 5173, nor the siblings' 5190 through
+5194) and stops it afterwards. Every suite runs in Chromium, Firefox, and WebKit. The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
 and 1,440px, the phone menu, and the share dialog open on the Gallery at both
 widths.
