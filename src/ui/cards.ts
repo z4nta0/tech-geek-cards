@@ -177,7 +177,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 
 
 		altStr : 'The Happy Halloween card, with its greeting in a spooky night scene.',
-		carCom : lazy( () => import( '../cards/HappyHalloweenCard.tsx' ) ),
+		carCom : lazy( () => import( '../cards/happy-halloween/happy-halloween-card.tsx' ).then( ( modObj ) => ( { default : modObj.HalCarCom } ) ) ),
 		cusBoo : false,
 		desStr : 'A spooky Halloween card with eerie animations and effects.',
 		froBoo : false,
