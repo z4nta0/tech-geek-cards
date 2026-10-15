@@ -159,7 +159,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 
 
 		altStr : 'The Fourth of July card, with its greeting under a sky of fireworks.',
-		carCom : lazy( () => import( '../cards/FourthOfJulyCard.tsx' ) ),
+		carCom : lazy( () => import( '../cards/fourth-of-july/fourth-of-july-card.tsx' ).then( ( modObj ) => ( { default : modObj.FojCarCom } ) ) ),
 		cusBoo : false,
 		desStr : 'An Independence Day celebration with fireworks and patriotic animations.',
 		froBoo : false,
