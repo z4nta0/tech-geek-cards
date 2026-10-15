@@ -7,11 +7,11 @@
  * @summary
  * Styles for CarPagCom: the loading message centered on the screen while a
  * card's code arrives, and the floating bar, a dark ink pill pinned to the
- * bottom center of the screen above the card, rising into view a moment
- * after the card opens, holding the wordmark, a More Cards link, a Replay
- * button, and an orange Share button, plus the bottom margin a card's
- * lettering takes to clear that bar. Every animation and transition holds
- * still under reduced motion.
+ * bottom center of the screen above the card, rising into view a moment after
+ * the card opens, holding the mark and wordmark (the mark alone on a phone), a
+ * More Cards link, a Replay button, and an orange Share button, plus the
+ * bottom margin a card's lettering takes to clear that bar. Every animation
+ * and transition holds still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -103,13 +103,16 @@
 
 /* #region barHomAnc */
 
-.barHomAnc { /* What: Bar Home Anchor. Why: The wordmark reads as the site's name and leads home. How: This sets it in the bold display face on the ink, easing its color, dimming, and focus. */
+.barHomAnc { /* What: Bar Home Anchor. Why: The mark and wordmark read as the site's name and lead home. How: This lines them up in the bold display face on the ink, easing its color, dimming, and focus ring. */
 
 
+	align-items : center;
 	color       : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+	display     : flex;
 	font-family : var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
 	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
 	font-weight : 800;
+	gap         : var( --spa-hor-m02 ); /* Spacing Horizontal Base Minus 2 ~= 8.304px */
 	transition  : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
@@ -142,6 +145,50 @@
 
 }
 
+.barMarIma { /* What: Bar Mark Image. Why: The hexagon mark leads the bar at the size the site's own bar draws it, a large enough target to tap alone on a phone. How: This sizes it to a rhythm step and keeps it from shrinking. */
+
+
+	display     : block;
+	flex-shrink : 0;
+	height      : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+	max-width   : none;                                /* What: Uncapped Width. Why: The base style caps images at their parent's width, and on a phone the mark is its link's only visible content, so the cap resolves to nothing and the mark vanishes. How: This lifts the cap, leaving its fixed size. */
+	width       : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+
+
+}
+
+
+/* #region barWorSpa */
+
+.barWorSpa { /* What: Bar Wordmark Span. Why: The site's name reads beside the mark. How: This holds the name and its orange ending. */
+
+
+	white-space : nowrap;
+
+
+}
+@media ( max-width : 640px ) { /* What: Phone Bar Wordmark Span. Why: The full bar is wider than a phone's screen, and the mark alone carries the brand. How: This applies at the phone breakpoint and below. */
+
+
+	.barWorSpa { /* What: Hidden Bar Wordmark Span. Why: The wordmark still has to name the link for screen readers. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
+
+
+		border      : 0;
+		clip-path   : inset( 50% );
+		height      : 1px;
+		margin      : -1px;
+		overflow    : hidden;
+		padding     : 0;
+		position    : absolute;
+		white-space : nowrap;
+		width       : 1px;
+
+
+	}
+
+
+}
+
 .barEndSpa { /* What: Bar Ending Span. Why: The wordmark's domain ending takes the family's orange, as in the site's bar. How: This colors it orange. */
 
 
@@ -150,7 +197,10 @@
 
 }
 
+/* #endregion barWorSpa */
+
 /* #endregion barHomAnc */
+
 
 
 .barGalAnc { /* What: Bar Gallery Anchor. Why: More Cards is a quiet text link on the ink. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */

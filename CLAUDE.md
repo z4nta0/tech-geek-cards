@@ -32,8 +32,11 @@ field to the share dialog).
   TechGeek.dev), a 404, and one page per card at its own address
   (`/happy-birthday`), which plays the card full screen with a small floating
   bar instead of the site's bar and footer.
-- **The floating bar** (decided by the user 2026-10-14): the wordmark (home),
-  More cards, Replay, and Share, the same on every card. Replay remounts the
+- **The floating bar** (decided by the user 2026-10-14): the mark and
+  wordmark (home), More cards, Replay, and Share, the same on every card. At
+  640px and below the wordmark is visually hidden, still naming the link, and
+  the mark stands alone (decided by the user 2026-10-15), since the full bar,
+  about 459px wide, overflowed a phone's screen. Replay remounts the
   card through a key, so every card restarts from its first frame the same
   way without code of its own; the cards' own Replay and Toggle Fullscreen
   buttons were removed.
@@ -161,8 +164,6 @@ rest follow the same pattern.
   WebKit's frames take up to 700ms and stalled the timeline.
 - **Tests**: each converted card joins every suite at 1,440px and 390px,
   captured at its finished scene under reduced motion.
-- **Known issue**: on a phone the floating bar (about 459px wide) is wider
-  than the screen and hangs off both sides; it needs its own fix.
 
 ## Legacy cards
 The cards in `src/cards/` (and `src/hooks/useWinSiz.ts`) are TechGeek.support's

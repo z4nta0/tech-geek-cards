@@ -3,7 +3,8 @@
 
 // #region Imports
 
-import cssModObj from './card.module.css'; // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.
+import cssModObj from './card.module.css';                         // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.
+import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the family's hexagon mark, which stands in for the wordmark on a phone. How: This is the design package's mark, fingerprinted by Vite.
 
 
 import { Link         } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
@@ -24,13 +25,13 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * card.tsx = Card
  *
  * @summary
- * The page at each card's own address: the card itself, playing full
- * screen, and a small floating bar over it with the TechGeek.cards name
- * (back to the home page), a link to more cards, a Replay button that plays
- * the card again from the start, and a Share button that opens the share
- * dialog for this card. The page sets its own title,
- * description, and canonical address. The card's code arrives on demand, so
- * a short loading message shows until it has.
+ * The page at each card's own address: the card itself, playing full screen,
+ * and a small floating bar over it with the TechGeek mark and TechGeek.cards
+ * name, the mark alone on a phone (back to the home page), a link to more
+ * cards, a Replay button that plays the card again from the start, and a Share
+ * button that opens the share dialog for this card. The page sets its own
+ * title, description, and canonical address. The card's code arrives on
+ * demand, so a short loading message shows until it has.
  *
  * Sections:
  *  - Components
@@ -154,7 +155,23 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barHomAnc }
 
 					to='/'
-				>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></Link>{ /* What: Home Link. Why: The site's name leads back to its home page. How: This routes home, showing the wordmark with its ending in orange. */ }
+				>{ /* What: Home Link. Why: The site's mark and name lead back to its home page. How: This routes home, showing the mark beside the wordmark, or the mark alone on a phone, where the wordmark is hidden but still names the link. */ }
+
+
+					<img
+						className={ cssModObj.barMarIma }
+
+						height='32' // What: Intrinsic Height. Why: The bar shouldn't shift while the mark loads. How: This is the mark's drawing height.
+						src={ marSvgUrl }
+						width='32' // What: Intrinsic Width. Why: The bar shouldn't shift while the mark loads. How: This is the mark's drawing width.
+
+						alt=''
+					/>{ /* What: Bar Mark Image Element. Why: The hexagon mark leads the bar like the site's own bar, and it's decoration the wordmark already names. How: This shows the mark with an empty alt. */ }
+
+					<span className={ cssModObj.barWorSpa }>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></span>{ /* What: Bar Wordmark Span Element. Why: The site's name reads beside the mark and names the link. How: This shows the wordmark with its ending in orange, hidden from view on a phone. */ }
+
+
+				</Link>
 
 
 
