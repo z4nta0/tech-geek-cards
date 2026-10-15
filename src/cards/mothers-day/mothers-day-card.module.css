@@ -1,0 +1,42 @@
+
+
+
+/**
+ * mothers-day-card.module.css = Mother's Day Card Module
+ *
+ * @summary
+ * The theme MotCarCom hands the shared Family engine: its background,
+ * lettering color, and font, set as the --fam-* properties
+ * family-card.module.css reads. The font is declared here, loading from the
+ * card's folder, so it loads with the card.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Great Vibes Font Face. Why: The lettering is a flowing script, like a handwritten note. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Great Vibes';
+	font-weight  : 400;
+	src          : url( './great-vibes-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+.motCarDiv { /* What: Mother's Card Div. Why: The Family engine plays every Family card, each in its own colors and font. How: This sets the three properties the engine reads. */
+
+
+	--fam-bac-col : #F9E8EC;                             /* What: Family Background Color. Why: A soft blush sets a tender tone. How: The engine's stage, lettering halo, and tap hint read it. */
+	--fam-tex-col : #8B2A3A;                             /* What: Family Text Color. Why: Deep rose reads clearly on the blush and over the photos' blush halo. How: The engine's lettering, underline, and cursor read it. */
+	--fam-tex-fon : 'Great Vibes', var( --fon-fam-mai ); /* What: Family Text Font. Why: A flowing script feels like a handwritten note. How: This names Great Vibes, falling back to the main font. */
+
+
+}
+
+

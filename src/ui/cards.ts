@@ -122,15 +122,15 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 	{ // What: Mother's Day Card Row. Why: The Mother's Day card celebrates mothers. How: Its page plays the card full screen.
 
 
-		altStr : "The Mother's Day card, with its illustrated thank-you to mothers.",
-		carCom : lazy( () => import( '../cards/MothersDayCardWrapper.tsx' ) ),
+		altStr : "The Mother's Day card's closing mosaic of family photos under its greeting.",
+		carCom : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( modObj ) => ( { default : modObj.MotCarCom } ) ) ),
 		cusBoo : false,
-		desStr : 'A heartfelt card that celebrates mothers, with gentle animations and illustrations.',
+		desStr : 'A heartfelt thank-you to mothers, typed line by line, with family photos opening in hearts.',
 		froBoo : false,
 		imaStr : motPreUrl,
 		lisBoo : true,
 		occStr : 'Family',
-		seaStr : "Send an animated Mother's Day card that thanks mom for everything, with heartfelt words and illustrations. Free to share.",
+		seaStr : "Send an animated Mother's Day card that thanks mom for everything, with heartfelt words and family photos. Free to share.",
 		sluStr : 'mothers-day',
 		titStr : "Mother's Day"
 
@@ -140,15 +140,15 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 	{ // What: Father's Day Card Row. Why: The Father's Day card celebrates fathers. How: Its page plays the card full screen.
 
 
-		altStr : "The Father's Day card, with its illustrated thank-you to fathers.",
-		carCom : lazy( () => import( '../cards/FathersDayCardWrapper.tsx' ) ),
+		altStr : "The Father's Day card's closing mosaic of family photos under its greeting.",
+		carCom : lazy( () => import( '../cards/fathers-day/fathers-day-card.tsx' ).then( ( modObj ) => ( { default : modObj.FatCarCom } ) ) ),
 		cusBoo : false,
-		desStr : 'A heartfelt card that celebrates fathers, with bold animations and illustrations.',
+		desStr : 'A heartfelt thank-you to fathers, typed line by line, with family photos opening in hearts.',
 		froBoo : false,
 		imaStr : fatPreUrl,
 		lisBoo : true,
 		occStr : 'Family',
-		seaStr : "Send an animated Father's Day card that thanks dad for everything, with heartfelt words and illustrations. Free to share.",
+		seaStr : "Send an animated Father's Day card that thanks dad for everything, with heartfelt words and family photos. Free to share.",
 		sluStr : 'fathers-day',
 		titStr : "Father's Day"
 
@@ -231,7 +231,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 
 
 		altStr : "The special Father's Day card, with its playful thank-you to fathers.",
-		carCom : lazy( () => import( '../cards/FathersDayCardWrapperSpecial.tsx' ) ),
+		carCom : lazy( () => import( '../cards/fathers-day-prank/fathers-day-prank-card.tsx' ).then( ( modObj ) => ( { default : modObj.FdpCarCom } ) ) ),
 		cusBoo : false,
 		desStr : "A playful Father's Day card for a dad with a wild side.",
 		froBoo : false,
