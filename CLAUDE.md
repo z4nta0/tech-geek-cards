@@ -22,8 +22,10 @@ their assets, and the image render script were copied from
 ## Kind of site
 Decided by the user 2026-10-14. z4nta0's real site, indexed with normal SEO
 (never the demo treatment). It showcases the cards z4nta0 has made and lets
-anyone share one; some cards take a recipient's name (so far only Happy
-Birthday, through `?name=`).
+anyone share one; some cards take a recipient's name (Happy Birthday and
+both Christmas cards, through `?name=`), and some a sender's (the Christmas
+cards, through `?from=`, marked `froBoo` in the catalog, which adds a second
+field to the share dialog).
 - **Pages**: Home (an introduction and a few cards picked at random), Gallery
   (search and an occasion filter), About (who TechGeek is and the sister
   sites), Contact (contact@techgeek.cards, through Netlify Forms as on
@@ -37,6 +39,12 @@ Birthday, through `?name=`).
   buttons were removed.
 - **The special Father's Day card** (`/fathers-day-special`) stays unlisted,
   since the user made it for their own father (decided 2026-10-14).
+- **The Christmas cards** (decided by the user 2026-10-15): one component,
+  two catalog rows. The listed Merry Christmas card (`/merry-christmas`) is
+  the snowy scene alone, signed From, Tech Geek unless `?from=` says
+  otherwise; the full prank (`/christmas-prank`), a fake hack before the
+  snowy scene, made for the user's family, stays unlisted and keeps its From,
+  Mr. Awesome default.
 - **Structured data**: a `WebSite` for this domain whose author is the same
   `Person` TechGeek.dev describes (`https://techgeek.dev/#person`), with the
   GitHub and LinkedIn profiles the footer links to and no email, since this
@@ -193,8 +201,8 @@ per suite and engine in `tests/playwright.config.ts`, which starts its own dev
 server on port 5195 (never the user's 5173, nor the siblings' 5190 through
 5194) and stops it afterwards. Every suite runs in Chromium, Firefox, and WebKit. The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
-and 1,440px, each converted card, the phone menu, and the share dialog open
-on the Gallery at both widths.
+and 1,440px, each converted card, the phone menu, the share dialog open on
+the Gallery at both widths, and a signable card's share dialog at 390px.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
   accessibility scan.
 - `npm run test:interaction`: navigation (including Send a Card and a card's

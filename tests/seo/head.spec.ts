@@ -20,7 +20,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * Checks the site's SEO setup in whichever engine the project runs. Home, the
  * Gallery, About, Contact, and every listed card are indexed: each has its own
  * title, a description of 100 to 125 characters, and one canonical address on
- * this domain, while the 404 page and the unlisted card carry noindex and no
+ * this domain, while the 404 page and the unlisted cards carry noindex and no
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
  * author, and, apart from the cards still to be converted, has one h1; moving
@@ -86,7 +86,8 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
 	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : false, patStr : '/happy-halloween',     titStr : 'Happy Halloween Card | TechGeek.cards'                    },
 	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : false, patStr : '/happy-thanksgiving',  titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
 	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',     titStr : 'Merry Christmas Card | TechGeek.cards'                    },
-	{ canStr : null,                                 heaBoo : false, patStr : '/fathers-day-special', titStr : "Father's Day Special Card | TechGeek.cards"               }
+	{ canStr : null,                                 heaBoo : false, patStr : '/fathers-day-special', titStr : "Father's Day Special Card | TechGeek.cards"               },
+	{ canStr : null,                                 heaBoo : true,  patStr : '/christmas-prank',     titStr : 'Christmas Prank Card | TechGeek.cards'                    }
 
 
 ];
@@ -142,7 +143,7 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 
 
-	if ( heaRowObj.canStr === null ) { // What: Noindex Page Branch. Why: The 404 page and the unlisted card must stay out of search results. How: This checks for the noindex tag and the absence of the indexed pages' tags.
+	if ( heaRowObj.canStr === null ) { // What: Noindex Page Branch. Why: The 404 page and the unlisted cards must stay out of search results. How: This checks for the noindex tag and the absence of the indexed pages' tags.
 
 
 		await expect( curPagObj.locator( 'meta[name="robots"]' ) ).toHaveAttribute( 'content', 'noindex' ); // What: Noindex Assertion. Why: Search engines must leave the page out. How: This checks the one robots tag says noindex.

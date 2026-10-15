@@ -34,16 +34,18 @@ import type { SnoSetTyp } from './snowfall.ts'; // What: Snowfall Settings Type.
  * christmas-card.tsx = Christmas Card
  *
  * @summary
- * The Merry Christmas card, a prank that turns into a greeting. A grid of dark
- * squares wipes away to a fake hacked screen: a pirate flag, a heading that
- * scrambles into You've Just Been Hacked, a glitch, and a message fading in
- * letter by letter that admits it's a joke. The squares wipe back over it,
- * then away again to a snowy cabin with snow falling, where the greeting,
- * named for its recipient through ?name=, and the sign-off fade in the same
- * way. Every duration, distance, and angle is a step on the design scale, and
- * the curves are the stylesheet's easing tokens. Under reduced motion the
- * card opens straight on the finished snowy scene, without snow. Converted
- * from TechGeek.support's original.
+ * The Merry Christmas card, in two versions. The listed one opens on a snowy
+ * cabin with snow falling, where the greeting, named for its recipient through
+ * ?name=, and the sign-off, signed by its sender through ?from= or by Tech
+ * Geek, fade in letter by letter. The unlisted prank turns into that greeting:
+ * a grid of dark squares wipes away to a fake hacked screen, a pirate flag
+ * with a heading that scrambles into You've Just Been Hacked, a glitch, and a
+ * message fading in letter by letter that admits it's a joke, before the
+ * squares wipe back over it and away again to the snowy scene, signed by Mr.
+ * Awesome unless the link says otherwise. Every duration, distance, and angle
+ * is a step on the design scale, and the curves are the stylesheet's easing
+ * tokens. Under reduced motion either version opens straight on the finished
+ * snowy scene, without snow. Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
@@ -279,34 +281,40 @@ const snoSetFun = () : SnoSetTyp => ( { // What: Snowfall Settings Function. Why
 
 // #region Components
 
+type CccProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
+
 // #region ChrCarCom
 
 /**
  * ChrCarCom = Christmas Card Component
  *
  * @summary
- * The Christmas card: the wipe's grid of squares over the hacked scene and
- * the snowy scene, played as one GSAP timeline when the card opens. The
- * timeline is built in useGSAP, so leaving the card or replaying it reverts
- * every tween and letter split, and its cleanup stops the snow. The grid is
- * measured once, when the card opens, and stretches to fill the screen if the
- * window is resized later. The greeting adds the recipient's name from
- * ?name= when there is one.
+ * The Christmas card, in two versions: the listed Merry Christmas card, which
+ * opens straight on the snowy scene, and the unlisted prank, which first
+ * plays the wipe's grid of squares over the hacked scene. Either plays as one
+ * GSAP timeline when the card opens, built in useGSAP, so leaving the card or
+ * replaying it reverts every tween and letter split, and its cleanup stops
+ * the snow. The prank's grid is measured once, when the card opens, and
+ * stretches to fill the screen if the window is resized later. The greeting
+ * adds the recipient's name from ?name=, and the sign-off is signed with
+ * ?from=, or by default Tech Geek on the listed card and Mr. Awesome on the
+ * prank.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props - This component does not use any props.
+ * @param props.prkBoo - Prank Boolean: Whether the card opens on the hacked
+ *                       prank, false by default for the snowy scene alone.
  *
  * @returns The card's scenes and the wipe's grid.
  *
  * @example
  * ```tsx
- * ChrCarCom() // => <ChrCarCom />
+ * ChrCarCom({ prkBoo }) // => <ChrCarCom />
  * ```
  *
 */
 
-function ChrCarCom () : JSX.Element {
+function ChrCarCom ( { prkBoo = false } : CccProTyp ) : JSX.Element {
 
 
 	const carDivRef = useRef< HTMLDivElement >( null );       // What: Card Div Reference. Why: The timeline's selectors and cleanup are scoped to the card. How: This holds the card's root.
@@ -321,7 +329,9 @@ function ChrCarCom () : JSX.Element {
 	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column And Row Numbers. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This runs griSizFun on the first render and keeps both counts.
 	const [ seaParObj ]                = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
-	const namParStr = seaParObj.get( 'name' ); // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
+	const froParStr = seaParObj.get( 'from' );                               // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
+	const namParStr = seaParObj.get( 'name' );                               // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
+	const sigNamStr = froParStr || ( prkBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
 
 
 
@@ -351,39 +361,54 @@ function ChrCarCom () : JSX.Element {
 
 		const decEasStr = gsaEasFun( 'dec' );                                                              // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
 		const fadDurNum = durSecFun( 'p11' );                                                              // What: Fade Duration Number. Why: The scramble and each letter's fade are long, expressive motion. How: This is the duration scale's Base Plus 11 step, about 3.48s, in seconds. // Duration Animation Base Plus 11 ~= 3,480.0ms
-		const hacSplObj = SplitText.create( hacVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Hacked Split Object. Why: The message fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
-		const inoEasStr = gsaEasFun( 'ino' );                                                              // What: In-Out Easing String. Why: The glitch's skew and stretch start and end slowly. How: This registers the in-out token and keeps its GSAP name.
 		const sigSplObj = SplitText.create( snoVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Signature Split Object. Why: The sign-off fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
 		const snoSplObj = SplitText.create( snoTitRef.current, { type : 'words, chars' } );                // What: Snowy Split Object. Why: The greeting fades in one letter at a time. How: This wraps its words and letters, labeling the heading with its full text.
 		const splShiNum = rhyPxlFun( 'm01' );                                                              // What: Split Shift Number. Why: Each letter slides in from just right of its place. How: This is the Spacing Horizontal Base Minus 1 step, 11px. // Vertical Rhythm Base Minus 1 = 11px
 		const splStaNum = durSecFun( 'm04' );                                                              // What: Split Stagger Number. Why: The letters arrive one after another. How: This is the duration scale's Base Minus 4 step, about 51.3ms, in seconds, between each letter's start. // Duration Animation Base Minus 4 ~= 51.3ms
 		const splFroObj = { autoAlpha : 0, duration : fadDurNum, stagger : splStaNum, x : splShiNum };     // What: Split From Object. Why: Both messages fade in the same way. How: Each letter starts hidden and shifted right, fading in over the long fade.
-		const squDurNum = durSecFun( 'm14' );                                                              // What: Square Duration Number. Why: Each square fades in a blink, one after another. How: This is the duration scale's Base Minus 14 step, about 3.08ms, in seconds. // Duration Animation Base Minus 14 ~= 3.080ms
-		const squEleArr = Array.from( pixConRef.current!.children );                                       // What: Square Element Array. Why: The wipe animates every square. How: This lists the grid's children. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                            // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
-
-		const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades in a Base Minus 14 step, starting one such step after the last, in random order.
 
 		let stoSnoFun = () => {}; // What: Stop Snowfall Function. Why: The cleanup has to stop the snow if it started. How: This holds the stop function staSnoFun returns, a no-op until then.
 
 
-		timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
+		const begSnoFun = () => { if ( !redMotFun() ) stoSnoFun = staSnoFun( snoSceRef.current!, cssModObj.snoFlaDiv, snoSetFun() ); }; // What: Begin Snowfall Function. Why: Both versions start the snow, but never under reduced motion. How: This starts it in the snowy scene and keeps its stop function. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The timeline only runs after the render that attaches it.
 
-		timLinObj.to( hacTitRef.current, { duration : fadDurNum, scrambleText : HAC_TIT_STR }, PAU_POS_STR ); // What: Heading Scramble. Why: The hack announces itself. How: After a pause, this types the heading out through random characters.
 
-		gliTimFun( timLinObj, [ hacTitRef.current! ], decEasStr, inoEasStr ); // What: Heading Glitch Call. Why: The heading glitches once it's written. How: This adds the glitch for the heading alone. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		if ( prkBoo ) { // What: Prank Opening Check. Why: Only the prank version opens on the fake hack. How: This adds the wipes, the hacked scene, and its glitches before the snowy scene.
 
-		timLinObj.from( hacSplObj.chars, splFroObj ); // What: Message Fade. Why: The joke gives itself away. How: This fades the message in by letter.
 
-		gliTimFun( timLinObj, [ hacTitRef.current!, hacMesRef.current! ], decEasStr, inoEasStr ); // What: Scene Glitch Call. Why: Heading and message glitch together before the scene ends. How: This adds the glitch for both at once. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: useGSAP runs after the render that attaches them.
+			const hacSplObj = SplitText.create( hacVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Hacked Split Object. Why: The message fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
+			const inoEasStr = gsaEasFun( 'ino' );                                                              // What: In-Out Easing String. Why: The glitch's skew and stretch start and end slowly. How: This registers the in-out token and keeps its GSAP name.
+			const squDurNum = durSecFun( 'm14' );                                                              // What: Square Duration Number. Why: Each square fades in a blink, one after another. How: This is the duration scale's Base Minus 14 step, about 3.08ms, in seconds. // Duration Animation Base Minus 14 ~= 3.080ms
+			const squEleArr = Array.from( pixConRef.current!.children );                                       // What: Square Element Array. Why: The wipe animates every square. How: This lists the grid's children. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.to( squEleArr, { ...squWipObj, opacity : 1 }, PAU_POS_STR ); // What: Closing Wipe. Why: The hacked scene ends. How: After a pause, this fades the squares back in.
+			const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades in a Base Minus 14 step, starting one such step after the last, in random order.
 
-		timLinObj.set( snoSceRef.current, { opacity : 1 }, PAU_POS_STR ); // What: Snowy Scene Reveal. Why: The real greeting waits under the squares. How: After a pause, this shows the snowy scene while they still cover it.
 
-		timLinObj.call( () => { if ( !redMotFun() ) stoSnoFun = staSnoFun( snoSceRef.current!, cssModObj.snoFlaDiv, snoSetFun() ); } ); // What: Snowfall Start Call. Why: The snow should already be falling when the squares lift, but not under reduced motion. How: This starts it and keeps its stop function. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The timeline only runs after the render that attaches it.
+			timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
 
-		timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Final Wipe. Why: The snowy scene is revealed. How: This fades the squares out again.
+			timLinObj.to( hacTitRef.current, { duration : fadDurNum, scrambleText : HAC_TIT_STR }, PAU_POS_STR ); // What: Heading Scramble. Why: The hack announces itself. How: After a pause, this types the heading out through random characters.
+
+			gliTimFun( timLinObj, [ hacTitRef.current! ], decEasStr, inoEasStr ); // What: Heading Glitch Call. Why: The heading glitches once it's written. How: This adds the glitch for the heading alone. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+
+			timLinObj.from( hacSplObj.chars, splFroObj ); // What: Message Fade. Why: The joke gives itself away. How: This fades the message in by letter.
+
+			gliTimFun( timLinObj, [ hacTitRef.current!, hacMesRef.current! ], decEasStr, inoEasStr ); // What: Scene Glitch Call. Why: Heading and message glitch together before the scene ends. How: This adds the glitch for both at once. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: useGSAP runs after the render that attaches them.
+
+			timLinObj.to( squEleArr, { ...squWipObj, opacity : 1 }, PAU_POS_STR ); // What: Closing Wipe. Why: The hacked scene ends. How: After a pause, this fades the squares back in.
+
+			timLinObj.set( snoSceRef.current, { opacity : 1 }, PAU_POS_STR ); // What: Snowy Scene Reveal. Why: The real greeting waits under the squares. How: After a pause, this shows the snowy scene while they still cover it.
+
+			timLinObj.call( begSnoFun ); // What: Snowfall Start Call. Why: The snow should already be falling when the squares lift. How: This starts it while they still cover the scene.
+
+			timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Final Wipe. Why: The snowy scene is revealed. How: This fades the squares out again.
+
+
+		}
+
+		else timLinObj.call( begSnoFun ); // What: Snowfall Start Call. Why: Without the prank, the card opens straight on the snowy scene. How: This starts the snow at once.
+
+
 
 		timLinObj.from( [ ...snoSplObj.chars, ...sigSplObj.chars ], splFroObj, PAU_POS_STR ); // What: Greeting Fade. Why: The greeting and sign-off arrive last. How: After a pause, this fades them in by letter.
 
@@ -412,73 +437,85 @@ function ChrCarCom () : JSX.Element {
 		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the wipe's grid and both scenes. */ }
 
 
-			<div
-				ref={ pixConRef }
-
-				className={ cssModObj.pixConDiv }
-
-				style={{
-					gridTemplateColumns : `repeat( ${ squColNum }, 1fr )`,
-					gridTemplateRows    : `repeat( ${ squRowNum }, 1fr )`
-				}}
-
-				aria-hidden='true'
-			>{ /* What: Pixel Container Div Element. Why: The wipe covers everything, and it's decoration a screen reader should skip. How: This lays the squares out in the measured columns and rows, each stretching so the grid fills the screen exactly. */ }
+			{ prkBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
 
 
-				{ Array.from( Array( squColNum * squRowNum ).keys(), ( squIndNum ) => ( // What: Square Map Call. Why: Every cell of the grid needs a square. How: This renders one per cell, keyed by its index.
+				<div
+					ref={ pixConRef }
+
+					className={ cssModObj.pixConDiv }
+
+					style={{
+						gridTemplateColumns : `repeat( ${ squColNum }, 1fr )`,
+						gridTemplateRows    : `repeat( ${ squRowNum }, 1fr )`
+					}}
+
+					aria-hidden='true'
+				>{ /* What: Pixel Container Div Element. Why: The wipe covers everything, and it's decoration a screen reader should skip. How: This lays the squares out in the measured columns and rows, each stretching so the grid fills the screen exactly. */ }
 
 
-					<div
-						key={ squIndNum }
-
-						className={ cssModObj.pixSquDiv }
-					/> // What: Pixel Square Div Element. Why: Each square is one pixel of the wipe. How: This draws a dark cell the timeline fades.
+					{ Array.from( Array( squColNum * squRowNum ).keys(), ( squIndNum ) => ( // What: Square Map Call. Why: Every cell of the grid needs a square. How: This renders one per cell, keyed by its index.
 
 
-				))}
+						<div
+							key={ squIndNum }
+
+							className={ cssModObj.pixSquDiv }
+						/> // What: Pixel Square Div Element. Why: Each square is one pixel of the wipe. How: This draws a dark cell the timeline fades.
 
 
-			</div>
+					))}
 
 
-			<section className={ cssModObj.hacSceSec }>{ /* What: Hacked Scene Section Element. Why: The card opens as a fake hacked screen. How: This holds the scrambled heading and the message over the pirate flag. */ }
+				</div>
 
 
-				<h2
-					ref={ hacTitRef }
-
-					className={ cssModObj.hacTitHea }
-
-					aria-label={ HAC_TIT_STR }
-				></h2>{ /* What: Hacked Title Heading Element. Why: The hack announces itself. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
-
-				<p
-					ref={ hacMesRef }
-
-					className={ cssModObj.hacMesPar }
-				>{ /* What: Hacked Message Paragraph Element. Why: The joke gives itself away. How: This holds the message's visible copy, which fades in by letter, and its hidden copy, glitching both together. */ }
+			) }
 
 
-					<span
-						ref={ hacVisRef }
-
-						aria-hidden='true'
-					>{ HAC_MES_STR }</span>{ /* What: Hacked Visible Span Element. Why: Split into letters, the message would be read out one letter at a time. How: This shows the copy the timeline fades in, hidden from screen readers. */ }
-
-					<span className={ cssModObj.scrReaSpa }>{ HAC_MES_STR }</span>{ /* What: Screen Reader Span Element. Why: Screen readers should hear the message whole. How: This holds the same message, hidden from view. */ }
+			{ prkBoo && ( // What: Prank Scene Check. Why: Only the prank opens on the fake hack. How: This renders the hacked scene for the prank alone.
 
 
-				</p>
+				<section className={ cssModObj.hacSceSec }>{ /* What: Hacked Scene Section Element. Why: The card opens as a fake hacked screen. How: This holds the scrambled heading and the message over the pirate flag. */ }
 
 
-			</section>
+					<h2
+						ref={ hacTitRef }
+
+						className={ cssModObj.hacTitHea }
+
+						aria-label={ HAC_TIT_STR }
+					></h2>{ /* What: Hacked Title Heading Element. Why: The hack announces itself. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
+
+					<p
+						ref={ hacMesRef }
+
+						className={ cssModObj.hacMesPar }
+					>{ /* What: Hacked Message Paragraph Element. Why: The joke gives itself away. How: This holds the message's visible copy, which fades in by letter, and its hidden copy, glitching both together. */ }
+
+
+						<span
+							ref={ hacVisRef }
+
+							aria-hidden='true'
+						>{ HAC_MES_STR }</span>{ /* What: Hacked Visible Span Element. Why: Split into letters, the message would be read out one letter at a time. How: This shows the copy the timeline fades in, hidden from screen readers. */ }
+
+						<span className={ cssModObj.scrReaSpa }>{ HAC_MES_STR }</span>{ /* What: Screen Reader Span Element. Why: Screen readers should hear the message whole. How: This holds the same message, hidden from view. */ }
+
+
+					</p>
+
+
+				</section>
+
+
+			) }
 
 
 			<section
 				ref={ snoSceRef }
 
-				className={ cssModObj.snoSceSec }
+				className={` ${ cssModObj.snoSceSec }   ${ prkBoo ? '' : cssModObj.snoSceSecOpen } `}
 			>{ /* What: Snowy Scene Section Element. Why: The real greeting is a snowy cabin with snow falling. How: This holds the greeting, the snowman, and the sign-off, and the snow falls inside it. */ }
 
 
@@ -505,9 +542,9 @@ function ChrCarCom () : JSX.Element {
 						ref={ snoVisRef }
 
 						aria-hidden='true'
-					><span className={ cssModObj.snoFroSpa }>From,</span> Mr. Awesome</span>{ /* What: Snowy Visible Span Element. Why: Split into letters, the sign-off would be read out one letter at a time. How: This shows the copy the timeline fades in, hidden from screen readers. */ }
+					><span className={ cssModObj.snoFroSpa }>From,</span> { sigNamStr }</span>{ /* What: Snowy Visible Span Element. Why: Split into letters, the sign-off would be read out one letter at a time. How: This shows the copy the timeline fades in, hidden from screen readers. */ }
 
-					<span className={ cssModObj.scrReaSpa }>From, Mr. Awesome</span>{ /* What: Screen Reader Span Element. Why: Screen readers should hear the sign-off whole. How: This holds the same sign-off, hidden from view. */ }
+					<span className={ cssModObj.scrReaSpa }>From, { sigNamStr }</span>{ /* What: Screen Reader Span Element. Why: Screen readers should hear the sign-off whole. How: This holds the same sign-off, hidden from view. */ }
 
 
 				</p>

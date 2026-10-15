@@ -6,13 +6,14 @@
  *
  * @summary
  * Styles for ChrCarCom, a card in two full-screen scenes stacked under a grid
- * of dark squares. The squares sit on top and fade away in a scattered
- * pixelated wipe. Under them is the snowy scene, hidden until the timeline
- * shows it, and at the bottom the hacked scene, red glitch lettering over a
- * pirate flag. The snowy scene carries the Merry Christmas heading, a tilted
- * snowman in the lower left, the handwritten sign-off in the lower right, and
- * the falling snowflakes snowfall.ts adds. The card brings its own three
- * fonts, declared here so they load with the card. Nothing here animates
+ * of dark squares, the prank's version; the listed version shows only the
+ * snowy scene, open from the start. The squares sit on top and fade away in a
+ * scattered pixelated wipe. Under them is the snowy scene, hidden until the
+ * timeline shows it, and at the bottom the hacked scene, red glitch lettering
+ * over a pirate flag. The snowy scene carries the Merry Christmas heading, a
+ * tilted snowman in the lower left, the handwritten sign-off in the lower
+ * right, and the falling snowflakes snowfall.ts adds. The card brings its own
+ * three fonts, declared here so they load with the card. Nothing here animates
  * through CSS: the GSAP timeline and the snowfall play everything, and both
  * skip their motion under reduced motion.
  *
@@ -187,6 +188,13 @@
 	position   : absolute;
 	text-align : center;
 	z-index    : 1; /* What: Layer Above The Hacked Scene. Why: Once shown, the snowy scene covers the hacked one, at 0. How: This sets it one higher. */
+
+
+}
+.snoSceSec--open { /* What: Open Snowy Scene Section. Why: The listed card has no prank to play first, so its snowy scene is there from the start. How: This shows the scene without waiting on the timeline. */
+
+
+	opacity : 1;
 
 
 }

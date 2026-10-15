@@ -67,8 +67,8 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * each converted card's page) and the 404 page at a phone width (390px) and a
  * desktop width (1,440px), the mobile menu open at the phone width, since the
  * menu is only reachable there, and the share dialog open on the Gallery at
- * both widths. Every row shares the {@link StaRecTyp} shape, so its fields
- * carry no comments of their own:
+ * both widths, plus a signable card's at the phone width. Every row shares the
+ * {@link StaRecTyp} shape, so its fields carry no comments of their own:
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
  *    one.
@@ -129,7 +129,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, the one card with a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -150,7 +150,28 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, the one card with a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
+
+			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
+
+
+		}
+
+
+	},
+
+	{ // What: Share Signed Phone State. Why: A card that can be signed adds a second name field, the dialog's tallest form, which matters most on a phone. How: This loads the Gallery at 390px and opens the share dialog for the Merry Christmas card.
+
+
+		heiNum : 844,
+		ideStr : 'share-signed-phone',
+		patStr : '/gallery',
+		widNum : 390,
+
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Merry Christmas tile's Share button, then moves the pointer off it.
+
+
+			await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the Merry Christmas card's, which has both name fields.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 

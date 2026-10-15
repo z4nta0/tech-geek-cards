@@ -57,9 +57,10 @@ type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: S
  * @summary
  * Renders the share dialog for one card and opens it as a modal as soon as
  * it mounts. The link is the card's address on this site, plus ?name= with
- * the trimmed name for a card that takes one. Copy Link writes the link to
- * the clipboard and says so (or, if the browser refuses, says to copy it by
- * hand); typing a new name resets that message. The share sheet button only
+ * the trimmed name for a card that takes one and ?from= with the sender's
+ * for a card that can be signed. Copy Link writes the link to the clipboard
+ * and says so (or, if the browser refuses, says to copy it by hand); typing a
+ * new name resets that message. The share sheet button only
  * renders where navigator.share exists, and a dismissed sheet is ignored.
  * Closing sets the closing class, whose animation's end closes the element
  * and calls onDiaCloFun, so the page can unmount the dialog; under reduced
@@ -88,6 +89,7 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 	const [ isaCloBoo, setIsaCloBoo ] = useState( false );                                  // What: Is-A Closing Boolean And Setter. Why: The dialog plays its closing animation before it actually closes. How: This turns the closing class on.
 	const [ copStaStr, setCopStaStr ] = useState< 'copied' | 'failed' | 'idle' >( 'idle' ); // What: Copy Status String And Setter. Why: The dialog says whether the link was copied. How: This starts idle, and Copy Link sets it.
+	const [ froValStr, setFroValStr ] = useState( '' );                                     // What: From Value String And Setter. Why: A signable card's link carries the sender's name typed. How: This holds the sender field's text.
 	const [ namValStr, setNamValStr ] = useState( '' );                                     // What: Name Value String And Setter. Why: A customizable card's link carries the name typed. How: This holds the name field's text.
 
 
@@ -102,11 +104,16 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 
 
+	const triFroStr = froValStr.trim();                                            // What: Trimmed From String. Why: Stray spaces shouldn't end up on the card. How: This trims the sender field's text.
 	const triNamStr = namValStr.trim();                                            // What: Trimmed Name String. Why: Stray spaces shouldn't end up on the card. How: This trims the name field's text.
 	const linUrlObj = new URL( `/${ carRecObj.sluStr }`, window.location.origin ); // What: Link URL Object. Why: The link points at the card on whichever address the site is served from. How: This builds the card's absolute address.
 
 
 	if ( carRecObj.cusBoo && triNamStr ) linUrlObj.searchParams.set( 'name', triNamStr ); // What: Name Parameter Set. Why: A customizable card reads the recipient's name from its address. How: This adds the trimmed name as ?name=, encoded, when there is one.
+
+
+
+	if ( carRecObj.froBoo && triFroStr ) linUrlObj.searchParams.set( 'from', triFroStr ); // What: From Parameter Set. Why: A signable card reads the sender's name from its address. How: This adds the trimmed name as ?from= when there is one.
 
 
 
@@ -347,6 +354,55 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 							className={ cssModObj.fieHinPar }
 						>It appears on the card as it opens.</p>{ /* What: Field Hint Paragraph Element. Why: The visitor should know where the name shows up. How: This explains it under the field, read with it by screen readers. */ }
+
+
+					</div>
+
+
+				) }
+
+				{ carRecObj.froBoo && ( // What: From Field Check. Why: Only a card that shows its sender's name should ask for one. How: This renders the sender field when the card can be signed.
+
+
+					<div className={ cssModObj.fieGroDiv }>{ /* What: Field Group Div Element. Why: The sender's label, field, and hint read as one unit. How: This stacks them. */ }
+
+
+						<label
+							className={ cssModObj.fieLabLab }
+
+							htmlFor='senNamInp'
+						>Your name (optional)</label>{ /* What: Field Label Label Element. Why: The sender field needs a visible label. How: This labels senNamInp. */ }
+
+						<input
+							id='senNamInp'
+
+							className={ cssModObj.fieTexInp }
+
+							autoComplete='off'
+							maxLength={ 30 }
+							placeholder='Sam'
+							spellCheck={ false }
+							type='text'
+							value={ froValStr }
+
+							aria-describedby='senNamHin'
+
+							onChange={ ( chaEveObj ) => { // What: From Change Handler. Why: A changed sender makes a new link, so an earlier Copied no longer applies. How: This stores the text and resets the copy status.
+
+
+								setFroValStr( chaEveObj.target.value ); // What: From Value Set Call. Why: The field is controlled. How: This stores the text typed.
+
+								setCopStaStr( 'idle' ); // What: Copy Status Reset Call. Why: The copied link no longer matches the new sender. How: This sets the status back to idle.
+
+
+							} }
+						/>{ /* What: Field Text Input Element. Why: The card can be signed by its sender. How: This takes up to 30 characters, added to the link as it's typed. */ }
+
+						<p
+							id='senNamHin'
+
+							className={ cssModObj.fieHinPar }
+						>It signs the card at the bottom.</p>{ /* What: Field Hint Paragraph Element. Why: The visitor should know where their name shows up. How: This explains it under the field, read with it by screen readers. */ }
 
 
 					</div>
