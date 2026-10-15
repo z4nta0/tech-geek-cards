@@ -1,0 +1,281 @@
+
+
+
+
+/**
+ * card.module.css = Card Module
+ *
+ * @summary
+ * Styles for CarPagCom: the loading message centered on the screen while a
+ * card's code arrives, and the floating bar, a dark ink pill pinned to the
+ * bottom center of the screen above the card, rising into view a moment
+ * after the card opens, holding the wordmark, a More Cards link, a Replay
+ * button, and an orange Share button. Every animation and transition holds still under
+ * reduced motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+.carStaDiv { /* What: Card Stage Div. Why: The cards were drawn under TechGeek.support's base styles, whose body line height was 1.6, and the family's base sets a taller one, which spread their lines apart. How: This restores 1.6 around the card, a literal kept only until the cards are converted to the family's tokens. */
+
+
+	line-height : 1.6;
+
+
+}
+
+
+
+.carLoaPar { /* What: Card Loading Paragraph. Why: The visitor should know the card is on its way. How: This centers the message on the full screen in muted mono and fades it up. */
+
+
+	align-items     : center;
+	animation       : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	color           : var( --tex-mut-col );                                                        /* Text Muted Color = #646482 */
+	display         : flex;
+	font-family     : var( --fon-fam-sec );                                                        /* Font Family Secondary = 'DM Mono', monospace */
+	justify-content : center;
+	min-height      : 100vh;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Loading Paragraph. Why: Someone who asked for less motion shouldn't see the message rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.carLoaPar { /* What: Motionless Card Loading Paragraph. Why: The message should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+
+
+/* #region carBarNav */
+
+.carBarNav { /* What: Card Bar Nav. Why: The bar floats over the card without covering much of it, and arrives after the card so it doesn't steal its opening. How: This pins a dark ink pill to the bottom center above the card's layers, lining up its links and button, and fades it up after a short delay. */
+
+
+	align-items   : center;
+	animation     : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) var( --dur-ani-p05 ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Animation Base Plus 5 ~= 643.8ms */
+	background    : var( --bac-inv-col );                                                                             /* Background Inverse Color = #1A1A2E */
+	border-radius : 999px;
+	bottom        : var( --spa-ver-bas );                                                                             /* Spacing Vertical Base ~= 14.572px */
+	box-shadow    : var( --ele-lar-sha );                                                                             /* Elevation Large Shadow */
+	display       : flex;
+	gap           : var( --spa-hor-bas );                                                                             /* Spacing Horizontal Base ~= 14.572px */
+	left          : 50%;
+	padding       : var( --spa-ver-m03 ) var( --spa-ver-m03 ) var( --spa-ver-m03 ) var( --spa-hor-p01 );              /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
+	position      : fixed;
+	translate     : -50% 0;
+	white-space   : nowrap;
+	z-index       : 1000;                                                                                             /* What: Card Clearing Layer. Why: The cards' own layers reach 999, and the bar has to stay above all of them. How: This sits one layer above the highest, to come down when the cards' layers are reworked. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Bar Nav. Why: Someone who asked for less motion shouldn't see the bar rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.carBarNav { /* What: Motionless Card Bar Nav. Why: The bar should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+
+/* #region barHomAnc */
+
+.barHomAnc { /* What: Bar Home Anchor. Why: The wordmark reads as the site's name and leads home. How: This sets it in the bold display face on the ink, easing its color, dimming, and focus. */
+
+
+	color         : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+	font-family   : var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+	font-size     : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight   : 800;
+	outline-color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
+	transition    : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.barHomAnc:hover { /* What: Hovered Bar Home Anchor. Why: A link shifts color on hover. How: This turns the wordmark the powder blue. */
+
+
+	color : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
+
+
+}
+.barHomAnc:active { /* What: Pressed Bar Home Anchor. Why: A text link dims when pressed. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Bar Home Anchor. Why: Someone who asked for less motion should see the link simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.barHomAnc { /* What: Motionless Bar Home Anchor. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.barEndSpa { /* What: Bar Ending Span. Why: The wordmark's domain ending takes the family's orange, as in the site's bar. How: This colors it orange. */
+
+
+	color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
+
+
+}
+
+/* #endregion barHomAnc */
+
+.barGalAnc { /* What: Bar Gallery Anchor. Why: More Cards is a quiet text link on the ink. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
+
+
+	color          : var( --tex-inm-col );                   /* Text Inverse-Muted Color = #8181a1 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	outline-color  : var( --acc-mai-col );                   /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
+	text-transform : uppercase;
+	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.barGalAnc:hover { /* What: Hovered Bar Gallery Anchor. Why: A link shifts color on hover. How: This turns it the page ivory. */
+
+
+	color : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+
+
+}
+.barGalAnc:active { /* What: Pressed Bar Gallery Anchor. Why: A text link dims when pressed. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Bar Gallery Anchor. Why: Someone who asked for less motion should see the link simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.barGalAnc { /* What: Motionless Bar Gallery Anchor. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.barRepBut { /* What: Bar Replay Button. Why: Replay is a quiet text button on the ink, matching More Cards beside it. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
+
+
+	color          : var( --tex-inm-col );                   /* Text Inverse-Muted Color = #8181a1 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	outline-color  : var( --acc-mai-col );                   /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
+	text-transform : uppercase;
+	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.barRepBut:hover { /* What: Hovered Bar Replay Button. Why: A text button shifts color on hover, like the link beside it. How: This turns it the page ivory. */
+
+
+	color : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+
+
+}
+.barRepBut:active { /* What: Pressed Bar Replay Button. Why: A text button dims when pressed, like the link beside it. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Bar Replay Button. Why: Someone who asked for less motion should see the button simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.barRepBut { /* What: Motionless Bar Replay Button. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.barShaBut { /* What: Bar Share Button. Why: Sharing is the bar's main action. How: This sets an orange pill in ink mono capitals, easing its color, press, and focus. */
+
+
+	background     : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */
+	border-radius  : 999px;
+	color          : var( --tex-acc-col );                      /* Text Accent Color = #1A1A2E */
+	font-family    : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                      /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	outline-color  : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */ /* What: Ink Focus Ring. Why: The dark orange ring would vanish on the ink. How: The bright orange keeps it visible. */
+	padding        : var( --spa-ver-m02 ) var( --spa-hor-p01 ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Plus 1 ~= 19.304px */
+	text-transform : uppercase;
+	transition     : background var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.barShaBut:hover { /* What: Hovered Bar Share Button. Why: The button responds to the pointer, without lifting out of the bar's row. How: This darkens its orange. */
+
+
+	background : var( --acc-hov-col ); /* Accent Hover Color ~= #e45700 */
+
+
+}
+.barShaBut:active { /* What: Pressed Bar Share Button. Why: A press should register before the dialog opens. How: This presses it in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Bar Share Button. Why: Someone who asked for less motion should see the button simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.barShaBut { /* What: Motionless Bar Share Button. Why: The hover, press, and focus looks should simply switch, the press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion carBarNav */
+
+

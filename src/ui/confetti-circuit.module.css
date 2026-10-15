@@ -1,0 +1,76 @@
+
+
+
+
+/**
+ * confetti-circuit.module.css = Confetti Circuit Module
+ *
+ * @summary
+ * Styles for ConCirCom: the wrapper pinned behind its section's content,
+ * drawing its traces in the family's strong blue, and the fills of the
+ * confetti pieces at the traces' ends, one per color role, so the motif
+ * follows the theme's colors.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region conCirDiv */
+
+.conCirDiv { /* What: Confetti Circuit Div. Why: The pattern fills its section behind the content without catching clicks. How: This pins it over the whole section at the bottom of the stack, in the strong blue the traces draw with. */
+
+
+	color          : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
+	inset          : 0;
+	pointer-events : none;
+	position       : absolute;
+	z-index        : 0;
+
+
+}
+
+.oraConCir { /* What: Orange Confetti Circle. Why: The first trace's confetti is the family's orange. How: This fills the dot with the main accent. */
+
+
+	fill : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
+
+
+}
+
+.berConRec { /* What: Berry Confetti Rect. Why: The second trace's confetti is this site's berry. How: This fills the square with the tertiary accent. */
+
+
+	fill : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+
+.oraSpaPat { /* What: Orange Sparkle Path. Why: The third trace's sparkle is the family's orange. How: This fills the star with the main accent. */
+
+
+	fill : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
+
+
+}
+
+.berSquPat { /* What: Berry Squiggle Path. Why: The loose streamer is this site's berry. How: This strokes the wave with the tertiary accent. */
+
+
+	stroke : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+
+.bluConCir { /* What: Blue Confetti Circle. Why: The loose dot is the family's powder blue. How: This fills the dot with the secondary accent. */
+
+
+	fill : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
+
+
+}
+
+/* #endregion conCirDiv */
+
+

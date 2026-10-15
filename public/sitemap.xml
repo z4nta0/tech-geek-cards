@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'><!-- What: URL Set Element. Why: Search engines read the sitemap to find every page worth indexing. How: This holds one entry per indexable page, in the sitemaps.org format, leaving out the unlisted special Father's Day card. -->
+
+
+	<url><!-- What: Home URL Element. Why: The home page is the first of the indexed pages. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/</loc><!-- What: Home Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Gallery URL Element. Why: The Gallery lists every card and is indexed. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/gallery</loc><!-- What: Gallery Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: About URL Element. Why: The About page tells who makes the cards and is indexed. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/about</loc><!-- What: About Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Contact URL Element. Why: The Contact page is how to reach z4nta0 and is indexed. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/contact</loc><!-- What: Contact Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Happy Birthday URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/happy-birthday</loc><!-- What: Happy Birthday Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Mother's Day URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/mothers-day</loc><!-- What: Mother's Day Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Father's Day URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/fathers-day</loc><!-- What: Father's Day Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Fourth Of July URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/fourth-of-july</loc><!-- What: Fourth Of July Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Happy Halloween URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/happy-halloween</loc><!-- What: Happy Halloween Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+	<url><!-- What: Happy Thanksgiving URL Element. Why: Each listed card has its own indexed page. How: This lists it by its canonical address. -->
+
+
+		<loc>https://techgeek.cards/happy-thanksgiving</loc><!-- What: Happy Thanksgiving Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->
+
+
+	</url>
+
+
+</urlset>

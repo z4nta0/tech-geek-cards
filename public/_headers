@@ -1,0 +1,40 @@
+# _headers = Security Headers Policy
+#
+# @summary
+# Hardening headers applied to every response, as on TechGeek.dev. The site
+# has no accounts or third-party code: every script, style, font, and image
+# is self-hosted, the contact form posts to the site itself for Netlify
+# Forms, and its links to the sister sites only navigate away. That lets the
+# Content-Security-Policy be strict rather than needing broad allowances.
+#
+# default-src 'self' is the fallback every unlisted directive inherits, so
+# connect-src (the form's post to the site's root), font-src, img-src, and
+# manifest-src need no lines of their own. The directives listed either need
+# a different value than 'self' (frame-src, object-src), are never covered by
+# default-src at all (base-uri, form-action, frame-ancestors), or just state
+# the default for clarity (script-src, style-src). form-action stays 'self'
+# so the form can still post to the site if its script ever fails.
+# style-src needs no 'unsafe-inline': the build ships no inline styles, and
+# React and the cards' animation library set their dynamic styles through
+# the DOM, which the policy doesn't restrict.
+#
+# Strict-Transport-Security keeps browsers on HTTPS for two years across
+# every subdomain, leaving out preload, which commits the domain to the
+# browsers' built-in HTTPS list and is slow to undo. Referrer-Policy is
+# strict-origin-when-cross-origin: the sister sites see that a visit came
+# from techgeek.cards, never a page's full address, which for a card can
+# hold its recipient's name. Permissions-Policy turns off every powerful
+# browser feature the site never uses; the clipboard and the share sheet the
+# share dialog uses stay allowed, and so does the screen wake lock, which the
+# longer cards hold so a phone's screen doesn't dim partway through.
+#
+# @author z4nta0 <https://github.com/z4nta0>
+
+# What: Security Headers Rule. Why: Every response should refuse framing, sniffing, plain HTTP, unused browser features, and anything loaded from another origin. How: This applies the Content-Security-Policy, the permissions and referrer policies, HSTS, a nosniff content type, and a deny on framing to every path.
+/*
+	Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; style-src 'self'
+	Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(self), serial=(), usb=(), xr-spatial-tracking=()
+	Referrer-Policy: strict-origin-when-cross-origin
+	Strict-Transport-Security: max-age=63072000; includeSubDomains
+	X-Content-Type-Options: nosniff
+	X-Frame-Options: DENY

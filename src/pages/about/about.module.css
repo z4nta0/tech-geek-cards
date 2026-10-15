@@ -1,0 +1,578 @@
+
+
+
+
+/**
+ * about.module.css = About Module
+ *
+ * @summary
+ * Styles for AboPagCom: a hero on the warm sunken ivory with the site's
+ * motif and a scalloped bottom edge, as on Home; the story's paragraphs
+ * beside a white card listing its main points, each led by a dot of
+ * confetti; and the three sister sites as equal cards, this site's own on a
+ * pale berry with a You Are Here label, the others with a link whose arrow
+ * nudges on hover; then the closing buttons. The page fades up as it opens,
+ * and every transition holds still under reduced motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region pagEntDiv */
+
+.pagEntDiv { /* What: Page Enter Div. Why: The page fades up into view as it opens, like every page. How: This plays the shared page entrance. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Page Enter Div. Why: Someone who asked for less motion shouldn't see the page slide in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.pagEntDiv { /* What: Motionless Page Enter Div. Why: The page should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+
+
+/* #region herSec */
+
+.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
+
+
+	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
+
+	background     : var( --bac-sun-col );                                /* Background Sunken Color = #EDE6D8 */
+	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
+	padding-bottom : var( --spa-ver-p06 );                                /* Spacing Vertical Base Plus 6 ~= 78.751px */
+	padding-top    : calc( var( --nav-bar-hei ) + var( --her-gap-pad ) ); /* Navigation Bar Height ~= 78.751px, Hero Gap Padding, about 59.447px - 138.199px */
+	position       : relative;
+
+
+}
+
+
+/* #region herInnDiv */
+
+.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, lifted over the motif. */
+
+
+	align-items    : flex-start;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-bas );   /* Spacing Vertical Base ~= 14.572px */
+	margin         : 0 auto;
+	max-width      : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
+	position       : relative;
+	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
+
+
+}
+
+.secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names each section above its heading. How: This sets it in berry mono capitals at the base size. */
+
+
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em ); /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	text-transform : uppercase;
+
+
+}
+
+.herTitHea { /* What: Hero Title Heading. Why: The heading is the page's loudest line. How: This sets it in the main text color at the shared h1 size. */
+
+
+	color : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+}
+
+.herLeaPar { /* What: Hero Lead Paragraph. Why: The lead reads a step larger than body text. How: This sets it at the base plus 2 size, capped at the paragraph measure. */
+
+
+	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+
+
+}
+
+/* #endregion herInnDiv */
+
+/* #endregion herSec */
+
+
+
+/* #region stoSec */
+
+.stoSec { /* What: Story Section. Why: The story gets room above and below. How: This pads the section top and bottom. */
+
+
+	padding : var( --spa-ver-p07 ) 0 var( --spa-ver-p06 ); /* Spacing Vertical Base Plus 7 ~= 104.323px, Spacing Vertical Base Plus 6 ~= 78.751px */
+
+
+}
+
+
+/* #region stoInnDiv */
+
+.stoInnDiv { /* What: Story Inner Div. Why: The paragraphs and the fact list sit side by side on wide screens. How: This lays them out in two columns in the site's centered column, the list starting level with the heading. */
+
+
+	align-items           : start;
+	display               : grid;
+	gap                   : var( --spa-ver-p04 ) var( --spa-hor-p06 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 6 ~= 78.751px */
+	grid-template-columns : 3fr 2fr;
+	margin                : 0 auto;
+	max-width             : var( --con-max-wid );                      /* Container Maximum Width, about 1,449px */
+	padding               : 0 var( --gut-sid-pad );                    /* Gutter Side Padding, about 19.304px - 44.876px */
+
+
+}
+@media ( max-width : 768px ) { /* What: Phone Story Inner Div. Why: Two columns are too tight on phones and small tablets. How: This applies at 768px and below. */
+
+
+	.stoInnDiv { /* What: Stacked Story Inner Div. Why: The list follows the paragraphs on a narrow screen. How: This sets one column. */
+
+
+		grid-template-columns : 1fr;
+
+
+	}
+
+
+}
+
+
+/* #region stoTexDiv */
+
+.stoTexDiv { /* What: Story Text Div. Why: The heading and paragraphs read as one column. How: This stacks them with even gaps. */
+
+
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-p01 ); /* Spacing Vertical Base Plus 1 ~= 19.304px */
+
+
+}
+
+.secTitHea { /* What: Section Title Heading. Why: Each section's heading reads in the main text color at the shared h2 size. How: This sets its color. */
+
+
+	color : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+}
+
+.stoTexPar { /* What: Story Text Paragraph. Why: The story's paragraphs stay a comfortable length. How: This caps them at the paragraph measure. */
+
+
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+
+
+}
+
+/* #endregion stoTexDiv */
+
+
+/* #region facLisUno */
+
+.facLisUno { /* What: Fact List Unordered. Why: The main points sit in a white card beside the story. How: This draws the card with a quiet border and stacks the facts. */
+
+
+	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-lar );                            /* Radius Border Large ~= 14.572px */
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-bas );                            /* Spacing Vertical Base ~= 14.572px */
+	padding        : var( --spa-ver-p03 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+
+
+}
+
+.facIteIte { /* What: Fact Item Item. Why: Each fact reads as one line led by a dot of confetti. How: This lines up the dot and the text in the main text color. */
+
+
+	align-items : center;
+	color       : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+	display     : flex;
+	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight : 600;
+	gap         : var( --spa-hor-bas ); /* Spacing Horizontal Base ~= 14.572px */
+
+
+}
+.facIteIte::before { /* What: Fact Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle, colored by the fact's position below. */
+
+
+	background    : var( --acc-mai-col );                /* Accent Main Color = #F26419 */
+	border-radius : 50%;
+	content       : '';
+	flex-shrink   : 0;
+	height        : calc( var( --ver-rhy-m01 ) * 1rem ); /* Vertical Rhythm Base Minus 1 = 11px */
+	width         : calc( var( --ver-rhy-m01 ) * 1rem ); /* Vertical Rhythm Base Minus 1 = 11px */
+
+
+}
+.facIteIte:nth-child( 2 )::before { /* What: Second Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
+
+
+	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+.facIteIte:nth-child( 3 )::before { /* What: Third Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
+
+
+	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
+
+
+}
+
+/* #endregion facLisUno */
+
+/* #endregion stoInnDiv */
+
+/* #endregion stoSec */
+
+
+
+/* #region famSec */
+
+.famSec { /* What: Family Section. Why: The sister sites get room below before the footer. How: This pads the section's bottom. */
+
+
+	padding-bottom : var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 8 ~= 138.199px */
+
+
+}
+
+
+/* #region secInnDiv */
+
+.secInnDiv { /* What: Section Inner Div. Why: The section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
+
+
+	margin    : 0 auto;
+	max-width : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	padding   : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
+
+
+}
+
+
+/* #region famLisUno */
+
+.famLisUno { /* What: Family List Unordered. Why: The three sites sit side by side as equal cards. How: This lays them out three across below the heading. */
+
+
+	display               : grid;
+	gap                   : var( --spa-ver-p02 ) var( --spa-hor-p02 );   /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	grid-template-columns : repeat( 3, 1fr );
+	margin                : var( --spa-ver-p03 ) 0 var( --spa-ver-p04 ); /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Vertical Base Plus 4 ~= 44.876px */
+
+
+}
+@media ( max-width : 1024px ) { /* What: Tablet Family List Unordered. Why: Three cards across are too narrow for a site name that can't wrap, TechGeek.support, on tablets and phones, and three cards can only sit three across or one. How: This applies at 1,024px and below. */
+
+
+	.famLisUno { /* What: Stacked Family List Unordered. Why: The sites read one under another. How: This sets one column, keeping three even rows. */
+
+
+		grid-template-columns : 1fr;
+
+
+	}
+
+
+}
+
+
+/* #region famIteIte */
+
+.famIteIte { /* What: Family Item Item. Why: Each site is a white card that answers the pointer. How: This draws the card with a quiet border, stacks its parts, and eases its lift and border. */
+
+
+	background     : var( --bac-sur-col );                                                                   /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col );                                        /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-lar );                                                                   /* Radius Border Large ~= 14.572px */
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-m01 );                                                                   /* Spacing Vertical Base Minus 1 = 11px */
+	padding        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                                              /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	transition     : border-color var( --dur-tra-bas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.famIteIte:hover { /* What: Hovered Family Item Item. Why: Cards answer the pointer like the rest of the family's cards. How: This turns the border the strong blue and lifts the card about 3px. */
+
+
+	border-color : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
+	translate    : 0 calc( var( --spa-ver-m06 ) * -1 ); /* Spacing Vertical Base Minus 6 ~= -2.696px */
+
+
+}
+.famIteIte[data-site-current-page] { /* What: Current Family Item Item. Why: This site's own card should read as the one the visitor is on. How: This sets it on the pale berry with a berry border. */
+
+
+	background   : var( --act-tin-col ); /* Accent-Tertiary Tint Color = #FAD3E0 */
+	border-color : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Item Item. Why: Someone who asked for less motion shouldn't see the card glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famIteIte { /* What: Motionless Family Item Item. Why: The border and lift should simply switch, still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famNamHea { /* What: Family Name Heading. Why: The site's name heads its card, and a name like TechGeek.support can't wrap. How: This sets it in the main text color, at the base plus 3 size from about 365px up and scaling down with the screen below that, so the longest name fits a 320px phone. */
+
+
+	color     : var( --tex-mai-col );                                     /* Text Main Color = #1A1A2E */
+	font-size : clamp( var( --fon-siz-p02 ), 7vw, var( --fon-siz-p03 ) ); /* Font Size Base Plus 2 ~= 19.304px, Font Size Base Plus 3 ~= 25.572px */
+
+
+}
+
+.famDesPar { /* What: Family Description Paragraph. Why: The line about the site stays a comfortable length. How: This caps it at the paragraph measure. */
+
+
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+
+
+}
+
+.famHerSpa { /* What: Family Here Span. Why: The You Are Here label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
+
+
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em ); /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	margin-top     : auto;
+	text-transform : uppercase;
+
+
+}
+
+
+/* #region famLinAnc */
+
+.famLinAnc { /* What: Family Link Anchor. Why: The link to a sister site is a text link at the card's foot. How: This sets it in dark orange mono capitals, pushed to the bottom, easing its color, dimming, and focus. */
+
+
+	color          : var( --acc-dar-col );                   /* Accent Dark Color ~= #bd3000 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	margin-top     : auto;
+	text-transform : uppercase;
+	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.famLinAnc:hover { /* What: Hovered Family Link Anchor. Why: A text link shifts color on hover. How: This turns it dark blue. */
+
+
+	color : var( --acs-dar-col ); /* Accent-Secondary Dark Color ~= #126186 */
+
+
+}
+.famLinAnc:active { /* What: Pressed Family Link Anchor. Why: A text link dims when pressed. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Link Anchor. Why: Someone who asked for less motion should see the link simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famLinAnc { /* What: Motionless Family Link Anchor. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famArrSpa { /* What: Family Arrow Span. Why: The link's arrow nudges forward on hover. How: This makes it an inline block so it can move, easing its shift. */
+
+
+	display    : inline-block;
+	transition : translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.famLinAnc:hover .famArrSpa { /* What: Hovered Family Arrow Span. Why: The arrow points the way as the link is hovered. How: This shifts it about 3.6px right. */
+
+
+	translate : var( --spa-hor-m05 ) 0; /* Spacing Horizontal Base Minus 5 ~= 3.572px */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Arrow Span. Why: Someone who asked for less motion shouldn't see the arrow slide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famArrSpa { /* What: Motionless Family Arrow Span. Why: The arrow should simply shift. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion famLinAnc */
+
+/* #endregion famIteIte */
+
+/* #endregion famLisUno */
+
+
+/* #region famActDiv */
+
+.famActDiv { /* What: Family Actions Div. Why: The two closing buttons sit side by side and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+
+
+	display   : flex;
+	flex-wrap : wrap;
+	gap       : var( --spa-ver-bas ) var( --spa-hor-bas ); /* Spacing Vertical Base ~= 14.572px, Spacing Horizontal Base ~= 14.572px */
+
+
+}
+
+.butSecAnc { /* What: Button Secondary Anchor. Why: The way to the portfolio sits back from the main action. How: This sets an outlined button in mono capitals, easing its border, color, lift, press, and focus. */
+
+
+	align-items    : center;
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-xsm );                            /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	display        : inline-flex;
+	font-family    : var( --fon-fam-sec );                            /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	text-transform : uppercase;
+	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.butSecAnc:hover { /* What: Hovered Button Secondary Anchor. Why: A button should respond to the pointer. How: This turns its border blue and its text dark blue and lifts it 2px. */
+
+
+	border-color : var( --acs-str-col );                            /* Accent-Secondary Strong Color = #4A91B8 */
+	color        : var( --acs-dar-col );                            /* Accent-Secondary Dark Color ~= #126186 */
+	transform    : translateY( calc( var( --spa-ver-m07 ) * -1 ) ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.butSecAnc:active { /* What: Pressed Button Secondary Anchor. Why: A press should register before anything else happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Button Secondary Anchor. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.butSecAnc { /* What: Motionless Button Secondary Anchor. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.butPriAnc { /* What: Button Primary Anchor. Why: The main action stands out. How: This sets an orange button in mono capitals, easing its color, lift, press, and focus. */
+
+
+	align-items    : center;
+	background     : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */
+	border-radius  : var( --rad-bor-xsm );                      /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-acc-col );                      /* Text Accent Color = #1A1A2E */
+	display        : inline-flex;
+	font-family    : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	text-transform : uppercase;
+	transition     : background var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.butPriAnc:hover { /* What: Hovered Button Primary Anchor. Why: A button should respond to the pointer. How: This darkens its orange and lifts it 2px. */
+
+
+	background : var( --acc-hov-col );                            /* Accent Hover Color ~= #e45700 */
+	transform  : translateY( calc( var( --spa-ver-m07 ) * -1 ) ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.butPriAnc:active { /* What: Pressed Button Primary Anchor. Why: A press should register before anything else happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Button Primary Anchor. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.butPriAnc { /* What: Motionless Button Primary Anchor. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion famActDiv */
+
+/* #endregion secInnDiv */
+
+/* #endregion famSec */
+
+/* #endregion pagEntDiv */
+
+

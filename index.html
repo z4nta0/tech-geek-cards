@@ -1,0 +1,203 @@
+<!doctype html><!-- What: Document Type Declaration. Why: Browsers render the page in standards mode only with a doctype. How: This declares HTML5. -->
+
+
+
+<html lang='en'><!-- What: Root HTML Element. Why: Screen readers and translation tools need the page's language. How: This marks the document as English. -->
+
+
+	<head><!-- What: Document Head Element. Why: The page's metadata and icons load before the body paints. How: This holds them in the sections below. -->
+
+
+		<!-- #region Document -->
+
+		<meta charset='UTF-8' />                                                 <!-- What: Character Set Meta. Why: The browser has to decode the page as UTF-8 before it reads anything else. How: This sits first in the head, inside the first 1,024 bytes the browser checks. -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' /> <!-- What: Viewport Meta. Why: Phones should lay the site out at device width instead of a zoomed-out desktop width. How: This sets the layout width to the device's and starts at no zoom. -->
+		<title>Animated Digital Greeting Cards to Send | TechGeek.cards</title>  <!-- What: Page Title Element. Why: Browser tabs, bookmarks, and search listings name the page by its title, and checkers and crawlers that never run the site's script read only this one. How: This is the home page's full title, and every other page renders its own, which React 19 places ahead of it. -->
+
+		<!-- #endregion Document -->
+
+
+		<!-- #region Search -->
+
+		<!--
+			index.html = Search Section
+
+			@summary
+			Each page renders its own canonical link or noindex tag, and every
+			page but Home its own title, since React 19 adds those beside any
+			in this file rather than replacing them. The Gallery, About,
+			Contact, and every card swap this one description's text for
+			their own while they show. So this section holds no canonical or
+			robots tag, and the title above and the description below are the
+			home page's.
+
+			@author z4nta0 <https://github.com/z4nta0>
+
+		-->
+
+
+
+		<meta name='author'      content='z4nta0' /> <!-- What: Author Meta. Why: Search engines and link preview inspectors look for who a page belongs to. How: This names z4nta0, who built and owns the site. -->
+		<meta name='description' content='Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one, add a name, and send the link.' /> <!-- What: Description Meta. Why: Search listings show a summary under the title, and checkers and crawlers that never run the script read only this one. How: This is the home page's description, which the other pages swap for their own while they show. -->
+
+		<!-- #endregion Search -->
+
+
+		<!-- #region Web App -->
+
+		<meta name='theme-color' content='#F26419' /> <!-- What: Theme Color Meta. Why: Mobile browsers tint their chrome around the page, and Discord edges its link previews in this color. How: This sets the brand orange, the main accent color. -->
+
+		<!-- #endregion Web App -->
+
+
+		<!-- #region Icons -->
+
+		<!--
+			index.html = Icons Section
+
+			@summary
+			The SVG comes first, since modern browsers prefer it and it stays
+			sharp at any tab density, then the root favicon.ico for older
+			browsers, then the PNG sizes from smallest to largest. Every raster
+			icon is rendered from favicon.svg by npm run icons. The order is
+			the browser's order of preference, so it stays as written rather
+			than alphabetical.
+
+			@author z4nta0 <https://github.com/z4nta0>
+
+		-->
+
+
+
+		<link href='/favicon.svg'         rel='icon' type='image/svg+xml' />             <!-- What: SVG Icon Link. Why: Modern browsers prefer a vector favicon that stays sharp at any tab density. How: This points at the hexagon mark in public/. -->
+		<link href='/favicon.ico'         rel='icon' sizes='any' />                      <!-- What: ICO Icon Link. Why: Older browsers read only a .ico favicon. How: This points at the root favicon.ico, which also answers the request browsers make for it on their own. -->
+		<link href='/favicon-16x16.png'   rel='icon' sizes='16x16'   type='image/png' /> <!-- What: Small PNG Icon Link. Why: Small tab icons look crisper drawn at their own size. How: This offers the 16px PNG. -->
+		<link href='/favicon-32x32.png'   rel='icon' sizes='32x32'   type='image/png' /> <!-- What: Medium PNG Icon Link. Why: A browser without SVG favicons needs a raster fallback, and most pick a 32px tab icon. How: This offers the 32px PNG. -->
+		<link href='/favicon-192x192.png' rel='icon' sizes='192x192' type='image/png' /> <!-- What: Large PNG Icon Link. Why: Some browsers and Android pick a large icon for shortcuts and tab previews. How: This offers the 192px PNG. -->
+		<link href='/favicon-512x512.png' rel='icon' sizes='512x512' type='image/png' /> <!-- What: Extra Large PNG Icon Link. Why: High-density screens and app launchers can ask for a bigger icon still. How: This offers the 512px PNG. -->
+
+		<!-- #endregion Icons -->
+
+
+		<!-- #region Home Screen -->
+
+		<link href='/apple-touch-icon.png' rel='apple-touch-icon' sizes='180x180' /> <!-- What: Apple Touch Icon Link. Why: iOS draws the home screen icon, and some apps the icon beside a shared link, from this link. How: This points at the 180px touch icon, the hexagon mark on ivory. -->
+
+		<!-- #endregion Home Screen -->
+
+
+		<!-- #region Structured Data -->
+
+		<script type='application/ld+json'>
+			{
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Person",
+						"@id": "https://techgeek.dev/#person",
+						"name": "z4nta0",
+						"url": "https://techgeek.dev/",
+						"jobTitle": "Full Stack Web Developer",
+						"sameAs": [
+							"https://github.com/z4nta0",
+							"https://www.linkedin.com/in/gary-s-walton-654739400/"
+						]
+					},
+					{
+						"@type": "WebSite",
+						"@id": "https://techgeek.cards/#website",
+						"name": "TechGeek.cards",
+						"url": "https://techgeek.cards/",
+						"inLanguage": "en-US",
+						"author": {
+							"@id": "https://techgeek.dev/#person"
+						}
+					}
+				]
+			}
+		</script> <!-- What: Site Structured Data Script. Why: Search engines read JSON-LD to tell who a site belongs to, and this site belongs to a person, never a business. How: This describes this domain as a website by z4nta0, the same person, under the same id, that TechGeek.dev describes, with the GitHub and LinkedIn profiles the footer links to. -->
+
+		<!-- #endregion Structured Data -->
+
+
+	</head>
+
+
+
+	<body><!-- What: Document Body Element. Why: This holds the site's mount point, the hidden copy of the contact form Netlify reads, and the entry script. How: The mount point stays empty until React renders the site into it. -->
+
+
+		<div id='appMouDiv'></div><!-- What: App Mount Div Element. Why: React needs one element to render the site into. How: main.tsx renders the app into this id. -->
+
+		<form
+			name='contact'
+			netlify
+			netlify-honeypot='bot-field'
+
+			hidden
+		><!-- What: Contact Form Element. Why: Netlify registers a site's forms by reading the built HTML, and the Contact page's form only exists once React runs. How: This hidden copy carries the form and field names Netlify needs. --><!-- Netlify finds forms by parsing the built HTML at deploy time, never running the site, so the React form in pages/contact/contact.tsx is invisible to it. This copy registers the form and its fields, and the page then POSTs to '/' with a matching form-name. Keep the name and every field name in sync with ConPagCom's submit, or submissions are rejected. hidden keeps it off the page, and Netlify still parses it. -->
+
+
+			<label for='hidNamInp'>Name</label><!-- What: Name Label Element. Why: The name field needs a label for Netlify's form record. How: This labels hidNamInp. -->
+
+			<input
+				id='hidNamInp'
+
+				name='name'
+
+				type='text'
+			/><!-- What: Hidden Name Input Element. Why: Netlify registers the name field by its name. How: This declares the name text field. -->
+
+			<label for='hidEmaInp'>Email</label><!-- What: Email Label Element. Why: The email field needs a label for Netlify's form record. How: This labels hidEmaInp. -->
+
+			<input
+				id='hidEmaInp'
+
+				name='email'
+
+				type='email'
+			/><!-- What: Hidden Email Input Element. Why: Netlify registers the email field by its name and uses it as the notification's reply-to. How: This declares the email field. -->
+
+			<label for='hidTopInp'>Topic</label><!-- What: Topic Label Element. Why: The topic field needs a label for Netlify's form record. How: This labels hidTopInp. -->
+
+			<input
+				id='hidTopInp'
+
+				name='topic'
+
+				type='text'
+			/><!-- What: Hidden Topic Input Element. Why: Netlify registers the topic field by its name. How: This declares the topic text field, which the page fills from its topic menu. -->
+
+			<label for='hidMesTex'>Message</label><!-- What: Message Label Element. Why: The message field needs a label for Netlify's form record. How: This labels hidMesTex. -->
+
+			<textarea
+				id='hidMesTex'
+
+				name='message'
+			></textarea><!-- What: Hidden Message Textarea Element. Why: Netlify registers the message field by its name. How: This declares the message text area. -->
+
+			<label for='hidBotInp'>Leave this field blank</label><!-- What: Bot Label Element. Why: The honeypot field needs a label for Netlify's form record. How: This labels hidBotInp. -->
+
+			<input
+				id='hidBotInp'
+
+				name='bot-field'
+
+				type='text'
+			/><!-- What: Hidden Bot Input Element. Why: Netlify drops any submission that fills its honeypot field. How: This declares the bot-field honeypot named in the form's netlify-honeypot attribute. -->
+
+
+		</form>
+
+		<script
+			src='/src/main.tsx'
+			type='module'
+		>/* What: Site Module Script Element. Why: This loads the site itself. How: Vite replaces it with the built, hashed bundle at build time. */</script>
+
+
+	</body>
+
+
+</html>
+
+

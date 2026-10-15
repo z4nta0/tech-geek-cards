@@ -1,0 +1,315 @@
+
+
+
+
+/**
+ * not-found.module.css = Not Found Module
+ *
+ * @summary
+ * Styles for NotFouCom: a full-screen ivory panel that fades up into view
+ * like every page, centering a huge quiet 404 with a tipped envelope laid
+ * over it, a Return to Sender rubber stamp drawn on the envelope that
+ * thunks down once, the heading and line, and two ways onward, an orange Go
+ * Home button and an outlined Browse the Gallery button. Everything that
+ * moves holds still under reduced motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region pagEntDiv */
+
+.pagEntDiv { /* What: Page Enter Div. Why: The 404 content fills the screen and fades in like every page. How: This centers its content on a full-height ivory panel, below the bar, and plays the shared page entrance. */
+
+
+	align-items     : center;
+	animation       : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both;                   /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	background      : var( --bac-pag-col );                                                                          /* Background Page Color = #F5F0E8 */
+	display         : flex;
+	justify-content : center;
+	min-height      : 100vh;
+	padding         : calc( var( --nav-bar-hei ) + var( --spa-ver-p04 ) ) var( --gut-sid-pad ) var( --spa-ver-p05 ); /* Navigation Bar Height ~= 78.751px, Spacing Vertical Base Plus 4 ~= 44.876px, Gutter Side Padding, about 19.304px - 44.876px, Spacing Vertical Base Plus 5 ~= 59.447px */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Page Enter Div. Why: Someone who asked for less motion shouldn't see the page slide in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.pagEntDiv { /* What: Motionless Page Enter Div. Why: The page should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+
+/* #region nofInnDiv */
+
+.nofInnDiv { /* What: Not-Found Inner Div. Why: The number, drawing, stamp, text, and buttons read as one centered block. How: This stacks and centers them. */
+
+
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-p02 ); /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	text-align     : center;
+
+
+}
+
+.errCodDiv { /* What: Error Code Div. Why: A huge quiet 404 says what happened at a glance without shouting. How: This sets it in the display font, scaling with the screen, in a deep beige that still reaches the 3:1 large-text contrast, and keeps it from being selected. */
+
+
+	color          : oklch( from var( --bor-mai-col ) calc( l - 0.24 ) c h );                /* Border Main Color = #D8CFBE, darkened to about #8d8475 */
+	font-family    : var( --fon-fam-mai );                                                   /* Font Family Main = 'Syne', sans-serif */
+	font-size      : clamp( min( 27vw, var( --fon-siz-p08 ) ), 20vw, var( --fon-siz-p10 ) ); /* Font Size Base Plus 8 ~= 104.323px, Font Size Base Plus 10 ~= 183.074px */ /* What: Small Phone Floor. Why: About 3.1em wide, the number would run past a 320px screen at the p08 floor. How: The floor is the smaller of p08 and 27vw, which only bites below about 386px, the same floor as TechGeek.dev's 404. */
+	font-weight    : 800;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * -1em );                                /* Core-Design-Number to the Power of 10 Reciprocal ~= -0.060em */
+	line-height    : var( --ver-rhy-m01 );                                                   /* Vertical Rhythm Base Minus 1 = 1 */
+	user-select    : none;
+
+
+}
+
+.envDraSvg { /* What: Envelope Drawing SVG. Why: The lost envelope lies tipped across the number. How: This sizes it, pulls it up over the number, tilts it, and lifts it above the number. */
+
+
+	margin-top : calc( var( --ver-rhy-p07 ) * -1rem ); /* Vertical Rhythm Base Plus 7 ~= -104.323px */
+	position   : relative;
+	rotate     : -6deg;
+	width      : calc( var( --ver-rhy-p09 ) * 1rem );  /* Vertical Rhythm Base Plus 9 ~= 183.074px */
+
+
+}
+
+.envBodRec { /* What: Envelope Body Rect. Why: The envelope is white with an ink outline. How: This fills it white and strokes it in ink. */
+
+
+	fill   : var( --bac-sur-col ); /* Background Surface Color = #FFFFFF */
+	stroke : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+}
+
+.envFlaPat { /* What: Envelope Flap Path. Why: The flap's fold is drawn in the same ink as the outline. How: This strokes it in ink. */
+
+
+	stroke : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+}
+
+.envStaRec { /* What: Envelope Stamp Rect. Why: The stamp is the site's berry. How: This fills it pale berry with a berry edge. */
+
+
+	fill   : var( --act-tin-col ); /* Accent-Tertiary Tint Color = #FAD3E0 */
+	stroke : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+
+.retSenGro { /* What: Return Sender Group. Why: A rubber stamp across the envelope lands with a bit of force, the page's flair. How: This scales the stamp's box and words from their own center and thunks them down once after the page arrives. */
+
+
+	animation        : retSenGroThunkIn var( --dur-ani-p02 ) var( --mot-bou-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.0ms */
+	transform-box    : fill-box;
+	transform-origin : center;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Return Sender Group. Why: Someone who asked for less motion shouldn't see the stamp land. How: This applies only when the reduced-motion preference is set. */
+
+
+	.retSenGro { /* What: Motionless Return Sender Group. Why: The stamp should simply be there. How: This turns the thunk off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+@keyframes retSenGroThunkIn { /* What: Return Sender Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from 160% and transparent to full size, the bounce easing giving it a small rebound. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : scale( 1.6 ); /* What: Stamp Start Scale. Why: The stamp starts as if held above the envelope. How: This begins it at 160%, a literal since no scale step lands within 10%. */
+
+
+	}
+
+	to {
+
+
+		opacity   : 1;
+		transform : none;
+
+
+	}
+
+
+}
+
+.retSenRec { /* What: Return Sender Rect. Why: The stamp's box is ruled in berry, its middle left clear so the envelope shows through like ink. How: This strokes it berry with no fill. */
+
+
+	fill   : none;
+	stroke : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
+
+
+}
+
+.retSenTex { /* What: Return Sender Text. Why: The stamp's words read like a rubber stamp's. How: This sets them in dark berry mono. */
+
+
+	fill        : var( --act-dar-col ); /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	font-family : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
+	font-weight : 500;
+
+
+}
+
+.nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color, a step below a full page heading. How: This sets its color and the base plus 4 size. */
+
+
+	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+	font-size : var( --fon-siz-p04 ); /* Font Size Base Plus 4 ~= 33.876px */
+
+
+}
+
+.nofDesPar { /* What: Not-Found Description Paragraph. Why: The line explaining the missing page stays short. How: This caps it at the small text measure. */
+
+
+	max-width : var( --tex-wid-sma ); /* Text Width Small ~= 22.047em */
+
+
+}
+
+
+/* #region nofActDiv */
+
+.nofActDiv { /* What: Not-Found Actions Div. Why: The two ways onward sit side by side, one height, and wrap on a narrow phone. How: This lines up the buttons centered in a wrapping row with gaps. */
+
+
+	display         : flex;
+	flex-wrap       : wrap;
+	gap             : var( --spa-ver-bas ) var( --spa-hor-bas ); /* Spacing Vertical Base ~= 14.572px, Spacing Horizontal Base ~= 14.572px */
+	justify-content : center;
+
+
+}
+
+.butPriAnc { /* What: Button Primary Anchor. Why: The way back into the site stands out. How: This sets an orange button in mono capitals, easing its color, lift, press, and focus. */
+
+
+	align-items    : center;
+	background     : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */
+	border-radius  : var( --rad-bor-xsm );                      /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-acc-col );                      /* Text Accent Color = #1A1A2E */
+	display        : inline-flex;
+	font-family    : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	text-transform : uppercase;
+	transition     : background var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.butPriAnc:hover { /* What: Hovered Button Primary Anchor. Why: A button should respond to the pointer. How: This darkens its orange and lifts it 2px. */
+
+
+	background : var( --acc-hov-col );                            /* Accent Hover Color ~= #e45700 */
+	transform  : translateY( calc( var( --spa-ver-m07 ) * -1 ) ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.butPriAnc:active { /* What: Pressed Button Primary Anchor. Why: A press should register before anything else happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Button Primary Anchor. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.butPriAnc { /* What: Motionless Button Primary Anchor. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.butSecAnc { /* What: Button Secondary Anchor. Why: The second way onward sits back from the first. How: This sets an outlined button in mono capitals, easing its border, color, lift, press, and focus. */
+
+
+	align-items    : center;
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-xsm );                            /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	display        : inline-flex;
+	font-family    : var( --fon-fam-sec );                            /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	text-transform : uppercase;
+	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.butSecAnc:hover { /* What: Hovered Button Secondary Anchor. Why: A button should respond to the pointer. How: This turns its border blue and its text dark blue and lifts it 2px. */
+
+
+	border-color : var( --acs-str-col );                            /* Accent-Secondary Strong Color = #4A91B8 */
+	color        : var( --acs-dar-col );                            /* Accent-Secondary Dark Color ~= #126186 */
+	transform    : translateY( calc( var( --spa-ver-m07 ) * -1 ) ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.butSecAnc:active { /* What: Pressed Button Secondary Anchor. Why: A press should register before anything else happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Button Secondary Anchor. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.butSecAnc { /* What: Motionless Button Secondary Anchor. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion nofActDiv */
+
+/* #endregion nofInnDiv */
+
+/* #endregion pagEntDiv */
+
+

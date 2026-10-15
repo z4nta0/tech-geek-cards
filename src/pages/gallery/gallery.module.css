@@ -1,0 +1,542 @@
+
+
+
+
+/**
+ * gallery.module.css = Gallery Module
+ *
+ * @summary
+ * Styles for GalPagCom: a hero on the warm sunken ivory with the site's
+ * motif and a scalloped bottom edge, as on Home; a search field and a row of
+ * occasion pills whose chosen pill fills with ink; the result count; a grid
+ * that sets the column counts the page hands it, so its rows stay even for
+ * any number of cards, with every tile capped at about 564px so a lone card
+ * never stretches; the empty message; and the custom card note. The page
+ * fades up as it opens, and every transition holds still under reduced
+ * motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region pagEntDiv */
+
+.pagEntDiv { /* What: Page Enter Div. Why: The page fades up into view as it opens, like every page. How: This plays the shared page entrance. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Page Enter Div. Why: Someone who asked for less motion shouldn't see the page slide in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.pagEntDiv { /* What: Motionless Page Enter Div. Why: The page should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+
+
+/* #region herSec */
+
+.herSec { /* What: Hero Section. Why: The hero stands apart from the page on the warm ivory, ending in a stamp's scalloped edge. How: This pads it below the bar, positions the motif against it, and cuts scallops into its bottom edge with a mask, as on Home. */
+
+
+	--her-sca-rad : calc( var( --ver-rhy-bas ) * 1rem ); /* Vertical Rhythm Base ~= 14.572px */ /* What: Hero Scallop Radius. Why: The scallops' size sets both the mask's band and its repeat. How: The mask below reads it. */
+
+	background     : var( --bac-sun-col );                                /* Background Sunken Color = #EDE6D8 */
+	mask           : linear-gradient( #000 0 0 ) top / 100% calc( 100% - var( --her-sca-rad ) ) no-repeat, radial-gradient( circle var( --her-sca-rad ) at 50% 0, #000 98%, transparent ) bottom / calc( var( --her-sca-rad ) * 2.5 ) var( --her-sca-rad ) repeat-x; /* What: Scallop Mask. Why: The hero's edge echoes a stamp's perforations. How: The first layer keeps everything above the bottom band, and the second repeats a half circle hanging down across that band, so the edge ends in scallops. */
+	padding-bottom : var( --spa-ver-p06 );                                /* Spacing Vertical Base Plus 6 ~= 78.751px */
+	padding-top    : calc( var( --nav-bar-hei ) + var( --her-gap-pad ) ); /* Navigation Bar Height ~= 78.751px, Hero Gap Padding, about 59.447px - 138.199px */
+	position       : relative;
+
+
+}
+
+
+/* #region herInnDiv */
+
+.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, lifted over the motif. */
+
+
+	align-items    : flex-start;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-bas );   /* Spacing Vertical Base ~= 14.572px */
+	margin         : 0 auto;
+	max-width      : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
+	position       : relative;
+	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
+
+
+}
+
+.secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names the page above its heading. How: This sets it in berry mono capitals at the base size. */
+
+
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em ); /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	text-transform : uppercase;
+
+
+}
+
+.herTitHea { /* What: Hero Title Heading. Why: The heading is the page's loudest line. How: This sets it in the main text color at the shared h1 size. */
+
+
+	color : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+}
+
+.herLeaPar { /* What: Hero Lead Paragraph. Why: The lead reads a step larger than body text. How: This sets it at the base plus 2 size, capped at the paragraph measure. */
+
+
+	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
+	max-width : var( --tex-wid-bas ); /* Text Width Base ~= 29.199em */
+
+
+}
+
+/* #endregion herInnDiv */
+
+/* #endregion herSec */
+
+
+
+/* #region galSec */
+
+.galSec { /* What: Gallery Section. Why: The controls and the cards get room above and below. How: This pads the section top and bottom. */
+
+
+	padding : var( --spa-ver-p05 ) 0 var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 5 ~= 59.447px, Spacing Vertical Base Plus 8 ~= 138.199px */
+
+
+}
+
+
+/* #region secInnDiv */
+
+.secInnDiv { /* What: Section Inner Div. Why: The section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
+
+
+	margin    : 0 auto;
+	max-width : var( --con-max-wid );   /* Container Maximum Width, about 1,449px */
+	padding   : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
+
+
+}
+
+
+/* #region conBarDiv */
+
+.conBarDiv { /* What: Controls Bar Div. Why: The search and the occasion pills sit on one line on wide screens and wrap on phones. How: This spreads them apart along their bottom edge, wrapping when there's no room. */
+
+
+	align-items     : flex-end;
+	display         : flex;
+	flex-wrap       : wrap;
+	gap             : var( --spa-ver-p01 ) var( --spa-hor-p02 ); /* Spacing Vertical Base Plus 1 ~= 19.304px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	justify-content : space-between;
+
+
+}
+
+
+/* #region seaFieDiv */
+
+.seaFieDiv { /* What: Search Field Div. Why: The search's label and field read as one unit, wide enough for a few words. How: This stacks them, growing to about 425px. */
+
+
+	display        : flex;
+	flex           : 1 1 auto;
+	flex-direction : column;
+	gap            : var( --spa-ver-m03 );                /* Spacing Vertical Base Minus 3 ~= 6.268px */
+	max-width      : calc( var( --ver-rhy-p12 ) * 1rem ); /* Vertical Rhythm Base Plus 12 ~= 425.896px */
+
+
+}
+
+.seaLabLab { /* What: Search Label Label. Why: The label reads as a small caption above the field. How: This sets it in muted mono capitals at the base size. */
+
+
+	color          : var( --tex-mut-col );                   /* Text Muted Color = #646482 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	text-transform : uppercase;
+
+
+}
+
+.seaTexInp { /* What: Search Text Input. Why: The search is a full-width white box whose border answers the pointer and whose focus ring eases in. How: This sets a white box with a quiet border and rounded corners, easing its border and focus ring. */
+
+
+	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-sma );                            /* Radius Border Small ~= 8.304px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	font-family    : var( --fon-fam-mai );                            /* Font Family Main = 'Syne', sans-serif */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	outline        : 0 solid var( --foc-rin-col );                    /* Focus Ring Color ~= #bd3000 */
+	outline-offset : calc( var( --ver-rhy-m03 ) * 1rem );             /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
+	transition     : border-color var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width          : 100%;
+
+
+}
+.seaTexInp::placeholder { /* What: Search Text Input Placeholder. Why: The sample search should read as a hint, not an entry. How: This sets it in the muted text color. */
+
+
+	color : var( --tex-mut-col ); /* Text Muted Color = #646482 */
+
+
+}
+.seaTexInp:hover { /* What: Hovered Search Text Input. Why: A field responds to the pointer. How: This turns its border the strong blue. */
+
+
+	border-color : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
+
+
+}
+.seaTexInp:focus-visible { /* What: Focused Search Text Input. Why: The field being typed in should be obvious. How: This turns its border orange while the shared focus ring grows in around it. */
+
+
+	border-color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Search Text Input. Why: Someone who asked for less motion should see the border and ring simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.seaTexInp { /* What: Motionless Search Text Input. Why: The border and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion seaFieDiv */
+
+
+/* #region occFilDiv */
+
+.occFilDiv { /* What: Occasion Filter Div. Why: The occasion pills sit in a row that wraps on a narrow phone. How: This lines them up with small gaps. */
+
+
+	display   : flex;
+	flex-wrap : wrap;
+	gap       : var( --spa-ver-m02 ) var( --spa-hor-m02 ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Minus 2 ~= 8.304px */
+
+
+}
+
+.occFilBut { /* What: Occasion Filter Button. Why: Each occasion is an outlined pill, and the chosen one fills with ink. How: This sets a white pill in mono capitals, easing its colors, press, and focus. */
+
+
+	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : 999px;
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	font-family    : var( --fon-fam-sec );                            /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                            /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m02 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base ~= 14.572px */
+	text-transform : uppercase;
+	transition     : background var( --dur-tra-bas ), border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.occFilBut:hover { /* What: Hovered Occasion Filter Button. Why: Pills in a row shift color on hover rather than lifting. How: This turns the border blue and the text dark blue. */
+
+
+	border-color : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
+	color        : var( --acs-dar-col ); /* Accent-Secondary Dark Color ~= #126186 */
+
+
+}
+.occFilBut:active { /* What: Pressed Occasion Filter Button. Why: A press should register before the filter changes. How: This presses the pill in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the pill by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+.occFilBut[aria-pressed='true'] { /* What: Chosen Occasion Filter Button. Why: The chosen occasion should stand out from the rest. How: This fills the pill with ink and sets its text in the page ivory. */
+
+
+	background   : var( --bac-inv-col ); /* Background Inverse Color = #1A1A2E */
+	border-color : var( --bac-inv-col ); /* Background Inverse Color = #1A1A2E */
+	color        : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+
+
+}
+.occFilBut[aria-pressed='true']:hover { /* What: Hovered Chosen Occasion Filter Button. Why: The chosen pill should answer the pointer too, which its ink fill would otherwise hide. How: This lightens the fill to the secondary ink. */
+
+
+	background   : var( --tex-sec-col ); /* Text Secondary Color = #3D3D5C */
+	border-color : var( --tex-sec-col ); /* Text Secondary Color = #3D3D5C */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Occasion Filter Button. Why: Someone who asked for less motion should see the pill simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.occFilBut { /* What: Motionless Occasion Filter Button. Why: The colors, press, and ring should switch at once, the press still applying. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion occFilDiv */
+
+/* #endregion conBarDiv */
+
+.resCouPar { /* What: Result Count Paragraph. Why: The count is a quiet note between the controls and the cards. How: This sets it in muted mono at the base size with room above and below. */
+
+
+	color       : var( --tex-mut-col );                        /* Text Muted Color = #646482 */
+	font-family : var( --fon-fam-sec );                        /* Font Family Secondary = 'DM Mono', monospace */
+	font-size   : var( --fon-siz-bas );                        /* Font Size Base = 1rem */
+	margin      : var( --spa-ver-p02 ) 0 var( --spa-ver-p03 ); /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Vertical Base Plus 3 ~= 33.876px */
+
+
+}
+
+.galHidHea { /* What: Gallery Hidden Heading. Why: The cards' heading is for screen readers and the page's outline only. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
+
+
+	border      : 0;
+	clip-path   : inset( 50% );
+	height      : 1px;
+	margin      : -1px;
+	overflow    : hidden;
+	padding     : 0;
+	position    : absolute;
+	white-space : nowrap;
+	width       : 1px;
+
+
+}
+
+.galGriDiv { /* What: Gallery Grid Div. Why: The cards sit in even rows, centered, whatever their number. How: This lays them out in a centered grid whose column count the attributes below set, each tile capped at about 564px. */
+
+
+	display         : grid;
+	gap             : var( --spa-ver-p04 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	justify-content : center;
+
+
+}
+.galGriDiv[data-grid-wide-columns='1'] { /* What: One Column Wide Gallery Grid Div. Why: A count no larger number divides shows in one column. How: This sets one capped column. */
+
+
+	grid-template-columns : minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+
+
+}
+.galGriDiv[data-grid-wide-columns='2'] { /* What: Two Column Wide Gallery Grid Div. Why: An even count three doesn't divide shows two across. How: This sets two capped columns. */
+
+
+	grid-template-columns : repeat( 2, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+
+
+}
+.galGriDiv[data-grid-wide-columns='3'] { /* What: Three Column Wide Gallery Grid Div. Why: A count three divides shows three across on wide screens. How: This sets three capped columns. */
+
+
+	grid-template-columns : repeat( 3, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+
+
+}
+@media ( max-width : 1024px ) { /* What: Tablet Gallery Grid Div. Why: Three tiles across are too narrow for their text on tablets. How: This applies at 1,024px and below. */
+
+
+	.galGriDiv[data-grid-medium-columns='1'] { /* What: One Column Medium Gallery Grid Div. Why: An odd count shows in one column on tablets. How: This sets one capped column. */
+
+
+		grid-template-columns : minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+
+
+	}
+
+	.galGriDiv[data-grid-medium-columns='2'] { /* What: Two Column Medium Gallery Grid Div. Why: An even count shows two across on tablets. How: This sets two capped columns. */
+
+
+		grid-template-columns : repeat( 2, minmax( 0, calc( var( --ver-rhy-p13 ) * 1rem ) ) ); /* Vertical Rhythm Base Plus 13 ~= 564.342px */
+
+
+	}
+
+
+}
+@media ( max-width : 640px ) { /* What: Phone Gallery Grid Div. Why: Two tiles across are too narrow on phones. How: This applies at 640px and below. */
+
+
+	.galGriDiv[data-grid-medium-columns] { /* What: One Column Phone Gallery Grid Div. Why: Each tile takes the full width. How: This sets one full-width column, whatever the counts. */
+
+
+		grid-template-columns : 1fr;
+
+
+	}
+
+
+}
+
+
+/* #region empResDiv */
+
+.empResDiv { /* What: Empty Results Div. Why: The empty message sits centered where the grid would be. How: This stacks the message and the button, centered, with room around them. */
+
+
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-p01 );   /* Spacing Vertical Base Plus 1 ~= 19.304px */
+	padding        : var( --spa-ver-p05 ) 0; /* Spacing Vertical Base Plus 5 ~= 59.447px */
+	text-align     : center;
+
+
+}
+
+.empResPar { /* What: Empty Results Paragraph. Why: The message reads a step larger than body text. How: This sets it at the base plus 2 size. */
+
+
+	font-size : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
+
+
+}
+
+.butSecBut { /* What: Button Secondary Button. Why: The way back is an outlined button, matching the site's secondary buttons. How: This sets an outlined button in mono capitals, easing its border, color, lift, press, and focus. */
+
+
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-xsm );                            /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	font-family    : var( --fon-fam-sec );                            /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	text-transform : uppercase;
+	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.butSecBut:hover { /* What: Hovered Button Secondary Button. Why: A button should respond to the pointer. How: This turns its border blue and its text dark blue and lifts it 2px. */
+
+
+	border-color : var( --acs-str-col );                            /* Accent-Secondary Strong Color = #4A91B8 */
+	color        : var( --acs-dar-col );                            /* Accent-Secondary Dark Color ~= #126186 */
+	transform    : translateY( calc( var( --spa-ver-m07 ) * -1 ) ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.butSecBut:active { /* What: Pressed Button Secondary Button. Why: A press should register before anything else happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Button Secondary Button. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.butSecBut { /* What: Motionless Button Secondary Button. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion empResDiv */
+
+
+/* #region cusNotPar */
+
+.cusNotPar { /* What: Custom Note Paragraph. Why: The invitation closes the page, centered under the cards. How: This centers it with room above. */
+
+
+	margin-top : var( --spa-ver-p06 ); /* Spacing Vertical Base Plus 6 ~= 78.751px */
+	text-align : center;
+
+
+}
+
+.cusNotAnc { /* What: Custom Note Anchor. Why: The link sits inside the sentence, so it's underlined and dims when pressed. How: This sets it in dark orange with an underline, easing its color, dimming, and focus. */
+
+
+	color                 : var( --acc-dar-col );                   /* Accent Dark Color ~= #bd3000 */
+	text-decoration       : underline;
+	text-underline-offset : calc( var( --cdn-pow-006-rec ) * 1em ); /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185em */
+	transition            : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.cusNotAnc:hover { /* What: Hovered Custom Note Anchor. Why: A text link shifts color on hover. How: This turns it dark blue. */
+
+
+	color : var( --acs-dar-col ); /* Accent-Secondary Dark Color ~= #126186 */
+
+
+}
+.cusNotAnc:active { /* What: Pressed Custom Note Anchor. Why: A text link dims when pressed. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Custom Note Anchor. Why: Someone who asked for less motion should see the link simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.cusNotAnc { /* What: Motionless Custom Note Anchor. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion cusNotPar */
+
+/* #endregion secInnDiv */
+
+/* #endregion galSec */
+
+/* #endregion pagEntDiv */
+
+
