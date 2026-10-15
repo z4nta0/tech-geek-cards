@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import styles from './HappyThanksgivingCard.module.css';
 
@@ -186,18 +186,7 @@ export default function ThanksgivingCard() {
   const leavesRef = useRef<HTMLDivElement>(null);
 
 
-  const [ resetBoolean, setResetBoolean ] = useState(false);
 
-    function resetTimeline() {
-
-
-        setResetBoolean(true);
-
-        setTimeout(() => {
-            setResetBoolean(false);
-        }, 100);
-
-    };
 
 
 
@@ -269,45 +258,8 @@ export default function ThanksgivingCard() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [resetBoolean]);
+  }, []);
 
-  const [isFullscreen, setIsFullscreen] = useState(true);
-    
-      function toggleFullscreen() {
-  
-          const maiConDiv = document.getElementById('maiConDiv') as HTMLDivElement;
-  
-          if (isFullscreen === true) {
-  
-              maiConDiv.style.overflow = 'auto';
-              maiConDiv.style.position = 'relative';
-              maiConDiv.style.width = '100%';
-              maiConDiv.style.paddingTop = '72px';
-              maiConDiv.style.zIndex = '9';
-  
-              document.body.style.overflow = 'auto';
-  
-  
-  
-              setIsFullscreen(false);
-  
-          } else {
-  
-              maiConDiv.style.overflow = 'hidden';
-              maiConDiv.style.position = 'fixed';
-              maiConDiv.style.width = '100vw';
-              maiConDiv.style.paddingTop = '0';
-              maiConDiv.style.zIndex = '999';
-  
-              document.body.style.overflow = 'hidden';
-  
-  
-  
-              setIsFullscreen(true);
-  
-          }
-  
-      };
 
   return (
     <div
@@ -345,7 +297,7 @@ export default function ThanksgivingCard() {
       <div style={{
         position: "relative", zIndex: 5,
         display: "flex", flexDirection: "column", alignItems: "center",
-        gap: "2rem", padding: "2rem",
+        gap: "32px", padding: "32px",
         maxWidth: "800px", width: "100%",
       }}>
         {/* Title */}
@@ -355,7 +307,7 @@ export default function ThanksgivingCard() {
           style={{
             opacity: 0,
             color: "#FFF3CC",
-            fontSize: "clamp(2.4rem, 7vw, 5rem)",
+            fontSize: "clamp(38.4px, 7vw, 80px)",
             fontWeight: "bold",
             letterSpacing: "0.04em",
             textAlign: "center",
@@ -370,7 +322,7 @@ export default function ThanksgivingCard() {
         {/* Illustrations row */}
         <div style={{
           display: "flex", alignItems: "flex-end",
-          justifyContent: "center", gap: "2.5rem",
+          justifyContent: "center", gap: "40px",
           flexWrap: "wrap",
         }}>
           <Cornucopia />
@@ -384,7 +336,7 @@ export default function ThanksgivingCard() {
           style={{
             opacity: 0,
             color: "#FDECC8",
-            fontSize: "clamp(1rem, 2.5vw, 1.35rem)",
+            fontSize: "clamp(16px, 2.5vw, 21.6px)",
             textAlign: "center",
             maxWidth: "560px",
             lineHeight: 1.75,
@@ -402,20 +354,6 @@ export default function ThanksgivingCard() {
         </p>
       </div>
 
-      <div id='butConDiv' className={ styles.buttonContainerDiv } >
-
-
-            <button id='repAniBut' className={ styles.animationButtons } onClick={() => resetTimeline()} >
-                Replay
-            </button>
-
-
-
-            <button id='fulScrBut' className={ styles.animationButtons } onClick={() => toggleFullscreen()} >
-                Toggle Fullscreen
-            </button>
-
-        </div>
     </div>
   );
 }

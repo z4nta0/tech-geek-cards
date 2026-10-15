@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import styles from './FourthOfJulyCard.module.css';
 
 interface Firework {
   id: number;
@@ -52,18 +51,7 @@ function generateStars(count: number): Star[] {
 
 export default function FourthOfJulyCard() {
 
-    const [ resetBoolean, setResetBoolean ] = useState(false);
 
-    function resetTimeline() {
-
-
-        setResetBoolean(true);
-
-        setTimeout(() => {
-            setResetBoolean(false);
-        }, 100);
-
-    };
 
 
 
@@ -110,7 +98,7 @@ export default function FourthOfJulyCard() {
         ease: "sine.inOut",
       });
     });
-  }, [resetBoolean]);
+  }, []);
 
   // Fireworks launcher
   useEffect(() => {
@@ -130,7 +118,7 @@ export default function FourthOfJulyCard() {
     launch();
     intervalRef.current = setInterval(launch, 900);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [resetBoolean]);
+  }, []);
 
   // Animate each new firework burst
   useEffect(() => {
@@ -171,37 +159,6 @@ export default function FourthOfJulyCard() {
     });
   }, [fireworks]);
 
-  const [isFullscreen, setIsFullscreen] = useState(true);
-
-   function toggleFullscreen() {
-
-    const maiConDiv = document.getElementById('maiConDiv') as HTMLDivElement;
-
-    if (isFullscreen === true) {
-
-        maiConDiv.style.position = 'relative';
-        maiConDiv.style.width = '100%';
-        maiConDiv.style.height = '100%';
-        maiConDiv.style.zIndex = '9';
-
-
-
-        setIsFullscreen(false);
-
-    } else {
-
-        maiConDiv.style.position = 'fixed';
-        maiConDiv.style.width = '100vw';
-        maiConDiv.style.height = '100vh';
-        maiConDiv.style.zIndex = '999';
-
-
-
-        setIsFullscreen(true);
-
-    }
-
-  }
 
   return (
     <div
@@ -302,13 +259,13 @@ export default function FourthOfJulyCard() {
       ))}
 
       {/* Card Content */}
-      <div style={{ textAlign: "center", zIndex: 10, padding: "2rem", maxWidth: 560 }}>
+      <div style={{ textAlign: "center", zIndex: 10, padding: "32px", maxWidth: 560 }}>
         {/* Flag */}
         <div
           ref={flagRef}
           style={{
             display: "inline-block",
-            marginBottom: "1.5rem",
+            marginBottom: "24px",
             border: "2px solid rgba(255,255,255,0.3)",
             borderRadius: 6,
             overflow: "hidden",
@@ -358,19 +315,19 @@ export default function FourthOfJulyCard() {
         <div
           ref={headlineRef}
           style={{
-            fontSize: "clamp(2rem, 7vw, 3.8rem)",
+            fontSize: "clamp(32px, 7vw, 60.8px)",
             fontWeight: "bold",
             color: "#FFFFFF",
             textShadow: "0 0 30px rgba(255,100,100,0.8), 0 0 60px rgba(100,150,255,0.6)",
             lineHeight: 1.1,
-            marginBottom: "1rem",
+            marginBottom: "16px",
             letterSpacing: "0.02em",
           }}
         >
           🎆 Happy 4th of July! 🎆
         </div>
 
-        <div style={{ color: "#FFD700", fontSize: "1.4rem", marginBottom: "1rem", letterSpacing: 8 }}>
+        <div style={{ color: "#FFD700", fontSize: "22.4px", marginBottom: "16px", letterSpacing: 8 }}>
           ★ ★ ★ ★ ★
         </div>
 
@@ -378,7 +335,7 @@ export default function FourthOfJulyCard() {
           ref={subRef}
           style={{
             color: "rgba(200, 220, 255, 0.95)",
-            fontSize: "clamp(1rem, 3vw, 1.3rem)",
+            fontSize: "clamp(16px, 3vw, 20.8px)",
             lineHeight: 1.7,
             maxWidth: 400,
             margin: "0 auto",
@@ -392,24 +349,10 @@ export default function FourthOfJulyCard() {
           </span>
         </div>
 
-        <div style={{ color: "#CC2222", fontSize: "1.2rem", marginTop: "1.5rem", letterSpacing: 6 }}>
+        <div style={{ color: "#CC2222", fontSize: "19.2px", marginTop: "24px", letterSpacing: 6 }}>
           ✦ ✦ ✦ ✦ ✦
         </div>
       </div>
-      <div id='butConDiv' className={ styles.buttonContainerDiv } >
-
-
-            <button id='repAniBut' className={ styles.animationButtons } onClick={resetTimeline} >
-                Replay
-            </button>
-
-
-
-            <button id='fulScrBut' className={ styles.animationButtons } onClick={() => toggleFullscreen()} >
-                Toggle Fullscreen
-            </button>
-
-        </div>
     </div>
   );
 }

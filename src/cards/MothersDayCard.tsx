@@ -1,23 +1,23 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
-import styles from './FathersDayCard.module.css';
+import styles from './MothersDayCard.module.css';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import { TextPlugin } from 'gsap/all';
 import { GSDevTools } from "gsap/GSDevTools";
 import { useEffect } from 'react';
-import appreciateImg from '../assets/fathers-day-card/appreciate.webp';
-import throughTheGenerationsImg from '../assets/fathers-day-card/through-the-generations.webp';
-import everythingImg from '../assets/fathers-day-card/everything.webp';
-import extra1Img from '../assets/fathers-day-card/extra-1.webp';
-import extra2Img from '../assets/fathers-day-card/extra-2.webp';
-import littleThingsImg from '../assets/fathers-day-card/little-things.webp';
-import loveYouImg from '../assets/fathers-day-card/love-you.webp';
-import importantRoleImg from '../assets/fathers-day-card/important-role.webp';
-import needYouImg from '../assets/fathers-day-card/need-you.webp';
-import specialDayImg from '../assets/fathers-day-card/special-day.webp';
-import provideForUsImg from '../assets/fathers-day-card/provide-for-us.webp';
-import thankYouImg from '../assets/fathers-day-card/thank-you.webp';
+import appreciateYouImg from '../assets/mothers-day-card/appreciate-you.webp';
+import celebrationImg from '../assets/mothers-day-card/celebration.webp';
+import everythingYouDoImg from '../assets/mothers-day-card/everything-you-do.webp';
+import extraImage1Img from '../assets/mothers-day-card/extra-image-1.webp';
+import extraImage2Img from '../assets/mothers-day-card/extra-image-2.webp';
+import littleThingsImg from '../assets/mothers-day-card/little-things.webp';
+import loveYouImg from '../assets/mothers-day-card/love-you.webp';
+import mothersLoveImg from '../assets/mothers-day-card/mothers-love.webp';
+import needYouImg from '../assets/mothers-day-card/need-you.webp';
+import ourResponsibilityImg from '../assets/mothers-day-card/our-responsibility.webp';
+import ourWorldImg from '../assets/mothers-day-card/our-world.webp';
+import thankYouImg from '../assets/mothers-day-card/thank-you.webp';
 import useWinSiz from '../hooks/useWinSiz.ts';     /** This import is the custom React hook that will provide the current window viewport dimensions and will also be used to trigger the useEffect hook on window resize events, as well as altering certain animation settings based on how small or big its dimensions are. */
 import { type WinSizObj } from '../hooks/useWinSiz.ts'; /** This import is the custom type definition for the custom state variable that is generated from the custom useWinSiz React Hook and stores the current viewport dimensions. */
 
@@ -27,7 +27,7 @@ gsap.registerPlugin(TextPlugin, SplitText, useGSAP, GSDevTools);
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function FathersDayCard() {
+export default function MothersDayCard() {
 
 
     /** Window Height Number                   = This custom variable stores the current window viewport height and will trigger a rerender via the {@link useEffect} hook when the window is resized and its value changes in order to recalculate the snowfall and the pixelated transition animation parameters. */
@@ -52,34 +52,21 @@ export default function FathersDayCard() {
 
 
    useGSAP(() => {
-/*
-life skills
-riding a bike
-teaching responsibility
-work ethic
-solving problems
-safety net - car breaks down, etc...
-pride and reassurance
-dad jokes
-sharing passions, hobbies, etc...
-building or sharing traditions
-role model - wife, family, community
-emotional growth
-*/
+
 
     const texArr = [
-        ["To all of the fathers out there, ", "thank you", "!"],
+        ["To all of the mothers out there, ", "thank you", "!"],
         ["For ", "everything", " that you do for us."],
         ["Especially the ", "little things", "."],
-        ["You play such an ", "important role", " in our lives."],
-        ["What fathers ", "provide for us", " goes beyond words!"],
-        ["And gets passed down ", "through the generations" ,"."],
-        ["So on this ", "special day" ," we take great delight in celebrating you."],
-        ["We do ", "love you", " always and unconditionally."],
-        ["We do ", "appreciate", " all that you do."],
-        ["And we will always ", "need you", " in our lives."],
+        ["To the world you are a mother, but to us you are ", "our world", "."],
+        ["A mother's love is a ", "special", " thing indeed!"],
+        ["You definitely deserve more than one day of ", "celebration" ,"."],
+        ["So it is ", "our responsibility" ," to make the most of this one day."],
+        ["You are ", "loved", " (even when we don't show it)."],
+        ["And you are ", "appreciated", " (even when we don't give it)."],
+        ["So please never get discouraged, because we ", "need you", " in our lives."],
         ["On behalf of the rest of us..."],
-        ["Happy Father's Day!"],
+        ["Happy Mother's Day!"],
     ];
 
 
@@ -1287,7 +1274,7 @@ emotional growth
 
 
 
-    const scale = winWidNum <= 1300 && winWidNum > 900 ? 1.8 : winWidNum <= 900 && winWidNum > 700 ? 1.4 : winWidNum <= 700 ? 1.1 : 2;
+    const scale = winWidNum <= 1300 && winWidNum > 900 ? 2 : winWidNum <= 900 && winWidNum > 700 ? 1.5 : winWidNum <= 700 ? 1.25 : 3;
 
     gsaTimIns.current.to(typewriter1, {
         scale: scale,
@@ -1336,71 +1323,9 @@ emotional growth
 
 
 
-   const [isFullscreen, setIsFullscreen] = useState(true);
-
-   function toggleFullscreen() {
-
-    const maiConDiv = document.getElementById('maiConDiv') as HTMLDivElement;
-    const masonryGrid = document.getElementById('masonryGrid') as HTMLDivElement;
-
-    if (isFullscreen === true) {
-
-        maiConDiv.style.overflow = 'auto';
-        maiConDiv.style.position = 'relative';
-
-        document.body.style.overflow = 'auto';
-
-        masonryGrid.style.position = 'relative';
 
 
 
-        setIsFullscreen(false);
-
-    } else {
-
-        maiConDiv.style.overflow = 'hidden';
-        maiConDiv.style.position = 'fixed';
-
-        document.body.style.overflow = 'hidden';
-
-        masonryGrid.style.position = 'fixed';
-
-
-
-        setIsFullscreen(true);
-
-    }
-
-  }
-
-
-
-    function resetTimeline() {
-
-
-        const typewriter1 = document.getElementById('typewriter1') as HTMLSpanElement;
-        const typewriter2 = document.getElementById('typewriter2') as HTMLSpanElement;
-        const typewriter3 = document.getElementById('typewriter3') as HTMLSpanElement;
-        const heartPath = document.getElementById('heartPath') as SVGSVGElement | HTMLElement;
-
-
-
-        typewriter1.style.display = 'inline';
-        typewriter1.style.padding = '0 0';
-        typewriter1.style.transform = 'scale(1)';
-        typewriter2.style.transform = 'scale(1)';
-        typewriter3.style.transform = 'scale(1)';
-        heartPath.style.transform = 'scale(0)';
-
-
-
-        if (gsaTimIns.current !== undefined && gsaTimIns.current !== null) {
-
-            gsaTimIns.current.invalidate().restart();
-
-        }
-
-    };
 
 
 
@@ -1558,7 +1483,7 @@ emotional growth
     <>
 
 
-      <div ref={ container } id='maiConDiv' className={` ${ styles.mainContainerDiv } ${ isFullscreen ? styles.enterFullscreen : styles.exitFullscreen }` } >
+      <div ref={ container } id='maiConDiv' className={` ${ styles.mainContainerDiv } ${ styles.enterFullscreen }` } >
 
         
 
@@ -1608,7 +1533,7 @@ emotional growth
 
 
 
-                        <img id='everythingYouDoImg' src={ everythingImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='everythingYouDoImg' src={ everythingYouDoImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
@@ -1616,19 +1541,19 @@ emotional growth
 
 
 
-                        <img id='ourWorldImg' src={ importantRoleImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='ourWorldImg' src={ ourWorldImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
-                        <img id='mothersLoveImg' src={ provideForUsImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='mothersLoveImg' src={ mothersLoveImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
-                        <img id='celebrationImg' src={ throughTheGenerationsImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='celebrationImg' src={ celebrationImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
-                        <img id='ourResponsibilityImg' src={ specialDayImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='ourResponsibilityImg' src={ ourResponsibilityImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
@@ -1636,7 +1561,7 @@ emotional growth
 
 
 
-                        <img id='appreciateYouImg' src={ appreciateImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
+                        <img id='appreciateYouImg' src={ appreciateYouImg } className={ styles.videos } style={ isLandscape === true ? { width: '1920px', height: '1080px', clipPath: 'url(#heartClip)' } : { width: '409px', height: '911px', clipPath: 'url(#heartClip)' } } />
 
 
 
@@ -1733,7 +1658,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c1r1 }` }>
 
 
-                        <img id='imgOne' className={ `${ styles.c1r1Img }  ${styles.images }  images` } src={ specialDayImg } onClick={ handleOnClick } />
+                        <img id='imgOne' className={ `${ styles.c1r1Img }  ${styles.images }  images` } src={ ourResponsibilityImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1773,7 +1698,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c1r2 }` }>
 
 
-                        <img id='imgFive' className={ `${ styles.c1r2Img }  ${styles.images }  images` } src={ importantRoleImg } onClick={ handleOnClick } />
+                        <img id='imgFive' className={ `${ styles.c1r2Img }  ${styles.images }  images` } src={ mothersLoveImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1783,7 +1708,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c2r2 }` }>
 
 
-                        <img id='imgSix' className={ `${ styles.c2r2Img }  ${styles.images }  images` } src={ extra2Img } onClick={ handleOnClick } />
+                        <img id='imgSix' className={ `${ styles.c2r2Img }  ${styles.images }  images` } src={ extraImage2Img } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1793,7 +1718,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c3r2 }` }>
 
 
-                        <img id='imgSeven' className={ `${ styles.c3r2Img }  ${styles.images }  images` } src={ extra1Img } onClick={ handleOnClick } />
+                        <img id='imgSeven' className={ `${ styles.c3r2Img }  ${styles.images }  images` } src={ extraImage1Img } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1803,7 +1728,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c4r2 }` }>
 
 
-                        <img id='imgEight' className={ `${ styles.c4r2Img }  ${styles.images }  images` } src={ provideForUsImg } onClick={ handleOnClick } />
+                        <img id='imgEight' className={ `${ styles.c4r2Img }  ${styles.images }  images` } src={ ourWorldImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1813,7 +1738,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c1r3 }` }>
 
 
-                        <img id='imgNine' className={ `${ styles.c1r3Img }  ${styles.images }  images` } src={ throughTheGenerationsImg } onClick={ handleOnClick } />
+                        <img id='imgNine' className={ `${ styles.c1r3Img }  ${styles.images }  images` } src={ celebrationImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1823,7 +1748,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c2r3 }` }>
 
 
-                        <img id='imgTen' className={ `${ styles.c2r3Img }  ${styles.images }  images` } src={ everythingImg } onClick={ handleOnClick } />
+                        <img id='imgTen' className={ `${ styles.c2r3Img }  ${styles.images }  images` } src={ everythingYouDoImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1843,7 +1768,7 @@ emotional growth
                     <div className={ `${ styles.cell}  ${ styles.c4r3 }` }>
 
 
-                        <img id='imgTwelve' className={ `${ styles.c4r3Img }  ${styles.images }  images` } src={ appreciateImg } onClick={ handleOnClick } />
+                        <img id='imgTwelve' className={ `${ styles.c4r3Img }  ${styles.images }  images` } src={ appreciateYouImg } onClick={ handleOnClick } />
 
 
                     </div>
@@ -1853,20 +1778,6 @@ emotional growth
 
 
 
-        <div id='butConDiv' className={ styles.buttonContainerDiv } >
-
-
-            <button id='repAniBut' className={ styles.animationButtons } onClick={resetTimeline} >
-                Replay
-            </button>
-
-
-
-            <button id='fulScrBut' className={ styles.animationButtons } onClick={() => toggleFullscreen()} >
-                Toggle Fullscreen
-            </button>
-
-        </div>
 
       </div>
     </>

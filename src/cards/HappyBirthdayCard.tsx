@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import styles from './HappyBirthdayCard.module.css';
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 const COLORS = ["#FF6B6B","#FFD93D","#6BCB77","#4D96FF","#FF6FCF","#FF9A3C","#A78BFA","#34D399"];
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -193,59 +193,9 @@ export default function HappyBirthdayCard() {
 
 
 
-    const [isFullscreen, setIsFullscreen] = useState(true);
-  
-    function toggleFullscreen() {
-
-        const maiConDiv = document.getElementById('maiConDiv') as HTMLDivElement;
-
-        if (isFullscreen === true) {
-
-            maiConDiv.style.overflow = 'auto';
-            maiConDiv.style.position = 'relative';
-            maiConDiv.style.width = '100%';
-            maiConDiv.style.paddingTop = '72px';
-            maiConDiv.style.zIndex = '9';
-
-            document.body.style.overflow = 'auto';
 
 
 
-            setIsFullscreen(false);
-
-        } else {
-
-            maiConDiv.style.overflow = 'hidden';
-            maiConDiv.style.position = 'fixed';
-            maiConDiv.style.width = '100vw';
-            maiConDiv.style.paddingTop = '0';
-            maiConDiv.style.zIndex = '999';
-
-            document.body.style.overflow = 'hidden';
-
-
-
-            setIsFullscreen(true);
-
-        }
-
-    };
-
-
-
-    function resetTimeline() {
-
-        launched.current = false;
-
-        //if (tickerRef.current) gsap.ticker.remove(tickerRef.current);
-        flickerTweens.current.forEach(t => t.kill());
-        //if (rafRef.current) cancelAnimationFrame(rafRef.current);
-        pieces.current = [];
-        const canvas = canvasRef.current; if (!canvas) return;
-        const ctx = canvas.getContext("2d")!;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    };
 
 
 
@@ -270,7 +220,7 @@ export default function HappyBirthdayCard() {
         <canvas ref={canvasRef} style={{ position:"absolute", inset:0, width:"100%", height:"100%", pointerEvents:"none", zIndex:10 }}/>
 
         {/* Content */}
-        <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"1.5rem", pointerEvents:"none", zIndex:5 }}>
+        <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"24px", pointerEvents:"none", zIndex:5 }}>
           <div style={{ textAlign:"center", marginBottom:8 }}>
             <div ref={titleTopRef} className={ styles.luckiestGuyFont } style={{ fontSize:48, fontWeight:700, color:"#fff", lineHeight:1.1, textShadow:"0 2px 20px rgba(255,180,0,0.5)" }}>
               🎉 Happy
@@ -311,20 +261,6 @@ export default function HappyBirthdayCard() {
           </div>
         </div>
       </div>
-      <div id='butConDiv' className={ styles.buttonContainerDiv } >
-
-
-            <button id='repAniBut' className={ styles.animationButtons } onClick={() => resetTimeline()} >
-                Replay
-            </button>
-
-
-
-            <button id='fulScrBut' className={ styles.animationButtons } onClick={() => toggleFullscreen()} >
-                Toggle Fullscreen
-            </button>
-
-        </div>
     </div>
   );
 }

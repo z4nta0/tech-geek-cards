@@ -1336,71 +1336,9 @@ emotional growth
 
 
 
-   const [isFullscreen, setIsFullscreen] = useState(true);
-
-   function toggleFullscreen() {
-
-    const maiConDiv = document.getElementById('maiConDiv') as HTMLDivElement;
-    const masonryGrid = document.getElementById('masonryGrid') as HTMLDivElement;
-
-    if (isFullscreen === true) {
-
-        maiConDiv.style.overflow = 'auto';
-        maiConDiv.style.position = 'relative';
-
-        document.body.style.overflow = 'auto';
-
-        masonryGrid.style.position = 'relative';
 
 
 
-        setIsFullscreen(false);
-
-    } else {
-
-        maiConDiv.style.overflow = 'hidden';
-        maiConDiv.style.position = 'fixed';
-
-        document.body.style.overflow = 'hidden';
-
-        masonryGrid.style.position = 'fixed';
-
-
-
-        setIsFullscreen(true);
-
-    }
-
-  }
-
-
-
-    function resetTimeline() {
-
-
-        const typewriter1 = document.getElementById('typewriter1') as HTMLSpanElement;
-        const typewriter2 = document.getElementById('typewriter2') as HTMLSpanElement;
-        const typewriter3 = document.getElementById('typewriter3') as HTMLSpanElement;
-        const heartPath = document.getElementById('heartPath') as SVGSVGElement | HTMLElement;
-
-
-
-        typewriter1.style.display = 'inline';
-        typewriter1.style.padding = '0 0';
-        typewriter1.style.transform = 'scale(1)';
-        typewriter2.style.transform = 'scale(1)';
-        typewriter3.style.transform = 'scale(1)';
-        heartPath.style.transform = 'scale(0)';
-
-
-
-        if (gsaTimIns.current !== undefined && gsaTimIns.current !== null) {
-
-            gsaTimIns.current.invalidate().restart();
-
-        }
-
-    };
 
 
 
@@ -1558,7 +1496,7 @@ emotional growth
     <>
 
 
-      <div ref={ container } id='maiConDiv' className={` ${ styles.mainContainerDiv } ${ isFullscreen ? styles.enterFullscreen : styles.exitFullscreen }` } >
+      <div ref={ container } id='maiConDiv' className={` ${ styles.mainContainerDiv } ${ styles.enterFullscreen }` } >
 
         
 
@@ -1853,20 +1791,6 @@ emotional growth
 
 
 
-        <div id='butConDiv' className={ styles.buttonContainerDiv } >
-
-
-            <button id='repAniBut' className={ styles.animationButtons } onClick={resetTimeline} >
-                Replay
-            </button>
-
-
-
-            <button id='fulScrBut' className={ styles.animationButtons } onClick={() => toggleFullscreen()} >
-                Toggle Fullscreen
-            </button>
-
-        </div>
 
       </div>
     </>
