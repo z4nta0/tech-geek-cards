@@ -74,7 +74,7 @@ type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place
 
 // #region Constants
 
-const COL_HEX_ARR = [ '#FF4444', '#FFFFFF', '#4488FF', '#FFD700', '#FF6B6B', '#88CCFF' ]; // What: Color Hex Array. Why: The fireworks burst in the flag's colors and gold. How: Each firework and each spark draws one of these at random, card art kept literal.
+const COL_VAR_ARR = [ 'var( --foj-red-col )', 'var( --foj-whi-col )', 'var( --foj-blu-col )', 'var( --foj-gol-col )', 'var( --foj-cor-col )', 'var( --foj-ice-col )' ]; // What: Color Variable Array. Why: The fireworks burst in the flag's colors and gold, which the card's stylesheet defines. How: Each firework and each spark draws one of these token references at random, which its custom property resolves against the card's root. // Fourth-Of-July Red Color = #FF4444, Fourth-Of-July White Color = #FFFFFF, Fourth-Of-July Blue Color = #4488FF, Fourth-Of-July Gold Color = #FFD700, Fourth-Of-July Coral Color = #FF6B6B, Fourth-Of-July Ice Color = #88CCFF
 
 
 
@@ -100,7 +100,7 @@ const FLA_STR_STR = Array.from( Array( 6 ).keys(), ( strIndNum ) => `M0 ${ ( ( s
 
 // #region Helpers
 
-const ranColFun = () : string => COL_HEX_ARR[ Math.floor( Math.random() * COL_HEX_ARR.length ) ]; // What: Random Color Function. Why: Every firework and spark takes a color from the palette. How: This returns one of its colors at random.
+const ranColFun = () : string => COL_VAR_ARR[ Math.floor( Math.random() * COL_VAR_ARR.length ) ]; // What: Random Color Function. Why: Every firework and spark takes a color from the palette. How: This returns one of its token references at random.
 
 
 
@@ -586,25 +586,29 @@ function FojCarCom () : JSX.Element {
 
 
 					<rect
-						fill='#B22234'
+						style={{ fill : 'var( --foj-fie-col )' }} // Fourth-Of-July Field Color = #B22234
+
 						height={ FLA_HEI_NUM }
 						width={ FLA_WID_NUM }
 					/>{ /* What: Red Field Rect Element. Why: The flag's seven red stripes fill everything the white ones don't. How: This paints the whole flag red. */ }
 
 					<path
+						style={{ fill : 'var( --foj-whi-col )' }} // Fourth-Of-July White Color = #FFFFFF
+
 						d={ FLA_STR_STR }
-						fill='#FFFFFF'
 					/>{ /* What: White Stripes Path Element. Why: Six white stripes lie between the red. How: This draws them all from the prebuilt path. */ }
 
 					<rect
-						fill='#3C3B6E'
+						style={{ fill : 'var( --foj-can-col )' }} // Fourth-Of-July Canton Color = #3C3B6E
+
 						height={ CAN_HEI_NUM }
 						width={ CAN_WID_NUM }
 					/>{ /* What: Canton Rect Element. Why: The blue canton holds the stars in the upper left. How: This paints it over the top seven stripes. */ }
 
 					<path
+						style={{ fill : 'var( --foj-whi-col )' }} // Fourth-Of-July White Color = #FFFFFF
+
 						d={ FLA_STA_STR }
-						fill='#FFFFFF'
 					/>{ /* What: Canton Stars Path Element. Why: Fifty white stars fill the canton. How: This draws them all from the prebuilt path. */ }
 
 

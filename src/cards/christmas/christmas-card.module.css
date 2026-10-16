@@ -73,15 +73,18 @@
 
 /* #region chrCarDiv */
 
-.chrCarDiv { /* What: Christmas Card Div. Why: The card fills the screen, its scenes stacked in it. How: This fixes it over the whole viewport, clips anything past its edges, and sets the fonts and shadow its lettering shares. */
+.chrCarDiv { /* What: Christmas Card Div. Why: The card fills the screen, its scenes stacked in it. How: This fixes it over the whole viewport, clips anything past its edges, and sets the fonts, colors, and shadow its scenes share. */
 
 
-	--chr-fes-fon : 'Mountains of Christmas', 'Gloria Hallelujah', var( --fon-fam-mai );                                                       /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon, and a recipient's name may hold letters Mountains of Christmas lacks, which it has only in basic Latin. How: This names Mountains of Christmas, then Gloria Hallelujah, whose extended Latin file draws those letters in a handwritten style, then the main font. */
-	--chr-gli-fon : 'Rubik Glitch', var( --fon-fam-mai );                                                                                      /* What: Christmas Glitch Font. Why: The hacked scene's lettering looks broken up. How: This names Rubik Glitch, falling back to the main font. */
-	--chr-han-fon : 'Gloria Hallelujah', var( --fon-fam-mai );                                                                                 /* What: Christmas Handwritten Font. Why: The sign-off's name looks handwritten. How: This names Gloria Hallelujah, falling back to the main font. */
-	--chr-sha-col : #4A4A4A; /* What: Christmas Shadow Color. Why: A soft gray shadow lifts the lettering off both busy backgrounds. How: This is the card's own dark gray. */
-	--chr-sha-spr : calc( var( --ver-rhy-m04 ) * 1rem );                                                                                       /* Vertical Rhythm Base Minus 4 ~= 4.732px */ /* What: Christmas Shadow Spread. Why: The outline should be soft. How: This is each shadow's blur. */
+	--chr-fes-fon : 'Mountains of Christmas', 'Gloria Hallelujah', var( --fon-fam-mai ); /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon, and a recipient's name may hold letters Mountains of Christmas lacks, which it has only in basic Latin. How: This names Mountains of Christmas, then Gloria Hallelujah, whose extended Latin file draws those letters in a handwritten style, then the main font. */
+	--chr-gli-fon : 'Rubik Glitch', var( --fon-fam-mai );                                /* What: Christmas Glitch Font. Why: The hacked scene's lettering looks broken up. How: This names Rubik Glitch, falling back to the main font. */
+	--chr-hac-col : #F00000;                                                             /* What: Christmas Hacked Color. Why: The fake hacked screen's lettering is an alarming red. How: This is #F00000, the hacked scene's lettering color. */
+	--chr-han-fon : 'Gloria Hallelujah', var( --fon-fam-mai );                           /* What: Christmas Handwritten Font. Why: The sign-off's name looks handwritten. How: This names Gloria Hallelujah, falling back to the main font. */
+	--chr-pix-col : #1A1A2E;                                                             /* What: Christmas Pixel Color. Why: The wipe's squares are a near-black ink, matching the site's dark ink without reading the site's colors. How: This is #1A1A2E, the fill of every square in the pixelated wipe. */
+	--chr-sha-col : #4A4A4A;                                                             /* What: Christmas Shadow Color. Why: A soft gray shadow lifts the lettering off both busy backgrounds. How: This is the card's own dark gray. */
+	--chr-sha-spr : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */ /* What: Christmas Shadow Spread. Why: The outline should be soft. How: This is each shadow's blur. */
 	--chr-tex-sha : drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ) drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ); /* What: Christmas Text Shadow. Why: The lettering can be hard to read over the backgrounds, and a shadow on every letter makes the letter-by-letter fades too slow to paint. How: This doubles a soft gray drop shadow, cast once around each whole heading or paragraph. */
+	--chr-whi-col : #FFFFFF;                                                             /* What: Christmas White Color. Why: The snowy scene's lettering and its snowflakes are white. How: This is #FFFFFF, read by the snowy scene's lettering and by every flake. */
 
 	inset    : 0;
 	overflow : hidden;
@@ -107,7 +110,7 @@
 .pixSquDiv { /* What: Pixel Square Div. Why: Each square is one pixel of the wipe. How: This fills it with the dark background, its opacity animated by the timeline. */
 
 
-	background-color : var( --bac-inv-col ); /* Background Inverse Color = #1A1A2E */
+	background-color : var( --chr-pix-col ); /* Christmas Pixel Color = #1A1A2E */
 
 
 }
@@ -122,7 +125,7 @@
 
 
 	background : url( './pirate-background.webp' ) center / cover no-repeat;
-	color      : #F00000;
+	color      : var( --chr-hac-col ); /* Christmas Hacked Color = #F00000 */
 	inset      : 0;
 	position   : absolute;
 	text-align : center;
@@ -193,13 +196,13 @@
 
 
 	background : url( './snowy-background.webp' ) center / cover no-repeat;
-	color      : #FFFFFF;
+	color      : var( --chr-whi-col ); /* Christmas White Color = #FFFFFF */
 	inset      : 0;
 	opacity    : 0;
 	overflow   : hidden;
 	position   : absolute;
 	text-align : center;
-	z-index    : 1; /* What: Layer Above The Hacked Scene. Why: Once shown, the snowy scene covers the hacked one, at 0. How: This sets it one higher. */
+	z-index    : 1;                    /* What: Layer Above The Hacked Scene. Why: Once shown, the snowy scene covers the hacked one, at 0. How: This sets it one higher. */
 
 
 }
@@ -290,7 +293,7 @@
 .snoFlaDiv { /* What: Snowy Flake Div. Why: Each snowflake is a small white dot that snowfall.ts moves every frame. How: This places it at the scene's top left, rounds it, keeps it out of the way of the pointer, and keeps it on its own layer, since it moves the whole time it exists. */
 
 
-	background-color : #FFFFFF;
+	background-color : var( --chr-whi-col ); /* Christmas White Color = #FFFFFF */
 	border-radius    : 50%;
 	left             : 0;
 	pointer-events   : none;
