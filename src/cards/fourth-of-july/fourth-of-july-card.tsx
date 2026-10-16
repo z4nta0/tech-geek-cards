@@ -11,6 +11,7 @@ import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
 import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
@@ -99,8 +100,7 @@ const FLA_STR_STR = Array.from( Array( 6 ).keys(), ( strIndNum ) => `M0 ${ ( ( s
 
 // #region Helpers
 
-const ranColFun = () : string => COL_HEX_ARR[ Math.floor( Math.random() * COL_HEX_ARR.length ) ];                               // What: Random Color Function. Why: Every firework and spark takes a color from the palette. How: This returns one of its colors at random.
-const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Value Function. Why: Every star and firework is placed, sized, and timed at random within a range. How: This returns a number from the minimum up to the maximum.
+const ranColFun = () : string => COL_HEX_ARR[ Math.floor( Math.random() * COL_HEX_ARR.length ) ]; // What: Random Color Function. Why: Every firework and spark takes a color from the palette. How: This returns one of its colors at random.
 
 
 
@@ -279,10 +279,10 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 	const lauFirFun = () : void => { // What: Launch Firework Function. Why: The sky bursts with a new firework every interval. How: This plays the next wrap in the pool and schedules the next launch.
 
 
+		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } ); // What: Timeline Object. Why: Each firework plays as one sequence. How: This creates its timeline, decelerating unless told otherwise.
 		const wraDivEle = wraDivArr[ wraIndNum ];                               // What: Wrap Div Element. Why: This launch plays the wrap whose turn it is. How: This takes it from the pool.
 		const wraXcoNum = ranValFun( 0.15, 0.85 ) * firDivEle.clientWidth;      // What: Wrap X-Coordinate Number. Why: Fireworks burst across the sky, clear of its edges. How: This picks a spot between 15% and 85% across, a literal position in the sky, in pixels.
 		const wraYcoNum = ranValFun( 0.1, 0.55 ) * firDivEle.clientHeight;      // What: Wrap Y-Coordinate Number. Why: Fireworks burst in the upper middle of the sky. How: This picks a spot between 10% and 55% down, a literal position in the sky, in pixels.
-		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } ); // What: Timeline Object. Why: Each firework plays as one sequence. How: This creates its timeline, decelerating unless told otherwise.
 
 		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell, Ring, And Particle Div Elements. Why: The timeline animates each piece. How: This takes the wrap's children in the order the card renders them, shell, ring, then sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
 
@@ -426,17 +426,16 @@ function FojCarCom () : JSX.Element {
 	useGSAP( () => { // What: Fourth Of July Timeline Hook. Why: The entrance, twinkle, and fireworks have to start after the card renders and stop when it leaves. How: This builds and plays them in a GSAP context, returning the fireworks' cleanup.
 
 
-		const bouEasStr = gsaEasFun( 'bou' );      // What: Bounce Easing String. Why: The headline lands with a celebratory overshoot. How: This registers the bounce token and keeps its GSAP name.
-		const decEasStr = gsaEasFun( 'dec' );      // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
-		const entDurNum = durSecFun( 'p07' );      // What: Entrance Duration Number. Why: Every entrance plays at the same unhurried pace, and the wish starts once the card has faded in. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const flaDelNum = durSecFun( 'p06' );      // What: Flag Delay Number. Why: The flag follows the headline. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
-		const flaShiNum = rhyPxlFun( 'p04' ) * -1; // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
-		const greDelNum = durSecFun( 'p03' );      // What: Greeting Delay Number. Why: The headline arrives just after the card starts fading in. How: This is the duration scale's Base Plus 3 step, in seconds. // Duration Animation Base Plus 3 ~= 366.9ms
-		const greScaNum = cdnPowFun( -1 );         // What: Greeting Scale Number. Why: The headline grows as it drops. How: This is the Power of 1 Reciprocal, the scale it starts from. // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
-		const greShiNum = rhyPxlFun( 'p05' ) * -1; // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
-		const wisShiNum = rhyPxlFun( 'p03' );      // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
-
+		const bouEasStr = gsaEasFun( 'bou' );                                                         // What: Bounce Easing String. Why: The headline lands with a celebratory overshoot. How: This registers the bounce token and keeps its GSAP name.
+		const decEasStr = gsaEasFun( 'dec' );                                                         // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
+		const entDurNum = durSecFun( 'p07' );                                                         // What: Entrance Duration Number. Why: Every entrance plays at the same unhurried pace, and the wish starts once the card has faded in. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const flaDelNum = durSecFun( 'p06' );                                                         // What: Flag Delay Number. Why: The flag follows the headline. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const flaShiNum = rhyPxlFun( 'p04' ) * -1;                                                    // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
+		const greDelNum = durSecFun( 'p03' );                                                         // What: Greeting Delay Number. Why: The headline arrives just after the card starts fading in. How: This is the duration scale's Base Plus 3 step, in seconds. // Duration Animation Base Plus 3 ~= 366.9ms
+		const greScaNum = cdnPowFun( -1 );                                                            // What: Greeting Scale Number. Why: The headline grows as it drops. How: This is the Power of 1 Reciprocal, the scale it starts from. // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+		const greShiNum = rhyPxlFun( 'p05' ) * -1;                                                    // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
 		const timLinObj = gsap.timeline( { defaults : { duration : entDurNum, ease : decEasStr } } ); // What: Timeline Object. Why: The entrance plays as one sequence. How: This creates the timeline, its tweens taking the entrance duration and decelerating unless told otherwise.
+		const wisShiNum = rhyPxlFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
 
 
 		timLinObj.from( carDivRef.current, { opacity : 0 }, 0 );                                                                             // What: Card Fade. Why: The card opens out of the dark. How: This fades it in from the start.
@@ -450,12 +449,11 @@ function FojCarCom () : JSX.Element {
 
 
 
-		const delMaxNum = durSecFun( 'p09' ); // What: Delay Maximum Number. Why: The stars start twinkling out of step. How: This is the duration scale's Base Plus 9 step, the longest wait, in seconds. // Duration Animation Base Plus 9 ~= 1,983.0ms
-		const durMaxNum = durSecFun( 'p10' ); // What: Duration Maximum Number. Why: The slowest stars swing over a few seconds. How: This is the duration scale's Base Plus 10 step, in seconds. // Duration Animation Base Plus 10 ~= 2,627.0ms
-		const durMinNum = durSecFun( 'p06' ); // What: Duration Minimum Number. Why: The quickest stars still twinkle softly. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
-		const inoEasStr = gsaEasFun( 'ino' ); // What: In-Out Easing String. Why: Stars brighten and dim gently at both ends. How: This registers the in-out token and keeps its GSAP name.
-		const opaMinNum = cdnPowFun( -8 );    // What: Opacity Minimum Number. Why: A twinkling star dims almost out. How: This is the Power of 8 Reciprocal. // Core-Design-Number to the Power of 8 Reciprocal ~= 0.105
-
+		const delMaxNum = durSecFun( 'p09' );                        // What: Delay Maximum Number. Why: The stars start twinkling out of step. How: This is the duration scale's Base Plus 9 step, the longest wait, in seconds. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		const durMaxNum = durSecFun( 'p10' );                        // What: Duration Maximum Number. Why: The slowest stars swing over a few seconds. How: This is the duration scale's Base Plus 10 step, in seconds. // Duration Animation Base Plus 10 ~= 2,627.0ms
+		const durMinNum = durSecFun( 'p06' );                        // What: Duration Minimum Number. Why: The quickest stars still twinkle softly. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const inoEasStr = gsaEasFun( 'ino' );                        // What: In-Out Easing String. Why: Stars brighten and dim gently at both ends. How: This registers the in-out token and keeps its GSAP name.
+		const opaMinNum = cdnPowFun( -8 );                           // What: Opacity Minimum Number. Why: A twinkling star dims almost out. How: This is the Power of 8 Reciprocal. // Core-Design-Number to the Power of 8 Reciprocal ~= 0.105
 		const staEleArr = Array.from( staLayRef.current!.children ); // What: Star Element Array. Why: Every star twinkles. How: This lists the star layer's children. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
 
@@ -584,7 +582,7 @@ function FojCarCom () : JSX.Element {
 					width={ FLA_WID_NUM } // What: Intrinsic Width. Why: The flag's box should keep its proportions before the stylesheet sizes it. How: This is its width in the drawing space.
 
 					aria-hidden='true'
-				>{ /* What: Flag Image Svg Element. Why: The American flag leads the card, and it's decoration a screen reader should skip. How: This draws the stripes, canton, and stars in the flag's own drawing space, its size set by the stylesheet. */ }
+				>{ /* What: Flag Image SVG Element. Why: The American flag leads the card, and it's decoration a screen reader should skip. How: This draws the stripes, canton, and stars in the flag's own drawing space, its size set by the stylesheet. */ }
 
 
 					<rect
