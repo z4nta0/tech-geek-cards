@@ -1,7 +1,8 @@
 # Project CLAUDE.md: tech-geek-cards
 
-z4nta0's digital greeting card site (React, Vite, React Router, to be deployed
-on Netlify at https://techgeek.cards/). Every rule in the user-level CLAUDE.md
+z4nta0's digital greeting card site (React, Vite, React Router), live on
+Netlify at https://techgeek.cards/ since 2026-10-16, with its contact form
+confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
