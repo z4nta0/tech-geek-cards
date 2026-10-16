@@ -1,0 +1,666 @@
+
+
+
+/**
+ * family-card.module.css = Family Card Module
+ *
+ * @summary
+ * Styles for FamCarCom, the engine behind the three Family cards. Every layer
+ * shares the card's one grid cell, filling the screen: the photo mosaic at the
+ * bottom, the heart stage over it, and the lettering on top. The card's own
+ * theme class sets its background, text color, and font through the
+ * --fam-bac-col, --fam-tex-col, and --fam-tex-fon properties, and may move
+ * the underline through --fam-und-off. The heart is a mask scaled through
+ * --fam-hea-sca, and the key words' underline is drawn through
+ * --fam-und-sca, both of which the timeline animates, while the cursor
+ * blinks on its own. The mosaic is four columns, three at the phone
+ * breakpoint, running behind the floating bar like the rest of the card,
+ * and each photo zooms slightly on hover, presses in, and opens in a dialog
+ * that fades in. Every transition and animation holds still under reduced
+ * motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region famCarDiv */
+
+.famCarDiv { /* What: Family Card Div. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This fixes it over the viewport in a one-cell grid, clipping anything past its edges. */
+
+
+	background-color      : var( --fam-bac-col ); /* Family Background Color, set by the card's theme class */
+	color                 : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */
+	display               : grid;
+	grid-template-columns : minmax( 0, 1fr );
+	grid-template-rows    : minmax( 0, 1fr );     /* What: Fixed Stage Row. Why: A plain 1fr row would grow to the photos' natural height, pushing the stage past the screen. How: This lets the row shrink to the screen. */
+	inset                 : 0;
+	overflow              : hidden;
+	position              : fixed;
+
+
+}
+.famCarDiv[data-family-stills-mode] { /* What: Stills Mode Family Card Div. Why: Under reduced motion the controls stay on the finished card, and floating over the mosaic they'd cover its bottom photos. How: This adds a second row below the stage, sized to the controls. */
+
+
+	grid-template-rows : minmax( 0, 1fr ) auto;
+
+
+}
+
+
+
+/* #region famGriDiv */
+
+.famGriDiv { /* What: Family Grid Div. Why: The card ends on all its photos in a mosaic of tall and short cells. How: This lays out four columns over seven rows, the taller rows a power of the core design number, hidden until the timeline shows it. */
+
+
+	display               : grid;
+	gap                   : var( --spa-ver-m01 ) var( --spa-hor-m01 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px */
+	grid-area             : 1 / 1;
+	grid-template-columns : repeat( 4, 1fr );
+	grid-template-rows    : 1.325fr 1fr 1fr 1.325fr 1fr 1fr 1.325fr;   /* What: Mosaic Rows. Why: The taller rows are the core design number to the power of 1, about 1.325, written out since an fr can't be computed. How: Three taller rows break up the mosaic. */
+	opacity               : 0;
+	padding               : var( --spa-ver-m01 ) var( --spa-hor-m01 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px */ /* What: Full Screen Mosaic. Why: The mosaic fills the screen like a collage, running behind the floating bar as every card does, and each photo the bar crosses still shows enough to tap. How: This keeps the same gap on every side. */
+	visibility            : hidden;
+
+
+}
+@media ( max-width : 640px ) { /* What: Phone Family Grid Div. Why: Four columns are too narrow on a phone. How: This applies at the phone breakpoint and below. */
+
+
+	.famGriDiv { /* What: Narrow Family Grid Div. Why: The mosaic needs wider cells on a phone. How: This lays out three columns over eight rows. */
+
+
+		grid-template-columns : repeat( 3, 1fr );
+		grid-template-rows    : 1.325fr 1fr 1fr 1.325fr 1fr 1fr 1.325fr 1.325fr; /* What: Narrow Mosaic Rows. Why: The phone mosaic adds a row for the photos the dropped column held. How: The taller rows are the core design number to the power of 1, about 1.325, written out since an fr can't be computed. */
+
+
+	}
+
+
+}
+
+
+
+/* #region famCelBut */
+
+.famCelBut { /* What: Family Cell Button. Why: Each photo fills its mosaic cell and opens full size when tapped. How: This clears the button's own look, clips its photo to the cell, and eases its focus ring. */
+
+
+	background : none;
+	border     : 0;
+	cursor     : zoom-in;
+	min-height : 0;
+	overflow   : hidden;
+	padding    : 0;
+	transition : outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.famCelBut:nth-child( 1 ) { /* What: First Cell. Why: The mosaic places each photo by hand. How: This takes column 1, row 1. */ grid-area : 1 / 1 / 2 / 2; }
+.famCelBut:nth-child( 2 ) { /* What: Second Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 1 to 2. */ grid-area : 1 / 2 / 3 / 3; }
+.famCelBut:nth-child( 3 ) { /* What: Third Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 1 to 3. */ grid-area : 1 / 3 / 4 / 4; }
+.famCelBut:nth-child( 4 ) { /* What: Fourth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 1 to 2. */ grid-area : 1 / 4 / 3 / 5; }
+.famCelBut:nth-child( 5 ) { /* What: Fifth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 2 to 5. */ grid-area : 2 / 1 / 6 / 2; }
+.famCelBut:nth-child( 6 ) { /* What: Sixth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 3 to 4. */ grid-area : 3 / 2 / 5 / 3; }
+.famCelBut:nth-child( 7 ) { /* What: Seventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 4 to 5. */ grid-area : 4 / 3 / 6 / 4; }
+.famCelBut:nth-child( 8 ) { /* What: Eighth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 3 to 6. */ grid-area : 3 / 4 / 7 / 5; }
+.famCelBut:nth-child( 9 ) { /* What: Ninth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */ grid-area : 6 / 1 / 8 / 2; }
+.famCelBut:nth-child( 10 ) { /* What: Tenth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 5 to 7. */ grid-area : 5 / 2 / 8 / 3; }
+.famCelBut:nth-child( 11 ) { /* What: Eleventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */ grid-area : 6 / 3 / 8 / 4; }
+.famCelBut:nth-child( 12 ) { /* What: Twelfth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, row 7. */ grid-area : 7 / 4 / 8 / 5; }
+@media ( max-width : 640px ) { /* What: Phone Family Cell Buttons. Why: The three-column mosaic places its photos its own way. How: This applies at the phone breakpoint and below. */
+
+
+	.famCelBut:nth-child( 1 ) { /* What: Narrow First Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 1 to 2. */ grid-area : 1 / 1 / 3 / 2; }
+	.famCelBut:nth-child( 2 ) { /* What: Narrow Second Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 1 to 3. */ grid-area : 1 / 2 / 4 / 3; }
+	.famCelBut:nth-child( 3 ) { /* What: Narrow Third Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 1. */ grid-area : 1 / 3 / 2 / 4; }
+	.famCelBut:nth-child( 4 ) { /* What: Narrow Fourth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, row 8. */ grid-area : 8 / 1 / 9 / 2; }
+	.famCelBut:nth-child( 5 ) { /* What: Narrow Fifth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 3 to 5. */ grid-area : 3 / 1 / 6 / 2; }
+	.famCelBut:nth-child( 6 ) { /* What: Narrow Sixth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, row 4. */ grid-area : 4 / 2 / 5 / 3; }
+	.famCelBut:nth-child( 7 ) { /* What: Narrow Seventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 2 to 5. */ grid-area : 2 / 3 / 6 / 4; }
+	.famCelBut:nth-child( 8 ) { /* What: Narrow Eighth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 7 to 8. */ grid-area : 7 / 2 / 9 / 3; }
+	.famCelBut:nth-child( 9 ) { /* What: Narrow Ninth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */ grid-area : 6 / 1 / 8 / 2; }
+	.famCelBut:nth-child( 10 ) { /* What: Narrow Tenth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 5 to 6. */ grid-area : 5 / 2 / 7 / 3; }
+	.famCelBut:nth-child( 11 ) { /* What: Narrow Eleventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */ grid-area : 6 / 3 / 8 / 4; }
+	.famCelBut:nth-child( 12 ) { /* What: Narrow Twelfth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 8. */ grid-area : 8 / 3 / 9 / 4; }
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cell Button. Why: Someone who asked for less motion shouldn't see the focus ring grow. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famCelBut { /* What: Motionless Family Cell Button. Why: The focus ring should simply appear. How: This turns the ring's transition off, as the base stylesheet does for every other button. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famCelIma { /* What: Family Cell Image. Why: The photo fills its cell and answers the pointer. How: This covers the cell, easing its zoom and press. */
+
+
+	display    : block;
+	height     : 100%;
+	max-width  : none;
+	object-fit : cover;
+	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width      : 100%;
+
+
+}
+.famCelBut:hover .famCelIma { /* What: Hovered Family Cell Image. Why: A photo that opens should invite the click. How: This zooms it in slightly within its cell, since a lift would crowd its neighbors in the mosaic. */
+
+
+	scale : 1.03; /* What: Hover Zoom. Why: The rules ask for a scale within a few percent. How: This is a literal, since no scale step lands within 10%. */
+
+
+}
+.famCelBut:active .famCelIma { /* What: Pressed Family Cell Image. Why: A press should register before the photo opens. How: This presses it in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This is a literal, since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cell Image. Why: Someone who asked for less motion shouldn't see the photo glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famCelIma { /* What: Motionless Family Cell Image. Why: The zoom and press should simply switch, still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion famCelBut */
+
+/* #endregion famGriDiv */
+
+
+
+.famPhoDiv { /* What: Family Photo Div. Why: Each scene's photo is revealed through a heart that grows to cover the screen. How: This stacks the photos under a heart-shaped mask sized from the timeline's scale, up to the core design number to the power of 4 times the screen's longer side. */
+
+
+	display               : grid;
+	grid-area             : 1 / 1;
+	grid-template-columns : minmax( 0, 1fr );
+	grid-template-rows    : minmax( 0, 1fr );                                                                                                /* What: Fixed Stage Row. Why: A plain 1fr row would grow to the photos' natural height, pushing the stage past the screen. How: This lets the row shrink to the screen. */
+	mask                  : url( './family-heart.svg' ) center / calc( var( --fam-hea-sca, 0 ) * var( --cdn-pow-004 ) * 100vmax ) no-repeat; /* Family Heart Scale, set by the timeline, Core-Design-Number to the Power of 4 ~= 3.080 */
+	pointer-events        : none;
+
+
+}
+
+.famSceIma { /* What: Family Scene Image. Why: The heart opens over the scene's photo. How: This covers the screen with it, hidden until its scene. */
+
+
+	grid-area  : 1 / 1;
+	height     : 100%;
+	max-width  : none;
+	object-fit : cover;
+	opacity    : 0;
+	visibility : hidden;
+	width      : 100%;
+
+
+}
+
+
+
+/* #region famTexDiv */
+
+.famTexDiv { /* What: Family Text Div. Why: The lines type out in the middle of the screen, over everything else. How: This centers the lettering with side room, hidden until the timeline fades it in, letting taps through to the photos. */
+
+
+	align-content  : center;
+	display        : grid;
+	grid-area      : 1 / 1;
+	justify-items  : center;
+	opacity        : 0;
+	padding-inline : var( --spa-hor-m01 ); /* Spacing Horizontal Base Minus 1 = 11px */
+	pointer-events : none;
+	text-align     : center;
+	visibility     : hidden;
+
+
+}
+
+
+
+/* #region famLinDiv */
+
+.famLinDiv { /* What: Family Line Div. Why: The lines read as handwriting, glowing in the background color so they stay clear over the photos. How: This sets them in the card's font at a size that grows with the screen, ringed and haloed in the background color. */
+
+
+	font-family : var( --fam-tex-fon );                                     /* Family Text Font, set by the card's theme class */
+	font-size   : clamp( var( --fon-siz-p04 ), 8vw, var( --fon-siz-p05 ) ); /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 5 ~= 44.876px */ /* What: Fluid Lettering Size. Why: Full-size lettering wraps into too many lines on a phone. How: This grows it with the screen between the two steps. */
+	line-height : var( --ver-rhy-bas );                                     /* Vertical Rhythm Base ~= 1.325 */
+	max-width   : var( --tex-wid-bas );                                     /* Text Width Base ~= 29.207em */
+	text-shadow : 0 0 calc( var( --ver-rhy-m09 ) * 1rem ) var( --fam-bac-col ), 0 0 calc( var( --ver-rhy-m03 ) * 1rem ) var( --fam-bac-col ), 0 0 calc( var( --ver-rhy-p02 ) * 1rem ) var( --fam-bac-col ); /* Vertical Rhythm Base Minus 9 ~= 1.160px, Family Background Color, Vertical Rhythm Base Minus 3 ~= 6.268px, Vertical Rhythm Base Plus 2 ~= 25.572px */ /* What: Lettering Halo. Why: A glow in the background color keeps the lettering clear over the photos, and WebKit stalls repainting more layers as each letter types. How: Three widening glows, a tight edge, a soft halo, and a wide haze, replace the original's four offset rings and five glows. */
+
+
+}
+
+.famHigSpa { /* What: Family Highlight Span. Why: The line's key words get a drawn underline. How: This sets them as a positioned inline block, so the underline can sit under them, sharing the line's halo. */
+
+
+	display  : inline-block;
+	position : relative;
+
+
+}
+.famHigSpa::after { /* What: Family Highlight Underline. Why: The underline draws in from the left under the key words. How: This lays a thin line in the text color under them, scaled across by the timeline. */
+
+
+	background-color : currentColor;
+	bottom           : var( --fam-und-off, calc( var( --cdn-pow-005-rec ) * 1em ) ); /* Family Underline Offset, set by the card's theme class, Core-Design-Number to the Power of 5 Reciprocal ~= 0.245em */ /* What: Underline Drop. Why: The underline should sit just under the letters at any size, and each card's font sits differently on its line. How: This is measured in the lettering's own size, a card's theme setting its own where the default touches its letters. */
+	content          : '';
+	height           : calc( var( --ver-rhy-m08 ) * 1rem );                          /* Vertical Rhythm Base Minus 8 ~= 1.536px */
+	left             : 0;
+	position         : absolute;
+	scale            : var( --fam-und-sca, 0 ) 1;                                    /* Family Underline Scale, set by the timeline */
+	transform-origin : left center;
+	width            : 100%;
+
+
+}
+
+.famGreSpa { /* What: Family Greeting Span. Why: The greeting grows as a whole, with room for its swashes. How: This makes it an inline block with side padding, scaled from its center. */
+
+
+	display          : inline-block;
+	padding-inline   : var( --spa-hor-p02 ); /* Spacing Horizontal Base Plus 2 ~= 25.572px */
+	transform-origin : center;
+
+
+}
+.famGreSpa:empty { /* What: Empty Family Greeting Span. Why: Until the greeting is typed, its padding would push each line off center. How: This takes it out of the line while it's empty. */
+
+
+	display : none;
+
+
+}
+
+.famCurSpa { /* What: Family Cursor Span. Why: A thin cursor follows the typing. How: This sizes a narrow box at the lettering's height, hanging a touch below the baseline with a small gap before it, for its blinking bar. */
+
+
+	display        : inline-block;
+	height         : calc( var( --ver-rhy-p04 ) * 1rem );     /* Vertical Rhythm Base Plus 4 ~= 44.876px */
+	margin-left    : var( --spa-hor-m05 );                    /* Spacing Horizontal Base Minus 5 ~= 3.572px */
+	max-height     : 1em;                                     /* What: Cursor Cap. Why: The lettering shrinks on a phone, and a full-height bar would tower over it. How: This caps the bar at the text's own size. */
+	vertical-align : calc( var( --cdn-pow-007-rec ) * -1em ); /* Core-Design-Number to the Power of 7 Reciprocal ~= -0.140em */ /* What: Cursor Drop. Why: On the text's bottom the bar hung below the letters by the font's whole descent, about 0.32em, and on the baseline it sat too high. How: This drops it about halfway, a touch under the letters, measured in their own size. */
+	width          : calc( var( --ver-rhy-m06 ) * 1rem );     /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+
+
+}
+.famCurSpa::before { /* What: Family Cursor Bar. Why: A typing cursor blinks, and the timeline fades the cursor's box out at the end, which an animation on the box itself would override. How: This fills the box with a bar in the text color that blinks on and off. */
+
+
+	animation        : famCurSpaBlinkFlash var( --dur-ani-p07 ) step-end infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */ /* What: Blink Cycle. Why: An ordinary text cursor blinks about once a second. How: Each cycle shows the bar for half the step and hides it for the other half. */
+	background-color : currentColor;
+	content          : '';
+	display          : block;
+	height           : 100%;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cursor Bar. Why: Someone who asked for less motion shouldn't see the cursor flash. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famCurSpa::before { /* What: Still Family Cursor Bar. Why: The cursor should simply stay lit. How: This turns the blink off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes famCurSpaBlinkFlash { /* What: Family Cursor Blink Flash. Why: The cursor blinks on and off rather than fading. How: Held by the step-end timing, the bar stays lit for the first half of each cycle and hidden for the second. */
+
+
+	50% {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+
+/* #endregion famLinDiv */
+
+/* #endregion famTexDiv */
+
+
+
+/* #region famBotDiv */
+
+.famBotDiv { /* What: Family Bottom Div. Why: The tap hint and the scene controls share the space just above the floating bar. How: This stacks them in a centered column from the bar's clearing margin up, letting taps through its empty space. */
+
+
+	align-items    : center;
+	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to a side margin's step outside the card page. */
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-m02 );                       /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	inset-inline   : 0;
+	pointer-events : none;
+	position       : absolute;
+
+
+}
+.famCarDiv[data-family-stills-mode] .famBotDiv { /* What: Stills Mode Family Bottom Div. Why: Under reduced motion the hint and controls take a strip of their own instead of floating over the photos. How: This sets the stack in the card's second row, padded clear of the floating bar. */
+
+
+	grid-area     : 2 / 1;
+	padding-block : var( --spa-ver-m02 ) var( --car-bar-mar, var( --spa-ver-m02 ) ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Card Bar Margin, set by its parent, ~= 74.019px */
+	position      : static;
+
+
+}
+
+.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, left out of the page until the grid appears. */
+
+
+	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */
+	border-radius    : 999px;
+	color            : inherit;
+	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by contrast checkers as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
+	font-family      : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size        : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
+	margin           : 0;
+	opacity          : 0;
+	padding          : var( --spa-ver-m03 ) var( --spa-hor-p01 ); /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
+	visibility       : hidden;
+
+
+}
+
+
+
+/* #region famConDiv */
+
+.famConDiv { /* What: Family Controls Div. Why: The scene controls stay out of the way but stay noticeable, over plain backgrounds and photos alike. How: This sets a rounded, see-through bar in the card's own background color, blurring what's behind it, with the dots over the buttons and focus rings in the card's text color. */
+
+
+	--foc-rin-col : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */ /* What: Focus Ring Color. Why: The family's orange ring clashes with the card's colors. How: The card's text color keeps the ring visible on its own background. */
+
+	align-items      : center;
+	backdrop-filter  : blur( calc( var( --ver-rhy-m03 ) * 1rem ) );                                                    /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	background-color : oklch( from var( --fam-bac-col ) l c h / var( --cdn-pow-002-rec ) );                            /* Family Background Color @ 0.570 opacity */
+	border           : var( --bor-wid-sma ) solid oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Border Width Small ~= 0.499px, Family Text Color @ 0.325 opacity */
+	border-radius    : var( --rad-bor-xla );                                                                           /* Radius Border Extra Large ~= 19.304px */
+	display          : flex;
+	flex-direction   : column;
+	gap              : var( --spa-ver-m04 );                                                                           /* Spacing Vertical Base Minus 4 ~= 4.732px */
+	padding          : var( --spa-ver-m02 ) var( --spa-hor-m02 ) var( --spa-ver-m04 );                                 /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Minus 2 ~= 8.304px, Spacing Vertical Base Minus 4 ~= 4.732px */
+	pointer-events   : auto;
+
+
+}
+
+
+
+/* #region famDotDiv */
+
+.famDotDiv { /* What: Family Dots Div. Why: The dots read as one quiet row above the buttons. How: This lines them up with a small gap. */
+
+
+	display : flex;
+	gap     : var( --spa-hor-m03 ); /* Spacing Horizontal Base Minus 3 ~= 6.268px */
+
+
+}
+
+.famDotSpa { /* What: Family Dot Span. Why: Each dot stands for a scene, faint until the card reaches it. How: This draws a small circle in the text color, mostly transparent, easing its fill. */
+
+
+	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Family Text Color @ 0.325 opacity */
+	border-radius    : 50%;
+	height           : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+	transition       : background-color var( --dur-tra-p02 ) var( --mot-dec-eas );          /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width            : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+
+
+}
+.famDotSpa[data-scene-dot-filled] { /* What: Filled Family Dot Span. Why: A dot fills in once its scene begins. How: This sets it in the full text color. */
+
+
+	background-color : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Dot Span. Why: Someone who asked for less motion should see the dots simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famDotSpa { /* What: Still Family Dot Span. Why: The dot should fill at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion famDotDiv */
+
+
+
+/* #region famButDiv */
+
+.famButDiv { /* What: Family Buttons Div. Why: The controls sit side by side under the dots. How: This lines the buttons up with a small gap. */
+
+
+	display : flex;
+	gap     : var( --spa-hor-m03 ); /* Spacing Horizontal Base Minus 3 ~= 6.268px */
+
+
+}
+
+
+
+/* #region famConBut */
+
+.famConBut { /* What: Family Control Button. Why: Each control is a round icon button big enough for a thumb. How: This clears the button's own look, sizes it to a comfortable target in the card's text color, and eases its tint, press, and focus ring. */
+
+
+	background-color : transparent;
+	border           : 0;
+	border-radius    : 50%;
+	color            : var( --fam-tex-col );                /* Family Text Color, set by the card's theme class */
+	cursor           : pointer;
+	display          : grid;
+	height           : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */ /* What: Thumb Target Height. Why: A thumb needs about 44px to hit reliably. How: The Base Plus 4 step lands there. */
+	padding          : 0;
+	place-items      : center;
+	transition       : background-color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
+	width            : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */ /* What: Thumb Target Width. Why: A thumb needs about 44px to hit reliably. How: The Base Plus 4 step lands there. */
+
+
+}
+.famConBut:hover { /* What: Hovered Family Control Button. Why: A control responds to the pointer, without lifting out of the bar's row. How: This tints its circle faintly in the text color. */
+
+
+	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-006-rec ) ); /* Family Text Color @ 0.185 opacity */
+
+
+}
+.famConBut:active { /* What: Pressed Family Control Button. Why: A press should register before the card moves. How: This presses it in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Control Button. Why: Someone who asked for less motion should see the button simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famConBut { /* What: Motionless Family Control Button. Why: The tint, press, and focus ring should simply switch, the press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famConSvg { /* What: Family Control SVG. Why: The icon sits centered in its button at an easy size. How: This sizes it to a rhythm step and fills it with the button's color. */
+
+
+	display : block;
+	fill    : currentColor;
+	height  : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+	width   : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+
+
+}
+
+/* #endregion famConBut */
+
+/* #endregion famButDiv */
+
+/* #endregion famConDiv */
+
+/* #endregion famBotDiv */
+
+
+.scrReaDiv { /* What: Screen Reader Div. Why: The typed lines are hidden from screen readers, which read the whole message from here instead. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
+
+
+	border      : 0;
+	clip-path   : inset( 50% );
+	height      : 1px;
+	margin      : -1px;
+	overflow    : hidden;
+	padding     : 0;
+	position    : absolute;
+	white-space : nowrap;
+	width       : 1px;
+
+
+}
+
+
+
+/* #region famExpDia */
+
+.famExpDia { /* What: Family Expanded Dialog. Why: A tapped photo fills the screen over the card. How: This clears the dialog's frame and sizes it to the whole viewport in the card's background color, fading in. */
+
+
+	animation        : famExpDiaOpenFadeIn var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	background-color : var( --fam-bac-col );                                               /* Family Background Color, set by the card's theme class */
+	border           : 0;
+	height           : 100%;
+	margin           : 0;
+	max-height       : none;
+	max-width        : none;
+	padding          : 0;
+	width            : 100%;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Expanded Dialog. Why: Someone who asked for less motion shouldn't see the photo fade. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famExpDia { /* What: Motionless Family Expanded Dialog. Why: The photo should simply appear. How: This turns the opening fade off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes famExpDiaOpenFadeIn { /* What: Family Expanded Dialog Open Fade In. Why: The photo arrives softly. How: This fades it in from transparent. */
+
+
+	from {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+
+
+
+/* #region famExpBut */
+
+.famExpBut { /* What: Family Expanded Button. Why: Tapping the full-size photo closes it. How: This clears the button's own look and fills the dialog, easing its press and focus ring. */
+
+
+	background : none;
+	border     : 0;
+	cursor     : zoom-out;
+	display    : block;
+	height     : 100%;
+	padding    : 0;
+	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width      : 100%;
+
+
+}
+.famExpBut:active { /* What: Pressed Family Expanded Button. Why: A press should register before the photo closes. How: This presses it in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This is a literal, since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Expanded Button. Why: Someone who asked for less motion shouldn't see the photo glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famExpBut { /* What: Motionless Family Expanded Button. Why: The press and focus ring should simply switch, still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famExpIma { /* What: Family Expanded Image. Why: The whole photo should show, uncropped. How: This fits it inside the screen. */
+
+
+	display    : block;
+	height     : 100%;
+	max-width  : none;
+	object-fit : contain;
+	width      : 100%;
+
+
+}
+
+/* #endregion famExpBut */
+
+/* #endregion famExpDia */
+
+/* #endregion famCarDiv */
+
+

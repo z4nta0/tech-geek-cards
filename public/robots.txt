@@ -1,0 +1,8 @@
+# What: All Crawlers Group. Why: TechGeek.cards is a real site that wants its cards to be found, so every crawler may read every page. How: This allows the whole site to any crawler; the 404 page keeps itself out of results with its own noindex tag.
+User-agent: *
+Allow: /
+
+
+
+# What: Sitemap Location. Why: Crawlers find the pages to index faster from a sitemap. How: This points them at the sitemap's absolute address.
+Sitemap: https://techgeek.cards/sitemap.xml

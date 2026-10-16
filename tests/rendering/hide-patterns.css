@@ -1,0 +1,29 @@
+
+
+
+/**
+ * hide-patterns.css = Hide Patterns Stylesheet
+ *
+ * @summary
+ * Applied by the rendering suite during its Chromium and WebKit captures
+ * only. The pages' faint confetti circuit backgrounds are SVG pattern fills,
+ * which those two engines tile a few color levels differently from one run to
+ * the next, so their screenshots failed now and then with nothing on the page
+ * changed. Hiding the patterns keeps those engines' baselines steady while
+ * Firefox, which draws them the same every time, still checks them.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+[data-element-name-hook~='conCirDiv'] { /* What: Confetti Circuit Div Hook. Why: The patterns are the one part of a page these engines don't draw the same from run to run. How: This hides every background pattern for the capture, leaving its space in place. */
+
+
+	visibility : hidden;
+
+
+}
+
+

@@ -1,0 +1,641 @@
+
+
+
+/**
+ * share-dialog.module.css = Share Dialog Module
+ *
+ * @summary
+ * Styles for ShaDiaCom: a white rounded panel that pops in over a dimmed
+ * backdrop with a gentle overshoot and fades out when closed, a round close
+ * button in its corner that lifts on hover, a berry eyebrow over the card's
+ * title, labeled fields whose focus ring eases in, an orange Copy Link button
+ * whose label fades in afresh each time it changes, an outlined share sheet
+ * button, a preview text link with a nudging arrow, and the copy status
+ * line, whose message fades in the same way. Every animation and transition
+ * holds still under reduced motion, except that the panel's closing
+ * animation shrinks to a hundredth of a millisecond, since the dialog waits
+ * on its end to close.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+/* #region shaDiaDia */
+
+.shaDiaDia { /* What: Share Dialog Dialog. Why: The dialog is a rounded panel centered over the page, sized for its text. How: This clears the browser's border and padding, caps the width at the paragraph measure plus the panel's padding, and pops the panel in. */
+
+
+	animation     : shaDiaDiaOpenPopIn var( --dur-ani-p02 ) var( --mot-ove-eas ) both;              /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
+	background    : var( --bac-sur-col );                                                           /* Background Surface Color = #FFFFFF */
+	border        : none;
+	border-radius : var( --rad-bor-xla );                                                           /* Radius Border Extra Large ~= 19.304px */
+	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow, about 0 19.3px 59.4px -11px plus 0 6.3px 14.6px -3.6px */
+	color         : var( --tex-mai-col );                                                           /* Text Main Color = #1A1A2E */
+	margin        : auto;
+	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, about 493.3px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
+	padding       : 0;
+	width         : calc( 100% - var( --gut-sid-pad ) * 2 );                                        /* Gutter Side Padding, about 19.304px - 44.876px */
+
+
+}
+.shaDiaDia::backdrop { /* What: Share Dialog Dialog Backdrop. Why: The page behind the dialog dims, so the panel stands out. How: This tints the backdrop with the scrim color at about 57% and fades it in. */
+
+
+	animation  : shaDiaDiaShadeFadeIn var( --dur-ani-p01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	background : oklch( from var( --scr-mai-col ) l c h / var( --cdn-pow-002-rec ) ); /* Scrim Main Color = #1A1A2E @ 0.570 opacity */
+
+
+}
+.shaDiaDia.shaDiaDia--closing { /* What: Closing Share Dialog Dialog. Why: The panel should leave the way it came, and the dialog only closes once it has. How: This fades and shrinks the panel away, its animation's end closing the dialog; the base class stays chained so it outranks the reduced-motion rule. */
+
+
+	animation : shaDiaDiaCloseFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+
+
+}
+.shaDiaDia.shaDiaDia--closing::backdrop { /* What: Closing Share Dialog Dialog Backdrop. Why: The dimming should lift with the panel. How: This fades the backdrop out over the same time. */
+
+
+	animation : shaDiaDiaShadeFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Share Dialog Dialog. Why: Someone who asked for less motion shouldn't see the panel pop or fade. How: This applies only when the reduced-motion preference is set. */
+
+
+	.shaDiaDia,
+	.shaDiaDia::backdrop,
+	.shaDiaDia.shaDiaDia--closing::backdrop { /* What: Motionless Share Dialog Dialog. Why: The panel and its dimming should simply appear and disappear. How: This turns the opening animations and the backdrop's closing fade off. */
+
+
+		animation : none;
+
+
+	}
+
+	.shaDiaDia.shaDiaDia--closing { /* What: Instant Closing Share Dialog Dialog. Why: The dialog closes when the panel's closing animation ends, so it can't simply have none. How: This shrinks the panel's animation to a hundredth of a millisecond, so it ends at once. */
+
+
+		animation-duration : .01ms;
+
+
+	}
+
+
+}
+@keyframes shaDiaDiaOpenPopIn { /* What: Share Dialog Dialog Open Pop In. Why: The panel arrives with a small, lively pop. How: This grows it from 94% and about 8px low, fading it in, the overshoot easing carrying it just past full size. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m02 ) ) scale( 0.94 ); /* Spacing Vertical Base Minus 2 ~= 8.304px */ /* What: Arrival Offset. Why: The panel rises a little as it grows. How: It starts one m02 step low at 94%, a literal scale since no scale step lands within 10%. */
+
+
+	}
+
+	to {
+
+
+		opacity   : 1;
+		transform : none;
+
+
+	}
+
+
+}
+@keyframes shaDiaDiaCloseFadeOut { /* What: Share Dialog Dialog Close Fade Out. Why: The panel leaves quietly. How: This shrinks it to 96% while fading it out. */
+
+
+	from {
+
+
+		opacity   : 1;
+		transform : none;
+
+
+	}
+
+	to {
+
+
+		opacity   : 0;
+		transform : scale( 0.96 ); /* What: Departure Scale. Why: The panel recedes slightly as it fades. How: This ends at 96%, a literal since no scale step lands within 10%. */
+
+
+	}
+
+
+}
+@keyframes shaDiaDiaShadeFadeIn { /* What: Share Dialog Dialog Shade Fade In. Why: The dimming eases in. How: This fades the backdrop from transparent. */
+
+
+	from {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+@keyframes shaDiaDiaShadeFadeOut { /* What: Share Dialog Dialog Shade Fade Out. Why: The dimming eases out. How: This fades the backdrop to transparent. */
+
+
+	to {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+
+
+/* #region shaInnDiv */
+
+.shaInnDiv { /* What: Share Inner Div. Why: The panel's content stacks with room around it, and the close button sits in its corner. How: This pads it and stacks its children, positioning the close button against it. */
+
+
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-p01 );                      /* Spacing Vertical Base Plus 1 ~= 19.304px */
+	padding        : var( --spa-ver-p03 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
+	position       : relative;
+
+
+}
+
+
+/* #region shaCloBut */
+
+.shaCloBut { /* What: Share Close Button. Why: The close button is a quiet round target in the panel's corner. How: This pins a circle in the top right corner, centering its cross, easing its colors, lift, press, and focus. */
+
+
+	border-radius : 50%;
+	color         : var( --tex-mut-col );                /* Text Muted Color = #646482 */
+	display       : grid;
+	height        : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+	place-items   : center;
+	position      : absolute;
+	right         : var( --spa-hor-bas );                /* Spacing Horizontal Base ~= 14.572px */
+	top           : var( --spa-ver-bas );                /* Spacing Vertical Base ~= 14.572px */
+	transition    : background var( --dur-tra-bas ), color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width         : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+
+
+}
+.shaCloBut:hover { /* What: Hovered Share Close Button. Why: The button responds to the pointer. How: This fills it with the sunken ivory, darkens the cross, and lifts it about 2px. */
+
+
+	background : var( --bac-sun-col );                /* Background Sunken Color = #EDE6D8 */
+	color      : var( --tex-mai-col );                /* Text Main Color = #1A1A2E */
+	translate  : 0 calc( var( --spa-ver-m07 ) * -1 ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.shaCloBut:active { /* What: Pressed Share Close Button. Why: A press should register before the dialog closes. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	scale     : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+	translate : 0;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Share Close Button. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.shaCloBut { /* What: Motionless Share Close Button. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.shaCloSvg { /* What: Share Close SVG. Why: In WebKit a press that lands on the icon doesn't count as pressing the button, so the button never showed its pressed look. How: This lets the pointer pass through the icon to the button behind it. */
+
+
+	pointer-events : none;
+
+
+}
+
+/* #endregion shaCloBut */
+
+
+.shaEyePar { /* What: Share Eyebrow Paragraph. Why: A small berry label sets the dialog's purpose. How: This sets it in berry mono capitals at the base size. */
+
+
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em ); /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	text-transform : uppercase;
+
+
+}
+
+.shaTitHea { /* What: Share Title Heading. Why: The card's name is the dialog's heading, clear of the close button. How: This sets it at the base plus 4 size, padding its right side past the button. */
+
+
+	font-size     : var( --fon-siz-p04 );                /* Font Size Base Plus 4 ~= 33.876px */
+	margin-top    : calc( var( --spa-ver-m02 ) * -1 );   /* Spacing Vertical Base Minus 2 ~= -8.304px */ /* What: Eyebrow Snug. Why: The eyebrow belongs to the title, closer than the stack's gap. How: This pulls the title up one m02 step. */
+	padding-right : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+
+
+}
+
+
+/* #region fieGroDiv */
+
+.fieGroDiv { /* What: Field Group Div. Why: A label, its field, and its hint read as one unit. How: This stacks them close together. */
+
+
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-m03 ); /* Spacing Vertical Base Minus 3 ~= 6.268px */
+
+
+}
+
+.fieLabLab { /* What: Field Label Label. Why: Labels read as small captions above their fields. How: This sets them in muted mono capitals at the base size. */
+
+
+	color          : var( --tex-mut-col );                   /* Text Muted Color = #646482 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	text-transform : uppercase;
+
+
+}
+
+.fieTexInp { /* What: Field Text Input. Why: The fields are full-width boxes whose border answers the pointer and whose focus ring eases in. How: This sets an ivory box with a quiet border and rounded corners, easing its border and focus ring. */
+
+
+	background     : var( --bac-pag-col );                            /* Background Page Color = #F5F0E8 */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-sma );                            /* Radius Border Small ~= 8.304px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	font-family    : var( --fon-fam-mai );                            /* Font Family Main = 'Syne', sans-serif */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	outline        : 0 solid var( --foc-rin-col );                    /* Focus Ring Color ~= #bd3000 */
+	outline-offset : calc( var( --ver-rhy-m03 ) * 1rem );             /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
+	transition     : border-color var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width          : 100%;
+
+
+}
+.fieTexInp::placeholder { /* What: Field Text Input Placeholder. Why: The sample name should read as a hint, not an entry. How: This sets it in the muted text color. */
+
+
+	color : var( --tex-mut-col ); /* Text Muted Color = #646482 */
+
+
+}
+.fieTexInp:hover { /* What: Hovered Field Text Input. Why: A field responds to the pointer. How: This turns its border the strong blue. */
+
+
+	border-color : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
+
+
+}
+.fieTexInp:focus-visible { /* What: Focused Field Text Input. Why: The field being typed in should be obvious. How: This turns its border orange while the shared focus ring grows in around it. */
+
+
+	border-color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
+
+
+}
+.fieTexInp.fieTexInp--link { /* What: Link Field Text Input. Why: The link reads as an address rather than prose, and a long one trails off rather than wrapping. How: This sets it in mono and ends overflowing text with an ellipsis. */
+
+
+	font-family   : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
+	text-overflow : ellipsis;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Field Text Input. Why: Someone who asked for less motion should see the border and ring simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.fieTexInp { /* What: Motionless Field Text Input. Why: The border and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.fieHinPar { /* What: Field Hint Paragraph. Why: The hint is secondary to the field above it. How: This sets it at the base size in the muted color, capped at the small measure. */
+
+
+	color     : var( --tex-mut-col ); /* Text Muted Color = #646482 */
+	font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
+	max-width : var( --tex-wid-sma ); /* Text Width Small ~= 22.047em */
+
+
+}
+
+/* #endregion fieGroDiv */
+
+
+
+/* #region shaActDiv */
+
+.shaActDiv { /* What: Share Actions Div. Why: The ways to send the card sit together and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+
+
+	align-items : center;
+	display     : flex;
+	flex-wrap   : wrap;
+	gap         : var( --spa-ver-m02 ) var( --spa-hor-bas ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base ~= 14.572px */
+
+
+}
+
+
+/* #region copLinBut */
+
+.copLinBut { /* What: Copy Link Button. Why: Copying is the main action, so it's the orange button, wide enough that its label can change without the row jumping. How: This sets an orange button in mono capitals with a minimum width, easing its color, lift, press, and focus. */
+
+
+	background     : var( --acc-mai-col );                      /* Accent Main Color = #F26419 */
+	border-radius  : var( --rad-bor-xsm );                      /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-acc-col );                      /* Text Accent Color = #1A1A2E */
+	font-family    : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	min-width      : calc( var( --cdn-pow-008 ) * 1em );        /* Core-Design-Number to the Power of 8 ~= 9.484em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p02 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	text-transform : uppercase;
+	transition     : background var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.copLinBut:hover { /* What: Hovered Copy Link Button. Why: The button responds to the pointer. How: This darkens its orange and lifts it about 2px. */
+
+
+	background : var( --acc-hov-col );                /* Accent Hover Color ~= #e45700 */
+	translate  : 0 calc( var( --spa-ver-m07 ) * -1 ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.copLinBut:active { /* What: Pressed Copy Link Button. Why: A press should register before the copy happens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	scale     : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+	translate : 0;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Copy Link Button. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.copLinBut { /* What: Motionless Copy Link Button. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.copLabSpa { /* What: Copy Label Span. Why: The label's change to Copied is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
+
+
+	animation : copLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	display   : inline-block;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Copy Label Span. Why: Someone who asked for less motion should see the label simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.copLabSpa { /* What: Motionless Copy Label Span. Why: The label should switch at once. How: This turns the animation off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes copLabSpaSwapFadeIn { /* What: Copy Label Span Swap Fade In. Why: A new label should arrive softly. How: This fades it in from about 3.6px low. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m05 ) ); /* Spacing Vertical Base Minus 5 ~= 3.572px */
+
+
+	}
+
+
+}
+
+/* #endregion copLinBut */
+
+
+.natShaBut { /* What: Native Share Button. Why: The share sheet is a second choice, so it's outlined. How: This sets an outlined button in mono capitals, easing its border, color, lift, press, and focus. */
+
+
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-xsm );                            /* Radius Border Extra Small ~= 3.572px */
+	color          : var( --tex-mai-col );                            /* Text Main Color = #1A1A2E */
+	font-family    : var( --fon-fam-sec );                            /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-p01 );                            /* Font Size Base Plus 1 ~= 14.572px */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : var( --spa-ver-m01 ) var( --spa-hor-p02 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	text-transform : uppercase;
+	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.natShaBut:hover { /* What: Hovered Native Share Button. Why: The button responds to the pointer. How: This turns its border blue and its text dark blue and lifts it about 2px. */
+
+
+	border-color : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
+	color        : var( --acs-dar-col );                /* Accent-Secondary Dark Color ~= #126186 */
+	translate    : 0 calc( var( --spa-ver-m07 ) * -1 ); /* Spacing Vertical Base Minus 7 ~= -2.035px */
+
+
+}
+.natShaBut:active { /* What: Pressed Native Share Button. Why: A press should register before the sheet opens. How: This presses it in slightly, which also undoes its hover lift. */
+
+
+	scale     : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+	translate : 0;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Native Share Button. Why: Someone who asked for less motion shouldn't see the button glide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.natShaBut { /* What: Motionless Native Share Button. Why: The hover, press, and focus looks should simply switch, the lift and press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+
+/* #region shaPreAnc */
+
+.shaPreAnc { /* What: Share Preview Anchor. Why: Previewing is a lighter action, so it's a text link. How: This sets it in dark orange mono capitals, easing its color, dimming, and focus. */
+
+
+	color          : var( --acc-dar-col );                   /* Accent Dark Color ~= #bd3000 */
+	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
+	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
+	font-weight    : 500;
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	text-transform : uppercase;
+	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.shaPreAnc:hover { /* What: Hovered Share Preview Anchor. Why: A text link shifts color on hover. How: This turns it dark blue. */
+
+
+	color : var( --acs-dar-col ); /* Accent-Secondary Dark Color ~= #126186 */
+
+
+}
+.shaPreAnc:active { /* What: Pressed Share Preview Anchor. Why: A text link dims when pressed. How: This fades it to about 75%. */
+
+
+	opacity : var( --cdn-pow-001-rec ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Share Preview Anchor. Why: Someone who asked for less motion should see the link simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.shaPreAnc { /* What: Motionless Share Preview Anchor. Why: The color, dimming, and ring should switch at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.shaArrSpa { /* What: Share Arrow Span. Why: The link's arrow nudges forward on hover. How: This makes it an inline block so it can move, easing its shift. */
+
+
+	display    : inline-block;
+	transition : translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+.shaPreAnc:hover .shaArrSpa { /* What: Hovered Share Arrow Span. Why: The arrow points the way as the link is hovered. How: This shifts it about 3.6px right. */
+
+
+	translate : var( --spa-hor-m05 ) 0; /* Spacing Horizontal Base Minus 5 ~= 3.572px */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Share Arrow Span. Why: Someone who asked for less motion shouldn't see the arrow slide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.shaArrSpa { /* What: Motionless Share Arrow Span. Why: The arrow should simply shift. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion shaPreAnc */
+
+/* #endregion shaActDiv */
+
+
+
+/* #region shaStaPar */
+
+.shaStaPar { /* What: Share Status Paragraph. Why: The copy result is a small note under the buttons. How: This sets it at the base size in the secondary text color. */
+
+
+	color     : var( --tex-sec-col ); /* Text Secondary Color = #3D3D5C */
+	font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
+
+
+}
+
+.shaStaSpa { /* What: Share Status Span. Why: A new copy result is the outcome of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the message remounts. */
+
+
+	animation : shaStaSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	display   : block;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Share Status Span. Why: Someone who asked for less motion should see the message simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.shaStaSpa { /* What: Motionless Share Status Span. Why: The message should switch at once. How: This turns the animation off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes shaStaSpaSwapFadeIn { /* What: Share Status Span Swap Fade In. Why: A new message should arrive softly. How: This fades it in from about 3.6px low. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m05 ) ); /* Spacing Vertical Base Minus 5 ~= 3.572px */
+
+
+	}
+
+
+}
+
+/* #endregion shaStaPar */
+
+/* #endregion shaInnDiv */
+
+/* #endregion shaDiaDia */
+
+

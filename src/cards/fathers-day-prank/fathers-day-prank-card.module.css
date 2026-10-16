@@ -1,0 +1,44 @@
+
+
+
+/**
+ * fathers-day-prank-card.module.css = Father's Day Prank Card Module
+ *
+ * @summary
+ * The theme FdpCarCom hands the shared Family engine: its background,
+ * lettering color, and font, set as the --fam-* properties
+ * family-card.module.css reads. The font is declared here, loading from the
+ * shared fonts folder, since the Father's Day card uses it too, so it loads
+ * with the card.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Permanent Marker Font Face. Why: The lettering is the Father's Day card's bold marker hand. How: This loads the font's Latin regular weight from the shared fonts folder, since the Father's Day card uses it too. */
+
+
+	font-display : swap;
+	font-family  : 'Permanent Marker';
+	font-weight  : 400;
+	src          : url( '../../assets/fonts/permanent-marker-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+.fdpCarDiv { /* What: Father's-Day-Prank Card Div. Why: The Family engine plays every Family card, each in its own colors and font. How: This sets the properties the engine reads. */
+
+
+	--fam-bac-col : #B8E3E9;                                  /* What: Family Background Color. Why: The prank looks like the Father's Day card until its first photo. How: The engine's stage, lettering halo, and tap hint read it. */
+	--fam-tex-col : #192A55;                                  /* What: Family Text Color. Why: Navy reads clearly on the sky blue and over the photos' sky blue halo. How: The engine's lettering, underline, and cursor read it. */
+	--fam-tex-fon : 'Permanent Marker', var( --fon-fam-mai ); /* What: Family Text Font. Why: The prank keeps the Father's Day card's bold marker hand. How: This names Permanent Marker, falling back to the main font. */
+	--fam-und-off : calc( var( --cdn-pow-006-rec ) * 1em );   /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185em */ /* What: Family Underline Offset. Why: Permanent Marker sits low on its line, so the default underline touched its letters. How: This drops the underline one step lower than the engine's default. */
+
+
+}
+
+

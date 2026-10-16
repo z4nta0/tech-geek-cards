@@ -1,0 +1,413 @@
+
+
+
+/**
+ * happy-halloween-card.module.css = Happy Halloween Card Module
+ *
+ * @summary
+ * Styles for HalCarCom, a full-screen night scene drawn in layers, each placed
+ * over the one before by the order the card draws them: a purple sky fading
+ * to a warm horizon, its twinkling stars, the floating moon in the top right,
+ * three ghosts over the hills, the hills along the bottom edge, the
+ * jack-o'-lanterns and candles standing on them, the greeting and wish in the
+ * middle, the bats flying over everything, and the lightning overlay on top.
+ * The figures along the ground stand clear of the card page's floating bar.
+ * The card brings its own two fonts, declared here so they load with the
+ * card. Nothing here animates through CSS: GSAP plays every motion and skips
+ * it under reduced motion, when the stars and bats also give up the layers
+ * they'd hold for it.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Butcherman Font Face. Why: The greeting drips like a horror movie title. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Butcherman';
+	font-weight  : 400;
+	src          : url( './butcherman-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+@font-face { /* What: Barriecito Font Face. Why: The wish looks scrawled by hand, like a spooky party invitation. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Barriecito';
+	font-weight  : 400;
+	src          : url( './barriecito-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+/* #region halCarDiv */
+
+.halCarDiv { /* What: Halloween Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport, clips anything past its edges, shades the sky from deep purple to a warm horizon, and sets the fonts and glow its lettering shares. */
+
+
+	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
+	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
+
+	background : linear-gradient( to bottom, #0A0015 0%, #1A0533 45%, #2D0D52 70%, #1A0A00 100% ); /* What: Night Sky Gradient. Why: The sky darkens toward the top and warms at the horizon. How: Its colors and stops are the card's own art, kept as drawn. */
+	inset      : 0;
+	overflow   : hidden;
+	position   : fixed;
+
+
+}
+
+
+
+/* #region staSkyDiv */
+
+.staSkyDiv { /* What: Star Sky Div. Why: The stars are scattered over the whole card. How: This fills the card, so each star's percentages place it across the sky. */
+
+
+	inset          : 0;
+	pointer-events : none;
+	position       : absolute;
+
+
+}
+
+.staTwiDiv { /* What: Star Twinkle Div. Why: Each star is a small white dot that twinkles the whole time the card is open. How: This rounds it white at its place and keeps it on its own layer, since its opacity changes every frame. */
+
+
+	background-color : #FFFFFF;
+	border-radius    : 50%;
+	position         : absolute;
+	will-change      : opacity;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Star Twinkle Div. Why: Under reduced motion the stars hold still. How: This applies only when the reduced-motion preference is set. */
+
+
+	.staTwiDiv { /* What: Still Star Twinkle Div. Why: A star that never twinkles needs no layer of its own. How: This drops the hint. */
+
+
+		will-change : auto;
+
+
+	}
+
+
+}
+
+/* #endregion staSkyDiv */
+
+
+
+.mooFloSvg { /* What: Moon Float SVG. Why: A glowing moon hangs in the top right corner. How: This pins it there at a fixed size, its distance from the right edge growing with the screen. */
+
+
+	position : absolute;
+	right    : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	top      : var( --spa-ver-p03 );                /* Spacing Vertical Base Plus 3 ~= 33.876px */
+	width    : calc( var( --ver-rhy-p07 ) * 1rem ); /* Vertical Rhythm Base Plus 7 ~= 104.323px */
+
+
+}
+
+
+
+.ghoFloSvg { /* What: Ghost Float SVG. Why: The ghosts hover over the hills. How: This places each one above the bottom edge, its modifier setting how far across and how big. */
+
+
+	bottom   : calc( var( --ver-rhy-p09 ) * 1rem ); /* Vertical Rhythm Base Plus 9 ~= 183.074px */
+	position : absolute;
+
+
+}
+.ghoFloSvg--lef { /* What: Left Ghost Float SVG. Why: The largest ghost hovers on the left. How: This places it near the left edge at the larger size. */
+
+
+	left  : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
+
+
+}
+.ghoFloSvg--rig { /* What: Right Ghost Float SVG. Why: A smaller ghost hovers on the right. How: This places it three quarters across at the smaller size. */
+
+
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
+
+
+}
+.ghoFloSvg--mid { /* What: Middle Ghost Float SVG. Why: The last ghost hovers near the middle, behind the greeting. How: This places it a little left of center at the smaller size. */
+
+
+	left  : var( --hor-rhy-024 );                /* Horizontal Rhythm 24 ~= 43.02vw */
+	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
+
+
+}
+
+
+
+.groHilSvg { /* What: Ground Hill SVG. Why: Rolling hills run along the bottom of the card. How: This stretches them across the full width at a fixed height. */
+
+
+	bottom   : 0;
+	height   : calc( var( --ver-rhy-p07 ) * 1rem ); /* Vertical Rhythm Base Plus 7 ~= 104.323px */
+	left     : 0;
+	position : absolute;
+	width    : 100%;
+
+
+}
+
+
+
+.pumLanSvg { /* What: Pumpkin Lantern SVG. Why: Jack-o'-lanterns stand on the hills, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar, letting its candle's flame reach past the top of its drawing, its modifier setting how far across and how big. */
+
+
+	bottom        : 0;
+	margin-bottom : var( --car-bar-mar, var( --spa-ver-p06 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 6 ~= 78.751px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the jack-o'-lantern clear of it, falling back to the nearest step to its old height outside the card page. */
+	overflow      : visible;
+	position      : absolute;
+
+
+}
+.pumLanSvg--fir { /* What: First Pumpkin Lantern SVG. Why: A large jack-o'-lantern sits at the far left. How: This places it at the left edge at the larger size. */
+
+
+	left  : var( --hor-rhy-013 );                /* Horizontal Rhythm 13 ~= 1.95vw */
+	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
+
+
+}
+.pumLanSvg--sec { /* What: Second Pumpkin Lantern SVG. Why: A small jack-o'-lantern sits left of center. How: This places it a fifth of the way across at the smaller size. */
+
+
+	left  : var( --hor-rhy-021 );                /* Horizontal Rhythm 21 ~= 18.50vw */
+	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
+
+
+}
+.pumLanSvg--thi { /* What: Third Pumpkin Lantern SVG. Why: A large jack-o'-lantern sits right of center. How: This places it a little past halfway at the larger size. */
+
+
+	left  : var( --hor-rhy-025 );                /* Horizontal Rhythm 25 ~= 56.98vw */
+	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
+
+
+}
+.pumLanSvg--fou { /* What: Fourth Pumpkin Lantern SVG. Why: A small jack-o'-lantern sits on the right. How: This places it three quarters across at the smaller size. */
+
+
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
+
+
+}
+
+
+
+.canFlaSvg { /* What: Candle Flame SVG. Why: Candles stand among the jack-o'-lanterns, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar at a slim fixed width, its modifier setting how far across. */
+
+
+	bottom        : 0;
+	margin-bottom : var( --car-bar-mar, var( --spa-ver-p06 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 6 ~= 78.751px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the candle clear of it, falling back to the nearest step to its old height outside the card page. */
+	position      : absolute;
+	width         : calc( var( --ver-rhy-p02 ) * 1rem );        /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+
+
+}
+.canFlaSvg--fir { /* What: First Candle Flame SVG. Why: A candle stands between the first two jack-o'-lanterns. How: This places it about an eighth of the way across. */
+
+
+	left : var( --hor-rhy-020 ); /* Horizontal Rhythm 20 ~= 13.97vw */
+
+
+}
+.canFlaSvg--sec { /* What: Second Candle Flame SVG. Why: A candle stands left of center. How: This places it about a third of the way across. */
+
+
+	left : var( --hor-rhy-023 ); /* Horizontal Rhythm 23 ~= 32.47vw */
+
+
+}
+.canFlaSvg--thi { /* What: Third Candle Flame SVG. Why: A candle stands near the middle. How: This places it a little left of center, under the middle ghost. */
+
+
+	left : var( --hor-rhy-024 ); /* Horizontal Rhythm 24 ~= 43.02vw */
+
+
+}
+.canFlaSvg--fou { /* What: Fourth Candle Flame SVG. Why: A candle stands near the right edge. How: This places it from the right, since no left step lands close to its old place. */
+
+
+	right : var( --hor-rhy-019 ); /* Horizontal Rhythm 19 ~= 10.54vw */
+
+
+}
+
+
+
+/* #region titCenDiv */
+
+.titCenDiv { /* What: Title Center Div. Why: The greeting and wish sit high in the night sky. How: This fills the card and centers its lines across it, near the top, with room at the sides on a phone. */
+
+
+	display        : grid;
+	inset          : 0;
+	padding-inline : var( --spa-hor-p02 );                                                     /* Spacing Horizontal Base Plus 2 ~= 25.572px */
+	padding-top    : clamp( var( --spa-ver-p03 ), 20vh, calc( var( --ver-rhy-p09 ) * 1rem ) ); /* Spacing Vertical Base Plus 3 ~= 33.876px, Vertical Rhythm Base Plus 9 ~= 183.074px */ /* What: Raised Greeting Offset. Why: Centered, the greeting crowded the ghosts, pumpkins, and candles into the bottom half of a small screen. How: This sets it near the top, a fifth of the screen's height down, between the two steps, letting the bats cross it. */
+	place-content  : start center;
+	position       : absolute;
+	text-align     : center;
+
+
+}
+
+
+
+/* #region titStaDiv */
+
+.titStaDiv { /* What: Title Stack Div. Why: The greeting's glow and shadow are a still copy sitting exactly under its letters. How: This lays the copy and the heading out as a grid, so both can share one cell. */
+
+
+	display : grid;
+
+
+}
+
+.titShaSpa,
+.titHalHea { /* What: Title Lettering. Why: The shadow copy has to match the heading letter for letter. How: This sets both in the dripping font, growing with the screen, in the same cell, with the same spacing. */
+
+
+	font-family    : var( --hal-gre-fon );                                                  /* Halloween Greeting Font = 'Butcherman', main font */
+	font-size      : clamp( min( 10vw, var( --fon-siz-p05 ) ), 8vw, var( --fon-siz-p08 ) ); /* Font Size Base Plus 5 ~= 44.876px, Font Size Base Plus 8 ~= 104.323px */ /* What: Fluid Heading Size. Why: A full-size greeting overflows a phone, and Butcherman runs wide. How: This grows it with the screen between the two steps, the floor following the screen below about 450px, as the base heading's does. */
+	font-weight    : 400;                                                                   /* What: Regular Weight. Why: Butcherman has no bold, and a heading's bold would draw a fake one. How: This keeps the font's own weight. */
+	grid-area      : 1 / 1;
+	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
+	line-height    : var( --ver-rhy-m01 );                                                  /* Vertical Rhythm Base Minus 1 = 1 */
+
+
+}
+
+
+
+/* #region titShaSpa */
+
+.titShaSpa { /* What: Title Shadow Span. Why: The greeting glows orange and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This draws the copy in the greeting's orange with both shadows cast once around it, under the heading. */
+
+
+	color   : #FF6B00;
+	display : block;
+	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 #1A0533 ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) oklch( from #FF6B00 l c h / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base ~= 14.572px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
+
+
+}
+
+.titLinSpa { /* What: Title Line Span. Why: The greeting reads as two lines, Happy over Halloween. How: This sets each word on a line of its own, in the copy and the heading alike. */
+
+
+	display : block;
+
+
+}
+
+/* #endregion titShaSpa */
+
+
+.titHalHea { /* What: Title Halloween Heading. Why: The greeting leads the card in glowing orange, over its shadow copy. How: This colors it, clears the heading's margin, and positions it so it paints over the copy, whose filter lifts it into the same layer as positioned elements. */
+
+
+	color    : #FF6B00;
+	margin   : 0;
+	position : relative;
+
+
+}
+
+/* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the titShaSpa region above. */
+
+/* #endregion titStaDiv */
+
+
+
+.wisMesPar { /* What: Wish Message Paragraph. Why: A wish sits under the greeting in candle yellow. How: This sets it in the handwritten font, growing with the screen, softly glowing and a little faded. */
+
+
+	color          : #FFE066;                                                    /* What: Candle Yellow. Why: The base paragraph rule sets the secondary text color, but the wish glows like the flames. How: This sets the card's own yellow. */
+	font-family    : var( --hal-wis-fon );                                       /* Halloween Wish Font = 'Barriecito', main font */
+	font-size      : clamp( var( --fon-siz-p01 ), 2.5vw, var( --fon-siz-p03 ) ); /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish grows with the greeting. How: This grows it with the screen between the two steps. */
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em );                     /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	margin         : var( --spa-ver-bas ) auto 0;                                /* Spacing Vertical Base ~= 14.572px */
+	max-width      : var( --tex-wid-bas );                                       /* Text Width Base ~= 29.207em */
+	opacity        : var( --cdn-pow-001-rec );                                   /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	text-shadow    : 0 0 calc( var( --ver-rhy-m01 ) * 1rem ) #FF8C00;            /* Vertical Rhythm Base Minus 1 = 11px */
+
+
+}
+
+/* #endregion titCenDiv */
+
+
+
+/* #region batFlyDiv */
+
+.batFlyDiv { /* What: Bat Fly Div. Why: Each bat flies across the sky, hidden until it sets off. How: This pins it to the card's top left, from where GSAP moves it, hides it until its flight fades it in, and keeps it on its own layer, since it moves every frame it's seen. */
+
+
+	left        : 0;
+	position    : absolute;
+	top         : 0;
+	visibility  : hidden;
+	width       : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
+	will-change : transform;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Bat Fly Div. Why: Under reduced motion the bats never fly. How: This applies only when the reduced-motion preference is set. */
+
+
+	.batFlyDiv { /* What: Still Bat Fly Div. Why: A hidden bat that never moves needs no layer of its own. How: This drops the hint. */
+
+
+		will-change : auto;
+
+
+	}
+
+
+}
+
+.batBodSvg { /* What: Bat Body SVG. Why: The bat's drawing fills its flying box and bobs inside it. How: This makes it a block the box's full width. */
+
+
+	display : block;
+	width   : 100%;
+
+
+}
+
+/* #endregion batFlyDiv */
+
+
+
+.ligFlaDiv { /* What: Lightning Flash Div. Why: Lightning lights the whole scene for an instant. How: This covers the card in pale blue, transparent and out of the pointer's way until a strike flashes it. */
+
+
+	background     : #C8D8FF;
+	inset          : 0;
+	opacity        : 0;
+	pointer-events : none;
+	position       : absolute;
+
+
+}
+
+/* #endregion halCarDiv */
+
+

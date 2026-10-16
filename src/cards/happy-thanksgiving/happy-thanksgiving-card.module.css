@@ -1,0 +1,235 @@
+
+
+
+/**
+ * happy-thanksgiving-card.module.css = Happy Thanksgiving Card Module
+ *
+ * @summary
+ * Styles for ThaCarCom, a full-screen autumn card: a warm brown-to-amber
+ * gradient with a soft amber glow, and centered on it the Happy Thanksgiving
+ * heading, a cornucopia and a turkey side by side, and a short script
+ * message with its wish below. The illustrations grow with the screen, the
+ * turkey a step taller than the cornucopia, so both stay side by side even
+ * on a 320px phone. Over everything, the falling leaves leaf-fall.ts adds
+ * drift down a layer of their own. The card brings its own two fonts,
+ * declared here so they load with the card. Nothing here animates through
+ * CSS: the GSAP timeline and the leaf fall play everything, and both skip
+ * their motion under reduced motion.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Peralta Font Face. Why: The heading is set in a sturdy, old-timey slab that suits a harvest card. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Peralta';
+	font-weight  : 400;
+	src          : url( './peralta-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+@font-face { /* What: Cookie Font Face. Why: The message reads as a handwritten note. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Cookie';
+	font-weight  : 400;
+	src          : url( './cookie-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+/* #region thaCarDiv */
+
+.thaCarDiv { /* What: Thanksgiving Card Div. Why: The card fills the screen with an autumn sky. How: This fixes it over the whole viewport on a brown-to-amber gradient under a soft amber glow, and lets its content scroll on a screen too short to hold it. */
+
+
+	background     : radial-gradient( ellipse at 50% 60%, rgb( 255 160 40 / var( --cdn-pow-006-rec ) ) 0%, transparent 70% ), linear-gradient( calc( var( --cdn-pow-018 ) * 1deg ), #3B1F0A 0%, #7B3A10 35%, #C4621D 70%, #E8A040 100% ); /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185, Core-Design-Number to the Power of 18 ~= 157.842deg */
+	display        : flex;
+	flex-direction : column;
+	inset          : 0;
+	overflow       : hidden auto;
+	position       : fixed;
+
+
+}
+
+
+/* #region carConDiv */
+
+.carConDiv { /* What: Card Content Div. Why: The heading, illustrations, and message stack in the middle of the screen, clear of the floating bar. How: This centers a column, capped in width, with its bottom padding lifting it above the bar. */
+
+
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-p03 );                       /* Spacing Vertical Base Plus 3 ~= 33.876px */
+	margin         : auto;                                       /* What: Safe Centering Margin. Why: Centering with justify-content cuts off the top of content taller than the screen. How: Auto margins center it in the card's column and let it scroll from the top when it doesn't fit. */
+	max-width      : calc( var( --ver-rhy-p14 ) * 1rem );        /* Vertical Rhythm Base Plus 14 ~= 746.874px */
+	padding        : var( --spa-ver-p03 ) var( --gut-sid-pad );  /* Spacing Vertical Base Plus 3 ~= 33.876px, Gutter Side Padding, about 19.304px - 44.876px */ /* What: Gutter Side Padding. Why: The original's 32px sides left too little room for the heading on a 320px phone. How: This takes the site's gutter, which narrows on a phone. */
+	padding-bottom : var( --car-bar-mar, var( --spa-ver-p03 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the content clear of it, falling back to the top padding's step outside the card page. */
+	width          : 100%;
+
+
+}
+
+.thaTitHea { /* What: Thanksgiving Title Heading. Why: The greeting leads the card in big cream lettering. How: This sets it in Peralta, growing with the screen, with a warm glow and a thin brown edge below each letter. */
+
+
+	color          : #FFF3CC;
+	font-family    : 'Peralta', var( --fon-fam-mai );                          /* Font Family Main = 'Syne', sans-serif */
+	font-size      : clamp( var( --fon-siz-p04 ), 7vw, var( --fon-siz-p07 ) ); /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 7 ~= 78.751px */ /* What: Fluid Heading Size. Why: A full-size heading crowds a phone. How: This grows it with the screen between the two steps. */
+	font-weight    : 400;                                                      /* What: Regular Weight. Why: Peralta has no bold, and a heading's bold would draw a fake one. How: This keeps the font's own weight. */
+	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                   /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
+	text-align     : center;
+	text-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( 120 50 0 / var( --cdn-pow-001-rec ) ), 0 calc( var( --ver-rhy-m09 ) * 1rem ) 0 #8B4513; /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755, Vertical Rhythm Base Minus 9 ~= 1.160px */
+
+
+}
+
+
+/* #region illRowDiv */
+
+.illRowDiv { /* What: Illustration Row Div. Why: The cornucopia and the turkey stand side by side on one baseline. How: This lines them up along their bottoms, centered, and sets the cornucopia's height both read. */
+
+
+	--tha-cor-hei : clamp( calc( var( --ver-rhy-p07 ) * 1rem ), 32vw, calc( var( --ver-rhy-p09 ) * 1rem ) ); /* Vertical Rhythm Base Plus 7 ~= 104.323px, Vertical Rhythm Base Plus 9 ~= 183.074px */ /* What: Thanksgiving Cornucopia Height. Why: Both illustrations have to fit side by side on a 320px phone, yet stand large on a desktop. How: This grows the cornucopia's height with the screen between the two steps, and the turkey's is one step taller. */
+
+	align-items     : flex-end;
+	display         : flex;
+	gap             : var( --spa-hor-p04 ); /* Spacing Horizontal Base Plus 4 ~= 44.876px */
+	justify-content : center;
+
+
+}
+@media ( max-width : 640px ) { /* What: Phone Illustration Row Div. Why: On a phone the illustrations need every pixel of the width. How: This applies at the phone breakpoint and below. */
+
+
+	.illRowDiv { /* What: Tight Illustration Row Div. Why: The full gap would push the turkey off a 320px screen. How: This narrows the gap a few steps. */
+
+
+		gap : var( --spa-hor-bas ); /* Spacing Horizontal Base ~= 14.572px */
+
+
+	}
+
+
+}
+
+.corIllSvg { /* What: Cornucopia Illustration SVG. Why: The horn of plenty spills fruit and vegetables. How: This sizes it by the row's cornucopia height, its width following its drawing, and lets its leaves reach past its edge. */
+
+
+	height   : var( --tha-cor-hei ); /* Thanksgiving Cornucopia Height, set by its parent, about 104.323px - 183.074px */
+	overflow : visible;
+	width    : auto;
+
+
+}
+
+.turIllSvg { /* What: Turkey Illustration SVG. Why: A turkey fans its tail beside the cornucopia. How: This sizes it one step taller than the cornucopia, its width following its drawing, and lets its feathers reach past its edge. */
+
+
+	height   : calc( var( --tha-cor-hei ) * var( --cdn-pow-001 ) ); /* Thanksgiving Cornucopia Height, set by its parent, about 104.323px - 183.074px, Core-Design-Number to the Power of 1 ~= 1.325 */
+	overflow : visible;
+	width    : auto;
+
+
+}
+
+/* #endregion illRowDiv */
+
+
+/* #region mesBloDiv */
+
+.mesBloDiv { /* What: Message Block Div. Why: The message and its wish read as one handwritten note. How: This sets both in Cookie, slanted, in cream with a soft brown glow, a line apart and within the text measure. */
+
+
+	color          : #FDECC8;
+	display        : flex;
+	flex-direction : column;
+	font-family    : 'Cookie', var( --fon-fam-mai );                                                                                      /* Font Family Main = 'Syne', sans-serif */
+	font-size      : clamp( var( --fon-siz-p03 ), 5vw, var( --fon-siz-p04 ) );                                                            /* Font Size Base Plus 3 ~= 25.572px, Font Size Base Plus 4 ~= 33.876px */ /* What: Fluid Message Size. Why: Cookie is a small, fine script, hard to read at an ordinary text size. How: This sets it about twice that size, growing with the screen between the two steps. */
+	font-style     : italic;
+	gap            : calc( var( --ver-rhy-bas ) * 1em );                                                                                  /* Vertical Rhythm Base ~= 1.325em */
+	line-height    : var( --ver-rhy-bas );                                                                                                /* Vertical Rhythm Base ~= 1.325 */ /* What: Script Line Height. Why: At its larger size the script's tall loops already space its lines, and the base step keeps the note from crowding the bar. How: This is one step tighter than body text. */
+	max-width      : var( --tex-wid-sma );                                                                                                /* Text Width Small ~= 22.048em */ /* What: Narrow Measure. Why: Cookie is a narrow script, so the base width ran about 93 characters a line. How: The small width keeps it near 70. */
+	text-align     : center;
+	text-shadow    : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m01 ) * 1rem ) rgb( 80 30 0 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 1 = 11px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+
+
+}
+
+.mesTexPar { /* What: Message Text Paragraph. Why: The base paragraph rule sets its own color, font, size, and line height, but the message takes its block's. How: This inherits all four. */
+
+
+	color       : inherit;
+	font-family : inherit;
+	font-size   : inherit;
+	line-height : inherit;
+
+
+}
+
+.wisLinPar { /* What: Wish Line Paragraph. Why: The wish is a quieter sign-off below the message. How: This inherits the block's color, font, and line height, a step smaller, upright, and slightly faded. */
+
+
+	color       : inherit;
+	font-family : inherit;
+	font-size   : calc( var( --cdn-pow-001-rec ) * 1em ); /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755em */
+	font-style  : normal;
+	line-height : inherit;
+	opacity     : var( --cdn-pow-001-rec );               /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+
+
+}
+
+/* #endregion mesBloDiv */
+
+/* #endregion carConDiv */
+
+
+
+/* #region leaLayDiv */
+
+.leaLayDiv { /* What: Leaf Layer Div. Why: The leaves fall over the whole screen, above the content, without catching a tap. How: This fixes a layer over the viewport after the content, clipping the leaves to its edges and letting the pointer through. */
+
+
+	inset          : 0;
+	overflow       : hidden;
+	pointer-events : none;
+	position       : fixed;
+
+
+}
+
+.leaTemSvg { /* What: Leaf Template SVG. Why: Every falling leaf copies one drawing, which itself stays hidden. How: This hides the template. */
+
+
+	display : none;
+
+
+}
+
+.leaFalSvg { /* What: Leaf Fall SVG. Why: Each leaf is a copy of the drawing that leaf-fall.ts moves every frame. How: This places it at the layer's top left and keeps it on its own layer, since it moves the whole time it exists. */
+
+
+	left        : 0;
+	position    : absolute;
+	top         : 0;
+	will-change : transform;
+
+
+}
+
+/* #endregion leaLayDiv */
+
+/* #endregion thaCarDiv */
+
+
