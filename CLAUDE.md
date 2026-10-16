@@ -81,6 +81,32 @@ field to the share dialog).
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
 
+## Hosting and DNS
+Set up with the user 2026-10-16, following TechGeek.dev's steps (see its
+CLAUDE.md, "Putting a new TechGeek domain behind Cloudflare"). techgeek.cards
+is registered at name.com and uses Cloudflare's nameservers (corey and
+khloe), on the Free plan, in front of Netlify.
+- **Records**: `@` and `www` are proxied CNAMEs to
+  `tech-geek-cards.netlify.app` (Cloudflare flattens the one on the bare
+  domain), replacing the fixed A addresses Netlify's zone had. Titan's two MX
+  records (priorities 10 and 20, as they were), SPF, the `titan1._domainkey`
+  DKIM key, the Google Search Console verification, and a new DMARC record
+  (`p=none`, reports to contact@techgeek.cards) are DNS only.
+- **Settings**: SSL/TLS Full (strict), Automatic HTTPS Rewrites on, Always Use
+  HTTPS and HSTS off, and a minimum of TLS 1.2. DNSSEC is off (no DS record
+  was ever set), which the user may turn on later for all three domains.
+- **Redirects and HSTS come from Netlify, not Cloudflare**: Netlify sends
+  `http` to `https` and `www` to the bare domain, and `public/_headers` sends
+  HSTS and every other security header, including the unlisted cards'
+  noindex. Cloudflare passes all of it through.
+- **Checked through Cloudflare** on the day: every page and card page, the
+  redirects, every security header, the unlisted cards' noindex, a card
+  page's head tags, the crawler files, icons, and preview images, the mail
+  and verification records, and that TLS 1.0 and 1.1 are refused.
+- **Left to do**: delete Netlify's DNS zone for techgeek.cards (the team's
+  Domains page, Delete DNS zone) a day or two after the switch, then confirm
+  the site's HTTPS certificate still shows as active.
+
 ## Theme
 Decided by the user 2026-10-14: "Confetti Circuit" (the second of three
 suggested directions) with the card stacks and envelopes borrowed from the
