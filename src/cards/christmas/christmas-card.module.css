@@ -37,10 +37,23 @@
 @font-face { /* What: Gloria Hallelujah Font Face. Why: The sign-off's name should look handwritten. How: This loads the font's Latin regular weight from the card's folder. */
 
 
-	font-display : swap;
-	font-family  : 'Gloria Hallelujah';
-	font-weight  : 400;
-	src          : url( './gloria-hallelujah-latin-400-normal.woff2' ) format( 'woff2' );
+	font-display  : swap;
+	font-family   : 'Gloria Hallelujah';
+	font-weight   : 400;
+	src           : url( './gloria-hallelujah-latin-400-normal.woff2' ) format( 'woff2' );
+	unicode-range : U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; /* What: Basic Latin Range. Why: The browser picks a font file by the characters each one covers. How: These are Fontsource's Latin set's characters. */
+
+
+}
+
+@font-face { /* What: Gloria Hallelujah Extended Font Face. Why: A sender's or recipient's name can hold letters beyond basic Latin, such as Ł, Ő, or Ș, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
+
+
+	font-display  : swap;
+	font-family   : 'Gloria Hallelujah';
+	font-weight   : 400;
+	src           : url( './gloria-hallelujah-latin-ext-400-normal.woff2' ) format( 'woff2' );
+	unicode-range : U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; /* What: Extended Latin Range. Why: Only a name with one of these characters needs this file. How: These are Fontsource's extended Latin set's characters. */
 
 
 }
@@ -63,7 +76,7 @@
 .chrCarDiv { /* What: Christmas Card Div. Why: The card fills the screen, its scenes stacked in it. How: This fixes it over the whole viewport, clips anything past its edges, and sets the fonts and shadow its lettering shares. */
 
 
-	--chr-fes-fon : 'Mountains of Christmas', var( --fon-fam-mai );                                                                            /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon. How: This names Mountains of Christmas, falling back to the main font. */
+	--chr-fes-fon : 'Mountains of Christmas', 'Gloria Hallelujah', var( --fon-fam-mai );                                                       /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon, and a recipient's name may hold letters Mountains of Christmas lacks, which it has only in basic Latin. How: This names Mountains of Christmas, then Gloria Hallelujah, whose extended Latin file draws those letters in a handwritten style, then the main font. */
 	--chr-gli-fon : 'Rubik Glitch', var( --fon-fam-mai );                                                                                      /* What: Christmas Glitch Font. Why: The hacked scene's lettering looks broken up. How: This names Rubik Glitch, falling back to the main font. */
 	--chr-han-fon : 'Gloria Hallelujah', var( --fon-fam-mai );                                                                                 /* What: Christmas Handwritten Font. Why: The sign-off's name looks handwritten. How: This names Gloria Hallelujah, falling back to the main font. */
 	--chr-sha-col : #4A4A4A; /* What: Christmas Shadow Color. Why: A soft gray shadow lifts the lettering off both busy backgrounds. How: This is the card's own dark gray. */
@@ -216,7 +229,7 @@
 
 
 	filter         : var( --chr-tex-sha );                                     /* Christmas Text Shadow, set by its parent */
-	font-family    : var( --chr-fes-fon );                                     /* Christmas Festive Font = 'Mountains of Christmas', main font */
+	font-family    : var( --chr-fes-fon );                                     /* Christmas Festive Font = 'Mountains of Christmas', 'Gloria Hallelujah', main font */
 	font-size      : clamp( var( --fon-siz-p04 ), 4vw, var( --fon-siz-p06 ) ); /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Heading Size. Why: A full-size heading crowds a phone. How: This grows it with the screen between the two steps. */
 	font-weight    : 700;
 	letter-spacing : normal;
@@ -265,7 +278,7 @@
 .snoFroSpa { /* What: Snowy From Span. Why: The From matches the greeting rather than the handwritten name. How: This sets it in the festive font. */
 
 
-	font-family : var( --chr-fes-fon ); /* Christmas Festive Font = 'Mountains of Christmas', main font */
+	font-family : var( --chr-fes-fon ); /* Christmas Festive Font = 'Mountains of Christmas', 'Gloria Hallelujah', main font */
 	font-weight : 700;
 
 
