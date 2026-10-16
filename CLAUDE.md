@@ -93,8 +93,15 @@ khloe), on the Free plan, in front of Netlify.
   DKIM key, the Google Search Console verification, and a new DMARC record
   (`p=none`, reports to contact@techgeek.cards) are DNS only.
 - **Settings**: SSL/TLS Full (strict), Automatic HTTPS Rewrites on, Always Use
-  HTTPS and HSTS off, and a minimum of TLS 1.2. DNSSEC is off (no DS record
-  was ever set), which the user may turn on later for all three domains.
+  HTTPS and HSTS off, and a minimum of TLS 1.2.
+- **DNSSEC** (turned on with the user 2026-10-16, for techgeek.dev and
+  easemylife.app the same day): Cloudflare signs the zone, and its DS record
+  (key tag 2371, algorithm 13, digest type 2) is entered at name.com, with
+  Max Sig Life left blank. A domain's old Netlify DNS zone has to be deleted
+  before DNSSEC goes on, since Netlify's nameservers keep answering unsigned
+  for resolvers that still remember them. Before ever moving the domain off
+  Cloudflare, turn DNSSEC off there and remove the DS record at name.com, then
+  wait a day before changing nameservers.
 - **Redirects and HSTS come from Netlify, not Cloudflare**: Netlify sends
   `http` to `https` and `www` to the bare domain, and `public/_headers` sends
   HSTS and every other security header, including the unlisted cards'
@@ -103,9 +110,12 @@ khloe), on the Free plan, in front of Netlify.
   redirects, every security header, the unlisted cards' noindex, a card
   page's head tags, the crawler files, icons, and preview images, the mail
   and verification records, and that TLS 1.0 and 1.1 are refused.
-- **Left to do**: delete Netlify's DNS zone for techgeek.cards (the team's
-  Domains page, Delete DNS zone) a day or two after the switch, then confirm
-  the site's HTTPS certificate still shows as active.
+- **Netlify's DNS zone** was deleted the same day, ahead of DNSSEC. Netlify
+  still issues the site's own certificate, which Full (strict) requires:
+  check the project's Domain management, HTTPS section after its first
+  renewal without the zone (about mid-December 2026; the current one runs to
+  January 14, 2027), and if renewal fails, set `@` and `www` to DNS only for
+  a few minutes, renew, and proxy them again.
 
 ## Theme
 Decided by the user 2026-10-14: "Confetti Circuit" (the second of three
