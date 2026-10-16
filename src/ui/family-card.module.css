@@ -289,15 +289,15 @@
 
 }
 
-.famCurSpa { /* What: Family Cursor Span. Why: A thin cursor follows the typing. How: This sizes a narrow box at the lettering's height, standing on the line's baseline with a small gap before it, for its blinking bar. */
+.famCurSpa { /* What: Family Cursor Span. Why: A thin cursor follows the typing. How: This sizes a narrow box at the lettering's height, hanging a touch below the baseline with a small gap before it, for its blinking bar. */
 
 
 	display        : inline-block;
-	height         : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
-	margin-left    : var( --spa-hor-m05 );                /* Spacing Horizontal Base Minus 5 ~= 3.572px */
-	max-height     : 1em;                                 /* What: Cursor Cap. Why: The lettering shrinks on a phone, and a full-height bar would tower over it. How: This caps the bar at the text's own size. */
-	vertical-align : baseline;                            /* What: Baseline Cursor. Why: Sitting on the text's bottom, the bar hung below the letters by the font's whole descent. How: This stands it on the baseline, level with the letters. */
-	width          : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+	height         : calc( var( --ver-rhy-p04 ) * 1rem );     /* Vertical Rhythm Base Plus 4 ~= 44.876px */
+	margin-left    : var( --spa-hor-m05 );                    /* Spacing Horizontal Base Minus 5 ~= 3.572px */
+	max-height     : 1em;                                     /* What: Cursor Cap. Why: The lettering shrinks on a phone, and a full-height bar would tower over it. How: This caps the bar at the text's own size. */
+	vertical-align : calc( var( --cdn-pow-007-rec ) * -1em ); /* Core-Design-Number to the Power of 7 Reciprocal ~= -0.140em */ /* What: Cursor Drop. Why: On the text's bottom the bar hung below the letters by the font's whole descent, about 0.32em, and on the baseline it sat too high. How: This drops it about halfway, a touch under the letters, measured in their own size. */
+	width          : calc( var( --ver-rhy-m06 ) * 1rem );     /* Vertical Rhythm Base Minus 6 ~= 2.696px */
 
 
 }
