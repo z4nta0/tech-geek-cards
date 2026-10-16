@@ -120,13 +120,13 @@ design/                Source artwork and the scripts that render it, not served
 
 ## Sharing a card
 
-Every card opens full screen at its own address (`/happy-birthday`), with a small floating bar to go home, see more cards, replay the card from the start, or share it. Sharing opens a dialog that copies the card's link or opens the phone's share sheet, and for a card that takes a name, adds it to the link (`/happy-birthday?name=Sam`), which the card reads as it opens. A card that can be signed, such as Merry Christmas, also takes the sender's name (`/merry-christmas?name=Sam&from=Alex`). The Merry Christmas card is the snowy scene alone; its full version, which opens on a fake hacked screen first, is unlisted at `/christmas-prank`. A card can also be shared straight from its tile on Home or in the Gallery.
+Every card opens full screen at its own address (`/happy-birthday`), with a small floating bar to go home, see more cards, replay the card from the start, or share it. Sharing opens a dialog that copies the card's link or opens the phone's share sheet, and for a card that takes a name, adds it to the link (`/happy-birthday?name=Sam`), which the card reads as it opens. A card that can be signed, such as Merry Christmas, also takes the sender's name (`/merry-christmas?name=Sam&from=Alex`). The Merry Christmas card is the snowy scene alone; its full version, which opens on a fake hacked screen first, is unlisted at `/merry-christmas-prank`. A card can also be shared straight from its tile on Home or in the Gallery.
 
 ## Unlisted cards
 
 These cards have their own pages but stay out of the Gallery, Home, and search results (they carry `noindex` and aren't in the sitemap), so they're reached only by their links. Any new unlisted card gets an address ending in `-prank`.
 
-- **Christmas Prank** (`/christmas-prank`): the full Christmas card, which opens on a fake hacked screen that glitches into the snowy Merry Christmas scene. Made for the maker's family, it's signed From, Mr. Awesome unless the link says otherwise.
+- **Christmas Prank** (`/merry-christmas-prank`): the full Christmas card, which opens on a fake hacked screen that glitches into the snowy Merry Christmas scene. Made for the maker's family, it's signed From, Mr. Awesome unless the link says otherwise.
 - **Father's Day Special** (`/fathers-day-prank`): a playful Father's Day card for a dad with a wild side, made for the maker's own father.
 
 ## Search and the contact form

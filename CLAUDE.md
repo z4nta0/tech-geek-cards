@@ -42,16 +42,18 @@ field to the share dialog).
   buttons were removed.
 - **Unlisted cards end in `-prank`** (decided by the user 2026-10-15): a
   card kept off the Gallery and Home, reached only by its own link, gets an
-  address ending in `-prank` (`/christmas-prank`), so every unlisted card is
-  named the same way, and the README's Unlisted cards section lists each one.
+  address ending in `-prank`, so every unlisted card is named the same way,
+  and the README's Unlisted cards section lists each one. One based on a
+  listed card takes that card's address plus `-prank` (decided by the user
+  2026-10-16): `/merry-christmas-prank`, `/fathers-day-prank`.
 - **The special Father's Day card** (`/fathers-day-prank`) stays unlisted,
   since the user made it for their own father (decided 2026-10-14).
-- **The Christmas cards** (decided by the user 2026-10-15): one component,
-  two catalog rows. The listed Merry Christmas card (`/merry-christmas`) is
-  the snowy scene alone, signed From, Tech Geek unless `?from=` says
-  otherwise; the full prank (`/christmas-prank`), a fake hack before the
-  snowy scene, made for the user's family, stays unlisted and keeps its From,
-  Mr. Awesome default.
+- **The Christmas cards** (decided by the user 2026-10-15): one component, two
+  catalog rows. The listed Merry Christmas card (`/merry-christmas`) is the
+  snowy scene alone, signed From, Tech Geek unless `?from=` says otherwise;
+  the full prank (`/merry-christmas-prank`), a fake hack before the snowy
+  scene, made for the user's family, stays unlisted and keeps its From, Mr.
+  Awesome default.
 - **Structured data**: a `WebSite` for this domain whose author is the same
   `Person` TechGeek.dev describes (`https://techgeek.dev/#person`), with the
   GitHub and LinkedIn profiles the footer links to and no email, since this
@@ -146,8 +148,8 @@ rest follow the same pattern.
   below `m03` included, for glitches), distances through `rhyPxlFun`, angles
   through `cdnPowFun`, and curves from the easing tokens, registered with
   GSAP's CustomEase through `ui/gsap-ease.ts`'s `gsaEasFun`; GSAP takes
-  seconds, so durations usually come through `durSecFun`. Under reduced motion the timeline jumps to
-  its end and any JS motion (the snow) never starts.
+  seconds, so durations usually come through `durSecFun`. Under reduced motion
+  the timeline jumps to its end and any JS motion (the snow) never starts.
 - **Lettering pinned to the bottom** takes `--car-bar-mar` as its bottom
   margin, which the card page sets to clear the floating bar.
 - **Text split by SplitText**: a heading keeps SplitText's own label, but a

@@ -257,7 +257,7 @@ const CAR_REC_ARR : CarRecTyp[] = [ // What: Card Record Array. Why: Every page 
 		lisBoo : false,
 		occStr : 'Holiday',
 		seaStr : 'A prank Christmas card that opens on a fake hack and glitches into a snowy cabin greeting, coded by hand. Free to share.',
-		sluStr : 'christmas-prank',
+		sluStr : 'merry-christmas-prank',
 		titStr : 'Christmas Prank'
 
 

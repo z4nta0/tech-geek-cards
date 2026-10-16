@@ -74,20 +74,20 @@ const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Th
 const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checked against what it should say. How: Each row names one page, its title, its canonical address or null, and whether its h1 is checked.
 
 
-	{ canStr : LIV_URL_STR,                          heaBoo : true,  patStr : '/',                   titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards' },
-	{ canStr : `${ LIV_URL_STR }gallery`,            heaBoo : true,  patStr : '/gallery',            titStr : 'Greeting Card Gallery | TechGeek.cards'                   },
-	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',              titStr : 'About the Maker | TechGeek.cards'                         },
-	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',            titStr : 'Contact | TechGeek.cards'                                 },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',       titStr : 'Page Not Found | TechGeek.cards'                          },
-	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',     titStr : 'Happy Birthday Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',        titStr : "Mother's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',        titStr : "Father's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',     titStr : 'Fourth of July Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',    titStr : 'Happy Halloween Card | TechGeek.cards'                    },
-	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving', titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
-	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',    titStr : 'Merry Christmas Card | TechGeek.cards'                    },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',  titStr : "Father's Day Special Card | TechGeek.cards"               },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/christmas-prank',    titStr : 'Christmas Prank Card | TechGeek.cards'                    }
+	{ canStr : LIV_URL_STR,                          heaBoo : true,  patStr : '/',                      titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards' },
+	{ canStr : `${ LIV_URL_STR }gallery`,            heaBoo : true,  patStr : '/gallery',               titStr : 'Greeting Card Gallery | TechGeek.cards'                   },
+	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',                 titStr : 'About the Maker | TechGeek.cards'                         },
+	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',               titStr : 'Contact | TechGeek.cards'                                 },
+	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',          titStr : 'Page Not Found | TechGeek.cards'                          },
+	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',        titStr : 'Happy Birthday Card | TechGeek.cards'                     },
+	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',           titStr : "Mother's Day Card | TechGeek.cards"                       },
+	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',           titStr : "Father's Day Card | TechGeek.cards"                       },
+	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',        titStr : 'Fourth of July Card | TechGeek.cards'                     },
+	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',       titStr : 'Happy Halloween Card | TechGeek.cards'                    },
+	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving',    titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
+	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',       titStr : 'Merry Christmas Card | TechGeek.cards'                    },
+	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',     titStr : "Father's Day Special Card | TechGeek.cards"               },
+	{ canStr : null,                                 heaBoo : true,  patStr : '/merry-christmas-prank', titStr : 'Christmas Prank Card | TechGeek.cards'                    }
 
 
 ];
