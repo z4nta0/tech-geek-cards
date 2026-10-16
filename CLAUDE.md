@@ -152,6 +152,20 @@ rest follow the same pattern.
   to the `stage` box, twice 1920 by 1080.
 - **Fonts** are Fontsource's Latin WOFF2 files, declared with `@font-face` in
   the card's own module, so they load only with the card.
+- **Colors are card tokens** (decided by the user 2026-10-16): a card's
+  colors are its own, never the site's theme, so a card never reads the
+  site's color roles. Every color it uses is a custom property in its root
+  rule, at the top of its module, even one another card also uses, named
+  `--<card>-<thing>-col` after the card's own prefix (`bir`, `chr`, `foj`,
+  `hal`, `tha`, `fam`) and what the color paints, or its hue when it paints
+  several things (`--hal-sky-col`, `--foj-whi-col`). An SVG attribute that
+  can't read a token sets the color through `style` instead, and JS reads
+  the token from the card's root at run time; where neither works, the
+  literal keeps a comment naming its token, so a search for the token finds
+  every use. A see-through use reads its token as `rgb( from var( --… ) r g b
+  / <alpha> )`, which keeps the color exact where an `oklch( from … )` round
+  trip shifted the Fourth of July's glows, and a gradient holding one adds `in
+  srgb` so it blends as before.
 - **Names beyond basic Latin** (added 2026-10-16): a font that shows a
   visitor's name (Birthday's Luckiest Guy, Christmas's Gloria Hallelujah) also
   declares Fontsource's extended Latin file, each face limited to its set's
