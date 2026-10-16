@@ -34,7 +34,37 @@ const COR_DES_NUM = ( Math.cbrt( 108 + 12 * Math.sqrt( 69 ) ) + Math.cbrt( 108 -
 
 // #region Helpers
 
-const cdnPowFun = ( powValNum : number ) : number => Math.pow( COR_DES_NUM, powValNum );                                                             // What: Core-Design-Number Power Function. Why: An angle or a pace with no named step still sits on the scale as a power of the core design number, like the stylesheet's --cdn-pow-* tokens. How: This raises the core design number to the given power.
+// #region cdnPowFun
+
+/**
+ * cdnPowFun = Core-Design-Number Power Function
+ *
+ * @summary
+ * Any power of the core design number as a plain number, the JavaScript
+ * counterpart of the stylesheet's --cdn-pow-* tokens, for an angle or a pace
+ * that sits on the scale without a named step of its own. The duration and
+ * rhythm helpers below build their steps on it too.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param powValNum - Power Value Number: The power to raise the core design
+ *                    number to, e.g. 15.
+ *
+ * @returns The core design number raised to that power.
+ *
+ * @example
+ * ```ts
+ * cdnPowFun(15) // => about 67.9
+ * ```
+ *
+*/
+
+const cdnPowFun = ( powValNum : number ) : number => Math.pow( COR_DES_NUM, powValNum ); // What: Core-Design-Number Power Function. Why: An angle or a pace with no named step still sits on the scale as a power of the core design number, like the stylesheet's --cdn-pow-* tokens. How: This raises the core design number to the given power.
+
+// #endregion cdnPowFun
+
+
+
 const steOffFun = ( steNamStr : string ) : number => steNamStr === 'bas' ? 0 : ( steNamStr[ 0 ] === 'p' ? 1 : -1 ) * Number( steNamStr.slice( 1 ) ); // What: Step Offset Function. Why: The rhythm and the duration scale name their steps the same way, by offset from a base step. How: This returns 0 for 'bas', NN for 'pNN', and -NN for 'mNN'.
 
 

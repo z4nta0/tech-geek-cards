@@ -66,8 +66,8 @@ type SnoSetTyp = { // What: Snowfall Settings Type. Why: The card picks how much
 
 // #region Constants
 
-const FRA_MIL_NUM = 1000 / 60; // What: Frame Millisecond Number. Why: The flakes' speeds and sway were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
 const FRA_MAX_NUM = 4;         // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every flake at once. How: This caps one frame's step at four 60ths of a second.
+const FRA_MIL_NUM = 1000 / 60; // What: Frame Millisecond Number. Why: The flakes' speeds and sway were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
 
 // #endregion Constants
 
@@ -217,7 +217,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 
-		return flaRecObj;
+		return flaRecObj; // What: Flake Record Return. Why: The array keeps every flake's values between frames. How: This hands the new flake to Array.from as its entry.
 
 
 	} );
@@ -261,6 +261,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 		}
+
 
 
 		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The snow keeps falling. How: This asks for the next frame and keeps its id.

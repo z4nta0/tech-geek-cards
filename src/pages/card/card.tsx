@@ -58,10 +58,10 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * document head, the card's component inside Suspense with a loading message
  * as the fallback, and the floating bar. The card is keyed by a replay count,
  * so Replay remounts it and every card replays the same way, without reaching
- * into its own code. The canonical address leaves out any ?name=, so every
- * personalized copy of a card counts as the card's one page. Share mounts the
- * share dialog, keyed by the card, and the dialog's close callback unmounts
- * it.
+ * into its own code. The canonical address leaves out any ?name= or ?from=,
+ * so every personalized copy of a card counts as the card's one page. Share
+ * mounts the share dialog, keyed by the card, and the dialog's close callback
+ * unmounts it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
