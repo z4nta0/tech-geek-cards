@@ -185,7 +185,7 @@ type StaRowTyp = { lefNum : number, sizNum : number, topNum : number }; // What:
  * @summary
  * Scatters the night's thirty stars at random across the whole width of the
  * sky and its upper 55%, so they stay clear of the hills, each a dot between
- * the vertical rhythm's Base Minus 10 and Base Minus 4 steps across. The card
+ * the vertical rhythm's Base Minus 9 and Base Minus 3 steps across. The card
  * calls it once, when it opens, so the stars keep their places for as long
  * as it's open.
  *
@@ -206,7 +206,7 @@ const staArrFun = () : StaRowTyp[] => Array.from( Array( 30 ).keys(), () => ( { 
 
 
 	lefNum : Math.random() * 100,                                   // What: Left Number. Why: Stars fill the whole width. How: This picks 0% to 100% from the left.
-	sizNum : gsap.utils.random( cdnPowFun( -9 ), cdnPowFun( -3 ) ), // What: Size Number. Why: Stars come in different sizes. How: This picks a width between the vertical rhythm's Base Minus 10 and Base Minus 4 steps, in rem. // Vertical Rhythm Base Minus 10 ~= 0.876px, Vertical Rhythm Base Minus 4 ~= 4.732px
+	sizNum : gsap.utils.random( cdnPowFun( -8 ), cdnPowFun( -2 ) ), // What: Size Number. Why: Stars come in different sizes, the smallest still large enough for every engine to draw. How: This picks a width between the vertical rhythm's Base Minus 9 and Base Minus 3 steps, in rem. // Vertical Rhythm Base Minus 9 ~= 1.160px, Vertical Rhythm Base Minus 3 ~= 6.268px
 	topNum : Math.random() * 55                                     // What: Top Number. Why: Stars stay above the ghosts and hills. How: This picks 0% to 55% from the top, a literal since it places the stars rather than spacing them.
 
 
