@@ -255,13 +255,14 @@
 
 /* #region titCenDiv */
 
-.titCenDiv { /* What: Title Center Div. Why: The greeting and wish sit in the middle of the night. How: This fills the card and centers its lines, with room at the sides on a phone. */
+.titCenDiv { /* What: Title Center Div. Why: The greeting and wish sit high in the night sky. How: This fills the card and centers its lines across it, near the top, with room at the sides on a phone. */
 
 
 	display        : grid;
 	inset          : 0;
-	padding-inline : var( --spa-hor-p02 ); /* Spacing Horizontal Base Plus 2 ~= 25.572px */
-	place-content  : center;
+	padding-inline : var( --spa-hor-p02 );                                                     /* Spacing Horizontal Base Plus 2 ~= 25.572px */
+	padding-top    : clamp( var( --spa-ver-p03 ), 20vh, calc( var( --ver-rhy-p09 ) * 1rem ) ); /* Spacing Vertical Base Plus 3 ~= 33.876px, Vertical Rhythm Base Plus 9 ~= 183.074px */ /* What: Raised Greeting Offset. Why: Centered, the greeting crowded the ghosts, pumpkins, and candles into the bottom half of a small screen. How: This sets it near the top, a fifth of the screen's height down, between the two steps, letting the bats cross it. */
+	place-content  : start center;
 	position       : absolute;
 	text-align     : center;
 
@@ -288,8 +289,8 @@
 	font-size      : clamp( min( 10vw, var( --fon-siz-p05 ) ), 8vw, var( --fon-siz-p08 ) ); /* Font Size Base Plus 5 ~= 44.876px, Font Size Base Plus 8 ~= 104.323px */ /* What: Fluid Heading Size. Why: A full-size greeting overflows a phone, and Butcherman runs wide. How: This grows it with the screen between the two steps, the floor following the screen below about 450px, as the base heading's does. */
 	font-weight    : 400;                                                                   /* What: Regular Weight. Why: Butcherman has no bold, and a heading's bold would draw a fake one. How: This keeps the font's own weight. */
 	grid-area      : 1 / 1;
-	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em ); /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
-	line-height    : var( --ver-rhy-m01 );                   /* Vertical Rhythm Base Minus 1 = 1 */
+	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
+	line-height    : var( --ver-rhy-m01 );                                                  /* Vertical Rhythm Base Minus 1 = 1 */
 
 
 }
