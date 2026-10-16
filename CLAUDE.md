@@ -64,6 +64,8 @@ field to the share dialog).
   each card has its own search description (`seaStr`, 100 to 125
   characters). Unlisted cards carry noindex and no canonical link, and stay
   out of the sitemap.
+- **Search engines**: the user submitted the sitemap to Google Search
+  Console and Bing Webmaster Tools on 2026-10-16, after the site went live.
 - **Link previews**: every card gets its own preview image and tags (decided
   by the user 2026-10-14), built 2026-10-16 as a page per card rather than a
   prerender. The build writes a copy of index.html per card (`<address>.html`)
