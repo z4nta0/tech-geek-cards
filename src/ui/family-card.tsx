@@ -406,6 +406,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		timLinObj.to( griDivRef.current, { autoAlpha : 1, duration : shoDurNum }, '<' ); // What: Grid Show. Why: The photo grid appears behind the growing greeting. How: This shows it almost at once.
 
+		timLinObj.set( tapParRef.current, { display : 'block' }, '<' ); // What: Tap Hint Entry. Why: The hint stays out of the page until it's needed. How: This adds it to the layout as the grid appears, which a jump back undoes.
+
 		timLinObj.to( tapParRef.current, { autoAlpha : 1, duration : fadDurNum }, '<' ); // What: Tap Hint Show. Why: The visitor should know the photos open. How: This fades the hint in with the grid.
 
 		timLinObj.to( griImaArr, { // What: Grid Wipe. Why: The photos fill in one after another. How: This uncovers each from left to right, in random order.
@@ -695,7 +697,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			>{ /* What: Family Text Div Element. Why: The lines type out over the card. How: This centers the lettering, hidden from screen readers, which read the whole message from the copy below. */ }
 
 
-				<p className={ cssModObj.famTexPar }>{ /* What: Family Text Paragraph Element. Why: Each line and the greeting type in one place. How: This holds the three line parts, the greeting, and the cursor. */ }
+				<div className={ cssModObj.famLinDiv }>{ /* What: Family Line Div Element. Why: Each line and the greeting type in one place. How: This holds the three line parts, the greeting, and the cursor. */ }
 
 
 					<span ref={ befSpaRef }></span>{ /* What: Before Span Element. Why: The line's first part types here. How: This starts empty. */ }
@@ -721,7 +723,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 					></span>{ /* What: Family Cursor Span Element. Why: A cursor shows where the typing is. How: This draws a bar after the text, fading once the greeting is typed. */ }
 
 
-				</p>
+				</div>
 
 
 			</div>

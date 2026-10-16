@@ -238,16 +238,14 @@
 
 
 
-/* #region famTexPar */
+/* #region famLinDiv */
 
-.famTexPar { /* What: Family Text Paragraph. Why: The lines read as handwriting, glowing in the background color so they stay clear over the photos. How: This sets them in the card's font at a size that grows with the screen, ringed and haloed in the background color. */
+.famLinDiv { /* What: Family Line Div. Why: The lines read as handwriting, glowing in the background color so they stay clear over the photos. How: This sets them in the card's font at a size that grows with the screen, ringed and haloed in the background color. */
 
 
-	color       : inherit;                                                  /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color, but the lettering takes the card's. How: This inherits the card's color. */
 	font-family : var( --fam-tex-fon );                                     /* Family Text Font, set by the card's theme class */
 	font-size   : clamp( var( --fon-siz-p04 ), 8vw, var( --fon-siz-p05 ) ); /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 5 ~= 44.876px */ /* What: Fluid Lettering Size. Why: Full-size lettering wraps into too many lines on a phone. How: This grows it with the screen between the two steps. */
 	line-height : var( --ver-rhy-bas );                                     /* Vertical Rhythm Base ~= 1.325 */
-	margin      : 0;
 	max-width   : var( --tex-wid-bas );                                     /* Text Width Base ~= 29.207em */
 	text-shadow : 0 0 calc( var( --ver-rhy-m09 ) * 1rem ) var( --fam-bac-col ), 0 0 calc( var( --ver-rhy-m03 ) * 1rem ) var( --fam-bac-col ), 0 0 calc( var( --ver-rhy-p02 ) * 1rem ) var( --fam-bac-col ); /* Vertical Rhythm Base Minus 9 ~= 1.160px, Family Background Color, Vertical Rhythm Base Minus 3 ~= 6.268px, Vertical Rhythm Base Plus 2 ~= 25.572px */ /* What: Lettering Halo. Why: A glow in the background color keeps the lettering clear over the photos, and WebKit stalls repainting more layers as each letter types. How: Three widening glows, a tight edge, a soft halo, and a wide haze, replace the original's four offset rings and five glows. */
 
@@ -345,7 +343,7 @@
 
 }
 
-/* #endregion famTexPar */
+/* #endregion famLinDiv */
 
 /* #endregion famTexDiv */
 
@@ -377,12 +375,13 @@
 
 }
 
-.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, hidden until the grid appears. */
+.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, left out of the page until the grid appears. */
 
 
 	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */
 	border-radius    : 999px;
-	color            : inherit;                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
+	color            : inherit;
+	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by contrast checkers as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
 	font-family      : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
 	font-size        : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
 	margin           : 0;
