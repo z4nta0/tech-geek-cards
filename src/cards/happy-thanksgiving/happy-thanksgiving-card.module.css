@@ -51,7 +51,35 @@
 .thaCarDiv { /* What: Thanksgiving Card Div. Why: The card fills the screen with an autumn sky. How: This fixes it over the whole viewport on a brown-to-amber gradient under a soft amber glow, and lets its content scroll on a screen too short to hold it. */
 
 
-	background     : radial-gradient( ellipse at 50% 60%, rgb( 255 160 40 / var( --cdn-pow-006-rec ) ) 0%, transparent 70% ), linear-gradient( calc( var( --cdn-pow-018 ) * 1deg ), #3B1F0A 0%, #7B3A10 35%, #C4621D 70%, #E8A040 100% ); /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185, Core-Design-Number to the Power of 18 ~= 157.842deg */
+	--tha-amb-col : #E8A040; /* What: Thanksgiving Amber Color. Why: The sky glows amber at its bright end. How: This is #E8A040, the sky gradient's last stop. */
+	--tha-bro-col : #8B4513; /* What: Thanksgiving Brown Color. Why: A saddle brown paints the turkey and some leaves and edges the heading. How: This is #8B4513, read by the heading's edge, the turkey's body and neck, and the falling leaves. */
+	--tha-cin-col : #D2691E; /* What: Thanksgiving Cinnamon Color. Why: A cinnamon orange colors the turkey's middle feather and some leaves. How: This is #D2691E, read by the feather rows and the falling leaves. */
+	--tha-cof-col : #3B1F0A; /* What: Thanksgiving Coffee Color. Why: The sky starts in a deep coffee brown. How: This is #3B1F0A, the sky gradient's first stop. */
+	--tha-cop-col : #C4621D; /* What: Thanksgiving Copper Color. Why: The sky warms through copper. How: This is #C4621D, the sky gradient's third stop. */
+	--tha-eye-col : #1a1a1a; /* What: Thanksgiving Eye Color. Why: The turkey's eye is near black. How: This is #1a1a1a, read by the eye. */
+	--tha-fea-col : #8B0000; /* What: Thanksgiving Feather Color. Why: The turkey's outer pair of feathers are deep red. How: This is #8B0000, read by the feather rows. */
+	--tha-fol-col : #5A7A2A; /* What: Thanksgiving Foliage Color. Why: Green leaves tuck around the cornucopia's produce. How: This is #5A7A2A, read by both cornucopia leaves. */
+	--tha-gli-col : white;   /* What: Thanksgiving Glint Color. Why: A glint brings the turkey's eye to life. How: This is white, read by the eye glint. */
+	--tha-glo-col : #FFA028; /* What: Thanksgiving Glow Color. Why: A soft amber glow lights the middle of the sky. How: This is #FFA028, read at an opacity by the sky's radial glow. */
+	--tha-gol-col : #DAA520; /* What: Thanksgiving Gold Color. Why: A goldenrod paints the horn's highlight, the corn, the gold feathers, the beak, the feet, and some leaves. How: This is #DAA520, read by each of those. */
+	--tha-gra-col : #6B2FA0; /* What: Thanksgiving Grape Color. Why: The grapes are purple. How: This is #6B2FA0, read by every grape. */
+	--tha-hor-col : #C8882A; /* What: Thanksgiving Horn Color. Why: The cornucopia's horn is wicker gold. How: This is #C8882A, read by the horn's body. */
+	--tha-meg-col : #501E00; /* What: Thanksgiving Message-Glow Color. Why: The message has a soft brown glow. How: This is #501E00, read at an opacity by the message block's text shadow. */
+	--tha-mes-col : #FDECC8; /* What: Thanksgiving Message Color. Why: The message is set in a soft cream. How: This is #FDECC8, read by the message block. */
+	--tha-och-col : #B8860B; /* What: Thanksgiving Ochre Color. Why: A darker gold marks the corn's husk line and some leaves. How: This is #B8860B, read by the husk line and the falling leaves. */
+	--tha-ora-col : #FF8C00; /* What: Thanksgiving Orange Color. Why: A bright orange adds a vivid leaf to the fall. How: This is #FF8C00, read by the falling leaves. */
+	--tha-out-col : #8B5E1A; /* What: Thanksgiving Outline Color. Why: The horn has a brown outline. How: This is #8B5E1A, read by the horn's stroke. */
+	--tha-pum-col : #D2601A; /* What: Thanksgiving Pumpkin Color. Why: A darker orange gives the pumpkin its ribs. How: This is #D2601A, read by the pumpkin's shading. */
+	--tha-red-col : #CC2200; /* What: Thanksgiving Red Color. Why: A bright red paints the apple and the turkey's wattle. How: This is #CC2200, read by both. */
+	--tha-rus-col : #7B3A10; /* What: Thanksgiving Rust Color. Why: The sky deepens through rust. How: This is #7B3A10, the sky gradient's second stop. */
+	--tha-sie-col : #A0522D; /* What: Thanksgiving Sienna Color. Why: A sienna brown paints the turkey's wing and some leaves. How: This is #A0522D, read by the wing and the falling leaves. */
+	--tha-tan-col : #CD853F; /* What: Thanksgiving Tan Color. Why: A tan paints the turkey's head and some leaves. How: This is #CD853F, read by the head and the falling leaves. */
+	--tha-ter-col : #E2703A; /* What: Thanksgiving Terracotta Color. Why: A terracotta orange paints the pumpkin and some leaves. How: This is #E2703A, read by the pumpkin's body and the falling leaves. */
+	--tha-tig-col : #783200; /* What: Thanksgiving Title-Glow Color. Why: The heading has a warm brown glow. How: This is #783200, read at an opacity by the heading's text shadow. */
+	--tha-tit-col : #FFF3CC; /* What: Thanksgiving Title Color. Why: The heading is set in big cream lettering. How: This is #FFF3CC, read by the heading. */
+	--tha-umb-col : #5C3317; /* What: Thanksgiving Umber Color. Why: A dark umber paints the stems, the pumpkin's curl, and the leaf veins. How: This is #5C3317, read by the pumpkin and apple stems, the curl, and the falling leaves' veins. */
+
+	background     : radial-gradient( ellipse at 50% 60% in srgb, rgb( from var( --tha-glo-col ) r g b / var( --cdn-pow-006-rec ) ) 0%, transparent 70% ), linear-gradient( calc( var( --cdn-pow-018 ) * 1deg ), var( --tha-cof-col ) 0%, var( --tha-rus-col ) 35%, var( --tha-cop-col ) 70%, var( --tha-amb-col ) 100% ); /* Thanksgiving Glow Color = #FFA028 @ 0.185 opacity, Core-Design-Number to the Power of 6 Reciprocal ~= 0.185, Core-Design-Number to the Power of 18 ~= 157.842deg, Thanksgiving Coffee Color = #3B1F0A, Thanksgiving Rust Color = #7B3A10, Thanksgiving Copper Color = #C4621D, Thanksgiving Amber Color = #E8A040 */ /* What: Glow Blending. Why: A gradient holding a relative color blends in Oklab unless told otherwise, which shifted the glow's falloff. How: in srgb keeps it blending as the original did. */
 	display        : flex;
 	flex-direction : column;
 	inset          : 0;
@@ -83,13 +111,13 @@
 .thaTitHea { /* What: Thanksgiving Title Heading. Why: The greeting leads the card in big cream lettering. How: This sets it in Peralta, growing with the screen, with a warm glow and a thin brown edge below each letter. */
 
 
-	color          : #FFF3CC;
+	color          : var( --tha-tit-col );                                     /* Thanksgiving Title Color = #FFF3CC */
 	font-family    : 'Peralta', var( --fon-fam-mai );                          /* Font Family Main = 'Syne', sans-serif */
 	font-size      : clamp( var( --fon-siz-p04 ), 7vw, var( --fon-siz-p07 ) ); /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 7 ~= 78.751px */ /* What: Fluid Heading Size. Why: A full-size heading crowds a phone. How: This grows it with the screen between the two steps. */
 	font-weight    : 400;                                                      /* What: Regular Weight. Why: Peralta has no bold, and a heading's bold would draw a fake one. How: This keeps the font's own weight. */
 	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                   /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
 	text-align     : center;
-	text-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( 120 50 0 / var( --cdn-pow-001-rec ) ), 0 calc( var( --ver-rhy-m09 ) * 1rem ) 0 #8B4513; /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755, Vertical Rhythm Base Minus 9 ~= 1.160px */
+	text-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( from var( --tha-tig-col ) r g b / var( --cdn-pow-001-rec ) ), 0 calc( var( --ver-rhy-m09 ) * 1rem ) 0 var( --tha-bro-col ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Thanksgiving Title-Glow Color = #783200 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755, Vertical Rhythm Base Minus 9 ~= 1.160px, Thanksgiving Brown Color = #8B4513 */
 
 
 }
@@ -151,17 +179,17 @@
 .mesBloDiv { /* What: Message Block Div. Why: The message and its wish read as one handwritten note. How: This sets both in Cookie, slanted, in cream with a soft brown glow, a line apart and within the text measure. */
 
 
-	color          : #FDECC8;
+	color          : var( --tha-mes-col );                                     /* Thanksgiving Message Color = #FDECC8 */
 	display        : flex;
 	flex-direction : column;
-	font-family    : 'Cookie', var( --fon-fam-mai );                                                                                      /* Font Family Main = 'Syne', sans-serif */
-	font-size      : clamp( var( --fon-siz-p03 ), 5vw, var( --fon-siz-p04 ) );                                                            /* Font Size Base Plus 3 ~= 25.572px, Font Size Base Plus 4 ~= 33.876px */ /* What: Fluid Message Size. Why: Cookie is a small, fine script, hard to read at an ordinary text size. How: This sets it about twice that size, growing with the screen between the two steps. */
+	font-family    : 'Cookie', var( --fon-fam-mai );                           /* Font Family Main = 'Syne', sans-serif */
+	font-size      : clamp( var( --fon-siz-p03 ), 5vw, var( --fon-siz-p04 ) ); /* Font Size Base Plus 3 ~= 25.572px, Font Size Base Plus 4 ~= 33.876px */ /* What: Fluid Message Size. Why: Cookie is a small, fine script, hard to read at an ordinary text size. How: This sets it about twice that size, growing with the screen between the two steps. */
 	font-style     : italic;
-	gap            : calc( var( --ver-rhy-bas ) * 1em );                                                                                  /* Vertical Rhythm Base ~= 1.325em */
-	line-height    : var( --ver-rhy-bas );                                                                                                /* Vertical Rhythm Base ~= 1.325 */ /* What: Script Line Height. Why: At its larger size the script's tall loops already space its lines, and the base step keeps the note from crowding the bar. How: This is one step tighter than body text. */
-	max-width      : var( --tex-wid-sma );                                                                                                /* Text Width Small ~= 22.047em */ /* What: Narrow Measure. Why: Cookie is a narrow script, so the base width ran about 93 characters a line. How: The small width keeps it near 70. */
+	gap            : calc( var( --ver-rhy-bas ) * 1em );                       /* Vertical Rhythm Base ~= 1.325em */
+	line-height    : var( --ver-rhy-bas );                                     /* Vertical Rhythm Base ~= 1.325 */ /* What: Script Line Height. Why: At its larger size the script's tall loops already space its lines, and the base step keeps the note from crowding the bar. How: This is one step tighter than body text. */
+	max-width      : var( --tex-wid-sma );                                     /* Text Width Small ~= 22.047em */ /* What: Narrow Measure. Why: Cookie is a narrow script, so the base width ran about 93 characters a line. How: The small width keeps it near 70. */
 	text-align     : center;
-	text-shadow    : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m01 ) * 1rem ) rgb( 80 30 0 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 1 = 11px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+	text-shadow    : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m01 ) * 1rem ) rgb( from var( --tha-meg-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 1 = 11px, Thanksgiving Message-Glow Color = #501E00 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
 
 
 }
