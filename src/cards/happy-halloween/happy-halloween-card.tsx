@@ -64,7 +64,6 @@ type ArtRowTyp = { claStr : string, delNum : number }; // What: Art Row Type. Wh
 
 // #region Constants
 
-const GLO_COL_STR = '#FFE066';          // What: Glow Color String. Why: The greeting shimmers toward the same candle yellow as the wish and the flames. How: The heading's letters tween their color to it.
 const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack-o'-lantern's body is four overlapping lobes. How: This lists each lobe's center across the drawing, in its own coordinates.
 
 
@@ -331,46 +330,53 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 				<path
 					ref={ lefWinRef }
 
+					style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 					d='M38,20 Q20,0 0,10 Q15,20 38,24 Z'
-					fill='#1A0533'
 				/>{ /* What: Left Wing Path Element. Why: The bat flaps. How: This draws the left wing, which folds down to flap. */ }
 
 				<path
 					ref={ rigWinRef }
 
+					style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 					d='M42,20 Q60,0 80,10 Q65,20 42,24 Z'
-					fill='#1A0533'
 				/>{ /* What: Right Wing Path Element. Why: The bat flaps. How: This draws the right wing, which folds a beat after the left. */ }
 
 				<ellipse
+					style={{ fill : 'var( --hal-vio-col )' }} // Halloween Violet Color = #2D0D52
+
 					cx='40'
 					cy='22'
-					fill='#2D0D52'
 					rx='8'
 					ry='6'
 				/>{ /* What: Bat Body Ellipse Element. Why: The wings meet at a small round body. How: This draws it in a lighter purple than the wings. */ }
 
 				<polygon
-					fill='#2D0D52'
+					style={{ fill : 'var( --hal-vio-col )' }} // Halloween Violet Color = #2D0D52
+
 					points='35,17 32,10 38,16'
 				/>{ /* What: Bat Ear Polygon Element. Why: Pointed ears read as a bat. How: This draws the left ear. */ }
 
 				<polygon
-					fill='#2D0D52'
+					style={{ fill : 'var( --hal-vio-col )' }} // Halloween Violet Color = #2D0D52
+
 					points='45,17 48,10 42,16'
 				/>{ /* What: Bat Ear Polygon Element. Why: Pointed ears read as a bat. How: This draws the right ear. */ }
 
 				<circle
+					style={{ fill : 'var( --hal-eye-col )' }} // Halloween Eye Color = #FF9F00
+
 					cx='37'
 					cy='21'
-					fill='#FF9F00'
 					r='2'
 				/>{ /* What: Bat Eye Circle Element. Why: Glowing eyes make the bat spooky. How: This draws the left eye in orange. */ }
 
 				<circle
+					style={{ fill : 'var( --hal-eye-col )' }} // Halloween Eye Color = #FF9F00
+
 					cx='43'
 					cy='21'
-					fill='#FF9F00'
 					r='2'
 				/>{ /* What: Bat Eye Circle Element. Why: Glowing eyes make the bat spooky. How: This draws the right eye in orange. */ }
 
@@ -456,7 +462,8 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 			<rect
-				fill='#E8C46A'
+				style={{ fill : 'var( --hal-wax-col )' }} // Halloween Wax Color = #E8C46A
+
 				height='35'
 				rx='3'
 				width='12'
@@ -465,9 +472,11 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			/>{ /* What: Candle Wax Rect Element. Why: The candle needs a body. How: This draws the wax column in pale gold. */ }
 
 			<rect
-				style={{ opacity : 'var( --cdn-pow-002-rec )' }} // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+				style={{
+					fill    : 'var( --hal-shi-col )',    // Halloween Shine Color = #F5D98F
+					opacity : 'var( --cdn-pow-002-rec )' // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+				}}
 
-				fill='#F5D98F'
 				height='20'
 				rx='1'
 				width='3'
@@ -476,7 +485,8 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			/>{ /* What: Candle Shine Rect Element. Why: A thin highlight rounds the wax. How: This draws a lighter stripe down its left side. */ }
 
 			<line
-				stroke='#333333'
+				style={{ stroke : 'var( --hal-wic-col )' }} // Halloween Wick Color = #333333
+
 				strokeWidth='1.5'
 				x1='15'
 				x2='15'
@@ -487,27 +497,31 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			<ellipse
 				ref={ flaEllRef }
 
+				style={{ fill : 'var( --hal-yel-col )' }} // Halloween Yellow Color = #FFE066
+
 				cx='15'
 				cy='16'
-				fill={ GLO_COL_STR }
 				rx='5'
 				ry='9'
 			/>{ /* What: Candle Flame Ellipse Element. Why: The candle is lit. How: This draws the outer flame in candle yellow, which the flicker squashes and stretches. */ }
 
 			<ellipse
-				style={{ opacity : 'var( --cdn-pow-001-rec )' }} // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+				style={{
+					fill    : 'var( --hal-cor-col )',    // Halloween Core Color = #FFF5A0
+					opacity : 'var( --cdn-pow-001-rec )' // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+				}}
 
 				cx='15'
 				cy='18'
-				fill='#FFF5A0'
 				rx='3'
 				ry='5'
 			/>{ /* What: Candle Core Ellipse Element. Why: A flame burns hottest at its heart. How: This draws a paler core inside the flame. */ }
 
 			<path
+				style={{ stroke : 'var( --hal-wax-col )' }} // Halloween Wax Color = #E8C46A
+
 				d='M9,38 Q7,44 9,48'
 				fill='none'
-				stroke='#E8C46A'
 				strokeLinecap='round'
 				strokeWidth='3'
 			/>{ /* What: Candle Drip Path Element. Why: Melted wax makes the candle look lit for a while. How: This draws a drip down its left side. */ }
@@ -603,44 +617,50 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 			<path
+				style={{ fill : 'var( --hal-whi-col )' }} // Halloween White Color = #FFFFFF
+
 				d='M5,40 Q5,5 30,5 Q55,5 55,40 L55,75 Q47,68 38,75 Q30,68 22,75 Q13,68 5,75 Z'
-				fill='#FFFFFF'
 			/>{ /* What: Ghost Body Path Element. Why: A ghost is a sheet with a wavy hem. How: This draws the white body. */ }
 
 			<ellipse
+				style={{ fill : 'var( --hal-ghf-col )' }} // Halloween Ghost-Face Color = #5B2D8E
+
 				cx='21'
 				cy='36'
-				fill='#5B2D8E'
 				rx='6'
 				ry='7'
 			/>{ /* What: Ghost Eye Ellipse Element. Why: The ghost looks out at the viewer. How: This draws the left eye in purple. */ }
 
 			<ellipse
+				style={{ fill : 'var( --hal-ghf-col )' }} // Halloween Ghost-Face Color = #5B2D8E
+
 				cx='39'
 				cy='36'
-				fill='#5B2D8E'
 				rx='6'
 				ry='7'
 			/>{ /* What: Ghost Eye Ellipse Element. Why: The ghost looks out at the viewer. How: This draws the right eye in purple. */ }
 
 			<circle
+				style={{ fill : 'var( --hal-whi-col )' }} // Halloween White Color = #FFFFFF
+
 				cx='23'
 				cy='34'
-				fill='#FFFFFF'
 				r='2'
 			/>{ /* What: Ghost Glint Circle Element. Why: A glint makes the eyes friendly. How: This draws a white spot in the left eye. */ }
 
 			<circle
+				style={{ fill : 'var( --hal-whi-col )' }} // Halloween White Color = #FFFFFF
+
 				cx='41'
 				cy='34'
-				fill='#FFFFFF'
 				r='2'
 			/>{ /* What: Ghost Glint Circle Element. Why: A glint makes the eyes friendly. How: This draws a white spot in the right eye. */ }
 
 			<path
+				style={{ stroke : 'var( --hal-ghf-col )' }} // Halloween Ghost-Face Color = #5B2D8E
+
 				d='M20,50 Q30,60 40,50'
 				fill='none'
-				stroke='#5B2D8E'
 				strokeLinecap='round'
 				strokeWidth='2.5'
 			/>{ /* What: Ghost Smile Path Element. Why: The ghost is friendly, not frightening. How: This draws a purple smile. */ }
@@ -734,16 +754,19 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			<circle
 				ref={ gloCirRef }
 
-				style={{ opacity : 'var( --cdn-pow-004-rec )' }} // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+				style={{
+					fill    : 'var( --hal-ora-col )',    // Halloween Orange Color = #FF8C00
+					opacity : 'var( --cdn-pow-004-rec )' // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+				}}
 
 				cx='40'
 				cy='44'
-				fill='#FF8C00'
 				r='18'
 			/>{ /* What: Pumpkin Glow Circle Element. Why: A lit jack-o'-lantern glows. How: This draws a soft orange disc behind the pumpkin, which the pulse grows and dims. */ }
 
 			<rect
-				fill='#3D7A1E'
+				style={{ fill : 'var( --hal-ste-col )' }} // Halloween Stem Color = #3D7A1E
+
 				height='12'
 				rx='3'
 				width='8'
@@ -757,9 +780,10 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 				<ellipse
 					key={ lobXcoNum }
 
+					style={{ fill : 'var( --hal-pum-col )' }} // Halloween Pumpkin Color = #E85D04
+
 					cx={ lobXcoNum }
 					cy='44'
-					fill='#E85D04'
 					rx='12.8'
 					ry='18'
 				/> // What: Pumpkin Lobe Ellipse Element. Why: Overlapping lobes give the pumpkin its ribbed shape. How: This draws one orange lobe.
@@ -768,24 +792,28 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			))}
 
 			<polygon
-				fill='#1A0533'
+				style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 				points='22,38 30,34 38,38'
 			/>{ /* What: Pumpkin Eye Polygon Element. Why: A jack-o'-lantern has a carved face. How: This cuts the left eye. */ }
 
 			<polygon
-				fill='#1A0533'
+				style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 				points='42,38 50,34 58,38'
 			/>{ /* What: Pumpkin Eye Polygon Element. Why: A jack-o'-lantern has a carved face. How: This cuts the right eye. */ }
 
 			<polygon
-				fill='#1A0533'
+				style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 				points='36,42 44,42 40,46'
 			/>{ /* What: Pumpkin Nose Polygon Element. Why: A jack-o'-lantern has a carved face. How: This cuts the nose. */ }
 
 			<path
+				style={{ stroke : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
+
 				d='M 20 50 Q 40 60 60 50'
 				fill='none'
-				stroke='#1A0533'
 				strokeLinecap='round'
 				strokeWidth='3'
 			/>{ /* What: Pumpkin Smile Path Element. Why: A jack-o'-lantern grins. How: This carves a wide smile. */ }
@@ -793,19 +821,22 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			<ellipse
 				ref={ flaEllRef }
 
+				style={{ fill : 'var( --hal-yel-col )' }} // Halloween Yellow Color = #FFE066
+
 				cx='40'
 				cy='7.2'
-				fill={ GLO_COL_STR }
 				rx='5'
 				ry='9'
 			/>{ /* What: Pumpkin Flame Ellipse Element. Why: A candle burns on top. How: This draws its outer flame in candle yellow, which the flicker squashes and stretches. */ }
 
 			<ellipse
-				style={{ opacity : 'var( --cdn-pow-001-rec )' }} // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+				style={{
+					fill    : 'var( --hal-cor-col )',    // Halloween Core Color = #FFF5A0
+					opacity : 'var( --cdn-pow-001-rec )' // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+				}}
 
 				cx='40'
 				cy='8.8'
-				fill='#FFF5A0'
 				rx='3'
 				ry='5'
 			/>{ /* What: Pumpkin Core Ellipse Element. Why: A flame burns hottest at its heart. How: This draws a paler core inside the flame. */ }
@@ -898,18 +929,19 @@ function HalCarCom () : JSX.Element {
 
 		// #region Title Animation
 
-		const gloDelNum = durSecFun( 'p08' );                                               // What: Glow Delay Number. Why: The shimmer starts as the last letters land. How: This is its delay. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const gloDurNum = durSecFun( 'p07' );                                               // What: Glow Duration Number. Why: Each letter shimmers slowly. How: This is each change's length. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const gloEacNum = durSecFun( 'm02' );                                               // What: Glow Each Number. Why: The shimmer runs along the letters as a wave. How: This is the offset from one letter to the next. // Duration Animation Base Minus 2 ~= 89.9ms
-		const titAngNum = cdnPowFun( 9 );                                                   // What: Title Angle Number. Why: The letters fall tilted. How: This is the tilt, about 12.6 degrees. // Core-Design-Number to the Power of 9 ~= 12.564
-		const titDelNum = durSecFun( 'p03' );                                               // What: Title Delay Number. Why: The scene settles a moment before the greeting arrives. How: This is the drop's delay. // Duration Animation Base Plus 3 ~= 366.9ms
-		const titDurNum = durSecFun( 'p05' );                                               // What: Title Duration Number. Why: Each letter drops quickly. How: This is each drop's length. // Duration Animation Base Plus 5 ~= 643.9ms
-		const titShiNum = rhyPxlFun( 'p05' ) * -1;                                          // What: Title Shift Number. Why: The letters drop from above. How: This is how far above their places they start. // Vertical Rhythm Base Plus 5 ~= -59.447px
-		const titSplObj = SplitText.create( titHalRef.current, { type : 'words, chars' } ); // What: Title Split Object. Why: The greeting drops in one letter at a time. How: This wraps its words and letters, labeling the heading with its full text.
-		const titStaNum = durSecFun( 'm03' );                                               // What: Title Stagger Number. Why: The letters drop one after another. How: This is the offset between each letter's start. // Duration Animation Base Minus 3 ~= 67.9ms
-		const gloStaObj = { each : gloEacNum, repeat : -1, yoyo : true };                   // What: Glow Stagger Object. Why: Each letter shimmers forever on its own offset. How: This repeats each letter's change back and forth, one offset after the last.
-		const titRotFun = gsap.utils.wrap( [ titAngNum * -1, titAngNum ] );                 // What: Title Rotation Function. Why: The letters tilt alternately left and right. How: This hands each letter the next tilt in turn.
-		const titTimObj = gsap.timeline( { delay : titDelNum } );                           // What: Title Timeline Object. Why: The glow and shadow wait until every letter has landed. How: This plays the drop, then the shadow copy's fade.
+		const gloColStr = getComputedStyle( carDivRef.current! ).getPropertyValue( '--hal-yel-col' ).trim(); // What: Glow Color String. Why: The greeting shimmers toward the same candle yellow as the wish and the flames. How: This reads the card's yellow from its root once, since a tween needs a real color rather than a custom property. // Halloween Yellow Color = #FFE066 // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		const gloDelNum = durSecFun( 'p08' );                                                                // What: Glow Delay Number. Why: The shimmer starts as the last letters land. How: This is its delay. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const gloDurNum = durSecFun( 'p07' );                                                                // What: Glow Duration Number. Why: Each letter shimmers slowly. How: This is each change's length. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const gloEacNum = durSecFun( 'm02' );                                                                // What: Glow Each Number. Why: The shimmer runs along the letters as a wave. How: This is the offset from one letter to the next. // Duration Animation Base Minus 2 ~= 89.9ms
+		const titAngNum = cdnPowFun( 9 );                                                                    // What: Title Angle Number. Why: The letters fall tilted. How: This is the tilt, about 12.6 degrees. // Core-Design-Number to the Power of 9 ~= 12.564
+		const titDelNum = durSecFun( 'p03' );                                                                // What: Title Delay Number. Why: The scene settles a moment before the greeting arrives. How: This is the drop's delay. // Duration Animation Base Plus 3 ~= 366.9ms
+		const titDurNum = durSecFun( 'p05' );                                                                // What: Title Duration Number. Why: Each letter drops quickly. How: This is each drop's length. // Duration Animation Base Plus 5 ~= 643.9ms
+		const titShiNum = rhyPxlFun( 'p05' ) * -1;                                                           // What: Title Shift Number. Why: The letters drop from above. How: This is how far above their places they start. // Vertical Rhythm Base Plus 5 ~= -59.447px
+		const titSplObj = SplitText.create( titHalRef.current, { type : 'words, chars' } );                  // What: Title Split Object. Why: The greeting drops in one letter at a time. How: This wraps its words and letters, labeling the heading with its full text.
+		const titStaNum = durSecFun( 'm03' );                                                                // What: Title Stagger Number. Why: The letters drop one after another. How: This is the offset between each letter's start. // Duration Animation Base Minus 3 ~= 67.9ms
+		const gloStaObj = { each : gloEacNum, repeat : -1, yoyo : true };                                    // What: Glow Stagger Object. Why: Each letter shimmers forever on its own offset. How: This repeats each letter's change back and forth, one offset after the last.
+		const titRotFun = gsap.utils.wrap( [ titAngNum * -1, titAngNum ] );                                  // What: Title Rotation Function. Why: The letters tilt alternately left and right. How: This hands each letter the next tilt in turn.
+		const titTimObj = gsap.timeline( { delay : titDelNum } );                                            // What: Title Timeline Object. Why: The glow and shadow wait until every letter has landed. How: This plays the drop, then the shadow copy's fade.
 
 
 		SplitText.create( titShaRef.current, { aria : 'none', type : 'words, chars' } ); // What: Shadow Split Call. Why: The shadow copy has to line up with the split heading letter for letter, and splitting drops the kerning between letters. How: This wraps the copy's words and letters the same way, adding no labels, since the copy is hidden from screen readers.
@@ -920,7 +952,7 @@ function HalCarCom () : JSX.Element {
 		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr } ); // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
 
 
-		gsap.to( titSplObj.chars, { color : GLO_COL_STR, delay : gloDelNum, duration : gloDurNum, ease : inoEasStr, stagger : gloStaObj } ); // What: Shimmer Tween. Why: The greeting flickers like candlelight. How: This shifts each letter to candle yellow and back forever, in a wave.
+		gsap.to( titSplObj.chars, { color : gloColStr, delay : gloDelNum, duration : gloDurNum, ease : inoEasStr, stagger : gloStaObj } ); // What: Shimmer Tween. Why: The greeting flickers like candlelight. How: This shifts each letter to candle yellow and back forever, in a wave.
 
 		// #endregion Title Animation
 
@@ -1104,13 +1136,15 @@ function HalCarCom () : JSX.Element {
 
 
 						<stop
+							style={{ stopColor : 'var( --hal-mol-col )' }} // Halloween Moon-Light Color = #FFF9C4
+
 							offset='0%'
-							stopColor='#FFF9C4'
 						/>{ /* What: Moon Light Stop Element. Why: The lit side is palest. How: This starts the gradient in pale yellow. */ }
 
 						<stop
+							style={{ stopColor : 'var( --hal-moo-col )' }} // Halloween Moon Color = #F0C040
+
 							offset='100%'
-							stopColor='#F0C040'
 						/>{ /* What: Moon Rim Stop Element. Why: The rim is deepest. How: This ends the gradient in gold. */ }
 
 
@@ -1144,11 +1178,13 @@ function HalCarCom () : JSX.Element {
 
 
 				<circle
-					style={{ opacity : 'var( --cdn-pow-006-rec )' }} // Core-Design-Number to the Power of 6 Reciprocal ~= 0.185
+					style={{
+						fill    : 'var( --hal-moo-col )',    // Halloween Moon Color = #F0C040
+						opacity : 'var( --cdn-pow-006-rec )' // Core-Design-Number to the Power of 6 Reciprocal ~= 0.185
+					}}
 
 					cx='60'
 					cy='60'
-					fill='#F0C040'
 					filter='url(#mooGloFil)'
 					r='44'
 				/>{ /* What: Moon Halo Circle Element. Why: The moon glows against the night. How: This draws a faint, blurred gold disc a little larger than the moon. */ }
@@ -1161,29 +1197,35 @@ function HalCarCom () : JSX.Element {
 				/>{ /* What: Moon Face Circle Element. Why: The moon is a lit disc. How: This draws it with the shaded fill. */ }
 
 				<circle
-					style={{ opacity : 'var( --cdn-pow-002-rec )' }} // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+					style={{
+						fill    : 'var( --hal-cra-col )',    // Halloween Crater Color = #E6B820
+						opacity : 'var( --cdn-pow-002-rec )' // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+					}}
 
 					cx='48'
 					cy='50'
-					fill='#E6B820'
 					r='6'
 				/>{ /* What: Moon Crater Circle Element. Why: Craters make the disc read as the moon. How: This draws the largest crater, upper left. */ }
 
 				<circle
-					style={{ opacity : 'var( --cdn-pow-003-rec )' }} // Core-Design-Number to the Power of 3 Reciprocal ~= 0.430
+					style={{
+						fill    : 'var( --hal-cra-col )',    // Halloween Crater Color = #E6B820
+						opacity : 'var( --cdn-pow-003-rec )' // Core-Design-Number to the Power of 3 Reciprocal ~= 0.430
+					}}
 
 					cx='70'
 					cy='70'
-					fill='#E6B820'
 					r='4'
 				/>{ /* What: Moon Crater Circle Element. Why: Craters make the disc read as the moon. How: This draws a smaller crater, lower right. */ }
 
 				<circle
-					style={{ opacity : 'var( --cdn-pow-004-rec )' }} // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+					style={{
+						fill    : 'var( --hal-cra-col )',    // Halloween Crater Color = #E6B820
+						opacity : 'var( --cdn-pow-004-rec )' // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+					}}
 
 					cx='74'
 					cy='44'
-					fill='#E6B820'
 					r='3'
 				/>{ /* What: Moon Crater Circle Element. Why: Craters make the disc read as the moon. How: This draws the faintest crater, upper right. */ }
 
@@ -1218,8 +1260,9 @@ function HalCarCom () : JSX.Element {
 
 
 				<path
+					style={{ fill : 'var( --hal-hil-col )' }} // Halloween Hill Color = #0F0020
+
 					d='M0,60 Q200,20 400,55 Q600,90 800,50 Q1000,10 1200,55 Q1350,80 1440,50 L1440,120 L0,120 Z'
-					fill='#0F0020'
 				/>{ /* What: Ground Hill Path Element. Why: The hills are a dark silhouette. How: This draws their wavy top and fills below it. */ }
 
 
