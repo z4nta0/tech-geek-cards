@@ -181,6 +181,14 @@ rest follow the same pattern.
   2026-10-16, every photo keeping at least a third of its area to tap at 320 by
   568), and the greeting's growth is capped to fit the screen. Its halo is
   three plain glows: more layers made WebKit stall while each letter typed.
+- **The Family cards' scene controls** (decided by the user 2026-10-16): a
+  steady, see-through bar above the floating bar, in the card's own colors,
+  with a dot per scene over Previous, Pause or Play, Next, and Skip to end;
+  the arrow keys step and the space bar pauses. Previous more than about a
+  second into a scene restarts it. The bar fades out as the greeting grows.
+  Under reduced motion it stays on the finished card, in a strip of its own
+  below the mosaic, with no Pause, and steps through each scene as two
+  stills: its line written out, then its photo.
 
 ## Card conversion pass
 Every card was converted on 2026-10-15, the Christmas card with the user and

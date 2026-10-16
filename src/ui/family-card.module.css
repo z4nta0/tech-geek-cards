@@ -41,6 +41,13 @@
 
 
 }
+.famCarDiv[data-family-stills-mode] { /* What: Stills Mode Family Card Div. Why: Under reduced motion the controls stay on the finished card, and floating over the mosaic they'd cover its bottom photos. How: This adds a second row below the stage, sized to the controls. */
+
+
+	grid-template-rows : minmax( 0, 1fr ) auto;
+
+
+}
 
 
 
@@ -223,7 +230,6 @@
 	opacity        : 0;
 	padding-inline : var( --spa-hor-m01 ); /* Spacing Horizontal Base Minus 1 = 11px */
 	pointer-events : none;
-	position       : relative;
 	text-align     : center;
 	visibility     : hidden;
 
@@ -341,26 +347,202 @@
 
 /* #endregion famTexPar */
 
-.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, out of the lines' flow at the bottom of the screen, hidden until the grid appears. */
+/* #endregion famTexDiv */
 
 
-	background-color : var( --fam-bac-col );                       /* Family Background Color, set by the card's theme class */
+
+/* #region famBotDiv */
+
+.famBotDiv { /* What: Family Bottom Div. Why: The tap hint and the scene controls share the space just above the floating bar. How: This stacks them in a centered column from the bar's clearing margin up, letting taps through its empty space. */
+
+
+	align-items    : center;
+	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to a side margin's step outside the card page. */
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-m02 );                       /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	inset-inline   : 0;
+	pointer-events : none;
+	position       : absolute;
+
+
+}
+.famCarDiv[data-family-stills-mode] .famBotDiv { /* What: Stills Mode Family Bottom Div. Why: Under reduced motion the hint and controls take a strip of their own instead of floating over the photos. How: This sets the stack in the card's second row, padded clear of the floating bar. */
+
+
+	grid-area     : 2 / 1;
+	padding-block : var( --spa-ver-m02 ) var( --car-bar-mar, var( --spa-ver-m02 ) ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Card Bar Margin, set by its parent, ~= 74.019px */
+	position      : static;
+
+
+}
+
+.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, hidden until the grid appears. */
+
+
+	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */
 	border-radius    : 999px;
-	bottom           : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Offset. Why: The hint sits low, under the greeting and clear of the floating bar. How: This lifts it above the bar, falling back to a side margin's step outside the card page. */
-	color            : inherit;                                    /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
-	font-family      : var( --fon-fam-sec );                       /* Font Family Secondary = 'DM Mono', monospace */
-	font-size        : var( --fon-siz-p01 );                       /* Font Size Base Plus 1 ~= 14.572px */
-	justify-self     : center;
+	color            : inherit;                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
+	font-family      : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
+	font-size        : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
 	margin           : 0;
 	opacity          : 0;
-	padding          : var( --spa-ver-m03 ) var( --spa-hor-p01 );  /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
-	position         : absolute;
+	padding          : var( --spa-ver-m03 ) var( --spa-hor-p01 ); /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Plus 1 ~= 19.304px */
 	visibility       : hidden;
 
 
 }
 
-/* #endregion famTexDiv */
+
+
+/* #region famConDiv */
+
+.famConDiv { /* What: Family Controls Div. Why: The scene controls stay out of the way but stay noticeable, over plain backgrounds and photos alike. How: This sets a rounded, see-through bar in the card's own background color, blurring what's behind it, with the dots over the buttons and focus rings in the card's text color. */
+
+
+	--foc-rin-col : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */ /* What: Focus Ring Color. Why: The family's orange ring clashes with the card's colors. How: The card's text color keeps the ring visible on its own background. */
+
+	align-items      : center;
+	backdrop-filter  : blur( calc( var( --ver-rhy-m03 ) * 1rem ) );                                                    /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	background-color : oklch( from var( --fam-bac-col ) l c h / var( --cdn-pow-002-rec ) );                            /* Family Background Color @ 0.570 opacity */
+	border           : var( --bor-wid-sma ) solid oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Border Width Small ~= 0.499px, Family Text Color @ 0.325 opacity */
+	border-radius    : var( --rad-bor-xla );                                                                           /* Radius Border Extra Large ~= 19.304px */
+	display          : flex;
+	flex-direction   : column;
+	gap              : var( --spa-ver-m04 );                                                                           /* Spacing Vertical Base Minus 4 ~= 4.732px */
+	padding          : var( --spa-ver-m02 ) var( --spa-hor-m02 ) var( --spa-ver-m04 );                                 /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Minus 2 ~= 8.304px, Spacing Vertical Base Minus 4 ~= 4.732px */
+	pointer-events   : auto;
+
+
+}
+
+
+
+/* #region famDotDiv */
+
+.famDotDiv { /* What: Family Dots Div. Why: The dots read as one quiet row above the buttons. How: This lines them up with a small gap. */
+
+
+	display : flex;
+	gap     : var( --spa-hor-m03 ); /* Spacing Horizontal Base Minus 3 ~= 6.268px */
+
+
+}
+
+.famDotSpa { /* What: Family Dot Span. Why: Each dot stands for a scene, faint until the card reaches it. How: This draws a small circle in the text color, mostly transparent, easing its fill. */
+
+
+	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Family Text Color @ 0.325 opacity */
+	border-radius    : 50%;
+	height           : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+	transition       : background-color var( --dur-tra-p02 ) var( --mot-dec-eas );          /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width            : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+
+
+}
+.famDotSpa[data-scene-dot-filled] { /* What: Filled Family Dot Span. Why: A dot fills in once its scene begins. How: This sets it in the full text color. */
+
+
+	background-color : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Dot Span. Why: Someone who asked for less motion should see the dots simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famDotSpa { /* What: Still Family Dot Span. Why: The dot should fill at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+/* #endregion famDotDiv */
+
+
+
+/* #region famButDiv */
+
+.famButDiv { /* What: Family Buttons Div. Why: The controls sit side by side under the dots. How: This lines the buttons up with a small gap. */
+
+
+	display : flex;
+	gap     : var( --spa-hor-m03 ); /* Spacing Horizontal Base Minus 3 ~= 6.268px */
+
+
+}
+
+
+
+/* #region famConBut */
+
+.famConBut { /* What: Family Control Button. Why: Each control is a round icon button big enough for a thumb. How: This clears the button's own look, sizes it to a comfortable target in the card's text color, and eases its tint, press, and focus ring. */
+
+
+	background-color : transparent;
+	border           : 0;
+	border-radius    : 50%;
+	color            : var( --fam-tex-col );                /* Family Text Color, set by the card's theme class */
+	cursor           : pointer;
+	display          : grid;
+	height           : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */ /* What: Thumb Target Height. Why: A thumb needs about 44px to hit reliably. How: The Base Plus 4 step lands there. */
+	padding          : 0;
+	place-items      : center;
+	transition       : background-color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
+	width            : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */ /* What: Thumb Target Width. Why: A thumb needs about 44px to hit reliably. How: The Base Plus 4 step lands there. */
+
+
+}
+.famConBut:hover { /* What: Hovered Family Control Button. Why: A control responds to the pointer, without lifting out of the bar's row. How: This tints its circle faintly in the text color. */
+
+
+	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-006-rec ) ); /* Family Text Color @ 0.185 opacity */
+
+
+}
+.famConBut:active { /* What: Pressed Family Control Button. Why: A press should register before the card moves. How: This presses it in slightly. */
+
+
+	scale : 0.97; /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the button by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Control Button. Why: Someone who asked for less motion should see the button simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famConBut { /* What: Motionless Family Control Button. Why: The tint, press, and focus ring should simply switch, the press still applying at once. How: This turns the transition off. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
+
+.famConSvg { /* What: Family Control SVG. Why: The icon sits centered in its button at an easy size. How: This sizes it to a rhythm step and fills it with the button's color. */
+
+
+	display : block;
+	fill    : currentColor;
+	height  : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+	width   : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+
+
+}
+
+/* #endregion famConBut */
+
+/* #endregion famButDiv */
+
+/* #endregion famConDiv */
+
+/* #endregion famBotDiv */
 
 
 .scrReaDiv { /* What: Screen Reader Div. Why: The typed lines are hidden from screen readers, which read the whole message from here instead. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */

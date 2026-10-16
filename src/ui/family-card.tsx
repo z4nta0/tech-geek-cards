@@ -6,17 +6,18 @@
 import cssModObj from './family-card.module.css'; // What: CSS Module Object. Why: The Family cards' stage, lettering, heart, and photo grid are styled in one module. How: This maps each class name in family-card.module.css to its scoped name.
 
 
-import { cdnPowFun   } from '../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The greeting grows by a power of the core design number. How: This returns that power.
-import { durSecFun   } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
-import { gsaEasFun   } from './gsap-ease.ts';     // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
-import { gsap        } from 'gsap';               // What: GSAP. Why: The card plays as one long timeline of typed lines, heart reveals, and the photo grid. How: This is the animation library that builds and plays it.
-import { redMotFun   } from '../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once. How: This reports whether reduced motion is on.
-import { rhyPxlFun   } from '../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The grown greeting keeps a margin from the screen's edges. How: This returns a step's size in pixels.
-import { TextPlugin  } from 'gsap/TextPlugin';    // What: Text Plugin. Why: Each line types itself out a letter at a time. How: This GSAP plugin animates an element's text that way.
-import { useEffect   } from 'react';              // What: Use Effect. Why: The screen should stay awake while the card plays, and an open photo closes on Escape through its dialog. How: This holds the wake lock's request and release.
-import { useGSAP     } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef      } from 'react';              // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
-import { useState    } from 'react';              // What: Use State. Why: A tapped photo opens full size. How: This holds which photo is open.
+import { cdnPowFun      } from '../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The greeting grows by a power of the core design number. How: This returns that power.
+import { durSecFun      } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { gsaEasFun      } from './gsap-ease.ts';     // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
+import { gsap           } from 'gsap';               // What: GSAP. Why: The card plays as one long timeline of typed lines, heart reveals, and the photo grid. How: This is the animation library that builds and plays it.
+import { redMotFun      } from '../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once, with stills to step back through. How: This reports whether reduced motion is on.
+import { rhyPxlFun      } from '../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The grown greeting keeps a margin from the screen's edges. How: This returns a step's size in pixels.
+import { TextPlugin     } from 'gsap/TextPlugin';    // What: Text Plugin. Why: Each line types itself out a letter at a time. How: This GSAP plugin animates an element's text that way.
+import { useEffect      } from 'react';              // What: Use Effect. Why: The screen should stay awake while the card plays, and an open photo closes on Escape through its dialog. How: This holds the wake lock's request and release.
+import { useEffectEvent } from 'react';              // What: Use Effect Event. Why: The arrow and space keys drive the scene controls with the card's latest state, without re-adding the listener every render. How: This wraps the key handler so the effect always calls its newest version.
+import { useGSAP        } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
+import { useRef         } from 'react';              // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useState       } from 'react';              // What: Use State. Why: A tapped photo opens full size, and the controls show the card's place and whether it's paused. How: This holds the open photo, the position, the paused state, and the reduced-motion preference.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -104,6 +105,34 @@ type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share 
 
 const BRE_WID_ARR = [ 1024, 768, 640 ]; // What: Breakpoint Width Array. Why: The greeting grows less on a smaller screen. How: These are the design package's desktop, tablet, and phone breakpoints, matched to the card's final power steps after the first.
 
+
+
+/**
+ * ICO_PAT_OBJ = Icon Path Object
+ *
+ * @summary
+ * The scene controls' icons, drawn in a 24 by 24 box and filled with the
+ * text color. Every row is one icon's SVG path data, keyed by its control:
+ * nex (next scene, a triangle and bar), pau (pause, two bars), pla (play, a
+ * triangle), pre (previous scene, a bar and triangle), and ski (skip to the
+ * end, two triangles and a bar).
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+const ICO_PAT_OBJ = { // What: Icon Path Object. Why: The controls draw their own small icons, so no icon set has to load. How: Each key holds one icon's path data.
+
+
+	nex : 'M5 5v14l10-7zM16 5h2v14h-2z',
+	pau : 'M7 5h4v14H7zM13 5h4v14h-4z',
+	pla : 'M8 5v14l11-7z',
+	pre : 'M6 5h2v14H6zM19 5v14L9 12z',
+	ski : 'M3 5v14l7.5-7zM10.5 5v14l7.5-7zM18.5 5h2v14h-2z'
+
+
+};
+
 // #endregion Constants
 
 
@@ -152,27 +181,51 @@ type FccProTyp = { famCarObj : FamCarTyp, theClaStr : string }; // What: Family-
 function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
-	const aftSpaRef = useRef< HTMLSpanElement >( null );         // What: After Span Reference. Why: The line's last part types itself out. How: This holds its span.
-	const befSpaRef = useRef< HTMLSpanElement >( null );         // What: Before Span Reference. Why: The line's first part types itself out. How: This holds its span.
-	const curSpaRef = useRef< HTMLSpanElement >( null );         // What: Cursor Span Reference. Why: The cursor fades once the greeting is typed. How: This holds its span.
-	const expDiaRef = useRef< HTMLDialogElement >( null );       // What: Expanded Dialog Reference. Why: A tapped photo opens in a modal dialog. How: This holds the dialog.
-	const famDivRef = useRef< HTMLDivElement >( null );          // What: Family Div Reference. Why: The timeline is scoped to the card. How: This holds the card's root.
-	const greSpaRef = useRef< HTMLSpanElement >( null );         // What: Greeting Span Reference. Why: The greeting types itself out and grows. How: This holds its span.
-	const griDivRef = useRef< HTMLDivElement >( null );          // What: Grid Div Reference. Why: The photo grid wipes in at the end. How: This holds the grid.
-	const higSpaRef = useRef< HTMLSpanElement >( null );         // What: Highlight Span Reference. Why: The line's key words type out and get underlined. How: This holds their span.
-	const phoDivRef = useRef< HTMLDivElement >( null );          // What: Photo Div Reference. Why: The heart opens over each scene's photo. How: This holds the masked photo stage.
-	const tapParRef = useRef< HTMLParagraphElement >( null );    // What: Tap Paragraph Reference. Why: The tap hint appears with the grid. How: This holds its paragraph.
-	const texDivRef = useRef< HTMLDivElement >( null );          // What: Text Div Reference. Why: Each line fades in and shrinks away as a whole. How: This holds the lettering.
-	const wakLocRef = useRef< WakeLockSentinel | null >( null ); // What: Wake Lock Reference. Why: The screen should stay on while the card plays. How: This holds the lock, null until granted.
+	const aftSpaRef = useRef< HTMLSpanElement >( null );           // What: After Span Reference. Why: The line's last part types itself out. How: This holds its span.
+	const befSpaRef = useRef< HTMLSpanElement >( null );           // What: Before Span Reference. Why: The line's first part types itself out. How: This holds its span.
+	const behTimRef = useRef< number >( 0 );                       // What: Behalf Time Reference. Why: The controls jump to the closing line and count it as past every scene. How: This holds the time, in seconds, its lettering starts.
+	const conDivRef = useRef< HTMLDivElement >( null );            // What: Controls Div Reference. Why: The scene controls fade away as the greeting grows. How: This holds the controls' bar.
+	const curSpaRef = useRef< HTMLSpanElement >( null );           // What: Cursor Span Reference. Why: The cursor fades once the greeting is typed. How: This holds its span.
+	const expDiaRef = useRef< HTMLDialogElement >( null );         // What: Expanded Dialog Reference. Why: A tapped photo opens in a modal dialog. How: This holds the dialog.
+	const famDivRef = useRef< HTMLDivElement >( null );            // What: Family Div Reference. Why: The timeline is scoped to the card. How: This holds the card's root.
+	const greSpaRef = useRef< HTMLSpanElement >( null );           // What: Greeting Span Reference. Why: The greeting types itself out and grows. How: This holds its span.
+	const griDivRef = useRef< HTMLDivElement >( null );            // What: Grid Div Reference. Why: The photo grid wipes in at the end. How: This holds the grid.
+	const higSpaRef = useRef< HTMLSpanElement >( null );           // What: Highlight Span Reference. Why: The line's key words type out and get underlined. How: This holds their span.
+	const phoDivRef = useRef< HTMLDivElement >( null );            // What: Photo Div Reference. Why: The heart opens over each scene's photo. How: This holds the masked photo stage.
+	const staTimRef = useRef< number[] >( [] );                    // What: Start Time Reference. Why: Previous and Next jump between scenes while the card plays. How: This holds each scene's start time, in seconds.
+	const stiTimRef = useRef< number[] >( [] );                    // What: Still Time Reference. Why: Under reduced motion the controls step through each scene as stills instead. How: This holds, for each scene, the time its line is fully written and the time its photo is fully shown.
+	const tapParRef = useRef< HTMLParagraphElement >( null );      // What: Tap Paragraph Reference. Why: The tap hint appears with the grid. How: This holds its paragraph.
+	const texDivRef = useRef< HTMLDivElement >( null );            // What: Text Div Reference. Why: Each line fades in and shrinks away as a whole. How: This holds the lettering.
+	const timLinRef = useRef< gsap.core.Timeline | null >( null ); // What: Timeline Reference. Why: The controls move the card's one timeline. How: This holds it once it's built.
+	const wakLocRef = useRef< WakeLockSentinel | null >( null );   // What: Wake Lock Reference. Why: The screen should stay on while the card plays. How: This holds the lock, null until granted.
 
 	const [ expIndNum, setExpIndNum ] = useState< number | null >( null ); // What: Expanded Index Number And Setter. Why: Only one photo opens full size at a time. How: This holds the open photo's index, or null.
+	const [ carPauBoo, setCarPauBoo ]       = useState( false );           // What: Paused Boolean And Setter. Why: The pause button shows play while the card is paused. How: This mirrors the timeline's paused state.
+	const [ posIndNum, setPosIndNum ] = useState( 0 );                     // What: Position Index Number And Setter. Why: The dots fill in as the card plays. How: This holds the current scene's place, or the scene count once the closing line begins.
+	const [ redMotBoo ]               = useState( redMotFun );             // What: Reduced Motion Boolean. Why: Under reduced motion the card opens finished, the controls step through stills, and there's nothing to pause. How: This reads the preference once, as the card opens.
+
+
+
+	const wakReqFun = () => navigator.wakeLock?.request( 'screen' ).then( ( wakLocObj ) => { wakLocRef.current = wakLocObj; } ).catch( () => {} ); // What: Wake Request Function. Why: The screen should stay on while the card plays, again after a jump back from the end, and not every browser grants a lock. How: This asks for the lock, keeps it when granted, and ignores a refusal.
+
+	const posUpdFun = () => { // What: Position Update Function. Why: The dots follow the timeline wherever it plays or jumps. How: This counts the scenes started by the timeline's time, or every scene once the closing line has begun.
+
+
+		const timNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
+
+
+
+		setPosIndNum( timNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= timNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
+
+
+	};
 
 
 
 	useEffect( () => { // What: Wake Lock Effect. Why: A long card shouldn't let the screen dim halfway through. How: This asks for the lock as the card opens and releases it as the card closes.
 
 
-		navigator.wakeLock?.request( 'screen' ).then( ( wakLocObj ) => { wakLocRef.current = wakLocObj; } ).catch( () => {} ); // What: Wake Lock Request. Why: Not every browser grants a lock, and a refusal shouldn't stop the card. How: This keeps the lock when granted and ignores a refusal.
+		wakReqFun(); // What: Wake Lock Request. Why: The screen should stay on from the card's first frame. How: This asks for the lock as the card opens.
 
 
 
@@ -241,6 +294,10 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const undDurNum = durSecFun( 'p02' );                                          // What: Underline Duration Number. Why: The underline draws quickly but visibly. How: This is the duration scale's Base Plus 2 step, in seconds. // Duration Animation Base Plus 2 ~= 277.0ms
 
 
+		staTimRef.current = []; // What: Start Time Reset. Why: A rebuilt timeline, as in development's double render, must not keep the old scene times. How: This empties the list before the scenes record their starts.
+		stiTimRef.current = []; // What: Still Time Reset. Why: A rebuilt timeline must not keep the old still times either. How: This empties the list before the scenes record their stills.
+
+
 		gsap.set( griImaArr, { clipPath : 'inset( 0 100% 0 0 )' } ); // What: Grid Photo Cover. Why: The grid's photos start hidden, ready to uncover. How: This clips each one away from the right.
 
 
@@ -249,6 +306,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			const parStrArr = [ sceRecObj.befStr, sceRecObj.higStr, sceRecObj.aftStr ]; // What: Part String Array. Why: The line types in three parts. How: This lists the parts in order.
 
+
+			staTimRef.current.push( timLinObj.duration() ); // What: Scene Start Record. Why: Previous and Next jump to a scene's first frame. How: This stores the time the scene begins, the timeline's length so far.
 
 			timLinObj.set( typSpaArr, { text : '' } ); // What: Line Clear. Why: Each line starts empty. How: This clears all three parts.
 
@@ -273,11 +332,15 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			timLinObj.to( higSpaRef.current, { '--fam-und-sca' : 1, duration : undDurNum, ease : inoEasStr } ); // What: Underline Draw. Why: The key words stand out. How: This draws the underline from the left.
 
+			stiTimRef.current.push( timLinObj.duration() ); // What: Line Still Record. Why: Under reduced motion each scene's line is shown whole. How: This stores the time it's written out and underlined.
+
 			timLinObj.to( texDivRef.current, { autoAlpha : 0, delay : holDurNum, duration : fadDurNum, scale : 0 } ); // What: Lettering Shrink. Why: The line gives way to its photo. How: After the hold, this shrinks and fades the lettering away.
 
 			timLinObj.set( phoImaArr[ sceIndNum ], { autoAlpha : 1 }, '<' ); // What: Photo Show. Why: The scene's photo waits under the closed heart. How: This shows it as the lettering starts to go.
 
 			timLinObj.to( phoDivRef.current, { '--fam-hea-sca' : 1, duration : fadDurNum } ); // What: Heart Open. Why: The photo is revealed through a heart. How: This grows the heart until it covers the screen.
+
+			stiTimRef.current.push( timLinObj.duration() ); // What: Photo Still Record. Why: Under reduced motion each scene's photo is shown whole. How: This stores the time the heart covers the screen.
 
 			timLinObj.to( phoDivRef.current, { '--fam-hea-sca' : 0, delay : holDurNum, duration : fadDurNum } ); // What: Heart Close. Why: The photo gives way to the next line. How: After the hold, this shrinks the heart back to nothing.
 
@@ -286,6 +349,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		}
 
+
+		behTimRef.current = timLinObj.duration(); // What: Behalf Time Record. Why: Next jumps from the last scene to the closing line. How: This stores the time the closing line begins.
 
 		timLinObj.set( typSpaArr, { text : '' } ); // What: Closing Clear. Why: The closing line starts empty. How: This clears all three parts.
 
@@ -322,6 +387,21 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		timLinObj.to( curSpaRef.current, { autoAlpha : 0, duration : fadDurNum } ); // What: Cursor Fade. Why: Nothing more is typed. How: This fades the cursor out.
 
+
+
+		if ( !redMotBoo ) { // What: Controls Exit Check. Why: Once the greeting grows there's nothing left to step through, but under reduced motion the controls are the way back into the scenes. How: This adds the controls' exit only when the card plays its motion.
+
+
+			timLinObj.to( conDivRef.current, { autoAlpha : 0, duration : fadDurNum }, '<' ); // What: Controls Fade Out. Why: The controls leave with the cursor. How: This fades them out beside the cursor's fade.
+
+			timLinObj.set( conDivRef.current, { display : 'none' } ); // What: Controls Removal. Why: The tap hint takes their place above the floating bar. How: This takes them out of the layout once faded, which a jump back undoes.
+
+
+		}
+
+
+
+
 		timLinObj.to( greSpaRef.current, { duration : fadDurNum, ease : oveEasStr, scale : finScaFun } ); // What: Greeting Growth. Why: The greeting fills the screen with a flourish. How: This grows it by its final scale, which GSAP reads from the function when the growth starts.
 
 		timLinObj.to( griDivRef.current, { autoAlpha : 1, duration : shoDurNum }, '<' ); // What: Grid Show. Why: The photo grid appears behind the growing greeting. How: This shows it almost at once.
@@ -353,12 +433,169 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		timLinObj.pause(); // What: Font Wait Pause. Why: The lines shouldn't type in a fallback font, and the greeting's fit is measured in the real one. How: This holds the timeline until the card's font has loaded.
 
-		document.fonts.load( `1em ${ getComputedStyle( greSpaRef.current! ).fontFamily }`, famCarObj.greStr ).finally( () => redMotFun() ? timLinObj.progress( 1 ) : timLinObj.play() ); // What: Font Loaded Start. Why: The card starts once its font is ready, and a visitor who asked for less motion should see the finished card at once. How: This loads the font for the greeting's letters, then plays the timeline, or jumps it to its end under reduced motion. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		timLinRef.current = timLinObj; // What: Timeline Store. Why: The controls move this timeline. How: This keeps it for their handlers.
+
+		timLinObj.eventCallback( 'onUpdate', posUpdFun ); // What: Position Update Callback. Why: The dots fill in as the card plays. How: This updates the position on every frame the timeline renders.
+
+		document.fonts.load( `1em ${ getComputedStyle( greSpaRef.current! ).fontFamily }`, famCarObj.greStr ).finally( () => redMotBoo ? timLinObj.progress( 1 ) : timLinObj.play() ); // What: Font Loaded Start. Why: The card starts once its font is ready, and a visitor who asked for less motion should see the finished card at once. How: This loads the font for the greeting's letters, then plays the timeline, or jumps it to its end under reduced motion. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
 
 	}, { scope : famDivRef } ); // What: Hook Options. Why: The timeline is built once, when the card opens, and its cleanup is tied to the card. How: This scopes the context to the card's root, with no dependencies.
 
 	// #endregion Family Timeline
+
+
+
+	// #region Scene Controls
+
+	// #region navSceFun
+
+	/**
+	 * navSceFun = Navigate Scene Function
+	 *
+	 * @summary
+	 * Moves the card one stop back or forward. While the card plays, the stops
+	 * are each scene's first frame, then the closing line, then the end, and
+	 * Previous more than a Base Plus 7 step (about 1.1s) into a scene restarts
+	 * that scene instead, as a music player does. Under reduced motion the
+	 * stops are stills, each scene's line written out and then its photo, and
+	 * the timeline stays paused on each. A jump keeps the card playing or
+	 * paused as it was, takes the wake lock again when it leaves the end, and
+	 * updates the dots at once.
+	 *
+	 * @author z4nta0 <https://github.com/z4nta0>
+	 *
+	 * @param dirNum - Direction Number: -1 for the previous stop, 1 for the
+	 *                 next.
+	 *
+	 * @returns This function does not return anything.
+	 *
+	 * @example
+	 * ```ts
+	 * navSceFun(-1) // => void
+	 * ```
+	 *
+	*/
+
+	const navSceFun = ( dirNum : number ) : void => { // What: Navigate Scene Function. Why: Previous and Next, and the arrow keys, move between scenes. How: This seeks the timeline to the next stop in the chosen direction.
+
+
+		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The jump moves the card's timeline. How: This reads it from its reference.
+
+
+
+		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to move. How: This returns early.
+
+
+
+		const endTimNum = timLinObj.duration();                                                                                     // What: End Time Number. Why: The last stop is the finished card. How: This is the timeline's length.
+		const stoTimArr = redMotBoo ? [ ...stiTimRef.current, endTimNum ] : [ ...staTimRef.current, behTimRef.current, endTimNum ]; // What: Stop Time Array. Why: Reduced motion steps through stills, and motion through scene starts. How: This lists the stops for the visitor's preference, ending at the end.
+		const timNum    = timLinObj.time() + 0.001;                                                                                 // What: Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
+
+		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= timNum ).length - 1;                             // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
+		const resSceBoo = !redMotBoo && dirNum < 0 && timNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Restart Scene Boolean. Why: Previous well into a scene restarts it, and only a quick second press goes back further. How: This checks the card is playing its motion, moving back, and more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
+
+		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirNum, 0 ), stoTimArr.length - 1 );    // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
+
+
+		timLinObj.seek( stoTimArr[ tarIndNum ] ); // What: Stop Seek Call. Why: The card has to show the stop exactly. How: This moves the timeline there, keeping it playing or paused.
+
+
+
+		if ( stoTimArr[ tarIndNum ] < endTimNum && !wakLocRef.current ) wakReqFun(); // What: Wake Lock Renewal. Why: The lock was released at the end, and a jump back plays on. How: This asks for it again when the jump leaves the end without one.
+
+
+
+		posUpdFun(); // What: Position Update Call. Why: A jump may not render a frame the update callback hears. How: This updates the dots at once.
+
+
+	};
+
+	// #endregion navSceFun
+
+
+
+	const skiEndFun = () => { // What: Skip End Function. Why: A visitor may want the greeting and photos without the whole story. How: This jumps the timeline to its end and updates the dots.
+
+
+		timLinRef.current?.progress( 1 ); // What: End Jump Call. Why: The finished card is the timeline's last frame. How: This moves the timeline to its end.
+
+		posUpdFun(); // What: Position Update Call. Why: The dots show the card has finished. How: This updates them at once.
+
+
+	};
+
+
+
+	const togPauFun = () => { // What: Toggle Pause Function. Why: Anything that moves on its own for long has to be pausable, and a visitor may want to linger on a photo. How: This flips the timeline between paused and playing and mirrors it in state.
+
+
+		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The toggle pauses the card's timeline. How: This reads it from its reference.
+
+
+
+		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to pause. How: This returns early.
+
+
+
+		timLinObj.paused( !timLinObj.paused() ); // What: Pause Flip Call. Why: The button and the space key both toggle. How: This sets the opposite of the current paused state.
+
+		setCarPauBoo( timLinObj.paused() ); // What: Paused State Update. Why: The button's icon and label follow the timeline. How: This stores the new state.
+
+
+	};
+
+
+
+	const keyDowFun = useEffectEvent( ( keyEveObj : KeyboardEvent ) => { // What: Key Down Function. Why: Keyboard visitors move through the card with the arrow keys and pause it with the space bar. How: This maps those keys to the controls, leaving a focused control's own keys and an open photo alone.
+
+
+		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar already presses a focused button or link. How: This checks the key went to one.
+		const modKeyBoo = keyEveObj.altKey || keyEveObj.ctrlKey || keyEveObj.metaKey;                                     // What: Modifier Key Boolean. Why: A key held with a modifier belongs to the browser. How: This checks for Alt, Control, or Command.
+		const phoOpeBoo = !!expDiaRef.current?.open;                                                                      // What: Photo Open Boolean. Why: An open photo keeps the keys for itself. How: This checks whether the dialog is open.
+
+
+
+		if ( modKeyBoo || phoOpeBoo ) return; // What: Key Guard. Why: These keys aren't the card's to take. How: This returns early.
+
+
+
+		if ( keyEveObj.key === 'ArrowLeft' ) navSceFun( -1 ); // What: Left Arrow Branch. Why: The left arrow goes back. How: This moves one stop back.
+
+		else if ( keyEveObj.key === 'ArrowRight' ) navSceFun( 1 ); // What: Right Arrow Branch. Why: The right arrow goes forward. How: This moves one stop forward.
+
+		else if ( keyEveObj.key === ' ' && !conFocBoo && !redMotBoo ) { // What: Space Branch. Why: The space bar pauses and plays, as in a video player. How: This toggles the pause, keeping the page from scrolling.
+
+
+			keyEveObj.preventDefault(); // What: Scroll Prevention Call. Why: The space bar would otherwise scroll. How: This cancels its default.
+
+			togPauFun(); // What: Pause Toggle Call. Why: The space bar pauses and plays. How: This toggles the pause.
+
+
+		}
+
+
+	} );
+
+
+
+	useEffect( () => { // What: Key Listener Effect. Why: The arrow keys and space bar work anywhere on the card. How: This listens for key presses on the window while the card is open.
+
+
+		const winKeyFun = ( keyEveObj : KeyboardEvent ) => keyDowFun( keyEveObj ); // What: Window Key Function. Why: The listener hands each press to the newest key handler. How: This calls it with the event.
+
+
+
+		addEventListener( 'keydown', winKeyFun ); // What: Key Listener Add. Why: The card hears every key press. How: This listens on the window.
+
+
+
+		return () => removeEventListener( 'keydown', winKeyFun ); // What: Key Listener Cleanup. Why: Keys shouldn't move a card that has closed. How: This stops listening.
+
+
+	}, [] ); // What: Effect Dependency Array. Why: The listener is added once per showing of the card. How: It always calls the newest handler through keyDowFun.
+
+	// #endregion Scene Controls
 
 
 
@@ -369,6 +606,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			ref={ famDivRef }
 
 			className={` ${ cssModObj.famCarDiv }   ${ theClaStr } `}
+
+			data-family-stills-mode={ redMotBoo || undefined } // What: Stills Mode Attribute. Why: Under reduced motion the controls stay on the finished card, where they'd cover the mosaic's bottom photos. How: This marks the card so its stylesheet gives the controls a strip of their own below the mosaic.
 		>{ /* What: Family Card Div Element. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This holds the photo grid, the heart stage, the lettering, the screen-reader copy, and the photo dialog. */ }
 
 
@@ -484,11 +723,190 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 				</p>
 
+
+			</div>
+
+
+
+			<div className={ cssModObj.famBotDiv }>{ /* What: Family Bottom Div Element. Why: The tap hint and the scene controls share the space above the floating bar. How: This stacks them, the hint over the controls, from the bar up. */ }
+
+
 				<p
 					ref={ tapParRef }
 
 					className={ cssModObj.famTapPar }
-				>Tap any photo to enlarge it.</p>{ /* What: Family Tap Paragraph Element. Why: The grid's photos open when tapped, which isn't obvious. How: This hint appears with the grid. */ }
+
+					aria-hidden='true'
+				>Tap any photo to enlarge it.</p>{ /* What: Family Tap Paragraph Element. Why: The grid's photos open when tapped, which isn't obvious, and each photo's button already says so to screen readers. How: This hint appears with the grid, hidden from screen readers. */ }
+
+
+
+				<div
+					ref={ conDivRef }
+
+					className={ cssModObj.famConDiv }
+
+					aria-label='Card controls'
+					role='group'
+				>{ /* What: Family Controls Div Element. Why: A visitor can step back or forward through the scenes, pause, or skip to the end. How: This holds the scene dots over a row of buttons, named as one group for screen readers. */ }
+
+
+					<div
+						className={ cssModObj.famDotDiv }
+
+						aria-label={ posIndNum < famCarObj.sceRecArr.length ? `Scene ${ posIndNum + 1 } of ${ famCarObj.sceRecArr.length }` : 'Closing' } // What: Dots Label. Why: Screen readers hear where the card is, which the dots only show. How: This names the current scene and the count, or the closing.
+						role='img'
+					>{ /* What: Family Dots Div Element. Why: The dots show how far along the card is, more so once a visitor can jump around. How: This lays out one dot per scene, read as a single image with its label. */ }
+
+
+						{ Array.from( famCarObj.sceRecArr.keys(), ( dotIndNum ) => ( // What: Dot Map Call. Why: Each scene gets a dot. How: This renders one per scene, keyed by its place.
+
+
+							<span
+								key={ dotIndNum }
+
+								className={ cssModObj.famDotSpa }
+
+								data-scene-dot-filled={ dotIndNum <= posIndNum || undefined } // What: Filled Dot Attribute. Why: The dots fill in as the card reaches each scene. How: This marks a dot whose scene has begun.
+							/> // What: Family Dot Span Element. Why: One dot stands for one scene. How: This draws a small circle, filled once its scene begins.
+
+
+						))}
+
+
+					</div>
+
+
+
+					<div className={ cssModObj.famButDiv }>{ /* What: Family Buttons Div Element. Why: The controls sit in one row under the dots. How: This lines the buttons up. */ }
+
+
+						<button
+							className={ cssModObj.famConBut }
+
+							type='button'
+
+							aria-label='Previous scene'
+
+							onClick={ () => navSceFun( -1 ) }
+						>{ /* What: Family Control Button Element. Why: A visitor can go back to a line or photo they missed. How: This restarts the scene, or goes back one when pressed again quickly. */ }
+
+
+							<svg
+								className={ cssModObj.famConSvg }
+
+								viewBox='0 0 24 24'
+
+								aria-hidden='true'
+							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
+
+
+								<path d={ ICO_PAT_OBJ.pre } />{ /* What: Previous Icon Path Element. Why: A bar and a left triangle read as previous. How: This draws them. */ }
+
+
+							</svg>
+
+
+						</button>
+
+
+						{ !redMotBoo && ( // What: Pause Button Check. Why: Under reduced motion nothing plays, so there's nothing to pause. How: This renders the button only when the card plays its motion.
+
+
+							<button
+								className={ cssModObj.famConBut }
+
+								type='button'
+
+								aria-label={ carPauBoo ? 'Play' : 'Pause' } // What: Pause Label. Why: The button says what it will do. How: This reads Play while paused and Pause while playing.
+
+								onClick={ togPauFun }
+							>{ /* What: Family Control Button Element. Why: Anything that moves on its own for long has to be pausable. How: This pauses or plays the card. */ }
+
+
+								<svg
+									className={ cssModObj.famConSvg }
+
+									viewBox='0 0 24 24'
+
+									aria-hidden='true'
+								>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
+
+
+									<path d={ carPauBoo ? ICO_PAT_OBJ.pla : ICO_PAT_OBJ.pau } />{ /* What: Pause Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars while playing. */ }
+
+
+								</svg>
+
+
+							</button>
+
+
+						) }
+
+
+						<button
+							className={ cssModObj.famConBut }
+
+							type='button'
+
+							aria-label='Next scene'
+
+							onClick={ () => navSceFun( 1 ) }
+						>{ /* What: Family Control Button Element. Why: A visitor can move ahead to the next line. How: This jumps to the next scene, the closing line, or the end. */ }
+
+
+							<svg
+								className={ cssModObj.famConSvg }
+
+								viewBox='0 0 24 24'
+
+								aria-hidden='true'
+							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
+
+
+								<path d={ ICO_PAT_OBJ.nex } />{ /* What: Next Icon Path Element. Why: A right triangle and a bar read as next. How: This draws them. */ }
+
+
+							</svg>
+
+
+						</button>
+
+
+						<button
+							className={ cssModObj.famConBut }
+
+							type='button'
+
+							aria-label='Skip to end'
+
+							onClick={ skiEndFun }
+						>{ /* What: Family Control Button Element. Why: A visitor may want the greeting and photos straight away. How: This jumps to the finished card. */ }
+
+
+							<svg
+								className={ cssModObj.famConSvg }
+
+								viewBox='0 0 24 24'
+
+								aria-hidden='true'
+							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
+
+
+								<path d={ ICO_PAT_OBJ.ski } />{ /* What: Skip Icon Path Element. Why: Two triangles and a bar read as skipping to the end. How: This draws them. */ }
+
+
+							</svg>
+
+
+						</button>
+
+
+					</div>
+
+
+				</div>
 
 
 			</div>
