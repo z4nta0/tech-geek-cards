@@ -42,10 +42,10 @@ import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
 
 // #region Constants
 
-const FRA_MAX_NUM = 4;                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
-const FRA_MIL_NUM = 1000 / 60;                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
-const PAR_COL_ARR = [ '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#FF6FCF', '#FF9A3C', '#A78BFA', '#34D399' ]; // What: Party Color Array. Why: The confetti and the balloons share one bright palette. How: Each piece picks one at random, and each balloon takes one in turn.
-const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random.
+const FRA_MAX_NUM = 4;                                                                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
+const FRA_MIL_NUM = 1000 / 60;                                                                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
+const PAR_TOK_ARR = [ '--bir-red-col', '--bir-yel-col', '--bir-gre-col', '--bir-blu-col', '--bir-pin-col', '--bir-ora-col', '--bir-pur-col', '--bir-eme-col' ]; // What: Party Token Array. Why: The confetti and the balloons share one bright palette, whose colors are the card's own tokens. How: The confetti reads each token's color once it starts and each piece picks one at random, while each balloon takes one in turn. // Birthday Red Color = #FF6B6B, Birthday Yellow Color = #FFD93D, Birthday Green Color = #6BCB77, Birthday Blue Color = #4D96FF, Birthday Pink Color = #FF6FCF, Birthday Orange Color = #FF9A3C, Birthday Purple Color = #A78BFA, Birthday Emerald Color = #34D399
+const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random.
 
 // #endregion Constants
 
@@ -155,7 +155,9 @@ type ConSysTyp = { // What: Confetti System Type. Why: The card throws bursts wh
  * Plus 6 step, about 853ms, and spins them up to about 5.4 degrees either
  * way. Below about three quarters of the canvas's height a piece fades out
  * over the same step, and a piece that has faded or fallen past the bottom
- * is dropped. The loop stops itself once no pieces are left.
+ * is dropped. The loop stops itself once no pieces are left. The party
+ * colors are read once, as it starts, from the card's tokens, which the
+ * canvas inherits.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -177,6 +179,11 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	const canConObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
 
 	const pieRecArr : PieRecTyp[] = []; // What: Piece Record Array. Why: Every piece in the air keeps its own values between frames. How: Bursts add to it, and each frame drops the pieces that are done.
+
+
+
+	const canStyObj = getComputedStyle( conCanEle );                                                      // What: Canvas Style Object. Why: The party colors are tokens set on the card, which the canvas inherits. How: This reads the canvas's computed style once, as the confetti starts.
+	const parColArr = PAR_TOK_ARR.map( ( tokNamStr ) => canStyObj.getPropertyValue( tokNamStr ).trim() ); // What: Party Color Array. Why: The canvas can't read a token, so each piece needs a plain color. How: This looks up each party token's value, in the token array's order.
 
 
 
@@ -396,7 +403,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 				alpNum    : 1,                                                               // What: Alpha Number. Why: A piece starts fully visible. How: This starts it at 1.
-				colStr    : PAR_COL_ARR[ Math.floor( Math.random() * PAR_COL_ARR.length ) ], // What: Color String. Why: The burst mixes the party colors. How: This picks one at random.
+				colStr    : parColArr[ Math.floor( Math.random() * parColArr.length ) ],     // What: Color String. Why: The burst mixes the party colors. How: This picks one at random.
 				rotNum    : Math.random() * 360,                                             // What: Rotation Number. Why: Pieces start at every angle. How: This picks one anywhere around a full turn, in degrees.
 				shaStr    : SHA_NAM_ARR[ Math.floor( Math.random() * SHA_NAM_ARR.length ) ], // What: Shape String. Why: The burst mixes three shapes. How: This picks one at random.
 				sizNum    : ranValFun( sizMinNum, sizMaxNum ),                               // What: Size Number. Why: Pieces come in different sizes. How: This picks one within the range.
@@ -458,7 +465,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 // #region Exports
 
-export { PAR_COL_ARR, staConFun, type ConSysTyp }; // What: Named Exports. Why: The card starts the confetti, keeps its functions, and colors its balloons from the same palette. How: This exports the palette, the start function, and the system type by name.
+export { PAR_TOK_ARR, staConFun, type ConSysTyp }; // What: Named Exports. Why: The card starts the confetti, keeps its functions, and colors its balloons from the same palette. How: This exports the palette's tokens, the start function, and the system type by name.
 
 // #endregion Exports
 
