@@ -159,7 +159,7 @@
 	font-style     : italic;
 	gap            : calc( var( --ver-rhy-bas ) * 1em );                                                                                  /* Vertical Rhythm Base ~= 1.325em */
 	line-height    : var( --ver-rhy-bas );                                                                                                /* Vertical Rhythm Base ~= 1.325 */ /* What: Script Line Height. Why: At its larger size the script's tall loops already space its lines, and the base step keeps the note from crowding the bar. How: This is one step tighter than body text. */
-	max-width      : var( --tex-wid-sma );                                                                                                /* Text Width Small ~= 22.048em */ /* What: Narrow Measure. Why: Cookie is a narrow script, so the base width ran about 93 characters a line. How: The small width keeps it near 70. */
+	max-width      : var( --tex-wid-sma );                                                                                                /* Text Width Small ~= 22.047em */ /* What: Narrow Measure. Why: Cookie is a narrow script, so the base width ran about 93 characters a line. How: The small width keeps it near 70. */
 	text-align     : center;
 	text-shadow    : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m01 ) * 1rem ) rgb( 80 30 0 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 1 = 11px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
 

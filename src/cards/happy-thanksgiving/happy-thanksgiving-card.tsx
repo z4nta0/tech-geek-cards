@@ -234,30 +234,48 @@ function ThaCarCom () : JSX.Element {
 	useGSAP( () => { // What: Thanksgiving Timeline Hook. Why: The timeline has to run after the card renders and be undone when it leaves. How: This builds and plays it in a GSAP context, returning the leaves' cleanup.
 
 
+		const bouEasStr = gsaEasFun( 'bou' );                                   // What: Bounce Easing String. Why: The produce pops in with a springy bounce. How: This registers the bounce token and keeps its GSAP name.
+		const corOffNum = rhyPxlFun( 'p06' ) * -1;                              // What: Cornucopia Offset Number. Why: The cornucopia slides in from the left. How: This is the Base Plus 6 rhythm step, negated, in pixels. // Vertical Rhythm Base Plus 6 ~= 78.751px
 		const decEasStr = gsaEasFun( 'dec' );                                   // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
+		const entDurNum = durSecFun( 'p06' );                                   // What: Entrance Duration Number. Why: The cornucopia, heading, and message arrive at one unhurried pace. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const feaDurNum = durSecFun( 'p04' );                                   // What: Feather Duration Number. Why: Each feather grows quickly. How: This is the Base Plus 4 step, in seconds. // Duration Animation Base Plus 4 ~= 486.1ms
+		const feaGapNum = durSecFun( 'm02' );                                   // What: Feather Gap Number. Why: The feathers fan out one after another. How: This is the Base Minus 2 step between them, in seconds. // Duration Animation Base Minus 2 ~= 89.9ms
+		const inoEasStr = gsaEasFun( 'ino' );                                   // What: In-Out Easing String. Why: The turkey rocks smoothly back and forth. How: This registers the in-out token and keeps its GSAP name.
+		const mesRisNum = rhyPxlFun( 'p01' );                                   // What: Message Rise Number. Why: The message drifts up a little as it arrives. How: This is the Base Plus 1 rhythm step, in pixels. // Vertical Rhythm Base Plus 1 ~= 19.304px
+		const mesStaNum = durSecFun( 'p09' );                                   // What: Message Start Number. Why: The message closes the card after the heading. How: This is the Base Plus 9 step, in seconds from the start. // Duration Animation Base Plus 9 ~= 1,983.0ms
 		const oveEasStr = gsaEasFun( 'ove' );                                   // What: Overshoot Easing String. Why: The cornucopia and feathers settle with a little overshoot. How: This registers the gentle overshoot token and keeps its GSAP name.
+		const proDurNum = durSecFun( 'p02' );                                   // What: Produce Duration Number. Why: Each piece of produce pops quickly. How: This is the Base Plus 2 step, in seconds. // Duration Animation Base Plus 2 ~= 277.0ms
+		const proGapNum = durSecFun( 'm03' );                                   // What: Produce Gap Number. Why: The produce pops one piece after another. How: This is the Base Minus 3 step between them, in seconds. // Duration Animation Base Minus 3 ~= 67.9ms
+		const proStaNum = durSecFun( 'p04' );                                   // What: Produce Start Number. Why: The produce pops once the cornucopia is on its way. How: This is the Base Plus 4 step, in seconds from the start. // Duration Animation Base Plus 4 ~= 486.1ms
 		const redMotBoo = redMotFun();                                          // What: Reduce Motion Boolean. Why: Under reduced motion the card opens finished and nothing loops. How: This reads the preference once, as the card opens.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } ); // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
-		const wobTweObj = gsap.to( turSvgRef.current, { duration : durSecFun( 'p06' ), ease : gsaEasFun( 'ino' ), paused : true, repeat : -1, rotation : cdnPowFun( 4 ), transformOrigin : '50% 100%', yoyo : true } ); // What: Wobble Tween Object. Why: Once in place, the turkey rocks gently for as long as the card is open. How: This tilts it about 3.1 degrees on its feet and back, forever, easing in and out over a Base Plus 6 step, created paused inside the context so leaving the card reverts it. // Duration Animation Base Plus 6 ~= 853.0ms, Core-Design-Number to the Power of 4 ~= 3.080
+		const titRisNum = rhyPxlFun( 'p03' );                                   // What: Title Rise Number. Why: The heading rises into place. How: This is the Base Plus 3 rhythm step, in pixels. // Vertical Rhythm Base Plus 3 ~= 33.876px
+		const titStaNum = durSecFun( 'p08' );                                   // What: Title Start Number. Why: The heading arrives once the scene is in place. How: This is the Base Plus 8 step, in seconds from the start. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const turDurNum = durSecFun( 'p05' );                                   // What: Turkey Duration Number. Why: The turkey rises a little quicker than the other entrances. How: This is the Base Plus 5 step, in seconds. // Duration Animation Base Plus 5 ~= 643.9ms
+		const turRisNum = rhyPxlFun( 'p04' );                                   // What: Turkey Rise Number. Why: The turkey rises into place. How: This is the Base Plus 4 rhythm step, in pixels. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const turStaNum = durSecFun( 'p06' );                                   // What: Turkey Start Number. Why: The turkey joins once the cornucopia has arrived. How: This is the Base Plus 6 step, in seconds from the start. // Duration Animation Base Plus 6 ~= 853.0ms
+		const wobAngNum = cdnPowFun( 4 );                                       // What: Wobble Angle Number. Why: The turkey rocks only a few degrees. How: This is the core design number to the 4th power, in degrees, about 3.08.
+		const wobDurNum = durSecFun( 'p06' );                                   // What: Wobble Duration Number. Why: Each rock of the turkey takes a calm beat. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const wobTweObj = gsap.to( turSvgRef.current, { duration : wobDurNum, ease : inoEasStr, paused : true, repeat : -1, rotation : wobAngNum, transformOrigin : '50% 100%', yoyo : true } ); // What: Wobble Tween Object. Why: Once in place, the turkey rocks gently for as long as the card is open. How: This tilts it about 3.1 degrees on its feet and back, forever, easing in and out over a Base Plus 6 step, created paused inside the context so leaving the card reverts it. // Duration Animation Base Plus 6 ~= 853.0ms, Core-Design-Number to the Power of 4 ~= 3.080
 
 
-		timLinObj.fromTo( corSvgRef.current, { autoAlpha : 0, x : rhyPxlFun( 'p06' ) * -1 }, { autoAlpha : 1, duration : durSecFun( 'p06' ), ease : oveEasStr, x : 0 }, 0 ); // What: Cornucopia Entrance. Why: The cornucopia opens the card. How: This fades it in as it slides from the left, overshooting a little. // Vertical Rhythm Base Plus 6 ~= -78.751px, Duration Animation Base Plus 6 ~= 853.0ms
+		timLinObj.fromTo( corSvgRef.current, { autoAlpha : 0, x : corOffNum }, { autoAlpha : 1, duration : entDurNum, ease : oveEasStr, x : 0 }, 0 ); // What: Cornucopia Entrance. Why: The cornucopia opens the card. How: This fades it in as it slides from the left, overshooting a little. // Vertical Rhythm Base Plus 6 ~= -78.751px, Duration Animation Base Plus 6 ~= 853.0ms
 
-		timLinObj.from( proGroRef.current!.children, { duration : durSecFun( 'p02' ), ease : gsaEasFun( 'bou' ), scale : 0, stagger : durSecFun( 'm03' ), transformOrigin : '50% 50%' }, durSecFun( 'p04' ) ); // What: Produce Pop. Why: The cornucopia spills its harvest. How: This grows each piece from nothing with a bounce, one after another. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Minus 3 ~= 67.9ms, Duration Animation Base Plus 4 ~= 486.1ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		timLinObj.from( proGroRef.current!.children, { duration : proDurNum, ease : bouEasStr, scale : 0, stagger : proGapNum, transformOrigin : '50% 50%' }, proStaNum ); // What: Produce Pop. Why: The cornucopia spills its harvest. How: This grows each piece from nothing with a bounce, one after another. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Minus 3 ~= 67.9ms, Duration Animation Base Plus 4 ~= 486.1ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.fromTo( turSvgRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p04' ) }, { autoAlpha : 1, duration : durSecFun( 'p05' ), y : 0 }, durSecFun( 'p06' ) ); // What: Turkey Entrance. Why: The turkey joins the cornucopia. How: This fades it in as it rises. // Vertical Rhythm Base Plus 4 ~= 44.876px, Duration Animation Base Plus 5 ~= 643.9ms, Duration Animation Base Plus 6 ~= 853.0ms
+		timLinObj.fromTo( turSvgRef.current, { autoAlpha : 0, y : turRisNum }, { autoAlpha : 1, duration : turDurNum, y : 0 }, turStaNum ); // What: Turkey Entrance. Why: The turkey joins the cornucopia. How: This fades it in as it rises. // Vertical Rhythm Base Plus 4 ~= 44.876px, Duration Animation Base Plus 5 ~= 643.9ms, Duration Animation Base Plus 6 ~= 853.0ms
 
-		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : durSecFun( 'p04' ), ease : oveEasStr, scaleY : 0, stagger : durSecFun( 'm02' ), transformOrigin : '50% 100%' }, durSecFun( 'p06' ) ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : feaDurNum, ease : oveEasStr, scaleY : 0, stagger : feaGapNum, transformOrigin : '50% 100%' }, turStaNum ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p03' ) }, { autoAlpha : 1, duration : durSecFun( 'p06' ), y : 0 }, durSecFun( 'p08' ) ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
+		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : titRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, titStaNum ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
 
-		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p01' ) }, { autoAlpha : 1, duration : durSecFun( 'p06' ), y : 0 }, durSecFun( 'p09' ) ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
+		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : mesRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, mesStaNum ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 
 		if ( redMotBoo ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
-		else timLinObj.call( () => { wobTweObj.play(); }, [], durSecFun( 'p09' ) ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		else timLinObj.call( () => { wobTweObj.play(); }, [], mesStaNum ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 
@@ -464,6 +482,8 @@ function ThaCarCom () : JSX.Element {
 
 
 					</svg>
+
+
 
 					<svg
 						ref={ turSvgRef }

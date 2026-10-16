@@ -275,8 +275,8 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 		const fadDurNum = durSecFun( 'p02' );                                                                              // What: Fade Duration Number. Why: The bat fades in and out at the edges. How: This is each fade's length. // Duration Animation Base Plus 2 ~= 277.0ms
 		const fadPosStr = `-=${ durSecFun( 'p03' ) }`;                                                                     // What: Fade Position String. Why: The bat fades out before it reaches the far edge. How: This GSAP position starts the fade before the flight ends. // Duration Animation Base Plus 3 ~= 366.9ms
 		const flyDurNum = gsap.utils.random( durSecFun( 'p11' ), durSecFun( 'p13' ) );                                     // What: Fly Duration Number. Why: Each bat crosses at its own pace. How: This picks the flight's length once, between the two steps. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
-		const higMaxNum = rhyPxlFun( 'p10' );                                                                              // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
-		const higMinNum = rhyPxlFun( 'p04' );                                                                              // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const heiMaxNum = rhyPxlFun( 'p10' );                                                                              // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
+		const heiMinNum = rhyPxlFun( 'p04' );                                                                              // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
 		const inoEasStr = gsaEasFun( 'ino' );                                                                              // What: In-Out Easing String. Why: The bob and the flaps turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
 		const repDelNum = gsap.utils.random( durSecFun( 'p07' ), durSecFun( 'p11' ) );                                     // What: Repeat Delay Number. Why: Each bat rests for its own while between flights. How: This picks the pause once, between the two steps. // Duration Animation Base Plus 7 ~= 1,130.0ms, Duration Animation Base Plus 11 ~= 3,480.0ms
 		const winDurNum = durSecFun( 'bas' );                                                                              // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
@@ -285,7 +285,7 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 		const batTimObj = gsap.timeline( { delay : delNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
 		const bobTopNum = bobAmpNum * -1;                                                                                  // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
 		const finXcoFun = () : number => innerWidth + batWidNum;                                                           // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
-		const ranTopFun = () : number => gsap.utils.random( higMinNum, higMaxNum );                                        // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
+		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );                                        // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
 		const staXcoNum = batWidNum * -1;                                                                                  // What: Start X-Coordinate Number. Why: The flight starts just past the left edge, out of sight. How: This is the bat's width to the left of the edge.
 		const ranDriFun = () : string => `+=${ gsap.utils.random( staXcoNum, batWidNum ) }`;                               // What: Random Drift Function. Why: Each flight rises or falls a little. How: This picks a drift up to about a bat's width either way, relative to where the flight starts.
 
@@ -728,7 +728,7 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 			viewBox='0 0 80 88'
 
 			aria-hidden='true'
-		>{ /* What: Pumpkin Lantern SVG Element. Why: The jack-o'-lantern is decoration a screen reader should skip. How: This draws it at its place on the hills, in a 40-unit drawing scaled by its class. */ }
+		>{ /* What: Pumpkin Lantern SVG Element. Why: The jack-o'-lantern is decoration a screen reader should skip. How: This draws it at its place on the hills, in an 80 by 88 drawing scaled by its class. */ }
 
 
 			<circle
@@ -874,11 +874,10 @@ function HalCarCom () : JSX.Element {
 	 * way, and spring upright into place, and once the last has landed the
 	 * greeting's glow and shadow fade in under them; from about a second and
 	 * a half in, the letters shimmer to candle yellow and back in a wave that
-	 * never stops. The
-	 * moon floats up and down, each star twinkles at its own pace, and the
-	 * sky flashes with a double strike of lightning after a few seconds and
-	 * then every few seconds more, at random. Under reduced motion none of it
-	 * starts: the greeting stands whole, and the sky stays dark.
+	 * never stops. The moon floats up and down, each star twinkles at its own
+	 * pace, and the sky flashes with a double strike of lightning after a few
+	 * seconds and then every few seconds more, at random. Under reduced motion
+	 * none of it starts: the greeting stands whole, and the sky stays dark.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -902,7 +901,7 @@ function HalCarCom () : JSX.Element {
 		const gloDelNum = durSecFun( 'p08' );                                               // What: Glow Delay Number. Why: The shimmer starts as the last letters land. How: This is its delay. // Duration Animation Base Plus 8 ~= 1,497.0ms
 		const gloDurNum = durSecFun( 'p07' );                                               // What: Glow Duration Number. Why: Each letter shimmers slowly. How: This is each change's length. // Duration Animation Base Plus 7 ~= 1,130.0ms
 		const gloEacNum = durSecFun( 'm02' );                                               // What: Glow Each Number. Why: The shimmer runs along the letters as a wave. How: This is the offset from one letter to the next. // Duration Animation Base Minus 2 ~= 89.9ms
-		const titAngNum = cdnPowFun( 9 );                                                   // What: Title Angle Number. Why: The letters fall tilted. How: This is the tilt, about 12.6 degrees. // Core-Design-Number to the Power of 9 ~= 12.563
+		const titAngNum = cdnPowFun( 9 );                                                   // What: Title Angle Number. Why: The letters fall tilted. How: This is the tilt, about 12.6 degrees. // Core-Design-Number to the Power of 9 ~= 12.564
 		const titDelNum = durSecFun( 'p03' );                                               // What: Title Delay Number. Why: The scene settles a moment before the greeting arrives. How: This is the drop's delay. // Duration Animation Base Plus 3 ~= 366.9ms
 		const titDurNum = durSecFun( 'p05' );                                               // What: Title Duration Number. Why: Each letter drops quickly. How: This is each drop's length. // Duration Animation Base Plus 5 ~= 643.9ms
 		const titShiNum = rhyPxlFun( 'p05' ) * -1;                                          // What: Title Shift Number. Why: The letters drop from above. How: This is how far above their places they start. // Vertical Rhythm Base Plus 5 ~= -59.447px

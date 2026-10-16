@@ -79,6 +79,19 @@
 
 
 }
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Birthday Card Div. Why: Under reduced motion a tap throws no confetti, so a pointer would promise an action that never comes. How: This applies only when the reduced-motion preference is set. */
+
+
+	.birCarDiv { /* What: Still Birthday Card Div. Why: The card has nothing to tap. How: This sets the ordinary cursor back. */
+
+
+		cursor : auto;
+
+
+	}
+
+
+}
 
 
 /* #region staSkyDiv */
@@ -97,10 +110,10 @@
 
 	background-color : #FFFFFF;
 	border-radius    : 50%;
-	height           : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.537px */
+	height           : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.536px */
 	position         : absolute;
 	translate        : -50% -50%;
-	width            : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.537px */
+	width            : calc( var( --ver-rhy-m08 ) * 1rem ); /* Vertical Rhythm Base Minus 8 ~= 1.536px */
 
 
 }
@@ -145,6 +158,19 @@
 
 
 }
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Balloon Float SVG. Why: Under reduced motion the balloons stand still, and a layer hint on something that never moves only holds memory. How: This applies only when the reduced-motion preference is set. */
+
+
+	.balFloSvg { /* What: Still Balloon Float SVG. Why: A balloon that never moves needs no layer of its own. How: This drops the hint. */
+
+
+		will-change : auto;
+
+
+	}
+
+
+}
 
 .balShiEll { /* What: Balloon Shine Ellipse. Why: The glint should be faint. How: This sets its opacity low. */
 
@@ -179,7 +205,7 @@
 	inset           : 0;
 	justify-content : center;
 	padding         : var( --spa-ver-p02 ) var( --spa-hor-p02 );  /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the side padding's step outside the card page. */
+	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the top padding's step outside the card page. */
 	position        : absolute;
 	text-align      : center;
 

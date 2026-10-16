@@ -64,7 +64,6 @@
 }
 
 
-
 /* #region staSkyDiv */
 
 .staSkyDiv { /* What: Star Sky Div. Why: The stars are scattered over the whole card. How: This fills the card, so each star's percentages place it across the sky. */
@@ -104,7 +103,6 @@
 /* #endregion staSkyDiv */
 
 
-
 .mooFloSvg { /* What: Moon Float SVG. Why: A glowing moon hangs in the top right corner. How: This pins it there at a fixed size, its distance from the right edge growing with the screen. */
 
 
@@ -115,8 +113,6 @@
 
 
 }
-
-
 
 .ghoFloSvg { /* What: Ghost Float SVG. Why: The ghosts hover over the hills. How: This places each one above the bottom edge, its modifier setting how far across and how big. */
 
@@ -151,8 +147,6 @@
 
 }
 
-
-
 .groHilSvg { /* What: Ground Hill SVG. Why: Rolling hills run along the bottom of the card. How: This stretches them across the full width at a fixed height. */
 
 
@@ -164,8 +158,6 @@
 
 
 }
-
-
 
 .pumLanSvg { /* What: Pumpkin Lantern SVG. Why: Jack-o'-lanterns stand on the hills, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar, letting its candle's flame reach past the top of its drawing, its modifier setting how far across and how big. */
 
@@ -209,8 +201,6 @@
 
 
 }
-
-
 
 .canFlaSvg { /* What: Candle Flame SVG. Why: Candles stand among the jack-o'-lanterns, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar at a slim fixed width, its modifier setting how far across. */
 
@@ -270,7 +260,6 @@
 }
 
 
-
 /* #region titStaDiv */
 
 .titStaDiv { /* What: Title Stack Div. Why: The greeting's glow and shadow are a still copy sitting exactly under its letters. How: This lays the copy and the heading out as a grid, so both can share one cell. */
@@ -294,7 +283,6 @@
 
 
 }
-
 
 
 /* #region titShaSpa */
@@ -393,7 +381,6 @@
 }
 
 /* #endregion batFlyDiv */
-
 
 
 .ligFlaDiv { /* What: Lightning Flash Div. Why: Lightning lights the whole scene for an instant. How: This covers the card in pale blue, transparent and out of the pointer's way until a strike flashes it. */

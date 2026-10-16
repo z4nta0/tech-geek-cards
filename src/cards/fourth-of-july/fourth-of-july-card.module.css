@@ -162,7 +162,7 @@
 
 }
 
-.flaImaSvg { /* What: Flag Image Svg. Why: The flag leads the card, framed and lifted off the sky. How: This centers it above the headline at a fixed width, its height following the flag's proportions, with a faint white border, rounded corners, and a soft shadow. */
+.flaImaSvg { /* What: Flag Image SVG. Why: The flag leads the card, framed and lifted off the sky. How: This centers it above the headline at a fixed width, its height following the flag's proportions, with a faint white border, rounded corners, and a soft shadow. */
 
 
 	border        : var( --bor-wid-lar ) solid rgb( 255 255 255 / var( --cdn-pow-004-rec ) );                                          /* Border Width Large ~= 2.035px, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
