@@ -332,8 +332,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades in a Base Minus 14 step, starting one such step after the last, in random order.
 
 
-			timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
-
+			timLinObj.to( squEleArr,         { ...squWipObj,         opacity : 0                } );              // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
 			timLinObj.to( hacTitRef.current, { duration : fadDurNum, scrambleText : HAC_TIT_STR }, PAU_POS_STR ); // What: Heading Scramble. Why: The hack announces itself. How: After a pause, this types the heading out through random characters.
 
 			gliTimFun( timLinObj, [ hacTitRef.current! ], decEasStr, inoEasStr ); // What: Heading Glitch Call. Why: The heading glitches once it's written. How: This adds the glitch for the heading alone. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.

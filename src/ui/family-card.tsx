@@ -339,11 +339,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			staTimRef.current.push( timLinObj.duration() ); // What: Scene Start Record. Why: Previous and Next jump to a scene's first frame. How: This stores the time the scene begins, the timeline's length so far.
 
-			timLinObj.set( typSpaArr, { text : '' } ); // What: Line Clear. Why: Each line starts empty. How: This clears all three parts.
-
+			timLinObj.set( typSpaArr,         { text : ''           } ); // What: Line Clear. Why: Each line starts empty. How: This clears all three parts.
 			timLinObj.set( higSpaRef.current, { '--fam-und-sca' : 0 } ); // What: Underline Reset. Why: Each line's underline starts undrawn. How: This sets its scale back to 0.
-
-			timLinObj.set( texDivRef.current, { scale : 1 } ); // What: Lettering Reset. Why: The last line shrank away. How: This restores its size.
+			timLinObj.set( texDivRef.current, { scale : 1           } ); // What: Lettering Reset. Why: The last line shrank away. How: This restores its size.
 
 			timLinObj.to( texDivRef.current, { autoAlpha : 1, duration : fadDurNum } ); // What: Lettering Fade In. Why: Each line arrives softly. How: This fades the lettering in.
 
@@ -382,8 +380,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		behTimRef.current = timLinObj.duration(); // What: Behalf Time Record. Why: Next jumps from the last scene to the closing line. How: This stores the time the closing line begins.
 
-		timLinObj.set( typSpaArr, { text : '' } ); // What: Closing Clear. Why: The closing line starts empty. How: This clears all three parts.
-
+		timLinObj.set( typSpaArr,         { text : '' } ); // What: Closing Clear. Why: The closing line starts empty. How: This clears all three parts.
 		timLinObj.set( texDivRef.current, { scale : 1 } ); // What: Closing Lettering Reset. Why: The last line shrank away. How: This restores its size.
 
 		timLinObj.to( texDivRef.current, { autoAlpha : 1, duration : fadDurNum } ); // What: Closing Fade In. Why: The closing line arrives softly. How: This fades the lettering in.
@@ -402,7 +399,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		} );
 
 		timLinObj.to( texDivRef.current, { autoAlpha : 0, duration : fadDurNum } ); // What: Behalf Fade Out. Why: The greeting arrives on its own. How: This fades the empty lettering out.
-
 		timLinObj.to( texDivRef.current, { autoAlpha : 1, duration : fadDurNum } ); // What: Greeting Fade In. Why: The greeting gets its own entrance. How: This fades the lettering back in.
 
 		timLinObj.to( greSpaRef.current, { // What: Greeting Typing. Why: The card ends on its greeting. How: This types it at the same steady pace.
@@ -431,9 +427,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 
-		timLinObj.to( greSpaRef.current, { duration : fadDurNum, ease : oveEasStr, scale : finScaFun } ); // What: Greeting Growth. Why: The greeting fills the screen with a flourish. How: This grows it by its final scale, which GSAP reads from the function when the growth starts.
-
-		timLinObj.to( griDivRef.current, { autoAlpha : 1, duration : shoDurNum }, '<' ); // What: Grid Show. Why: The photo grid appears behind the growing greeting. How: This shows it almost at once.
+		timLinObj.to( greSpaRef.current, { duration : fadDurNum, ease : oveEasStr, scale : finScaFun } );      // What: Greeting Growth. Why: The greeting fills the screen with a flourish. How: This grows it by its final scale, which GSAP reads from the function when the growth starts.
+		timLinObj.to( griDivRef.current, { duration : shoDurNum, autoAlpha : 1                       }, '<' ); // What: Grid Show. Why: The photo grid appears behind the growing greeting. How: This shows it almost at once.
 
 		timLinObj.set( tapParRef.current, { display : 'block' }, '<' ); // What: Tap Hint Entry. Why: The hint stays out of the page until it's needed. How: This adds it to the layout as the grid appears, which a jump back undoes.
 

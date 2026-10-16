@@ -290,9 +290,10 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 		timLinArr[ wraIndNum ]?.kill(); // What: Last Timeline Kill Call. Why: A reused wrap's last burst must not keep playing over its new one. How: This kills the wrap's previous timeline, if any.
 
 
-		timLinObj.set( wraDivEle, { x : wraXcoNum, y : wraYcoNum }, 0 );                                                        // What: Wrap Placement. Why: The firework bursts at its picked spot. How: This moves the wrap there by transform, so placing it needs no layout.
-		timLinObj.fromTo( sheDivEle, { opacity : 1 }, { duration : sheDurNum, ease : accEasStr, opacity : 0 }, 0 );             // What: Shell Fade. Why: The shell burns out as it bursts. How: This shows it and fades it from the start.
-		timLinObj.fromTo( rinDivEle, { opacity : 1, scale : 0 }, { duration : rinDurNum, opacity : 0, scale : 1 }, rinDelNum ); // What: Ring Burst. Why: The burst flashes outward. How: After the ring delay, this grows the ring from nothing as it fades.
+		timLinObj.set( wraDivEle, { x : wraXcoNum, y : wraYcoNum }, 0 ); // What: Wrap Placement. Why: The firework bursts at its picked spot. How: This moves the wrap there by transform, so placing it needs no layout.
+
+		timLinObj.fromTo( sheDivEle, { opacity : 1            }, { duration : sheDurNum, opacity : 0, ease : accEasStr }, 0 );         // What: Shell Fade. Why: The shell burns out as it bursts. How: This shows it and fades it from the start.
+		timLinObj.fromTo( rinDivEle, { opacity : 1, scale : 0 }, { duration : rinDurNum, opacity : 0, scale : 1        }, rinDelNum ); // What: Ring Burst. Why: The burst flashes outward. How: After the ring delay, this grows the ring from nothing as it fades.
 
 
 		for ( const [ parIndNum, parDivEle ] of parDivArr.entries() ) { // What: Particle Loop. Why: Every spark flies its own way. How: This colors each one and adds its flight to the timeline.
@@ -438,10 +439,10 @@ function FojCarCom () : JSX.Element {
 		const wisShiNum = rhyPxlFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
 
 
-		timLinObj.from( carDivRef.current, { opacity : 0 }, 0 );                                                                             // What: Card Fade. Why: The card opens out of the dark. How: This fades it in from the start.
-		timLinObj.from( greTitRef.current, { ease : bouEasStr, force3D : true, opacity : 0, scale : greScaNum, y : greShiNum }, greDelNum ); // What: Headline Spring. Why: The greeting arrives with a celebratory bounce. How: After the greeting delay, this drops it into place and grows it to full size on the bounce curve. // What: Kept Layer Note. Why: WebKit repainted the headline's wide glow whenever the heading left its own layer or something under it changed, stalling frames for up to 250ms. How: force3D keeps the heading on its own layer after the spring ends, so its glow is drawn once.
-		timLinObj.from( flaImaRef.current, { opacity : 0, x : flaShiNum }, flaDelNum );                                                      // What: Flag Slide. Why: The flag sweeps in from the side. How: After the flag delay, this slides it in from the left.
-		timLinObj.from( wisMesRef.current, { opacity : 0, y : wisShiNum }, entDurNum );                                                      // What: Wish Rise. Why: The wish follows the headline. How: Once the card has faded in, this raises the wish in from below.
+		timLinObj.from( carDivRef.current, { opacity : 0                                                                     }, 0 );         // What: Card Fade. Why: The card opens out of the dark. How: This fades it in from the start.
+		timLinObj.from( greTitRef.current, { opacity : 0, ease : bouEasStr, force3D : true, scale : greScaNum, y : greShiNum }, greDelNum ); // What: Headline Spring. Why: The greeting arrives with a celebratory bounce. How: After the greeting delay, this drops it into place and grows it to full size on the bounce curve. // What: Kept Layer Note. Why: WebKit repainted the headline's wide glow whenever the heading left its own layer or something under it changed, stalling frames for up to 250ms. How: force3D keeps the heading on its own layer after the spring ends, so its glow is drawn once.
+		timLinObj.from( flaImaRef.current, { opacity : 0, x : flaShiNum                                                      }, flaDelNum ); // What: Flag Slide. Why: The flag sweeps in from the side. How: After the flag delay, this slides it in from the left.
+		timLinObj.from( wisMesRef.current, { opacity : 0, y : wisShiNum                                                      }, entDurNum ); // What: Wish Rise. Why: The wish follows the headline. How: Once the card has faded in, this raises the wish in from below.
 
 
 

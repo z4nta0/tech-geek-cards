@@ -281,7 +281,6 @@ function ThaCarCom () : JSX.Element {
 		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : feaDurNum, ease : oveEasStr, scaleY : 0, stagger : feaGapNum, transformOrigin : '50% 100%' }, turStaNum ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
 		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : titRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, titStaNum ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
-
 		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : mesRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, mesStaNum ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
