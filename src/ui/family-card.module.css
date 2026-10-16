@@ -97,33 +97,33 @@
 
 
 }
-.famCelBut:nth-child( 1 ) { /* What: First Cell. Why: The mosaic places each photo by hand. How: This takes column 1, row 1. */ grid-area : 1 / 1 / 2 / 2; }
-.famCelBut:nth-child( 2 ) { /* What: Second Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 1 to 2. */ grid-area : 1 / 2 / 3 / 3; }
-.famCelBut:nth-child( 3 ) { /* What: Third Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 1 to 3. */ grid-area : 1 / 3 / 4 / 4; }
-.famCelBut:nth-child( 4 ) { /* What: Fourth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 1 to 2. */ grid-area : 1 / 4 / 3 / 5; }
-.famCelBut:nth-child( 5 ) { /* What: Fifth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 2 to 5. */ grid-area : 2 / 1 / 6 / 2; }
-.famCelBut:nth-child( 6 ) { /* What: Sixth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 3 to 4. */ grid-area : 3 / 2 / 5 / 3; }
-.famCelBut:nth-child( 7 ) { /* What: Seventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 4 to 5. */ grid-area : 4 / 3 / 6 / 4; }
-.famCelBut:nth-child( 8 ) { /* What: Eighth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 3 to 6. */ grid-area : 3 / 4 / 7 / 5; }
-.famCelBut:nth-child( 9 ) { /* What: Ninth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */ grid-area : 6 / 1 / 8 / 2; }
-.famCelBut:nth-child( 10 ) { /* What: Tenth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 5 to 7. */ grid-area : 5 / 2 / 8 / 3; }
-.famCelBut:nth-child( 11 ) { /* What: Eleventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */ grid-area : 6 / 3 / 8 / 4; }
-.famCelBut:nth-child( 12 ) { /* What: Twelfth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, row 7. */ grid-area : 7 / 4 / 8 / 5; }
+.famCelBut:nth-child( 1 )  { grid-area : 1 / 1 / 2 / 2; } /* What: First Cell. Why: The mosaic places each photo by hand. How: This takes column 1, row 1. */
+.famCelBut:nth-child( 2 )  { grid-area : 1 / 2 / 3 / 3; } /* What: Second Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 1 to 2. */
+.famCelBut:nth-child( 3 )  { grid-area : 1 / 3 / 4 / 4; } /* What: Third Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 1 to 3. */
+.famCelBut:nth-child( 4 )  { grid-area : 1 / 4 / 3 / 5; } /* What: Fourth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 1 to 2. */
+.famCelBut:nth-child( 5 )  { grid-area : 2 / 1 / 6 / 2; } /* What: Fifth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 2 to 5. */
+.famCelBut:nth-child( 6 )  { grid-area : 3 / 2 / 5 / 3; } /* What: Sixth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 3 to 4. */
+.famCelBut:nth-child( 7 )  { grid-area : 4 / 3 / 6 / 4; } /* What: Seventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 4 to 5. */
+.famCelBut:nth-child( 8 )  { grid-area : 3 / 4 / 7 / 5; } /* What: Eighth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, rows 3 to 6. */
+.famCelBut:nth-child( 9 )  { grid-area : 6 / 1 / 8 / 2; } /* What: Ninth Cell. Why: The mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */
+.famCelBut:nth-child( 10 ) { grid-area : 5 / 2 / 8 / 3; } /* What: Tenth Cell. Why: The mosaic places each photo by hand. How: This takes column 2, rows 5 to 7. */
+.famCelBut:nth-child( 11 ) { grid-area : 6 / 3 / 8 / 4; } /* What: Eleventh Cell. Why: The mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */
+.famCelBut:nth-child( 12 ) { grid-area : 7 / 4 / 8 / 5; } /* What: Twelfth Cell. Why: The mosaic places each photo by hand. How: This takes column 4, row 7. */
 @media ( max-width : 640px ) { /* What: Phone Family Cell Buttons. Why: The three-column mosaic places its photos its own way. How: This applies at the phone breakpoint and below. */
 
 
-	.famCelBut:nth-child( 1 ) { /* What: Narrow First Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 1 to 2. */ grid-area : 1 / 1 / 3 / 2; }
-	.famCelBut:nth-child( 2 ) { /* What: Narrow Second Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 1 to 3. */ grid-area : 1 / 2 / 4 / 3; }
-	.famCelBut:nth-child( 3 ) { /* What: Narrow Third Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 1. */ grid-area : 1 / 3 / 2 / 4; }
-	.famCelBut:nth-child( 4 ) { /* What: Narrow Fourth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, row 8. */ grid-area : 8 / 1 / 9 / 2; }
-	.famCelBut:nth-child( 5 ) { /* What: Narrow Fifth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 3 to 5. */ grid-area : 3 / 1 / 6 / 2; }
-	.famCelBut:nth-child( 6 ) { /* What: Narrow Sixth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, row 4. */ grid-area : 4 / 2 / 5 / 3; }
-	.famCelBut:nth-child( 7 ) { /* What: Narrow Seventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 2 to 5. */ grid-area : 2 / 3 / 6 / 4; }
-	.famCelBut:nth-child( 8 ) { /* What: Narrow Eighth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 7 to 8. */ grid-area : 7 / 2 / 9 / 3; }
-	.famCelBut:nth-child( 9 ) { /* What: Narrow Ninth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */ grid-area : 6 / 1 / 8 / 2; }
-	.famCelBut:nth-child( 10 ) { /* What: Narrow Tenth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 5 to 6. */ grid-area : 5 / 2 / 7 / 3; }
-	.famCelBut:nth-child( 11 ) { /* What: Narrow Eleventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */ grid-area : 6 / 3 / 8 / 4; }
-	.famCelBut:nth-child( 12 ) { /* What: Narrow Twelfth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 8. */ grid-area : 8 / 3 / 9 / 4; }
+	.famCelBut:nth-child( 1 )  { grid-area : 1 / 1 / 3 / 2; } /* What: Narrow First Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 1 to 2. */
+	.famCelBut:nth-child( 2 )  { grid-area : 1 / 2 / 4 / 3; } /* What: Narrow Second Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 1 to 3. */
+	.famCelBut:nth-child( 3 )  { grid-area : 1 / 3 / 2 / 4; } /* What: Narrow Third Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 1. */
+	.famCelBut:nth-child( 4 )  { grid-area : 8 / 1 / 9 / 2; } /* What: Narrow Fourth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, row 8. */
+	.famCelBut:nth-child( 5 )  { grid-area : 3 / 1 / 6 / 2; } /* What: Narrow Fifth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 3 to 5. */
+	.famCelBut:nth-child( 6 )  { grid-area : 4 / 2 / 5 / 3; } /* What: Narrow Sixth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, row 4. */
+	.famCelBut:nth-child( 7 )  { grid-area : 2 / 3 / 6 / 4; } /* What: Narrow Seventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 2 to 5. */
+	.famCelBut:nth-child( 8 )  { grid-area : 7 / 2 / 9 / 3; } /* What: Narrow Eighth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 7 to 8. */
+	.famCelBut:nth-child( 9 )  { grid-area : 6 / 1 / 8 / 2; } /* What: Narrow Ninth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 1, rows 6 to 7. */
+	.famCelBut:nth-child( 10 ) { grid-area : 5 / 2 / 7 / 3; } /* What: Narrow Tenth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 2, rows 5 to 6. */
+	.famCelBut:nth-child( 11 ) { grid-area : 6 / 3 / 8 / 4; } /* What: Narrow Eleventh Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, rows 6 to 7. */
+	.famCelBut:nth-child( 12 ) { grid-area : 8 / 3 / 9 / 4; } /* What: Narrow Twelfth Cell. Why: The phone mosaic places each photo by hand. How: This takes column 3, row 8. */
 
 
 }
