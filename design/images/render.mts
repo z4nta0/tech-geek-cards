@@ -26,9 +26,9 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  * 3x zoom. The card illustrations are shown at up to 1920 by 1080, larger
  * than their originals, so they keep their full size, while a full-screen
  * background covers twice that stage. Everything is written as WebP into
- * src/assets, or into a converted card's own folder for images only it shows,
- * except the birthday card's social preview, which
- * link scrapers need as a JPEG at exactly 1200 by 630, written into public/.
+ * src/assets, or into a converted card's own folder for images only it shows.
+ * The link preview images are captured from the site itself by
+ * design/og-image/render.mts instead.
  * Run it with npm run images whenever an image is added or replaced, or a
  * display size changes.
  *
@@ -51,9 +51,8 @@ const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. 
 
 	'card'     : { cutBoo : false, heiNum : Infinity, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1920 by 1080 stage, larger than their originals. How: This leaves them at full size.
 	'portrait' : { cutBoo : false, heiNum : 640,      widNum : 560      }, // What: Portrait Box. Why: The About portrait fills a 280 by 320 frame. How: This covers twice that.
-	'preview'  : { cutBoo : false, heiNum : 930,      widNum : 1240     }, // What: Preview Box. Why: A card preview fills a 4:3 frame up to about 620px wide. How: This covers twice that.
+	'preview'  : { cutBoo : false, heiNum : 675,      widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery. How: This covers about twice that.
 	'project'  : { cutBoo : false, heiNum : 698,      widNum : 1240     }, // What: Project Box. Why: A project screenshot fills a 16:9 frame up to about 620px wide. How: This covers twice that.
-	'social'   : { cutBoo : true,  heiNum : 630,      widNum : 1200     }, // What: Social Box. Why: Link previews expect a 1200 by 630 image. How: This cuts the original to exactly that.
 	'stage'    : { cutBoo : false, heiNum : 2160,     widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1920 by 1080. How: This covers twice that.
 
 
@@ -75,8 +74,7 @@ const IMA_REC_ARR : ImaRecTyp[] = [ // What: Image Record Array. Why: Every imag
 	{ boxStr : 'card',     outStr : 'src/cards/christmas/snowman.webp',             souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is shown at about 115px wide, smaller than its original. How: This keeps it at full size.
 	{ boxStr : 'stage',    outStr : 'src/cards/christmas/pirate-background.webp',   souStr : 'christmas-card/pirate-background.jpg' }, // What: Christmas Pirate Background Row. Why: The hacked scene fills the screen. How: This fits it to the stage box.
 	{ boxStr : 'stage',    outStr : 'src/cards/christmas/snowy-background.webp',    souStr : 'christmas-card/snowy-background.jpg'  }, // What: Christmas Snowy Background Row. Why: The snowy scene fills the screen. How: This fits it to the stage box.
-	{ boxStr : 'portrait', outStr : 'src/assets/self-portrait.webp',                souStr : 'self-portrait.jpg'                    }, // What: Portrait Row. Why: The About page shows the portrait. How: This fits it to the portrait box.
-	{ boxStr : 'social',   outStr : 'public/happy-birthday-card-preview-image.jpg', souStr : 'og-happy-birthday-card.png'           }  // What: Social Preview Row. Why: The birthday card's link preview is fetched by its fixed URL. How: This cuts it to the social box as a JPEG in public/.
+	{ boxStr : 'portrait', outStr : 'src/assets/self-portrait.webp',                souStr : 'self-portrait.jpg'                    }  // What: Portrait Row. Why: The About page shows the portrait. How: This fits it to the portrait box.
 
 
 ];
@@ -115,7 +113,7 @@ for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each o
 
 
 	const boxRecObj = BOX_REC_OBJ[ imaRecObj.boxStr ];                                                                                                   // What: Box Record Object. Why: The image fits its kind's box. How: This looks the box up by kind.
-	const mimTypStr = imaRecObj.outStr.endsWith( '.jpg' ) ? 'image/jpeg' : 'image/webp';                                                                 // What: MIME Type String. Why: Only the social preview is a JPEG. How: This picks the format from the output's extension.
+	const mimTypStr = 'image/webp'; // What: MIME Type String. Why: Every image this script writes is a WebP. How: This names the format the canvas encodes.
 	const souUrlStr = `data:image/${ imaRecObj.souStr.endsWith( '.jpg' ) ? 'jpeg' : 'png' };base64,${ readFileSync( souPatStr ).toString( 'base64' ) }`; // What: Source URL String. Why: A canvas drawn from a file URL can't be read back, while one drawn from data can. How: This hands the original to the page as a data URL.
 
 
@@ -130,14 +128,14 @@ for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each o
 		await souImaEle.decode(); // What: Source Decode Wait. Why: Drawing an undecoded image draws nothing. How: This waits until it's ready.
 
 
-		const souHeiNum = souImaEle.naturalHeight;                                                                                // What: Source Height Number. Why: The fit is measured against the original. How: This reads its height.
-		const souWidNum = souImaEle.naturalWidth;                                                                                 // What: Source Width Number. Why: The fit is measured against the original. How: This reads its width.
-		const scaValNum = Math.min( 1, Math.max( boxRecObj.widNum / souWidNum, boxRecObj.heiNum / souHeiNum ) );                  // What: Scale Value Number. Why: The image covers its box, as object-fit cover shows it, but is never enlarged. How: This takes the larger of the two fits, capped at 1.
-		const drwHeiNum = Math.round( souHeiNum * scaValNum );                                                                    // What: Drawn Height Number. Why: The original is drawn at the fitted size. How: This scales its height.
-		const drwWidNum = Math.round( souWidNum * scaValNum );                                                                    // What: Drawn Width Number. Why: The original is drawn at the fitted size. How: This scales its width.
-		const outHeiNum = boxRecObj.cutBoo ? boxRecObj.heiNum : drwHeiNum;                                                        // What: Output Height Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
-		const outWidNum = boxRecObj.cutBoo ? boxRecObj.widNum : drwWidNum;                                                        // What: Output Width Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
-		const outCanEle = document.createElement( 'canvas' );                                                                     // What: Output Canvas Element. Why: The image is redrawn at its new size. How: This creates the canvas.
+		const souHeiNum = souImaEle.naturalHeight;                                                               // What: Source Height Number. Why: The fit is measured against the original. How: This reads its height.
+		const souWidNum = souImaEle.naturalWidth;                                                                // What: Source Width Number. Why: The fit is measured against the original. How: This reads its width.
+		const scaValNum = Math.min( 1, Math.max( boxRecObj.widNum / souWidNum, boxRecObj.heiNum / souHeiNum ) ); // What: Scale Value Number. Why: The image covers its box, as object-fit cover shows it, but is never enlarged. How: This takes the larger of the two fits, capped at 1.
+		const drwHeiNum = Math.round( souHeiNum * scaValNum );                                                   // What: Drawn Height Number. Why: The original is drawn at the fitted size. How: This scales its height.
+		const drwWidNum = Math.round( souWidNum * scaValNum );                                                   // What: Drawn Width Number. Why: The original is drawn at the fitted size. How: This scales its width.
+		const outHeiNum = boxRecObj.cutBoo ? boxRecObj.heiNum : drwHeiNum;                                       // What: Output Height Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
+		const outWidNum = boxRecObj.cutBoo ? boxRecObj.widNum : drwWidNum;                                       // What: Output Width Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
+		const outCanEle = document.createElement( 'canvas' );                                                    // What: Output Canvas Element. Why: The image is redrawn at its new size. How: This creates the canvas.
 
 
 		outCanEle.height = outHeiNum; // What: Canvas Height Assignment. Why: The canvas has to match the output size. How: This sets its height.
