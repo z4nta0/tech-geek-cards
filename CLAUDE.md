@@ -128,8 +128,9 @@ src/
                          share dialog, the motif, and the page list
   cards/                 one folder per card (christmas/, mothers-day/, ...)
   ui/family-card.tsx     the engine the three Family cards share
-  utils/                 motion.ts and rhythm.ts, the reduced-motion check,
-                         easing tokens, and scale steps for GSAP
+  utils/                 motion.ts, rhythm.ts, and random.ts, the
+                         reduced-motion check, easing tokens, scale steps for
+                         GSAP, and the random value the cards' pieces share
   assets/                card previews, illustrations, and fonts
   styles/                styles.css: the berry role and the layout values
 ```
