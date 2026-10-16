@@ -96,33 +96,34 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
 const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { // What: Card Tag Function. Why: Each card's page has to name the card to link scrapers. How: This swaps each of the home page's tags for the card's.
 
 
-	const desStr = htmEscFun( carDatObj.seaStr );                              // What: Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
-	const imaStr = `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg`;         // What: Image String. Why: Each card's preview shows its own image. How: This is its JPEG's absolute address.
-	const altStr = htmEscFun( carDatObj.altStr );                              // What: Alternative String. Why: The preview image needs a description. How: This escapes the card's alt text.
-	const titStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` ); // What: Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
-	const urlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                    // What: URL String. Why: The preview links to the card's own address. How: This is its absolute address.
+	const carDesStr = htmEscFun( carDatObj.seaStr );                              // What: Card Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
+	const carImaStr = `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg`;         // What: Card Image String. Why: Each card's preview shows its own image. How: This is its JPEG's absolute address.
+	const carAltStr = htmEscFun( carDatObj.altStr );                              // What: Card Alternative String. Why: The preview image needs a description. How: This escapes the card's alt text.
+	const carTitStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` ); // What: Card Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
+	const carUrlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                    // What: Card URL String. Why: The preview links to the card's own address. How: This is its absolute address.
+
 
 	const tagRowArr : [ string, string ][] = [ // What: Tag Row Array. Why: Every tag the card changes is found and replaced the same way. How: Each row pairs a tag's name or property with its card value.
 
 
-		[ 'description', desStr ],         // What: Description Row. Why: Search listings and many previews read the plain description. How: This sets the card's.
-		[ 'og:description', desStr ],      // What: Open Graph Description Row. Why: Most previews show this summary. How: This sets the card's.
-		[ 'og:image', imaStr ],            // What: Open Graph Image Row. Why: Most previews show this picture. How: This points at the card's own image.
-		[ 'og:image:alt', altStr ],        // What: Open Graph Image Alt Row. Why: The picture needs a description. How: This sets the card's alt text.
-		[ 'og:image:type', 'image/jpeg' ], // What: Open Graph Image Type Row. Why: A card's image is a JPEG, where the site's card is a PNG. How: This names its type.
-		[ 'og:title', titStr ],            // What: Open Graph Title Row. Why: Most previews lead with this title. How: This sets the card's.
-		[ 'og:url', urlStr ],              // What: Open Graph URL Row. Why: The preview points at the card's address. How: This sets it.
-		[ 'twitter:description', desStr ], // What: Twitter Description Row. Why: X shows this summary. How: This sets the card's.
-		[ 'twitter:image', imaStr ],       // What: Twitter Image Row. Why: X shows this picture. How: This points at the card's own image.
-		[ 'twitter:image:alt', altStr ],   // What: Twitter Image Alt Row. Why: X describes the picture with this. How: This sets the card's alt text.
-		[ 'twitter:title', titStr ]        // What: Twitter Title Row. Why: X leads with this title. How: This sets the card's.
+		[ 'description', carDesStr ],         // What: Description Row. Why: Search listings and many previews read the plain description. How: This sets the card's.
+		[ 'og:description', carDesStr ],      // What: Open Graph Description Row. Why: Most previews show this summary. How: This sets the card's.
+		[ 'og:image', carImaStr ],            // What: Open Graph Image Row. Why: Most previews show this picture. How: This points at the card's own image.
+		[ 'og:image:alt', carAltStr ],        // What: Open Graph Image Alt Row. Why: The picture needs a description. How: This sets the card's alt text.
+		[ 'og:image:type', 'image/jpeg' ],    // What: Open Graph Image Type Row. Why: A card's image is a JPEG, where the site's card is a PNG. How: This names its type.
+		[ 'og:title', carTitStr ],            // What: Open Graph Title Row. Why: Most previews lead with this title. How: This sets the card's.
+		[ 'og:url', carUrlStr ],              // What: Open Graph URL Row. Why: The preview points at the card's address. How: This sets it.
+		[ 'twitter:description', carDesStr ], // What: Twitter Description Row. Why: X shows this summary. How: This sets the card's.
+		[ 'twitter:image', carImaStr ],       // What: Twitter Image Row. Why: X shows this picture. How: This points at the card's own image.
+		[ 'twitter:image:alt', carAltStr ],   // What: Twitter Image Alt Row. Why: X describes the picture with this. How: This sets the card's alt text.
+		[ 'twitter:title', carTitStr ]        // What: Twitter Title Row. Why: X leads with this title. How: This sets the card's.
 
 
 	];
 
 
 
-	return tagRowArr.reduce( ( curHtmStr, [ keyStr, valStr ] ) => curHtmStr.replace( new RegExp( `<meta\\s+(name|property)=['"]${ keyStr.replace( /:/g, '\\:' ) }['"][^>]*>` ), `<meta $1="${ keyStr }" content="${ valStr }" />` ), htmTexStr.replace( /<title>[^<]*<\/title>/, `<title>${ titStr }</title>` ) ); // What: Tagged Page Return. Why: The page's title and every listed tag carry the card's values. How: This replaces the title, then each tag in turn, keeping whether it used name or property.
+	return tagRowArr.reduce( ( curHtmStr, [ tagKeyStr, tagValStr ] ) => curHtmStr.replace( new RegExp( `<meta\\s+(name|property)=['"]${ tagKeyStr.replace( /:/g, '\\:' ) }['"][^>]*>` ), `<meta $1="${ tagKeyStr }" content="${ tagValStr }" />` ), htmTexStr.replace( /<title>[^<]*<\/title>/, `<title>${ carTitStr }</title>` ) ); // What: Tagged Page Return. Why: The page's title and every listed tag carry the card's values. How: This replaces the title, then each tag in turn, keeping whether it used name or property.
 
 
 };
@@ -163,7 +164,7 @@ const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { //
 const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrapers read only a page's raw HTML, so each card needs a page of its own. How: This returns a plugin that serves and writes them.
 
 
-	let bldRecObj = { isaBldBoo : false, outDirStr : '' }; // What: Build Record Object. Why: The pages are written only after a production build, into its output folder. How: This holds whether the run is a build and where it writes, once Vite has resolved its config.
+	let buiRecObj = { buiBoo : false, outStr : '' }; // What: Build Record Object. Why: The pages are written only after a production build, into its output folder. How: This holds whether the run is a build and where it writes, once Vite has resolved its config.
 
 
 
@@ -175,21 +176,20 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 		closeBundle : async () => { // What: Close Bundle Hook. Why: The card pages copy the built page, which exists only once the build is written. How: This writes each card's page and its rewrite rules after the build.
 
 
-			if ( !bldRecObj.isaBldBoo ) return; // What: Build Guard. Why: The dev server writes nothing. How: This returns early outside a build.
+			if ( !buiRecObj.buiBoo ) return; // What: Build Guard. Why: The dev server writes nothing. How: This returns early outside a build.
 
 
 
-			const indHtmStr = await readFile( resolve( bldRecObj.outDirStr, 'index.html' ), 'utf8' ); // What: Index HTML String. Why: Every card page starts from the built page, bundle tags and all. How: This reads it.
-			const redPatStr = resolve( bldRecObj.outDirStr, '_redirects' );                           // What: Redirects Path String. Why: The rewrite rules go into the built copy of _redirects. How: This is its path.
-			const redTexStr = await readFile( redPatStr, 'utf8' );                                    // What: Redirects Text String. Why: The card rules go ahead of the site's existing rules. How: This reads the built copy.
-
+			const indHtmStr = await readFile( resolve( buiRecObj.outStr, 'index.html' ), 'utf8' );                                             // What: Index HTML String. Why: Every card page starts from the built page, bundle tags and all. How: This reads it.
+			const redPatStr = resolve( buiRecObj.outStr, '_redirects' );                                                                       // What: Redirects Path String. Why: The rewrite rules go into the built copy of _redirects. How: This is its path.
+			const redTexStr = await readFile( redPatStr, 'utf8' );                                                                             // What: Redirects Text String. Why: The card rules go ahead of the site's existing rules. How: This reads the built copy.
 			const carRulStr = CAR_DAT_ARR.map( ( carDatObj ) => `/${ carDatObj.sluStr }    /${ carDatObj.sluStr }.html    200` ).join( '\n' ); // What: Card Rules String. Why: Each card's address has to serve its own page rather than index.html. How: This writes a rewrite rule per card.
-			const heaPatStr = resolve( bldRecObj.outDirStr, '_headers' );                                                                      // What: Headers Path String. Why: The unlisted cards' rules go into the built copy of _headers. How: This is its path.
+			const heaPatStr = resolve( buiRecObj.outStr, '_headers' );                                                                         // What: Headers Path String. Why: The unlisted cards' rules go into the built copy of _headers. How: This is its path.
 			const heaTexStr = await readFile( heaPatStr, 'utf8' );                                                                             // What: Headers Text String. Why: The card rules follow the site's existing rules. How: This reads the built copy.
 			const unlRulStr = CAR_DAT_ARR.filter( ( carDatObj ) => !carDatObj.lisBoo ).flatMap( ( carDatObj ) => [ `/${ carDatObj.sluStr }`, `/${ carDatObj.sluStr }.html` ] ).map( ( pagPatStr ) => `${ pagPatStr }\n\tX-Robots-Tag: noindex` ).join( '\n' ); // What: Unlisted Rules String. Why: An unlisted card stays out of search even for crawlers that never run its script, which never see the card page's noindex tag. How: This writes a noindex header rule for each unlisted card's address and file name.
 
 
-			await Promise.all( CAR_DAT_ARR.map( ( carDatObj ) => writeFile( resolve( bldRecObj.outDirStr, `${ carDatObj.sluStr }.html` ), carTagFun( indHtmStr, carDatObj ) ) ) ); // What: Card Pages Write. Why: Each card needs its own page. How: This writes one tagged copy of the built page per card.
+			await Promise.all( CAR_DAT_ARR.map( ( carDatObj ) => writeFile( resolve( buiRecObj.outStr, `${ carDatObj.sluStr }.html` ), carTagFun( indHtmStr, carDatObj ) ) ) ); // What: Card Pages Write. Why: Each card needs its own page. How: This writes one tagged copy of the built page per card.
 
 			await writeFile( heaPatStr, `${ heaTexStr }\n\n\n\n# What: Unlisted Card Rules. Why: An unlisted card is made for one person and should stay out of search. How: These send a noindex header with each unlisted card's page.\n${ unlRulStr }\n` ); // What: Headers Write. Why: The unlisted cards' noindex rules join the site's headers. How: This appends them.
 
@@ -201,7 +201,14 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 		configResolved : ( conResObj ) => { // What: Config Resolved Hook. Why: The pages are written only after a build, into its output folder. How: This records both once Vite has resolved its config.
 
 
-			bldRecObj = { isaBldBoo : conResObj.command === 'build', outDirStr : resolve( conResObj.root, conResObj.build.outDir ) }; // What: Build Record Assignment. Why: closeBundle needs both. How: This stores whether this is a build and its output folder.
+			buiRecObj = { // What: Build Record Assignment. Why: closeBundle needs both. How: This stores whether this is a build and its output folder.
+
+
+				buiBoo : conResObj.command === 'build',                    // What: Build Boolean. Why: The dev server writes nothing. How: This is true only for a production build.
+				outStr : resolve( conResObj.root, conResObj.build.outDir ) // What: Output String. Why: The pages are written beside the built index.html. How: This is the build's resolved output folder.
+
+
+			};
 
 
 		},
@@ -209,8 +216,8 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 		transformIndexHtml : ( htmTexStr, ctxIndObj ) => { // What: Transform Index HTML Hook. Why: On the dev server, a card's address should serve the card's own tags, as the built site does. How: This rewrites the page for a card's address and leaves every other page alone.
 
 
-			const sluStr = new URL( ctxIndObj.originalUrl ?? '/', LIV_URL_STR ).pathname.slice( 1 ); // What: Slug String. Why: The requested address names the card, if any. How: This reads the path without its slash or query.
-			const carDatObj = CAR_DAT_ARR.find( ( carCurObj ) => carCurObj.sluStr === sluStr );      // What: Card Data Object. Why: Only a card's address gets a card's tags. How: This finds the card, if the address names one.
+			const reqSluStr = new URL( ctxIndObj.originalUrl ?? '/', LIV_URL_STR ).pathname.slice( 1 ); // What: Requested Slug String. Why: The requested address names the card, if any. How: This reads the path without its slash or query.
+			const carDatObj = CAR_DAT_ARR.find( ( carCurObj ) => carCurObj.sluStr === reqSluStr );      // What: Card Data Object. Why: Only a card's address gets a card's tags. How: This finds the card, if the address names one.
 
 
 

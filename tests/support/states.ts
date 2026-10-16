@@ -16,14 +16,14 @@ import type { Page } from '@playwright/test'; // What: Page. Why: Opening a stat
  * The page states the accessibility, interaction, and rendering suites visit,
  * and the helper that opens one; the responsive suite opens its own widths
  * through the same helper. A state is a page at a width, sometimes with
- * something opened on it: every route and the 404 page at phone and desktop
- * widths, the mobile menu open on a phone, and the share dialog open on the
- * Gallery at both widths. The card pages aren't states yet, since each card's
- * own code is checked as that card is converted. opeStaFun sizes the
- * viewport, loads the page, waits for the fonts, scrolls through the page so
- * any lazily loaded image loads, runs the state's own action, such as opening
- * the menu, and then waits for the page to stay still so nothing is measured
- * mid-fade.
+ * something opened on it: every route, every card, and the 404 page at phone
+ * and desktop widths, the mobile menu open on a phone, the share dialog open
+ * on the Gallery at both widths, and a signable card's share dialog on a
+ * phone. opeStaFun sizes the viewport, loads the page, under reduced motion
+ * for a card so it opens on its finished scene, waits for the fonts, scrolls
+ * through the page so any lazily loaded image loads, runs the state's own
+ * action, such as opening the menu, and then waits for the page to stay still
+ * so nothing is measured mid-fade.
  *
  * Sections:
  *  - Types
@@ -65,10 +65,10 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  *
  * @summary
  * Every state the checks visit: each route (Home, Gallery, About, Contact, and
- * each converted card's page) and the 404 page at a phone width (390px) and a
- * desktop width (1,440px), the mobile menu open at the phone width, since the
- * menu is only reachable there, and the share dialog open on the Gallery at
- * both widths, plus a signable card's at the phone width. Every row shares the
+ * every card's page) and the 404 page at a phone width (390px) and a desktop
+ * width (1,440px), the mobile menu open at the phone width, since the menu is
+ * only reachable there, and the share dialog open on the Gallery at both
+ * widths, plus a signable card's at the phone width. Every row shares the
  * {@link StaRecTyp} shape, so its fields carry no comments of their own:
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
@@ -99,8 +99,8 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 	{ heiNum : 844, ideStr : 'not-found-phone',           patStr : '/missing',               redBoo : false, widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
 	{ heiNum : 900, ideStr : 'christmas-desktop',         patStr : '/merry-christmas',       redBoo : true,  widNum : 1440 }, // What: Christmas Desktop State. Why: The Christmas card is the first converted card, so its page joins every check. How: This loads it at 1,440px, where reduced motion shows its finished snowy scene.
 	{ heiNum : 844, ideStr : 'christmas-phone',           patStr : '/merry-christmas',       redBoo : true,  widNum : 390  }, // What: Christmas Phone State. Why: The card's lettering shrinks and the floating bar crowds it on a phone. How: This loads it at 390px.
-	{ heiNum : 900, ideStr : 'birthday-desktop',          patStr : '/happy-birthday',        redBoo : true,  widNum : 1440 }, // What: Birthday Desktop State. Why: The Birthday card's message and cake, and converted cards join every check. How: This loads it at 1,440px, where it shows its message, cake, and balloons, still under reduced motion.
-	{ heiNum : 844, ideStr : 'birthday-phone',            patStr : '/happy-birthday',        redBoo : true,  widNum : 390  }, // What: Birthday Phone State. Why: The Birthday card's message and cake, and converted cards join every check. How: This loads it at 390px, where it shows its message, cake, and balloons, still under reduced motion.
+	{ heiNum : 900, ideStr : 'birthday-desktop',          patStr : '/happy-birthday',        redBoo : true,  widNum : 1440 }, // What: Birthday Desktop State. Why: The Birthday card's message, cake, and balloons share the screen, and converted cards join every check. How: This loads it at 1,440px, where it shows its message, cake, and balloons, still under reduced motion.
+	{ heiNum : 844, ideStr : 'birthday-phone',            patStr : '/happy-birthday',        redBoo : true,  widNum : 390  }, // What: Birthday Phone State. Why: The Birthday card's message, cake, and balloons share the screen, and converted cards join every check. How: This loads it at 390px, where it shows its message, cake, and balloons, still under reduced motion.
 	{ heiNum : 900, ideStr : 'mothers-day-desktop',       patStr : '/mothers-day',           redBoo : true,  widNum : 1440 }, // What: Mother's Day Desktop State. Why: The Mother's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 	{ heiNum : 844, ideStr : 'mothers-day-phone',         patStr : '/mothers-day',           redBoo : true,  widNum : 390  }, // What: Mother's Day Phone State. Why: The Mother's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 	{ heiNum : 900, ideStr : 'fathers-day-desktop',       patStr : '/fathers-day',           redBoo : true,  widNum : 1440 }, // What: Father's Day Desktop State. Why: The Father's Day card ends on its greeting over a photo mosaic, and converted cards join every check. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
@@ -334,13 +334,13 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
  * opeStaFun = Open State Function
  *
  * @summary
- * Opens one state on a page and waits until it's settled: sizes the
- * viewport, loads the path, waits for the web fonts, scrolls through the
- * page so every lazily loaded image starts loading ({@link revPagFun}),
- * waits for every image to decode, runs the state's action if it has one,
- * then waits until the page stays still ({@link waiSetFun}), so a check never
- * measures a heading halfway through its entrance fade or a menu halfway
- * open.
+ * Opens one state on a page and waits until it's settled: sizes the viewport,
+ * loads the path, under reduced motion for a card's row until it's open, waits
+ * for the web fonts, scrolls through the page so every lazily loaded image
+ * starts loading ({@link revPagFun}), waits for every image to decode, runs
+ * the state's action if it has one, then waits until the page stays still
+ * ({@link waiSetFun}), so a check never measures a heading halfway through its
+ * entrance fade or a menu halfway open.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

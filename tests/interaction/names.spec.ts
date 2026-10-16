@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import { expect } from '@playwright/test'; // What: Expect. Why: Each check passes only when the right font files load. How: This asserts on the files the page requested.
@@ -51,10 +50,10 @@ import { test   } from '@playwright/test'; // What: Test. Why: Each card and nam
 const NAM_ROW_ARR = [ // What: Name Row Array. Why: Each name card is checked with a plain name and one that needs more letters. How: Each row names a card's address with its name, whether that name needs the extended file, and the file's name.
 
 
-	{ extBoo : false, filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=Zo%C3%AB'                     },
-	{ extBoo : true,  filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=%C5%81ukasz'                  },
-	{ extBoo : false, filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=Sam'           },
-	{ extBoo : true,  filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=%C5%81ukasz'   }
+	{ extBoo : false, filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=Zo%C3%AB'                   },
+	{ extBoo : true,  filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=%C5%81ukasz'                },
+	{ extBoo : false, filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=Sam'         },
+	{ extBoo : true,  filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=%C5%81ukasz' }
 
 
 ];

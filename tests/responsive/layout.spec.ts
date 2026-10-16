@@ -15,16 +15,16 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * layout.spec.ts = Layout Spec
  *
  * @summary
- * Measures every route, the 404 page, and the open mobile menu across a range
- * of screen widths, in whichever engine the project runs, and fails a width
- * whose layout breaks: the page scrolling sideways, a visible element reaching
- * past either edge of the screen (unless an ancestor clips it on purpose),
- * text spilling out of its own box, or two controls a visitor can reach
- * overlapping each other. The widths run from 320px, WCAG's narrowest reflow
- * width, to 1,920px, and include a pixel either side of each of the site's
- * breakpoints, where a layout switches and is most likely to crowd. Pages open
- * under reduced motion, which changes nothing about the layout but skips the
- * wait for entrance animations.
+ * Measures every route, every card, the 404 page, and the open mobile menu
+ * across a range of screen widths, in whichever engine the project runs, and
+ * fails a width whose layout breaks: the page scrolling sideways, a visible
+ * element reaching past either edge of the screen (unless an ancestor clips it
+ * on purpose), text spilling out of its own box, or two controls a visitor can
+ * reach overlapping each other. The widths run from 320px, WCAG's narrowest
+ * reflow width, to 1,920px, and include a pixel either side of each of the
+ * site's breakpoints, where a layout switches and is most likely to crowd.
+ * Pages open under reduced motion, which changes nothing about the layout but
+ * skips the wait for entrance animations.
  *
  * Sections:
  *  - Constants
@@ -58,7 +58,7 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
 	{ ideStr : 'christmas',         menBoo : false, patStr : '/merry-christmas'       }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
-	{ ideStr : 'birthday',          menBoo : false, patStr : '/happy-birthday'        }, // What: Birthday Case. Why: The Birthday card's message and cake. How: This measures its message, cake, and balloons, still under reduced motion.
+	{ ideStr : 'birthday',          menBoo : false, patStr : '/happy-birthday'        }, // What: Birthday Case. Why: The Birthday card's message, cake, and balloons share the screen. How: This measures its message, cake, and balloons, still under reduced motion.
 	{ ideStr : 'mothers-day',       menBoo : false, patStr : '/mothers-day'           }, // What: Mother's Day Case. Why: The Mother's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
 	{ ideStr : 'fathers-day',       menBoo : false, patStr : '/fathers-day'           }, // What: Father's Day Case. Why: The Father's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
 	{ ideStr : 'fourth-of-july',    menBoo : false, patStr : '/fourth-of-july'        }, // What: Fourth Of July Case. Why: The Fourth of July card's flag and lettering center above the bar. How: This measures its finished flag and lettering, which reduced motion shows at once.
@@ -144,13 +144,11 @@ function layProFun () : string[] {
 	const texSpiFun = ( texCurEle : Element ) => { // What: Text Spill Function. Why: Only the element's own text running out of its box is a spill, not a decoration drawn past it on purpose, such as an underline or highlight reaching past an italic line. How: This measures every line of the element's own text and reports whether any runs more than a pixel past either inner edge of its box.
 
 
-		const boxRecObj = texCurEle.getBoundingClientRect(); // What: Box Rect Object. Why: The text is measured against the element's own box. How: This measures the box.
-		const ranTexObj = document.createRange();            // What: Range Text Object. Why: A range measures text by its lines rather than by the element's box. How: This creates one to point at each text node in turn.
-
+		const boxRecObj = texCurEle.getBoundingClientRect();                                                                       // What: Box Rect Object. Why: The text is measured against the element's own box. How: This measures the box.
+		const ranTexObj = document.createRange();                                                                                  // What: Range Text Object. Why: A range measures text by its lines rather than by the element's box. How: This creates one to point at each text node in turn.
 		const sizRatNum = texCurEle instanceof HTMLElement && texCurEle.offsetWidth ? boxRecObj.width / texCurEle.offsetWidth : 1; // What: Size Ratio Number. Why: An element grown by a transform (a card's greeting) is drawn larger than its layout width, while its border and inner width are read unscaled. How: This is its drawn width over its layout width, 1 when it isn't scaled.
-
-		const boxLefNum = boxRecObj.left + texCurEle.clientLeft * sizRatNum; // What: Box Left Number. Why: Text may reach the padding but not the border. How: This is the inner left edge, just inside the left border, scaled as drawn.
-		const boxRigNum = boxLefNum + texCurEle.clientWidth * sizRatNum;     // What: Box Right Number. Why: Text may reach the padding but not the border. How: This is the inner right edge, the inner width past the left one, scaled as drawn.
+		const boxLefNum = boxRecObj.left + texCurEle.clientLeft * sizRatNum;                                                       // What: Box Left Number. Why: Text may reach the padding but not the border. How: This is the inner left edge, just inside the left border, scaled as drawn.
+		const boxRigNum = boxLefNum + texCurEle.clientWidth * sizRatNum;                                                           // What: Box Right Number. Why: Text may reach the padding but not the border. How: This is the inner right edge, the inner width past the left one, scaled as drawn.
 
 
 		for ( const chiCurNod of texCurEle.childNodes ) { // What: Text Node Loop. Why: Only the element's own text counts, since each child element is measured on its own. How: This walks the element's direct children.
@@ -252,7 +250,6 @@ function layProFun () : string[] {
 
 		const expRecObj = expCurEle.getBoundingClientRect(); // What: Exposed Rect Object. Why: The samples cover the control's own box. How: This measures it.
 		const samPoiArr = [ 0.1, 0.3, 0.5, 0.7, 0.9 ];        // What: Sample Point Array. Why: Five fractions across each side make an even grid of 25 points. How: Each fraction places a sample across the box.
-
 		const hitCouNum = samPoiArr.flatMap( ( xcoFraNum ) => samPoiArr.map( ( ycoFraNum ) => document.elementFromPoint( expRecObj.left + expRecObj.width * xcoFraNum, expRecObj.top + expRecObj.height * ycoFraNum ) ) ).filter( ( hitCurEle ) => !!hitCurEle && expCurEle.contains( hitCurEle ) ).length; // What: Hit Count Number. Why: Each sample the control wins is a spot a visitor can tap. How: This counts the samples whose top element is the control or inside it.
 
 
