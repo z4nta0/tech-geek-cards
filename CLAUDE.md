@@ -149,6 +149,15 @@ rest follow the same pattern.
   to the `stage` box, twice 1920 by 1080.
 - **Fonts** are Fontsource's Latin WOFF2 files, declared with `@font-face` in
   the card's own module, so they load only with the card.
+- **Names beyond basic Latin** (added 2026-10-16): a font that shows a
+  visitor's name (Birthday's Luckiest Guy, Christmas's Gloria Hallelujah) also
+  declares Fontsource's extended Latin file, each face limited to its set's
+  characters with `unicode-range`, so the extra file downloads only when a
+  name uses a letter such as Ł. Mountains of Christmas has no extended set,
+  so the Christmas greeting falls back to Gloria Hallelujah for those
+  letters. None of the three has Cyrillic or Greek, which show in a system
+  font. `tests/interaction/names.spec.ts` checks the extended files load only
+  when needed.
 - **The component is a named export**, and the catalog's lazy import maps it
   to the default React.lazy needs.
 - **GSAP timelines follow the scale**: durations through `durMilFun` (steps
@@ -203,9 +212,7 @@ the rest while the user was away, for review together afterwards. Every style
 value was snapped to its nearest token whatever the distance (decided by the
 user 2026-10-15), and each value more than 10% from its original was listed
 for that review. The interim pieces are gone: the copied hook, the 1.6 line
-height on the card page, and the floating bar's z-index of 1000. Still open:
-names outside Latin (the extended Latin font files, loaded only when a name
-needs them).
+height on the card page, and the floating bar's z-index of 1000.
 
 ## Test suites
 Added 2026-10-14, adapted from TechGeek.dev's (see its CLAUDE.md for what
