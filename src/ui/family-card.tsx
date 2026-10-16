@@ -200,7 +200,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const wakLocRef = useRef< WakeLockSentinel | null >( null );   // What: Wake Lock Reference. Why: The screen should stay on while the card plays. How: This holds the lock, null until granted.
 
 	const [ expIndNum, setExpIndNum ] = useState< number | null >( null ); // What: Expanded Index Number And Setter. Why: Only one photo opens full size at a time. How: This holds the open photo's index, or null.
-	const [ carPauBoo, setCarPauBoo ]       = useState( false );           // What: Paused Boolean And Setter. Why: The pause button shows play while the card is paused. How: This mirrors the timeline's paused state.
+	const [ carPauBoo, setCarPauBoo ] = useState( false );                 // What: Card Paused Boolean And Setter. Why: The pause button shows play while the card is paused. How: This mirrors the timeline's paused state.
 	const [ posIndNum, setPosIndNum ] = useState( 0 );                     // What: Position Index Number And Setter. Why: The dots fill in as the card plays. How: This holds the current scene's place, or the scene count once the closing line begins.
 	const [ redMotBoo ]               = useState( redMotFun );             // What: Reduced Motion Boolean. Why: Under reduced motion the card opens finished, the controls step through stills, and there's nothing to pause. How: This reads the preference once, as the card opens.
 
@@ -208,17 +208,47 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 	const wakReqFun = () => navigator.wakeLock?.request( 'screen' ).then( ( wakLocObj ) => { wakLocRef.current = wakLocObj; } ).catch( () => {} ); // What: Wake Request Function. Why: The screen should stay on while the card plays, again after a jump back from the end, and not every browser grants a lock. How: This asks for the lock, keeps it when granted, and ignores a refusal.
 
+
+
+	// #region posUpdFun
+
+	/**
+	 * posUpdFun = Position Update Function
+	 *
+	 * @summary
+	 * Stores the card's place for the scene dots and their label: the index
+	 * of the last scene whose start the timeline has reached, or the scene
+	 * count once the closing line has begun, which fills every dot and
+	 * reads as the closing. It reads a millisecond ahead, so a jump that
+	 * lands exactly on a scene's start counts as reaching it. The timeline
+	 * calls it on every frame it renders, and each jump calls it once more,
+	 * since a jump may not render a frame the callback hears.
+	 *
+	 * @author z4nta0 <https://github.com/z4nta0>
+	 *
+	 * @param void - This function takes no parameters.
+	 *
+	 * @returns This function does not return anything.
+	 *
+	 * @example
+	 * ```ts
+	 * posUpdFun() // => void
+	 * ```
+	 *
+	*/
+
 	const posUpdFun = () => { // What: Position Update Function. Why: The dots follow the timeline wherever it plays or jumps. How: This counts the scenes started by the timeline's time, or every scene once the closing line has begun.
 
 
 		const timNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
 
 
-
 		setPosIndNum( timNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= timNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
 
 
 	};
+
+	// #endregion posUpdFun
 
 
 
@@ -401,7 +431,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 
-
 		timLinObj.to( greSpaRef.current, { duration : fadDurNum, ease : oveEasStr, scale : finScaFun } ); // What: Greeting Growth. Why: The greeting fills the screen with a flourish. How: This grows it by its final scale, which GSAP reads from the function when the growth starts.
 
 		timLinObj.to( griDivRef.current, { autoAlpha : 1, duration : shoDurNum }, '<' ); // What: Grid Show. Why: The photo grid appears behind the growing greeting. How: This shows it almost at once.
@@ -485,7 +514,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The jump moves the card's timeline. How: This reads it from its reference.
 
 
-
 		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to move. How: This returns early.
 
 
@@ -494,8 +522,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const stoTimArr = redMotBoo ? [ ...stiTimRef.current, endTimNum ] : [ ...staTimRef.current, behTimRef.current, endTimNum ]; // What: Stop Time Array. Why: Reduced motion steps through stills, and motion through scene starts. How: This lists the stops for the visitor's preference, ending at the end.
 		const timNum    = timLinObj.time() + 0.001;                                                                                 // What: Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
 
-		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= timNum ).length - 1;                             // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
-		const resSceBoo = !redMotBoo && dirNum < 0 && timNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Restart Scene Boolean. Why: Previous well into a scene restarts it, and only a quick second press goes back further. How: This checks the card is playing its motion, moving back, and more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= timNum ).length - 1; // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
+
+		const bacDirBoo = dirNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
+		const farPasBoo = timNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const motPlaBoo = !redMotBoo;                                                          // What: Motion Playing Boolean. Why: Under reduced motion every stop is a still, so nothing restarts. How: This checks the card plays its motion.
+
+		const resSceBoo = bacDirBoo && farPasBoo && motPlaBoo; // What: Restart Scene Boolean. Why: Previous well into a scene restarts it, and only a quick second press goes back further. How: This combines the three checks.
+
 
 		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirNum, 0 ), stoTimArr.length - 1 );    // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
 
@@ -535,7 +569,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The toggle pauses the card's timeline. How: This reads it from its reference.
 
 
-
 		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to pause. How: This returns early.
 
 
@@ -552,9 +585,21 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const keyDowFun = useEffectEvent( ( keyEveObj : KeyboardEvent ) => { // What: Key Down Function. Why: Keyboard visitors move through the card with the arrow keys and pause it with the space bar. How: This maps those keys to the controls, leaving a focused control's own keys and an open photo alone.
 
 
+		const altPreBoo = keyEveObj.altKey;  // What: Alt Pressed Boolean. Why: A key held with Alt belongs to the browser. How: This reads the event's Alt flag.
+		const conPreBoo = keyEveObj.ctrlKey; // What: Control Pressed Boolean. Why: A key held with Control belongs to the browser. How: This reads the event's Control flag.
+		const metPreBoo = keyEveObj.metaKey; // What: Meta Pressed Boolean. Why: A key held with Command belongs to the browser. How: This reads the event's Meta flag.
+
+		const modKeyBoo = altPreBoo || conPreBoo || metPreBoo; // What: Modifier Key Boolean. Why: A key held with a modifier belongs to the browser. How: This combines the three flags.
+
+
 		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar already presses a focused button or link. How: This checks the key went to one.
-		const modKeyBoo = keyEveObj.altKey || keyEveObj.ctrlKey || keyEveObj.metaKey;                                     // What: Modifier Key Boolean. Why: A key held with a modifier belongs to the browser. How: This checks for Alt, Control, or Command.
 		const phoOpeBoo = !!expDiaRef.current?.open;                                                                      // What: Photo Open Boolean. Why: An open photo keeps the keys for itself. How: This checks whether the dialog is open.
+
+		const conFreBoo = !conFocBoo;            // What: Control Free Boolean. Why: The space bar already presses a focused button or link. How: This checks focus isn't on one.
+		const motPlaBoo = !redMotBoo;            // What: Motion Playing Boolean. Why: Under reduced motion nothing plays, so there's nothing to pause. How: This checks the card plays its motion.
+		const spaKeyBoo = keyEveObj.key === ' '; // What: Space Key Boolean. Why: The space bar pauses and plays. How: This checks the key pressed was the space bar.
+
+		const spaPauBoo = conFreBoo && motPlaBoo && spaKeyBoo; // What: Space Pause Boolean. Why: The space bar toggles the pause only when it isn't pressing a control and the card plays its motion. How: This combines the three checks.
 
 
 
@@ -566,7 +611,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		else if ( keyEveObj.key === 'ArrowRight' ) navSceFun( 1 ); // What: Right Arrow Branch. Why: The right arrow goes forward. How: This moves one stop forward.
 
-		else if ( keyEveObj.key === ' ' && !conFocBoo && !redMotBoo ) { // What: Space Branch. Why: The space bar pauses and plays, as in a video player. How: This toggles the pause, keeping the page from scrolling.
+		else if ( spaPauBoo ) { // What: Space Branch. Why: The space bar pauses and plays, as in a video player. How: This toggles the pause, keeping the page from scrolling.
 
 
 			keyEveObj.preventDefault(); // What: Scroll Prevention Call. Why: The space bar would otherwise scroll. How: This cancels its default.
@@ -655,7 +700,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 			</div>
-
 
 			<div
 				ref={ phoDivRef }
@@ -914,6 +958,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			</div>
 
 
+
 			<div className={ cssModObj.scrReaDiv }>{ /* What: Screen Reader Div Element. Why: The typed lines are hidden from screen readers, which should still hear the whole message. How: This holds every line and the greeting, hidden from view. */ }
 
 
@@ -925,14 +970,12 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 				))}
 
-
 				<p>{ famCarObj.behStr }</p>{ /* What: Behalf Paragraph Element. Why: The closing line is part of the message. How: This holds it. */ }
 
 				<h1>{ famCarObj.greStr }</h1>{ /* What: Greeting Heading Element. Why: The greeting is the card's heading. How: This holds it for screen readers and search engines. */ }
 
 
 			</div>
-
 
 			<dialog
 				ref={ expDiaRef }

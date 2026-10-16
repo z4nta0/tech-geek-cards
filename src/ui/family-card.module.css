@@ -50,7 +50,6 @@
 }
 
 
-
 /* #region famGriDiv */
 
 .famGriDiv { /* What: Family Grid Div. Why: The card ends on all its photos in a mosaic of tall and short cells. How: This lays out four columns over seven rows, the taller rows a power of the core design number, hidden until the timeline shows it. */
@@ -81,7 +80,6 @@
 
 
 }
-
 
 
 /* #region famCelBut */
@@ -189,6 +187,8 @@
 
 
 
+/* #region famPhoDiv */
+
 .famPhoDiv { /* What: Family Photo Div. Why: Each scene's photo is revealed through a heart that grows to cover the screen. How: This stacks the photos under a heart-shaped mask sized from the timeline's scale, up to the core design number to the power of 4 times the screen's longer side. */
 
 
@@ -216,6 +216,8 @@
 
 }
 
+/* #endregion famPhoDiv */
+
 
 
 /* #region famTexDiv */
@@ -235,7 +237,6 @@
 
 
 }
-
 
 
 /* #region famLinDiv */
@@ -380,8 +381,8 @@
 
 	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */
 	border-radius    : 999px;
-	color            : inherit;
-	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by contrast checkers as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
+	color            : inherit;                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
+	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by contrast checkers as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */
 	font-family      : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
 	font-size        : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
 	margin           : 0;
@@ -414,7 +415,6 @@
 
 
 }
-
 
 
 /* #region famDotDiv */
@@ -474,7 +474,6 @@
 
 
 }
-
 
 
 /* #region famConBut */
@@ -544,6 +543,7 @@
 /* #endregion famBotDiv */
 
 
+
 .scrReaDiv { /* What: Screen Reader Div. Why: The typed lines are hidden from screen readers, which read the whole message from here instead. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
 
 
@@ -607,7 +607,6 @@
 }
 
 
-
 /* #region famExpBut */
 
 .famExpBut { /* What: Family Expanded Button. Why: Tapping the full-size photo closes it. How: This clears the button's own look and fills the dialog, easing its press and focus ring. */
@@ -619,7 +618,7 @@
 	display    : block;
 	height     : 100%;
 	padding    : 0;
-	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 	width      : 100%;
 
 
