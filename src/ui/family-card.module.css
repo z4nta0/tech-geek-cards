@@ -9,12 +9,15 @@
  * shares the card's one grid cell, filling the screen: the photo mosaic at the
  * bottom, the heart stage over it, and the lettering on top. The card's own
  * theme class sets its background, text color, and font through the
- * --fam-bac-col, --fam-tex-col, and --fam-tex-fon properties. The heart is a
- * mask scaled through --fam-hea-sca, and the key words' underline is drawn
- * through --fam-und-sca, both of which the timeline animates. The mosaic is
- * four columns, three at the phone breakpoint, and each photo zooms slightly
- * on hover, presses in, and opens in a dialog that fades in. Every
- * transition and animation holds still under reduced motion.
+ * --fam-bac-col, --fam-tex-col, and --fam-tex-fon properties, and may move
+ * the underline through --fam-und-off. The heart is a mask scaled through
+ * --fam-hea-sca, and the key words' underline is drawn through
+ * --fam-und-sca, both of which the timeline animates, while the cursor
+ * blinks on its own. The mosaic is four columns, three at the phone
+ * breakpoint, running behind the floating bar like the rest of the card,
+ * and each photo zooms slightly on hover, presses in, and opens in a dialog
+ * that fades in. Every transition and animation holds still under reduced
+ * motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -47,12 +50,12 @@
 
 
 	display               : grid;
-	gap                   : var( --spa-ver-m01 ) var( --spa-hor-m01 );                                            /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px */
+	gap                   : var( --spa-ver-m01 ) var( --spa-hor-m01 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px */
 	grid-area             : 1 / 1;
 	grid-template-columns : repeat( 4, 1fr );
-	grid-template-rows    : 1.325fr 1fr 1fr 1.325fr 1fr 1fr 1.325fr;                                              /* What: Mosaic Rows. Why: The taller rows are the core design number to the power of 1, about 1.325, written out since an fr can't be computed. How: Three taller rows break up the mosaic. */
+	grid-template-rows    : 1.325fr 1fr 1fr 1.325fr 1fr 1fr 1.325fr;   /* What: Mosaic Rows. Why: The taller rows are the core design number to the power of 1, about 1.325, written out since an fr can't be computed. How: Three taller rows break up the mosaic. */
 	opacity               : 0;
-	padding               : var( --spa-ver-m01 ) var( --spa-hor-m01 ) var( --car-bar-mar, var( --spa-ver-m01 ) ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px, Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the mosaic's last row clear of it, falling back to the mosaic's own gap outside the card page. */
+	padding               : var( --spa-ver-m01 ) var( --spa-hor-m01 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Minus 1 = 11px */ /* What: Full Screen Mosaic. Why: The mosaic fills the screen like a collage, running behind the floating bar as every card does, and each photo the bar crosses still shows enough to tap. How: This keeps the same gap on every side. */
 	visibility            : hidden;
 
 
@@ -257,12 +260,12 @@
 
 
 	background-color : currentColor;
-	bottom           : calc( var( --cdn-pow-005-rec ) * 1em ); /* Core-Design-Number to the Power of 5 Reciprocal ~= 0.245em */ /* What: Underline Drop. Why: The underline should sit just under the letters at any size. How: This is measured in the lettering's own size. */
+	bottom           : var( --fam-und-off, calc( var( --cdn-pow-005-rec ) * 1em ) ); /* Family Underline Offset, set by the card's theme class, Core-Design-Number to the Power of 5 Reciprocal ~= 0.245em */ /* What: Underline Drop. Why: The underline should sit just under the letters at any size, and each card's font sits differently on its line. How: This is measured in the lettering's own size, a card's theme setting its own where the default touches its letters. */
 	content          : '';
-	height           : calc( var( --ver-rhy-m08 ) * 1rem );    /* Vertical Rhythm Base Minus 8 ~= 1.536px */
+	height           : calc( var( --ver-rhy-m08 ) * 1rem );                          /* Vertical Rhythm Base Minus 8 ~= 1.536px */
 	left             : 0;
 	position         : absolute;
-	scale            : var( --fam-und-sca, 0 ) 1;              /* Family Underline Scale, set by the timeline */
+	scale            : var( --fam-und-sca, 0 ) 1;                                    /* Family Underline Scale, set by the timeline */
 	transform-origin : left center;
 	width            : 100%;
 
@@ -286,16 +289,52 @@
 
 }
 
-.famCurSpa { /* What: Family Cursor Span. Why: A thin cursor follows the typing. How: This draws a narrow bar in the text color at the lettering's height, with a small gap before it. */
+.famCurSpa { /* What: Family Cursor Span. Why: A thin cursor follows the typing. How: This sizes a narrow box at the lettering's height, standing on the line's baseline with a small gap before it, for its blinking bar. */
 
 
+	display        : inline-block;
+	height         : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
+	margin-left    : var( --spa-hor-m05 );                /* Spacing Horizontal Base Minus 5 ~= 3.572px */
+	max-height     : 1em;                                 /* What: Cursor Cap. Why: The lettering shrinks on a phone, and a full-height bar would tower over it. How: This caps the bar at the text's own size. */
+	vertical-align : baseline;                            /* What: Baseline Cursor. Why: Sitting on the text's bottom, the bar hung below the letters by the font's whole descent. How: This stands it on the baseline, level with the letters. */
+	width          : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+
+
+}
+.famCurSpa::before { /* What: Family Cursor Bar. Why: A typing cursor blinks, and the timeline fades the cursor's box out at the end, which an animation on the box itself would override. How: This fills the box with a bar in the text color that blinks on and off. */
+
+
+	animation        : famCurSpaBlinkFlash var( --dur-ani-p07 ) step-end infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */ /* What: Blink Cycle. Why: An ordinary text cursor blinks about once a second. How: Each cycle shows the bar for half the step and hides it for the other half. */
 	background-color : currentColor;
-	display          : inline-block;
-	height           : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
-	margin-left      : var( --spa-hor-m05 );                /* Spacing Horizontal Base Minus 5 ~= 3.572px */
-	max-height       : 1em;                                 /* What: Cursor Cap. Why: The lettering shrinks on a phone, and a full-height bar would tower over it. How: This caps the bar at the text's own size. */
-	vertical-align   : text-bottom;
-	width            : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
+	content          : '';
+	display          : block;
+	height           : 100%;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cursor Bar. Why: Someone who asked for less motion shouldn't see the cursor flash. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famCurSpa::before { /* What: Still Family Cursor Bar. Why: The cursor should simply stay lit. How: This turns the blink off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes famCurSpaBlinkFlash { /* What: Family Cursor Blink Flash. Why: The cursor blinks on and off rather than fading. How: Held by the step-end timing, the bar stays lit for the first half of each cycle and hidden for the second. */
+
+
+	50% {
+
+
+		opacity : 0;
+
+
+	}
 
 
 }

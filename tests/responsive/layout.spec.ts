@@ -245,6 +245,23 @@ function layProFun () : string[] {
 	} );
 
 
+	const expFraFun = ( expCurEle : Element ) : number => { // What: Exposed Fraction Function. Why: A control a floating bar crosses still works when enough of it stays uncovered. How: This samples a grid of points over the control and returns the share where the control itself is on top.
+
+
+		const expRecObj = expCurEle.getBoundingClientRect(); // What: Exposed Rect Object. Why: The samples cover the control's own box. How: This measures it.
+		const samPoiArr = [ 0.1, 0.3, 0.5, 0.7, 0.9 ];        // What: Sample Point Array. Why: Five fractions across each side make an even grid of 25 points. How: Each fraction places a sample across the box.
+
+		const hitCouNum = samPoiArr.flatMap( ( xcoFraNum ) => samPoiArr.map( ( ycoFraNum ) => document.elementFromPoint( expRecObj.left + expRecObj.width * xcoFraNum, expRecObj.top + expRecObj.height * ycoFraNum ) ) ).filter( ( hitCurEle ) => !!hitCurEle && expCurEle.contains( hitCurEle ) ).length; // What: Hit Count Number. Why: Each sample the control wins is a spot a visitor can tap. How: This counts the samples whose top element is the control or inside it.
+
+
+
+		return hitCouNum / ( samPoiArr.length * samPoiArr.length ); // What: Exposed Fraction Return. Why: The caller compares the share with its limit. How: This divides the hits by the 25 samples.
+
+
+	};
+
+
+
 	conEleArr.forEach( ( oneCurEle, oneIndNum ) => conEleArr.slice( oneIndNum + 1 ).forEach( ( twoCurEle ) => { // What: Control Pair Loop. Why: Overlap is a property of two controls. How: This visits every pair once.
 
 
@@ -258,7 +275,7 @@ function layProFun () : string[] {
 		const areOveBoo = oveWidNum * oveHeiNum > 1;                                            // What: Area Overlap Boolean. Why: A shared edge or corner isn't a real overlap. How: This checks they share more than a pixel of area.
 		const sepConBoo = !oneCurEle.contains( twoCurEle ) && !twoCurEle.contains( oneCurEle ); // What: Separate Control Boolean. Why: A control inside another overlaps it by design. How: This checks that neither holds the other.
 
-		const conOveBoo = widOveBoo && heiOveBoo && areOveBoo && sepConBoo; // What: Control Overlap Boolean. Why: All four together mean two separate controls cover each other. How: This combines them.
+		const conOveBoo = widOveBoo && heiOveBoo && areOveBoo && sepConBoo && !( expFraFun( oneCurEle ) >= 0.25 && expFraFun( twoCurEle ) >= 0.25 ); // What: Control Overlap Boolean. Why: All four together mean two separate controls cover each other, unless both still show a quarter of themselves to tap, as photos do behind a card's floating bar. How: This combines them, skipping such a pair.
 
 
 		if ( conOveBoo ) proLisArr.push( `${ desEleFun( oneCurEle ) } overlaps ${ desEleFun( twoCurEle ) }` ); // What: Overlap Check. Why: Overlapping controls are hard to read and to tap. How: This records a pair sharing more than a pixel of area.

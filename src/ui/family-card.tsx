@@ -488,7 +488,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 					ref={ tapParRef }
 
 					className={ cssModObj.famTapPar }
-				>Tap a photo to see it full size.</p>{ /* What: Family Tap Paragraph Element. Why: The grid's photos open when tapped, which isn't obvious. How: This hint appears with the grid. */ }
+				>Tap any photo to enlarge it.</p>{ /* What: Family Tap Paragraph Element. Why: The grid's photos open when tapped, which isn't obvious. How: This hint appears with the grid. */ }
 
 
 			</div>

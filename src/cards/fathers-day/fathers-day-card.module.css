@@ -30,12 +30,13 @@
 
 
 
-.fatCarDiv { /* What: Father's Card Div. Why: The Family engine plays every Family card, each in its own colors and font. How: This sets the three properties the engine reads. */
+.fatCarDiv { /* What: Father's Card Div. Why: The Family engine plays every Family card, each in its own colors and font. How: This sets the properties the engine reads. */
 
 
 	--fam-bac-col : #B8E3E9;                                  /* What: Family Background Color. Why: A pale sky blue sets a bright, easy tone. How: The engine's stage, lettering halo, and tap hint read it. */
 	--fam-tex-col : #192A55;                                  /* What: Family Text Color. Why: Navy reads clearly on the sky blue and over the photos' sky blue halo. How: The engine's lettering, underline, and cursor read it. */
 	--fam-tex-fon : 'Permanent Marker', var( --fon-fam-mai ); /* What: Family Text Font. Why: A bold marker hand feels like a note on the fridge. How: This names Permanent Marker, falling back to the main font. */
+	--fam-und-off : calc( var( --cdn-pow-006-rec ) * 1em );   /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185em */ /* What: Family Underline Offset. Why: Permanent Marker sits low on its line, so the default underline touched its letters. How: This drops the underline one step lower than the engine's default. */
 
 
 }

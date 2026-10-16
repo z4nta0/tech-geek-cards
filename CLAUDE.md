@@ -171,14 +171,16 @@ rest follow the same pattern.
   balloons, fireworks) returns a stop function the card's `useGSAP` cleanup
   calls, steps by elapsed time so 60Hz and 120Hz screens match, and never
   starts under reduced motion.
-- **The Family cards** (Mother's Day, Father's Day, and the Father's Day
-  prank) are one engine, `ui/family-card.tsx`, each card only a record of its
-  lines, photos, grid order, and greeting plus a theme class setting
-  `--fam-bac-col`, `--fam-tex-col`, and `--fam-tex-fon`. The heart is a CSS
-  mask (`ui/family-heart.svg`), so no orientation code or remount is needed,
-  the grid's photos open in a dialog, and the greeting's growth is capped to
-  fit the screen. Its halo is three plain glows: more layers made WebKit
-  stall while each letter typed.
+- **The Family cards** (Mother's Day, Father's Day, and the Father's Day prank)
+  are one engine, `ui/family-card.tsx`, each card only a record of its lines,
+  photos, grid order, and greeting plus a theme class setting `--fam-bac-col`,
+  `--fam-tex-col`, and `--fam-tex-fon`, plus `--fam-und-off` where its font
+  needs the underline moved. The heart is a CSS mask (`ui/family-heart.svg`),
+  so no orientation code or remount is needed, the grid's photos open in a
+  dialog, the mosaic runs behind the floating bar (decided by the user
+  2026-10-16, every photo keeping at least a third of its area to tap at 320 by
+  568), and the greeting's growth is capped to fit the screen. Its halo is
+  three plain glows: more layers made WebKit stall while each letter typed.
 
 ## Card conversion pass
 Every card was converted on 2026-10-15, the Christmas card with the user and
