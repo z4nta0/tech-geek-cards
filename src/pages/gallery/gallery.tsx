@@ -10,15 +10,15 @@ import { CAR_REC_ARR  } from '../../ui/cards.ts';                      // What: 
 import { CarTilCom    } from '../../ui/card-tile.tsx';                 // What: Card Tile Component. Why: Each card shows as a tile. How: The page renders one per matching card.
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
 import { Link         } from 'react-router';                           // What: Link. Why: The custom card note moves to the Contact page without a full page load. How: This renders that link.
-import { OCC_NAM_ARR  } from '../../ui/cards.ts';                      // What: Occasion Name Array. Why: The filter offers every occasion. How: The page renders a button for each.
+import { OCC_NAM_ARR  } from '../../ui/card-data.ts';                  // What: Occasion Name Array. Why: The filter offers every occasion. How: The page renders a button for each.
 import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: A card can be shared straight from its tile. How: The page mounts it when a tile's Share is pressed.
 import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: The Gallery's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the search, the chosen occasion, and the card being shared. How: This holds each of them.
 
 
-import type { CarRecTyp } from '../../ui/cards.ts'; // What: Card Record Type. Why: The page holds the card being shared. How: This types that state.
-import type { JSX       } from 'react';             // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
-import type { OccNamTyp } from '../../ui/cards.ts'; // What: Occasion Name Type. Why: The chosen filter is an occasion or All. How: This types that state.
+import type { CarRecTyp } from '../../ui/cards.ts';     // What: Card Record Type. Why: The page holds the card being shared. How: This types that state.
+import type { JSX       } from 'react';                 // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
+import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name Type. Why: The chosen filter is an occasion or All. How: This types that state.
 
 // #endregion Imports
 
