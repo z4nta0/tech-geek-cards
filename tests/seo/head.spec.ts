@@ -3,8 +3,9 @@
 
 // #region Imports
 
-import { expect } from '@playwright/test'; // What: Expect. Why: Each check passes only when the page says what it should. How: This asserts on the page's head, its links, and the crawler files.
-import { test   } from '@playwright/test'; // What: Test. Why: Each page and each file is its own test. How: This declares them.
+import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: Every card's own page carries its own link preview. How: The preview tests check one page and one image per card.
+import { expect      } from '@playwright/test';          // What: Expect. Why: Each check passes only when the page says what it should. How: This asserts on the page's head, its links, and the crawler files.
+import { test        } from '@playwright/test';          // What: Test. Why: Each page and each file is its own test. How: This declares them.
 
 
 import type { Page } from '@playwright/test'; // What: Page. Why: The head helper reads a Playwright page. How: This types its page parameter.
@@ -31,8 +32,10 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * describes, with the GitHub and LinkedIn profiles the footer links to. Every
  * icon the head links to is served, the PNGs at the size their links promise.
  * robots.txt lets every crawler in and names the sitemap, which lists every
- * indexed page. The social preview checks come back once each card has its own
- * preview card. Adapted from TechGeek.dev.
+ * indexed page. Home's raw page and every card's carry a complete set of link
+ * preview tags with absolute addresses, the card's own title, description,
+ * address, and image, and every preview image is served at 1,200x630 under
+ * 300 KB. Adapted from TechGeek.dev.
  *
  * Sections:
  *  - Constants
@@ -52,6 +55,43 @@ const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Th
 
 
 
+/**
+ * SOC_KEY_ARR = Social Key Array
+ *
+ * @summary
+ * Every Open Graph and Twitter tag a complete link preview needs, per the
+ * social preview rule; twitter:site and twitter:creator are left out, since
+ * the site has no X account. Every row is one tag's property or name.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full card only when every tag is there. How: Each entry names one tag.
+
+
+	'og:description',
+	'og:image',
+	'og:image:alt',
+	'og:image:height',
+	'og:image:type',
+	'og:image:width',
+	'og:locale',
+	'og:site_name',
+	'og:title',
+	'og:type',
+	'og:url',
+	'twitter:card',
+	'twitter:description',
+	'twitter:image',
+	'twitter:image:alt',
+	'twitter:title'
+
+
+];
+
+
+
 // #region PAG_HEA_ARR
 
 /**
@@ -62,8 +102,8 @@ const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Th
  * carry no comments of their own:
  * - `canStr` (String or null): Canonical String, the page's canonical
  *   address, or null for a page that carries noindex and no canonical link.
- * - `heaBoo` (Boolean): Heading Boolean, whether the page's one h1 is checked;
- *   false for the cards, whose own h1 comes with each card's conversion.
+ * - `heaBoo` (Boolean): Heading Boolean, whether the page's one h1 is checked,
+ *   now true on every row.
  * - `patStr` (String): Path String, the address the page is loaded from.
  * - `titStr` (String): Title String, the page's exact title.
  *
@@ -177,6 +217,73 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 // #endregion heaCheFun
 
+
+
+const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
+
+
+
+// #region imaSizFun
+
+/**
+ * imaSizFun = Image Size Function
+ *
+ * @summary
+ * Reads an image's width and height from its own bytes, the way an app sizes
+ * a preview before drawing it. A PNG keeps them at a fixed place in its
+ * header; a JPEG keeps them in its first start-of-frame segment, found by
+ * walking its segments from the start.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param imaBufObj - Image Buffer Object: The image's bytes.
+ *
+ * @returns The image's width and height in pixels, or zeros when no size is
+ *          found.
+ *
+ * @example
+ * ```ts
+ * imaSizFun(imaBufObj) // => [ 1200, 630 ]
+ * ```
+ *
+*/
+
+function imaSizFun ( imaBufObj : Buffer ) : [ number, number ] {
+
+
+	if ( imaBufObj.readUInt32BE( 0 ) === 0x89504E47 ) return [ imaBufObj.readUInt32BE( 16 ), imaBufObj.readUInt32BE( 20 ) ]; // What: PNG Size Return. Why: A PNG's width and height sit at bytes 16 and 20 of its header. How: This reads them when the PNG signature leads the file.
+
+
+
+	let offPosNum = 2; // What: Offset Position Number. Why: A JPEG's segments follow its two-byte start marker. How: This starts the walk just past it.
+
+
+
+	while ( offPosNum < imaBufObj.length ) { // What: Segment Walk Loop. Why: The size sits in the first start-of-frame segment, wherever it falls. How: This steps from segment to segment by their lengths.
+
+
+		const marCodNum = imaBufObj[ offPosNum + 1 ]; // What: Marker Code Number. Why: The segment's kind decides whether it holds the size. How: This reads the byte after the segment's 0xFF.
+
+
+
+		if ( marCodNum >= 0xC0 && marCodNum <= 0xC3 ) return [ imaBufObj.readUInt16BE( offPosNum + 7 ), imaBufObj.readUInt16BE( offPosNum + 5 ) ]; // What: Frame Size Return. Why: A start-of-frame segment holds the height then the width. How: This reads both and returns them width first.
+
+
+
+		offPosNum += 2 + imaBufObj.readUInt16BE( offPosNum + 2 ); // What: Next Segment Step. Why: Every other segment is skipped. How: This moves past its marker and its stated length.
+
+
+	}
+
+
+
+	return [ 0, 0 ]; // What: No Size Return. Why: An image without a readable size should fail the check, not the test run. How: This returns zeros.
+
+
+}
+
+// #endregion imaSizFun
+
 // #endregion Helpers
 
 
@@ -205,6 +312,8 @@ test( 'moving between pages swaps their head tags', async ( { page : curPagObj }
 
 
 	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The walk starts on the home page. How: This loads the root path.
+
+	await curPagObj.waitForLoadState( 'networkidle' ); // What: Home Settled Wait. Why: A footer click landing while Home is still loading its cards and images can miss as the page shifts under it. How: This waits until nothing more is loading.
 
 	await heaCheFun( curPagObj, PAG_HEA_ARR[ 0 ] ); // What: Home Head Check. Why: The walk starts from a known head. How: This checks Home's.
 
@@ -272,6 +381,62 @@ test( 'the raw page carries the home title and description for script-free reade
 	expect( titTexStr.length ).toBeGreaterThanOrEqual( 50 ); // What: Raw Title Length Assertion. Why: Checkers flag a title that leaves most of a listing's room unused. How: This checks it runs at least 50 characters.
 
 	expect( rawHtmStr ).toContain( `<meta name='description' content='${ HOM_DES_STR }' />` ); // What: Raw Description Assertion. Why: Checkers and crawlers without the script need a description to show. How: This checks the raw page carries the home page's.
+
+
+} );
+
+
+
+for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop. Why: Home and every card each need a complete preview in their raw page. How: This declares one test per page, null standing for Home.
+
+
+	const patStr = carDatObj ? `/${ carDatObj.sluStr }` : '/'; // What: Path String. Why: Each test loads its own page. How: This is the card's address, or the root.
+
+
+	test( `${ patStr } raw page carries its link preview`, async ( { request : reqConObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
+
+
+		const socTagObj = socTagFun( await ( await reqConObj.get( `${ patStr }?name=Sam` ) ).text() );                           // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the page, fetched with a name.
+		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                                     // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
+		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`;       // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
+		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;                   // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.
+		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                            // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
+
+
+		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] ); // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
+
+		expect( [ socTagObj[ 'og:url' ], socTagObj[ 'og:image' ], socTagObj[ 'twitter:image' ] ] ).toEqual( [ expUrlStr, expImaStr, expImaStr ] ); // What: Address Assertion. Why: Scrapers need absolute addresses for the page and its image. How: This checks each against the page's own.
+
+		expect( [ socTagObj[ 'og:title' ], socTagObj[ 'twitter:title' ], socTagObj[ 'description' ], socTagObj[ 'og:description' ], socTagObj[ 'twitter:description' ] ] ).toEqual( [ expTitStr, expTitStr, expDesStr, expDesStr, expDesStr ] ); // What: Text Assertion. Why: The preview names and describes the page as the page itself does. How: This checks the titles and descriptions.
+
+		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
+
+
+	} );
+
+
+}
+
+
+
+test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqConObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and WhatsApp drops one of 300 KB or more. How: This fetches every preview image and reads its bytes.
+
+
+	for ( const imaPatStr of [ '/og-image.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.sluStr }.jpg` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
+
+
+		const imaResObj = await reqConObj.get( imaPatStr ); // What: Image Response Object. Why: The image has to exist where the tags point. How: This fetches it.
+		const imaBufObj = await imaResObj.body();           // What: Image Buffer Object. Why: The image's size is read from its bytes. How: This reads them.
+
+
+		expect( [ imaPatStr, imaResObj.headers()[ 'content-type' ] ] ).toEqual( [ imaPatStr, imaPatStr.endsWith( '.png' ) ? 'image/png' : 'image/jpeg' ] ); // What: Image Type Assertion. Why: A missing image falls through to the app's HTML. How: This checks the file is served as its type, naming it on failure.
+
+		expect( [ imaPatStr, ...imaSizFun( imaBufObj ) ] ).toEqual( [ imaPatStr, 1200, 630 ] ); // What: Image Size Assertion. Why: The tags promise 1,200x630. How: This reads the image's real size, naming it on failure.
+
+		expect( imaBufObj.length ).toBeLessThan( 300 * 1024 ); // What: Image Bytes Assertion. Why: WhatsApp drops a preview image of 300 KB or more. How: This checks the file is under the limit.
+
+
+	}
 
 
 } );

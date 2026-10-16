@@ -8,6 +8,7 @@
 		"dev": "vite",
 		"icons": "node design/icons/render.mts",
 		"images": "node design/images/render.mts",
+		"og-images": "node design/og-image/render.mts",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"test": "playwright test --config tests/playwright.config.ts",

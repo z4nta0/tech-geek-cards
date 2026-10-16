@@ -6,10 +6,15 @@
 import react from '@vitejs/plugin-react'; // What: React. Why: Vite needs the React plugin to compile JSX. How: This is called first in the plugins array.
 
 
-import { defineConfig } from 'vite'; // What: Define Config. Why: Vite's config helper passes the config through with its types. How: This wraps VIT_CON_OBJ.
+import { CAR_DAT_ARR  } from './src/ui/card-data.ts'; // What: Card Data Array. Why: Every card gets its own page carrying its title, description, and link preview. How: The card pages plugin writes one per row.
+import { defineConfig } from 'vite';                 // What: Define Config. Why: Vite's config helper passes the config through with its types. How: This wraps VIT_CON_OBJ.
+import { readFile     } from 'node:fs/promises';     // What: Read File. Why: The card pages are copies of the built page. How: This reads the built index.html and _redirects.
+import { resolve      } from 'node:path';            // What: Resolve. Why: The card pages are written beside the built index.html. How: This joins the build folder with each file name.
+import { writeFile    } from 'node:fs/promises';     // What: Write File. Why: Each card's page and the rewrite rules are files in the build. How: This writes them.
 
 
-import type { Plugin } from 'vite'; // What: Plugin. Why: The page minifier is a Vite plugin. How: This types minHtmFun's return, which types its hook.
+import type { CarDatTyp } from './src/ui/card-data.ts'; // What: Card Data Type. Why: A card's page is written from its data. How: This types the card carTagFun reads.
+import type { Plugin    } from 'vite';                 // What: Plugin. Why: The page minifier and the card pages are Vite plugins. How: This types their returns, which types their hooks.
 
 // #endregion Imports
 
@@ -22,12 +27,17 @@ import type { Plugin } from 'vite'; // What: Plugin. Why: The page minifier is a
  * The build and dev server config. It compiles React, reads CSS module class
  * names as camelCase keys, and, for production builds only, compacts
  * index.html, which Vite processes but never minifies, so the page's comments
- * and indentation stay out of what visitors download. Every other setting
- * stays at Vite's default, including building index.html as the one page and
- * copying the files in public/ (the icons, the social card, the crawler
- * files, and Netlify's _headers and _redirects) into the build untouched.
+ * and indentation stay out of what visitors download. It also gives every
+ * card a page of its own, a copy of index.html carrying the card's title,
+ * description, and link preview tags, since link scrapers read only a page's
+ * raw HTML: the dev server serves each card's address that way, and the
+ * build writes the copies with the rewrite rules that serve them. Every other
+ * setting stays at Vite's default, including copying the files in public/
+ * (the icons, the social images, the crawler files, and Netlify's _headers
+ * and _redirects) into the build untouched.
  *
  * Sections:
+ *  - Constants
  *  - Helpers
  *  - Exports
  *
@@ -37,7 +47,185 @@ import type { Plugin } from 'vite'; // What: Plugin. Why: The page minifier is a
 
 
 
+// #region Constants
+
+const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Link preview tags need absolute addresses. How: Each card's address and image are built on the live site's root.
+
+// #endregion Constants
+
+
+
 // #region Helpers
+
+const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&amp;' ).replace( /"/g, '&quot;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ); // What: HTML Escape Function. Why: A card's text goes into double-quoted attributes, and some holds apostrophes and could hold quotes. How: This escapes the characters that would break out of the attribute.
+
+
+
+// #region carTagFun
+
+/**
+ * carTagFun = Card Tag Function
+ *
+ * @summary
+ * Rewrites the home page's head tags for one card: the title, the
+ * description, and every Open Graph and Twitter tag that names the page,
+ * its address, or its image. Each tag is found by its name or property,
+ * whichever quotes it uses and whether or not the page has been compacted,
+ * and replaced whole, so the result is the same in the dev server's page
+ * and the built one. A card's link preview image is its own JPEG in
+ * public/social/, named after its address. The canonical link and an
+ * unlisted card's noindex stay with the card's page in React, and Netlify
+ * keeps unlisted cards out of search with a header.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param htmTexStr - HTML Text String: The home page's HTML.
+ * @param carDatObj - Card Data Object: {@link CarDatTyp}
+ *
+ * @returns The page's HTML with the card's tags in place of the home page's.
+ *
+ * @example
+ * ```ts
+ * carTagFun(htmTexStr, carDatObj) // => the card's page
+ * ```
+ *
+*/
+
+const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { // What: Card Tag Function. Why: Each card's page has to name the card to link scrapers. How: This swaps each of the home page's tags for the card's.
+
+
+	const desStr = htmEscFun( carDatObj.seaStr );                               // What: Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
+	const imaStr = `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg`;          // What: Image String. Why: Each card's preview shows its own image. How: This is its JPEG's absolute address.
+	const altStr = htmEscFun( carDatObj.altStr );                               // What: Alternative String. Why: The preview image needs a description. How: This escapes the card's alt text.
+	const titStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` ); // What: Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
+	const urlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                     // What: URL String. Why: The preview links to the card's own address. How: This is its absolute address.
+
+	const tagRowArr : [ string, string ][] = [ // What: Tag Row Array. Why: Every tag the card changes is found and replaced the same way. How: Each row pairs a tag's name or property with its card value.
+
+
+		[ 'description', desStr ],         // What: Description Row. Why: Search listings and many previews read the plain description. How: This sets the card's.
+		[ 'og:description', desStr ],      // What: Open Graph Description Row. Why: Most previews show this summary. How: This sets the card's.
+		[ 'og:image', imaStr ],            // What: Open Graph Image Row. Why: Most previews show this picture. How: This points at the card's own image.
+		[ 'og:image:alt', altStr ],        // What: Open Graph Image Alt Row. Why: The picture needs a description. How: This sets the card's alt text.
+		[ 'og:image:type', 'image/jpeg' ], // What: Open Graph Image Type Row. Why: A card's image is a JPEG, where the site's card is a PNG. How: This names its type.
+		[ 'og:title', titStr ],            // What: Open Graph Title Row. Why: Most previews lead with this title. How: This sets the card's.
+		[ 'og:url', urlStr ],              // What: Open Graph URL Row. Why: The preview points at the card's address. How: This sets it.
+		[ 'twitter:description', desStr ], // What: Twitter Description Row. Why: X shows this summary. How: This sets the card's.
+		[ 'twitter:image', imaStr ],       // What: Twitter Image Row. Why: X shows this picture. How: This points at the card's own image.
+		[ 'twitter:image:alt', altStr ],   // What: Twitter Image Alt Row. Why: X describes the picture with this. How: This sets the card's alt text.
+		[ 'twitter:title', titStr ]        // What: Twitter Title Row. Why: X leads with this title. How: This sets the card's.
+
+
+	];
+
+
+
+	return tagRowArr.reduce( ( curHtmStr, [ keyStr, valStr ] ) => curHtmStr.replace( new RegExp( `<meta\\s+(name|property)=['"]${ keyStr.replace( /:/g, '\\:' ) }['"][^>]*>` ), `<meta $1="${ keyStr }" content="${ valStr }" />` ), htmTexStr.replace( /<title>[^<]*<\/title>/, `<title>${ titStr }</title>` ) ); // What: Tagged Page Return. Why: The page's title and every listed tag carry the card's values. How: This replaces the title, then each tag in turn, keeping whether it used name or property.
+
+
+};
+
+// #endregion carTagFun
+
+
+
+// #region carPagFun
+
+/**
+ * carPagFun = Card Pages Function
+ *
+ * @summary
+ * Builds the Vite plugin that gives every card a page of its own. On the dev
+ * server it rewrites the page it serves for a card's address, so the SEO
+ * suite can read each card's raw tags. After a production build it writes
+ * one copy of the built index.html per card, as <address>.html, through
+ * carTagFun, and puts a rewrite rule for each card's address ahead of the
+ * site's catch-all in _redirects, so Netlify serves the card's own page,
+ * query and all, while every other path still loads index.html. It also
+ * adds a noindex header rule for each unlisted card to _headers, for
+ * crawlers that never run the page's script.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param void - This function takes no parameters.
+ *
+ * @returns The plugin object, for the config's plugins array.
+ *
+ * @example
+ * ```ts
+ * carPagFun() // => { closeBundle, configResolved, name, transformIndexHtml }
+ * ```
+ *
+*/
+
+const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrapers read only a page's raw HTML, so each card needs a page of its own. How: This returns a plugin that serves and writes them.
+
+
+	let bldRecObj = { isaBldBoo : false, outDirStr : '' }; // What: Build Record Object. Why: The pages are written only after a production build, into its output folder. How: This holds whether the run is a build and where it writes, once Vite has resolved its config.
+
+
+
+	return { // What: Plugin Return. Why: Vite runs each hook at its own stage. How: This returns the plugin's hooks.
+
+
+		name : 'card-pages', // What: Name. Why: Vite reports a plugin's warnings and errors under its name. How: This names the plugin.
+
+		closeBundle : async () => { // What: Close Bundle Hook. Why: The card pages copy the built page, which exists only once the build is written. How: This writes each card's page and its rewrite rules after the build.
+
+
+			if ( !bldRecObj.isaBldBoo ) return; // What: Build Guard. Why: The dev server writes nothing. How: This returns early outside a build.
+
+
+
+			const indHtmStr = await readFile( resolve( bldRecObj.outDirStr, 'index.html' ), 'utf8' ); // What: Index HTML String. Why: Every card page starts from the built page, bundle tags and all. How: This reads it.
+			const redPatStr = resolve( bldRecObj.outDirStr, '_redirects' );                       // What: Redirects Path String. Why: The rewrite rules go into the built copy of _redirects. How: This is its path.
+			const redTexStr = await readFile( redPatStr, 'utf8' );                                // What: Redirects Text String. Why: The card rules go ahead of the site's existing rules. How: This reads the built copy.
+
+			const carRulStr = CAR_DAT_ARR.map( ( carDatObj ) => `/${ carDatObj.sluStr }    /${ carDatObj.sluStr }.html    200` ).join( '\n' ); // What: Card Rules String. Why: Each card's address has to serve its own page rather than index.html. How: This writes a rewrite rule per card.
+			const heaPatStr = resolve( bldRecObj.outDirStr, '_headers' );                                                                // What: Headers Path String. Why: The unlisted cards' rules go into the built copy of _headers. How: This is its path.
+			const heaTexStr = await readFile( heaPatStr, 'utf8' );                                                                       // What: Headers Text String. Why: The card rules follow the site's existing rules. How: This reads the built copy.
+			const unlRulStr = CAR_DAT_ARR.filter( ( carDatObj ) => !carDatObj.lisBoo ).flatMap( ( carDatObj ) => [ `/${ carDatObj.sluStr }`, `/${ carDatObj.sluStr }.html` ] ).map( ( pagPatStr ) => `${ pagPatStr }\n\tX-Robots-Tag: noindex` ).join( '\n' ); // What: Unlisted Rules String. Why: An unlisted card stays out of search even for crawlers that never run its script, which never see the card page's noindex tag. How: This writes a noindex header rule for each unlisted card's address and file name.
+
+
+			await Promise.all( CAR_DAT_ARR.map( ( carDatObj ) => writeFile( resolve( bldRecObj.outDirStr, `${ carDatObj.sluStr }.html` ), carTagFun( indHtmStr, carDatObj ) ) ) ); // What: Card Pages Write. Why: Each card needs its own page. How: This writes one tagged copy of the built page per card.
+
+			await writeFile( heaPatStr, `${ heaTexStr }\n\n\n\n# What: Unlisted Card Rules. Why: An unlisted card is made for one person and should stay out of search. How: These send a noindex header with each unlisted card's page.\n${ unlRulStr }\n` ); // What: Headers Write. Why: The unlisted cards' noindex rules join the site's headers. How: This appends them.
+
+			await writeFile( redPatStr, `# What: Card Page Rules. Why: Each card's address serves its own page, which carries its link preview. How: These rewrite each card's address to its page, ahead of the catch-all.\n${ carRulStr }\n\n\n\n${ redTexStr }` ); // What: Redirects Write. Why: The card rules must come before the catch-all, which would otherwise answer every card's address. How: This writes them ahead of the existing rules.
+
+
+		},
+
+		configResolved : ( conResObj ) => { // What: Config Resolved Hook. Why: The pages are written only after a build, into its output folder. How: This records both once Vite has resolved its config.
+
+
+			bldRecObj = { isaBldBoo : conResObj.command === 'build', outDirStr : resolve( conResObj.root, conResObj.build.outDir ) }; // What: Build Record Assignment. Why: closeBundle needs both. How: This stores whether this is a build and its output folder.
+
+
+		},
+
+		transformIndexHtml : ( htmTexStr, ctxIndObj ) => { // What: Transform Index HTML Hook. Why: On the dev server, a card's address should serve the card's own tags, as the built site does. How: This rewrites the page for a card's address and leaves every other page alone.
+
+
+			const sluStr = new URL( ctxIndObj.originalUrl ?? '/', LIV_URL_STR ).pathname.slice( 1 );      // What: Slug String. Why: The requested address names the card, if any. How: This reads the path without its slash or query.
+			const carDatObj = CAR_DAT_ARR.find( ( carCurObj ) => carCurObj.sluStr === sluStr );           // What: Card Data Object. Why: Only a card's address gets a card's tags. How: This finds the card, if the address names one.
+
+
+
+			return carDatObj ? carTagFun( htmTexStr, carDatObj ) : htmTexStr; // What: Page Return. Why: Every other page keeps the home page's tags. How: This returns the card's page or the page as it was.
+
+
+		}
+
+
+	};
+
+
+};
+
+// #endregion carPagFun
+
+
 
 // #region minHtmFun
 
@@ -109,7 +297,7 @@ const VIT_CON_OBJ = defineConfig({ // What: Vite Config Object. Why: Vite reads 
 
 
 	css     : { modules : { localsConvention : 'camelCaseOnly' } }, // What: CSS. Why: CSS modules expose each class name as a camelCase key only, so every module reads the same way, per the CSS modules rules. How: This sets the locals convention.
-	plugins : [ react(), minHtmFun() ]                              // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React and the page minifier.
+	plugins : [ react(), minHtmFun(), carPagFun() ]                 // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React, the page minifier, and the card pages.
 
 
 });
