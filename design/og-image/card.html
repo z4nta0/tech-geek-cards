@@ -1,0 +1,273 @@
+<!doctype html><!-- What: Document Type Declaration. Why: Browsers render the page in standards mode only with a doctype. How: This declares HTML5. -->
+
+
+
+<html lang='en'><!-- What: Root HTML Element. Why: The card is set in English text. How: This marks the document as English. -->
+
+
+	<head><!-- What: Document Head Element. Why: The card's fonts and layout load before it's captured. How: This holds them in the sections below. -->
+
+
+		<!-- #region Document -->
+
+		<meta charset='UTF-8' />                          <!-- What: Character Set Meta. Why: The card's text has to decode as UTF-8. How: This sits first in the head. -->
+		<title>TechGeek.cards Social Preview Card</title> <!-- What: Page Title Element. Why: The file should say what it is when opened in a browser. How: This names the card. -->
+
+		<!-- #endregion Document -->
+
+
+		<!-- #region Card Styles -->
+
+		<style>/* What: Card Style Element. Why: The card is one fixed-size image, styled here from the site's own fonts and tokens. How: This imports the shared package's font faces, tokens, and base styles and the site's own global stylesheet, then lays out the card. */
+
+
+			@import url( '../../node_modules/techgeek-design/src/styles/fonts.css' );  /* What: Package Fonts Import. Why: The card should be set in the family's own typefaces. How: This loads the shared package's font faces, whose file paths resolve from that stylesheet's own folder. */
+			@import url( '../../node_modules/techgeek-design/src/styles/tokens.css' ); /* What: Package Tokens Import. Why: The card should read the family's colors and scale rather than copies of them. How: This loads the shared tokens. */
+			@import url( '../../node_modules/techgeek-design/src/styles/base.css' );   /* What: Package Base Import. Why: The rem steps assume the family's 11px root. How: This loads the shared base styles, which set it. */
+			@import url( '../../src/styles/styles.css' );                              /* What: Site Styles Import. Why: The card should match the site's own overrides, its berry accent included. How: This loads the site's global stylesheet last, as the site does. */
+
+
+
+			/* #region carBodBod */
+
+			.carBodBod { /* What: Card Body Body. Why: The card fills the whole 1,200x630 capture on the site's ivory page color. How: This sizes it in literal pixels, the image's own fixed size, and centers its column both ways. */
+
+
+				align-items     : center;
+				background      : var( --bac-pag-col ); /* Background Page Color = #F5F0E8 */
+				display         : flex;
+				height          : 630px;
+				justify-content : center;
+				overflow        : hidden;
+				position        : relative;
+				width           : 1200px;
+
+
+			}
+
+
+			/* #region preStaDiv */
+
+			.preStaDiv { /* What: Preview Stack Div. Why: Card previews fanned at the card's sides show what the site offers, outside the center square some apps crop to. How: This pins a stack of two previews to one side, centered top to bottom. */
+
+
+				height    : calc( var( --ver-rhy-p11 ) * 1rem ); /* Vertical Rhythm Base Plus 11 ~= 321.209px */
+				position  : absolute;
+				top       : 50%;
+				translate : 0 -50%;
+				width     : calc( var( --ver-rhy-p10 ) * 1rem ); /* Vertical Rhythm Base Plus 10 ~= 242.475px */
+
+
+			}
+			.preStaDiv--lef { /* What: Left Preview Stack Div. Why: One stack sits on the left. How: This places it a spacing step in from the left edge. */
+
+
+				left : var( --spa-hor-p03 ); /* Spacing Horizontal Base Plus 3 ~= 33.876px */
+
+
+			}
+			.preStaDiv--rig { /* What: Right Preview Stack Div. Why: The other stack mirrors it on the right. How: This places it a spacing step in from the right edge. */
+
+
+				right : var( --spa-hor-p03 ); /* Spacing Horizontal Base Plus 3 ~= 33.876px */
+
+
+			}
+
+			.preFraIma { /* What: Preview Frame Image. Why: Each preview reads as a printed card, as on the site's tiles. How: This sets the still in a white frame with the site's large shadow, tipped by its modifier. */
+
+
+				aspect-ratio  : 4 / 3;
+				background    : var( --bac-sur-col );                                          /* Background Surface Color = #FFFFFF */
+				border-radius : var( --rad-bor-sma );                                          /* Radius Border Small ~= 8.304px */
+				box-shadow    : var( --ele-lar-sha );                                          /* Elevation Large Shadow, about 0 11px 44.9px plus 0 3.6px 11px -2.7px */
+				display       : block;
+				object-fit    : cover;
+				padding       : var( --spa-ver-m03 ) var( --spa-hor-m03 );                     /* Spacing Vertical Base Minus 3 ~= 6.268px, Spacing Horizontal Base Minus 3 ~= 6.268px */
+				position      : absolute;
+				width         : 100%;
+
+
+			}
+			.preFraIma--top { /* What: Top Preview Frame Image. Why: The back preview tips one way at the stack's top. How: This rotates it back a power of the core design number in degrees. */
+
+
+				rotate : calc( var( --cdn-pow-008 ) * -1deg ); /* Core-Design-Number to the Power of 8 ~= -9.48deg */
+				top    : 0;
+
+
+			}
+			.preFraIma--bot { /* What: Bottom Preview Frame Image. Why: The front preview tips the other way at the stack's foot. How: This rotates it forward a smaller power of the core design number in degrees. */
+
+
+				bottom : 0;
+				rotate : calc( var( --cdn-pow-006 ) * 1deg ); /* Core-Design-Number to the Power of 6 ~= 5.40deg */
+
+
+			}
+
+			/* #endregion preStaDiv */
+
+
+
+			/* #region carColDiv */
+
+			.carColDiv { /* What: Card Column Div. Why: Some apps crop the card to its center square, so everything that matters sits inside the middle 630px. How: This stacks the mark, the wordmark, and the tagline in one centered column. */
+
+
+				align-items    : center;
+				display        : flex;
+				flex-direction : column;
+				position       : relative;
+				text-align     : center;
+
+
+			}
+
+			.hexMarIma { /* What: Hexagon Mark Image. Why: The site's hexagon mark makes the card recognizable at a glance. How: This sizes the mark at the p08 rhythm step, large enough to lead the column. */
+
+
+				display : block;
+				height  : calc( var( --ver-rhy-p08 ) * 1rem ); /* Vertical Rhythm Base Plus 8 ~= 138.198px */
+				width   : calc( var( --ver-rhy-p08 ) * 1rem ); /* Vertical Rhythm Base Plus 8 ~= 138.198px */
+
+
+			}
+
+
+			/* #region braWorPar */
+
+			.braWorPar { /* What: Brand Wordmark Paragraph. Why: The site's name reads under its mark, set as the bar sets it. How: This sets it bold in the display font, a little tight, at the p05 step. */
+
+
+				font-family    : var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+				font-size      : var( --fon-siz-p05 ); /* Font Size Base Plus 5 ~= 44.876px */
+				font-weight    : 800;
+				letter-spacing : -0.03em;
+				line-height    : var( --ver-rhy-m01 ); /* Vertical Rhythm Base Minus 1 = 1 */
+				margin         : var( --spa-ver-p02 ) 0 0; /* Spacing Vertical Base Plus 2 ~= 25.572px */
+
+
+			}
+
+			.worFirSpa { /* What: Wordmark First Span. Why: The brand reads in the main text color, as in the bar. How: This sets TechGeek in the ink. */
+
+
+				color : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
+
+
+			}
+
+			.worLasSpa { /* What: Wordmark Last Span. Why: The domain ending carries the accent, as in the bar. How: This sets .cards in the dark orange. */
+
+
+				color : var( --acc-dar-col ); /* Accent Dark Color ~= #bd3000 */
+
+
+			}
+
+			/* #endregion braWorPar */
+
+
+			.tagLinPar { /* What: Tag Line Paragraph. Why: The card says what the site offers, large enough to read at thumbnail size and set apart from the wordmark. How: This sets it in the accent serif's italic in the berry text shade under the wordmark. */
+
+
+				color       : var( --act-dar-col ); /* Accent Tertiary Dark Color, the berry text shade */
+				font-family : var( --fon-fam-acc ); /* Font Family Accent = 'Lora', serif */
+				font-size   : var( --fon-siz-p05 ); /* Font Size Base Plus 5 ~= 44.876px */
+				font-style  : italic;
+				line-height : var( --ver-rhy-m01 ); /* Vertical Rhythm Base Minus 1 = 1 */
+				margin      : var( --spa-ver-bas ) 0 0; /* Spacing Vertical Base ~= 14.572px */
+
+
+			}
+
+			/* #endregion carColDiv */
+
+			/* #endregion carBodBod */
+
+
+		</style>
+
+		<!-- #endregion Card Styles -->
+
+
+	</head>
+
+
+
+	<body class='carBodBod'><!-- What: Card Body Element. Why: The card fills the capture. How: This holds the two preview stacks and the center column. -->
+
+
+		<div class='preStaDiv preStaDiv--lef'><!-- What: Preview Stack Div Element. Why: Two card previews fan out on the left. How: This holds them, tipped opposite ways. -->
+
+
+			<img
+				class='preFraIma preFraIma--top'
+
+				src='../../src/assets/happy-birthday-card-preview-image.webp'
+
+				alt=''
+			/><!-- What: Preview Frame Image Element. Why: The birthday card leads the left stack. How: This shows its tile preview, tipped back, with an empty alt since the image's own alt text describes the card as a whole. -->
+
+			<img
+				class='preFraIma preFraIma--bot'
+
+				src='../../src/assets/happy-halloween-card-preview-image.webp'
+
+				alt=''
+			/><!-- What: Preview Frame Image Element. Why: The Halloween card sits in front of it. How: This shows its tile preview, tipped forward. -->
+
+
+		</div>
+
+
+
+		<div class='carColDiv'><!-- What: Card Column Div Element. Why: The mark, name, and tagline lead the card in its center square. How: This stacks them in one centered column. -->
+
+
+			<img
+				class='hexMarIma'
+
+				src='../../node_modules/techgeek-design/src/assets/brand/favicon.svg'
+
+				alt=''
+			/><!-- What: Hexagon Mark Image Element. Why: The family's hexagon mark leads the card. How: This shows the shared mark, with an empty alt since the wordmark names the site. -->
+
+			<p class='braWorPar'><span class='worFirSpa'>TechGeek</span><span class='worLasSpa'>.cards</span></p><!-- What: Brand Wordmark Paragraph Element. Why: The site's name reads under its mark. How: This sets TechGeek in ink and .cards in orange. -->
+
+			<p class='tagLinPar'>Animated Greeting Cards</p><!-- What: Tag Line Paragraph Element. Why: The card says what the site offers. How: This sets it in berry italic under the name. -->
+
+
+		</div>
+
+
+
+		<div class='preStaDiv preStaDiv--rig'><!-- What: Preview Stack Div Element. Why: Two more previews fan out on the right, mirroring the left. How: This holds them, tipped opposite ways. -->
+
+
+			<img
+				class='preFraIma preFraIma--top'
+
+				src='../../src/assets/christmas-card-preview-image.webp'
+
+				alt=''
+			/><!-- What: Preview Frame Image Element. Why: The Christmas card leads the right stack. How: This shows its tile preview, tipped back. -->
+
+			<img
+				class='preFraIma preFraIma--bot'
+
+				src='../../src/assets/mothers-day-card-preview-image.webp'
+
+				alt=''
+			/><!-- What: Preview Frame Image Element. Why: The Mother's Day card sits in front of it. How: This shows its tile preview, tipped forward. -->
+
+
+		</div>
+
+
+	</body>
+
+
+
+</html>

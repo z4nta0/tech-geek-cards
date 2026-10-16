@@ -1,6 +1,6 @@
 {
 	"name": "tech-geek-cards",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -8,6 +8,7 @@
 		"dev": "vite",
 		"icons": "node design/icons/render.mts",
 		"images": "node design/images/render.mts",
+		"og-images": "node design/og-image/render.mts",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"test": "playwright test --config tests/playwright.config.ts",

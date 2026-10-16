@@ -249,9 +249,9 @@ function HomPagCom () : JSX.Element {
 
 									className={ cssModObj.envCarIma }
 
-									height='930' // What: Intrinsic Height. Why: The hero shouldn't shift while the cards load. How: This is the preview file's real height in pixels.
+									height='675' // What: Intrinsic Height. Why: The hero shouldn't shift while the cards load. How: This is the preview file's real height in pixels.
 									src={ carRecObj.imaStr }
-									width='1653' // What: Intrinsic Width. Why: The hero shouldn't shift while the cards load. How: This is the preview file's real width in pixels.
+									width='1200' // What: Intrinsic Width. Why: The hero shouldn't shift while the cards load. How: This is the preview file's real width in pixels.
 
 									alt=''
 								/> // What: Envelope Card Image Element. Why: A still of each card sits in the fan. How: This shows the card's preview in a white border, its alt left empty since the stage is decoration.

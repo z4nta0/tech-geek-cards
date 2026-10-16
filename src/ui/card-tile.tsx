@@ -94,10 +94,10 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 					<img
 						className={ cssModObj.staPreIma }
 
-						height='930' // What: Intrinsic Height. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real height in pixels.
+						height='675' // What: Intrinsic Height. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real height in pixels.
 						loading='lazy'
 						src={ carRecObj.imaStr }
-						width='1653' // What: Intrinsic Width. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real width in pixels.
+						width='1200' // What: Intrinsic Width. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real width in pixels.
 
 						alt={ carRecObj.altStr }
 					/>{ /* What: Stamp Preview Image Element. Why: A still of the card shows what it looks like. How: This shows the card's preview, loading it once it nears the screen. */ }

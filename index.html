@@ -86,6 +86,51 @@
 		<!-- #endregion Home Screen -->
 
 
+		<!-- #region Open Graph -->
+
+		<!--
+			index.html = Open Graph Section
+
+			@summary
+			The link preview most apps show when a page's address is shared:
+			iMessage, WhatsApp, Facebook, LinkedIn, Slack, and Discord read
+			these tags from the raw page, never running the site's script.
+			These are the home page's; the build writes each card a copy of
+			this page with its own title, description, address, and image,
+			and every other page shares the home page's preview.
+
+			@author z4nta0 <https://github.com/z4nta0>
+
+		-->
+
+
+
+		<meta property='og:description'  content='Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.' /> <!-- What: Open Graph Description Meta. Why: Link previews show a summary under the title. How: This repeats the home page's description, which each card's page swaps for its own. -->
+		<meta property='og:image'        content='https://techgeek.cards/og-image.png' />                      <!-- What: Open Graph Image Meta. Why: A shared link shows a picture of the site. How: This points at the social card in public/ by its absolute address, which each card's page swaps for its own image. -->
+		<meta property='og:image:alt'    content='The TechGeek.cards hexagon mark and wordmark above the words Animated Greeting Cards, between fanned card previews.' /> <!-- What: Open Graph Image Alt Meta. Why: Apps that read images aloud need the card described. How: This describes what the social card shows. -->
+		<meta property='og:image:height' content='630' />                                                      <!-- What: Open Graph Image Height Meta. Why: Apps can lay out the preview before the image loads. How: This gives the card's height in pixels. -->
+		<meta property='og:image:type'   content='image/png' />                                                <!-- What: Open Graph Image Type Meta. Why: Some apps check an image's type before fetching it. How: This names the social card's PNG type, which each card's page swaps for JPEG. -->
+		<meta property='og:image:width'  content='1200' />                                                     <!-- What: Open Graph Image Width Meta. Why: Apps can lay out the preview before the image loads. How: This gives the card's width in pixels. -->
+		<meta property='og:locale'       content='en_US' />                                                    <!-- What: Open Graph Locale Meta. Why: Apps can tell what language the page is in. How: This marks it as US English. -->
+		<meta property='og:site_name'    content='TechGeek.cards' />                                           <!-- What: Open Graph Site Name Meta. Why: Previews name the site apart from the page. How: This names TechGeek.cards. -->
+		<meta property='og:title'        content='Animated Digital Greeting Cards to Send | TechGeek.cards' /> <!-- What: Open Graph Title Meta. Why: Link previews lead with a title. How: This repeats the page's title, which each card's page swaps for its own. -->
+		<meta property='og:type'         content='website' />                                                  <!-- What: Open Graph Type Meta. Why: Apps style a preview by the kind of page it is. How: This marks every page as a website. -->
+		<meta property='og:url'          content='https://techgeek.cards/' />                                  <!-- What: Open Graph URL Meta. Why: A preview should point at the page's real address. How: This is the home page's absolute address, which each card's page swaps for its own. -->
+
+		<!-- #endregion Open Graph -->
+
+
+		<!-- #region Twitter Card -->
+
+		<meta name='twitter:card'        content='summary_large_image' /> <!-- What: Twitter Card Type Meta. Why: X and apps that read its tags show a large image only when asked to. How: This asks for the large image card. -->
+		<meta name='twitter:description' content='Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.' /> <!-- What: Twitter Description Meta. Why: X shows a summary under the title. How: This repeats the page's description. -->
+		<meta name='twitter:image'       content='https://techgeek.cards/og-image.png' />                                                                                          <!-- What: Twitter Image Meta. Why: X shows a picture of the site. How: This points at the same social card. -->
+		<meta name='twitter:image:alt'   content='The TechGeek.cards hexagon mark and wordmark above the words Animated Greeting Cards, between fanned card previews.' />          <!-- What: Twitter Image Alt Meta. Why: Screen readers on X need the image described. How: This repeats the social card's description. -->
+		<meta name='twitter:title'       content='Animated Digital Greeting Cards to Send | TechGeek.cards' />                                                                     <!-- What: Twitter Title Meta. Why: X leads its preview with a title. How: This repeats the page's title. -->
+
+		<!-- #endregion Twitter Card -->
+
+
 		<!-- #region Structured Data -->
 
 		<script type='application/ld+json'>

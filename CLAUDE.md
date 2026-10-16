@@ -1,7 +1,8 @@
 # Project CLAUDE.md: tech-geek-cards
 
-z4nta0's digital greeting card site (React, Vite, React Router, to be deployed
-on Netlify at https://techgeek.cards/). Every rule in the user-level CLAUDE.md
+z4nta0's digital greeting card site (React, Vite, React Router), live on
+Netlify at https://techgeek.cards/ since 2026-10-16, with its contact form
+confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
@@ -64,12 +65,17 @@ field to the share dialog).
   characters). Unlisted cards carry noindex and no canonical link, and stay
   out of the sitemap.
 - **Link previews**: every card gets its own preview image and tags (decided
-  by the user 2026-10-14), which needs each card's page prerendered or given
-  its own HTML shell. Until that's built, the site has no Open Graph or
-  Twitter tags at all. In the same step, the tile previews (1653x930 now,
-  more than twice their largest display size) are rendered at about
-  1200x675, with the intrinsic `width` and `height` updated in
-  `ui/card-tile.tsx` and `pages/home/home.tsx`.
+  by the user 2026-10-14), built 2026-10-16 as a page per card rather than a
+  prerender. The build writes a copy of index.html per card (`<address>.html`)
+  with its title, description, address, and image, adds a rewrite rule per
+  card ahead of the catch-all in `_redirects`, and a noindex header for each
+  unlisted card in `_headers`; the dev server serves the same per-card tags.
+  The plain card data lives in `ui/card-data.ts`, which the build reads, and
+  `ui/cards.ts` adds each card's component and tile preview. The site's
+  preview is `public/og-image.png`, from `design/og-image/card.html`; each
+  card's is `public/social/<address>.jpg`, its finished screen; both come
+  from `npm run og-images`. Every other page shares Home's preview. The tile
+  previews render at 1200x675, about twice their largest display size.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
 
@@ -227,5 +233,3 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
-- **Not covered yet**: the social preview checks, which return with the
-  per-card preview images.

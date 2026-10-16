@@ -45,7 +45,7 @@ npm run test:accessibility  # axe-core plus scripted keyboard, naming, reflow, a
 npm run test:interaction    # page navigation, a card's round trip, the phone menu, the contact form, and every link and button's hover, press, and focus feedback
 npm run test:rendering      # full-page screenshots of each page state against approved baselines
 npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, and every paragraph within its measure
-npm run test:seo            # titles, descriptions, canonical links, robots, structured data, icons, robots.txt, and the sitemap, for every page and card
+npm run test:seo            # titles, descriptions, canonical links, robots, link previews, structured data, icons, robots.txt, and the sitemap, for every page and card
 ```
 
 Each suite runs in Chromium, Firefox, and WebKit against its own dev server on port 5195, so a dev server already running on 5173 is left alone. The states the suites visit are every page and the 404 page at phone and desktop widths, the open phone menu, and the share dialog open on the Gallery, for both the birthday card and a card that can be signed. Reports land in `tests/output/` (git-ignored); `npx playwright show-report tests/output/report` opens the HTML report. The rendering suite's approved screenshots live in `tests/rendering/baselines/` and match to the pixel, so after a change meant to alter how a page looks, review the diff in the report, then run `npm run test:rendering -- --update-snapshots` and commit the new baselines with the change. Chromium and WebKit capture with the faint confetti circuit pattern hidden, since they draw it slightly differently from run to run; Firefox still checks it. The baselines were captured on Linux, and font rendering differs between systems, so on macOS or Windows refresh them locally before relying on the comparison. If a browser is missing, `npx playwright install chromium firefox webkit` installs all three.
@@ -64,8 +64,9 @@ npm run preview
 The card images and the icons are rendered by scripts, so they can be rebuilt whenever something changes:
 
 ```bash
-npm run images  # encodes the originals in design/images/originals/ as WebP where the site imports them
-npm run icons   # copies the design package's favicon.svg into public/ and renders favicon.ico, the PNG icons, and the Apple touch icon from it
+npm run images     # encodes the originals in design/images/originals/ as WebP where the site imports them
+npm run og-images  # captures the link preview images: the site's card from design/og-image/card.html and each card's finished screen
+npm run icons      # copies the design package's favicon.svg into public/ and renders favicon.ico, the PNG icons, and the Apple touch icon from it
 ```
 
 The originals in `design/images/originals/` are large and kept out of git, so a fresh checkout needs the original files before `npm run images` can run.
@@ -74,7 +75,7 @@ The originals in `design/images/originals/` are large and kept out of git, so a 
 
 1. Give the card its own folder, `src/cards/<card-name>/`, holding its component, its CSS module, any script only it uses, its illustrations, and its fonts as Latin WOFF2 files. `src/cards/christmas/` is the pattern to follow; a Mother's or Father's Day style card is just a record handed to `src/ui/family-card.tsx`.
 2. Add the originals of its illustrations and its preview to `design/images/originals/`, list them in `design/images/render.mts`, and run `npm run images`. The preview lands in `src/assets/`, since the Gallery and Home show it too.
-3. Give it a row in `CAR_REC_ARR` in `src/ui/cards.ts`: its title, occasion, descriptions, preview, address, and component. The row makes its tile, its page, and its share dialog; nothing else needs a route.
+3. Give it a row in `CAR_DAT_ARR` in `src/ui/card-data.ts` (its title, occasion, descriptions, and address) and its component and preview in the lookups in `src/ui/cards.ts`, then run `npm run og-images` for its link preview. The row makes its tile, its page, and its share dialog; nothing else needs a route.
 4. Add its address to `public/sitemap.xml`, its row to the SEO suite's page list, its desktop and phone states to `tests/support/states.ts`, and its case to the two responsive suites, then run the tests and approve its new screenshots.
 
 ## Project structure
@@ -95,7 +96,7 @@ src/
 ├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
-public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the birthday card's old preview image, kept until each card has its own
+public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image.png and each card's in social/
 tests/
 ├── accessibility/     axe-core scan and scripted checks
 ├── interaction/       navigation, phone menu, contact form, and hover, press, and focus feedback checks
@@ -107,6 +108,7 @@ tests/
 
 design/                Source artwork and the scripts that render it, not served
 ├── icons/             render.mts, which builds the icon set in public/ (npm run icons)
+├── og-image/          card.html and render.mts, which capture the link preview images (npm run og-images)
 └── images/            render.mts, which builds the card images (npm run images)
 ```
 
