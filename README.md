@@ -50,7 +50,7 @@ npm run test:seo            # titles, descriptions, canonical links, robots, str
 
 Each suite runs in Chromium, Firefox, and WebKit against its own dev server on port 5195, so a dev server already running on 5173 is left alone. The states the suites visit are every page and the 404 page at phone and desktop widths, the open phone menu, and the share dialog open on the Gallery, for both the birthday card and a card that can be signed. Reports land in `tests/output/` (git-ignored); `npx playwright show-report tests/output/report` opens the HTML report. The rendering suite's approved screenshots live in `tests/rendering/baselines/` and match to the pixel, so after a change meant to alter how a page looks, review the diff in the report, then run `npm run test:rendering -- --update-snapshots` and commit the new baselines with the change. Chromium and WebKit capture with the faint confetti circuit pattern hidden, since they draw it slightly differently from run to run; Firefox still checks it. The baselines were captured on Linux, and font rendering differs between systems, so on macOS or Windows refresh them locally before relying on the comparison. If a browser is missing, `npx playwright install chromium firefox webkit` installs all three.
 
-Converted cards join every suite, starting with the Christmas card at both widths, checked at its finished scene under reduced motion. The cards still to be converted are only checked by the SEO and navigation suites; each joins the others as it's converted to the site's rules.
+Every card, the unlisted pranks included, joins every suite at both widths, checked at its finished scene under reduced motion.
 
 ## Build
 

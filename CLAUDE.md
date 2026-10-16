@@ -97,7 +97,8 @@ the family's fonts and colors.
   Tokens, not the design package.
 - **Horizontal layout**: TechGeek.dev's (the horizontal rhythm, the same
   content cap, gutter, and hero gap), kept by the user 2026-10-14 after
-  looking at the initial version; responsiveness still to be tested by hand.
+  looking at the initial version; its responsiveness tested by hand by the
+  user on 2026-10-16.
 
 ## Card Grids exception
 Decided by the user 2026-10-14, as on TechGeek.dev's Work page. The Gallery's
@@ -226,6 +227,5 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
-- **Not covered yet**: the two prank pages (Christmas and Father's Day), which
-  share their listed cards' code, and the social preview checks, which
-  return with the per-card preview images.
+- **Not covered yet**: the social preview checks, which return with the
+  per-card preview images.
