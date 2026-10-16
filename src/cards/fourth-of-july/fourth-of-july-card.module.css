@@ -25,21 +25,37 @@
 
 /* #region fojCarDiv */
 
-.fojCarDiv { /* What: Fourth-Of-July Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport in the sky's gradient, sets the card's serif and lettering color, and centers its column above the floating bar, scrolling only when the column can't fit. */
+.fojCarDiv { /* What: Fourth-Of-July Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport in the sky's gradient, defines the card's colors, sets its serif and lettering color, and centers its column above the floating bar, scrolling only when the column can't fit. */
 
 
+	--foj-blu-col : #4488FF;          /* What: Fourth-Of-July Blue Color. Why: Some fireworks burst in the flag's blue. How: This is #4488FF, one of the colors the card picks for a firework or a spark. */
+	--foj-can-col : #3C3B6E;          /* What: Fourth-Of-July Canton Color. Why: The flag's canton is a deep navy. How: This is #3C3B6E, the fill of the flag's canton. */
+	--foj-cor-col : #FF6B6B;          /* What: Fourth-Of-July Coral Color. Why: Some fireworks burst in a soft coral. How: This is #FF6B6B, one of the colors the card picks for a firework or a spark. */
+	--foj-fie-col : #B22234;          /* What: Fourth-Of-July Field Color. Why: The flag's red stripes are its classic deep red. How: This is #B22234, the fill of the flag's red field, which the white stripes are drawn over. */
+	--foj-gol-col : #FFD700;          /* What: Fourth-Of-July Gold Color. Why: Gold lights the star row, the motto, and some fireworks. How: This is #FFD700, read by those rows and picked for a firework or a spark. */
+	--foj-hor-col : #1A0A0A;          /* What: Fourth-Of-July Horizon Color. Why: The sky glows dark red at its bottom. How: This is #1A0A0A, the sky gradient's last stop. */
+	--foj-ice-col : #88CCFF;          /* What: Fourth-Of-July Ice Color. Why: Some fireworks burst in an icy light blue. How: This is #88CCFF, one of the colors the card picks for a firework or a spark. */
+	--foj-inn-col : #FF6464;          /* What: Fourth-Of-July Inner Color. Why: The headline glows red close around its letters. How: This is #FF6464, the inner of the headline's two glows, read at an opacity. */
+	--foj-mid-col : #0D1B4B;          /* What: Fourth-Of-July Middle Color. Why: The sky is navy through its middle. How: This is #0D1B4B, the sky gradient's middle stop. */
+	--foj-out-col : #6496FF;          /* What: Fourth-Of-July Outer Color. Why: The headline glows blue farther out. How: This is #6496FF, the outer of the headline's two glows, read at an opacity. */
+	--foj-red-col : #FF4444;          /* What: Fourth-Of-July Red Color. Why: Some fireworks burst in a bright red. How: This is #FF4444, one of the colors the card picks for a firework or a spark. */
 	--foj-ser-fon : 'Georgia', serif; /* What: Fourth-Of-July Serif Font. Why: The card's lettering is set in a classic serif. How: This names Georgia, falling back to the system's serif. */
+	--foj-sha-col : #000000;          /* What: Fourth-Of-July Shadow Color. Why: Dark shadows lift the flag and the wish off the sky. How: This is #000000, read at an opacity by the flag's and the wish's shadows. */
+	--foj-twi-col : #CC2222;          /* What: Fourth-Of-July Twinkle Color. Why: The closing sparkles are red. How: This is #CC2222, the twinkle row's color. */
+	--foj-whi-col : #FFFFFF;          /* What: Fourth-Of-July White Color. Why: White is the card's lettering, its stars, the flag's stripes, stars, and frame, and some fireworks. How: This is #FFFFFF, read by each of those. */
+	--foj-wis-col : #C8DCFF;          /* What: Fourth-Of-July Wish Color. Why: The wish reads in a soft pale blue. How: This is #C8DCFF, the wish paragraph's color. */
+	--foj-zen-col : #0A0A2E;          /* What: Fourth-Of-July Zenith Color. Why: The sky is darkest at its top. How: This is #0A0A2E, the sky gradient's first stop. */
 
-	background     : linear-gradient( #0A0A2E, #0D1B4B 50%, #1A0A0A );
-	color          : #FFFFFF;
+	background     : linear-gradient( var( --foj-zen-col ), var( --foj-mid-col ) 50%, var( --foj-hor-col ) ); /* Fourth-Of-July Zenith Color = #0A0A2E, Fourth-Of-July Middle Color = #0D1B4B, Fourth-Of-July Horizon Color = #1A0A0A */
+	color          : var( --foj-whi-col );                                                                    /* Fourth-Of-July White Color = #FFFFFF */
 	display        : flex;
 	flex-direction : column;
-	font-family    : var( --foj-ser-fon );    /* Fourth-Of-July Serif Font = 'Georgia', serif */
+	font-family    : var( --foj-ser-fon );                                                                    /* Fourth-Of-July Serif Font = 'Georgia', serif */
 	inset          : 0;
-	line-height    : var( --ver-rhy-p01 );    /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	line-height    : var( --ver-rhy-p01 );                                                                    /* Vertical Rhythm Base Plus 1 ~= 1.755 */
 	overflow-x     : hidden;
 	overflow-y     : auto;
-	padding-bottom : var( --car-bar-mar, 0 ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the centered column out of the bar's space, with no padding outside the card page. */
+	padding-bottom : var( --car-bar-mar, 0 );                                                                 /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the centered column out of the bar's space, with no padding outside the card page. */
 	position       : fixed;
 	text-align     : center;
 
@@ -64,7 +80,7 @@
 .staDotSpa { /* What: Star Dot Span. Why: Each star is a small white dot. How: This rounds it in white, its place, size, and brightness set by the card. */
 
 
-	background-color : #FFFFFF;
+	background-color : var( --foj-whi-col ); /* Fourth-Of-July White Color = #FFFFFF */
 	border-radius    : 50%;
 	position         : absolute;
 
@@ -162,17 +178,17 @@
 
 }
 
-.flaImaSvg { /* What: Flag Image Svg. Why: The flag leads the card, framed and lifted off the sky. How: This centers it above the headline at a fixed width, its height following the flag's proportions, with a faint white border, rounded corners, and a soft shadow. */
+.flaImaSvg { /* What: Flag Image SVG. Why: The flag leads the card, framed and lifted off the sky. How: This centers it above the headline at a fixed width, its height following the flag's proportions, with a faint white border, rounded corners, and a soft shadow. */
 
 
-	border        : var( --bor-wid-lar ) solid rgb( 255 255 255 / var( --cdn-pow-004-rec ) );                                          /* Border Width Large ~= 2.035px, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
-	border-radius : var( --rad-bor-sma );                                                                                              /* Radius Border Small ~= 8.304px */
-	box-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( 0 0 0 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+	border        : var( --bor-wid-lar ) solid rgb( from var( --foj-whi-col ) r g b / var( --cdn-pow-004-rec ) );   /* Border Width Large ~= 2.035px, Fourth-Of-July White Color = #FFFFFF @ 0.325 opacity */
+	border-radius : var( --rad-bor-sma );                                                                           /* Radius Border Small ~= 8.304px */
+	box-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( from var( --foj-sha-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Fourth-Of-July Shadow Color = #000000 @ 0.570 opacity */
 	display       : block;
 	height        : auto;
-	margin        : 0 auto var( --spa-ver-p02 );                                                                                       /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	margin        : 0 auto var( --spa-ver-p02 );                                                                    /* Spacing Vertical Base Plus 2 ~= 25.572px */
 	overflow      : hidden;
-	width         : calc( var( --ver-rhy-p09 ) * 1rem );                                                                               /* Vertical Rhythm Base Plus 9 ~= 183.074px */
+	width         : calc( var( --ver-rhy-p09 ) * 1rem );                                                            /* Vertical Rhythm Base Plus 9 ~= 183.074px */
 
 
 }
@@ -187,7 +203,7 @@
 	letter-spacing : calc( var( --cdn-pow-014-rec ) * 1em );                   /* Core-Design-Number to the Power of 14 Reciprocal ~= 0.020em */
 	line-height    : var( --ver-rhy-m01 );                                     /* Vertical Rhythm Base Minus 1 = 1 */
 	margin         : 0 0 var( --spa-ver-bas );                                 /* Spacing Vertical Base ~= 14.572px */
-	text-shadow    : 0 0 calc( var( --ver-rhy-p03 ) * 1rem ) rgb( 255 100 100 / var( --cdn-pow-001-rec ) ), 0 0 calc( var( --ver-rhy-p05 ) * 1rem ) rgb( 100 150 255 / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Plus 3 ~= 33.876px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755, Vertical Rhythm Base Plus 5 ~= 59.447px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+	text-shadow    : 0 0 calc( var( --ver-rhy-p03 ) * 1rem ) rgb( from var( --foj-inn-col ) r g b / var( --cdn-pow-001-rec ) ), 0 0 calc( var( --ver-rhy-p05 ) * 1rem ) rgb( from var( --foj-out-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Plus 3 ~= 33.876px, Fourth-Of-July Inner Color = #FF6464 @ 0.755 opacity, Vertical Rhythm Base Plus 5 ~= 59.447px, Fourth-Of-July Outer Color = #6496FF @ 0.570 opacity */
 
 
 }
@@ -195,7 +211,7 @@
 .staRowDiv { /* What: Star Row Div. Why: A row of gold stars sets the headline off from the wish. How: This sets the stars in gold, spaced in proportion to their size. */
 
 
-	color          : #FFD700;
+	color          : var( --foj-gol-col );                   /* Fourth-Of-July Gold Color = #FFD700 */
 	font-size      : var( --fon-siz-p02 );                   /* Font Size Base Plus 2 ~= 19.304px */
 	letter-spacing : calc( var( --cdn-pow-004-rec ) * 1em ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325em */
 	margin-bottom  : var( --spa-ver-bas );                   /* Spacing Vertical Base ~= 14.572px */
@@ -209,13 +225,13 @@
 .wisMesPar { /* What: Wish Message Paragraph. Why: The card's wish reads as a short, soft line under the greeting. How: This sets it in pale blue in the card's serif, growing with the screen, within the small text measure, with a dark shadow lifting it off the fireworks. */
 
 
-	color       : #C8DCFF;
-	font-family : var( --foj-ser-fon );                                                                                              /* Fourth-Of-July Serif Font = 'Georgia', serif */ /* What: Card Serif. Why: The base paragraph rule sets the main font. How: This keeps the card's serif. */
-	font-size   : clamp( var( --fon-siz-p01 ), 3vw, var( --fon-siz-p02 ) );                                                          /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 2 ~= 19.304px */ /* What: Fluid Text Size. Why: The wish should grow on a wide screen without crowding a phone. How: This grows it with the screen between the two steps. */
-	line-height : var( --ver-rhy-p01 );                                                                                              /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	color       : var( --foj-wis-col );                                     /* Fourth-Of-July Wish Color = #C8DCFF */
+	font-family : var( --foj-ser-fon );                                     /* Fourth-Of-July Serif Font = 'Georgia', serif */ /* What: Card Serif. Why: The base paragraph rule sets the main font. How: This keeps the card's serif. */
+	font-size   : clamp( var( --fon-siz-p01 ), 3vw, var( --fon-siz-p02 ) ); /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 2 ~= 19.304px */ /* What: Fluid Text Size. Why: The wish should grow on a wide screen without crowding a phone. How: This grows it with the screen between the two steps. */
+	line-height : var( --ver-rhy-p01 );                                     /* Vertical Rhythm Base Plus 1 ~= 1.755 */
 	margin      : 0 auto;
-	max-width   : var( --tex-wid-sma );                                                                                              /* Text Width Small ~= 22.047em */
-	text-shadow : 0 calc( var( --ver-rhy-m10 ) * 1rem ) calc( var( --ver-rhy-m02 ) * 1rem ) rgb( 0 0 0 / var( --cdn-pow-001-rec ) ); /* Vertical Rhythm Base Minus 10 ~= 0.876px, Vertical Rhythm Base Minus 2 ~= 8.304px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	max-width   : var( --tex-wid-sma );                                     /* Text Width Small ~= 22.047em */
+	text-shadow : 0 calc( var( --ver-rhy-m10 ) * 1rem ) calc( var( --ver-rhy-m02 ) * 1rem ) rgb( from var( --foj-sha-col ) r g b / var( --cdn-pow-001-rec ) ); /* Vertical Rhythm Base Minus 10 ~= 0.876px, Vertical Rhythm Base Minus 2 ~= 8.304px, Fourth-Of-July Shadow Color = #000000 @ 0.755 opacity */
 
 
 }
@@ -223,7 +239,7 @@
 .motLinSpa { /* What: Motto Line Span. Why: The anthem's closing words stand apart from the wish. How: This sets them in gold italics. */
 
 
-	color      : #FFD700;
+	color      : var( --foj-gol-col ); /* Fourth-Of-July Gold Color = #FFD700 */
 	font-style : italic;
 
 
@@ -235,7 +251,7 @@
 .twiRowDiv { /* What: Twinkle Row Div. Why: A row of red sparkles closes the card. How: This sets the sparkles in red below the wish, spaced in proportion to their size. */
 
 
-	color          : #CC2222;
+	color          : var( --foj-twi-col );                   /* Fourth-Of-July Twinkle Color = #CC2222 */
 	font-size      : var( --fon-siz-p02 );                   /* Font Size Base Plus 2 ~= 19.304px */
 	letter-spacing : calc( var( --cdn-pow-004-rec ) * 1em ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325em */
 	margin-top     : var( --spa-ver-p02 );                   /* Spacing Vertical Base Plus 2 ~= 25.572px */

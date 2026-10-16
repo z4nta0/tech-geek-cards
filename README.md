@@ -93,7 +93,7 @@ src/
 │   └── not-found/     The 404 page every unknown path shows, with its .module.css
 ├── ui/                What more than one page or card uses: the card catalog (cards.ts), the card tile, the share dialog, the confetti circuit pattern, page-links.ts (the pages the bar and footer link to), gsap-ease.ts, and family-card.tsx, the engine the three Family cards share
 ├── styles/            styles.css: this site's berry color, ease-in-out curve, and layout values, loaded after the design package's stylesheets
-├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines
+├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines, and a random value between two bounds
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
 public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image.png and each card's in social/

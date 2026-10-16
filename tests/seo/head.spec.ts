@@ -24,18 +24,17 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * this domain, while the 404 page and the unlisted cards carry noindex and no
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
- * author, and, apart from the cards still to be converted, has one h1; moving
- * between pages swaps the tags rather than piling them up. The raw page, read
- * without running the site's script the way link checkers read it, carries the
- * home page's full title and description. The structured data describes this
- * domain as a WebSite whose author is z4nta0, the same Person TechGeek.dev
- * describes, with the GitHub and LinkedIn profiles the footer links to. Every
- * icon the head links to is served, the PNGs at the size their links promise.
- * robots.txt lets every crawler in and names the sitemap, which lists every
- * indexed page. Home's raw page and every card's carry a complete set of link
- * preview tags with absolute addresses, the card's own title, description,
- * address, and image, and every preview image is served at 1,200x630 under
- * 300 KB. Adapted from TechGeek.dev.
+ * author, and has one h1; moving between pages swaps the tags rather than
+ * piling them up. The raw page, read without running the site's script the way
+ * link checkers read it, carries the home page's full title and description.
+ * The structured data describes this domain as a WebSite whose author is
+ * z4nta0, the same Person TechGeek.dev describes, with the GitHub and LinkedIn
+ * profiles the footer links to. Every icon the head links to is served, the
+ * PNGs at the size their links promise. robots.txt lets every crawler in and
+ * names the sitemap, which lists every indexed page. Home's raw page and every
+ * card's carry a complete set of link preview tags with absolute addresses,
+ * the card's own title, description, address, and image, and every preview
+ * image is served at 1,200x630 under 300 KB. Adapted from TechGeek.dev.
  *
  * Sections:
  *  - Constants
@@ -147,8 +146,8 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
  *
  * @summary
  * Checks that the page showing now has the head its row describes: its exact
- * title, exactly one description, z4nta0 as author, and, unless it's a card,
- * one h1. A page with a canonical address has that one canonical link, a
+ * title, exactly one description, z4nta0 as author, and, when its row checks
+ * it, one h1. A page with a canonical address has that one canonical link, a
  * description of 100 to 125 characters, and no robots tag; a page without one
  * has a noindex robots tag and no canonical link. Counting the tags also
  * catches a navigation that left the previous page's tags behind.
@@ -258,12 +257,10 @@ function imaSizFun ( imaBufObj : Buffer ) : [ number, number ] {
 	let offPosNum = 2; // What: Offset Position Number. Why: A JPEG's segments follow its two-byte start marker. How: This starts the walk just past it.
 
 
-
 	while ( offPosNum < imaBufObj.length ) { // What: Segment Walk Loop. Why: The size sits in the first start-of-frame segment, wherever it falls. How: This steps from segment to segment by their lengths.
 
 
 		const marCodNum = imaBufObj[ offPosNum + 1 ]; // What: Marker Code Number. Why: The segment's kind decides whether it holds the size. How: This reads the byte after the segment's 0xFF.
-
 
 
 		if ( marCodNum >= 0xC0 && marCodNum <= 0xC3 ) return [ imaBufObj.readUInt16BE( offPosNum + 7 ), imaBufObj.readUInt16BE( offPosNum + 5 ) ]; // What: Frame Size Return. Why: A start-of-frame segment holds the height then the width. How: This reads both and returns them width first.
@@ -390,17 +387,17 @@ test( 'the raw page carries the home title and description for script-free reade
 for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop. Why: Home and every card each need a complete preview in their raw page. How: This declares one test per page, null standing for Home.
 
 
-	const patStr = carDatObj ? `/${ carDatObj.sluStr }` : '/'; // What: Path String. Why: Each test loads its own page. How: This is the card's address, or the root.
+	const pagPatStr = carDatObj ? `/${ carDatObj.sluStr }` : '/'; // What: Page Path String. Why: Each test loads its own page. How: This is the card's address, or the root.
 
 
-	test( `${ patStr } raw page carries its link preview`, async ( { request : reqConObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
+	test( `${ pagPatStr } raw page carries its link preview`, async ( { request : reqConObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
 
 
-		const socTagObj = socTagFun( await ( await reqConObj.get( `${ patStr }?name=Sam` ) ).text() );                           // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the page, fetched with a name.
-		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                                     // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
-		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`;       // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
-		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;                   // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.
-		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                            // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
+		const socTagObj = socTagFun( await ( await reqConObj.get( `${ pagPatStr }?name=Sam` ) ).text() );                  // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the page, fetched with a name.
+		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                               // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
+		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`; // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
+		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;             // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.
+		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                      // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
 
 
 		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] ); // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.

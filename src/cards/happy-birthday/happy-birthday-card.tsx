@@ -10,7 +10,7 @@ import { cdnPowFun       } from '../../utils/rhythm.ts'; // What: Core-Design-Nu
 import { durSecFun       } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun       } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap            } from 'gsap';                  // What: GSAP. Why: The greeting and cake pop in as one timeline. How: This is the animation library that builds and plays it.
-import { PAR_COL_ARR     } from './confetti.ts';         // What: Party Color Array. Why: The balloons share the confetti's palette. How: Each balloon takes one of its colors in turn.
+import { PAR_TOK_ARR     } from './confetti.ts';         // What: Party Token Array. Why: The balloons share the confetti's palette. How: Each balloon takes one of its color tokens in turn.
 import { redMotFun       } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
 import { rhyPxlFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are spacing steps. How: This returns a step's size in pixels.
 import { staBalFun       } from './balloons.ts';         // What: Start Balloons Function. Why: Balloons float up behind the greeting. How: This starts them and returns the function that stops them.
@@ -75,9 +75,9 @@ import type { MouseEvent } from 'react';         // What: Mouse Event. Why: A ta
 const CAD_ROW_ARR = [ // What: Candle Row Array. Why: The cake carries three candles, each with its own flame. How: The cake renders one candle and flame per row.
 
 
-	{ colStr : '#FF6FCF', modStr : '',                        xcoNum : 41 },
-	{ colStr : '#4D96FF', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 },
-	{ colStr : '#6BCB77', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }
+	{ colStr : 'var( --bir-pin-col )', modStr : '',                        xcoNum : 41 }, // Birthday Pink Color = #FF6FCF
+	{ colStr : 'var( --bir-blu-col )', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 }, // Birthday Blue Color = #4D96FF
+	{ colStr : 'var( --bir-gre-col )', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }  // Birthday Green Color = #6BCB77
 
 
 ];
@@ -105,13 +105,13 @@ const OPE_COU_NUM = 60;                      // What: Opening Count Number. Why:
 const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot the cake. How: The cake renders one tilted strip per row.
 
 
-	{ angNum : 0,  colStr : '#A78BFA', xcoNum : 40, ycoNum : 80 },
-	{ angNum : 30, colStr : '#FF6B6B', xcoNum : 60, ycoNum : 74 },
-	{ angNum : 60, colStr : '#4D96FF', xcoNum : 80, ycoNum : 82 },
-	{ angNum : 90, colStr : '#FFD93D', xcoNum : 50, ycoNum : 90 },
-	{ angNum : 45, colStr : '#6BCB77', xcoNum : 90, ycoNum : 76 },
-	{ angNum : 20, colStr : '#FF6FCF', xcoNum : 35, ycoNum : 88 },
-	{ angNum : 70, colStr : '#FF9A3C', xcoNum : 75, ycoNum : 68 }
+	{ angNum : 0,  colStr : 'var( --bir-pur-col )', xcoNum : 40, ycoNum : 80 }, // Birthday Purple Color = #A78BFA
+	{ angNum : 30, colStr : 'var( --bir-red-col )', xcoNum : 60, ycoNum : 74 }, // Birthday Red Color = #FF6B6B
+	{ angNum : 60, colStr : 'var( --bir-blu-col )', xcoNum : 80, ycoNum : 82 }, // Birthday Blue Color = #4D96FF
+	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // Birthday Yellow Color = #FFD93D
+	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // Birthday Green Color = #6BCB77
+	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // Birthday Pink Color = #FF6FCF
+	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // Birthday Orange Color = #FF9A3C
 
 
 ];
@@ -288,15 +288,11 @@ function BirCarCom () : JSX.Element {
 
 		} );
 
-		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0, y : rhyPxlFun( 'p03' ) } ); // What: Happy Line Pop. Why: The greeting starts with Happy. How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
-
-		timLinObj.from( titLinArr, { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0 }, ovePosStr ); // What: Birthday Line Pop. Why: Birthday and the name follow close behind. How: This grows them from nothing, overlapping the Happy line. // Duration Animation Base Plus 4 ~= 486.1ms
-
-		timLinObj.from( subParRef.current, { autoAlpha : 0, duration : durSecFun( 'p04' ) }, sliPosStr ); // What: Wish Fade. Why: The wish arrives once the greeting has. How: This fades it in. // Duration Animation Base Plus 4 ~= 486.1ms
-
-		timLinObj.from( cakSvgRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : cdnPowFun( -2 ), y : rhyPxlFun( 'p04' ) }, sliPosStr ); // What: Cake Bounce. Why: The cake bounces up last. How: This grows it from about 0.57 of its size as it rises from a Base Plus 4 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Core-Design-Number to the Power of -2 ~= 0.570, Vertical Rhythm Base Plus 4 ~= 44.876px
-
-		timLinObj.from( tapParRef.current, { autoAlpha : 0, duration : durSecFun( 'p03' ) }, `+=${ durSecFun( 'p04' ) }` ); // What: Invitation Fade. Why: Once the card has settled, it invites a tap. How: After a Base Plus 4 step's pause, this fades the invitation in. // Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0,               y : rhyPxlFun( 'p03' ) } );                              // What: Happy Line Pop. Why: The greeting starts with Happy. How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
+		timLinObj.from( titLinArr,         { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0                                       }, ovePosStr );                   // What: Birthday Line Pop. Why: Birthday and the name follow close behind. How: This grows them from nothing, overlapping the Happy line. // Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( subParRef.current, { autoAlpha : 0, duration : durSecFun( 'p04' )                                                                    }, sliPosStr );                   // What: Wish Fade. Why: The wish arrives once the greeting has. How: This fades it in. // Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( cakSvgRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : cdnPowFun( -2 ), y : rhyPxlFun( 'p04' ) }, sliPosStr );                   // What: Cake Bounce. Why: The cake bounces up last. How: This grows it from about 0.57 of its size as it rises from a Base Plus 4 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Core-Design-Number to the Power of -2 ~= 0.570, Vertical Rhythm Base Plus 4 ~= 44.876px
+		timLinObj.from( tapParRef.current, { autoAlpha : 0, duration : durSecFun( 'p03' )                                                                    }, `+=${ durSecFun( 'p04' ) }` ); // What: Invitation Fade. Why: Once the card has settled, it invites a tap. How: After a Base Plus 4 step's pause, this fades the invitation in. // Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Plus 4 ~= 486.1ms
 
 		timLinObj.call( () => conSysObj.burFun( Math.random() * conCanRef.current!.clientWidth, rhyPxlFun( 'm01' ) * -1, TOP_COU_NUM ), [], '<' ); // What: Top Shower Call. Why: A last shower falls as the invitation appears. How: This throws the top count from a random spot just above the top edge, a Base Minus 1 step up, as the invitation starts. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and the timeline only runs after that render. // Vertical Rhythm Base Minus 1 = -11px
 
@@ -398,7 +394,8 @@ function BirCarCom () : JSX.Element {
 
 
 						<ellipse
-							fill={ PAR_COL_ARR[ balIndNum % PAR_COL_ARR.length ] }
+							style={{ fill : `var( ${ PAR_TOK_ARR[ balIndNum % PAR_TOK_ARR.length ] } )` }}
+
 							rx='17.5'
 							ry='20.7'
 						/>{ /* What: Balloon Body Ellipse Element. Why: The balloon is an oval. How: This fills it in the balloon's party color. */ }
@@ -406,9 +403,10 @@ function BirCarCom () : JSX.Element {
 						<ellipse
 							className={ cssModObj.balShiEll }
 
+							style={{ fill : 'var( --bir-whi-col )' }} // Birthday White Color = #FFFFFF
+
 							cx='-4.6'
 							cy='-5.5'
-							fill='#FFFFFF'
 							rx='4.6'
 							ry='3.7'
 						/>{ /* What: Balloon Shine Ellipse Element. Why: A glint makes the balloon look round and glossy. How: This draws a faint white spot up and to the left. */ }
@@ -416,7 +414,8 @@ function BirCarCom () : JSX.Element {
 						<line
 							className={ cssModObj.balStrLin }
 
-							stroke={ PAR_COL_ARR[ balIndNum % PAR_COL_ARR.length ] }
+							style={{ stroke : `var( ${ PAR_TOK_ARR[ balIndNum % PAR_TOK_ARR.length ] } )` }}
+
 							strokeWidth='0.8'
 							x1='0'
 							x2='0'
@@ -504,15 +503,17 @@ function BirCarCom () : JSX.Element {
 					<ellipse
 						className={ cssModObj.cakShaEll }
 
+						style={{ fill : 'var( --bir-sha-col )' }} // Birthday Shadow Color = #3A1A6E
+
 						cx='70'
 						cy='100'
-						fill='#3A1A6E'
 						rx='55'
 						ry='8'
 					/>{ /* What: Cake Shadow Ellipse Element. Why: The cake should sit on something. How: This draws a soft dark oval under it. */ }
 
 					<rect
-						fill='#FF6B6B'
+						style={{ fill : 'var( --bir-red-col )' }} // Birthday Red Color = #FF6B6B
+
 						height='34'
 						rx='6'
 						width='100'
@@ -523,7 +524,8 @@ function BirCarCom () : JSX.Element {
 					<rect
 						className={ cssModObj.cakHigRec }
 
-						fill='#FF9A9A'
+						style={{ fill : 'var( --bir-boh-col )' }} // Birthday Bottom-Highlight Color = #FF9A9A
+
 						height='10'
 						width='100'
 						x='20'
@@ -536,9 +538,10 @@ function BirCarCom () : JSX.Element {
 						<ellipse
 							key={ iciXcoNum }
 
+							style={{ fill : 'var( --bir-whi-col )' }} // Birthday White Color = #FFFFFF
+
 							cx={ iciXcoNum }
 							cy='68'
-							fill='#FFFFFF'
 							rx='6'
 							ry='4'
 						/> // What: Icing Dollop Ellipse Element. Why: Each dollop is a small white oval. How: This draws it on the tier's edge.
@@ -547,7 +550,8 @@ function BirCarCom () : JSX.Element {
 					))}
 
 					<rect
-						fill='#FFD93D'
+						style={{ fill : 'var( --bir-yel-col )' }} // Birthday Yellow Color = #FFD93D
+
 						height='28'
 						rx='6'
 						width='80'
@@ -558,7 +562,8 @@ function BirCarCom () : JSX.Element {
 					<rect
 						className={` ${ cssModObj.cakHigRec }   ${ cssModObj.cakHigRecTop } `}
 
-						fill='#FFE97D'
+						style={{ fill : 'var( --bir-toh-col )' }} // Birthday Top-Highlight Color = #FFE97D
+
 						height='10'
 						width='80'
 						x='30'
@@ -571,9 +576,10 @@ function BirCarCom () : JSX.Element {
 						<ellipse
 							key={ iciXcoNum }
 
+							style={{ fill : 'var( --bir-whi-col )' }} // Birthday White Color = #FFFFFF
+
 							cx={ iciXcoNum }
 							cy='44'
-							fill='#FFFFFF'
 							rx='5'
 							ry='3.5'
 						/> // What: Icing Dollop Ellipse Element. Why: Each dollop is a small white oval. How: This draws it on the tier's edge.
@@ -589,7 +595,8 @@ function BirCarCom () : JSX.Element {
 
 
 							<rect
-								fill={ cadRowObj.colStr }
+								style={{ fill : cadRowObj.colStr }}
+
 								height='18'
 								rx='3'
 								width='8'
@@ -601,9 +608,10 @@ function BirCarCom () : JSX.Element {
 
 
 								<ellipse
+									style={{ fill : 'var( --bir-yel-col )' }} // Birthday Yellow Color = #FFD93D
+
 									cx={ cadRowObj.xcoNum + 4 }
 									cy='22'
-									fill='#FFD93D'
 									rx='3.5'
 									ry='5'
 								/>{ /* What: Flame Outer Ellipse Element. Why: The flame glows yellow. How: This draws its outer oval. */ }
@@ -611,17 +619,19 @@ function BirCarCom () : JSX.Element {
 								<ellipse
 									className={ cssModObj.flaMidEll }
 
+									style={{ fill : 'var( --bir-red-col )' }} // Birthday Red Color = #FF6B6B
+
 									cx={ cadRowObj.xcoNum + 4 }
 									cy='23'
-									fill='#FF6B6B'
 									rx='2'
 									ry='3'
 								/>{ /* What: Flame Middle Ellipse Element. Why: The flame burns redder inside. How: This draws a smaller, softer red oval. */ }
 
 								<ellipse
+									style={{ fill : 'var( --bir-whi-col )' }} // Birthday White Color = #FFFFFF
+
 									cx={ cadRowObj.xcoNum + 4 }
 									cy='21.5'
-									fill='#FFFFFF'
 									rx='1'
 									ry='1.5'
 								/>{ /* What: Flame Core Ellipse Element. Why: The flame's hottest point is white. How: This draws a tiny white oval at its heart. */ }
@@ -642,7 +652,8 @@ function BirCarCom () : JSX.Element {
 						<rect
 							key={ `${ sprRowObj.xcoNum }-${ sprRowObj.ycoNum }` }
 
-							fill={ sprRowObj.colStr }
+							style={{ fill : sprRowObj.colStr }}
+
 							height='2.5'
 							rx='1'
 							transform={ `rotate( ${ sprRowObj.angNum }, ${ sprRowObj.xcoNum }, ${ sprRowObj.ycoNum } )` }

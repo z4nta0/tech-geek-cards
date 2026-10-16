@@ -7,9 +7,9 @@
  * @summary
  * The theme FdpCarCom hands the shared Family engine: its background,
  * lettering color, and font, set as the --fam-* properties
- * family-card.module.css reads. The font is declared here, loading from the
- * shared fonts folder, since the Father's Day card uses it too, so it loads
- * with the card.
+ * family-card.module.css reads, plus the underline offset its font needs. The
+ * font is declared here so it loads with the card, from the shared fonts
+ * folder, since the Father's Day card uses it too.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

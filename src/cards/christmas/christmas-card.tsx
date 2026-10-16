@@ -227,7 +227,7 @@ const snoSetFun = () : SnoSetTyp => ( { // What: Snowfall Settings Function. Why
 
 // #region Components
 
-type CccProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
+type CacProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
 
 // #region ChrCarCom
 
@@ -260,7 +260,7 @@ type CccProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props 
  *
 */
 
-function ChrCarCom ( { prkBoo = false } : CccProTyp ) : JSX.Element {
+function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 
 
 	const carDivRef = useRef< HTMLDivElement >( null );       // What: Card Div Reference. Why: The timeline's selectors and cleanup are scoped to the card. How: This holds the card's root.
@@ -287,16 +287,17 @@ function ChrCarCom ( { prkBoo = false } : CccProTyp ) : JSX.Element {
 	 * christmas-card.tsx = Christmas Timeline
 	 *
 	 * @summary
-	 * The card's one timeline, in order: the squares wipe away to the hacked
-	 * scene; after a second's pause the heading scrambles in and glitches;
-	 * the message fades in by letter; heading and message glitch together;
-	 * after a pause the squares wipe back; after another the snowy scene is
-	 * shown under them, the snow starts, and they wipe away; and after a
-	 * last pause the greeting and sign-off fade in by letter. The squares
-	 * fade in random order, the letters slide in from the right, and the
-	 * long fades use the duration scale's Base Plus 11 step, about 3.48s.
-	 * Under reduced motion the timeline jumps straight to its end, and the
-	 * snow never starts.
+	 * The card's one timeline. The prank's, in order: the squares wipe away to
+	 * the hacked scene; after a second's pause the heading scrambles in and
+	 * glitches; the message fades in by letter; heading and message glitch
+	 * together; after a pause the squares wipe back; after another the snowy
+	 * scene is shown under them, the snow starts, and they wipe away; and
+	 * after a last pause the greeting and sign-off fade in by letter. The
+	 * listed card's starts the snow at once and, after the pause, fades the
+	 * greeting and sign-off in the same way. The squares fade in random order,
+	 * the letters slide in from the right, and the long fades use the duration
+	 * scale's Base Plus 11 step, about 3.48s. Under reduced motion the
+	 * timeline jumps straight to its end, and the snow never starts.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -331,8 +332,7 @@ function ChrCarCom ( { prkBoo = false } : CccProTyp ) : JSX.Element {
 			const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades in a Base Minus 14 step, starting one such step after the last, in random order.
 
 
-			timLinObj.to( squEleArr, { ...squWipObj, opacity : 0 } ); // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
-
+			timLinObj.to( squEleArr,         { ...squWipObj,         opacity : 0                } );              // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
 			timLinObj.to( hacTitRef.current, { duration : fadDurNum, scrambleText : HAC_TIT_STR }, PAU_POS_STR ); // What: Heading Scramble. Why: The hack announces itself. How: After a pause, this types the heading out through random characters.
 
 			gliTimFun( timLinObj, [ hacTitRef.current! ], decEasStr, inoEasStr ); // What: Heading Glitch Call. Why: The heading glitches once it's written. How: This adds the glitch for the heading alone. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.

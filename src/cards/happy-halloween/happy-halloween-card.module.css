@@ -49,20 +49,40 @@
 
 /* #region halCarDiv */
 
-.halCarDiv { /* What: Halloween Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport, clips anything past its edges, shades the sky from deep purple to a warm horizon, and sets the fonts and glow its lettering shares. */
+.halCarDiv { /* What: Halloween Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport, clips anything past its edges, shades the sky from deep purple to a warm horizon, and sets the fonts and colors its pieces share. */
 
 
+	--hal-cor-col : #FFF5A0;                            /* What: Halloween Core Color. Why: A flame burns palest at its heart. How: This is #FFF5A0, the pale yellow core of every candle's and jack-o'-lantern's flame. */
+	--hal-cra-col : #E6B820;                            /* What: Halloween Crater Color. Why: Craters make the disc read as the moon. How: This is #E6B820, the deep gold of the moon's three craters. */
+	--hal-eye-col : #FF9F00;                            /* What: Halloween Eye Color. Why: Glowing eyes make the bats spooky. How: This is #FF9F00, the orange of every bat's eyes. */
+	--hal-ghf-col : #5B2D8E;                            /* What: Halloween Ghost-Face Color. Why: The ghosts look out with friendly faces. How: This is #5B2D8E, the purple of each ghost's eyes and smile. */
+	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the color of the greeting, its shadow copy, and the copy's glow. */
 	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
+	--hal-hil-col : #0F0020;                            /* What: Halloween Hill Color. Why: The hills are a dark silhouette. How: This is #0F0020, the near-black purple of the hills along the bottom edge. */
+	--hal-hor-col : #1A0A00;                            /* What: Halloween Horizon Color. Why: The sky warms at the horizon. How: This is #1A0A00, the dark brown at the bottom of the sky's gradient. */
+	--hal-lig-col : #C8D8FF;                            /* What: Halloween Lightning Color. Why: Lightning lights the whole scene for an instant. How: This is #C8D8FF, the pale blue of the lightning flash. */
+	--hal-mol-col : #FFF9C4;                            /* What: Halloween Moon-Light Color. Why: The moon is lit from its upper left. How: This is #FFF9C4, the pale yellow its shading starts from. */
+	--hal-moo-col : #F0C040;                            /* What: Halloween Moon Color. Why: The moon glows gold against the night. How: This is #F0C040, the gold of the moon's rim and its halo. */
+	--hal-ora-col : #FF8C00;                            /* What: Halloween Orange Color. Why: Warm orange light glows behind each jack-o'-lantern and around the wish. How: This is #FF8C00, the color of the jack-o'-lanterns' glows and the wish's text shadow. */
+	--hal-pum-col : #E85D04;                            /* What: Halloween Pumpkin Color. Why: The jack-o'-lanterns are orange pumpkins. How: This is #E85D04, the orange of each pumpkin's lobes. */
+	--hal-pur-col : #1A0533;                            /* What: Halloween Purple Color. Why: The card's deepest purple ties the night together. How: This is #1A0533, the middle of the sky, the greeting's dark shadow, the bats' wings, and the jack-o'-lanterns' carved faces. */
+	--hal-shi-col : #F5D98F;                            /* What: Halloween Shine Color. Why: A thin highlight rounds each candle's wax. How: This is #F5D98F, the light stripe down each candle. */
+	--hal-ste-col : #3D7A1E;                            /* What: Halloween Stem Color. Why: A pumpkin has a green stem. How: This is #3D7A1E, the green of each jack-o'-lantern's stem. */
+	--hal-vio-col : #2D0D52;                            /* What: Halloween Violet Color. Why: A lighter purple lifts the lower sky and sets the bats' bodies off their wings. How: This is #2D0D52, the sky's lower band and the bats' bodies and ears. */
+	--hal-wax-col : #E8C46A;                            /* What: Halloween Wax Color. Why: The candles are pale gold wax. How: This is #E8C46A, the color of each candle and its drip. */
+	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: The stars and ghosts shine white. How: This is #FFFFFF, the stars, the ghosts' bodies, and the glints in their eyes. */
+	--hal-wic-col : #333333;                            /* What: Halloween Wick Color. Why: The flame burns from a dark wick. How: This is #333333, the dark gray of each candle's wick. */
 	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
+	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the wish, the flames, and the greeting's shimmer together. How: This is #FFE066, the color of the wish, every outer flame, and the shimmer the greeting's letters tween to. */
+	--hal-zen-col : #0A0015;                            /* What: Halloween Zenith Color. Why: The sky darkens toward the top. How: This is #0A0015, the near black at the top of the sky's gradient. */
 
-	background : linear-gradient( to bottom, #0A0015 0%, #1A0533 45%, #2D0D52 70%, #1A0A00 100% ); /* What: Night Sky Gradient. Why: The sky darkens toward the top and warms at the horizon. How: Its colors and stops are the card's own art, kept as drawn. */
+	background : linear-gradient( to bottom, var( --hal-zen-col ) 0%, var( --hal-pur-col ) 45%, var( --hal-vio-col ) 70%, var( --hal-hor-col ) 100% ); /* Halloween Zenith Color = #0A0015, Halloween Purple Color = #1A0533, Halloween Violet Color = #2D0D52, Halloween Horizon Color = #1A0A00 */ /* What: Night Sky Gradient. Why: The sky darkens toward the top and warms at the horizon. How: Its colors and stops are the card's own art, kept as drawn. */
 	inset      : 0;
 	overflow   : hidden;
 	position   : fixed;
 
 
 }
-
 
 
 /* #region staSkyDiv */
@@ -80,7 +100,7 @@
 .staTwiDiv { /* What: Star Twinkle Div. Why: Each star is a small white dot that twinkles the whole time the card is open. How: This rounds it white at its place and keeps it on its own layer, since its opacity changes every frame. */
 
 
-	background-color : #FFFFFF;
+	background-color : var( --hal-whi-col ); /* Halloween White Color = #FFFFFF */
 	border-radius    : 50%;
 	position         : absolute;
 	will-change      : opacity;
@@ -104,7 +124,6 @@
 /* #endregion staSkyDiv */
 
 
-
 .mooFloSvg { /* What: Moon Float SVG. Why: A glowing moon hangs in the top right corner. How: This pins it there at a fixed size, its distance from the right edge growing with the screen. */
 
 
@@ -115,8 +134,6 @@
 
 
 }
-
-
 
 .ghoFloSvg { /* What: Ghost Float SVG. Why: The ghosts hover over the hills. How: This places each one above the bottom edge, its modifier setting how far across and how big. */
 
@@ -151,8 +168,6 @@
 
 }
 
-
-
 .groHilSvg { /* What: Ground Hill SVG. Why: Rolling hills run along the bottom of the card. How: This stretches them across the full width at a fixed height. */
 
 
@@ -164,8 +179,6 @@
 
 
 }
-
-
 
 .pumLanSvg { /* What: Pumpkin Lantern SVG. Why: Jack-o'-lanterns stand on the hills, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar, letting its candle's flame reach past the top of its drawing, its modifier setting how far across and how big. */
 
@@ -209,8 +222,6 @@
 
 
 }
-
-
 
 .canFlaSvg { /* What: Candle Flame SVG. Why: Candles stand among the jack-o'-lanterns, clear of the card page's floating bar. How: This pins each one to the bottom edge above the bar at a slim fixed width, its modifier setting how far across. */
 
@@ -270,7 +281,6 @@
 }
 
 
-
 /* #region titStaDiv */
 
 .titStaDiv { /* What: Title Stack Div. Why: The greeting's glow and shadow are a still copy sitting exactly under its letters. How: This lays the copy and the heading out as a grid, so both can share one cell. */
@@ -296,15 +306,14 @@
 }
 
 
-
 /* #region titShaSpa */
 
 .titShaSpa { /* What: Title Shadow Span. Why: The greeting glows orange and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This draws the copy in the greeting's orange with both shadows cast once around it, under the heading. */
 
 
-	color   : #FF6B00;
+	color   : var( --hal-gre-col ); /* Halloween Greeting Color = #FF6B00 */
 	display : block;
-	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 #1A0533 ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) oklch( from #FF6B00 l c h / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base ~= 14.572px, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
+	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 var( --hal-pur-col ) ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) rgb( from var( --hal-gre-col ) r g b / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Halloween Purple Color = #1A0533, Vertical Rhythm Base ~= 14.572px, Halloween Greeting Color = #FF6B00 @ 0.755 opacity */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
 
 
 }
@@ -320,10 +329,12 @@
 /* #endregion titShaSpa */
 
 
+/* #region titHalHea */
+
 .titHalHea { /* What: Title Halloween Heading. Why: The greeting leads the card in glowing orange, over its shadow copy. How: This colors it, clears the heading's margin, and positions it so it paints over the copy, whose filter lifts it into the same layer as positioned elements. */
 
 
-	color    : #FF6B00;
+	color    : var( --hal-gre-col ); /* Halloween Greeting Color = #FF6B00 */
 	margin   : 0;
 	position : relative;
 
@@ -332,6 +343,8 @@
 
 /* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the titShaSpa region above. */
 
+/* #endregion titHalHea */
+
 /* #endregion titStaDiv */
 
 
@@ -339,14 +352,14 @@
 .wisMesPar { /* What: Wish Message Paragraph. Why: A wish sits under the greeting in candle yellow. How: This sets it in the handwritten font, growing with the screen, softly glowing and a little faded. */
 
 
-	color          : #FFE066;                                                    /* What: Candle Yellow. Why: The base paragraph rule sets the secondary text color, but the wish glows like the flames. How: This sets the card's own yellow. */
-	font-family    : var( --hal-wis-fon );                                       /* Halloween Wish Font = 'Barriecito', main font */
-	font-size      : clamp( var( --fon-siz-p01 ), 2.5vw, var( --fon-siz-p03 ) ); /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish grows with the greeting. How: This grows it with the screen between the two steps. */
-	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em );                     /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
-	margin         : var( --spa-ver-bas ) auto 0;                                /* Spacing Vertical Base ~= 14.572px */
-	max-width      : var( --tex-wid-bas );                                       /* Text Width Base ~= 29.207em */
-	opacity        : var( --cdn-pow-001-rec );                                   /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
-	text-shadow    : 0 0 calc( var( --ver-rhy-m01 ) * 1rem ) #FF8C00;            /* Vertical Rhythm Base Minus 1 = 11px */
+	color          : var( --hal-yel-col );                                         /* Halloween Yellow Color = #FFE066 */ /* What: Candle Yellow. Why: The base paragraph rule sets the secondary text color, but the wish glows like the flames. How: This sets the card's own yellow. */
+	font-family    : var( --hal-wis-fon );                                         /* Halloween Wish Font = 'Barriecito', main font */
+	font-size      : clamp( var( --fon-siz-p01 ), 2.5vw, var( --fon-siz-p03 ) );   /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish grows with the greeting. How: This grows it with the screen between the two steps. */
+	letter-spacing : calc( var( --cdn-pow-008-rec ) * 1em );                       /* Core-Design-Number to the Power of 8 Reciprocal ~= 0.105em */
+	margin         : var( --spa-ver-bas ) auto 0;                                  /* Spacing Vertical Base ~= 14.572px */
+	max-width      : var( --tex-wid-bas );                                         /* Text Width Base ~= 29.207em */
+	opacity        : var( --cdn-pow-001-rec );                                     /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	text-shadow    : 0 0 calc( var( --ver-rhy-m01 ) * 1rem ) var( --hal-ora-col ); /* Vertical Rhythm Base Minus 1 = 11px, Halloween Orange Color = #FF8C00 */
 
 
 }
@@ -395,11 +408,10 @@
 /* #endregion batFlyDiv */
 
 
-
 .ligFlaDiv { /* What: Lightning Flash Div. Why: Lightning lights the whole scene for an instant. How: This covers the card in pale blue, transparent and out of the pointer's way until a strike flashes it. */
 
 
-	background     : #C8D8FF;
+	background     : var( --hal-lig-col ); /* Halloween Lightning Color = #C8D8FF */
 	inset          : 0;
 	opacity        : 0;
 	pointer-events : none;

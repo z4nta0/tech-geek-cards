@@ -100,6 +100,8 @@ const CAR_COM_OBJ : Record< string, LazyExoticComponent< ComponentType > > = { /
 
 
 
+// #region CAR_IMA_OBJ
+
 /**
  * CAR_IMA_OBJ = Card Image Object
  *
@@ -126,6 +128,8 @@ const CAR_IMA_OBJ : Record< string, string > = { // What: Card Image Object. Why
 
 
 };
+
+// #endregion CAR_IMA_OBJ
 
 
 

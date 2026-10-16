@@ -15,11 +15,11 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * measure.spec.ts = Measure Spec
  *
  * @summary
- * Checks the text measure rule on every route, each converted card, the 404
- * page, and the open phone menu, in whichever engine the project runs: no line
- * of a paragraph may run past 75 characters, or past 60 for small text
- * (anything set below the 14.572px body size, such as captions and labels).
- * Each paragraph's text is walked one character at a time and split into its
+ * Checks the text measure rule on every route, every card, the 404 page, and
+ * the open phone menu, in whichever engine the project runs: no line of a
+ * paragraph may run past 75 characters, or past 60 for small text (anything
+ * set below the 14.572px body size, such as captions and labels). Each
+ * paragraph's text is walked one character at a time and split into its
  * rendered lines by where each character lands, so the count is what a reader
  * actually sees at that width, skipping a visually hidden copy meant only for
  * screen readers. The widths run from 320px to 1,920px, with the site's
@@ -51,7 +51,7 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
 	{ ideStr : 'christmas',         menBoo : false, patStr : '/merry-christmas'       }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
-	{ ideStr : 'birthday',          menBoo : false, patStr : '/happy-birthday'        }, // What: Birthday Case. Why: The Birthday card's message and cake. How: This measures its message, cake, and balloons, still under reduced motion.
+	{ ideStr : 'birthday',          menBoo : false, patStr : '/happy-birthday'        }, // What: Birthday Case. Why: The Birthday card's message, cake, and balloons share the screen. How: This measures its message, cake, and balloons, still under reduced motion.
 	{ ideStr : 'mothers-day',       menBoo : false, patStr : '/mothers-day'           }, // What: Mother's Day Case. Why: The Mother's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
 	{ ideStr : 'fathers-day',       menBoo : false, patStr : '/fathers-day'           }, // What: Father's Day Case. Why: The Father's Day card ends on its greeting over a photo mosaic. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
 	{ ideStr : 'fourth-of-july',    menBoo : false, patStr : '/fourth-of-july'        }, // What: Fourth Of July Case. Why: The Fourth of July card's flag and lettering center above the bar. How: This measures its finished flag and lettering, which reduced motion shows at once.

@@ -74,7 +74,7 @@ const gsaEasFun = ( easFamStr : string ) : string => { // What: GSAP Easing Func
 
 
 
-	return easNamStr;
+	return easNamStr; // What: Easing Name Return. Why: The card's tweens refer to the curve by its GSAP name. How: This returns the name the curve was registered under.
 
 
 };

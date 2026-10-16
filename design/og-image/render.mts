@@ -1,7 +1,6 @@
 
 
 
-
 // #region Imports
 
 import { CAR_DAT_ARR   } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: Every card gets its own link preview image. How: The script captures one per row, named after the card's address.
@@ -44,11 +43,11 @@ import { statSync      } from 'node:fs';                   // What: Stat Sync. W
 
 // #region Constants
 
-const CAR_URL_STR = new URL( './card.html', import.meta.url ).href;                            // What: Card URL String. Why: The site's card loads its fonts and styles by paths relative to itself. How: This is card.html's own file URL.
-const MAX_BYT_NUM = 300 * 1024;                                                                // What: Maximum Bytes Number. Why: WhatsApp drops a preview image of 300 KB or more. How: This is the limit every image is checked against.
-const OUT_PAT_STR = fileURLToPath( new URL( '../../public/og-image.png', import.meta.url ) );  // What: Output Path String. Why: The home page's tags point at the site's card in public/. How: This resolves that path from this script's folder.
-const SOC_DIR_STR = fileURLToPath( new URL( '../../public/social/', import.meta.url ) );       // What: Social Directory String. Why: Each card's tags point at its own image in public/social/. How: This resolves that folder from this script's folder.
+const CAR_URL_STR = new URL( './card.html', import.meta.url ).href;                           // What: Card URL String. Why: The site's card loads its fonts and styles by paths relative to itself. How: This is card.html's own file URL.
 const HID_CSS_STR = "nav[aria-label='Card'], [data-family-stills-mode] > :has( > [aria-label='Card controls'] ) { display : none !important; } [data-family-stills-mode] { grid-template-rows : minmax( 0, 1fr ) !important; } * { --car-bar-mar : var( --spa-ver-m01 ) !important; }"; // What: Hide CSS String. Why: A preview shows the card alone, without the floating bar or the Family cards' controls, whose room it reclaims. How: This hides both by their accessible names and shrinks the bar's clearing margin, styles only this capture ever sees.
+const MAX_BYT_NUM = 300 * 1024;                                                               // What: Maximum Bytes Number. Why: WhatsApp drops a preview image of 300 KB or more. How: This is the limit every image is checked against.
+const OUT_PAT_STR = fileURLToPath( new URL( '../../public/og-image.png', import.meta.url ) ); // What: Output Path String. Why: The home page's tags point at the site's card in public/. How: This resolves that path from this script's folder.
+const SOC_DIR_STR = fileURLToPath( new URL( '../../public/social/', import.meta.url ) );      // What: Social Directory String. Why: Each card's tags point at its own image in public/social/. How: This resolves that folder from this script's folder.
 
 // #endregion Constants
 

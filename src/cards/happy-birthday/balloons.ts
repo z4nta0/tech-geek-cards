@@ -4,6 +4,7 @@
 // #region Imports
 
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise and sway take steps on the duration scale. How: This returns a step's length in milliseconds.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
 import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway is a rhythm step. How: This returns a step's size in pixels.
 
 // #endregion Imports
@@ -49,10 +50,6 @@ const SCA_MIN_NUM = 28 / 46;   // What: Scale Minimum Number. Why: The smallest 
 
 
 // #region Helpers
-
-const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Value Function. Why: Every balloon's size, pace, and sway are picked at random within a range. How: This returns a number from the minimum up to the maximum.
-
-
 
 type BalRecTyp = { // What: Balloon Record Type. Why: Each balloon keeps its own size, pace, and sway between frames. How: This holds its element and every value its next step reads.
 
@@ -153,11 +150,11 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 	 * draBalFun = Draw Balloon Function
 	 *
 	 * @summary
-	 * Places one balloon at a moment of its rise. Its column is the center of its
-	 * own equal share of the container's width, less half its width, and its
-	 * sway is the sine of the time over its period, offset by its phase. It
-	 * moves the balloon by transform alone, scaled to its size from its own
-	 * center.
+	 * Places one balloon at a moment of its rise. Its column is the center of
+	 * its own equal share of the container's width, less half its width, and
+	 * its sway is the sine of the time over its period, offset by its phase.
+	 * It moves the balloon by transform alone, scaled to its size from its
+	 * own center.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *

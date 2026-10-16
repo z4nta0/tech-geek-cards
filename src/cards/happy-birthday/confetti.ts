@@ -5,6 +5,7 @@
 
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The confetti's spin, slowing, and fading cutoffs sit on the scale as powers of the core design number. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: How fast the confetti slows and fades are steps on the duration scale. How: This returns a step's length in milliseconds.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
 import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's sizes, speeds, and pull are rhythm steps. How: This returns a step's size in pixels.
 
 // #endregion Imports
@@ -41,20 +42,16 @@ import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
 
 // #region Constants
 
-const FRA_MIL_NUM = 1000 / 60;                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
-const FRA_MAX_NUM = 4;                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
-const PAR_COL_ARR = [ '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#FF6FCF', '#FF9A3C', '#A78BFA', '#34D399' ]; // What: Party Color Array. Why: The confetti and the balloons share one bright palette. How: Each piece picks one at random, and each balloon takes one in turn.
-const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random.
+const FRA_MAX_NUM = 4;                                                                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
+const FRA_MIL_NUM = 1000 / 60;                                                                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
+const PAR_TOK_ARR = [ '--bir-red-col', '--bir-yel-col', '--bir-gre-col', '--bir-blu-col', '--bir-pin-col', '--bir-ora-col', '--bir-pur-col', '--bir-eme-col' ]; // What: Party Token Array. Why: The confetti and the balloons share one bright palette, whose colors are the card's own tokens. How: The confetti reads each token's color once it starts and each piece picks one at random, while each balloon takes one in turn. // Birthday Red Color = #FF6B6B, Birthday Yellow Color = #FFD93D, Birthday Green Color = #6BCB77, Birthday Blue Color = #4D96FF, Birthday Pink Color = #FF6FCF, Birthday Orange Color = #FF9A3C, Birthday Purple Color = #A78BFA, Birthday Emerald Color = #34D399
+const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random.
 
 // #endregion Constants
 
 
 
 // #region Helpers
-
-const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Value Function. Why: Every piece's size, speed, and spin are picked at random within a range. How: This returns a number from the minimum up to the maximum.
-
-
 
 // #region draStaFun
 
@@ -68,7 +65,7 @@ const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValN
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param conTexObj - Context Object: The canvas's 2D drawing context, already
+ * @param canConObj - Canvas Context Object: The canvas's 2D drawing context, already
  *                    moved and turned to the piece.
  * @param radValNum - Radius Value Number: The distance from the center to
  *                    each point, in pixels.
@@ -77,15 +74,15 @@ const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValN
  *
  * @example
  * ```ts
- * draStaFun(conTexObj, radValNum) // => void
+ * draStaFun(canConObj, radValNum) // => void
  * ```
  *
 */
 
-const draStaFun = ( conTexObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
+const draStaFun = ( canConObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
 
 
-	conTexObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
+	canConObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
 
 
 	for ( let poiIndNum = 0; poiIndNum < 5; poiIndNum++ ) { // What: Point Loop. Why: The star has five points, each with an inner corner after it. How: This adds both corners for each point.
@@ -95,15 +92,16 @@ const draStaFun = ( conTexObj : CanvasRenderingContext2D, radValNum : number ) :
 		const innAngNum = outAngNum + Math.PI / 5;                   // What: Inner Angle Number. Why: Each inner corner sits halfway to the next point. How: This is a tenth of a turn past the point.
 
 
-		conTexObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
-		conTexObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
+		canConObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
+		canConObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
 
 
 	}
 
 
-	conTexObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
-	conTexObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
+
+	canConObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
+	canConObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
 
 
 };
@@ -157,7 +155,9 @@ type ConSysTyp = { // What: Confetti System Type. Why: The card throws bursts wh
  * Plus 6 step, about 853ms, and spins them up to about 5.4 degrees either
  * way. Below about three quarters of the canvas's height a piece fades out
  * over the same step, and a piece that has faded or fallen past the bottom
- * is dropped. The loop stops itself once no pieces are left.
+ * is dropped. The loop stops itself once no pieces are left. The party
+ * colors are read once, as it starts, from the card's tokens, which the
+ * canvas inherits.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -176,9 +176,14 @@ type ConSysTyp = { // What: Confetti System Type. Why: The card throws bursts wh
 const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: Start Confetti Function. Why: The card throws confetti when it opens and whenever it's tapped. How: This readies the canvas and returns the functions that throw a burst and stop it all.
 
 
-	const conTexObj = conCanEle.getContext( '2d' )!; // What: Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
+	const canConObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
 
 	const pieRecArr : PieRecTyp[] = []; // What: Piece Record Array. Why: Every piece in the air keeps its own values between frames. How: Bursts add to it, and each frame drops the pieces that are done.
+
+
+
+	const canStyObj = getComputedStyle( conCanEle );                                                      // What: Canvas Style Object. Why: The party colors are tokens set on the card, which the canvas inherits. How: This reads the canvas's computed style once, as the confetti starts.
+	const parColArr = PAR_TOK_ARR.map( ( tokNamStr ) => canStyObj.getPropertyValue( tokNamStr ).trim() ); // What: Party Color Array. Why: The canvas can't read a token, so each piece needs a plain color. How: This looks up each party token's value, in the token array's order.
 
 
 
@@ -198,7 +203,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		canWidNum = conCanEle.clientWidth;                          // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
 		conCanEle.height = Math.round( canHeiNum * pixRatNum );     // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
 		conCanEle.width  = Math.round( canWidNum * pixRatNum );     // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
-		conTexObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
+		canConObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
 
 
 	};
@@ -269,7 +274,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
-		conTexObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
+		canConObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
 
 
 
@@ -300,30 +305,30 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 
-			conTexObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
-			conTexObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
-			conTexObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
-			conTexObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
-			conTexObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
+			canConObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
+			canConObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
+			canConObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
+			canConObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
+			canConObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
 
 
-			if ( pieRecObj.shaStr === 'rect' ) conTexObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
+			if ( pieRecObj.shaStr === 'rect' ) canConObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
 
 			else if ( pieRecObj.shaStr === 'circle' ) { // What: Circle Draw Branch. Why: Some pieces are dots. How: This fills a circle as wide as the piece.
 
 
-				conTexObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
-				conTexObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
-				conTexObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
+				canConObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
+				canConObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
+				canConObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
 
 
 			}
 
-			else draStaFun( conTexObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
+			else draStaFun( canConObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
 
 
 
-			conTexObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
+			canConObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
 
 
 		}
@@ -398,7 +403,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 				alpNum    : 1,                                                               // What: Alpha Number. Why: A piece starts fully visible. How: This starts it at 1.
-				colStr    : PAR_COL_ARR[ Math.floor( Math.random() * PAR_COL_ARR.length ) ], // What: Color String. Why: The burst mixes the party colors. How: This picks one at random.
+				colStr    : parColArr[ Math.floor( Math.random() * parColArr.length ) ],     // What: Color String. Why: The burst mixes the party colors. How: This picks one at random.
 				rotNum    : Math.random() * 360,                                             // What: Rotation Number. Why: Pieces start at every angle. How: This picks one anywhere around a full turn, in degrees.
 				shaStr    : SHA_NAM_ARR[ Math.floor( Math.random() * SHA_NAM_ARR.length ) ], // What: Shape String. Why: The burst mixes three shapes. How: This picks one at random.
 				sizNum    : ranValFun( sizMinNum, sizMaxNum ),                               // What: Size Number. Why: Pieces come in different sizes. How: This picks one within the range.
@@ -460,7 +465,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 // #region Exports
 
-export { PAR_COL_ARR, staConFun, type ConSysTyp }; // What: Named Exports. Why: The card starts the confetti, keeps its functions, and colors its balloons from the same palette. How: This exports the palette, the start function, and the system type by name.
+export { PAR_TOK_ARR, staConFun, type ConSysTyp }; // What: Named Exports. Why: The card starts the confetti, keeps its functions, and colors its balloons from the same palette. How: This exports the palette's tokens, the start function, and the system type by name.
 
 // #endregion Exports
 

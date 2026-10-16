@@ -80,7 +80,20 @@ const GRA_POS_ARR = [ // What: Grape Position Array. Why: The grapes are five id
 
 
 
-const LEA_COL_ARR = [ '#D2691E', '#CD853F', '#A0522D', '#B8860B', '#DAA520', '#8B4513', '#FF8C00', '#E2703A' ]; // What: Leaf Color Array. Why: The falling leaves come in a range of autumn browns, golds, and oranges. How: Each fall, a leaf picks one of these at random.
+const LEA_COL_ARR = [ // What: Leaf Color Array. Why: The falling leaves come in a range of autumn browns, golds, and oranges. How: Each fall, a leaf picks one of these at random, each a token the leaf's own color reads from the card's root.
+
+
+	'var( --tha-cin-col )', // Thanksgiving Cinnamon Color = #D2691E
+	'var( --tha-tan-col )', // Thanksgiving Tan Color = #CD853F
+	'var( --tha-sie-col )', // Thanksgiving Sienna Color = #A0522D
+	'var( --tha-och-col )', // Thanksgiving Ochre Color = #B8860B
+	'var( --tha-gol-col )', // Thanksgiving Gold Color = #DAA520
+	'var( --tha-bro-col )', // Thanksgiving Brown Color = #8B4513
+	'var( --tha-ora-col )', // Thanksgiving Orange Color = #FF8C00
+	'var( --tha-ter-col )'  // Thanksgiving Terracotta Color = #E2703A
+
+
+];
 
 
 
@@ -89,10 +102,10 @@ const LEA_COL_ARR = [ '#D2691E', '#CD853F', '#A0522D', '#B8860B', '#DAA520', '#8
  *
  * @summary
  * The turkey's five tail feathers, fanned from left to right, each row a
- * feather: colStr, its Color String, and rotNum, its Rotation Number, the
- * angle in degrees it's turned around the base of the tail in the drawing's
- * own space. The outer pair is deep red, the next pair gold, and the middle
- * one orange.
+ * feather: colStr, its Color String, a token the card's root defines, and
+ * rotNum, its Rotation Number, the angle in degrees it's turned around the
+ * base of the tail in the drawing's own space. The outer pair is deep red,
+ * the next pair gold, and the middle one orange.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -101,11 +114,11 @@ const LEA_COL_ARR = [ '#D2691E', '#CD853F', '#A0522D', '#B8860B', '#DAA520', '#8
 const TUR_FEA_ARR = [ // What: Turkey Feather Array. Why: The tail is five identical feathers at different angles and colors. How: The turkey draws one feather per row, in order, so the later ones overlap the earlier.
 
 
-	{ colStr : '#8B0000', rotNum : -40 },
-	{ colStr : '#DAA520', rotNum : -20 },
-	{ colStr : '#D2691E', rotNum : 0   },
-	{ colStr : '#DAA520', rotNum : 20  },
-	{ colStr : '#8B0000', rotNum : 40  }
+	{ colStr : 'var( --tha-fea-col )', rotNum : -40 }, // Thanksgiving Feather Color = #8B0000
+	{ colStr : 'var( --tha-gol-col )', rotNum : -20 }, // Thanksgiving Gold Color = #DAA520
+	{ colStr : 'var( --tha-cin-col )', rotNum : 0   }, // Thanksgiving Cinnamon Color = #D2691E
+	{ colStr : 'var( --tha-gol-col )', rotNum : 20  }, // Thanksgiving Gold Color = #DAA520
+	{ colStr : 'var( --tha-fea-col )', rotNum : 40  }  // Thanksgiving Feather Color = #8B0000
 
 
 ];
@@ -234,30 +247,47 @@ function ThaCarCom () : JSX.Element {
 	useGSAP( () => { // What: Thanksgiving Timeline Hook. Why: The timeline has to run after the card renders and be undone when it leaves. How: This builds and plays it in a GSAP context, returning the leaves' cleanup.
 
 
+		const bouEasStr = gsaEasFun( 'bou' );                                   // What: Bounce Easing String. Why: The produce pops in with a springy bounce. How: This registers the bounce token and keeps its GSAP name.
+		const corOffNum = rhyPxlFun( 'p06' ) * -1;                              // What: Cornucopia Offset Number. Why: The cornucopia slides in from the left. How: This is the Base Plus 6 rhythm step, negated, in pixels. // Vertical Rhythm Base Plus 6 ~= 78.751px
 		const decEasStr = gsaEasFun( 'dec' );                                   // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
+		const entDurNum = durSecFun( 'p06' );                                   // What: Entrance Duration Number. Why: The cornucopia, heading, and message arrive at one unhurried pace. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const feaDurNum = durSecFun( 'p04' );                                   // What: Feather Duration Number. Why: Each feather grows quickly. How: This is the Base Plus 4 step, in seconds. // Duration Animation Base Plus 4 ~= 486.1ms
+		const feaGapNum = durSecFun( 'm02' );                                   // What: Feather Gap Number. Why: The feathers fan out one after another. How: This is the Base Minus 2 step between them, in seconds. // Duration Animation Base Minus 2 ~= 89.9ms
+		const inoEasStr = gsaEasFun( 'ino' );                                   // What: In-Out Easing String. Why: The turkey rocks smoothly back and forth. How: This registers the in-out token and keeps its GSAP name.
+		const mesRisNum = rhyPxlFun( 'p01' );                                   // What: Message Rise Number. Why: The message drifts up a little as it arrives. How: This is the Base Plus 1 rhythm step, in pixels. // Vertical Rhythm Base Plus 1 ~= 19.304px
+		const mesStaNum = durSecFun( 'p09' );                                   // What: Message Start Number. Why: The message closes the card after the heading. How: This is the Base Plus 9 step, in seconds from the start. // Duration Animation Base Plus 9 ~= 1,983.0ms
 		const oveEasStr = gsaEasFun( 'ove' );                                   // What: Overshoot Easing String. Why: The cornucopia and feathers settle with a little overshoot. How: This registers the gentle overshoot token and keeps its GSAP name.
+		const proDurNum = durSecFun( 'p02' );                                   // What: Produce Duration Number. Why: Each piece of produce pops quickly. How: This is the Base Plus 2 step, in seconds. // Duration Animation Base Plus 2 ~= 277.0ms
+		const proGapNum = durSecFun( 'm03' );                                   // What: Produce Gap Number. Why: The produce pops one piece after another. How: This is the Base Minus 3 step between them, in seconds. // Duration Animation Base Minus 3 ~= 67.9ms
+		const proStaNum = durSecFun( 'p04' );                                   // What: Produce Start Number. Why: The produce pops once the cornucopia is on its way. How: This is the Base Plus 4 step, in seconds from the start. // Duration Animation Base Plus 4 ~= 486.1ms
 		const redMotBoo = redMotFun();                                          // What: Reduce Motion Boolean. Why: Under reduced motion the card opens finished and nothing loops. How: This reads the preference once, as the card opens.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } ); // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
-		const wobTweObj = gsap.to( turSvgRef.current, { duration : durSecFun( 'p06' ), ease : gsaEasFun( 'ino' ), paused : true, repeat : -1, rotation : cdnPowFun( 4 ), transformOrigin : '50% 100%', yoyo : true } ); // What: Wobble Tween Object. Why: Once in place, the turkey rocks gently for as long as the card is open. How: This tilts it about 3.1 degrees on its feet and back, forever, easing in and out over a Base Plus 6 step, created paused inside the context so leaving the card reverts it. // Duration Animation Base Plus 6 ~= 853.0ms, Core-Design-Number to the Power of 4 ~= 3.080
+		const titRisNum = rhyPxlFun( 'p03' );                                   // What: Title Rise Number. Why: The heading rises into place. How: This is the Base Plus 3 rhythm step, in pixels. // Vertical Rhythm Base Plus 3 ~= 33.876px
+		const titStaNum = durSecFun( 'p08' );                                   // What: Title Start Number. Why: The heading arrives once the scene is in place. How: This is the Base Plus 8 step, in seconds from the start. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const turDurNum = durSecFun( 'p05' );                                   // What: Turkey Duration Number. Why: The turkey rises a little quicker than the other entrances. How: This is the Base Plus 5 step, in seconds. // Duration Animation Base Plus 5 ~= 643.9ms
+		const turRisNum = rhyPxlFun( 'p04' );                                   // What: Turkey Rise Number. Why: The turkey rises into place. How: This is the Base Plus 4 rhythm step, in pixels. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const turStaNum = durSecFun( 'p06' );                                   // What: Turkey Start Number. Why: The turkey joins once the cornucopia has arrived. How: This is the Base Plus 6 step, in seconds from the start. // Duration Animation Base Plus 6 ~= 853.0ms
+		const wobAngNum = cdnPowFun( 4 );                                       // What: Wobble Angle Number. Why: The turkey rocks only a few degrees. How: This is the core design number to the 4th power, in degrees, about 3.08.
+		const wobDurNum = durSecFun( 'p06' );                                   // What: Wobble Duration Number. Why: Each rock of the turkey takes a calm beat. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+		const wobTweObj = gsap.to( turSvgRef.current, { duration : wobDurNum, ease : inoEasStr, paused : true, repeat : -1, rotation : wobAngNum, transformOrigin : '50% 100%', yoyo : true } ); // What: Wobble Tween Object. Why: Once in place, the turkey rocks gently for as long as the card is open. How: This tilts it about 3.1 degrees on its feet and back, forever, easing in and out over a Base Plus 6 step, created paused inside the context so leaving the card reverts it. // Duration Animation Base Plus 6 ~= 853.0ms, Core-Design-Number to the Power of 4 ~= 3.080
 
 
-		timLinObj.fromTo( corSvgRef.current, { autoAlpha : 0, x : rhyPxlFun( 'p06' ) * -1 }, { autoAlpha : 1, duration : durSecFun( 'p06' ), ease : oveEasStr, x : 0 }, 0 ); // What: Cornucopia Entrance. Why: The cornucopia opens the card. How: This fades it in as it slides from the left, overshooting a little. // Vertical Rhythm Base Plus 6 ~= -78.751px, Duration Animation Base Plus 6 ~= 853.0ms
+		timLinObj.fromTo( corSvgRef.current, { autoAlpha : 0, x : corOffNum }, { autoAlpha : 1, duration : entDurNum, ease : oveEasStr, x : 0 }, 0 ); // What: Cornucopia Entrance. Why: The cornucopia opens the card. How: This fades it in as it slides from the left, overshooting a little. // Vertical Rhythm Base Plus 6 ~= -78.751px, Duration Animation Base Plus 6 ~= 853.0ms
 
-		timLinObj.from( proGroRef.current!.children, { duration : durSecFun( 'p02' ), ease : gsaEasFun( 'bou' ), scale : 0, stagger : durSecFun( 'm03' ), transformOrigin : '50% 50%' }, durSecFun( 'p04' ) ); // What: Produce Pop. Why: The cornucopia spills its harvest. How: This grows each piece from nothing with a bounce, one after another. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Minus 3 ~= 67.9ms, Duration Animation Base Plus 4 ~= 486.1ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		timLinObj.from( proGroRef.current!.children, { duration : proDurNum, ease : bouEasStr, scale : 0, stagger : proGapNum, transformOrigin : '50% 50%' }, proStaNum ); // What: Produce Pop. Why: The cornucopia spills its harvest. How: This grows each piece from nothing with a bounce, one after another. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Minus 3 ~= 67.9ms, Duration Animation Base Plus 4 ~= 486.1ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.fromTo( turSvgRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p04' ) }, { autoAlpha : 1, duration : durSecFun( 'p05' ), y : 0 }, durSecFun( 'p06' ) ); // What: Turkey Entrance. Why: The turkey joins the cornucopia. How: This fades it in as it rises. // Vertical Rhythm Base Plus 4 ~= 44.876px, Duration Animation Base Plus 5 ~= 643.9ms, Duration Animation Base Plus 6 ~= 853.0ms
+		timLinObj.fromTo( turSvgRef.current, { autoAlpha : 0, y : turRisNum }, { autoAlpha : 1, duration : turDurNum, y : 0 }, turStaNum ); // What: Turkey Entrance. Why: The turkey joins the cornucopia. How: This fades it in as it rises. // Vertical Rhythm Base Plus 4 ~= 44.876px, Duration Animation Base Plus 5 ~= 643.9ms, Duration Animation Base Plus 6 ~= 853.0ms
 
-		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : durSecFun( 'p04' ), ease : oveEasStr, scaleY : 0, stagger : durSecFun( 'm02' ), transformOrigin : '50% 100%' }, durSecFun( 'p06' ) ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : feaDurNum, ease : oveEasStr, scaleY : 0, stagger : feaGapNum, transformOrigin : '50% 100%' }, turStaNum ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p03' ) }, { autoAlpha : 1, duration : durSecFun( 'p06' ), y : 0 }, durSecFun( 'p08' ) ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
-
-		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : rhyPxlFun( 'p01' ) }, { autoAlpha : 1, duration : durSecFun( 'p06' ), y : 0 }, durSecFun( 'p09' ) ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
+		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : titRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, titStaNum ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
+		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : mesRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, mesStaNum ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 
 		if ( redMotBoo ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
-		else timLinObj.call( () => { wobTweObj.play(); }, [], durSecFun( 'p09' ) ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		else timLinObj.call( () => { wobTweObj.play(); }, [], mesStaNum ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 
@@ -312,18 +342,23 @@ function ThaCarCom () : JSX.Element {
 
 
 						<path
+							style={{
+								fill   : 'var( --tha-hor-col )', // Thanksgiving Horn Color = #C8882A
+								stroke : 'var( --tha-out-col )'  // Thanksgiving Outline Color = #8B5E1A
+							}}
+
 							d='M30 100 Q60 60 130 80 Q180 90 230 70 Q240 68 245 72 Q250 76 245 82 Q220 100 170 105 Q110 112 60 140 Z'
-							fill='#C8882A'
-							stroke='#8B5E1A'
 							strokeWidth='2'
 						/>{ /* What: Horn Body Path Element. Why: The horn is a curved, tapering basket. How: This draws it in wicker gold with a brown outline. */ }
 
 						<path
-							style={{ opacity : 'var( --cdn-pow-002-rec )' }} // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+							style={{
+								opacity : 'var( --cdn-pow-002-rec )', // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+								stroke  : 'var( --tha-gol-col )'      // Thanksgiving Gold Color = #DAA520
+							}}
 
 							d='M30 100 Q60 75 130 88 Q180 97 230 76'
 							fill='none'
-							stroke='#DAA520'
 							strokeWidth='3'
 						/>{ /* What: Horn Shading Path Element. Why: A highlight along the horn rounds it out. How: This draws a faded gold line along its upper curve. */ }
 
@@ -335,25 +370,29 @@ function ThaCarCom () : JSX.Element {
 
 
 								<ellipse
+									style={{ fill : 'var( --tha-ter-col )' }} // Thanksgiving Terracotta Color = #E2703A
+
 									cx='52'
 									cy='88'
-									fill='#E2703A'
 									rx='22'
 									ry='18'
 								/>{ /* What: Pumpkin Body Ellipse Element. Why: The pumpkin is round and orange. How: This draws its body. */ }
 
 								<ellipse
-									style={{ opacity : 'var( --cdn-pow-004-rec )' }} // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+									style={{
+										fill    : 'var( --tha-pum-col )',    // Thanksgiving Pumpkin Color = #D2601A
+										opacity : 'var( --cdn-pow-004-rec )' // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+									}}
 
 									cx='52'
 									cy='88'
-									fill='#D2601A'
 									rx='14'
 									ry='18'
 								/>{ /* What: Pumpkin Shading Ellipse Element. Why: A darker middle gives the pumpkin its ribs. How: This draws a faint narrower oval over its body. */ }
 
 								<rect
-									fill='#5C3317'
+									style={{ fill : 'var( --tha-umb-col )' }} // Thanksgiving Umber Color = #5C3317
+
 									height='8'
 									rx='2'
 									width='4'
@@ -362,9 +401,10 @@ function ThaCarCom () : JSX.Element {
 								/>{ /* What: Pumpkin Stem Rect Element. Why: The pumpkin has a stubby stem. How: This draws a small brown bar on top. */ }
 
 								<path
+									style={{ stroke : 'var( --tha-umb-col )' }} // Thanksgiving Umber Color = #5C3317
+
 									d='M54 73 Q62 68 60 76'
 									fill='none'
-									stroke='#5C3317'
 									strokeWidth='1.5'
 								/>{ /* What: Pumpkin Curl Path Element. Why: A curling vine finishes the stem. How: This draws a thin brown hook beside it. */ }
 
@@ -375,14 +415,16 @@ function ThaCarCom () : JSX.Element {
 
 
 								<circle
+									style={{ fill : 'var( --tha-red-col )' }} // Thanksgiving Red Color = #CC2200
+
 									cx='82'
 									cy='76'
-									fill='#CC2200'
 									r='14'
 								/>{ /* What: Apple Body Circle Element. Why: The apple is round and red. How: This draws its body. */ }
 
 								<rect
-									fill='#5C3317'
+									style={{ fill : 'var( --tha-umb-col )' }} // Thanksgiving Umber Color = #5C3317
+
 									height='7'
 									rx='1.5'
 									width='3'
@@ -399,11 +441,13 @@ function ThaCarCom () : JSX.Element {
 								<circle
 									key={ `${ graPosObj.xcoNum }-${ graPosObj.ycoNum }` }
 
-									style={{ opacity : 'var( --cdn-pow-001-rec )' }} // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+									style={{
+										fill    : 'var( --tha-gra-col )',    // Thanksgiving Grape Color = #6B2FA0
+										opacity : 'var( --cdn-pow-001-rec )' // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+									}}
 
 									cx={ graPosObj.xcoNum }
 									cy={ graPosObj.ycoNum }
-									fill='#6B2FA0'
 									r='7'
 								/> // What: Grape Circle Element. Why: Each grape is a small purple circle. How: This draws one, slightly see-through so the bunch overlaps softly.
 
@@ -414,18 +458,21 @@ function ThaCarCom () : JSX.Element {
 
 
 								<ellipse
+									style={{ fill : 'var( --tha-gol-col )' }} // Thanksgiving Gold Color = #DAA520
+
 									cx='70'
 									cy='62'
-									fill='#DAA520'
 									rx='9'
 									ry='20'
 									transform='rotate(-30,70,62)'
 								/>{ /* What: Corn Ear Ellipse Element. Why: The corn is a long golden ear, tipped back. How: This draws it tilted. */ }
 
 								<line
-									style={{ opacity : 'var( --cdn-pow-002-rec )' }} // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+									style={{
+										opacity : 'var( --cdn-pow-002-rec )', // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
+										stroke  : 'var( --tha-och-col )'      // Thanksgiving Ochre Color = #B8860B
+									}}
 
-									stroke='#B8860B'
 									strokeWidth='1'
 									x1='62'
 									x2='78'
@@ -441,22 +488,26 @@ function ThaCarCom () : JSX.Element {
 
 
 						<ellipse
-							style={{ opacity : 'var( --cdn-pow-001-rec )' }} // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+							style={{
+								fill    : 'var( --tha-fol-col )',    // Thanksgiving Foliage Color = #5A7A2A
+								opacity : 'var( --cdn-pow-001-rec )' // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+							}}
 
 							cx='20'
 							cy='95'
-							fill='#5A7A2A'
 							rx='12'
 							ry='6'
 							transform='rotate(20,20,95)'
 						/>{ /* What: Lower Leaf Ellipse Element. Why: Green leaves tuck around the produce. How: This draws one below the grapes. */ }
 
 						<ellipse
-							style={{ opacity : 'var( --cdn-pow-001-rec )' }} // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+							style={{
+								fill    : 'var( --tha-fol-col )',    // Thanksgiving Foliage Color = #5A7A2A
+								opacity : 'var( --cdn-pow-001-rec )' // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+							}}
 
 							cx='48'
 							cy='58'
-							fill='#5A7A2A'
 							rx='10'
 							ry='5'
 							transform='rotate(-15,48,58)'
@@ -464,6 +515,8 @@ function ThaCarCom () : JSX.Element {
 
 
 					</svg>
+
+
 
 					<svg
 						ref={ turSvgRef }
@@ -492,9 +545,10 @@ function ThaCarCom () : JSX.Element {
 
 
 									<ellipse
+										style={{ fill : turFeaObj.colStr }}
+
 										cx='100'
 										cy='130'
-										fill={ turFeaObj.colStr }
 										rx='18'
 										ry='55'
 									/>{ /* What: Feather Ellipse Element. Why: Each feather is a long oval. How: This draws one in the row's color. */ }
@@ -510,67 +564,76 @@ function ThaCarCom () : JSX.Element {
 
 
 						<ellipse
+							style={{ fill : 'var( --tha-bro-col )' }} // Thanksgiving Brown Color = #8B4513
+
 							cx='100'
 							cy='155'
-							fill='#8B4513'
 							rx='42'
 							ry='38'
 						/>{ /* What: Body Ellipse Element. Why: The turkey's body is round and brown. How: This draws it over the base of the tail. */ }
 
 						<ellipse
+							style={{ fill : 'var( --tha-sie-col )' }} // Thanksgiving Sienna Color = #A0522D
+
 							cx='78'
 							cy='158'
-							fill='#A0522D'
 							rx='20'
 							ry='28'
 							transform='rotate(-15,78,158)'
 						/>{ /* What: Wing Ellipse Element. Why: A lighter wing rests on the body. How: This draws it tilted on the left. */ }
 
 						<ellipse
+							style={{ fill : 'var( --tha-bro-col )' }} // Thanksgiving Brown Color = #8B4513
+
 							cx='100'
 							cy='118'
-							fill='#8B4513'
 							rx='16'
 							ry='22'
 						/>{ /* What: Neck Ellipse Element. Why: The neck joins the head to the body. How: This draws it above the body. */ }
 
 						<circle
+							style={{ fill : 'var( --tha-tan-col )' }} // Thanksgiving Tan Color = #CD853F
+
 							cx='100'
 							cy='98'
-							fill='#CD853F'
 							r='20'
 						/>{ /* What: Head Circle Element. Why: The turkey's head is round and tan. How: This draws it on the neck. */ }
 
 						<circle
+							style={{ fill : 'var( --tha-eye-col )' }} // Thanksgiving Eye Color = #1a1a1a
+
 							cx='107'
 							cy='93'
-							fill='#1a1a1a'
 							r='4'
 						/>{ /* What: Eye Circle Element. Why: The turkey looks to the right. How: This draws a dark eye. */ }
 
 						<circle
+							style={{ fill : 'var( --tha-gli-col )' }} // Thanksgiving Glint Color = white
+
 							cx='108.5'
 							cy='91.5'
-							fill='white'
 							r='1.2'
 						/>{ /* What: Eye Glint Circle Element. Why: A glint brings the eye to life. How: This draws a white dot on it. */ }
 
 						<polygon
-							fill='#DAA520'
+							style={{ fill : 'var( --tha-gol-col )' }} // Thanksgiving Gold Color = #DAA520
+
 							points='114,98 124,96 114,102'
 						/>{ /* What: Beak Polygon Element. Why: The turkey has a short beak. How: This draws a gold triangle pointing right. */ }
 
 						<ellipse
+							style={{ fill : 'var( --tha-red-col )' }} // Thanksgiving Red Color = #CC2200
+
 							cx='112'
 							cy='104'
-							fill='#CC2200'
 							rx='5'
 							ry='8'
 						/>{ /* What: Wattle Ellipse Element. Why: A red wattle hangs below the beak. How: This draws it. */ }
 
 						<g
+							style={{ stroke : 'var( --tha-gol-col )' }} // Thanksgiving Gold Color = #DAA520
+
 							fill='none'
-							stroke='#DAA520'
 							strokeLinecap='round'
 						>{ /* What: Feet Group Element. Why: Both feet share their gold, round-ended strokes. How: This sets those once for the legs and toes. */ }
 
@@ -645,7 +708,7 @@ function ThaCarCom () : JSX.Element {
 						fill='currentColor'
 					/>{ /* What: Right Half Path Element. Why: A lighter half makes the leaf look folded. How: This draws the right half, faded. */ }
 
-					<g stroke='#5C3317'>{ /* What: Vein Group Element. Why: The leaf's veins share their brown. How: This sets it once for the midrib and side veins. */ }
+					<g style={{ stroke : 'var( --tha-umb-col )' }}>{ /* What: Vein Group Element. Why: The leaf's veins share their brown. How: This sets it once for the midrib and side veins. */ }{ /* Thanksgiving Umber Color = #5C3317 */ }
 
 
 						<line

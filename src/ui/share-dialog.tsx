@@ -24,16 +24,16 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
  * share-dialog.tsx = Share Dialog
  *
  * @summary
- * The dialog that sends a card: the card's name, a field for the
- * recipient's name on a card that shows one, the card's link (with the
- * name added to it), a Copy Link button, the device's own share sheet where
- * the browser offers one, and a link to preview the card exactly as it will
- * arrive. It's the browser's native modal dialog, so focus stays inside it,
- * the page behind is inert, and Escape closes it; Escape, a click on the
- * backdrop, and the close button all play a short closing animation first.
- * A page mounts it, keyed by the card, when a Share button is pressed, and
- * unmounts it when it calls back that it has closed, so every opening starts
- * fresh.
+ * The dialog that sends a card: the card's name, a field for the recipient's
+ * name on a card that shows one and for the sender's on a card that can be
+ * signed, the card's link (with the names added to it), a Copy Link button,
+ * the device's own share sheet where the browser offers one, and a link to
+ * preview the card exactly as it will arrive. It's the browser's native modal
+ * dialog, so focus stays inside it, the page behind is inert, and Escape
+ * closes it; Escape, a click on the backdrop, and the close button all play a
+ * short closing animation first. A page mounts it, keyed by the card, when a
+ * Share button is pressed, and unmounts it when it calls back that it has
+ * closed, so every opening starts fresh.
  *
  * Sections:
  *  - Components
@@ -60,7 +60,7 @@ type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: S
  * the trimmed name for a card that takes one and ?from= with the sender's
  * for a card that can be signed. Copy Link writes the link to the clipboard
  * and says so (or, if the browser refuses, says to copy it by hand); typing a
- * new name resets that message. The share sheet button only
+ * new name in either field resets that message. The share sheet button only
  * renders where navigator.share exists, and a dismissed sheet is ignored.
  * Closing sets the closing class, whose animation's end closes the element
  * and calls onDiaCloFun, so the page can unmount the dialog; under reduced
@@ -121,7 +121,7 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 
 
-	const prePatStr = `${ linUrlObj.pathname }${ linUrlObj.search }`; // What: Preview Path String. Why: The preview link should open the card exactly as it will arrive. How: This keeps the link's path and its name parameter.
+	const prePatStr = `${ linUrlObj.pathname }${ linUrlObj.search }`; // What: Preview Path String. Why: The preview link should open the card exactly as it will arrive. How: This keeps the link's path and its name parameters.
 
 
 
@@ -211,7 +211,7 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 				text  : `A ${ carRecObj.titStr } card for you!`, // What: Text. Why: Some apps send a message along with the link. How: This names the card as a short note to the recipient.
 				title : carRecObj.titStr,                        // What: Title. Why: The sheet and some apps show a title for what's being shared. How: This is the card's name.
-				url   : linUrlObj.href                           // What: URL. Why: The link is what the recipient opens. How: This is the card's full link, with the name when there is one.
+				url   : linUrlObj.href                           // What: URL. Why: The link is what the recipient opens. How: This is the card's full link, with the names when there are any.
 
 
 			});
@@ -475,7 +475,7 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 						className={ cssModObj.shaPreAnc }
 
 						to={ prePatStr }
-					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Preview Card Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same name in its address, its arrow hidden from screen readers. */ }
+					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Preview Card Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same names in its address, its arrow hidden from screen readers. */ }
 
 
 				</div>

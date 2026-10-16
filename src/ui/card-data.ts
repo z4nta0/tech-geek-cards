@@ -76,7 +76,7 @@ const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: 
 const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page that shows or opens a card, and the build that writes each card's page, read the same catalog. How: Each row describes one card.
 
 
-	{ // What: Happy Birthday Card Row. Why: The birthday card is the only one that shows a recipient's name so far. How: Its link takes the name as ?name=.
+	{ // What: Happy Birthday Card Row. Why: The birthday card can greet its recipient by name. How: Its link takes the name as ?name=.
 
 
 		altStr : 'The Happy Birthday card, with its greeting over a festive scene.',
