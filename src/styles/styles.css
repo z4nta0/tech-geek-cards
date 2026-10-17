@@ -9,9 +9,9 @@
  * fonts.css, tokens.css, and base.css, which hold the TechGeek family's
  * tokens, base element styles, and shared keyframes. It adds the one color
  * role this site brings to the family, the confetti berry, and sets the
- * layout values every site sets for itself, plus an ease-in-out curve for
- * this site's heavy animation. Everything else lives in each component's own
- * CSS module.
+ * layout values every site sets for itself, its wordmark size included, plus
+ * an ease-in-out curve for this site's heavy animation. Everything else lives
+ * in each component's own CSS module.
  *
  * Sections:
  *  - Tokens
@@ -39,6 +39,7 @@
 
 	/* #region Layout Tokens */
 
+	--bra-wor-siz : clamp( var( --fon-siz-bas ), 4.8vw, var( --fon-siz-p02 ) );                /* What: Brand Wordmark Size, about 11px - 19.304px. Why: At the package's rate, TechGeek.cards' wordmark left the menu toggle 1 to 3px from a 320px screen's edge, and past it in WebKit. How: This eases the wordmark down below about 400px, about 15.4px at 320px, keeping the bar's full side margin on every phone without a breakpoint. */
 	--con-max-wid : calc( 1920px / var( --cdn-pow-001 ) );                                     /* What: Container Maximum Width. Why: The content column should fill the screen on phones and tablets but stop widening on large monitors. How: Every page's centered columns, the bar's row, and the footer's row cap their width at a 1,920px viewport divided by the first power of the core design number, about 1,449px, the same cap as TechGeek.dev. */
 	--gut-sid-pad : clamp( var( --spa-hor-p01 ), var( --hor-rhy-016 ), var( --spa-hor-p04 ) ); /* What: Gutter Side Padding. Why: Content needs side margins that grow with the screen within sensible bounds. How: Every centered column, the bar, the phone menu, the footer, and the 404 page pad their sides with horizontal step 016, held between the p01 and p04 horizontal spacing steps, about 19.304px to 44.876px, the same gutter as TechGeek.dev. */
 	--her-gap-pad : clamp( var( --spa-ver-p05 ), 10vw, var( --spa-ver-p08 ) );                 /* What: Hero Gap Padding. Why: Every page's hero should sit the same distance below the bar, a distance that suits the screen rather than the window's height. How: Each hero pads its top by the bar's height plus this, 10vw held between the p05 and p08 vertical spacing steps, about 59.447px to 138.199px. */

@@ -6,7 +6,9 @@ confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
-`techgeek-design` (`../techgeek-design`, installed from its `v0.1.0` tag).
+`techgeek-design` (`../techgeek-design`, installed from its `v0.3.0` tag,
+moved from `v0.1.0` on 2026-10-17 for the bar's clearance for scrolled-to
+links and its menu up to 1,024px).
 
 ## Origin and sibling sites
 Decided 2026-10-12, recorded 2026-10-14. TechGeek.support
