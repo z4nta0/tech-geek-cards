@@ -20,7 +20,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * @summary
  * Checks the site's SEO setup in whichever engine the project runs. Home, the
  * Gallery, About, Contact, and every listed card are indexed: each has its own
- * title, a description of 100 to 125 characters, and one canonical address on
+ * title, a description of 120 to 125 characters, and one canonical address on
  * this domain, while the 404 page and the unlisted cards carry noindex and no
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
@@ -148,7 +148,7 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
  * Checks that the page showing now has the head its row describes: its exact
  * title, exactly one description, z4nta0 as author, and, when its row checks
  * it, one h1. A page with a canonical address has that one canonical link, a
- * description of 100 to 125 characters, and no robots tag; a page without one
+ * description of 120 to 125 characters, and no robots tag; a page without one
  * has a noindex robots tag and no canonical link. Counting the tags also
  * catches a navigation that left the previous page's tags behind.
  *
@@ -198,7 +198,7 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 		const desConStr = await curPagObj.locator( 'meta[name="description"]' ).getAttribute( 'content' ) ?? ''; // What: Description Content String. Why: The description's length is checked against what listings show. How: This reads the one description's text.
 
 
-		expect( desConStr.length ).toBeGreaterThanOrEqual( 100 ); // What: Description Minimum Assertion. Why: A summary that's too short wastes the space a listing gives it. How: This checks it runs at least 100 characters.
+		expect( desConStr.length ).toBeGreaterThanOrEqual( 120 ); // What: Description Minimum Assertion. Why: A summary that's too short wastes the space a listing gives it, and link preview checkers flag one under 120 characters. How: This checks it runs at least 120 characters.
 
 		expect( desConStr.length ).toBeLessThanOrEqual( 125 ); // What: Description Maximum Assertion. Why: Phones cut a summary off around 125 characters. How: This checks it stays within that.
 

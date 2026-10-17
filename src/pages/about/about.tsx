@@ -95,7 +95,7 @@ const FAM_SIT_ARR = [ // What: Family Site Array. Why: The family section introd
 function AboPagCom () : JSX.Element {
 
 
-	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the sister sites behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the two sister sites that sit behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 

@@ -63,8 +63,9 @@ field to the share dialog).
   site's address isn't TechGeek.dev's.
 - **Search**: the home title is "Animated Digital Greeting Cards to Send |
   TechGeek.cards" (lengthened past 50 characters for the raw-page check), and
-  each card has its own search description (`seaStr`, 100 to 125
-  characters). Unlisted cards carry noindex and no canonical link, and stay
+  each card has its own search description (`seaStr`, 120 to 125
+  characters, decided 2026-10-17 since preview checkers flag anything
+  shorter). Unlisted cards carry noindex and no canonical link, and stay
   out of the sitemap.
 - **Search engines**: the user submitted the sitemap to Google Search
   Console and Bing Webmaster Tools on 2026-10-16, after the site went live.

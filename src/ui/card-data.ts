@@ -38,7 +38,7 @@ type CarDatTyp = { // What: Card Data Type. Why: Every card is described the sam
 	froBoo : boolean,   // What: From Boolean. Why: Only some cards can be signed with the sender's name. How: The share dialog offers its sender field when this is true, and adds the name to the card's link as ?from=.
 	lisBoo : boolean,   // What: Listed Boolean. Why: A card can live at its own address without being shown in the Gallery or on Home. How: Only cards with this true are listed.
 	occStr : OccNamTyp, // What: Occasion String. Why: The Gallery groups cards by occasion. How: This names the card's occasion.
-	seaStr : string,    // What: Search String. Why: A card's own page needs a search and link preview description of 100 to 125 characters, which the tile's shorter description doesn't fill. How: The card's built page carries it, and the card's page swaps it into the description tag while it shows.
+	seaStr : string,    // What: Search String. Why: A card's own page needs a search and link preview description of 120 to 125 characters, which the tile's shorter description doesn't fill. How: The card's built page carries it, and the card's page swaps it into the description tag while it shows.
 	sluStr : string,    // What: Slug String. Why: Every card has its own address. How: The card opens at this path, such as /happy-birthday, and its link preview image is named after it.
 	titStr : string     // What: Title String. Why: Every card has a name. How: Tiles, the share dialog, the card's page title, and its link preview show it.
 
@@ -133,7 +133,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Fourth of July card with fireworks and patriotic flair to celebrate Independence Day. Free to share.',
+		seaStr : 'Send an animated Fourth of July card with fireworks and patriotic flair to celebrate Independence Day. Free to share by link.',
 		sluStr : 'fourth-of-july',
 		titStr : 'Fourth of July'
 
@@ -149,7 +149,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Happy Halloween card with spooky effects and eerie animations to your favorite ghouls. Free to share.',
+		seaStr : 'Send an animated Happy Halloween card with spooky effects and eerie animations to all your favorite ghouls. Free to share.',
 		sluStr : 'happy-halloween',
 		titStr : 'Happy Halloween'
 
@@ -165,7 +165,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Happy Thanksgiving card with warm autumn colors and festive animations. Free to share with a link.',
+		seaStr : 'Send an animated Happy Thanksgiving card with warm autumn colors and festive animations. Free to share with a single link.',
 		sluStr : 'happy-thanksgiving',
 		titStr : 'Happy Thanksgiving'
 
