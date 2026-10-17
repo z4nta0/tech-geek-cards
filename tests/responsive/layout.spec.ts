@@ -19,8 +19,9 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * across a range of screen widths, in whichever engine the project runs, and
  * fails a width whose layout breaks: the page scrolling sideways, a visible
  * element reaching past either edge of the screen (unless an ancestor clips it
- * on purpose), text spilling out of its own box, or two controls a visitor can
- * reach overlapping each other. The widths run from 320px, WCAG's narrowest
+ * on purpose, which never excuses a link or button cut off at the edge), text
+ * spilling out of its own box, or two controls a visitor can reach overlapping
+ * each other. The widths run from 320px, WCAG's narrowest
  * reflow width, to 1,920px, and include a pixel either side of each of the
  * site's breakpoints, where a layout switches and is most likely to crowd.
  * Pages open under reduced motion, which changes nothing about the layout but
@@ -73,7 +74,7 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 
 
 
-const MEN_MAX_NUM = 768;                                                                           // What: Menu Maximum Number. Why: The mobile menu exists only up to the site's 768px breakpoint. How: The menu case is measured only at widths up to this.
+const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The mobile menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
 const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: Layouts crowd at the narrowest widths and switch at the breakpoints. How: This lists common screen widths (480px a landscape phone, 1,280px a laptop) plus the site's 640px, 768px, and 1,024px breakpoints and the pixel past each.
 
 // #endregion Constants
@@ -92,15 +93,21 @@ const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1
  * the element by its tag and its first class (just the readable part, once
  * that class comes from a hashed CSS module). The page scrolling sideways is
  * one problem. A visible element counts as spilling past an edge when it
- * reaches more than a pixel beyond the viewport and no ancestor clips its
- * overflow. An element with text of its own spills its box when a line of that
- * text runs more than a pixel past either inner edge and it doesn't clip or
- * scroll its content; a decoration drawn past the text on purpose doesn't
- * count, and inline elements are skipped, since they have no box width of
- * their own. Two reachable controls (links and buttons that are visible, in
- * the tab order, and not inside inert content) overlap when their boxes share
- * more than a pixel of area and neither holds the other. Passed to
- * Playwright's evaluate, so it can't read anything from this file.
+ * reaches more than a pixel beyond the viewport and no ancestor below the body
+ * clips its overflow (the body hides sideways overflow on every page, so it
+ * would excuse everything); one moved wholly off-screen, like the form's
+ * honeypot, is hidden on purpose and doesn't count. And a reachable control
+ * (see below) counts as cut off when it reaches past an edge inside an
+ * ancestor that hides its overflow, since a clipped button is still half
+ * hidden, while one in a container that scrolls can be scrolled to. An element
+ * with text of its own spills its box when a line of that text runs more than
+ * a pixel past either inner edge and it doesn't clip or scroll its content; a
+ * decoration drawn past the text on purpose doesn't count, and inline elements
+ * are skipped, since they have no box width of their own. Two reachable
+ * controls (links and buttons that are visible, in the tab order, and not
+ * inside inert content) overlap when their boxes share more than a pixel of
+ * area and neither holds the other. Passed to Playwright's evaluate, so it
+ * can't read anything from this file.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -128,14 +135,27 @@ function layProFun () : string[] {
 	const desEleFun = ( desCurEle : Element ) => `${ desCurEle.tagName.toLowerCase() }${ desCurEle.classList.length ? '.' + ( desCurEle.classList[ 0 ].split( '_' )[ 1 ] || desCurEle.classList[ 0 ] ) : '' }`; // What: Describe Element Function. Why: A problem should name the element in terms of the source. How: This joins the tag with its first class, keeping only the readable part when it's a hashed module class.
 
 
-	const cliAncFun = ( cliCurEle : Element ) => { // What: Clipped Ancestor Function. Why: An element an ancestor clips can reach past the edge without showing there. How: This reports whether any ancestor hides, clips, or scrolls its overflow.
+	const cliAncFun = ( cliCurEle : Element ) => { // What: Clipped Ancestor Function. Why: An element an ancestor clips can reach past the edge without showing there. How: This reports whether any ancestor below the body hides, clips, or scrolls its overflow.
 
 
-		for ( let ancCurEle = cliCurEle.parentElement; ancCurEle; ancCurEle = ancCurEle.parentElement ) if ( getComputedStyle( ancCurEle ).overflowX !== 'visible' ) return true; // What: Ancestor Overflow Loop. Why: Any clipping ancestor contains the element. How: This walks up the tree and returns as soon as one doesn't show its overflow.
+		for ( let ancCurEle = cliCurEle.parentElement; ancCurEle && ancCurEle !== document.body; ancCurEle = ancCurEle.parentElement ) if ( getComputedStyle( ancCurEle ).overflowX !== 'visible' ) return true; // What: Ancestor Overflow Loop. Why: Any clipping container inside the page contains the element, while the body, which the shared base styles set to hide sideways overflow on every page, would otherwise excuse every element and hide real spills. How: This walks up the tree and returns as soon as one doesn't show its overflow.
 
 
 
 		return false; // What: Unclipped Return. Why: No ancestor clips the element, so its spill would show. How: This reports that none was found.
+
+
+	};
+
+
+	const hidAncFun = ( hidCurEle : Element ) => { // What: Hidden Ancestor Function. Why: A control cut off inside a container that scrolls can still be scrolled to, but one cut off inside a container that hides its overflow can't be reached at all. How: This reports whether any ancestor below the body hides or clips its overflow, leaving out ones that scroll.
+
+
+		for ( let ancCurEle = hidCurEle.parentElement; ancCurEle && ancCurEle !== document.body; ancCurEle = ancCurEle.parentElement ) if ( [ 'clip', 'hidden' ].includes( getComputedStyle( ancCurEle ).overflowX ) ) return true; // What: Ancestor Hidden Overflow Loop. Why: Any hiding container cuts its content off for good. How: This walks up the tree and returns as soon as one hides or clips its overflow.
+
+
+
+		return false; // What: Not Hidden Return. Why: No ancestor hides the element's overflow, so either it shows or it can be scrolled to. How: This reports that none was found.
 
 
 	};
@@ -201,9 +221,9 @@ function layProFun () : string[] {
 
 
 
-		const rigSpiBoo = recCurObj.right > vieWidNum + 1; // What: Right Spill Boolean. Why: Content past the right edge is cut off or forces sideways scrolling. How: This checks the box reaches more than a pixel beyond the viewport's right.
-		const lefSpiBoo = recCurObj.left < -1;             // What: Left Spill Boolean. Why: Content past the left edge is cut off. How: This checks the box starts more than a pixel before the viewport.
-		const ancCliBoo = cliAncFun( layCurEle );          // What: Ancestor Clipped Boolean. Why: An element an ancestor clips doesn't show past the edge. How: This checks for a clipping ancestor.
+		const rigSpiBoo = recCurObj.right > vieWidNum + 1 && recCurObj.left < vieWidNum; // What: Right Spill Boolean. Why: Content past the right edge is cut off or forces sideways scrolling, while an element moved wholly off-screen, like the form's honeypot, is hidden on purpose. How: This checks the box reaches more than a pixel beyond the viewport's right while still starting on screen.
+		const lefSpiBoo = recCurObj.left < -1 && recCurObj.right > 0;                    // What: Left Spill Boolean. Why: Content past the left edge is cut off, while an element moved wholly off-screen is hidden on purpose. How: This checks the box starts more than a pixel before the viewport while still ending on screen.
+		const ancCliBoo = cliAncFun( layCurEle );                                       // What: Ancestor Clipped Boolean. Why: An element an ancestor clips doesn't show past the edge. How: This checks for a clipping ancestor.
 
 		const edgSpiBoo = ( rigSpiBoo || lefSpiBoo ) && !ancCliBoo; // What: Edge Spill Boolean. Why: Only an unclipped element past an edge breaks the layout. How: This combines them.
 
@@ -259,6 +279,22 @@ function layProFun () : string[] {
 
 	};
 
+
+
+	conEleArr.forEach( ( conCurEle ) => { // What: Cut Off Control Loop. Why: A container that clips its overflow hides the spill, but a control cut off at the edge, like a menu button pushed half off a crowded bar, still can't be fully seen or reached, which the edge check above lets through. How: This records each reachable control partly on screen whose box runs more than a pixel past either edge inside an ancestor that hides its overflow.
+
+
+		const conRecObj = conCurEle.getBoundingClientRect(); // What: Control Rect Object. Why: The control's edges are compared with the viewport's. How: This reads its box.
+
+
+		if ( !hidAncFun( conCurEle ) ) return; // What: Unhidden Control Guard. Why: An unclipped control past the edge is already recorded as a spill, and one inside a scrolling container, like a row of filters that scrolls sideways, can be scrolled to. How: This skips both, keeping only controls a hiding container cuts off for good.
+
+
+
+		if ( ( conRecObj.right > vieWidNum + 1 && conRecObj.left < vieWidNum ) || ( conRecObj.left < -1 && conRecObj.right > 0 ) ) proLisArr.push( `${ desEleFun( conCurEle ) } is cut off at the ${ conRecObj.right > vieWidNum + 1 ? 'right' : 'left' } edge` ); // What: Cut Off Control Check. Why: Every reachable control has to sit fully on screen. How: This records one that runs past an edge.
+
+
+	} );
 
 
 	conEleArr.forEach( ( oneCurEle, oneIndNum ) => conEleArr.slice( oneIndNum + 1 ).forEach( ( twoCurEle ) => { // What: Control Pair Loop. Why: Overlap is a property of two controls. How: This visits every pair once.
