@@ -95,7 +95,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-	usePagDesFun( 'Ask about a custom greeting card, or about a card in the gallery. Write to TechGeek.cards and z4nta0 will reply.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Ask about a custom greeting card, or about a card in the gallery. Write to TechGeek.cards and z4nta0 will reply by email.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 

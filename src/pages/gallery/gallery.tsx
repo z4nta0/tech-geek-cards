@@ -87,7 +87,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then send the one you like to a friend.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then send your favorite one to a friend for free.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
