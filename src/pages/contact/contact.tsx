@@ -374,6 +374,7 @@ function ConPagCom () : JSX.Element {
 											name='name'
 
 											autoComplete='name'
+											placeholder='Alex Smith'
 											required
 											type='text'
 											value={ forDatObj.name }
@@ -401,6 +402,7 @@ function ConPagCom () : JSX.Element {
 											name='email'
 
 											autoComplete='email'
+											placeholder='you@example.com'
 											required
 											type='email'
 											value={ forDatObj.email }

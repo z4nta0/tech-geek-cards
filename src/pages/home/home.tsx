@@ -26,10 +26,10 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  *
  * @summary
  * The home page: a hero whose cards fan out of an open envelope beside the
- * site's pitch, the three steps of sending a card, four cards from the
- * Gallery picked at random on each visit, and a postcard banner inviting a
- * custom card. Any featured card can be shared from its tile through the
- * share dialog.
+ * site's pitch (above it at 768px and below), the three steps of sending a
+ * card, four cards from the Gallery picked at random on each visit, and a
+ * postcard banner inviting a custom card. Any featured card can be shared from
+ * its tile through the share dialog.
  *
  * Sections:
  *  - Constants
@@ -184,7 +184,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-					<div className={ cssModObj.herInnDiv }>{ /* What: Hero Inner Div Element. Why: The text and the envelope sit side by side on wide screens and stack on phones. How: This lays them out in a centered, capped grid. */ }
+					<div className={ cssModObj.herInnDiv }>{ /* What: Hero Inner Div Element. Why: The text and the envelope sit side by side on wide screens and stack at 768px and below, the envelope first. How: This lays them out in a centered, capped grid. */ }
 
 
 						<div className={ cssModObj.herTexDiv }>{ /* What: Hero Text Div Element. Why: The pitch reads as one column. How: This stacks the eyebrow, heading, lead, and buttons. */ }
@@ -234,7 +234,7 @@ function HomPagCom () : JSX.Element {
 							className={ cssModObj.envStaDiv }
 
 							aria-hidden='true'
-						>{ /* What: Envelope Stage Div Element. Why: Cards fanning out of an open envelope show what the site does at a glance. How: This holds the envelope's back, flap, cards, front, stamp, and confetti, hidden from screen readers as decoration. */ }
+						>{ /* What: Envelope Stage Div Element. Why: Cards fanning out of an open envelope show what the site does at a glance, leading the stacked hero at 768px and below. How: This holds the envelope's back, flap, cards, front, stamp, and confetti, hidden from screen readers as decoration. */ }
 
 
 							<div className={ cssModObj.envFlaDiv } />{ /* What: Envelope Flap Div Element. Why: The open flap stands up behind the cards. How: This draws a triangle above the envelope's back. */ }

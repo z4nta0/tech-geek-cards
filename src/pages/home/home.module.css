@@ -7,12 +7,13 @@
  * @summary
  * Styles for HomPagCom. The hero sits on the warm sunken ivory, its bottom
  * edge cut into scallops like a stamp's, with the pitch beside an open
- * envelope: a blue envelope lined in berry, three cards rising out of it one
- * after another and fanning wider on hover, a perforated stamp on its front,
- * and confetti popping in around it. Below come the three numbered step
- * cards, the featured cards four, two, or one across, and a perforated
- * postcard banner with a postmark. The page fades up as it opens, and every
- * animation and transition holds still under reduced motion.
+ * envelope, the envelope stacking above it at 768px and below: a blue envelope
+ * lined in berry, three cards rising out of it one after another and fanning
+ * wider on hover, a perforated stamp on its front, and confetti popping in
+ * around it. Below come the three numbered step cards, the featured cards
+ * four, two, or one across, and a perforated postcard banner with a postmark.
+ * The page fades up as it opens, and every animation and transition holds
+ * still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -82,7 +83,7 @@
 @media ( max-width : 768px ) { /* What: Phone Hero Inner Div. Why: Two columns are too tight on phones and small tablets. How: This applies at 768px and below. */
 
 
-	.herInnDiv { /* What: Stacked Hero Inner Div. Why: The envelope sits under the pitch on a narrow screen. How: This sets one column. */
+	.herInnDiv { /* What: Stacked Hero Inner Div. Why: The envelope sits above the pitch on a narrow screen. How: This sets one column. */
 
 
 		grid-template-columns : 1fr;
@@ -312,6 +313,20 @@
 	max-width    : calc( var( --ver-rhy-p13 ) * 1rem ); /* Vertical Rhythm Base Plus 13 ~= 563.794px */
 	position     : relative;
 	width        : 100%;
+
+
+}
+@media ( max-width : 768px ) { /* What: Phone Envelope Stage Div. Why: The stacked hero opens on its picture, as the sister sites' heroes do, without the picture filling the first screen. How: This applies at 768px and below. */
+
+
+	.envStaDiv { /* What: Leading Envelope Stage Div. Why: The envelope leads the single column, above the pitch, and at its full size it pushed the pitch below the first screen on tablets and large phones. How: This moves it to the front of the grid's order and caps it two rhythm steps down, which narrows it from 768px down to about 360px, where the column itself becomes narrower than the cap. */
+
+
+		max-width : calc( var( --ver-rhy-p11 ) * 1rem ); /* Vertical Rhythm Base Plus 11 ~= 321.273px */
+		order     : -1;
+
+
+	}
 
 
 }
