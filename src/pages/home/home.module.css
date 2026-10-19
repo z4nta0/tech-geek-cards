@@ -316,13 +316,14 @@
 
 
 }
-@media ( max-width : 768px ) { /* What: Phone Envelope Stage Div. Why: The stacked hero opens on its picture, as the sister sites' heroes do. How: This applies at 768px and below. */
+@media ( max-width : 768px ) { /* What: Phone Envelope Stage Div. Why: The stacked hero opens on its picture, as the sister sites' heroes do, without the picture filling the first screen. How: This applies at 768px and below. */
 
 
-	.envStaDiv { /* What: Leading Envelope Stage Div. Why: The envelope leads the single column, above the pitch. How: This moves it to the front of the grid's order. */
+	.envStaDiv { /* What: Leading Envelope Stage Div. Why: The envelope leads the single column, above the pitch, and at its full size it pushed the pitch below the first screen on tablets and large phones. How: This moves it to the front of the grid's order and caps it two rhythm steps down, which narrows it from 768px down to about 360px, where the column itself becomes narrower than the cap. */
 
 
-		order : -1;
+		max-width : calc( var( --ver-rhy-p11 ) * 1rem ); /* Vertical Rhythm Base Plus 11 ~= 321.273px */
+		order     : -1;
 
 
 	}
