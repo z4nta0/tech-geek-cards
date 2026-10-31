@@ -7,11 +7,13 @@ import cssModObj from './card.module.css';                         // What: CSS 
 import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the family's hexagon mark, which stands in for the wordmark on a phone. How: This is the design package's mark, fingerprinted by Vite.
 
 
-import { Link         } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
-import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when Share is pressed.
-import { Suspense     } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
-import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
-import { useState     } from 'react';                                  // What: Use State. Why: The page remembers whether its share dialog is open and how many times the card has been replayed. How: This holds both.
+import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
+import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when Share is pressed.
+import { Suspense        } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
+import { useLocation     } from 'react-router';                           // What: Use Location. Why: The share dialog's preview link can open the card's own page again. How: The page reads the location's key, which changes on every navigation.
+import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { useSearchParams } from 'react-router';                           // What: Use Search Parameters. Why: The share dialog should start with the names the card is showing. How: The page reads them from its address.
+import { useState        } from 'react';                                  // What: Use State. Why: The page remembers whether its share dialog is open and how many times the card has been replayed. How: This holds both.
 
 
 import type { CarRecTyp } from '../../ui/cards.ts'; // What: Card Record Type. Why: The page plays one card. How: This types its card prop.
@@ -56,12 +58,14 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * Renders one card's page: its title and either its canonical link (a listed
  * card) or a noindex tag (an unlisted one), which React moves into the
  * document head, the card's component inside Suspense with a loading message
- * as the fallback, and the floating bar. The card is keyed by a replay count,
- * so Replay remounts it and every card replays the same way, without reaching
- * into its own code. The canonical address leaves out any ?name= or ?from=,
- * so every personalized copy of a card counts as the card's one page. Share
- * mounts the share dialog, keyed by the card, and the dialog's close callback
- * unmounts it.
+ * as the fallback, and the floating bar. The card is keyed by the location's
+ * key and a replay count, so Replay, and the share dialog's preview link
+ * opening this same page, remount it, and every card replays the same way,
+ * without reaching into its own code. The canonical address leaves out any
+ * ?name= or ?from=, so every personalized copy of a card counts as the card's
+ * one page. Share mounts the share dialog, keyed by the card, with its name
+ * fields starting at the names the address carries, and the dialog's close
+ * callback unmounts it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -80,12 +84,14 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
 function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
-	const CarComCom = carRecObj.carCom; // What: Card Component Component. Why: JSX only renders a component held in a capitalized name. How: This holds the card's lazy component.
+	const CarComCom = carRecObj.carCom;  // What: Card Component Component. Why: JSX only renders a component held in a capitalized name. How: This holds the card's lazy component.
+	const locKeyStr = useLocation().key; // What: Location Key String. Why: A link to this same page, such as the share dialog's preview, should play the card again with the names it carries. How: This reads the router's key for the current visit, which every navigation renews, even to the same address.
 
 
 
 	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: Replay starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
 	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after Share is pressed. How: This starts closed.
+	const [ seaParObj ]               = useSearchParams(); // What: Search Parameters Object. Why: The share dialog should start with the names the card is showing. How: This reads the card's own address, whose ?name= and ?from= the card shows.
 
 
 
@@ -134,7 +140,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 				<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
 
 
-					<CarComCom key={ repCouNum } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the replay count so Replay mounts it fresh and it plays again from the start. */ }
+					<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
 
 
 				</Suspense>
@@ -209,6 +215,8 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 				<ShaDiaCom
 					carRecObj={ carRecObj }
+					froIniStr={ seaParObj.get( 'from' ) ?? '' } // What: From Initial Attribute. Why: A sender previewing a signed card shouldn't have to type their name again. How: This starts the sender field with the address's ?from=, or empty without one.
+					namIniStr={ seaParObj.get( 'name' ) ?? '' } // What: Name Initial Attribute. Why: A sender previewing a named card shouldn't have to type the name again. How: This starts the name field with the address's ?name=, or empty without one.
 
 					onDiaCloFun={ () => setShaOpeBoo( false ) }
 				/> // What: Share Dialog Component. Why: The visitor sends the card from here. How: This opens the dialog for this card, unmounting it once it closes.
