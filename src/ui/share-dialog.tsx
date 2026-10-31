@@ -48,7 +48,7 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
 
 // #region Components
 
-type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: Share-Dialog-Component Props Type. Why: The dialog shares one card and tells its page when it has closed. How: This types ShaDiaCom's props.
+type SdcProTyp = { carRecObj : CarRecTyp, froIniStr? : string, namIniStr? : string, onDiaCloFun : () => void }; // What: Share-Dialog-Component Props Type. Why: The dialog shares one card, can start with the names a card is already showing, and tells its page when it has closed. How: This types ShaDiaCom's props.
 
 // #region ShaDiaCom
 
@@ -57,19 +57,24 @@ type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: S
  *
  * @summary
  * Renders the share dialog for one card and opens it as a modal as soon as it
- * mounts. The link is the card's address on this site, plus ?name= with the
- * trimmed name for a card that takes one and ?from= with the sender's for a
- * card that can be signed. Copy Link writes the link to the clipboard and says
- * so (or, if the browser refuses, says to copy it by hand); typing a new name
- * in either field resets that message. The share sheet button only renders
- * where navigator.share exists, and a dismissed sheet is ignored. Closing sets
- * the closing class, whose animation's end closes the element and calls
+ * mounts, its name fields starting with any names the page passes in. The link
+ * is the card's address on this site, plus ?name= with the trimmed name for a
+ * card that takes one and ?from= with the sender's for a card that can be
+ * signed. Copy Link writes the link to the clipboard and says so (or, if the
+ * browser refuses, says to copy it by hand); typing a new name in either field
+ * resets that message. The share sheet button only renders where
+ * navigator.share exists, and a dismissed sheet is ignored. Closing sets the
+ * closing class, whose animation's end closes the element and calls
  * onDiaCloFun, so the page can unmount the dialog; under reduced motion that
  * animation runs for a hundredth of a millisecond, so its end still fires.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
+ * @param props.froIniStr   - From Initial String: The sender's name the field
+ *                            starts with, empty by default.
+ * @param props.namIniStr   - Name Initial String: The recipient's name the
+ *                            field starts with, empty by default.
  * @param props.onDiaCloFun - On Dialog Close Function: Called once the dialog
  *                            has finished closing.
  *
@@ -77,20 +82,20 @@ type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: S
  *
  * @example
  * ```tsx
- * ShaDiaCom({ carRecObj, onDiaCloFun }) // => <ShaDiaCom />
+ * ShaDiaCom({ carRecObj, froIniStr, namIniStr, ... }) // => <ShaDiaCom />
  * ```
  *
 */
 
-function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
+function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } : SdcProTyp ) : JSX.Element {
 
 
 	const diaEleRef = useRef< HTMLDialogElement >( null ); // What: Dialog Element Reference. Why: Opening and closing are methods on the dialog element. How: This holds the rendered dialog.
 
 	const [ isaCloBoo, setIsaCloBoo ] = useState( false );                                  // What: Is-A Closing Boolean And Setter. Why: The dialog plays its closing animation before it actually closes. How: This turns the closing class on.
 	const [ copStaStr, setCopStaStr ] = useState< 'copied' | 'failed' | 'idle' >( 'idle' ); // What: Copy Status String And Setter. Why: The dialog says whether the link was copied. How: This starts idle, and Copy Link sets it.
-	const [ froValStr, setFroValStr ] = useState( '' );                                     // What: From Value String And Setter. Why: A signable card's link carries the sender's name typed. How: This holds the sender field's text.
-	const [ namValStr, setNamValStr ] = useState( '' );                                     // What: Name Value String And Setter. Why: A customizable card's link carries the name typed. How: This holds the name field's text.
+	const [ froValStr, setFroValStr ] = useState( froIniStr );                              // What: From Value String And Setter. Why: A signable card's link carries the sender's name typed. How: This holds the sender field's text, starting with the name the page passed in.
+	const [ namValStr, setNamValStr ] = useState( namIniStr );                              // What: Name Value String And Setter. Why: A customizable card's link carries the name typed. How: This holds the name field's text, starting with the name the page passed in.
 
 
 

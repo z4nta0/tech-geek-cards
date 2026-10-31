@@ -309,6 +309,22 @@ test( "the share dialog's preview link on a card's own page closes the dialog an
 
 } );
 
+
+test( "a card's share dialog starts with the names its address carries", async ( { page : curPagObj } ) => { // What: Carried Names Test. Why: A sender who previewed a card, or opened a named one, shouldn't have to type its names again to share it. How: This opens the signable Christmas card with both names in its address, opens Share, and checks both fields start with them.
+
+
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The card's bar shows its full wordmark at desktop width. How: This sizes the page before it loads.
+
+	await curPagObj.goto( '/merry-christmas?name=Sam&from=Alex' ); // What: Named Card Navigation. Why: The Christmas card takes both a recipient's and a sender's name. How: This loads it with both in its address.
+
+	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's Share button. How: This presses it.
+
+	await expect( curPagObj.getByLabel( 'Their name (optional)' ) ).toHaveValue( 'Sam' ); // What: Recipient Field Assertion. Why: The recipient's name should carry over. How: This checks the field holds the address's name.
+	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( 'Alex' ); // What: Sender Field Assertion. Why: The sender's name should carry over. How: This checks the field holds the address's from.
+
+
+} );
+
 // #endregion Module Init
 
 
