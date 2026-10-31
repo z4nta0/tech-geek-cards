@@ -30,10 +30,11 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
  * the device's own share sheet where the browser offers one, and a link to
  * preview the card exactly as it will arrive. It's the browser's native modal
  * dialog, so focus stays inside it, the page behind is inert, and Escape
- * closes it; Escape, a click on the backdrop, and the close button all play a
- * short closing animation first. A page mounts it, keyed by the card, when a
- * Share button is pressed, and unmounts it when it calls back that it has
- * closed, so every opening starts fresh.
+ * closes it; Escape, a click on the backdrop, the close button, and the
+ * preview link all play a short closing animation first, the link's so a
+ * preview from the card's own page leaves the card in view. A page mounts it,
+ * keyed by the card, when a Share button is pressed, and unmounts it when it
+ * calls back that it has closed, so every opening starts fresh.
  *
  * Sections:
  *  - Components
@@ -55,17 +56,16 @@ type SdcProTyp = { carRecObj : CarRecTyp, onDiaCloFun : () => void }; // What: S
  * ShaDiaCom = Share Dialog Component
  *
  * @summary
- * Renders the share dialog for one card and opens it as a modal as soon as
- * it mounts. The link is the card's address on this site, plus ?name= with
- * the trimmed name for a card that takes one and ?from= with the sender's
- * for a card that can be signed. Copy Link writes the link to the clipboard
- * and says so (or, if the browser refuses, says to copy it by hand); typing a
- * new name in either field resets that message. The share sheet button only
- * renders where navigator.share exists, and a dismissed sheet is ignored.
- * Closing sets the closing class, whose animation's end closes the element
- * and calls onDiaCloFun, so the page can unmount the dialog; under reduced
- * motion that animation runs for a hundredth of a millisecond, so its end
- * still fires.
+ * Renders the share dialog for one card and opens it as a modal as soon as it
+ * mounts. The link is the card's address on this site, plus ?name= with the
+ * trimmed name for a card that takes one and ?from= with the sender's for a
+ * card that can be signed. Copy Link writes the link to the clipboard and says
+ * so (or, if the browser refuses, says to copy it by hand); typing a new name
+ * in either field resets that message. The share sheet button only renders
+ * where navigator.share exists, and a dismissed sheet is ignored. Closing sets
+ * the closing class, whose animation's end closes the element and calls
+ * onDiaCloFun, so the page can unmount the dialog; under reduced motion that
+ * animation runs for a hundredth of a millisecond, so its end still fires.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -475,6 +475,8 @@ function ShaDiaCom ( { carRecObj, onDiaCloFun } : SdcProTyp ) : JSX.Element {
 						className={ cssModObj.shaPreAnc }
 
 						to={ prePatStr }
+
+						onClick={ cloDiaFun } // What: Preview Close Handler. Why: Opened on the card's own page, the preview reopens that page behind the dialog, which would otherwise stay on top of it. How: This starts the dialog's closing animation as the link navigates, and a link to another page unmounts the dialog anyway.
 					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Preview Card Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same names in its address, its arrow hidden from screen readers. */ }
 
 

@@ -20,12 +20,11 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers dr
  * Checks that moving between pages behaves like a multi-page site, in
  * whichever engine the project runs. A client-side router keeps the scroll
  * position when it swaps pages, so the useScrTopFun hook the app root calls
- * puts every link-driven navigation back at the top. Footer links clicked at
- * the bottom of each page open the next page at its top, the current page's
- * own bar link scrolls back to the top, a phone menu link does the same,
- * back returns the visitor to where they were rather than to the top, the
- * Send a Card button switches to the Gallery without reloading the site, and
- * a card tile opens its card, whose More cards link leads back.
+ * puts every link-driven navigation back at the top. The checks follow links
+ * from the bottom of a page, from the bar, and from the phone menu to the top
+ * of the next page, go back to an earlier position, and open cards from their
+ * tiles and from the share dialog's preview, the router switching pages
+ * without reloading the site.
  *
  * Sections:
  *  - Constants
@@ -260,6 +259,52 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 	await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Return Assertion. Why: More cards has to reach the Gallery. How: This waits for the address to change back.
 
 	await expect.poll( () => curPagObj.evaluate( () => window.scrollY ) ).toBe( 0 ); // What: Top Assertion. Why: A link opens its page at the top. How: This polls until the Gallery sits at its top.
+
+
+} );
+
+
+test( "the share dialog's preview link opens its card from the Gallery", async ( { page : curPagObj } ) => { // What: Gallery Preview Test. Why: A sender may want to see a card as it will arrive before sending it. How: This opens the birthday card's share dialog from its tile, names the recipient, follows Preview card, and checks the card opens with the name and no dialog.
+
+
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The tiles sit three across at desktop width. How: This sizes the page before it loads.
+
+	await curPagObj.goto( '/gallery' ); // What: Gallery Navigation. Why: The preview starts from a tile's Share button. How: This loads the Gallery.
+
+	await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click. Why: The dialog opens from the tile's Share button. How: This presses the birthday card's.
+
+	await curPagObj.getByLabel( 'Their name (optional)' ).fill( 'Sam' ); // What: Name Fill. Why: The preview should carry the name the link will. How: This types a recipient's name.
+
+	await curPagObj.getByRole( 'link', { name : 'Preview card' } ).click(); // What: Preview Click. Why: The preview link is what's under test. How: This follows it.
+
+	await expect( curPagObj ).toHaveURL( '/happy-birthday?name=Sam' );                      // What: Preview Address Assertion. Why: The preview opens the card as its link will. How: This waits for the card's address with the name.
+	await expect( curPagObj.getByRole( 'dialog' ) ).toBeHidden();                           // What: Closed Dialog Assertion. Why: The card should be in view, not under the dialog. How: This checks no dialog shows.
+	await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toContainText( 'Sam' ); // What: Named Greeting Assertion. Why: The card should greet the recipient the link names. How: This checks the greeting holds the name.
+
+
+} );
+
+
+
+test( "the share dialog's preview link on a card's own page closes the dialog and replays the card", async ( { page : curPagObj } ) => { // What: Own Page Preview Test. Why: On the card's own page the preview opens that same page, so it has to close the dialog and start the card over itself. How: This marks the card's greeting, opens Share, names the recipient, follows Preview card, and checks the dialog closed and a fresh greeting holds the name.
+
+
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The card's bar shows its full wordmark at desktop width. How: This sizes the page before it loads.
+
+	await curPagObj.goto( '/happy-birthday' ); // What: Card Navigation. Why: The preview starts from the card's own page. How: This loads the birthday card.
+
+	await curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( heaEleObj ) => heaEleObj.setAttribute( 'data-test-mount-marker', '' ) ); // What: Mount Marker Call. Why: A card that starts over is mounted fresh, without the mark. How: This sets a presence-only attribute on the greeting.
+
+	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's Share button. How: This presses it.
+
+	await curPagObj.getByLabel( 'Their name (optional)' ).fill( 'Sam' ); // What: Name Fill. Why: The replayed card should carry the name the link will. How: This types a recipient's name.
+
+	await curPagObj.getByRole( 'link', { name : 'Preview card' } ).click(); // What: Preview Click. Why: The preview link is what's under test. How: This follows it.
+
+	await expect( curPagObj ).toHaveURL( '/happy-birthday?name=Sam' );                      // What: Preview Address Assertion. Why: The preview opens the card as its link will. How: This waits for the card's address with the name.
+	await expect( curPagObj.getByRole( 'dialog' ) ).toBeHidden();                           // What: Closed Dialog Assertion. Why: The card should be in view, not under the dialog. How: This checks the dialog closed.
+	await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toContainText( 'Sam' ); // What: Named Greeting Assertion. Why: The card should greet the recipient the link names. How: This checks the greeting holds the name.
+	await expect( curPagObj.locator( 'h1[data-test-mount-marker]' ) ).toHaveCount( 0 );     // What: Replay Assertion. Why: The card should start over, not just change its name in place. How: This checks the marked greeting is gone, replaced by a freshly mounted one.
 
 
 } );
