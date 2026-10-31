@@ -133,6 +133,6 @@ These cards have their own pages but stay out of the Gallery, Home, and search r
 
 ## Search and the contact form
 
-Home, the Gallery, About, Contact, and every listed card are indexed, each with its own title, description, and canonical link, while the 404 page and any unlisted card carry `noindex`. The structured data describes the site as z4nta0's, the same person TechGeek.dev describes. `index.html` carries the home page's title and description, since link checkers and many crawlers read it without running the site's script. Each card's own link preview card is still to come.
+Home, the Gallery, About, Contact, and every listed card are indexed, each with its own title, description, and canonical link, while the 404 page and any unlisted card carry `noindex`. The structured data describes the site as z4nta0's, the same person TechGeek.dev describes. `index.html` carries the home page's title and description, since link checkers and many crawlers read it without running the site's script, and every card gets its own copy of it at build time, so each card's link shows that card's own title, description, and preview image.
 
 The contact form posts to Netlify Forms: a hidden copy of the form in `index.html` registers its fields, and Netlify emails each submission to the address set in its dashboard, with the visitor's email as the reply-to.
