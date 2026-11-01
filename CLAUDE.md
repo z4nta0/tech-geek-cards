@@ -81,6 +81,19 @@ field to the share dialog).
   card's is `public/social/<address>.jpg`, its finished screen; both come
   from `npm run og-images`. Every other page shares Home's preview. The tile
   previews render at 1200x675, about twice their largest display size.
+- **Ko-fi** (decided by the user 2026-11-01, following TechGeek.dev and
+  TechGeek.support): the README ends with the shared Support section, and
+  About closes with a white Support My Work band below the family section,
+  its "Buy Me a Coffee" button opening https://ko-fi.com/techgeekdev in a new
+  tab from `TIP_URL_STR` in `pages/about/about.tsx`. Its wording follows the
+  siblings', said for this site: every card is free to send and always will
+  be, and a tip is never expected. `tests/interaction/ko-fi.spec.ts` checks
+  the link.
+- **License** (decided by the user 2026-11-01, per the user-level Licenses
+  rule): the code is source available under the PolyForm Noncommercial
+  License 1.0.0 in `LICENSE.md`, whose note keeps the written content,
+  images, and TechGeek name and marks all rights reserved, so the site never
+  calls its code open source.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
 
