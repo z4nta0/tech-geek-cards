@@ -89,6 +89,11 @@ field to the share dialog).
   siblings', said for this site: every card is free to send and always will
   be, and a tip is never expected. `tests/interaction/ko-fi.spec.ts` checks
   the link.
+- **License** (decided by the user 2026-11-01, per the user-level Licenses
+  rule): the code is source available under the PolyForm Noncommercial
+  License 1.0.0 in `LICENSE.md`, whose note keeps the written content,
+  images, and TechGeek name and marks all rights reserved, so the site never
+  calls its code open source.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
 

@@ -143,3 +143,10 @@ If this project is useful to you, you can support its development with a tip
 on Ko-fi. It's never required, and always appreciated.
 
 [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/techgeekdev)
+
+## License
+
+Source available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md):
+free to use, copy, and change for any noncommercial purpose. The written
+content, images, and TechGeek name and marks aren't covered, and remain all
+rights reserved.
