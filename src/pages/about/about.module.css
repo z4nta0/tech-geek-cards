@@ -10,9 +10,9 @@
  * white card listing its main points, each led by a dot of confetti, two by
  * two once it drops under the story on a tablet; and the three sister sites as
  * equal cards, this site's own on a pale berry with a You Are Here label, the
- * others with a link whose arrow nudges on hover; then the closing buttons.
- * The page fades up as it opens, and every transition holds still under
- * reduced motion.
+ * others with a link whose arrow nudges on hover; then the closing buttons,
+ * and a white band with the Ko-fi invitation and its button. The page fades
+ * up as it opens, and every transition holds still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -279,7 +279,7 @@
 
 /* #region aboFamSec */
 
-.aboFamSec { /* What: About Family Section. Why: The sister sites get room below before the footer. How: This pads the section's bottom. */
+.aboFamSec { /* What: About Family Section. Why: The sister sites get room below before the Support band. How: This pads the section's bottom. */
 
 
 	padding-bottom : var( --spa-ver-p08 ); /* Spacing Vertical Base Plus 8 ~= 138.199px */
@@ -547,7 +547,7 @@
 
 }
 
-.butPriAnc { /* What: Button Primary Anchor. Why: The main action stands out. How: This sets an orange button in mono capitals, easing its color, lift, press, and focus. */
+.butPriAnc { /* What: Button Primary Anchor. Why: The page's actions, browsing the Gallery and buying a coffee, stand out. How: This sets an orange button in mono capitals, easing its color, lift, press, and focus. */
 
 
 	align-items    : center;
@@ -599,6 +599,77 @@
 /* #endregion secInnDiv */
 
 /* #endregion aboFamSec */
+
+
+
+/* #region aboSupSec */
+
+.aboSupSec { /* What: About Support Section. Why: The invitation to tip stands apart on a white band, below the sister sites. How: This sets the surface color, a hairline border above, and roomy padding. */
+
+
+	background : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border-top : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	padding    : var( --spa-ver-p07 ) 0;                          /* Spacing Vertical Base Plus 7 ~= 104.323px */
+
+
+}
+
+
+/* #region supInnDiv */
+
+.supInnDiv { /* What: Support Inner Div. Why: The invitation sits centered in the page's column. How: This caps and centers the column with its side padding and stacks its children centered with even gaps. */
+
+
+	align-items    : center;
+	display        : flex;
+	flex-direction : column;
+	gap            : var( --spa-ver-bas );   /* Spacing Vertical Base ~= 14.572px */
+	margin         : 0 auto;
+	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
+	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
+	text-align     : center;
+
+
+}
+
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Support section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the herInnDiv and stoTexDiv regions above. */
+
+.supTexPar { /* What: Support Text Paragraph. Why: The invitation reads a step larger than body text, with room before its button. How: This sets it at the base plus 2 size, capped at the paragraph measure, with a small step below. */
+
+
+	font-size     : var( --fon-siz-p02 ); /* Font Size Base Plus 2 ~= 19.304px */
+	margin-bottom : var( --spa-ver-bas ); /* Spacing Vertical Base ~= 14.572px */
+	max-width     : var( --tex-wid-bas ); /* Text Width Base ~= 29.207em */
+
+
+}
+
+
+/* #region butPriAnc */
+
+/* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the family section's orange button. How: Its rule sits in the famActDiv region above. */
+
+.visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, which sighted visitors learn from the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
+
+
+	border      : 0;
+	clip-path   : inset( 50% );
+	height      : 1px;
+	margin      : -1px;
+	overflow    : hidden;
+	padding     : 0;
+	position    : absolute;
+	white-space : nowrap;
+	width       : 1px;
+
+
+}
+
+/* #endregion butPriAnc */
+
+/* #endregion supInnDiv */
+
+/* #endregion aboSupSec */
 
 /* #endregion pagEntDiv */
 

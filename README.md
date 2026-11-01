@@ -42,7 +42,7 @@ npm run typecheck  # TypeScript across src/, the configs, tests/, and the design
 ```bash
 npm test                    # every suite
 npm run test:accessibility  # axe-core plus scripted keyboard, naming, reflow, and motion checks
-npm run test:interaction    # page navigation, a card's round trip, the phone menu, the contact form, and every link and button's hover, press, and focus feedback
+npm run test:interaction    # page navigation, a card's round trip, the phone menu, the contact form, the Ko-fi button, and every link and button's hover, press, and focus feedback
 npm run test:rendering      # full-page screenshots of each page state against approved baselines
 npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, and every paragraph within its measure
 npm run test:seo            # titles, descriptions, canonical links, robots, link previews, structured data, icons, robots.txt, and the sitemap, for every page and card
@@ -99,7 +99,7 @@ src/
 public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image.png and each card's in social/
 tests/
 ├── accessibility/     axe-core scan and scripted checks
-├── interaction/       navigation, phone menu, contact form, and hover, press, and focus feedback checks
+├── interaction/       navigation, phone menu, contact form, Ko-fi button, and hover, press, and focus feedback checks
 ├── rendering/         screenshot comparisons, their baselines/, and the stylesheet that hides the background pattern
 ├── responsive/        layout checks across screen widths
 ├── seo/               head tags, structured data, icon, and crawler file checks

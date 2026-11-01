@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import cssModObj from './about.module.css'; // What: CSS Module Object. Why: About's hero, story, and family sections are styled in its own module. How: This maps each class name in about.module.css to its hashed module class.
+import cssModObj from './about.module.css'; // What: CSS Module Object. Why: About's sections are styled in its own module. How: This maps each class name in about.module.css to its hashed module class.
 
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
@@ -23,8 +23,9 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * @summary
  * The page about who makes the cards and how: a hero, a few paragraphs on
  * how each card is built beside a short list of what that means for whoever
- * receives one, and the TechGeek family of three sister sites, ending with
- * the way to z4nta0's portfolio and back to the Gallery.
+ * receives one, the TechGeek family of three sister sites with the way to
+ * z4nta0's portfolio and back to the Gallery, and a closing invitation to
+ * support the work with a tip on Ko-fi.
  *
  * Sections:
  *  - Constants
@@ -61,6 +62,10 @@ const FAM_SIT_ARR = [ // What: Family Site Array. Why: The family section introd
 
 
 ];
+
+
+
+const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The Support section's button opens z4nta0's Ko-fi page, the same address every README links. How: This is the page's public address, written here since it never changes between builds.
 
 // #endregion Constants
 
@@ -272,6 +277,34 @@ function AboPagCom () : JSX.Element {
 
 
 						</div>
+
+
+					</div>
+
+
+				</section>
+
+
+
+				<section className={ cssModObj.aboSupSec }>{ /* What: About Support Section Element. Why: The page closes with a low-key invitation to tip, after the ways onward. How: This holds the Support column on a white band. */ }
+
+
+					<div className={ cssModObj.supInnDiv }>{ /* What: Support Inner Div Element. Why: The invitation sits centered in the page's column. How: This stacks the eyebrow, heading, paragraph, and Ko-fi button. */ }
+
+
+						<p className={ cssModObj.secEyePar }>Support My Work</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
+
+						<h2 className={ cssModObj.secTitHea }>Buy Me a Coffee</h2>{ /* What: Section Title Heading Element. Why: The heading names the invitation. How: This shows the section's h2. */ }
+
+						<p className={ cssModObj.supTexPar }>Every card on this site is free to send, and it always will be. If a card here made someone smile, you can support my work with a tip on Ko-fi. It's never expected, and always appreciated.</p>{ /* What: Support Text Paragraph Element. Why: A visitor should know a tip is optional and the cards stay free either way. How: This states the invitation. */ }
+
+						<a
+							className={ cssModObj.butPriAnc }
+
+							href={ TIP_URL_STR }
+							rel='noopener noreferrer'
+							target='_blank'
+						>Buy Me a Coffee<span className={ cssModObj.visHidSpa }> (opens Ko-fi in a new tab)</span></a>{ /* What: Button Primary Anchor Element. Why: The invitation ends with its one action. How: This opens the Ko-fi page in a new tab, cut off from this page, telling screen reader users where it goes through a visually hidden note. */ }
 
 
 					</div>
