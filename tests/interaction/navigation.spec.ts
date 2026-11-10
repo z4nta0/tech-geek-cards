@@ -671,6 +671,7 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 } );
 
 
+
 test( "the share dialog's preview link opens its card from the Gallery", async ( { page : curPagObj } ) => { // What: Gallery Preview Test. Why: A sender may want to see a card as it will arrive before sending it. How: This opens the birthday card's share dialog from its tile, names the recipient, follows Preview card, and checks the card opens with the name and no dialog.
 
 
@@ -715,6 +716,7 @@ test( "the share dialog's preview link on a card's own page closes the dialog an
 
 
 } );
+
 
 
 test( "a card's share dialog starts with the names its address carries", async ( { page : curPagObj } ) => { // What: Carried Names Test. Why: A sender who previewed a card, or opened a named one, shouldn't have to type its names again to share it. How: This opens the signable Christmas card with both names in its address, opens Share, and checks both fields start with them.
