@@ -211,32 +211,6 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-			<main
-				id='main'
-
-				tabIndex={ -1 } // What: Main Focus Target. Why: The skip link moves focus here, and a main element can't take focus on its own. How: This makes it focusable without adding it to the Tab order.
-			>{ /* What: Card Main Element. Why: The card is the page's main content, and the skip link jumps here. How: This holds the card, apart from the floating bar and the share dialog; its ID stays the plain word `main`, since the skip link's #main address names it as a navigation target. */ }
-
-
-				<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
-
-
-					<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
-
-
-						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
-
-
-					</Suspense>
-
-
-				</div>
-
-
-			</main>
-
-
-
 			<nav
 				className={ cssModObj.carBarNav }
 
@@ -294,6 +268,32 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 			</nav>
+
+
+
+			<main
+				id='main'
+
+				tabIndex={ -1 } // What: Main Focus Target. Why: The skip link moves focus here, and a main element can't take focus on its own. How: This makes it focusable without adding it to the Tab order.
+			>{ /* What: Card Main Element. Why: The card is the page's main content, and the skip link jumps here. How: This holds the card, apart from the floating bar and the share dialog; its ID stays the plain word `main`, since the skip link's #main address names it as a navigation target. */ }
+
+
+				<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
+
+
+					<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+
+
+						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
+
+
+					</Suspense>
+
+
+				</div>
+
+
+			</main>
 
 
 

@@ -6,13 +6,13 @@
  *
  * @summary
  * Styles for CarPagCom: the skip link, an orange button waiting above the
- * screen that slides down over the card's corner when focused, the loading
- * message centered on the screen while a card's code arrives, and the
- * floating bar, a dark ink pill pinned to the bottom center of the screen
- * above the card, rising into view a moment after the card opens, holding the
- * mark and wordmark (the mark alone on a phone), a More Cards link, a Replay
- * button, and an orange Share button, plus the bottom margin a card's
- * lettering takes to clear that bar. Every animation and transition holds
+ * screen that slides down over the card's corner when focused; the floating
+ * bar, a dark ink pill pinned to the bottom center of the screen above the
+ * card, rising into view a moment after the card opens, holding the mark and
+ * wordmark (the mark alone on a phone), a More Cards link, a Replay button,
+ * and an orange Share button; the bottom margin a card's lettering takes to
+ * clear that bar; and the loading message centered on the screen while a
+ * card's code arrives. Every animation and transition holds
  * still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -23,6 +23,8 @@
 
 .carSkiAnc { /* What: Card Skip Anchor. Why: A keyboard user should be able to jump straight to the card, and the link shouldn't show until it's needed. How: This sets it as an orange button in mono capitals, like the shared bar's skip link, fixed just above the screen's top edge at the page's side gutter, and eases its slide into view and back out, leaving on the accelerating curve, along with its hover color and lift, its press, and its focus ring. */
 
+
+	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The family's dark orange ring can vanish on a dark card. How: The bright orange matches the floating bar's rings, since the base styles draw every ring in this color. */
 
 	background      : var( --acc-mai-col );                               /* Accent Main Color = #F26419 */
 	border-radius   : var( --rad-bor-xsm );                               /* Radius Border Extra Small ~= 3.572px */
@@ -80,47 +82,6 @@
 
 
 }
-
-
-/* #region carStaDiv */
-
-.carStaDiv { /* What: Card Stage Div. Why: Every card has to keep its lettering clear of the floating bar. How: This hands each card the margin that clears it. */
-
-
-	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together, plus a gap above it, which each card reads as its bottom margin. */
-
-
-}
-
-.carLoaPar { /* What: Card Loading Paragraph. Why: The visitor should know the card is on its way. How: This centers the message on the full screen in muted mono and fades it up. */
-
-
-	align-items     : center;
-	animation       : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
-	color           : var( --tex-mut-col );                                                        /* Text Muted Color = #646482 */
-	display         : flex;
-	font-family     : var( --fon-fam-sec );                                                        /* Font Family Secondary = 'DM Mono', monospace */
-	justify-content : center;
-	min-height      : 100vh;
-
-
-}
-@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Loading Paragraph. Why: Someone who asked for less motion shouldn't see the message rise. How: This applies only when the reduced-motion preference is set. */
-
-
-	.carLoaPar { /* What: Motionless Card Loading Paragraph. Why: The message should simply be there. How: This turns the entrance off. */
-
-
-		animation : none;
-
-
-	}
-
-
-}
-
-/* #endregion carStaDiv */
-
 
 
 /* #region carBarNav */
@@ -391,5 +352,46 @@
 }
 
 /* #endregion carBarNav */
+
+
+
+/* #region carStaDiv */
+
+.carStaDiv { /* What: Card Stage Div. Why: Every card has to keep its lettering clear of the floating bar. How: This hands each card the margin that clears it. */
+
+
+	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together, plus a gap above it, which each card reads as its bottom margin. */
+
+
+}
+
+.carLoaPar { /* What: Card Loading Paragraph. Why: The visitor should know the card is on its way. How: This centers the message on the full screen in muted mono and fades it up. */
+
+
+	align-items     : center;
+	animation       : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	color           : var( --tex-mut-col );                                                        /* Text Muted Color = #646482 */
+	display         : flex;
+	font-family     : var( --fon-fam-sec );                                                        /* Font Family Secondary = 'DM Mono', monospace */
+	justify-content : center;
+	min-height      : 100vh;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Loading Paragraph. Why: Someone who asked for less motion shouldn't see the message rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.carLoaPar { /* What: Motionless Card Loading Paragraph. Why: The message should simply be there. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+/* #endregion carStaDiv */
 
 
