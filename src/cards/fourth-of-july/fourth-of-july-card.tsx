@@ -13,7 +13,7 @@ import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Ref. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps the scattered stars across renders.
@@ -228,8 +228,8 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 	const accEasStr = gsaEasFun( 'acc' ); // What: Accelerate Easing String. Why: The shell fades out faster as it goes. How: This registers the accelerate token and keeps its GSAP name.
 	const decEasStr = gsaEasFun( 'dec' ); // What: Decelerate Easing String. Why: The ring and sparks burst fast and slow as they spread. How: This registers the decelerate token and keeps its GSAP name.
-	const disMaxNum = rhyPxlFun( 'p08' ); // What: Distance Maximum Number. Why: The farthest sparks fly well out from the burst. How: This is the Vertical Rhythm Base Plus 8 step, in pixels. // Vertical Rhythm Base Plus 8 ~= 138.199px
-	const disMinNum = rhyPxlFun( 'p05' ); // What: Distance Minimum Number. Why: The nearest sparks still clear the ring. How: This is the Vertical Rhythm Base Plus 5 step, in pixels. // Vertical Rhythm Base Plus 5 ~= 59.447px
+	const disMaxNum = rhyPixFun( 'p08' ); // What: Distance Maximum Number. Why: The farthest sparks fly well out from the burst. How: This is the Vertical Rhythm Base Plus 8 step, in pixels. // Vertical Rhythm Base Plus 8 ~= 138.199px
+	const disMinNum = rhyPixFun( 'p05' ); // What: Distance Minimum Number. Why: The nearest sparks still clear the ring. How: This is the Vertical Rhythm Base Plus 5 step, in pixels. // Vertical Rhythm Base Plus 5 ~= 59.447px
 	const fliMaxNum = durSecFun( 'p08' ); // What: Flight Maximum Number. Why: The slowest sparks linger. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
 	const fliMinNum = durSecFun( 'p06' ); // What: Flight Minimum Number. Why: The quickest sparks burn out fast. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
 	const intSecNum = durSecFun( 'p06' ); // What: Interval Second Number. Why: A new firework bursts a little less than once a second. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
@@ -300,16 +300,16 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 
 			const angRadNum = ( 360 / PAR_COU_NUM * parIndNum + ranValFun( parJitNum * -1, parJitNum ) ) * Math.PI / 180; // What: Angle Radian Number. Why: The sparks spread evenly around the circle, each straying a little. How: This is the spark's share of the circle plus a random jitter, in radians.
-			const disPxlNum = ranValFun( disMinNum, disMaxNum );                                                          // What: Distance Pixel Number. Why: Sparks fly different distances. How: This picks one within the range.
+			const disPixNum = ranValFun( disMinNum, disMaxNum );                                                          // What: Distance Pixel Number. Why: Sparks fly different distances. How: This picks one within the range.
 			const fliSecNum = ranValFun( fliMinNum, fliMaxNum );                                                          // What: Flight Second Number. Why: Sparks burn out at different times. How: This picks a duration within the range.
-			const xcoPxlNum = Math.cos( angRadNum ) * disPxlNum;                                                          // What: X-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's horizontal share.
-			const ycoPxlNum = Math.sin( angRadNum ) * disPxlNum;                                                          // What: Y-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's vertical share.
+			const xcoPixNum = Math.cos( angRadNum ) * disPixNum;                                                          // What: X-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's horizontal share.
+			const ycoPixNum = Math.sin( angRadNum ) * disPixNum;                                                          // What: Y-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's vertical share.
 
 
 			parDivEle.style.setProperty( '--foj-par-col', ranColFun() ); // What: Particle Color Assignment. Why: The sparks burst in mixed colors. How: This sets the custom property the spark reads to a random palette color.
 
 
-			timLinObj.fromTo( parDivEle, { opacity : 1, scale : 1, x : 0, y : 0 }, { duration : fliSecNum, opacity : 0, scale : parScaNum, x : xcoPxlNum, y : ycoPxlNum }, parDelNum ); // What: Particle Flight. Why: The sparks fly out, shrink, and burn out. How: This shows the spark at the burst point, then after the particle delay moves it to its end point over its flight.
+			timLinObj.fromTo( parDivEle, { opacity : 1, scale : 1, x : 0, y : 0 }, { duration : fliSecNum, opacity : 0, scale : parScaNum, x : xcoPixNum, y : ycoPixNum }, parDelNum ); // What: Particle Flight. Why: The sparks fly out, shrink, and burn out. How: This shows the spark at the burst point, then after the particle delay moves it to its end point over its flight.
 
 
 		}
@@ -431,12 +431,12 @@ function FojCarCom () : JSX.Element {
 		const decEasStr = gsaEasFun( 'dec' );                                                         // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
 		const entDurNum = durSecFun( 'p07' );                                                         // What: Entrance Duration Number. Why: Every entrance plays at the same unhurried pace, and the wish starts once the card has faded in. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
 		const flaDelNum = durSecFun( 'p06' );                                                         // What: Flag Delay Number. Why: The flag follows the headline. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
-		const flaShiNum = rhyPxlFun( 'p04' ) * -1;                                                    // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
+		const flaShiNum = rhyPixFun( 'p04' ) * -1;                                                    // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
 		const greDelNum = durSecFun( 'p03' );                                                         // What: Greeting Delay Number. Why: The headline arrives just after the card starts fading in. How: This is the duration scale's Base Plus 3 step, in seconds. // Duration Animation Base Plus 3 ~= 366.9ms
 		const greScaNum = cdnPowFun( -1 );                                                            // What: Greeting Scale Number. Why: The headline grows as it drops. How: This is the Power of 1 Reciprocal, the scale it starts from. // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
-		const greShiNum = rhyPxlFun( 'p05' ) * -1;                                                    // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
+		const greShiNum = rhyPixFun( 'p05' ) * -1;                                                    // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
 		const timLinObj = gsap.timeline( { defaults : { duration : entDurNum, ease : decEasStr } } ); // What: Timeline Object. Why: The entrance plays as one sequence. How: This creates the timeline, its tweens taking the entrance duration and decelerating unless told otherwise.
-		const wisShiNum = rhyPxlFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
+		const wisShiNum = rhyPixFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
 
 
 		timLinObj.from( carDivRef.current, { opacity : 0                                                                     }, 0 );         // What: Card Fade. Why: The card opens out of the dark. How: This fades it in from the start.

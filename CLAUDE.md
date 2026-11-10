@@ -248,7 +248,7 @@ rest follow the same pattern.
 - **The component is a named export**, and the catalog's lazy import maps it
   to the default React.lazy needs.
 - **GSAP timelines follow the scale**: durations through `durMilFun` (steps
-  below `m03` included, for glitches), distances through `rhyPxlFun`, angles
+  below `m03` included, for glitches), distances through `rhyPixFun`, angles
   through `cdnPowFun`, and curves from the easing tokens, registered with
   GSAP's CustomEase through `ui/gsap-ease.ts`'s `gsaEasFun`; GSAP takes
   seconds, so durations usually come through `durSecFun`. Under reduced motion

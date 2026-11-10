@@ -5,7 +5,7 @@
 
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise and sway take steps on the duration scale. How: This returns a step's length in milliseconds.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway is a rhythm step. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway is a rhythm step. How: This returns a step's size in pixels.
 
 // #endregion Imports
 
@@ -134,7 +134,7 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 		risDurNum : ranValFun( durMilFun( 'p15' ), durMilFun( 'p18' ) ), // What: Rise Duration Number. Why: Some balloons rise faster than others. How: This picks a crossing time from the Base Plus 15 to the Base Plus 18 step, about 10.7 to 24.9 seconds. // Duration Animation Base Plus 15 ~= 10,717.0ms, Duration Animation Base Plus 18 ~= 24,914.0ms
 		scaNum    : ranValFun( SCA_MIN_NUM, 1 ),                         // What: Scale Number. Why: Balloons come in different sizes. How: This picks a scale from about 0.61 to full.
 		svgEle    : balSvgEle,                                           // What: SVG Element. Why: The record moves its own balloon. How: This keeps the element.
-		swaAmpNum : ranValFun( rhyPxlFun( 'bas' ), rhyPxlFun( 'p03' ) ), // What: Sway Amplitude Number. Why: Some balloons sway wider than others. How: This picks a swing from the Vertical Rhythm Base to the Base Plus 3 step, about 14.6 to 33.9px. // Vertical Rhythm Base ~= 14.572px, Vertical Rhythm Base Plus 3 ~= 33.876px
+		swaAmpNum : ranValFun( rhyPixFun( 'bas' ), rhyPixFun( 'p03' ) ), // What: Sway Amplitude Number. Why: Some balloons sway wider than others. How: This picks a swing from the Vertical Rhythm Base to the Base Plus 3 step, about 14.6 to 33.9px. // Vertical Rhythm Base ~= 14.572px, Vertical Rhythm Base Plus 3 ~= 33.876px
 		swaPerNum : ranValFun( durMilFun( 'p10' ), durMilFun( 'p13' ) ), // What: Sway Period Number. Why: Some balloons sway faster than others. How: This picks one full swing's length from the Base Plus 10 to the Base Plus 13 step, about 2.6 to 6.1 seconds. // Duration Animation Base Plus 10 ~= 2,627.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
 
 		ycoNum : movValBoo ? conHeiNum + ( Math.random() - 0.5 ) * balSvgEle.clientHeight : Math.random() * ( conHeiNum - balSvgEle.clientHeight ) // What: Y-Coordinate Number. Why: Rising balloons start around the bottom edge, staggered, while resting ones fill the sky. How: This picks a height within half a balloon of the bottom, or anywhere from the top to a balloon above the bottom.

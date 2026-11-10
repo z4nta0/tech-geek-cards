@@ -6,7 +6,7 @@
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The confetti's spin, slowing, and fading cutoffs sit on the scale as powers of the core design number. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: How fast the confetti slows and fades are steps on the duration scale. How: This returns a step's length in milliseconds.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's sizes, speeds, and pull are rhythm steps. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's sizes, speeds, and pull are rhythm steps. How: This returns a step's size in pixels.
 
 // #endregion Imports
 
@@ -226,9 +226,9 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	const draDecNum = durMilFun( 'p06' ); // What: Drag Decay Number. Why: A piece's drift slows smoothly over time. How: This is the duration scale's Base Plus 6 step, about 853ms, the time constant of the slowing. // Duration Animation Base Plus 6 ~= 853.0ms
 	const fadDurNum = durMilFun( 'p06' ); // What: Fade Duration Number. Why: A piece fades out over a moment once it's low. How: This is the duration scale's Base Plus 6 step, about 853ms, from full to gone. // Duration Animation Base Plus 6 ~= 853.0ms
 	const fadFraNum = cdnPowFun( -1 );    // What: Fade Fraction Number. Why: Pieces start fading in the lower part of the canvas. How: This is the core design number to the power of -1, about 0.755 of the height. // Core-Design-Number to the Power of -1 ~= 0.755
-	const graPxlNum = rhyPxlFun( 'm12' ); // What: Gravity Pixel Number. Why: Every piece is pulled down. How: This is the Vertical Rhythm Base Minus 12 step, about 0.499px, added to its downward speed per 60th of a second. // Vertical Rhythm Base Minus 12 ~= 0.499px
+	const graPixNum = rhyPixFun( 'm12' ); // What: Gravity Pixel Number. Why: Every piece is pulled down. How: This is the Vertical Rhythm Base Minus 12 step, about 0.499px, added to its downward speed per 60th of a second. // Vertical Rhythm Base Minus 12 ~= 0.499px
 	const minAlpNum = cdnPowFun( -11 );   // What: Minimum Alpha Number. Why: A piece too faint to see is dropped. How: This is the core design number to the power of -11, about 0.045. // Core-Design-Number to the Power of -11 ~= 0.045
-	const outPxlNum = rhyPxlFun( 'p01' ); // What: Out Pixel Number. Why: A piece is dropped once it has fallen past the bottom. How: This is the Vertical Rhythm Base Plus 1 step, about 19.3px, below the bottom edge. // Vertical Rhythm Base Plus 1 ~= 19.304px
+	const outPixNum = rhyPixFun( 'p01' ); // What: Out Pixel Number. Why: A piece is dropped once it has fallen past the bottom. How: This is the Vertical Rhythm Base Plus 1 step, about 19.3px, below the bottom edge. // Vertical Rhythm Base Plus 1 ~= 19.304px
 	const velMulNum = cdnPowFun( -2 );    // What: Velocity Multiplier Number. Why: The pieces were tuned to move at just over half their speed. How: This is the core design number to the power of -2, about 0.570. // Core-Design-Number to the Power of -2 ~= 0.570
 
 	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the confetti has to cancel the next frame, and a burst has to know whether the loop is running. How: This holds the pending frame's id, 0 while the loop is idle.
@@ -284,7 +284,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 			const pieRecObj = pieRecArr[ pieIndNum ]; // What: Piece Record Object. Why: The checks read the piece's values. How: This takes the piece at the index.
 
 
-			if ( pieRecObj.alpNum <= minAlpNum || pieRecObj.ycoNum >= canHeiNum + outPxlNum ) pieRecArr.splice( pieIndNum, 1 ); // What: Piece Drop Check. Why: A piece too faint to see or past the bottom is done. How: This removes it from the array.
+			if ( pieRecObj.alpNum <= minAlpNum || pieRecObj.ycoNum >= canHeiNum + outPixNum ) pieRecArr.splice( pieIndNum, 1 ); // What: Piece Drop Check. Why: A piece too faint to see or past the bottom is done. How: This removes it from the array.
 
 
 		}
@@ -296,7 +296,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 			pieRecObj.xcoNum += pieRecObj.velXcoNum * velMulNum * fraValNum; // What: X-Coordinate Increase. Why: The piece drifts sideways. How: This adds its scaled sideways speed for the frame's length.
 			pieRecObj.ycoNum += pieRecObj.velYcoNum * velMulNum * fraValNum; // What: Y-Coordinate Increase. Why: The piece rises or falls. How: This adds its scaled downward speed for the frame's length.
-			pieRecObj.velYcoNum += graPxlNum * fraValNum;                    // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
+			pieRecObj.velYcoNum += graPixNum * fraValNum;                    // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
 			pieRecObj.velXcoNum *= draFacNum;                                // What: Velocity X-Coordinate Decrease. Why: The sideways drift dies away. How: This keeps the frame's share of it.
 			pieRecObj.rotNum += pieRecObj.spiNum * fraValNum;                // What: Rotation Increase. Why: The piece tumbles. How: This adds its spin for the frame's length.
 
@@ -383,11 +383,11 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	const burFun = ( burXcoNum : number, burYcoNum : number, pieCouNum : number ) : void => { // What: Burst Function. Why: The card throws confetti when it opens and wherever it's tapped. How: This adds pieces at the point and starts the loop if it's idle.
 
 
-		const kicPxlNum = rhyPxlFun( 'm03' ); // What: Kick Pixel Number. Why: A burst throws upward before it falls. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px, taken off every piece's downward speed. // Vertical Rhythm Base Minus 3 ~= 6.268px
-		const sizMaxNum = rhyPxlFun( 'bas' ); // What: Size Maximum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base step, about 14.6px. // Vertical Rhythm Base ~= 14.572px
-		const sizMinNum = rhyPxlFun( 'm03' ); // What: Size Minimum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px. // Vertical Rhythm Base Minus 3 ~= 6.268px
-		const speMaxNum = rhyPxlFun( 'm01' ); // What: Speed Maximum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 1 step, 11px per 60th of a second. // Vertical Rhythm Base Minus 1 = 11px
-		const speMinNum = rhyPxlFun( 'm06' ); // What: Speed Minimum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 6 step, about 2.70px per 60th of a second. // Vertical Rhythm Base Minus 6 ~= 2.696px
+		const kicPixNum = rhyPixFun( 'm03' ); // What: Kick Pixel Number. Why: A burst throws upward before it falls. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px, taken off every piece's downward speed. // Vertical Rhythm Base Minus 3 ~= 6.268px
+		const sizMaxNum = rhyPixFun( 'bas' ); // What: Size Maximum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base step, about 14.6px. // Vertical Rhythm Base ~= 14.572px
+		const sizMinNum = rhyPixFun( 'm03' ); // What: Size Minimum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px. // Vertical Rhythm Base Minus 3 ~= 6.268px
+		const speMaxNum = rhyPixFun( 'm01' ); // What: Speed Maximum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 1 step, 11px per 60th of a second. // Vertical Rhythm Base Minus 1 = 11px
+		const speMinNum = rhyPixFun( 'm06' ); // What: Speed Minimum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 6 step, about 2.70px per 60th of a second. // Vertical Rhythm Base Minus 6 ~= 2.696px
 		const spiMaxNum = cdnPowFun( 6 );     // What: Spin Maximum Number. Why: Pieces spin up to a limit either way. How: This is the core design number to the power of 6, about 5.40 degrees per 60th of a second. // Core-Design-Number to the Power of 6 ~= 5.404
 
 
@@ -409,7 +409,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 				sizNum    : ranValFun( sizMinNum, sizMaxNum ),                               // What: Size Number. Why: Pieces come in different sizes. How: This picks one within the range.
 				spiNum    : ranValFun( -spiMaxNum, spiMaxNum ),                              // What: Spin Number. Why: Pieces spin either way at their own pace. How: This picks a spin from the limit one way to the limit the other.
 				velXcoNum : Math.cos( angValNum ) * speValNum,                               // What: Velocity X-Coordinate Number. Why: The piece flies along its angle. How: This is the speed's sideways share.
-				velYcoNum : Math.sin( angValNum ) * speValNum - kicPxlNum,                   // What: Velocity Y-Coordinate Number. Why: The piece flies along its angle, kicked upward. How: This is the speed's downward share less the kick.
+				velYcoNum : Math.sin( angValNum ) * speValNum - kicPixNum,                   // What: Velocity Y-Coordinate Number. Why: The piece flies along its angle, kicked upward. How: This is the speed's downward share less the kick.
 				xcoNum    : burXcoNum,                                                       // What: X-Coordinate Number. Why: Every piece starts at the burst's point. How: This takes its distance from the left edge.
 				ycoNum    : burYcoNum                                                        // What: Y-Coordinate Number. Why: Every piece starts at the burst's point. How: This takes its distance from the top edge.
 
