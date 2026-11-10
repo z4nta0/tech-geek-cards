@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import react from '@vitejs/plugin-react'; // What: React. Why: Vite needs the React plugin to compile JSX. How: This is called first in the plugins array.
+import reaPluFun from '@vitejs/plugin-react'; // What: React Plugin Function. Why: Vite needs the React plugin to compile JSX. How: This is called first in the plugins array.
 
 
 import { CAR_DAT_ARR  } from './src/ui/card-data.ts'; // What: Card Data Array. Why: Every card gets its own page carrying its title, description, and link preview. How: The card pages plugin writes one per row.
@@ -307,7 +307,7 @@ const VIT_CON_OBJ = defineConfig({ // What: Vite Config Object. Why: Vite reads 
 
 	build   : { assetsInlineLimit : 0 },                            // What: Build. Why: Vite inlines any asset under 4 KB as a data: URI, which the Content-Security-Policy blocks as an image from another origin, hiding the bar's mark and the Family cards' heart mask. How: This turns inlining off, so every asset ships as its own file on the site's own origin.
 	css     : { modules : { localsConvention : 'camelCaseOnly' } }, // What: CSS. Why: CSS modules expose each class name as a camelCase key only, so every module reads the same way, per the CSS modules rules. How: This sets the locals convention.
-	plugins : [ react(), minHtmFun(), carPagFun() ]                 // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React, the page minifier, and the card pages.
+	plugins : [ reaPluFun(), minHtmFun(), carPagFun() ]             // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React, the page minifier, and the card pages.
 
 
 });
