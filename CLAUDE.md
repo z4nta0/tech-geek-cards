@@ -6,9 +6,27 @@ confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
-`techgeek-design` (`../techgeek-design`, installed from its `v0.4.0` tag,
+`techgeek-design` (`../techgeek-design`, installed from its `v0.7.1` tag,
 moved from `v0.1.0` on 2026-10-17 for the bar's clearance for scrolled-to
-links, top and bottom, and its menu up to 1,024px).
+links, top and bottom, and its menu up to 1,024px, then to `v0.7.1` on
+2026-11-10, in the audit, for the bar's skip link, the scroll hook restoring
+back, forward, and reload positions itself, the phone menu closing on any
+of its links' clicks, modified and middle clicks included, named easing on
+every transition, and the "(opens in a new tab)" note on its profile links).
+
+## Main content and skip link
+Decided 2026-11-10, in the audit. Every page opens with a skip link, reading
+"Skip to main content", that focuses `<main id='main'>`, whose plain click
+leaves no hash in the address.
+- **Site pages**: the main content is everything between the bar and the
+  footer, the `<main>` in `app.tsx` holding whichever page shows. The skip
+  link comes from the shared bar in techgeek-design.
+- **Card pages**: the main content is the card. A card's page has no site
+  bar, so `pages/card/card.tsx` renders its own skip link, styled like the
+  bar's (an orange button above the screen that slides down when focused),
+  and its own `<main>` around the playing card, leaving the floating bar and
+  the share dialog outside it. The skip link sits at layer 1, above the
+  card's fixed root and level with the floating bar at the bottom edge.
 
 ## Origin and sibling sites
 Decided 2026-10-12, recorded 2026-10-14. TechGeek.support

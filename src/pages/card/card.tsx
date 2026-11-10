@@ -27,21 +27,75 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * card.tsx = Card
  *
  * @summary
- * The page at each card's own address: the card itself, playing full screen,
- * and a small floating bar over it with the TechGeek mark and TechGeek.cards
- * name, the mark alone on a phone (back to the home page), a link to more
- * cards, a Replay button that plays the card again from the start, and a Share
- * button that opens the share dialog for this card. The page sets its own
- * title, description, and canonical address. The card's code arrives on
- * demand, so a short loading message shows until it has.
+ * The page at each card's own address: a skip link to the card, the card
+ * itself, playing full screen as the page's main content, and a small
+ * floating bar over it with the TechGeek mark and TechGeek.cards name, the
+ * mark alone on a phone (back to the home page), a link to more cards, a
+ * Replay button that plays the card again from the start, and a Share button
+ * that opens the share dialog for this card. The page sets its own title,
+ * description, and canonical address. The card's code arrives on demand, so a
+ * short loading message shows until it has.
  *
  * Sections:
+ *  - Helpers
  *  - Components
  *  - Exports
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
+
+
+
+// #region Helpers
+
+// #region modCliFun
+
+/**
+ * modCliFun = Modified Click Function
+ *
+ * @summary
+ * Whether a click on the skip link should be left to the browser: one made
+ * with a modifier key held (Ctrl or Cmd to open a new tab, Shift for a new
+ * window, Alt to download) or with any button but the main one. The skip
+ * link's handler returns early when this is true, so the link's own address
+ * opens the browser's own way.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param cliEveObj - Click Event Object: The skip link's click event.
+ *
+ * @returns Whether the browser should handle the click itself.
+ * @see {@link modCliBoo}
+ *
+ * @example
+ * ```ts
+ * modCliFun(cliEveObj) // => false for a plain click
+ * ```
+ *
+*/
+
+function modCliFun ( cliEveObj : React.MouseEvent< HTMLAnchorElement > ) : boolean {
+
+
+	const altKeyBoo = cliEveObj.altKey;       // What: Alt Key Boolean. Why: An Alt click is one the browser handles its own way. How: This reads whether Alt was held.
+	const conKeyBoo = cliEveObj.ctrlKey;      // What: Control Key Boolean. Why: Ctrl-click opens a new tab elsewhere. How: This reads whether Ctrl was held.
+	const metKeyBoo = cliEveObj.metaKey;      // What: Meta Key Boolean. Why: Cmd-click opens a new tab on a Mac. How: This reads whether Cmd was held.
+	const othButBoo = cliEveObj.button !== 0; // What: Other Button Boolean. Why: A middle click opens a new tab. How: This checks the click wasn't made with the main button.
+	const shiKeyBoo = cliEveObj.shiftKey;     // What: Shift Key Boolean. Why: Shift-click opens a new window. How: This reads whether Shift was held.
+
+	const modCliBoo = altKeyBoo || conKeyBoo || metKeyBoo || othButBoo || shiKeyBoo; // What: Modified Click Boolean. Why: Any one of these means the visitor asked the browser to open the link its own way. How: This combines them.
+
+
+
+	return modCliBoo; // What: Modified Click Return. Why: The link's handler decides from this whether to step aside. How: This hands back the combined answer.
+
+
+}
+
+// #endregion modCliFun
+
+// #endregion Helpers
 
 
 
@@ -57,8 +111,11 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * @summary
  * Renders one card's page: its title and either its canonical link (a listed
  * card) or a noindex tag (an unlisted one), which React moves into the
- * document head, the card's component inside Suspense with a loading message
- * as the fallback, and the floating bar. The card is keyed by the location's
+ * document head, a skip link, the card's component inside Suspense with a
+ * loading message as the fallback, held in the page's main element, and the
+ * floating bar. The skip link comes first, waiting above the screen until
+ * it's focused, and its plain click focuses the main element without putting
+ * #main in the address. The card is keyed by the location's
  * key and a replay count, so Replay, and the share dialog's preview link
  * opening this same page, remount it, and every card replays the same way,
  * without reaching into its own code. The canonical address leaves out any
@@ -71,8 +128,8 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  *
  * @param props.carRecObj - Card Record Object: {@link CarRecTyp}
  *
- * @returns The page's head tags, the card, the floating bar, and the share
- *          dialog when it's open.
+ * @returns The page's head tags, the skip link, the card in its main
+ *          element, the floating bar, and the share dialog when it's open.
  *
  * @example
  * ```tsx
@@ -132,21 +189,51 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 			) }
 
+			<a
+				className={ cssModObj.carSkiAnc }
+
+				href='#main'
+
+				onClick={ ( cliEveObj ) => { // What: Skip Click Handler. Why: The jump should land on the card without leaving a hash in the address. How: This leaves a modified click to the browser, and otherwise cancels the default and focuses the main element.
 
 
-			<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
+					if ( modCliFun( cliEveObj ) ) return; // What: Modified Click Guard. Why: A Ctrl, Cmd, Shift, or Alt click asks the browser to open the link its own way. How: This returns before the default is cancelled.
 
 
-				<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+
+					cliEveObj.preventDefault(); // What: Default Prevent Call. Why: The browser's own jump would put #main in the address. How: This cancels it.
+
+					document.getElementById( 'main' )?.focus(); // What: Main Focus Call. Why: Focus has to land on the card, so the next Tab continues into it. How: This focuses the page's main element.
 
 
-					<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
+				} }
+			>Skip to main content</a>{ /* What: Card Skip Anchor Element. Why: Every page opens with a skip link, so a keyboard user can jump straight to its main content, here the card. How: This is the page's first stop, waiting above the screen until it's focused, when it slides down over the card's corner, and its click moves focus to the main element holding the card. */ }
 
 
-				</Suspense>
+
+			<main
+				id='main'
+
+				tabIndex={ -1 } // What: Main Focus Target. Why: The skip link moves focus here, and a main element can't take focus on its own. How: This makes it focusable without adding it to the Tab order.
+			>{ /* What: Card Main Element. Why: The card is the page's main content, and the skip link jumps here. How: This holds the card, apart from the floating bar and the share dialog; its ID stays the plain word `main`, since the skip link's #main address names it as a navigation target. */ }
 
 
-			</div>
+				<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
+
+
+					<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+
+
+						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
+
+
+					</Suspense>
+
+
+				</div>
+
+
+			</main>
 
 
 

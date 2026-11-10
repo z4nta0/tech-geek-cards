@@ -225,9 +225,12 @@ function sigEleFun ( eleCurEle : Element ) : string {
  *
  * @summary
  * Probes every reachable control and returns a problem for each one that
- * gives no feedback. Each control is scrolled into view, read at rest with
- * the pointer away, read again while hovered, and again while the mouse
- * button is held on it, every look read once its transition has settled. A
+ * gives no feedback. A control that waits above the screen until it's
+ * focused, such as a skip link, is focused first, so it slides into view, and
+ * its focus is dropped again once it's probed. Each control is scrolled into
+ * view, read at rest with the pointer away, read again while hovered, and
+ * again while the mouse button is held on it, every look read once its
+ * transition has settled. A
  * control that looks the same at rest and hovered, or hovered and pressed,
  * is a problem. Normally its transition list must include the focus ring's
  * outline-width, so the ring eases in; under reduced motion every one of its
@@ -262,6 +265,13 @@ async function feeProFun ( curPagObj : Page, redMotBoo : boolean ) : Promise< st
 		const conDesStr = await conCurObj.evaluate( ( conCurEle ) => `${ conCurEle.tagName.toLowerCase() } "${ ( conCurEle.getAttribute( 'aria-label' ) || conCurEle.textContent || '' ).trim().slice( 0, 30 ) }"` ); // What: Control Description String. Why: A problem should name the control a person would recognize. How: This joins its tag with its label or text.
 
 
+		const focOnlBoo = await conCurObj.evaluate( ( conCurEle ) => getComputedStyle( conCurEle ).position === 'fixed' && conCurEle.getBoundingClientRect().bottom <= 0 ); // What: Focus Only Boolean. Why: A skip link waits above the screen, where the pointer can't reach it, until it's focused. How: This is true for a fixed control resting entirely above the screen.
+
+
+		if ( focOnlBoo ) await conCurObj.focus(); // What: Focus First Call. Why: A control that only appears on focus has to be focused before it can be hovered. How: This focuses it, sliding it into view, before its looks are read.
+
+
+
 		await conCurObj.scrollIntoViewIfNeeded(); // What: Control Scroll Call. Why: A control has to be on screen to hover or press. How: This scrolls it into view.
 
 		await curPagObj.mouse.move( 0, 0 ); // What: Pointer Away Call. Why: The resting look is read with nothing hovered. How: This moves the pointer to the corner of the bar.
@@ -291,6 +301,9 @@ async function feeProFun ( curPagObj : Page, redMotBoo : boolean ) : Promise< st
 
 
 		await curPagObj.mouse.up(); // What: Mouse Up Call. Why: The press has to end before the next control. How: This releases the button, whose click the caller has blocked.
+
+
+		if ( focOnlBoo ) await conCurObj.evaluate( ( conCurEle ) => ( conCurEle as HTMLElement ).blur() ); // What: Focus Drop Call. Why: A focused skip link would stay over the corner of the page, under the pointer of a later control's hover. How: This blurs it, sending it back above the screen. // What: Type Assertion Note. Why: Only an HTML element has blur in its type. How: The control is a link or a button, both HTML elements.
 
 
 

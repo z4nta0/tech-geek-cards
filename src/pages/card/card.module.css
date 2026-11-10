@@ -5,18 +5,81 @@
  * card.module.css = Card Module
  *
  * @summary
- * Styles for CarPagCom: the loading message centered on the screen while a
- * card's code arrives, and the floating bar, a dark ink pill pinned to the
- * bottom center of the screen above the card, rising into view a moment after
- * the card opens, holding the mark and wordmark (the mark alone on a phone), a
- * More Cards link, a Replay button, and an orange Share button, plus the
- * bottom margin a card's lettering takes to clear that bar. Every animation
- * and transition holds still under reduced motion.
+ * Styles for CarPagCom: the skip link, an orange button waiting above the
+ * screen that slides down over the card's corner when focused, the loading
+ * message centered on the screen while a card's code arrives, and the
+ * floating bar, a dark ink pill pinned to the bottom center of the screen
+ * above the card, rising into view a moment after the card opens, holding the
+ * mark and wordmark (the mark alone on a phone), a More Cards link, a Replay
+ * button, and an orange Share button, plus the bottom margin a card's
+ * lettering takes to clear that bar. Every animation and transition holds
+ * still under reduced motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
 
+
+
+.carSkiAnc { /* What: Card Skip Anchor. Why: A keyboard user should be able to jump straight to the card, and the link shouldn't show until it's needed. How: This sets it as an orange button in mono capitals, like the shared bar's skip link, fixed just above the screen's top edge at the page's side gutter, and eases its slide into view and back out, leaving on the accelerating curve, along with its hover color and lift, its press, and its focus ring. */
+
+
+	background      : var( --acc-mai-col );                               /* Accent Main Color = #F26419 */
+	border-radius   : var( --rad-bor-xsm );                               /* Radius Border Extra Small ~= 3.572px */
+	color           : var( --tex-acc-col );                               /* Text Accent Color = #1A1A2E */
+	font-family     : var( --fon-fam-sec );                               /* Font Family Secondary = 'DM Mono', monospace */
+	font-size       : var( --fon-siz-bas );                               /* Font Size Base = 1rem */
+	font-weight     : 500;
+	left            : var( --gut-sid-pad );                               /* Gutter Side Padding, about 19.304px - 44.876px */
+	letter-spacing  : calc( var( --cdn-pow-010-rec ) * 1em );             /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding         : var( --spa-ver-m01 ) var( --spa-hor-p02 );          /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	position        : fixed;
+	text-decoration : none;
+	text-transform  : uppercase;
+	top             : var( --spa-ver-m02 );                               /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	transform       : translateY( calc( -100% - var( --spa-ver-m01 ) ) ); /* Spacing Vertical Base Minus 1 = 11px */ /* What: Hidden Offset. Why: The link waits above the screen until it's focused, clear of the edge so no sliver of it shows. How: This raises it by its own height plus more than its top offset. */
+	transition      : background var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-p02 ) var( --mot-acc-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 2 ~= 277.0ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ), Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	z-index         : 1;                                                  /* What: Skip Link Layer. Why: The focused link has to show above the card, whose root is fixed with its own layers kept inside it. How: This sets it one layer above the card, level with the floating bar, which sits at the screen's bottom edge, away from it. */
+
+
+}
+.carSkiAnc:focus { /* What: Focused Card Skip Anchor. Why: The link has to come into view however focus reaches it. How: This slides it down over the card's corner on the decelerating curve, still easing its hover color and lift, its press, and its focus ring, on :focus rather than :focus-visible so a script's focus shows it too. */
+
+
+	transform  : translateY( 0 );
+	transition : background var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-p02 ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
+
+
+}
+.carSkiAnc:hover { /* What: Hovered Card Skip Anchor. Why: A button should respond to the pointer. How: This darkens its orange and lifts it 1px, like the shared bar's skip link. */
+
+
+	background : var( --acc-hov-col ); /* Accent Hover Color ~= #e45700 */
+	transform  : translateY( -1px );
+
+
+}
+.carSkiAnc:active { /* What: Pressed Card Skip Anchor. Why: A press should register before focus moves. How: This presses the button in slightly, which also undoes its hover lift. */
+
+
+	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Card Skip Anchor. Why: Someone who asked for less motion shouldn't see the link slide. How: This applies only when the reduced-motion preference is set. */
+
+
+	.carSkiAnc,
+	.carSkiAnc:focus { /* What: Motionless Card Skip Anchor. Why: The link should simply appear, and its hover, press, and focus changes should switch on at once. How: This turns the transition off on both the hidden and the focused rule, since the focused rule outranks the base. */
+
+
+		transition : none;
+
+
+	}
+
+
+}
 
 
 /* #region carStaDiv */
