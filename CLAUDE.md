@@ -318,6 +318,21 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
   specified when none is chosen).
+  - **Scroll position** (added 2026-11-10, in the audit, from TechGeek.dev's):
+    a footer link from the bottom of each page opens the next at its top, the
+    current page's own bar link and a phone menu link do too, back, forward,
+    and back again return Home to its exact bottom from Contact, which can't
+    scroll that far, a reload returns to its position with
+    `history.scrollRestoration` read as `manual`, a fresh load opens at the
+    top, `#main` added to the address wins over a saved position, malformed
+    saved positions raise no error, and with smooth scrolling on a page
+    change still lands at the top before it's drawn. `Math.random` is fixed
+    at 0.5, so Home keeps its height between visits.
+  - **Skip link**: the first Tab on every page, the 404 page, and every card
+    page lands on the skip link fully in view, and its plain click focuses
+    `<main>` with no hashchange.
+  - **Menu closing**: a plain tap, a Ctrl or Cmd click, and a middle click on
+    the drawer's links each close it, the email link included.
 - `npm run test:rendering`: full-page screenshots against
   `tests/rendering/baselines/`, with the clock and `Math.random` fixed (Home
   picks its cards at random), the confetti circuit hidden in Chromium and
