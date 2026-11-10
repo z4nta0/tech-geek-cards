@@ -135,7 +135,7 @@
 	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
 	font-weight : 800;
 	gap         : var( --spa-hor-m02 ); /* Spacing Horizontal Base Minus 2 ~= 8.304px */
-	transition  : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition  : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -234,7 +234,7 @@
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	text-transform : uppercase;
-	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -275,7 +275,7 @@
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	text-transform : uppercase;
-	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -319,7 +319,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m02 ) var( --spa-hor-p01 ); /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Plus 1 ~= 19.304px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
