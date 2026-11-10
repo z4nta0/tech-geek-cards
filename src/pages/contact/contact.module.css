@@ -173,6 +173,13 @@
 
 
 }
+.thaYouDiv:focus { /* What: Focused Thank You Div. Why: The thank-you takes focus by script so screen readers announce it, which is where the result lands rather than a control, so a focus ring around the whole card would only confuse. How: This removes its outline. */
+
+
+	outline : none;
+
+
+}
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Thank You Div. Why: Someone who asked for less motion shouldn't see the thank-you rise. How: This applies only when the reduced-motion preference is set. */
 
 
@@ -416,6 +423,16 @@
 
 
 
+/* #region errAleDiv */
+
+.errAleDiv:empty { /* What: Empty Error Alert Div. Why: The alert region stays in the form from the first render so a failed send is announced, but as an empty flex item it would still add the form's gap above the button. How: This takes it out of the form's flow while it holds no message, so it takes no space and adds no gap. */
+
+
+	position : absolute;
+
+
+}
+
 .errMesPar { /* What: Error Message Paragraph. Why: A failed send has to stand out, and its arrival should be seen. How: This fades it up into view with the shared entrance, as dark red text on a pale red panel with a red edge. */
 
 
@@ -441,6 +458,9 @@
 
 
 }
+
+/* #endregion errAleDiv */
+
 
 .subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's start, easing its color, lift, press, and focus, dimmed while sending. */
 

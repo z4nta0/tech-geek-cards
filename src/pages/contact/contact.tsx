@@ -7,7 +7,9 @@ import cssModObj from './contact.module.css'; // What: CSS Module Object. Why: C
 
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
+import { useEffect    } from 'react';                                  // What: Use Effect. Why: Focus has to follow the swap between the form and the thank-you. How: This runs the focus move once the swap has rendered.
 import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Contact's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { useRef       } from 'react';                                  // What: Use Reference. Why: The focus moves need the elements they land on and whether the form is coming back. How: This holds each of those across renders.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the form's fields and whether a message is sending, sent, or failed. How: This holds each of them.
 
 
@@ -70,7 +72,12 @@ const TOP_OPT_ARR = [ 'A custom card', 'A question about a card', 'Something els
  * counts as sent; a failed reply or a network failure is logged and shown
  * above the button. The button reads Sending while the message is on its
  * way. A sent message shows the thank-you, whose button empties the form for
- * another message.
+ * another message. The error's alert region is in the form, empty, from the
+ * first render, and the thank-you takes focus as it replaces the form, which
+ * announces it, so focus never falls to the page. A failed send focuses the
+ * submit button again, since disabling it while sending can drop its focus.
+ * The thank-you's button puts focus back on the name field as the form
+ * returns, while a first visit leaves focus where it is.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -130,7 +137,18 @@ function ConPagCom () : JSX.Element {
 
 
 
-	const resForFun = () => { // What: Reset Form Function. Why: The thank-you's button lets a visitor send another message. How: This hides the thank-you and empties the fields.
+	// #region Result Focus
+
+	const forNamRef = useRef< HTMLInputElement >( null );  // What: Form Name Reference. Why: Focus returns to the first field when the form comes back. How: This holds the name input.
+	const retForRef = useRef( false );                     // What: Return Form Reference. Why: Only a return from the thank-you moves focus to the name field, never a first visit. How: This starts false, and resForFun sets it true.
+	const subForRef = useRef< HTMLButtonElement >( null ); // What: Submit Form Reference. Why: A failed send puts focus back on the submit button. How: This holds the button.
+	const thaYouRef = useRef< HTMLDivElement >( null );    // What: Thank You Reference. Why: The thank-you takes focus as it replaces the form. How: This holds the thank-you panel.
+
+
+	const resForFun = () => { // What: Reset Form Function. Why: The thank-you's button lets a visitor send another message. How: This marks the form as returning, hides the thank-you, and empties the fields.
+
+
+		retForRef.current = true; // What: Return Flag Set. Why: The focus effect moves focus to the name field only when the form comes back from the thank-you. How: This marks the return before the swap renders, so the effect after it already reads it.
 
 
 		setIsaSenBoo( false ); // What: Sent Flag Reset Call. Why: The form shows again in place of the thank-you. How: This clears the sent flag.
@@ -139,6 +157,30 @@ function ConPagCom () : JSX.Element {
 
 
 	};
+
+
+
+	useEffect( () => { // What: Result Focus Effect. Why: The swap removes the focused control, and focus must land on what replaces it rather than fall to the page. How: This focuses the thank-you once it shows, or the name field once the form returns from it.
+
+
+		if ( isaSenBoo ) thaYouRef.current?.focus(); // What: Thank-You Focus Call. Why: Focus on the panel announces it, standing in for a live region. How: This focuses the panel, which takes focus through its tabIndex of -1.
+
+		else if ( retForRef.current ) forNamRef.current?.focus(); // What: Name Field Focus Call. Why: A visitor writing another message starts at the first field, while a first visit shouldn't move focus at all. How: This focuses the name input only after resForFun has marked the return.
+
+
+	}, [ isaSenBoo ] ); // What: Effect Dependency Array. Why: Focus moves only when the form and the thank-you swap. How: isaSenBoo changes whenever one replaces the other.
+
+
+
+	useEffect( () => { // What: Error Focus Effect. Why: The submit button is disabled while the message sends, which can drop its focus to the page, and focus must never fall there. How: This focuses the button again once a failed send shows its error.
+
+
+		if ( errMesStr ) subForRef.current?.focus(); // What: Submit Focus Call. Why: The visitor can try again from where they were, and focus never stays on the page. How: This focuses the button, enabled again by the same render that shows the error.
+
+
+	}, [ errMesStr ] ); // What: Effect Dependency Array. Why: Focus moves back only when a send fails. How: errMesStr gains its message when a send fails, and clears as the next one starts.
+
+	// #endregion Result Focus
 
 
 
@@ -290,10 +332,12 @@ function ConPagCom () : JSX.Element {
 
 
 							<div
+								ref={ thaYouRef }
+
 								className={ cssModObj.thaYouDiv }
 
-								role='status'
-							>{ /* What: Thank You Div Element. Why: The visitor should know the message went out. How: This live region shows the thanks and a way to send another. */ }
+								tabIndex={ -1 }
+							>{ /* What: Thank You Div Element. Why: The visitor should know the message went out, and screen reader users hear it as focus lands here. How: This shows the thanks and a way to send another, taking focus by script as it replaces the form. */ }
 
 
 								<h2 className={ cssModObj.thaTitHea }>Message sent!</h2>{ /* What: Thank Title Heading Element. Why: The headline confirms the send. How: This shows it as an h2. */ }
@@ -367,6 +411,8 @@ function ConPagCom () : JSX.Element {
 										>Your name</label>{ /* What: Field Label Label Element. Why: The name field needs a visible label. How: This labels conNamInp. */ }
 
 										<input
+											ref={ forNamRef }
+
 											id='conNamInp'
 
 											className={ cssModObj.fieTexInp }
@@ -486,19 +532,27 @@ function ConPagCom () : JSX.Element {
 
 								</div>
 
-								{ errMesStr && ( // What: Error Message Check. Why: A failed send has to say so at once. How: This shows the error when there is one.
+								<div
+									className={ cssModObj.errAleDiv }
+
+									role='alert'
+								>{ /* What: Error Alert Div Element. Why: Screen reader users have to hear a failed send, and a live region added at the moment it speaks is often missed. How: This alert region sits in the form, empty, from the first render, and gains the error when a send fails. */ }
 
 
-									<p
-										className={ cssModObj.errMesPar }
-
-										role='alert'
-									>{ errMesStr }</p> // What: Error Message Paragraph Element. Why: The visitor needs to know the message didn't go out. How: This alert shows the error, announced at once.
+									{ errMesStr && ( // What: Error Presence Check. Why: An error shows only after a failed send. How: This renders the message when there is one.
 
 
-								) }
+										<p className={ cssModObj.errMesPar }>{ errMesStr }</p> // What: Error Message Paragraph Element. Why: The visitor needs to know the message didn't go out. How: This fades the error up into view above the button.
+
+
+									) }
+
+
+								</div>
 
 								<button
+									ref={ subForRef }
+
 									className={ cssModObj.subForBut }
 
 									disabled={ isaLoaBoo }
