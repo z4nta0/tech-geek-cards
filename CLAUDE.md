@@ -313,7 +313,8 @@ suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
 and 1,440px, each converted card, the phone menu, the share dialog open on
 the Gallery at both widths, and a signable card's share dialog at 390px.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
-  accessibility scan.
+  accessibility scan, whose names check also fails a shown link that opens a
+  new tab without "in a new tab)" in its name (added 2026-11-10).
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
