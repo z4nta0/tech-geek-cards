@@ -416,7 +416,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 
 
 
-test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqConObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and WhatsApp drops one of 300 KB or more. How: This fetches every preview image and reads its bytes.
+test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqConObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and WhatsApp drops one of 300 KB or more. How: This fetches every preview image and checks its type, dimensions, and size.
 
 
 	for ( const imaPatStr of [ '/og-image.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.sluStr }.jpg` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.

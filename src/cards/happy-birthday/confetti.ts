@@ -65,8 +65,8 @@ const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                      
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param canConObj - Canvas Context Object: The canvas's 2D drawing context, already
- *                    moved and turned to the piece.
+ * @param canConObj - Canvas Context Object: The canvas's 2D drawing context,
+ *                    already moved and turned to the piece.
  * @param radValNum - Radius Value Number: The distance from the center to
  *                    each point, in pixels.
  *
