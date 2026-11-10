@@ -16,6 +16,7 @@
 		"test:interaction": "playwright test --config tests/playwright.config.ts --project \"interaction-*\"",
 		"test:rendering": "playwright test --config tests/playwright.config.ts --project \"rendering-*\"",
 		"test:responsive": "playwright test --config tests/playwright.config.ts --project \"responsive-*\"",
+		"test:security": "playwright test --config tests/playwright.config.ts --project \"security-*\"",
 		"test:seo": "playwright test --config tests/playwright.config.ts --project \"seo-*\"",
 		"typecheck": "tsc -b"
 	},

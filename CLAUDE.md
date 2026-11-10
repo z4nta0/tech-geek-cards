@@ -307,8 +307,10 @@ each check does). The user always has their own dev server running on the
 usual 5173 (decided 2026-10-14), so Claude never starts one to look at the
 site and uses theirs instead. Playwright suites live in `tests/`, one project
 per suite and engine in `tests/playwright.config.ts`, which starts its own dev
-server on port 5195 (never the user's 5173, nor the siblings' 5190 through
-5194) and stops it afterwards. Every suite runs in Chromium, Firefox, and WebKit. The states the
+server on port 5195 and a `vite preview` of a fresh build on 5205 (never the
+user's 5173, nor the siblings' 5190 through 5204) and stops both afterwards.
+Every suite runs in Chromium, Firefox, and WebKit, Chromium as full headless
+Chrome (`channel : 'chromium'`). The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
 and 1,440px, each converted card, the phone menu, the share dialog open on
 the Gallery at both widths, and a signable card's share dialog at 390px.
@@ -340,6 +342,19 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
   WebKit by its `conCirDiv` hook.
 - `npm run test:responsive`: 14 widths from 320 to 1,920px, and the text
   measure.
+- `npm run test:security` (added 2026-11-10, in the audit, from
+  TechGeek.dev's): in Chromium only, since they read files, `public/_headers`'
+  policy (`default-src 'self'`, every directive only `'self'` or `'none'`, no
+  `'unsafe-inline'` or `'unsafe-eval'`) and hardening headers, the catch-all in
+  `public/_redirects`, the built `dist/_headers` sending noindex with every
+  unlisted card's address and file name and no listed one's, no secrets in
+  `dist/`, and `npm audit` of the shipped dependencies (skipped with a message
+  offline). In every engine, from the preview with each path's built headers
+  applied: an injected inline script is refused and reported, every state and
+  the Contact form's sent and failed results report no violation but WebKit's
+  select report, every new tab link carries `noopener` and `noreferrer`, and
+  each card that takes `?name=` or `?from=` shows script-like names as text.
+  Each check was proven by breaking what it guards.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.

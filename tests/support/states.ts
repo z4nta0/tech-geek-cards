@@ -13,12 +13,12 @@ import type { Page } from '@playwright/test'; // What: Page. Why: Opening a stat
  * states.ts = States
  *
  * @summary
- * The page states the accessibility, interaction, and rendering suites visit,
- * and the helper that opens one; the responsive suite opens its own widths
- * through the same helper. A state is a page at a width, sometimes with
- * something opened on it: every route, every card, and the 404 page at phone
- * and desktop widths, the mobile menu open on a phone, the share dialog open
- * on the Gallery at both widths, and a signable card's share dialog on a
+ * The page states the accessibility, interaction, rendering, and security
+ * suites visit, and the helper that opens one; the responsive suite opens its
+ * own widths through the same helper. A state is a page at a width, sometimes
+ * with something opened on it: every route, every card, and the 404 page at
+ * phone and desktop widths, the mobile menu open on a phone, the share dialog
+ * open on the Gallery at both widths, and a signable card's share dialog on a
  * phone. opeStaFun sizes the viewport, loads the page, under reduced motion
  * for a card so it opens on its finished scene, waits for the fonts, scrolls
  * through the page so any lazily loaded image loads, runs the state's own
@@ -45,7 +45,7 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 	actFun? : ( curPagObj : Page ) => Promise< void >, // What: Action Function. Why: Some states need something opened after the page loads. How: This runs against the loaded page, e.g. clicking the menu toggle.
 	heiNum  : number,                                  // What: Height Number. Why: The viewport's height decides what's on screen. How: This is the viewport height in CSS pixels.
 	ideStr  : string,                                  // What: Identifier String. Why: Each test names the state it checks. How: This becomes part of the test title.
-	patStr  : string,                                  // What: Path String. Why: Each state opens one route. How: This is the path loaded from the dev server.
+	patStr  : string,                                  // What: Path String. Why: Each state opens one route. How: This is the path loaded from the suite's server.
 	redBoo? : boolean,                                 // What: Reduced Boolean. Why: A card plays for up to two minutes, so it never sits still long enough to check. How: When true, the page loads under reduced motion, opening on the card's finished scene, and the preference is switched back off once it's open.
 	widNum  : number                                   // What: Width Number. Why: Layouts and menus change with width. How: This is the viewport width in CSS pixels.
 
@@ -75,7 +75,7 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  *    one.
  *  - `heiNum` (Number): Height Number, the viewport height in CSS pixels.
  *  - `ideStr` (String): Identifier String, the state's name in test titles.
- *  - `patStr` (String): Path String, the route loaded from the dev server.
+ *  - `patStr` (String): Path String, the route loaded from the suite's server.
  *  - `redBoo` (Boolean): Reduced Boolean, true on a card's rows, which load
  *    under reduced motion so the card opens finished, then switch it off.
  *  - `widNum` (Number): Width Number, the viewport width in CSS pixels.
@@ -370,7 +370,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 
 
-	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's dev server.
+	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's server.
 
 	await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Text measured before its web font loads would have the wrong size and wrapping. How: This waits until every font face has loaded.
 
@@ -401,7 +401,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 // #region Exports
 
-export { opeStaFun, STA_REC_ARR }; // What: Named Exports. Why: The accessibility, interaction, rendering, and responsive specs share these states and their opener. How: This exports the state list and the helper that opens one.
+export { opeStaFun, STA_REC_ARR }; // What: Named Exports. Why: The page suites share these states and their opener. How: This exports the state list and the helper that opens one.
 
 // #endregion Exports
 
