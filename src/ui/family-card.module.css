@@ -612,14 +612,22 @@
 .famExpBut { /* What: Family Expanded Button. Why: Tapping the full-size photo closes it. How: This clears the button's own look and fills the dialog, easing its press and focus ring. */
 
 
-	background : none;
-	border     : 0;
-	cursor     : zoom-out;
-	display    : block;
-	height     : 100%;
-	padding    : 0;
-	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
-	width      : 100%;
+	background     : none;
+	border         : 0;
+	cursor         : zoom-out;
+	display        : block;
+	height         : 100%;
+	outline-offset : calc( var( --ver-rhy-m03 ) * -1rem ); /* Vertical Rhythm Base Minus 3 ~= -6.268px */ /* What: Inset Ring Offset. Why: The button fills the screen, so a ring held outside it would be drawn past the viewport's edge, where no one sees it. How: This holds the zero-width ring inside its edge instead, the shared step's distance in, for the focused rule to grow out from. */
+	padding        : 0;
+	transition     : scale var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
+	width          : 100%;
+
+
+}
+.famExpBut:focus-visible { /* What: Focused Family Expanded Button. Why: A keyboard user in the photo dialog has to see where focus is, and the shared ring, held outside the button, would fall past the screen's edge. How: This draws the shared ring inside the button's edge, the extra large border width in, so it shows over the photo. */
+
+
+	outline-offset : calc( var( --bor-wid-xla ) * -1 ); /* Border Width Extra Large ~= -3.572px */
 
 
 }
