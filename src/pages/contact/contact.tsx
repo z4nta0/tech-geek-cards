@@ -25,12 +25,12 @@ import type { JSX         } from 'react'; // What: JSX. Why: The component decla
  * contact.tsx = Contact
  *
  * @summary
- * The page for getting in touch: a hero, then the contact form beside a
- * short sidebar with the email address and what to include when asking for
- * a custom card. The form sends through Netlify Forms, as TechGeek.dev's
- * does: a hidden copy in index.html registers its fields, and the page posts
- * them to the site's root as form contact, with a honeypot for bots. A sent
- * message swaps the form for a thank-you.
+ * The page for getting in touch: a hero, then the contact form beside a short
+ * sidebar (stacking with it at 1,024px and below) with the email address and
+ * what to include when asking for a custom card. The form sends through
+ * Netlify Forms, as TechGeek.dev's does: a hidden copy in index.html registers
+ * its fields, and the page posts them to the site's root as form contact, with
+ * a honeypot for bots. A sent message swaps the form for a thank-you.
  *
  * Sections:
  *  - Constants
@@ -567,7 +567,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-						<aside className={ cssModObj.conSidAsi }>{ /* What: Contact Sidebar Aside Element. Why: The email and the tips for a custom card sit beside the form. How: This stacks them in a white card. */ }
+						<aside className={ cssModObj.conSidAsi }>{ /* What: Contact Sidebar Aside Element. Why: The email and the tips for a custom card sit beside the form above 1,024px, stacking with it at 1,024px and below. How: This stacks them in a white card. */ }
 
 
 							<h2 className={ cssModObj.sidTitHea }>Other ways to reach me</h2>{ /* What: Sidebar Title Heading Element. Why: The sidebar has its own heading. How: This shows it as an h2. */ }

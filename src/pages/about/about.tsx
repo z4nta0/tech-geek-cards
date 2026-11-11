@@ -21,11 +21,12 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * about.tsx = About
  *
  * @summary
- * The page about who makes the cards and how: a hero, a few paragraphs on
- * how each card is built beside a short list of what that means for whoever
- * receives one, the TechGeek family of three sister sites with the way to
- * z4nta0's portfolio and back to the Gallery, and a closing invitation to
- * support the work with a tip on Ko-fi.
+ * The page about who makes the cards and how: a hero, a few paragraphs on how
+ * each card is built beside a short list of what that means for whoever
+ * receives one (the list stacking under them at 768px and below), the TechGeek
+ * family of three sister sites with the way to z4nta0's portfolio and back to
+ * the Gallery, and a closing invitation to support the work with a tip on
+ * Ko-fi.
  *
  * Sections:
  *  - Constants
@@ -80,9 +81,10 @@ const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Wh
  *
  * @summary
  * Renders the About page and its title and canonical link, and swaps in its
- * search description. The story's paragraphs sit beside the fact list. Each
- * sister site is a card linking to that site in the same tab, except this
- * site's own, which says the visitor is here instead of linking to itself.
+ * search description. The story's paragraphs sit beside the fact list above
+ * 768px, the list stacking under them at 768px and below. Each sister site is
+ * a card linking to that site in the same tab, except this site's own, which
+ * says the visitor is here instead of linking to itself.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -174,7 +176,7 @@ function AboPagCom () : JSX.Element {
 
 						</div>
 
-						<ul className={ cssModObj.facLisUno }>{ /* What: Fact List Unordered Element. Why: The story's main points read at a glance. How: This lists them in a white card beside the paragraphs. */ }
+						<ul className={ cssModObj.facLisUno }>{ /* What: Fact List Unordered Element. Why: The story's main points read at a glance. How: This lists them in a white card beside the paragraphs above 768px, stacking under them at 768px and below. */ }
 
 
 							{ FAC_LIS_ARR.map( ( facTexStr ) => ( // What: Fact Map Call. Why: Every fact gets a row. How: This renders one list item per fact.

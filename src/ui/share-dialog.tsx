@@ -9,7 +9,7 @@ import cssModObj from './share-dialog.module.css'; // What: CSS Module Object. W
 import { Link      } from 'react-router'; // What: Link. Why: The dialog's preview link opens the card without a full page load. How: This renders it as a router link.
 import { useEffect } from 'react';        // What: Use Effect. Why: The dialog has to open as a modal once it's on the page. How: This calls showModal after the first render.
 import { useRef    } from 'react';        // What: Use Reference. Why: Opening and closing a dialog are methods on its element. How: This holds the dialog element.
-import { useState  } from 'react';        // What: Use State. Why: The dialog remembers the name typed, whether the link was copied, and whether it's closing. How: This holds each of them.
+import { useState  } from 'react';        // What: Use State. Why: The dialog remembers what the visitor typed, whether the link was copied, and whether it's closing. How: This holds each of them.
 
 
 import type { CarRecTyp      } from './cards.ts'; // What: Card Record Type. Why: The dialog shares one card. How: This types its card prop.

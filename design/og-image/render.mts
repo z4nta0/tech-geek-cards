@@ -25,11 +25,12 @@ import { statSync      } from 'node:fs';                   // What: Stat Sync. W
  * artwork. Each card's, public/social/<address>.jpg, is captured from the card
  * itself, played by the site's own dev server on port 5196 under reduced
  * motion so it opens on its finished scene, with the floating bar and the
- * Family cards' controls hidden; those are JPEGs, since most are photographs,
- * saved at the highest quality that stays under 300 KB, the cap the social
- * preview rule keeps as a safe margin for WhatsApp. Run it with npm run
- * og-images whenever a card or the site's look changes, and give a changed
- * image a new filename, since apps cache previews.
+ * Family cards' controls hidden; those are JPEGs, which keep a finished card
+ * screen under 300 KB, the cap the social preview rule keeps as a safe margin
+ * for WhatsApp, saved at the first quality from 90 down in steps of 5 that
+ * fits under it. Run it with npm run og-images whenever a card or the site's
+ * look changes, and give a changed image a new filename, since apps cache
+ * previews.
  *
  * Sections:
  *  - Constants
@@ -106,7 +107,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 
 
 
-		if ( statSync( imaPatStr ).size < MAX_BYT_NUM ) break; // What: Size Fit Exit. Why: The first quality that fits is the best that fits. How: This stops the loop once the image is under the limit.
+		if ( statSync( imaPatStr ).size < MAX_BYT_NUM ) break; // What: Size Fit Exit. Why: The first quality that fits is the one kept. How: This stops the loop once the image is under the limit.
 
 
 	}

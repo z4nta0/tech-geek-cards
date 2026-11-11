@@ -875,7 +875,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 		await curPagObj.evaluateHandle( () => document.activeElement as Element ).then( ( actHanObj ) => actHanObj.evaluate( aniFinFun ) ); // What: Ring Finish Wait. Why: WebKit's clock can lag on a heavy page, leaving the ring partway grown after the settle time. How: This waits for the focused stop's transitions to finish. // What: Type Assertion Note. Why: activeElement types as possibly null. How: The Tab press just put focus on a stop.
 
 
-		if ( !staRecObj.actFun ) expect( await curPagObj.evaluate( () => document.activeElement?.textContent?.trim() ) ).toBe( 'Skip to main content' ); // What: First Stop Check. Why: The ring checked should be the skip link's, the page's first stop. How: On a state with nothing opened, where focus starts at the top of the page, this reads the focused element's text, while a state whose action moves focus, such as the open menu or a sent form, starts the walk from there.
+		if ( !staRecObj.actFun ) expect( await curPagObj.evaluate( () => document.activeElement?.textContent?.trim() ) ).toBe( 'Skip to main content' ); // What: First Stop Check. Why: The ring checked should be the skip link's, the page's first stop. How: On a state with nothing opened, where focus starts at the top of the page, this reads the focused element's text, while a state whose action moves focus, such as the open menu, starts the walk from there.
 
 
 

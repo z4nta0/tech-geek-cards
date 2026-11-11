@@ -55,7 +55,7 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 
 	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
 	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and the listed cards' tiles. How: This measures it as loaded.
-	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
+	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds its sections, such as the story. How: This measures it as loaded.
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
 	{ ideStr : 'christmas',         menBoo : false, patStr : '/merry-christmas'       }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
@@ -161,7 +161,7 @@ function layProFun () : string[] {
 	};
 
 
-	const texSpiFun = ( texCurEle : Element ) => { // What: Text Spill Function. Why: Only the element's own text running out of its box is a spill, not a decoration drawn past it on purpose, such as an underline or highlight reaching past an italic line. How: This measures every line of the element's own text and reports whether any runs more than a pixel past either inner edge of its box.
+	const texSpiFun = ( texCurEle : Element ) => { // What: Text Spill Function. Why: Only the element's own text running out of its box is a spill, not a decoration drawn past it on purpose, such as an underline reaching past an italic line. How: This measures every line of the element's own text and reports whether any runs more than a pixel past either inner edge of its box.
 
 
 		const boxRecObj = texCurEle.getBoundingClientRect();                                                                       // What: Box Rect Object. Why: The text is measured against the element's own box. How: This measures the box.

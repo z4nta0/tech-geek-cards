@@ -27,9 +27,9 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers th
  * The accessibility checks axe-core can't make, run on every page state in
  * whichever engine the project runs. Names: every link and button in the
  * accessibility tree has a name, no name carries a decorative glyph such as an
- * arrow or an emoji, and every shown link that opens a new tab says so in its
- * name. Keyboard: no element uses a positive tabindex, and a Tab walk from
- * where focus rests once the state has opened reaches its end without getting
+ * arrow, and every shown link that opens a new tab says so in its name.
+ * Keyboard: no element uses a positive tabindex, and a Tab walk from where
+ * focus rests once the state has opened reaches its end without getting
  * trapped, never moves backwards through the document, and lands only on stops
  * that are on screen, not covered by anything else, and visibly changed by
  * focus. Reflow: at 320px wide, WCAG's narrowest reflow width, nothing scrolls

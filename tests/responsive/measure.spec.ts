@@ -18,7 +18,7 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * Checks the text measure rule on every route, every card, the 404 page, and
  * the open phone menu, in whichever engine the project runs: no line of a
  * paragraph may run past 75 characters, or past 60 for small text (text set
- * under 14px, below the 14.572px body size, such as captions and labels). Each
+ * under 14px, below the 14.572px body size, such as captions). Each
  * paragraph's text is walked one character at a time and split into its
  * rendered lines by where each character lands, so the count is what a reader
  * actually sees at that width, skipping a visually hidden copy meant only for
@@ -48,8 +48,8 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 
 
 	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the hero's lead, the steps, the card descriptions, and the banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds each listed card's description and the custom card note. How: This measures it as loaded.
-	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds the story and the sister sites' descriptions. How: This measures it as loaded.
+	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds its paragraphs, such as each listed card's description. How: This measures it as loaded.
+	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds its paragraphs, such as the story. How: This measures it as loaded.
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
 	{ ideStr : 'christmas',         menBoo : false, patStr : '/merry-christmas'       }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
