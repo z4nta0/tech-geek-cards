@@ -71,19 +71,19 @@ const AXE_TAG_ARR = [ 'wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'b
  *
  * @summary
  * Runs axe-core on the page as it stands, limited to the WCAG and
- * best-practice rule sets, and returns its full results. The caller opens
- * and settles the state first, so the scan never sees a page mid-load or
+ * best-practice rule sets, and returns its full results. It expects the state
+ * already open and settled, so the scan never sees a page mid-load or
  * mid-animation.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param curPagObj - Current Page Object: The page to scan.
  *
- * @returns The scan's results.
+ * @returns A promise that resolves with the scan's results.
  *
  * @example
  * ```ts
- * scaStaFun(page) // => { violations, incomplete, passes, ... }
+ * await scaStaFun(page) // => { violations, incomplete, ... }
  * ```
  *
 */

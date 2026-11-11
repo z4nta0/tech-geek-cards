@@ -54,7 +54,7 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 
 
 	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and every card tile. How: This measures it as loaded.
+	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds the search, the filters, and the listed cards' tiles. How: This measures it as loaded.
 	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds the story, the facts, and the sister sites. How: This measures it as loaded.
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds the form and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.

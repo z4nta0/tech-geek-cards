@@ -64,11 +64,15 @@ const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Th
  * @summary
  * What each page's head should say. Every row shares one shape, so its fields
  * carry no comments of their own:
+ *
  * - `canStr` (String or null): Canonical String, the page's canonical
  *   address, or null for a page that carries noindex and no canonical link.
+ *
  * - `heaBoo` (Boolean): Heading Boolean, whether the page's one h1 is checked,
  *   now true on every row.
+ *
  * - `patStr` (String): Path String, the address the page is loaded from.
+ *
  * - `titStr` (String): Title String, the page's exact title.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -78,20 +82,20 @@ const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: Th
 const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checked against what it should say. How: Each row names one page, its title, its canonical address or null, and whether its h1 is checked.
 
 
-	{ canStr : LIV_URL_STR,                          heaBoo : true,  patStr : '/',                      titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards' },
-	{ canStr : `${ LIV_URL_STR }gallery`,            heaBoo : true,  patStr : '/gallery',               titStr : 'Greeting Card Gallery | TechGeek.cards'                   },
-	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',                 titStr : 'About the Maker | TechGeek.cards'                         },
-	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',               titStr : 'Contact | TechGeek.cards'                                 },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',          titStr : 'Page Not Found | TechGeek.cards'                          },
-	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',        titStr : 'Happy Birthday Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',           titStr : "Mother's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',           titStr : "Father's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',        titStr : 'Fourth of July Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',       titStr : 'Happy Halloween Card | TechGeek.cards'                    },
-	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving',    titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
-	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',       titStr : 'Merry Christmas Card | TechGeek.cards'                    },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',     titStr : "Father's Day Special Card | TechGeek.cards"               },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/merry-christmas-prank', titStr : 'Christmas Prank Card | TechGeek.cards'                    }
+	{ canStr : LIV_URL_STR,                          heaBoo : true,  patStr : '/',                      titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards' }, // What: Home Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }gallery`,            heaBoo : true,  patStr : '/gallery',               titStr : 'Greeting Card Gallery | TechGeek.cards'                   }, // What: Gallery Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',                 titStr : 'About the Maker | TechGeek.cards'                         }, // What: About Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',               titStr : 'Contact | TechGeek.cards'                                 }, // What: Contact Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',          titStr : 'Page Not Found | TechGeek.cards'                          }, // What: Not Found Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
+	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',        titStr : 'Happy Birthday Card | TechGeek.cards'                     }, // What: Happy Birthday Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',           titStr : "Mother's Day Card | TechGeek.cards"                       }, // What: Mother's Day Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',           titStr : "Father's Day Card | TechGeek.cards"                       }, // What: Father's Day Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',        titStr : 'Fourth of July Card | TechGeek.cards'                     }, // What: Fourth of July Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',       titStr : 'Happy Halloween Card | TechGeek.cards'                    }, // What: Happy Halloween Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving',    titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 }, // What: Happy Thanksgiving Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',       titStr : 'Merry Christmas Card | TechGeek.cards'                    }, // What: Merry Christmas Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',     titStr : "Father's Day Special Card | TechGeek.cards"               }, // What: Father's Day Prank Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
+	{ canStr : null,                                 heaBoo : true,  patStr : '/merry-christmas-prank', titStr : 'Christmas Prank Card | TechGeek.cards'                    }  // What: Merry Christmas Prank Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
 
 
 ];
@@ -453,7 +457,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 
 
 
-test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqCotObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and WhatsApp drops one of 300 KB or more. How: This fetches every preview image and checks its type, dimensions, and size.
+test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqCotObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and the social preview rule caps each at 300 KB as a safe margin for WhatsApp. How: This fetches every preview image and checks its type, dimensions, and size.
 
 
 	for ( const imaPatStr of [ '/og-image.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.sluStr }.jpg` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
@@ -467,7 +471,7 @@ test( 'every link preview image is 1,200x630 and under 300 KB', async ( { reques
 
 		expect( [ imaPatStr, ...imaSizFun( imaBufObj ) ] ).toEqual( [ imaPatStr, 1200, 630 ] ); // What: Image Size Assertion. Why: The tags promise 1,200x630. How: This reads the image's real size, naming it on failure.
 
-		expect( imaBufObj.length ).toBeLessThan( 300 * 1024 ); // What: Image Bytes Assertion. Why: WhatsApp drops a preview image of 300 KB or more. How: This checks the file is under the limit.
+		expect( imaBufObj.length ).toBeLessThan( 300 * 1024 ); // What: Image Bytes Assertion. Why: The social preview rule caps a preview image at 300 KB, a safe margin for WhatsApp. How: This checks the file is under the limit.
 
 
 	}

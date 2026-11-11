@@ -48,7 +48,7 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 
 
 	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the hero's lead, the steps, the card descriptions, and the banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds every card's description and the custom card note. How: This measures it as loaded.
+	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds each listed card's description and the custom card note. How: This measures it as loaded.
 	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds the story and the sister sites' descriptions. How: This measures it as loaded.
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.

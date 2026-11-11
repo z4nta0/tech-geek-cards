@@ -8,7 +8,7 @@ import { chromium      } from '@playwright/test';          // What: Chromium. Wh
 import { createServer  } from 'vite';                      // What: Create Server. Why: The cards are captured as the site plays them. How: This starts the site's own dev server for the run.
 import { fileURLToPath } from 'node:url';                  // What: File URL To Path. Why: The output paths are resolved from this script's own location. How: This turns a file URL into a path.
 import { mkdirSync     } from 'node:fs';                   // What: Make Directory Sync. Why: The cards' images go in their own folder, which a fresh checkout may lack. How: This creates it if needed.
-import { statSync      } from 'node:fs';                   // What: Stat Sync. Why: Every image has to stay under the size WhatsApp accepts. How: This reads a saved image's size in bytes.
+import { statSync      } from 'node:fs';                   // What: Stat Sync. Why: Every image has to stay under the 300 KB cap the social preview rule keeps as a safe margin for WhatsApp. How: This reads a saved image's size in bytes.
 
 // #endregion Imports
 
@@ -22,14 +22,14 @@ import { statSync      } from 'node:fs';                   // What: Stat Sync. W
  * public/og-image.png, is captured from card.html beside this script: the
  * hexagon mark, the TechGeek.cards wordmark, and "Animated Greeting Cards"
  * between two fanned stacks of card previews, as a PNG since it's flat
- * artwork. Each card's, public/social/<address>.jpg, is captured from the
- * card itself, played by the site's own dev server on port 5196 under
- * reduced motion so it opens on its finished scene, with the floating bar
- * and the Family cards' controls hidden; those are JPEGs, since most are
- * photographs, saved at the highest quality that stays under 300 KB, the
- * most WhatsApp will show. Run it with npm run og-images whenever a card or
- * the site's look changes, and give a changed image a new filename, since
- * apps cache previews.
+ * artwork. Each card's, public/social/<address>.jpg, is captured from the card
+ * itself, played by the site's own dev server on port 5196 under reduced
+ * motion so it opens on its finished scene, with the floating bar and the
+ * Family cards' controls hidden; those are JPEGs, since most are photographs,
+ * saved at the highest quality that stays under 300 KB, the cap the social
+ * preview rule keeps as a safe margin for WhatsApp. Run it with npm run
+ * og-images whenever a card or the site's look changes, and give a changed
+ * image a new filename, since apps cache previews.
  *
  * Sections:
  *  - Constants
@@ -45,7 +45,7 @@ import { statSync      } from 'node:fs';                   // What: Stat Sync. W
 
 const CAR_URL_STR = new URL( './card.html', import.meta.url ).href;                           // What: Card URL String. Why: The site's card loads its fonts and styles by paths relative to itself. How: This is card.html's own file URL.
 const HID_CSS_STR = "nav[aria-label='Card'], [data-family-stills-mode] > :has( > [aria-label='Card controls'] ) { display : none !important; } [data-family-stills-mode] { grid-template-rows : minmax( 0, 1fr ) !important; } * { --car-bar-mar : var( --spa-ver-m01 ) !important; }"; // What: Hide CSS String. Why: A preview shows the card alone, without the floating bar or the Family cards' controls, whose room it reclaims. How: This hides both by their accessible names and shrinks the bar's clearing margin, styles only this capture ever sees.
-const MAX_BYT_NUM = 300 * 1024;                                                               // What: Maximum Bytes Number. Why: WhatsApp drops a preview image of 300 KB or more. How: This is the limit every image is checked against.
+const MAX_BYT_NUM = 300 * 1024;                                                               // What: Maximum Bytes Number. Why: The social preview rule caps a preview image at 300 KB, a safe margin for WhatsApp. How: This is the limit every image is checked against.
 const OUT_PAT_STR = fileURLToPath( new URL( '../../public/og-image.png', import.meta.url ) ); // What: Output Path String. Why: The home page's tags point at the site's card in public/. How: This resolves that path from this script's folder.
 const SOC_DIR_STR = fileURLToPath( new URL( '../../public/social/', import.meta.url ) );      // What: Social Directory String. Why: Each card's tags point at its own image in public/social/. How: This resolves that folder from this script's folder.
 
@@ -67,7 +67,7 @@ await capPagObj.screenshot( { path : OUT_PAT_STR, type : 'png' } ); // What: Sit
 
 
 
-if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.png is at or over the ${ MAX_BYT_NUM } byte limit.` ); // What: Site Size Guard. Why: An image over the limit would quietly drop out of WhatsApp previews. How: This fails the run.
+if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.png is at or over the ${ MAX_BYT_NUM } byte limit.` ); // What: Site Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
 
 
 
@@ -99,7 +99,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 	await capPagObj.waitForTimeout( 500 ); // What: Settle Wait. Why: A layout that changed with the capture styles needs a frame or two to repaint. How: This pauses half a second.
 
 
-	for ( let quaValNum = 90; quaValNum >= 50; quaValNum -= 5 ) { // What: Quality Loop. Why: Each image should look its best while staying under WhatsApp's limit. How: This saves the card from quality 90 down in steps of 5 until it fits.
+	for ( let quaValNum = 90; quaValNum >= 50; quaValNum -= 5 ) { // What: Quality Loop. Why: Each image should look its best while staying under the 300 KB cap. How: This saves the card from quality 90 down in steps of 5 until it fits.
 
 
 		await capPagObj.screenshot( { path : imaPatStr, quality : quaValNum, type : 'jpeg' } ); // What: Card Capture Call. Why: This writes the card's image. How: This saves the page as a JPEG at this pass's quality.
@@ -113,7 +113,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 
 
 
-	if ( statSync( imaPatStr ).size >= MAX_BYT_NUM ) throw new Error( `${ carDatObj.sluStr }.jpg is over the ${ MAX_BYT_NUM } byte limit even at quality 50.` ); // What: Card Size Guard. Why: An image over the limit would quietly drop out of WhatsApp previews. How: This fails the run.
+	if ( statSync( imaPatStr ).size >= MAX_BYT_NUM ) throw new Error( `${ carDatObj.sluStr }.jpg is over the ${ MAX_BYT_NUM } byte limit even at quality 50.` ); // What: Card Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
 
 
 

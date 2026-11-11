@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: Every card's own page opens with its own skip link. How: The skip link checks visit one page per card.
+import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: Every card's own page opens with its own skip link. How: This is the card catalog's plain data, one row per card, which the skip link checks walk to visit each card's page.
 import { expect      } from '@playwright/test';          // What: Expect. Why: Each check passes only when the page lands where it should. How: This asserts on what each check reads.
 import { test        } from '@playwright/test';          // What: Test. Why: Each navigation case is its own test. How: This declares them.
 
@@ -51,7 +51,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers dr
  * PAG_LIN_ARR = Page Link Array
  *
  * @summary
- * Every page of the site, in the bar's order, each one both a starting point
+ * The four bar pages, in the bar's order, each one both a starting point
  * and a destination. Every row shares one shape, so its fields carry no
  * comments of their own:
  *
@@ -64,7 +64,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers dr
  *
 */
 
-const PAG_LIN_ARR = [ // What: Page Link Array. Why: Every page is checked as a starting point and as a destination. How: Each row pairs a route's path with its link text, in the bar's order.
+const PAG_LIN_ARR = [ // What: Page Link Array. Why: The four bar pages are each checked as a starting point and as a destination. How: Each row pairs a route's path with its link text, in the bar's order.
 
 
 	{ labStr : 'Home',    patStr : '/'        }, // What: Home Link Row. Why: Home is the bar's first page. How: This pairs its link text with its path.

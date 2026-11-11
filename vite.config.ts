@@ -24,19 +24,18 @@ import type { Plugin    } from 'vite';                  // What: Plugin. Why: Th
  * vite.config.ts = Vite Config
  *
  * @summary
- * The build and dev server config. It compiles React, ships every asset as
- * its own file rather than inlining small ones as data: URIs, which the
- * site's Content-Security-Policy blocks, reads CSS module class names as
- * camelCase keys, and, for production builds only, compacts
- * index.html, which Vite processes but never minifies, so the page's comments
- * and indentation stay out of what visitors download. It also gives every
- * card a page of its own, a copy of index.html carrying the card's title,
- * description, and link preview tags, since link scrapers read only a page's
- * raw HTML: the dev server serves each card's address that way, and the
- * build writes the copies with the rewrite rules that serve them. Every other
- * setting stays at Vite's default, including copying the files in public/
- * (the icons, the social images, the crawler files, and Netlify's _headers
- * and _redirects) into the build untouched.
+ * The build and dev server config. It compiles React, ships every asset as its
+ * own file rather than inlining small ones as data: URIs, which the site's
+ * Content-Security-Policy blocks, reads CSS module class names as camelCase
+ * keys, and, for production builds only, compacts index.html, which Vite
+ * processes but never minifies, so the page's comments and indentation stay
+ * out of what visitors download. It also gives every card a page of its own, a
+ * copy of index.html carrying the card's title, description, and link preview
+ * tags, since link scrapers read only a page's raw HTML: the dev server serves
+ * each card's address that way, and the build writes the copies with the
+ * rewrite rules that serve them. Every other setting stays at Vite's default,
+ * including copying the files in public/ (such as the crawler files) into the
+ * build untouched.
  *
  * Sections:
  *  - Constants

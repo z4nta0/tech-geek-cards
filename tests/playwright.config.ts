@@ -17,15 +17,14 @@ import { fileURLToPath } from 'node:url';         // What: File URL To Path. Why
  * The config behind npm test and its suites, each run against the real site in
  * all three of Playwright's engines (Chromium, Firefox, and WebKit), one
  * project per suite and engine, since a check that passes in one engine proves
- * nothing about the others. The suites are accessibility, which the pre-commit
- * check runs, interaction, rendering, responsive, security, and seo.
- * Playwright starts the Vite dev server on port 5195 for the run, and a build
- * served by vite preview on 5205 for checks of what ships, and stops both
- * afterwards, so a dev server already running on the usual 5173, or a sibling
- * project's suites on their own ports, are never touched. Reports and failure
- * screenshots land in tests/output, which git ignores, while the rendering
- * suite's approved screenshots live in tests/rendering/baselines and are
- * committed.
+ * nothing about the others. Each suite covers one kind of check, such as
+ * accessibility, which the pre-commit check runs. Playwright starts the Vite
+ * dev server on port 5195 for the run, and a build served by vite preview on
+ * 5205 for checks of what ships, and stops both afterwards, so a dev server
+ * already running on the usual 5173, or a sibling project's suites on their
+ * own ports, are never touched. Reports and failure screenshots land in
+ * tests/output, which git ignores, while the rendering suite's approved
+ * screenshots live in tests/rendering/baselines and are committed.
  *
  * Sections:
  *  - Constants
