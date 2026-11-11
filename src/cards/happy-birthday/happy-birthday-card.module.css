@@ -5,17 +5,15 @@
  * happy-birthday-card.module.css = Happy Birthday Card Module
  *
  * @summary
- * Styles for BirCarCom, a full-screen night sky in deep purples, stacked in
- * painting order: a scatter of faint stars, the balloons balloons.ts floats
- * up, the greeting, wish, cake, and invitation centered above the floating
- * bar, and on top the canvas confetti.ts throws confetti on. The greeting
- * pops in Luckiest Guy, its Happy line glowing white and its Birthday and
- * name lines in a rainbow, and the wish is set in Mystery Quest, both
- * declared here so they load with the card from its own folder. The candle
- * flames flicker through CSS, and stand still under reduced motion;
- * everything else is played by the GSAP timeline and the two loops, which
- * skip their motion under reduced motion. No layer needs a z-index, since
- * each paints over the one before it.
+ * Styles for BirCarCom, a full-screen night sky in deep purples, its layers
+ * stacked in painting order, from a scatter of faint stars at the back to the
+ * canvas confetti.ts throws confetti on at the front, with the greeting and
+ * cake centered above the floating bar between them. The greeting pops in
+ * Luckiest Guy, glowing white or in a rainbow line by line, and the wish is
+ * set in Mystery Quest, both declared here so they load with the card from its
+ * own folder. The candle flames flicker through CSS; everything else is played
+ * by the GSAP timeline and the two loops. No layer needs a z-index, since each
+ * paints over the one before it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -65,24 +63,24 @@
 .birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
 
 
-	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: The confetti, a balloon, a candle, a sprinkle, and the rainbow lettering share one bright blue. How: This is #4D96FF, read by the module, the cake, and confetti.ts. */
+	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: A bright blue is one of the card's party colors, such as a balloon's. How: This is #4D96FF. */
 	--bir-boh-col : #FF9A9A;                               /* What: Birthday Bottom-Highlight Color. Why: The bottom tier's top catches the light. How: This is #FF9A9A, a pale coral the cake's bottom highlight band reads. */
 	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
 	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
-	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, the last party color confetti.ts reads. */
+	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, one of the card's party colors. */
 	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The Happy line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
-	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: The confetti, a balloon, a candle, a sprinkle, and the rainbow lettering share one bright green. How: This is #6BCB77, read by the module, the cake, and confetti.ts. */
+	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: A bright green is one of the card's party colors, such as a candle's. How: This is #6BCB77. */
 	--bir-nav-col : #0A1A4A;                               /* What: Birthday Navy Color. Why: The night sky deepens to navy at its far corner. How: This is #0A1A4A, the sky gradient's last stop. */
-	--bir-ora-col : #FF9A3C;                               /* What: Birthday Orange Color. Why: The confetti, a balloon, and a sprinkle share one bright orange. How: This is #FF9A3C, read by the cake and confetti.ts. */
-	--bir-pin-col : #FF6FCF;                               /* What: Birthday Pink Color. Why: The confetti, a balloon, a candle, and a sprinkle share one bright pink. How: This is #FF6FCF, read by the cake and confetti.ts. */
+	--bir-ora-col : #FF9A3C;                               /* What: Birthday Orange Color. Why: A bright orange is one of the card's party colors, such as a sprinkle's. How: This is #FF9A3C. */
+	--bir-pin-col : #FF6FCF;                               /* What: Birthday Pink Color. Why: A bright pink is one of the card's party colors, such as a candle's. How: This is #FF6FCF. */
 	--bir-plu-col : #1A0533;                               /* What: Birthday Plum Color. Why: The night sky starts in a deep plum. How: This is #1A0533, the sky gradient's first stop. */
-	--bir-pur-col : #A78BFA;                               /* What: Birthday Purple Color. Why: The confetti, a balloon, a sprinkle, and the rainbow lettering share one soft purple. How: This is #A78BFA, read by the module, the cake, and confetti.ts. */
-	--bir-red-col : #FF6B6B;                               /* What: Birthday Red Color. Why: The confetti, a balloon, the bottom tier, a flame's heart, a sprinkle, and the rainbow lettering share one coral red. How: This is #FF6B6B, read by the module, the cake, and confetti.ts. */
+	--bir-pur-col : #A78BFA;                               /* What: Birthday Purple Color. Why: A soft purple is one of the card's party colors, such as a sprinkle's. How: This is #A78BFA. */
+	--bir-red-col : #FF6B6B;                               /* What: Birthday Red Color. Why: A coral red is one of the card's party colors, such as the bottom tier's. How: This is #FF6B6B. */
 	--bir-sha-col : #3A1A6E;                               /* What: Birthday Shadow Color. Why: The cake sits on a dark shadow. How: This is #3A1A6E, the deep purple the cake's shadow oval reads. */
 	--bir-toh-col : #FFE97D;                               /* What: Birthday Top-Highlight Color. Why: The top tier's top catches the light. How: This is #FFE97D, a pale yellow the cake's top highlight band reads. */
 	--bir-vio-col : #2D0A5E;                               /* What: Birthday Violet Color. Why: The night sky glows violet toward its middle. How: This is #2D0A5E, the sky gradient's middle stop. */
-	--bir-whi-col : #FFFFFF;                               /* What: Birthday White Color. Why: The lettering, stars, balloon shine, icing, and flame cores share one white. How: This is #FFFFFF, read by the module and the cake. */
-	--bir-yel-col : #FFD93D;                               /* What: Birthday Yellow Color. Why: The confetti, a balloon, the top tier, the flames, a sprinkle, and the rainbow lettering share one sunny yellow. How: This is #FFD93D, read by the module, the cake, and confetti.ts. */
+	--bir-whi-col : #FFFFFF;                               /* What: Birthday White Color. Why: White is the card's main light color, such as the lettering's. How: This is #FFFFFF. */
+	--bir-yel-col : #FFD93D;                               /* What: Birthday Yellow Color. Why: A sunny yellow is one of the card's party colors, such as the flames'. How: This is #FFD93D. */
 
 	-webkit-user-select : none;
 	background          : linear-gradient( calc( var( --cdn-pow-017 ) * 1deg ), var( --bir-plu-col ) 0%, var( --bir-vio-col ) calc( var( --cdn-pow-003-rec ) * 100% ), var( --bir-nav-col ) 100% ); /* Core-Design-Number to the Power of 17 ~= 119.151deg, Birthday Plum Color = #1A0533, Birthday Violet Color = #2D0A5E, Core-Design-Number to the Power of 3 Reciprocal ~= 43.0%, Birthday Navy Color = #0A1A4A */
@@ -221,7 +219,7 @@
 	inset           : 0;
 	justify-content : center;
 	padding         : var( --spa-ver-p02 ) var( --spa-hor-p02 );  /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the top padding's step outside the card page. */
+	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the top padding's step outside the card page. */
 	position        : absolute;
 	text-align      : center;
 
@@ -392,7 +390,7 @@
 
 
 
-.birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets small, slightly spaced main-font text in a quiet white, a little below the cake. */
+.birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets slightly spaced main-font text in a quiet white, a little below the cake. */
 
 
 	color          : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-002-rec ) );   /* Birthday White Color = #FFFFFF @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */

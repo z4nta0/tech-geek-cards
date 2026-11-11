@@ -6,16 +6,13 @@
  *
  * @summary
  * Styles for HalCarCom, a full-screen night scene drawn in layers, each placed
- * over the one before by the order the card draws them: a purple sky fading
- * to a warm horizon, its twinkling stars, the floating moon in the top right,
- * three ghosts over the hills, the hills along the bottom edge, the
- * jack-o'-lanterns and candles standing on them, the greeting and wish in the
- * middle, the bats flying over everything, and the lightning overlay on top.
- * The figures along the ground stand clear of the card page's floating bar.
- * The card brings its own two fonts, declared here so they load with the
- * card. Nothing here animates through CSS: GSAP plays every motion and skips
- * it under reduced motion, when the stars and bats also give up the layers
- * they'd hold for it.
+ * over the one before by the order the card draws them, from a purple sky
+ * fading to a warm horizon at the back to the lightning overlay on top, with
+ * the figures, such as the ghosts, and the greeting and wish between them. The
+ * figures along the ground stand clear of the card page's floating bar. The
+ * card brings its own fonts, declared here so they load with the card. Nothing
+ * here animates through CSS: GSAP plays every motion, and under reduced motion
+ * the stars and bats give up the layers they'd hold for it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -52,28 +49,28 @@
 .halCarDiv { /* What: Halloween Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport, clips anything past its edges, shades the sky from deep purple to a warm horizon, and sets the fonts and colors its pieces share. */
 
 
-	--hal-cor-col : #FFF5A0;                            /* What: Halloween Core Color. Why: A flame burns palest at its heart. How: This is #FFF5A0, the pale yellow core of every candle's and jack-o'-lantern's flame. */
+	--hal-cor-col : #FFF5A0;                            /* What: Halloween Core Color. Why: A flame burns palest at its heart. How: This is #FFF5A0, the pale yellow core of a flame. */
 	--hal-cra-col : #E6B820;                            /* What: Halloween Crater Color. Why: Craters make the disc read as the moon. How: This is #E6B820, the deep gold of the moon's three craters. */
 	--hal-eye-col : #FF9F00;                            /* What: Halloween Eye Color. Why: Glowing eyes make the bats spooky. How: This is #FF9F00, the orange of every bat's eyes. */
 	--hal-ghf-col : #5B2D8E;                            /* What: Halloween Ghost-Face Color. Why: The ghosts look out with friendly faces. How: This is #5B2D8E, the purple of each ghost's eyes and smile. */
-	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the color of the greeting, its shadow copy, and the copy's glow. */
+	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the greeting's own orange, such as its glow's. */
 	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
 	--hal-hil-col : #0F0020;                            /* What: Halloween Hill Color. Why: The hills are a dark silhouette. How: This is #0F0020, the near-black purple of the hills along the bottom edge. */
 	--hal-hor-col : #1A0A00;                            /* What: Halloween Horizon Color. Why: The sky warms at the horizon. How: This is #1A0A00, the dark brown at the bottom of the sky's gradient. */
 	--hal-lig-col : #C8D8FF;                            /* What: Halloween Lightning Color. Why: Lightning lights the whole scene for an instant. How: This is #C8D8FF, the pale blue of the lightning flash. */
 	--hal-mol-col : #FFF9C4;                            /* What: Halloween Moon-Light Color. Why: The moon is lit from its upper left. How: This is #FFF9C4, the pale yellow its shading starts from. */
 	--hal-moo-col : #F0C040;                            /* What: Halloween Moon Color. Why: The moon glows gold against the night. How: This is #F0C040, the gold of the moon's rim and its halo. */
-	--hal-ora-col : #FF8C00;                            /* What: Halloween Orange Color. Why: Warm orange light glows behind each jack-o'-lantern and around the wish. How: This is #FF8C00, the color of the jack-o'-lanterns' glows and the wish's text shadow. */
+	--hal-ora-col : #FF8C00;                            /* What: Halloween Orange Color. Why: Warm orange light glows around the scene's warm pieces, such as each jack-o'-lantern. How: This is #FF8C00, the color of those glows. */
 	--hal-pum-col : #E85D04;                            /* What: Halloween Pumpkin Color. Why: The jack-o'-lanterns are orange pumpkins. How: This is #E85D04, the orange of each pumpkin's lobes. */
-	--hal-pur-col : #1A0533;                            /* What: Halloween Purple Color. Why: The card's deepest purple ties the night together. How: This is #1A0533, the middle of the sky, the greeting's dark shadow, the bats' wings, and the jack-o'-lanterns' carved faces. */
+	--hal-pur-col : #1A0533;                            /* What: Halloween Purple Color. Why: The card's deepest purple ties the night together. How: This is #1A0533, the darkest purple of the scene, such as the middle of the sky. */
 	--hal-shi-col : #F5D98F;                            /* What: Halloween Shine Color. Why: A thin highlight rounds each candle's wax. How: This is #F5D98F, the light stripe down each candle. */
 	--hal-ste-col : #3D7A1E;                            /* What: Halloween Stem Color. Why: A pumpkin has a green stem. How: This is #3D7A1E, the green of each jack-o'-lantern's stem. */
-	--hal-vio-col : #2D0D52;                            /* What: Halloween Violet Color. Why: A lighter purple lifts the lower sky and sets the bats' bodies off their wings. How: This is #2D0D52, the sky's lower band and the bats' bodies and ears. */
+	--hal-vio-col : #2D0D52;                            /* What: Halloween Violet Color. Why: A lighter purple lifts parts of the night off the deeper purple, such as the lower sky. How: This is #2D0D52. */
 	--hal-wax-col : #E8C46A;                            /* What: Halloween Wax Color. Why: The candles are pale gold wax. How: This is #E8C46A, the color of each candle and its drip. */
-	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: The stars and ghosts shine white. How: This is #FFFFFF, the stars, the ghosts' bodies, and the glints in their eyes. */
+	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: White is the scene's brightest light, such as the stars'. How: This is #FFFFFF. */
 	--hal-wic-col : #333333;                            /* What: Halloween Wick Color. Why: The flame burns from a dark wick. How: This is #333333, the dark gray of each candle's wick. */
 	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
-	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the wish, the flames, and the greeting's shimmer together. How: This is #FFE066, the color of the wish, every outer flame, and the shimmer the greeting's letters tween to. */
+	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the card's warm lights together, such as the flames. How: This is #FFE066. */
 	--hal-zen-col : #0A0015;                            /* What: Halloween Zenith Color. Why: The sky darkens toward the top. How: This is #0A0015, the near black at the top of the sky's gradient. */
 
 	background : linear-gradient( to bottom, var( --hal-zen-col ) 0%, var( --hal-pur-col ) 45%, var( --hal-vio-col ) 70%, var( --hal-hor-col ) 100% ); /* Halloween Zenith Color = #0A0015, Halloween Purple Color = #1A0533, Halloween Violet Color = #2D0D52, Halloween Horizon Color = #1A0A00 */ /* What: Night Sky Gradient. Why: The sky darkens toward the top and warms at the horizon. How: Its colors and stops are the card's own art, kept as drawn. */

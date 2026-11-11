@@ -5,17 +5,14 @@
  * fourth-of-july-card.module.css = Fourth Of July Card Module
  *
  * @summary
- * Styles for FojCarCom, a full-screen night sky fading from navy to a dark
- * red glow. One layer holds the scattered stars and another the pool of
- * fireworks the card launches in turn: each firework a shell, a ring, and
- * sparks around one point, glowing in its own color and hidden until it
- * bursts. Over them, a centered column holds the flag, the Happy 4th of July
- * headline with its red and blue glow, a row of gold stars, the wish with
- * its gold motto line, and a row of red sparkles, all in the card's own
- * serif. The column centers in the space above the card page's floating bar
- * and scrolls if a short screen can't fit it. Nothing here animates through
- * CSS: GSAP plays the entrance, the twinkle, and the fireworks, and skips
- * its motion under reduced motion.
+ * Styles for FojCarCom, a full-screen night sky fading from navy to a dark red
+ * glow. Layers over the sky hold its pieces, such as the pool of fireworks the
+ * card launches in turn, each glowing in its own color and hidden until it
+ * bursts. Over them, a centered column holds the card's lettering and
+ * decorations, such as the Happy 4th of July headline with its red and blue
+ * glow, all in the card's own serif. The column centers in the space above the
+ * card page's floating bar and scrolls if a short screen can't fit it. Nothing
+ * here animates through CSS: GSAP plays every motion.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -32,7 +29,7 @@
 	--foj-can-col : #3C3B6E;          /* What: Fourth-Of-July Canton Color. Why: The flag's canton is a deep navy. How: This is #3C3B6E, the fill of the flag's canton. */
 	--foj-cor-col : #FF6B6B;          /* What: Fourth-Of-July Coral Color. Why: Some fireworks burst in a soft coral. How: This is #FF6B6B, one of the colors the card picks for a firework or a spark. */
 	--foj-fie-col : #B22234;          /* What: Fourth-Of-July Field Color. Why: The flag's red stripes are its classic deep red. How: This is #B22234, the fill of the flag's red field, which the white stripes are drawn over. */
-	--foj-gol-col : #FFD700;          /* What: Fourth-Of-July Gold Color. Why: Gold lights the star row, the motto, and some fireworks. How: This is #FFD700, read by those rows and picked for a firework or a spark. */
+	--foj-gol-col : #FFD700;          /* What: Fourth-Of-July Gold Color. Why: Gold is the card's warm accent, such as the star row's. How: This is #FFD700. */
 	--foj-hor-col : #1A0A0A;          /* What: Fourth-Of-July Horizon Color. Why: The sky glows dark red at its bottom. How: This is #1A0A0A, the sky gradient's last stop. */
 	--foj-ice-col : #88CCFF;          /* What: Fourth-Of-July Ice Color. Why: Some fireworks burst in an icy light blue. How: This is #88CCFF, one of the colors the card picks for a firework or a spark. */
 	--foj-inn-col : #FF6464;          /* What: Fourth-Of-July Inner Color. Why: The headline glows red close around its letters. How: This is #FF6464, the inner of the headline's two glows, read at an opacity. */
@@ -40,9 +37,9 @@
 	--foj-out-col : #6496FF;          /* What: Fourth-Of-July Outer Color. Why: The headline glows blue farther out. How: This is #6496FF, the outer of the headline's two glows, read at an opacity. */
 	--foj-red-col : #FF4444;          /* What: Fourth-Of-July Red Color. Why: Some fireworks burst in a bright red. How: This is #FF4444, one of the colors the card picks for a firework or a spark. */
 	--foj-ser-fon : 'Georgia', serif; /* What: Fourth-Of-July Serif Font. Why: The card's lettering is set in a classic serif. How: This names Georgia, falling back to the system's serif. */
-	--foj-sha-col : #000000;          /* What: Fourth-Of-July Shadow Color. Why: Dark shadows lift the flag and the wish off the sky. How: This is #000000, read at an opacity by the flag's and the wish's shadows. */
+	--foj-sha-col : #000000;          /* What: Fourth-Of-July Shadow Color. Why: Dark shadows lift the card's pieces off the sky, such as the flag. How: This is #000000, read at an opacity. */
 	--foj-twi-col : #CC2222;          /* What: Fourth-Of-July Twinkle Color. Why: The closing sparkles are red. How: This is #CC2222, the twinkle row's color. */
-	--foj-whi-col : #FFFFFF;          /* What: Fourth-Of-July White Color. Why: White is the card's lettering, its stars, the flag's stripes, stars, and frame, and some fireworks. How: This is #FFFFFF, read by each of those. */
+	--foj-whi-col : #FFFFFF;          /* What: Fourth-Of-July White Color. Why: White is the card's main light color, such as its lettering's. How: This is #FFFFFF. */
 	--foj-wis-col : #C8DCFF;          /* What: Fourth-Of-July Wish Color. Why: The wish reads in a soft pale blue. How: This is #C8DCFF, the wish paragraph's color. */
 	--foj-zen-col : #0A0A2E;          /* What: Fourth-Of-July Zenith Color. Why: The sky is darkest at its top. How: This is #0A0A2E, the sky gradient's first stop. */
 
