@@ -301,6 +301,9 @@
 
 }
 
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Family section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the herInnDiv and stoTexDiv regions above. */
+
+
 
 /* #region famLisUno */
 

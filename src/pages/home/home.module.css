@@ -859,6 +859,8 @@
 
 }
 
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Featured section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the homHiwSec region above. */
+
 
 /* #region allCarAnc */
 
@@ -1055,6 +1057,8 @@
 
 }
 
+/* What: Section Eyebrow Paragraph Pointer. Why: The Commission section's eyebrow shares its rule with the other sections'. How: Its rule sits in the homHiwSec region above. */
+
 .posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color, a step below the section headings. How: This sets its color and the base plus 4 size. */
 
 
@@ -1071,6 +1075,8 @@
 
 
 }
+
+/* What: Button Primary Anchor Pointer. Why: The Commission section's button shares the hero's orange button, its postcard modifier included. How: Their rules sit in the herActDiv region above. */
 
 /* #endregion posTexDiv */
 
