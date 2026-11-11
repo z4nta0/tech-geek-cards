@@ -1058,7 +1058,7 @@
 
 /* What: Section Eyebrow Paragraph Pointer. Why: The Commission section's eyebrow shares its rule with the other sections'. How: Its rule sits in the homHiwSec region above. */
 
-.posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color, a step below the section headings. How: This sets its color and the base plus 4 size. */
+.posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color. How: This sets its color and the base plus 4 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */

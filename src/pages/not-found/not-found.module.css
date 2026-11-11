@@ -190,7 +190,7 @@
 
 
 
-.nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color, a step below a full page heading. How: This sets its color and the base plus 4 size. */
+.nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color. How: This sets its color and the base plus 4 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */

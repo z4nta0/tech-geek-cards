@@ -231,7 +231,7 @@
 
 }
 
-.facIteIte { /* What: Fact Item Item. Why: Each fact reads as one line led by a dot of confetti. How: This lines up the dot beside the text's first line in the main text color. */
+.facIteIte { /* What: Fact Item Item. Why: Each fact is one item led by a dot of confetti. How: This lines up the dot beside the text's first line in the main text color. */
 
 
 	align-items : start;

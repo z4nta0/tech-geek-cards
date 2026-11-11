@@ -630,7 +630,7 @@
 
 }
 
-.sidTipIte { /* What: Sidebar Tip Item. Why: Each tip reads as one line led by a dot of confetti. How: This lines up the dot beside the text's first line. */
+.sidTipIte { /* What: Sidebar Tip Item. Why: Each tip is one item led by a dot of confetti. How: This lines up the dot beside the text's first line. */
 
 
 	align-items : start;

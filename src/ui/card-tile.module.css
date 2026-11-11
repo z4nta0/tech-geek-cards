@@ -150,7 +150,7 @@
 
 /* #region carTagDiv */
 
-.carTagDiv { /* What: Card Tag Div. Why: The tags sit in a row that wraps on a narrow tile. How: This lines them up with small gaps. */
+.carTagDiv { /* What: Card Tag Div. Why: The tags sit in a row. How: This lines them up with small gaps. */
 
 
 	display   : flex;

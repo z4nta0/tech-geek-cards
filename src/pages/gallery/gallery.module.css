@@ -237,7 +237,7 @@
 
 /* #region occFilDiv */
 
-.occFilDiv { /* What: Occasion Filter Div. Why: The occasion pills sit in a row that wraps on a narrow phone. How: This lines them up with small gaps. */
+.occFilDiv { /* What: Occasion Filter Div. Why: The occasion pills sit in a row, wrapping onto two lines at about 365px wide and below. How: This lines them up with small gaps. */
 
 
 	display   : flex;
