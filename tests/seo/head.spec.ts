@@ -25,14 +25,16 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
  * author, and has one h1; moving between pages swaps the tags rather than
- * piling them up. The raw page, read without running the site's script the way
- * link checkers read it, carries the home page's full title and description.
+ * piling them up. The raw page, read from the build without running the
+ * site's script the way link checkers read it, carries the home page's full
+ * title and description.
  * The structured data describes this domain as a WebSite whose author is
  * z4nta0, the same Person TechGeek.dev describes, with the GitHub and LinkedIn
  * profiles the footer links to. Every icon the head links to is served, the
  * PNGs at the size their links promise. robots.txt lets every crawler in and
  * names the sitemap, which lists every indexed page. Home's raw page and every
- * card's carry a complete set of link preview tags with absolute addresses,
+ * card's, read from the build, carry a complete set of link preview tags with
+ * absolute addresses,
  * the card's own title, description, address, and image, and every preview
  * image is served at 1,200x630 under 300 KB. Adapted from TechGeek.dev.
  *
@@ -51,6 +53,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
 
 const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the home page's description, and every other page must swap it for its own. How: This is the exact text it should hold.
 const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: The canonical links, structured data, robots.txt, and sitemap all name the live site. How: This is its address.
+const PRE_URL_STR = 'http://localhost:5205';   // What: Preview URL String. Why: Link scrapers read the shipped page, which the build minifies and copies once per card, so the raw pages are read from the build rather than the dev server. How: This is the address the preview server answers on.
 
 
 
@@ -369,7 +372,7 @@ test( 'the structured data describes z4nta0 and matches the pages', async ( { pa
 test( 'the raw page carries the home title and description for script-free readers', async ( { request : reqConObj } ) => { // What: Raw Head Test. Why: Link checkers and many crawlers read the page without running the site's script, so the title and description have to be in index.html itself. How: This fetches the root as raw HTML and checks both.
 
 
-	const rawHtmStr = await ( await reqConObj.get( '/' ) ).text();                                        // What: Raw HTML String. Why: The page is read the way a script-free reader reads it. How: This fetches the root's HTML without a browser.
+	const rawHtmStr = await ( await reqConObj.get( `${ PRE_URL_STR }/` ) ).text();                        // What: Raw HTML String. Why: The page is read the way a script-free reader reads what ships. How: This fetches the built root's HTML without a browser.
 	const titTexStr = rawHtmStr.match( /<title>([^<]*)<\/title>/ )?.[ 1 ].replace( /&amp;/g, '&' ) ?? ''; // What: Title Text String. Why: The raw title is checked as written. How: This reads the title element's text and decodes its ampersand.
 
 
@@ -393,7 +396,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 	test( `${ pagPatStr } raw page carries its link preview`, async ( { request : reqConObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
 
 
-		const socTagObj = socTagFun( await ( await reqConObj.get( `${ pagPatStr }?name=Sam` ) ).text() );                  // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the page, fetched with a name.
+		const socTagObj = socTagFun( await ( await reqConObj.get( `${ PRE_URL_STR }${ pagPatStr }?name=Sam` ) ).text() ); // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the built page, fetched with a name.
 		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                               // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
 		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`; // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
 		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;             // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.

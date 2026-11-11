@@ -377,3 +377,7 @@ open (`tests/support/family.ts`), each at both widths.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
+  The raw page checks (Home's title and description, and the link preview
+  tags of Home and every card's own `<address>.html`) read the build from the
+  preview on 5205 (changed 2026-11-10, in the audit), since scrapers read what
+  ships.
