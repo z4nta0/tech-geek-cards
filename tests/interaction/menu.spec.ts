@@ -25,7 +25,7 @@ import type { Page    } from '@playwright/test'; // What: Page. Why: The helpers
  * usual ways out each close it and give the page back: tapping the scrim,
  * pressing Escape, which also returns focus to the toggle, tapping the brand,
  * which also goes home, and widening the screen past the phone layout, which
- * hides the toggle. Choosing any of its links closes it too, whether the link
+ * hides the toggle. Choosing one of its links closes it too, whether the link
  * opens in place or in a new tab, through a plain tap, a Ctrl or Cmd click, a
  * middle click, or a plain tap on a profile that opens another site. The email
  * link hands its address to the visitor's mail app rather than a tab, so its

@@ -13,17 +13,17 @@ import type { Page } from '@playwright/test'; // What: Page. Why: Opening a stat
  * states.ts = States
  *
  * @summary
- * The page states the accessibility, interaction, rendering, and security
- * suites visit, and the helper that opens one; the responsive suite opens its
- * own widths through the same helper. A state is a page at a width, sometimes
- * with something opened on it: every route, every card, and the 404 page at
- * phone and desktop widths, the mobile menu open on a phone, the share dialog
- * open on the Gallery at both widths, and a signable card's share dialog on a
- * phone. opeStaFun sizes the viewport, loads the page, under reduced motion
- * for a card so it opens on its finished scene, waits for the fonts, scrolls
- * through the page so any lazily loaded image loads, runs the state's own
- * action, such as opening the menu, and then waits for the page to stay still
- * so nothing is measured mid-fade.
+ * The shared page states the accessibility, interaction, rendering, and
+ * security suites visit, and the helper that opens one; the responsive suite
+ * opens its own widths through the same helper. A state is a page at a width,
+ * sometimes with something opened on it: every route, every card, and the 404
+ * page at phone and desktop widths, the mobile menu open on a phone, the share
+ * dialog open on the Gallery at both widths, and a signable card's share
+ * dialog on a phone. opeStaFun sizes the viewport, loads the page, under
+ * reduced motion for a card so it opens on its finished scene, waits for the
+ * fonts, scrolls through the page so any lazily loaded image loads, runs the
+ * state's own action, such as opening the menu, and then waits for the page to
+ * stay still so nothing is measured mid-fade.
  *
  * Sections:
  *  - Types
@@ -64,12 +64,13 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * STA_REC_ARR = State Record Array
  *
  * @summary
- * Every state the checks visit: each route (Home, Gallery, About, Contact, and
- * every card's page) and the 404 page at a phone width (390px) and a desktop
- * width (1,440px), the mobile menu open at the phone width, since the menu is
- * only reachable there, and the share dialog open on the Gallery at both
- * widths, plus a signable card's at the phone width. Every row shares the
- * {@link StaRecTyp} shape, so its fields carry no comments of their own:
+ * The shared states the checks visit: each route (Home, Gallery, About,
+ * Contact, and every card's page) and the 404 page at a phone width (390px)
+ * and a desktop width (1,440px), the mobile menu open at the phone width,
+ * since the menu is only reachable there, and the share dialog open on the
+ * Gallery at both widths, plus a signable card's at the phone width. Every row
+ * shares the {@link StaRecTyp} shape, so its fields carry no comments of their
+ * own:
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
  *    one.
@@ -84,12 +85,12 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  *
 */
 
-const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every check walks the same list of states, so a new state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
+const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites share one list of states, so a shared state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
 
 
-	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
+	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: The home page opens the site at a desktop width. How: This loads the home page at 1,440px.
 	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
-	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
+	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and the listed cards' tiles. How: This loads the Gallery at 1,440px.
 	{ heiNum : 844, ideStr : 'gallery-phone',             patStr : '/gallery',               redBoo : false, widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
 	{ heiNum : 900, ideStr : 'about-desktop',             patStr : '/about',                 redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
 	{ heiNum : 844, ideStr : 'about-phone',               patStr : '/about',                 redBoo : false, widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.

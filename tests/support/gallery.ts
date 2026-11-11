@@ -19,9 +19,9 @@ import type { StaRecTyp } from './states.ts';      // What: State Record Type. W
  *
  * @summary
  * The Gallery's narrowed states, for the suites that check every state a
- * visitor can reach: the grid narrowed to the Family occasion, the filter
- * with the fewest listed cards, and a search no card matches, which swaps the
- * grid for its empty message, each at the Gallery's phone and desktop widths.
+ * visitor can reach: the grid narrowed to the Family occasion's two listed
+ * cards, and a search no card matches, which swaps the grid for its empty
+ * message, each at the Gallery's phone and desktop widths.
  * They're kept out of the shared state list, since the rendering suite
  * captures every state there against a baseline.
  *
@@ -71,7 +71,7 @@ const FIL_STA_ARR : StaRecTyp[] = GAL_STA_ARR.map( ( staRecObj ) => ( { // What:
 	actFun : async ( curPagObj : Page ) => { // What: Action Function. Why: The state shows the grid narrowed by an occasion. How: This presses "Family" and waits until two tiles remain.
 
 
-		await curPagObj.getByRole( 'button', { exact : true, name : 'Family' } ).click(); // What: Filter Click Call. Why: Family narrows the grid to two listed cards, the occasion with the fewest. How: This presses its button.
+		await curPagObj.getByRole( 'button', { exact : true, name : 'Family' } ).click(); // What: Filter Click Call. Why: Family narrows the grid to its two listed cards. How: This presses its button.
 
 		await expect( curPagObj.locator( 'article' ) ).toHaveCount( 2 ); // What: Narrowed Grid Assertion. Why: The checks read the page only once the filter has applied. How: This waits until two tiles remain.
 

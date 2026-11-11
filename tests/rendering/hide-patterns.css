@@ -18,7 +18,7 @@
 
 
 
-[data-element-name-hook~='conCirDiv'] { /* What: Confetti Circuit Div Hook. Why: The patterns are the one part of a page these engines don't draw the same from run to run. How: This hides every background pattern for the capture, leaving its space in place. */
+[data-element-name-hook~='conCirDiv'] { /* What: Confetti Circuit Div Hook. Why: These engines don't draw the patterns the same from run to run. How: This hides every background pattern for the capture, leaving its space in place. */
 
 
 	visibility : hidden;

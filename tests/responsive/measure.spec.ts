@@ -17,8 +17,8 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * @summary
  * Checks the text measure rule on every route, every card, the 404 page, and
  * the open phone menu, in whichever engine the project runs: no line of a
- * paragraph may run past 75 characters, or past 60 for small text (anything
- * set below the 14.572px body size, such as captions and labels). Each
+ * paragraph may run past 75 characters, or past 60 for small text (text set
+ * under 14px, below the 14.572px body size, such as captions and labels). Each
  * paragraph's text is walked one character at a time and split into its
  * rendered lines by where each character lands, so the count is what a reader
  * actually sees at that width, skipping a visually hidden copy meant only for
@@ -68,7 +68,7 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 
 const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The phone menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
 const SMA_MAX_NUM = 60;                                                                            // What: Small Maximum Number. Why: Small and secondary text has to land within 40 to 60 characters a line. How: This is the upper limit small text is held to.
-const SMA_SIZ_NUM = 14;                                                                            // What: Small Size Number. Why: Small text is anything set below the body size of about 14.572px. How: A paragraph whose font size is under this many pixels is held to the small limit.
+const SMA_SIZ_NUM = 14;                                                                            // What: Small Size Number. Why: Small text is set below the body size of about 14.572px, and a 14px cutoff keeps text at the body size out. How: A paragraph whose font size is under this many pixels is held to the small limit.
 const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: A column is at its widest just before a layout switches. How: This lists the responsive suite's widths, the site's breakpoints and the pixel past each included.
 
 // #endregion Constants

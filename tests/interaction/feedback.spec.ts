@@ -15,7 +15,7 @@ import { RES_STA_ARR } from '../support/contact.ts';  // What: Result State Arra
 import { SET_WAI_NUM } from '../support/feedback.ts'; // What: Settle Wait Number. Why: Each look is read once its transition has finished. How: This is the pause before each read.
 import { snaEleFun   } from '../support/feedback.ts'; // What: Snapshot Element Function. Why: Each look is recorded with whether each part of it would ease. How: This runs inside the page to read it.
 import { snaProFun   } from '../support/feedback.ts'; // What: Snap Problems Function. Why: A change has to ease rather than snap. How: This turns two snapshots into a problem for each snapped change.
-import { STA_REC_ARR } from '../support/states.ts';   // What: State Record Array. Why: Every page state is checked. How: This lists them.
+import { STA_REC_ARR } from '../support/states.ts';   // What: State Record Array. Why: The shared page states are each checked. How: This lists them.
 import { test        } from '@playwright/test';       // What: Test. Why: Each check of each state is its own test. How: This declares them.
 import { valSigFun   } from '../support/feedback.ts'; // What: Value Signature Function. Why: Two looks are told apart by their values alone. How: This joins a snapshot's values into one string.
 
@@ -180,7 +180,7 @@ const TOG_TAR_ARR : TogTarTyp[] = [ // What: Toggle Target Array. Why: A switche
 
 	},
 
-	{ // What: Scrolled Bar Row. Why: Once the page moves under the bar, the bar firms up its background, shows its bottom border, and casts its shadow. How: This flips its data-nav-bar-scrolled, on every site state, since the bar shows on each.
+	{ // What: Scrolled Bar Row. Why: Once the page moves under the bar, the bar firms up its background, shows its bottom border, and casts its shadow. How: This flips its data-nav-bar-scrolled on the site page states its row lists, since the bar shows on each.
 
 
 		actStr : '',
