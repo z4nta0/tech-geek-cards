@@ -568,7 +568,7 @@ function BirCarCom () : JSX.Element {
 						width='80'
 						x='30'
 						y='44'
-					/>{ /* What: Cake Highlight Rect Element. Why: The top tier's top catches the light. How: This draws a pale band along it, a little stronger than the bottom tier's. */ }
+					/>{ /* What: Cake Highlight Rect Top Element. Why: The top tier's top catches the light. How: This draws a pale band along it, a little stronger than the bottom tier's. */ }
 
 					{ ICI_TOP_ARR.map( ( iciXcoNum ) => ( // What: Top Icing Map Call. Why: The top tier's edge is trimmed with icing. How: This renders a dollop at each point, keyed by its position.
 

@@ -261,7 +261,7 @@
 
 
 }
-.famHigSpa::after { /* What: Family Highlight Underline. Why: The underline draws in from the left under the key words. How: This lays a thin line in the text color under them, scaled across by the timeline. */
+.famHigSpa::after { /* What: Family Highlight Span Underline. Why: The underline draws in from the left under the key words. How: This lays a thin line in the text color under them, scaled across by the timeline. */
 
 
 	background-color : currentColor;
@@ -306,7 +306,7 @@
 
 
 }
-.famCurSpa::before { /* What: Family Cursor Bar. Why: A typing cursor blinks, and the timeline fades the cursor's box out at the end, which an animation on the box itself would override. How: This fills the box with a bar in the text color that blinks on and off. */
+.famCurSpa::before { /* What: Family Cursor Span Bar. Why: A typing cursor blinks, and the timeline fades the cursor's box out at the end, which an animation on the box itself would override. How: This fills the box with a bar in the text color that blinks on and off. */
 
 
 	animation        : famCurSpaBlinkFlash var( --dur-ani-p07 ) step-end infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */ /* What: Blink Cycle. Why: An ordinary text cursor blinks about once a second. How: Each cycle shows the bar for half the step and hides it for the other half. */
@@ -317,10 +317,10 @@
 
 
 }
-@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cursor Bar. Why: Someone who asked for less motion shouldn't see the cursor flash. How: This applies only when the reduced-motion preference is set. */
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cursor Span Bar. Why: Someone who asked for less motion shouldn't see the cursor flash. How: This applies only when the reduced-motion preference is set. */
 
 
-	.famCurSpa::before { /* What: Still Family Cursor Bar. Why: The cursor should simply stay lit. How: This turns the blink off. */
+	.famCurSpa::before { /* What: Still Family Cursor Span Bar. Why: The cursor should simply stay lit. How: This turns the blink off. */
 
 
 		animation : none;
@@ -330,7 +330,7 @@
 
 
 }
-@keyframes famCurSpaBlinkFlash { /* What: Family Cursor Blink Flash. Why: The cursor blinks on and off rather than fading. How: Held by the step-end timing, the bar stays lit for the first half of each cycle and hidden for the second. */
+@keyframes famCurSpaBlinkFlash { /* What: Family Cursor Span Blink Flash. Why: The cursor blinks on and off rather than fading. How: Held by the step-end timing, the bar stays lit for the first half of each cycle and hidden for the second. */
 
 
 	50% {

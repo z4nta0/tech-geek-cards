@@ -434,7 +434,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 						value={ linUrlObj.href }
 
 						onFocus={ ( focEveObj ) => focEveObj.currentTarget.select() } // What: Link Focus Handler. Why: Someone copying by hand wants the whole link. How: This selects it all when the field gains focus.
-					/>{ /* What: Field Text Input Element. Why: The link should be visible, and copyable by hand if the button can't. How: This shows the link read-only in mono. */ }
+					/>{ /* What: Field Text Input Link Element. Why: The link should be visible, and copyable by hand if the button can't. How: This shows the link read-only in mono. */ }
 
 
 				</div>

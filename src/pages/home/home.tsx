@@ -463,7 +463,7 @@ function HomPagCom () : JSX.Element {
 										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
-									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
+									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Postcard Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
 
 
 								</div>
