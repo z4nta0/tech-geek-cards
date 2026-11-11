@@ -42,7 +42,6 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * TechGeek.support's original.
  *
  * Sections:
- *  - Types
  *  - Constants
  *  - Helpers
  *  - Components
@@ -52,23 +51,6 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
-
-
-
-// #region Types
-
-type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
-
-
-	lefNum : number, // What: Left Number. Why: Stars are scattered across the sky. How: This holds its distance from the left edge, in percent.
-	opaNum : number, // What: Opacity Number. Why: Some stars shine brighter than others. How: This holds its starting opacity.
-	sizNum : number, // What: Size Number. Why: Stars come in different sizes. How: This holds its width and height, in rem.
-	topNum : number  // What: Top Number. Why: Stars fill the upper part of the sky. How: This holds its distance from the top edge, in percent.
-
-
-};
-
-// #endregion Types
 
 
 
@@ -109,6 +91,17 @@ const FLA_STR_STR = Array.from( Array( 6 ).keys(), ( strIndNum ) => `M0 ${ ( ( s
 const ranColFun = () : string => COL_VAR_ARR[ Math.floor( Math.random() * COL_VAR_ARR.length ) ]; // What: Random Color Function. Why: Every firework and spark takes a color from the palette. How: This returns one of its token references at random.
 
 
+
+type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
+
+
+	lefNum : number, // What: Left Number. Why: Stars are scattered across the sky. How: This holds its distance from the left edge, in percent.
+	opaNum : number, // What: Opacity Number. Why: Some stars shine brighter than others. How: This holds its starting opacity.
+	sizNum : number, // What: Size Number. Why: Stars come in different sizes. How: This holds its width and height, in rem.
+	topNum : number  // What: Top Number. Why: Stars fill the upper part of the sky. How: This holds its distance from the top edge, in percent.
+
+
+};
 
 const staArrFun = () : StaRecTyp[] => Array.from( { length : STA_COU_NUM }, () => ( { // What: Star Array Function. Why: The stars are scattered once, when the card opens. How: This builds each star's record from random values within its ranges.
 

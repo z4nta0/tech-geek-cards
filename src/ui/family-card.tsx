@@ -70,8 +70,6 @@ type PhoRecTyp = { // What: Photo Record Type. Why: Every photo is shown with a 
 
 };
 
-
-
 type SceRecTyp = { // What: Scene Record Type. Why: Each scene types one line and underlines its key words. How: This holds the line's three parts; the scene opens its heart over the photo at its own place in the photo list.
 
 
@@ -81,8 +79,6 @@ type SceRecTyp = { // What: Scene Record Type. Why: Each scene types one line an
 
 
 };
-
-
 
 type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share every step and differ only in their content. How: This holds everything one card supplies.
 
