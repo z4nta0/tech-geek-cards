@@ -87,7 +87,7 @@ const ranIntFun = ( minValNum : number, maxValNum : number ) : number => Math.ro
  * @summary
  * Starts a flake again at the top of the snow once it has fallen past the
  * bottom or drifted past either side, with a new size, speed, and sway, so
- * the snow never repeats the same pattern. It places the flake at random
+ * the snow doesn't fall in a fixed pattern. It places the flake at random
  * across the snow's current width, less its own size so it starts fully
  * inside, and resizes its element to match.
  *

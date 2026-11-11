@@ -137,7 +137,7 @@
 
 
 }
-@media ( max-width : 640px ) { /* What: Phone Illustration Row Div. Why: On a phone the illustrations need every pixel of the width. How: This applies at the phone breakpoint and below. */
+@media ( max-width : 640px ) { /* What: Phone Illustration Row Div. Why: On a phone the illustrations need more of the width. How: This applies at the phone breakpoint and below. */
 
 
 	.illRowDiv { /* What: Tight Illustration Row Div. Why: The full gap would push the turkey off a 320px screen. How: This narrows the gap a few steps. */

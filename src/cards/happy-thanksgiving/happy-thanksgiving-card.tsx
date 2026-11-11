@@ -229,16 +229,16 @@ function ThaCarCom () : JSX.Element {
 	 * happy-thanksgiving-card.tsx = Thanksgiving Timeline
 	 *
 	 * @summary
-	 * The card's one timeline, with every start time a step on the duration
-	 * scale: the cornucopia slides in from the left at once, overshooting a
-	 * little; from Base Plus 4 its eight pieces of produce pop out with a
-	 * bounce, a Base Minus 3 step apart; from Base Plus 6 the turkey rises in
-	 * and its feathers fan up from their base, a Base Minus 2 step apart; at
-	 * Base Plus 8 the heading rises in; and at Base Plus 9 the message
-	 * follows and the turkey starts rocking a few degrees back and forth for
-	 * as long as the card is open. The leaves start falling as the card
-	 * opens. Under reduced motion the timeline jumps straight to its end, and
-	 * neither the rocking nor the leaves ever start.
+	 * The card's one timeline, with every start time after the first a step on
+	 * the duration scale: the cornucopia slides in from the left at once,
+	 * overshooting a little; from Base Plus 4 its eight pieces of produce pop
+	 * out with a bounce, a Base Minus 3 step apart; from Base Plus 6 the
+	 * turkey rises in and its feathers fan up from their base, a Base Minus 2
+	 * step apart; at Base Plus 8 the heading rises in; and at Base Plus 9 the
+	 * message follows and the turkey starts rocking a few degrees back and
+	 * forth for as long as the card is open. The leaves start falling as the
+	 * card opens. Under reduced motion the timeline jumps straight to its end,
+	 * and neither the rocking nor the leaves ever start.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *

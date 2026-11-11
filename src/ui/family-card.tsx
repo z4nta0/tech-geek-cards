@@ -675,10 +675,10 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 						<img
 							className={ cssModObj.famCelIma }
 
-							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 							loading='lazy'
 							src={ famCarObj.phoRecArr[ phoIndNum ].imaStr }
-							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 							alt=''
 						/>{ /* What: Family Cell Image Element. Why: The photo fills its cell. How: This shows it with an empty alt, since its button names it. */ }
@@ -709,9 +709,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 						className={ cssModObj.famSceIma }
 
-						height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+						height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 						src={ phoRecObj.imaStr }
-						width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+						width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 						alt=''
 					/> // What: Family Scene Image Element. Why: The heart opens over the scene's photo. How: This fills the screen with it, hidden from screen readers since the copy below speaks for the card.
@@ -996,9 +996,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 						<img
 							className={ cssModObj.famExpIma }
 
-							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 							src={ famCarObj.phoRecArr[ expIndNum ].imaStr }
-							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 							alt={ famCarObj.phoRecArr[ expIndNum ].altStr }
 						/>{ /* What: Family Expanded Image Element. Why: The photo should be seen whole. How: This fits it to the screen, described for screen readers. */ }

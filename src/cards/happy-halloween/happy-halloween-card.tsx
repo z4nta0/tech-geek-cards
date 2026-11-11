@@ -121,8 +121,8 @@ const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles 
  * @summary
  * The three ghosts over the hills, each an ArtRowTyp: claModStr, the modifier
  * class that places and sizes the ghost, and delSecNum, the delay in seconds
- * before it rises, so they appear one at a time. Every delay is a step on the
- * duration scale.
+ * before it rises, so they appear one at a time. Every delay after the first
+ * is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -151,7 +151,7 @@ const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack
  * The four jack-o'-lanterns along the ground, each an ArtRowTyp: claModStr,
  * the modifier class that places and sizes it, and delSecNum, the delay in
  * seconds before its candle and glow start to flicker, so they never flicker
- * in step. Every delay is a step on the duration scale.
+ * in step. Every delay after the first is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -205,7 +205,7 @@ const staArrFun = () : StaRowTyp[] => Array.from( Array( 30 ).keys(), () => ( { 
 
 
 	lefNum : Math.random() * 100,                                   // What: Left Number. Why: Stars fill the whole width. How: This picks 0% to 100% from the left.
-	sizNum : gsap.utils.random( cdnPowFun( -8 ), cdnPowFun( -2 ) ), // What: Size Number. Why: Stars come in different sizes, the smallest still large enough for every engine to draw. How: This picks a width between the vertical rhythm's Base Minus 9 and Base Minus 3 steps, in rem. // Vertical Rhythm Base Minus 9 ~= 1.160px, Vertical Rhythm Base Minus 3 ~= 6.268px
+	sizNum : gsap.utils.random( cdnPowFun( -8 ), cdnPowFun( -2 ) ), // What: Size Number. Why: Stars come in different sizes. How: This picks a width between the vertical rhythm's Base Minus 9 and Base Minus 3 steps, in rem. // Vertical Rhythm Base Minus 9 ~= 1.160px, Vertical Rhythm Base Minus 3 ~= 6.268px
 	topNum : Math.random() * 55                                     // What: Top Number. Why: Stars stay above the ghosts and hills. How: This picks 0% to 55% from the top, a literal since it places the stars rather than spacing them.
 
 
@@ -588,7 +588,7 @@ function GhoFloCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 		const ghoTimObj = gsap.timeline( { delay : delSecNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
 		const inoEasStr = gsaEasFun( 'ino' );                  // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
 		const rotAngNum = cdnPowFun( 5 );                      // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
-		const rotDurNum = durSecFun( 'p09' );                  // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two never line up. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		const rotDurNum = durSecFun( 'p09' );                  // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two drift out of step. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 		ghoTimObj.fromTo( ghoSvgRef.current, { autoAlpha : 0, y : entShiNum }, { autoAlpha : 1, duration : entDurNum, ease : decEasStr, y : 0 } ); // What: Rise Step. Why: The ghost appears over the hills. How: This fades it in as it rises to its place.
