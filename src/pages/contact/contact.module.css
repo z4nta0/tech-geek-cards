@@ -559,7 +559,7 @@
 
 }
 
-.sidTitHea { /* What: Sidebar Title Heading. Why: The sidebar's heading sits a step below the page's sections. How: This sets it in the main text color at the base plus 3 size. */
+.sidTitHea { /* What: Sidebar Title Heading. Why: The sidebar's heading introduces the other ways to reach me. How: This sets it in the main text color at the base plus 3 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */

@@ -24,7 +24,7 @@
 
 /* #region Tokens */
 
-:root { /* What: Root Tokens. Why: The package's color roles and layout values are defaults a site builds on. How: This adds the berry accent family and the ease-in-out curve, and sets this site's content cap, side gutter, hero gap, and bar height on the root. */
+:root { /* What: Root Tokens. Why: The package's color roles and layout values are defaults a site builds on. How: This adds the berry accent family and the ease-in-out curve, and sets this site's layout values on the root, such as its content cap. */
 
 
 	/* #region Color Tokens */

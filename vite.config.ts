@@ -8,9 +8,9 @@ import reaPluFun from '@vitejs/plugin-react'; // What: React Plugin Function. Wh
 
 import { CAR_DAT_ARR  } from './src/ui/card-data.ts'; // What: Card Data Array. Why: Every card gets its own page carrying its title, description, and link preview. How: The card pages plugin writes one per row.
 import { defineConfig } from 'vite';                  // What: Define Config. Why: Vite's config helper passes the config through with its types. How: This wraps VIT_CON_OBJ.
-import { readFile     } from 'node:fs/promises';      // What: Read File. Why: The card pages are copies of the built page. How: This reads the built index.html and _redirects.
+import { readFile     } from 'node:fs/promises';      // What: Read File. Why: The card pages are copies of the built page. How: This reads the built index.html, _redirects, and _headers.
 import { resolve      } from 'node:path';             // What: Resolve. Why: The card pages are written beside the built index.html. How: This joins the build folder with each file name.
-import { writeFile    } from 'node:fs/promises';      // What: Write File. Why: Each card's page and the rewrite rules are files in the build. How: This writes them.
+import { writeFile    } from 'node:fs/promises';      // What: Write File. Why: Each card's page, the rewrite rules, and the noindex header rules are files in the build. How: This writes them.
 
 
 import type { CarDatTyp } from './src/ui/card-data.ts'; // What: Card Data Type. Why: A card's page is written from its data. How: This types the card carTagFun reads.

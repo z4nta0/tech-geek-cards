@@ -654,7 +654,7 @@
 
 /* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the family section's orange button. How: Its rule sits in the famActDiv region above. */
 
-.visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, which sighted visitors learn from the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
+.visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, while sighted visitors see Ko-fi named in the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
 
 
 	border      : 0;

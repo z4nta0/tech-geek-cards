@@ -139,7 +139,7 @@
 
 
 }
-.barHomAnc:hover { /* What: Hovered Bar Home Anchor. Why: A link shifts color on hover. How: This turns the wordmark the powder blue. */
+.barHomAnc:hover { /* What: Hovered Bar Home Anchor. Why: A link shifts color on hover. How: This turns the wordmark's TechGeek part powder blue, leaving its orange ending. */
 
 
 	color : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
