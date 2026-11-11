@@ -251,7 +251,7 @@
 	content       : '';
 	flex-shrink   : 0;
 	height        : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
-	margin-top    : calc( ( 1lh - var( --ver-rhy-m01 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 1 = 11px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact or tip that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
+	margin-top    : calc( ( 1lh - var( --ver-rhy-m01 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 1 = 11px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
 	width         : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
 
 

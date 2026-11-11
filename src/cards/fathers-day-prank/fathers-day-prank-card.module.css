@@ -33,7 +33,7 @@
 .fdpCarDiv { /* What: Father's-Day-Prank Card Div. Why: The Family engine plays every Family card, each in its own colors and font. How: This sets the properties the engine reads. */
 
 
-	--fam-bac-col : #B8E3E9;                                  /* What: Family Background Color. Why: The prank matches the Father's Day card's colors and font, so only its words tell the two apart. How: This is a fixed hex color the card's root sets for the shared engine. */
+	--fam-bac-col : #B8E3E9;                                  /* What: Family Background Color. Why: The prank matches the Father's Day card's colors and font, so its words and photos tell the two apart. How: This is a fixed hex color the card's root sets for the shared engine. */
 	--fam-tex-col : #192A55;                                  /* What: Family Text Color. Why: Navy reads clearly on the sky blue and over the photos' sky blue halo. How: This is a fixed hex color the card's root sets for the shared engine. */
 	--fam-tex-fon : 'Permanent Marker', var( --fon-fam-mai ); /* What: Family Text Font. Why: The prank keeps the Father's Day card's bold marker hand. How: This names Permanent Marker, falling back to the main font. */
 	--fam-und-off : calc( var( --cdn-pow-006-rec ) * 1em );   /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185em */ /* What: Family Underline Offset. Why: Permanent Marker sits low on its line, so the default underline touched its letters. How: This drops the underline one step lower than the engine's default. */

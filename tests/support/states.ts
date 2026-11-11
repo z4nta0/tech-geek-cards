@@ -123,7 +123,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 	{ heiNum : 900, ideStr : 'fathers-day-prank-desktop', patStr : '/fathers-day-prank',     redBoo : true,  widNum : 1440 }, // What: Father's Day Prank Desktop State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 	{ heiNum : 844, ideStr : 'fathers-day-prank-phone',   patStr : '/fathers-day-prank',     redBoo : true,  widNum : 390  }, // What: Father's Day Prank Phone State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 
-	{ // What: Menu Phone State. Why: The open menu holds the phone's only copy of the page links. How: This loads the home page at 390px and opens the menu through its toggle button.
+	{ // What: Menu Phone State. Why: The open menu holds the bar's links, which the phone layout hides until it opens. How: This loads the home page at 390px and opens the menu through its toggle button.
 
 
 		heiNum : 844,

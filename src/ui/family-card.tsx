@@ -7,7 +7,7 @@ import cssModObj from './family-card.module.css'; // What: CSS Module Object. Wh
 
 
 import { cdnPowFun      } from '../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The greeting grows by a power of the core design number. How: This returns that power.
-import { durSecFun      } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { durSecFun      } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale or a letter count times one, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun      } from './gsap-ease.ts';     // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap           } from 'gsap';               // What: GSAP. Why: The card plays as one long timeline of typed lines, heart reveals, and the photo grid. How: This is the animation library that builds and plays it.
 import { redMotFun      } from '../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once, with stills to step back through. How: This reports whether reduced motion is on.
@@ -40,7 +40,8 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * greeting types and grows, and the photo grid wipes in, each photo opening
  * full size when tapped. The heart is a CSS mask scaled over the photo, so it
  * works the same on a phone held upright or sideways. Every duration is a step
- * on the duration scale, and the curves are the stylesheet's easing tokens.
+ * on the duration scale or a letter count times one, and the curves are the
+ * stylesheet's easing tokens.
  * Under reduced motion the card opens straight on the finished greeting and
  * photo grid. Built from TechGeek.support's three hand-written copies of one
  * card.
