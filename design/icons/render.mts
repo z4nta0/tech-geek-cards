@@ -185,39 +185,39 @@ for ( const icoRecObj of ICO_REC_ARR ) writeFileSync( OUT_DIR_STR + icoRecObj.fi
 
 
 const icoPngArr = await Promise.all( ICO_SIZ_ARR.map( ( icoSizNum ) => renPngFun( icoSizNum, false ) ) ); // What: ICO PNG Array. Why: favicon.ico packs one PNG per size. How: This renders each of its sizes.
-const icoHeaBuf = Buffer.alloc( 6 + 16 * icoPngArr.length );                                              // What: ICO Header Buffer. Why: An ICO file starts with a header and one directory entry per image. How: This allocates both.
+const icoHeaObj = Buffer.alloc( 6 + 16 * icoPngArr.length );                                              // What: ICO Header Object. Why: An ICO file starts with a header and one directory entry per image. How: This allocates both.
 
 
-icoHeaBuf.writeUInt16LE( 1, 2 );                // What: ICO Type Write. Why: The format marks icons with type 1. How: This writes it after the reserved zero.
-icoHeaBuf.writeUInt16LE( icoPngArr.length, 4 ); // What: ICO Count Write. Why: The header says how many images follow. How: This writes the count.
+icoHeaObj.writeUInt16LE( 1, 2 );                // What: ICO Type Write. Why: The format marks icons with type 1. How: This writes it after the reserved zero.
+icoHeaObj.writeUInt16LE( icoPngArr.length, 4 ); // What: ICO Count Write. Why: The header says how many images follow. How: This writes the count.
 
 
-let icoOffNum = icoHeaBuf.length; // What: ICO Offset Number. Why: Each directory entry says where its image starts. How: This begins right after the header and directory.
+let icoOffNum = icoHeaObj.length; // What: ICO Offset Number. Why: Each directory entry says where its image starts. How: This begins right after the header and directory.
 
 
-for ( const [ icoIndNum, icoPngBuf ] of icoPngArr.entries() ) { // What: ICO Entry Loop. Why: Each image needs a directory entry. How: This writes one per size, in order.
+for ( const [ icoIndNum, icoPngObj ] of icoPngArr.entries() ) { // What: ICO Entry Loop. Why: Each image needs a directory entry. How: This writes one per size, in order.
 
 
 	const entOffNum = 6 + 16 * icoIndNum;       // What: Entry Offset Number. Why: Each entry has its own place in the directory. How: This finds it.
 	const entSizNum = ICO_SIZ_ARR[ icoIndNum ]; // What: Entry Size Number. Why: The entry names its image's width and height. How: This reads the size it was rendered at.
 
 
-	icoHeaBuf.writeUInt8( entSizNum, entOffNum );               // What: Entry Width Write. Why: The entry names the image's width. How: This writes it.
-	icoHeaBuf.writeUInt8( entSizNum, entOffNum + 1 );           // What: Entry Height Write. Why: The entry names the image's height. How: This writes it.
-	icoHeaBuf.writeUInt16LE( 1, entOffNum + 4 );                // What: Entry Planes Write. Why: The format expects one color plane. How: This writes it.
-	icoHeaBuf.writeUInt16LE( 32, entOffNum + 6 );               // What: Entry Depth Write. Why: The images are full-color PNGs with alpha. How: This writes 32 bits per pixel.
-	icoHeaBuf.writeUInt32LE( icoPngBuf.length, entOffNum + 8 ); // What: Entry Size Write. Why: The entry says how many bytes its image takes. How: This writes the PNG's length.
-	icoHeaBuf.writeUInt32LE( icoOffNum, entOffNum + 12 );       // What: Entry Offset Write. Why: The entry says where its image starts. How: This writes the running offset.
+	icoHeaObj.writeUInt8( entSizNum, entOffNum );               // What: Entry Width Write. Why: The entry names the image's width. How: This writes it.
+	icoHeaObj.writeUInt8( entSizNum, entOffNum + 1 );           // What: Entry Height Write. Why: The entry names the image's height. How: This writes it.
+	icoHeaObj.writeUInt16LE( 1, entOffNum + 4 );                // What: Entry Planes Write. Why: The format expects one color plane. How: This writes it.
+	icoHeaObj.writeUInt16LE( 32, entOffNum + 6 );               // What: Entry Depth Write. Why: The images are full-color PNGs with alpha. How: This writes 32 bits per pixel.
+	icoHeaObj.writeUInt32LE( icoPngObj.length, entOffNum + 8 ); // What: Entry Size Write. Why: The entry says how many bytes its image takes. How: This writes the PNG's length.
+	icoHeaObj.writeUInt32LE( icoOffNum, entOffNum + 12 );       // What: Entry Offset Write. Why: The entry says where its image starts. How: This writes the running offset.
 
 
-	icoOffNum += icoPngBuf.length; // What: Offset Advance. Why: The next image starts after this one. How: This adds its length.
+	icoOffNum += icoPngObj.length; // What: Offset Advance. Why: The next image starts after this one. How: This adds its length.
 
 
 }
 
 
 
-writeFileSync( OUT_DIR_STR + 'favicon.ico', Buffer.concat( [ icoHeaBuf, ...icoPngArr ] ) ); // What: ICO Write Call. Why: Browsers request /favicon.ico on their own. How: This writes the header, directory, and PNGs as one file.
+writeFileSync( OUT_DIR_STR + 'favicon.ico', Buffer.concat( [ icoHeaObj, ...icoPngArr ] ) ); // What: ICO Write Call. Why: Browsers request /favicon.ico on their own. How: This writes the header, directory, and PNGs as one file.
 
 await broInsObj.close(); // What: Browser Close Call. Why: The script should exit once the icons are saved. How: This shuts Chromium down.
 

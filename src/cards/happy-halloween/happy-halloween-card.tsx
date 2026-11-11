@@ -14,7 +14,7 @@ import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Functi
 import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' drops, bobs, and flight paths are rhythm steps. How: This returns a step's size in pixels.
 import { SplitText } from 'gsap/SplitText';        // What: Split Text. Why: The greeting drops in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: Each figure's motion has to start after the card renders and stop when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef    } from 'react';                 // What: Use Ref. Why: The motion animates specific elements. How: Each animated element gets a ref.
+import { useRef    } from 'react';                 // What: Use Reference. Why: The motion animates specific elements. How: Each animated element gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps their places.
 
 

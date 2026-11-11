@@ -15,7 +15,7 @@ import { ranValFun } from '../../utils/random.ts'; // What: Random Value Functio
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
 import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
-import { useRef    } from 'react';                 // What: Use Ref. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
+import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps the scattered stars across renders.
 
 
@@ -92,7 +92,7 @@ const ranColFun = () : string => COL_VAR_ARR[ Math.floor( Math.random() * COL_VA
 
 
 
-type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
+type StaReoTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
 
 
 	lefNum : number, // What: Left Number. Why: Stars are scattered across the sky. How: This holds its distance from the left edge, in percent.
@@ -103,7 +103,7 @@ type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place
 
 };
 
-const staArrFun = () : StaRecTyp[] => Array.from( { length : STA_COU_NUM }, () => ( { // What: Star Array Function. Why: The stars are scattered once, when the card opens. How: This builds each star's record from random values within its ranges.
+const staArrFun = () : StaReoTyp[] => Array.from( { length : STA_COU_NUM }, () => ( { // What: Star Array Function. Why: The stars are scattered once, when the card opens. How: This builds each star's record from random values within its ranges.
 
 
 	lefNum : ranValFun( 0, 100 ),                           // What: Left Number. Why: Stars spread across the whole sky. How: This picks 0% to 100% across.
@@ -296,10 +296,10 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param xcoNum - X-Coordinate Number: The star's center from the flag's left
- *                 edge.
- * @param ycoNum - Y-Coordinate Number: The star's center from the flag's top
- *                 edge.
+ * @param cenXcoNum - Center X-Coordinate Number: The star's center from the
+ *                    flag's left edge.
+ * @param cenYcoNum - Center Y-Coordinate Number: The star's center from the
+ *                    flag's top edge.
  *
  * @returns The star's subpath.
  *
@@ -310,7 +310,7 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
  *
 */
 
-const staPatFun = ( xcoNum : number, ycoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
+const staPatFun = ( cenXcoNum : number, cenYcoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
 
 
 	const corPoiArr = Array.from( Array( 10 ).keys(), ( corIndNum ) => { // What: Corner Point Array. Why: A five-pointed star has ten corners. How: This places each one around the center, alternating the outer and inner radius.
@@ -321,7 +321,7 @@ const staPatFun = ( xcoNum : number, ycoNum : number ) : string => { // What: St
 
 
 
-		return `${ ( xcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( ycoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
+		return `${ ( cenXcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( cenYcoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
 
 
 	} );

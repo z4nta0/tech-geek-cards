@@ -16,7 +16,7 @@ import { TextPlugin     } from 'gsap/TextPlugin';    // What: Text Plugin. Why: 
 import { useEffect      } from 'react';              // What: Use Effect. Why: The screen should stay awake while the card plays, and an open photo closes on Escape through its dialog. How: This holds the wake lock's request and release.
 import { useEffectEvent } from 'react';              // What: Use Effect Event. Why: The arrow and space keys drive the scene controls with the card's latest state, without re-adding the listener every render. How: This wraps the key handler so the effect always calls its newest version.
 import { useGSAP        } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef         } from 'react';              // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useRef         } from 'react';              // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
 import { useState       } from 'react';              // What: Use State. Why: A tapped photo opens full size, and the controls show the card's place and whether it's paused. How: This holds the open photo, the position, the paused state, and the reduced-motion preference.
 
 
@@ -236,10 +236,10 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const posUpdFun = () => { // What: Position Update Function. Why: The dots follow the timeline wherever it plays or jumps. How: This counts the scenes started by the timeline's time, or every scene once the closing line has begun.
 
 
-		const timNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
+		const curTimNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Current Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
 
 
-		setPosIndNum( timNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= timNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
+		setPosIndNum( curTimNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= curTimNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
 
 
 	};
@@ -342,13 +342,13 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			timLinObj.to( texDivRef.current, { autoAlpha : 1, duration : fadDurNum } ); // What: Lettering Fade In. Why: Each line arrives softly. How: This fades the lettering in.
 
 
-			parStrArr.forEach( ( parStr, parIndNum ) => { // What: Part Typing Loop. Why: The line types one part after another. How: This adds a typing step per part.
+			parStrArr.forEach( ( parValStr, parIndNum ) => { // What: Part Typing Loop. Why: The line types one part after another. How: This adds a typing step per part.
 
 
-				const typDurNum = parStr.length * chaDurNum; // What: Typing Duration Number. Why: Each part types at the same steady pace. How: This is a letter's time per letter.
+				const typDurNum = parValStr.length * chaDurNum; // What: Typing Duration Number. Why: Each part types at the same steady pace. How: This is a letter's time per letter.
 
 
-				timLinObj.to( typSpaArr[ parIndNum ], { duration : typDurNum, ease : 'none', text : parStr } ); // What: Part Typing Step. Why: The part appears letter by letter. How: This types it evenly over its duration.
+				timLinObj.to( typSpaArr[ parIndNum ], { duration : typDurNum, ease : 'none', text : parValStr } ); // What: Part Typing Step. Why: The part appears letter by letter. How: This types it evenly over its duration.
 
 
 			} );
@@ -487,8 +487,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
-	 * @param dirNum - Direction Number: -1 for the previous stop, 1 for the
-	 *                 next.
+	 * @param dirValNum - Direction Value Number: -1 for the previous stop, 1
+	 *                    for the next.
 	 *
 	 * @returns This function does not return anything.
 	 *
@@ -499,7 +499,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 *
 	*/
 
-	const navSceFun = ( dirNum : number ) : void => { // What: Navigate Scene Function. Why: Previous and Next, and the arrow keys, move between scenes. How: This seeks the timeline to the next stop in the chosen direction.
+	const navSceFun = ( dirValNum : number ) : void => { // What: Navigate Scene Function. Why: Previous and Next, and the arrow keys, move between scenes. How: This seeks the timeline to the next stop in the chosen direction.
 
 
 		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The jump moves the card's timeline. How: This reads it from its reference.
@@ -511,18 +511,18 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		const endTimNum = timLinObj.duration();                                                                                     // What: End Time Number. Why: The last stop is the finished card. How: This is the timeline's length.
 		const stoTimArr = redMotBoo ? [ ...stiTimRef.current, endTimNum ] : [ ...staTimRef.current, behTimRef.current, endTimNum ]; // What: Stop Time Array. Why: Reduced motion steps through stills, and motion through scene starts. How: This lists the stops for the visitor's preference, ending at the end.
-		const timNum    = timLinObj.time() + 0.001;                                                                                 // What: Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
+		const curTimNum = timLinObj.time() + 0.001;                                                                                 // What: Current Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
 
-		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= timNum ).length - 1; // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
+		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= curTimNum ).length - 1; // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
 
-		const bacDirBoo = dirNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
-		const farPasBoo = timNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const motPlaBoo = !redMotBoo;                                                          // What: Motion Playing Boolean. Why: Under reduced motion every stop is a still, so nothing restarts. How: This checks the card plays its motion.
+		const bacDirBoo = dirValNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
+		const farPasBoo = curTimNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const motPlaBoo = !redMotBoo;                                                             // What: Motion Playing Boolean. Why: Under reduced motion every stop is a still, so nothing restarts. How: This checks the card plays its motion.
 
 		const resSceBoo = bacDirBoo && farPasBoo && motPlaBoo; // What: Restart Scene Boolean. Why: Previous well into a scene restarts it, and only a quick second press goes back further. How: This combines the three checks.
 
 
-		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirNum, 0 ), stoTimArr.length - 1 );    // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
+		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirValNum, 0 ), stoTimArr.length - 1 ); // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
 
 
 		timLinObj.seek( stoTimArr[ tarIndNum ] ); // What: Stop Seek Call. Why: The card has to show the stop exactly. How: This moves the timeline there, keeping it playing or paused.

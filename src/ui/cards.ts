@@ -74,7 +74,7 @@ const CAR_COM_OBJ : Record< string, LazyExoticComponent< ComponentType > > = { /
 	'happy-halloween'       : lazy( () => import( '../cards/happy-halloween/happy-halloween-card.tsx' ).then( ( modObj ) => ( { default : modObj.HalCarCom } ) ) ),
 	'happy-thanksgiving'    : lazy( () => import( '../cards/happy-thanksgiving/happy-thanksgiving-card.tsx' ).then( ( modObj ) => ( { default : modObj.ThaCarCom } ) ) ),
 	'merry-christmas'       : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : modObj.ChrCarCom } ) ) ),
-	'merry-christmas-prank' : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : () => createElement( modObj.ChrCarCom, { prkBoo : true } ) } ) ) ),
+	'merry-christmas-prank' : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : () => createElement( modObj.ChrCarCom, { praBoo : true } ) } ) ) ),
 	'mothers-day'           : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( modObj ) => ( { default : modObj.MotCarCom } ) ) )
 
 

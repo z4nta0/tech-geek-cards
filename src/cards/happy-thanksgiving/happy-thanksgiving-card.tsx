@@ -15,7 +15,7 @@ import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Functi
 import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrances' slides and the leaves' sizes and drift are spacing steps. How: This returns a step's size in pixels.
 import { staLeaFun } from './leaf-fall.ts';        // What: Start Leaf Function. Why: Leaves fall over the card. How: This starts them and returns the function that stops them.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef    } from 'react';                 // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
 
 
 import type { JSX       } from 'react';          // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.

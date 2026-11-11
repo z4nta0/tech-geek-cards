@@ -17,7 +17,7 @@ import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'; // What: Scramble 
 import { SplitText          } from 'gsap/SplitText';          // What: Split Text. Why: The messages fade in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { staSnoFun          } from './snowfall.ts';           // What: Start Snowfall Function. Why: Snow falls over the last scene. How: This starts it and returns the function that stops it.
 import { useGSAP            } from '@gsap/react';             // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef             } from 'react';                   // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useRef             } from 'react';                   // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
 import { useSearchParams    } from 'react-router';            // What: Use Search Parameters. Why: The greeting can name its recipient. How: This reads the address's ?name= parameter.
 import { useState           } from 'react';                   // What: Use State. Why: The wipe's grid is measured once, when the card opens. How: This keeps the measured columns and rows.
 
@@ -227,7 +227,7 @@ const snoSetFun = () : SnoSetTyp => ( { // What: Snowfall Settings Function. Why
 
 // #region Components
 
-type CacProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
+type CacProTyp = { praBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
 
 // #region ChrCarCom
 
@@ -248,19 +248,19 @@ type CacProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.prkBoo - Prank Boolean: Whether the card opens on the hacked
+ * @param props.praBoo - Prank Boolean: Whether the card opens on the hacked
  *                       prank, false by default for the snowy scene alone.
  *
  * @returns The card's scenes and the wipe's grid.
  *
  * @example
  * ```tsx
- * ChrCarCom({ prkBoo }) // => <ChrCarCom />
+ * ChrCarCom({ praBoo }) // => <ChrCarCom />
  * ```
  *
 */
 
-function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
+function ChrCarCom ( { praBoo = false } : CacProTyp ) : JSX.Element {
 
 
 	const carDivRef = useRef< HTMLDivElement >( null );       // What: Card Div Reference. Why: The timeline's selectors and cleanup are scoped to the card. How: This holds the card's root.
@@ -277,7 +277,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 
 	const froParStr = seaParObj.get( 'from' );                               // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
 	const namParStr = seaParObj.get( 'name' );                               // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
-	const sigNamStr = froParStr || ( prkBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
+	const sigNamStr = froParStr || ( praBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
 
 
 
@@ -321,7 +321,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 		const begSnoFun = () => { if ( !redMotFun() ) stoSnoFun = staSnoFun( snoSceRef.current!, cssModObj.snoFlaDiv, snoSetFun() ); }; // What: Begin Snowfall Function. Why: Both versions start the snow, but never under reduced motion. How: This starts it in the snowy scene and keeps its stop function. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The timeline only runs after the render that attaches it.
 
 
-		if ( prkBoo ) { // What: Prank Opening Check. Why: Only the prank version opens on the fake hack. How: This adds the wipes, the hacked scene, and its glitches before the snowy scene.
+		if ( praBoo ) { // What: Prank Opening Check. Why: Only the prank version opens on the fake hack. How: This adds the wipes, the hacked scene, and its glitches before the snowy scene.
 
 
 			const hacSplObj = SplitText.create( hacVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Hacked Split Object. Why: The message fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
@@ -383,7 +383,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the wipe's grid and both scenes. */ }
 
 
-			{ prkBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
+			{ praBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
 
 
 				<div
@@ -419,7 +419,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			) }
 
 
-			{ prkBoo && ( // What: Prank Scene Check. Why: Only the prank opens on the fake hack. How: This renders the hacked scene for the prank alone.
+			{ praBoo && ( // What: Prank Scene Check. Why: Only the prank opens on the fake hack. How: This renders the hacked scene for the prank alone.
 
 
 				<section className={ cssModObj.hacSceSec }>{ /* What: Hacked Scene Section Element. Why: The card opens as a fake hacked screen. How: This holds the scrambled heading and the message over the pirate flag. */ }
@@ -461,7 +461,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			<section
 				ref={ snoSceRef }
 
-				className={` ${ cssModObj.snoSceSec }   ${ prkBoo ? '' : cssModObj.snoSceSecOpen } `}
+				className={` ${ cssModObj.snoSceSec }   ${ praBoo ? '' : cssModObj.snoSceSecOpen } `}
 			>{ /* What: Snowy Scene Section Element. Why: The real greeting is a snowy cabin with snow falling. How: This holds the greeting, the snowman, and the sign-off, and the snow falls inside it. */ }
 
 

@@ -16,7 +16,7 @@ import { rhyPixFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel F
 import { staBalFun       } from './balloons.ts';         // What: Start Balloons Function. Why: Balloons float up behind the greeting. How: This starts them and returns the function that stops them.
 import { staConFun       } from './confetti.ts';         // What: Start Confetti Function. Why: Confetti bursts when the card opens and wherever it's tapped. How: This readies the canvas and returns its burst and stop functions.
 import { useGSAP         } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef          } from 'react';                 // What: Use Ref. Why: The timeline, balloons, and confetti work on specific elements. How: Each of those elements gets a ref.
+import { useRef          } from 'react';                 // What: Use Reference. Why: The timeline, balloons, and confetti work on specific elements. How: Each of those elements gets a ref.
 import { useSearchParams } from 'react-router';          // What: Use Search Parameters. Why: The greeting can name its recipient. How: This reads the address's ?name= parameter.
 import { useState        } from 'react';                 // What: Use State. Why: Whether motion is reduced is read once, when the card opens. How: This keeps that answer for the card's life.
 

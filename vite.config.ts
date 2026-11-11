@@ -213,10 +213,10 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 
 		},
 
-		transformIndexHtml : ( htmTexStr, ctxIndObj ) => { // What: Transform Index HTML Hook. Why: On the dev server, a card's address should serve the card's own tags, as the built site does. How: This rewrites the page for a card's address and leaves every other page alone.
+		transformIndexHtml : ( htmTexStr, cotIndObj ) => { // What: Transform Index HTML Hook. Why: On the dev server, a card's address should serve the card's own tags, as the built site does. How: This rewrites the page for a card's address and leaves every other page alone.
 
 
-			const reqSluStr = new URL( ctxIndObj.originalUrl ?? '/', LIV_URL_STR ).pathname.slice( 1 ); // What: Requested Slug String. Why: The requested address names the card, if any. How: This reads the path without its slash or query.
+			const reqSluStr = new URL( cotIndObj.originalUrl ?? '/', LIV_URL_STR ).pathname.slice( 1 ); // What: Requested Slug String. Why: The requested address names the card, if any. How: This reads the path without its slash or query.
 			const carDatObj = CAR_DAT_ARR.find( ( carCurObj ) => carCurObj.sluStr === reqSluStr );      // What: Card Data Object. Why: Only a card's address gets a card's tags. How: This finds the card, if the address names one.
 
 
