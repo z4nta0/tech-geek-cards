@@ -24,8 +24,8 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * each other. The widths run from 320px, WCAG's narrowest
  * reflow width, to 1,920px, and include a pixel either side of each of the
  * site's breakpoints, where a layout switches and is most likely to crowd.
- * Pages open under reduced motion, which changes nothing about the layout but
- * skips the wait for entrance animations.
+ * Pages open under reduced motion, which skips the wait for entrance
+ * animations and opens each card on its finished scene.
  *
  * Sections:
  *  - Constants
@@ -342,7 +342,7 @@ for ( const layCasObj of LAY_CAS_ARR ) { // What: Case Loop. Why: Every page and
 		test( `${ layCasObj.ideStr } holds its layout at ${ widCurNum }px`, async ( { page : curPagObj } ) => { // What: Layout Test. Why: The layout should hold together at every width. How: This opens the case at the width and lists its layout problems.
 
 
-			await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: Entrance animations don't change the layout, so waiting on them only slows the run. How: This makes the page match prefers-reduced-motion, which turns them off.
+			await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: Waiting on entrance animations only slows the run, and a card should be measured on its finished scene. How: This makes the page match prefers-reduced-motion, which skips the entrances and opens a card on its finished scene.
 
 			await opeStaFun( curPagObj, { // What: Case Open Call. Why: The layout is measured settled. How: This opens the case's path at the width, opening the menu first for the menu case.
 

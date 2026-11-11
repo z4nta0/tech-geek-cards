@@ -165,7 +165,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 
 	},
 
-	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen and its buttons wrap. How: This loads the Gallery at 390px and opens the share dialog for the birthday card.
+	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen. How: This loads the Gallery at 390px and opens the share dialog for the birthday card.
 
 
 		heiNum : 844,

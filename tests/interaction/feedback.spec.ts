@@ -844,7 +844,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 		const proLisArr = [ ...await feeProFun( curPagObj, staRecObj.ideStr, false ), ...await togProFun( curPagObj, staRecObj.ideStr, false ) ]; // What: Problem List Array. Why: The state passes only when every reachable link, button, and form field responds and every switched state shows and eases. How: This gathers both probes' problems, so a failure prints each one, the toggles' included when a control fails.
 
 
-		if ( /^(home|gallery|about)-(desktop|phone)$/.test( staRecObj.ideStr ) ) proLisArr.push( ...await hovProFun( curPagObj, staRecObj.ideStr, false ) ); // What: Hover Probe Call. Why: The hover surfaces show, with nothing covering them, only on the plain Home, Gallery, and About states. How: On those pages' desktop and phone states, this adds the surfaces' problems.
+		if ( /^(home|gallery|about)-(desktop|phone)$/.test( staRecObj.ideStr ) ) proLisArr.push( ...await hovProFun( curPagObj, staRecObj.ideStr, false ) ); // What: Hover Probe Call. Why: The hover surfaces are probed on the plain Home, Gallery, and About states, where nothing covers them. How: On those pages' desktop and phone states, this adds the surfaces' problems.
 
 
 
@@ -901,7 +901,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 		const proLisArr = [ ...await feeProFun( curPagObj, staRecObj.ideStr, true ), ...await togProFun( curPagObj, staRecObj.ideStr, true ) ]; // What: Problem List Array. Why: Every reachable link, button, and form field has to respond, and every switched state show, without moving. How: This gathers both probes' problems, so a failure prints each one, the toggles' included when a control fails.
 
 
-		if ( /^(home|gallery|about)-(desktop|phone)$/.test( staRecObj.ideStr ) ) proLisArr.push( ...await hovProFun( curPagObj, staRecObj.ideStr, true ) ); // What: Hover Probe Call. Why: The hover surfaces show, with nothing covering them, only on the plain Home, Gallery, and About states. How: On those pages' desktop and phone states, this adds the surfaces' problems.
+		if ( /^(home|gallery|about)-(desktop|phone)$/.test( staRecObj.ideStr ) ) proLisArr.push( ...await hovProFun( curPagObj, staRecObj.ideStr, true ) ); // What: Hover Probe Call. Why: The hover surfaces are probed on the plain Home, Gallery, and About states, where nothing covers them. How: On those pages' desktop and phone states, this adds the surfaces' problems.
 
 
 
