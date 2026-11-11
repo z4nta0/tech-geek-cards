@@ -52,7 +52,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
 
 // #region Constants
 
-const INJ_MAR_STR = '<img src=x onerror=alert(1) data-injected-markup>'; // What: Injected Markup String. Why: A name that became markup would let a shared link run code in a visitor's browser. How: This is an image tag with an inline handler and a marker attribute, which a page showing it as text never turns into an element.
+const INJ_MAR_STR = '<img src=x onerror=alert(1) data-test-injected-markup>'; // What: Injected Markup String. Why: A name that became markup would let a shared link run code in a visitor's browser. How: This is an image tag with an inline handler and a marker attribute, which a page showing it as text never turns into an element.
 
 // #endregion Constants
 
@@ -319,8 +319,8 @@ for ( const carDatObj of CAR_DAT_ARR.filter( ( carCurObj ) => carCurObj.cusBoo |
 
 		await expect( curPagObj.getByRole( 'main' ) ).toContainText( INJ_MAR_STR ); // What: Name As Text Assertion. Why: The name has to reach the card as the characters it was written in. How: This waits for the card to show the script-like text whole.
 
-		expect( await curPagObj.locator( '[data-injected-markup]' ).count() ).toBe( 0 ); // What: No Markup Assertion. Why: A name rendered as HTML would turn into an image element with the marker attribute. How: This checks no such element exists.
-		expect( await polVioFun( curPagObj, broNamStr ) ).toEqual( [] );                 // What: No Violation Assertion. Why: An inline handler the name added would be refused and reported. How: This checks nothing was refused.
+		expect( await curPagObj.locator( '[data-test-injected-markup]' ).count() ).toBe( 0 ); // What: No Markup Assertion. Why: A name rendered as HTML would turn into an image element with the marker attribute. How: This checks no such element exists.
+		expect( await polVioFun( curPagObj, broNamStr ) ).toEqual( [] );                      // What: No Violation Assertion. Why: An inline handler the name added would be refused and reported. How: This checks nothing was refused.
 
 
 	} );
