@@ -223,7 +223,7 @@
 
 }
 
-.shaCloSvg { /* What: Share Close SVG. Why: In WebKit a press that lands on the icon doesn't count as pressing the button, so the button never showed its pressed look. How: This lets the pointer pass through the icon to the button behind it. */
+.shaCloSvg { /* What: Share Close SVG. Why: A press on the icon should land on the close button itself. How: This lets the pointer pass through the icon to the button around it. */
 
 
 	pointer-events : none;

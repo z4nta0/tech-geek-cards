@@ -454,7 +454,7 @@ function ConPagCom () : JSX.Element {
 											value={ forDatObj.email }
 
 											onChange={ chaFieFun }
-										/>{ /* What: Field Text Input Element. Why: The email field takes the address the reply goes back to this address. How: This takes their email, required and checked for its format. */ }
+										/>{ /* What: Field Text Input Element. Why: A reply needs an address to go back to. How: This takes their email, required and checked for its format. */ }
 
 
 									</div>

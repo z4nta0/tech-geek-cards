@@ -289,7 +289,34 @@ function imaSizFun ( imaBufObj : Buffer ) : [ number, number ] {
 
 
 
+// #region socTagFun
+
+/**
+ * socTagFun = Social Tag Function
+ *
+ * @summary
+ * Reads a page's meta tags from its raw HTML, the way a link scraper reads
+ * them without running a script. It only reads a tag whose `name` or
+ * `property` attribute comes directly before its `content`, the order the
+ * site's own tags use, and decodes only the `&quot;`, `&#39;`, and `&amp;`
+ * entities in each value. A name found twice keeps its last value.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param htmTexStr - HTML Text String: The page's raw HTML.
+ *
+ * @returns Each tag's name or property mapped to its decoded content.
+ *
+ * @example
+ * ```ts
+ * socTagFun(htmTexStr) // => { 'og:title' : 'Happy Birthday Card | ...', ... }
+ * ```
+ *
+*/
+
 const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
+
+// #endregion socTagFun
 
 // #endregion Helpers
 
