@@ -18,18 +18,18 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  * render.mts = Image Renderer
  *
  * @summary
- * Rebuilds every raster image the site shows from the originals in
- * originals/, a folder kept out of git so the large source files never bloat
- * the repository again. Each image is scaled so it covers its box, which is
- * twice the largest size the site shows it at, never scaled up, and encoded
- * at 0.85 quality, the lowest that showed no difference from the original at
- * 3x zoom, except flat artwork, which is encoded lossless. The card
- * illustrations are shown at up to 1,920 by 1,080, larger than their
- * originals, so they keep their full size, while a full-screen background
- * covers twice that stage. A card preview's box cuts it to
- * exactly 16:9 around its center, so a 4:3 original matches every other
- * preview. Everything is written as WebP into src/assets, or into a converted
- * card's own folder for images only it shows.
+ * Rebuilds the site's raster images, such as the card previews, from the
+ * originals in originals/, a folder kept out of git so the large source files
+ * never bloat the repository again. Each image is scaled so it covers its
+ * box, never scaled up, and encoded at 0.85 quality, the lowest that showed
+ * no difference from the original at 3x zoom, except flat artwork, which is
+ * encoded lossless. A card preview's box is about twice its largest display
+ * size, and cuts it to exactly 16:9 around its center, so a 4:3 original
+ * matches every other preview. A full-screen background's box is twice the
+ * 1,920 by 1,080 stage, and the card illustrations and photos, shown up to
+ * that stage's size, keep their full size. Everything is written as WebP
+ * into src/assets, or into a converted card's own folder for images only it
+ * shows.
  * The link preview images are captured from the site itself by
  * design/og-image/render.mts instead.
  * Run it with npm run images whenever an image is added or replaced, or a
@@ -49,15 +49,13 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
 
 type BoxRecTyp = { cutBoo : boolean, heiNum : number, losBoo : boolean, widNum : number }; // What: Box Record Type. Why: A kind of image is either fitted to cover its box or cut to exactly its size, and encoded lossy or lossless. How: This names whether it's cut, the box's height and width in pixels, Infinity for no limit, and whether it's lossless.
 
-const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. Why: Each kind of image is shown at a different largest size, and its file should be no more than twice that. How: This maps each kind to its box.
+const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. Why: Each kind of image is shown at a different largest size, and its file should be no more than three times that. How: This maps each kind to its box.
 
 
-	'artwork'  : { cutBoo : false, heiNum : Infinity, losBoo : true,  widNum : Infinity }, // What: Artwork Box. Why: Flat cartoon artwork is encoded lossless, per the Images rule, and the card artwork shows smaller than its originals. How: This leaves it at full size and lossless.
-	'card'     : { cutBoo : false, heiNum : Infinity, losBoo : false, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
-	'portrait' : { cutBoo : false, heiNum : 640,      losBoo : false, widNum : 560      }, // What: Portrait Box. Why: The About portrait fills a 280 by 320 frame. How: This covers twice that.
-	'preview'  : { cutBoo : true,  heiNum : 675,      losBoo : false, widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
-	'project'  : { cutBoo : false, heiNum : 698,      losBoo : false, widNum : 1240     }, // What: Project Box. Why: A project screenshot fills a 16:9 frame up to about 620px wide. How: This covers twice that.
-	'stage'    : { cutBoo : false, heiNum : 2160,     losBoo : false, widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
+	'artwork' : { cutBoo : false, heiNum : Infinity, losBoo : true,  widNum : Infinity }, // What: Artwork Box. Why: Flat cartoon artwork is encoded lossless, per the Images rule, and the card artwork shows smaller than its originals. How: This leaves it at full size and lossless.
+	'card'    : { cutBoo : false, heiNum : Infinity, losBoo : false, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
+	'preview' : { cutBoo : true,  heiNum : 675,      losBoo : false, widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
+	'stage'   : { cutBoo : false, heiNum : 2160,     losBoo : false, widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
 
 
 };
@@ -71,14 +69,11 @@ const IMA_REC_ARR : ImaRecTyp[] = [ // What: Image Record Array. Why: Every imag
 
 	...[ [ 'fathers-day-card', 'fathers-day' ], [ 'fdc-special', 'fathers-day-prank' ], [ 'mothers-day-card', 'mothers-day' ] ].flatMap( ( [ dirNamStr, carDirStr ] ) => [ 'appreciate', 'appreciate-you', 'celebration', 'everything', 'everything-you-do', 'extra-1', 'extra-2', 'extra-image-1', 'extra-image-2', 'feces-flinging', 'important-role', 'little-things', 'love', 'love-you', 'monkeying-around', 'mothers-love', 'need-you', 'need-your', 'our-responsibility', 'our-world', 'provide-for-us', 'simian-role', 'special-day', 'thank-you', 'through-the-generations', 'through-the-simian-offspring' ].map( ( filNamStr ) => ( { boxStr : 'card', outStr : `src/cards/${ carDirStr }/${ filNamStr }.webp`, souStr : `${ dirNamStr }/${ filNamStr }.png` } ) ) ), // What: Family Photo Rows. Why: The three Family cards share most photo names, and each folder holds only some of them. How: This lists every name for every original folder, writing into that card's own folder, and the loop skips an original that doesn't exist.
 
-	...[ 'ease-my-life', 'hair-designs', 'reese-roofing', 'seal-and-shield', 'tech-geek', 'the-bernie-bears', 'tonys-toppers' ].map( ( proNamStr ) => ( { boxStr : 'project', outStr : `src/assets/${ proNamStr }-website.webp`, souStr : `${ proNamStr }-website.png` } ) ), // What: Project Screenshot Rows. Why: Every project card shows a screenshot of its site. How: This builds one row per project.
-
 	...[ 'christmas', 'fathers-day', 'fourth-of-july', 'happy-birthday', 'happy-halloween', 'happy-thanksgiving', 'mothers-day' ].map( ( carNamStr ) => ( { boxStr : 'preview', outStr : `src/assets/${ carNamStr }-card-preview-image.webp`, souStr : `${ carNamStr }-card-preview-image.png` } ) ), // What: Card Preview Rows. Why: Every card in the catalog shows a preview. How: This builds one row per card.
 
-	{ boxStr : 'artwork',  outStr : 'src/cards/christmas/snowman.webp',             souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is flat cartoon art shown at about 115px wide, smaller than its original. How: This keeps it at full size, encoded lossless.
-	{ boxStr : 'stage',    outStr : 'src/cards/christmas/pirate-background.webp',   souStr : 'christmas-card/pirate-background.jpg' }, // What: Christmas Pirate Background Row. Why: The hacked scene fills the screen. How: This fits it to the stage box.
-	{ boxStr : 'stage',    outStr : 'src/cards/christmas/snowy-background.webp',    souStr : 'christmas-card/snowy-background.jpg'  }, // What: Christmas Snowy Background Row. Why: The snowy scene fills the screen. How: This fits it to the stage box.
-	{ boxStr : 'portrait', outStr : 'src/assets/self-portrait.webp',                souStr : 'self-portrait.jpg'                    }  // What: Portrait Row. Why: The About page shows the portrait. How: This fits it to the portrait box.
+	{ boxStr : 'artwork', outStr : 'src/cards/christmas/snowman.webp',           souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is flat cartoon art shown at about 115px wide, smaller than its original. How: This keeps it at full size, encoded lossless.
+	{ boxStr : 'stage',   outStr : 'src/cards/christmas/pirate-background.webp', souStr : 'christmas-card/pirate-background.jpg' }, // What: Christmas Pirate Background Row. Why: The hacked scene fills the screen. How: This fits it to the stage box.
+	{ boxStr : 'stage',   outStr : 'src/cards/christmas/snowy-background.webp',  souStr : 'christmas-card/snowy-background.jpg'  }  // What: Christmas Snowy Background Row. Why: The snowy scene fills the screen. How: This fits it to the stage box.
 
 
 ];
