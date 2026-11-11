@@ -23,7 +23,6 @@ import { readFileSync  } from 'node:fs';  // What: Read File Sync. Why: The head
  * their headers.
  *
  * Sections:
- *  - Types
  *  - Constants
  *  - Helpers
  *  - Exports
@@ -31,14 +30,6 @@ import { readFileSync  } from 'node:fs';  // What: Read File Sync. Why: The head
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
-
-
-
-// #region Types
-
-type HeaBloTyp = { heaObj : Record< string, string >, patStr : string }; // What: Header Block Type. Why: A headers file is a list of paths, each with its own headers. How: This pairs a block's path with its headers, keyed by lowercase name.
-
-// #endregion Types
 
 
 
@@ -52,6 +43,8 @@ const HEA_PAT_STR = fileURLToPath( new URL( '../../public/_headers', import.meta
 
 
 // #region Helpers
+
+type HeaBloTyp = { heaObj : Record< string, string >, patStr : string }; // What: Header Block Type. Why: A headers file is a list of paths, each with its own headers. How: This pairs a block's path with its headers, keyed by lowercase name.
 
 // #region heaBloFun
 
