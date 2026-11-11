@@ -446,7 +446,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-								<div className={ cssModObj.posTexDiv }>{ /* What: Postcard Text Div Element. Why: The invitation reads as one column beside the postmark above 768px, where the postmark is hidden at 768px and below. How: This stacks the eyebrow, heading, paragraph, and button. */ }
+								<div className={ cssModObj.posTexDiv }>{ /* What: Postcard Text Div Element. Why: The invitation reads as one column, beside the postmark above 768px and alone at 768px and below, where the postmark is hidden. How: This stacks the eyebrow, heading, paragraph, and button. */ }
 
 
 									<p className={ cssModObj.secEyePar }>Made to order</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the banner. How: This shows it in berry mono capitals. */ }

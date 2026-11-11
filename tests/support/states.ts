@@ -67,7 +67,7 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * The shared states the checks visit: each route (Home, Gallery, About,
  * Contact, and every card's page) and the 404 page at a phone width (390px)
  * and a desktop width (1,440px), the mobile menu open at the phone width,
- * since the menu is only reachable there, and the share dialog open on the
+ * where the menu replaces the bar's links, and the share dialog open on the
  * Gallery at both widths, plus a signable card's at the phone width. Every row
  * shares the {@link StaRecTyp} shape, so its fields carry no comments of their
  * own:
@@ -96,11 +96,11 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 
 	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: The home page opens the site at a desktop width. How: This loads the home page at 1,440px.
 	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
-	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and the listed cards' tiles. How: This loads the Gallery at 1,440px.
+	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds its sections, such as the listed cards' tiles. How: This loads the Gallery at 1,440px.
 	{ heiNum : 844, ideStr : 'gallery-phone',             patStr : '/gallery',               redBoo : false, widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
 	{ heiNum : 900, ideStr : 'about-desktop',             patStr : '/about',                 redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds its sections, such as the story. How: This loads the About page at 1,440px.
 	{ heiNum : 844, ideStr : 'about-phone',               patStr : '/about',                 redBoo : false, widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
-	{ heiNum : 900, ideStr : 'contact-desktop',           patStr : '/contact',               redBoo : false, widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
+	{ heiNum : 900, ideStr : 'contact-desktop',           patStr : '/contact',               redBoo : false, widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds its sections, such as the form. How: This loads the Contact page at 1,440px.
 	{ heiNum : 844, ideStr : 'contact-phone',             patStr : '/contact',               redBoo : false, widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
 	{ heiNum : 900, ideStr : 'not-found-desktop',         patStr : '/missing',               redBoo : false, widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
 	{ heiNum : 844, ideStr : 'not-found-phone',           patStr : '/missing',               redBoo : false, widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.

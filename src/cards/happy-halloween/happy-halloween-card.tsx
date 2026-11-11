@@ -864,10 +864,10 @@ function PumLanCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
  * @summary
  * The Happy Halloween card. It renders the night scene, its stars scattered
  * once when it opens, and plays the motion that belongs to the scene as a
- * whole: the greeting dropping in, its shimmer, the moon's float, the stars'
- * twinkle, and the lightning, all built in useGSAP so leaving the card or
- * replaying it reverts every tween and the letter split and cancels the next
- * flash. The ghosts, bats, jack-o'-lanterns, and candles run their own.
+ * whole, such as the greeting dropping in, all built in useGSAP so leaving
+ * the card or replaying it reverts every tween and the letter split and
+ * cancels the next flash. The ghosts, bats, jack-o'-lanterns, and candles run
+ * their own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -1079,7 +1079,7 @@ function HalCarCom () : JSX.Element {
 			ref={ carDivRef }
 
 			className={ cssModObj.halCarDiv }
-		>{ /* What: Halloween Card Div Element. Why: The card fills the screen with a night scene. How: This holds the sky, the figures, the greeting, and the lightning, layered in the order they're drawn. */ }
+		>{ /* What: Halloween Card Div Element. Why: The card fills the screen with a night scene. How: This holds the night scene's layers, such as the sky, layered in the order they're drawn. */ }
 
 
 			<div
