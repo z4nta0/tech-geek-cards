@@ -27,7 +27,11 @@
 
 type OccNamTyp = 'Birthday' | 'Family' | 'Holiday'; // What: Occasion Name Type. Why: Every card belongs to one occasion the Gallery can filter by. How: This lists the three occasion names.
 
+// #endregion Types
 
+
+
+// #region Constants
 
 type CarDatTyp = { // What: Card Data Type. Why: Every card is described the same way wherever it's shown or built. How: This names each field a card's data holds.
 
@@ -44,16 +48,6 @@ type CarDatTyp = { // What: Card Data Type. Why: Every card is described the sam
 
 
 };
-
-// #endregion Types
-
-
-
-// #region Constants
-
-const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after All.
-
-
 
 // #region CAR_DAT_ARR
 
@@ -224,6 +218,10 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 ];
 
 // #endregion CAR_DAT_ARR
+
+
+
+const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after All.
 
 // #endregion Constants
 

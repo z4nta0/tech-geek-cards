@@ -35,6 +35,7 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  *
  * Sections:
  *  - Constants
+ *  - Module State
  *  - Module Init
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -75,10 +76,17 @@ const ICO_SIZ_ARR = [ 16, 32, 48 ]; // What: ICO Size Array. Why: favicon.ico sh
 
 const OUT_DIR_STR = fileURLToPath( new URL( '../../public/', import.meta.url ) );                                                       // What: Output Directory String. Why: Browsers request icons from the site's root. How: This resolves public/ from this script's folder.
 const SOU_SVG_STR = fileURLToPath( new URL( '../../node_modules/techgeek-design/src/assets/brand/favicon.svg', import.meta.url ) ); // What: Source SVG String. Why: The TechGeek family's mark lives in the shared design package. How: This resolves the installed package's artwork from this script's folder.
-const SOU_B64_STR = readFileSync( SOU_SVG_STR ).toString( 'base64' );                                                                   // What: Source Base64 String. Why: The browser draws the mark from data rather than a file path. How: This reads the artwork and encodes it.
-const TOU_SCA_NUM = 0.8;                                                                                         // What: Touch Scale Number. Why: iOS rounds the touch icon's corners, which would crowd a mark drawn edge to edge. How: The touch icon draws the mark at this share of its square, centered.
+const TOU_SCA_NUM = 0.8; // What: Touch Scale Number. Why: iOS rounds the touch icon's corners, which would crowd a mark drawn edge to edge. How: The touch icon draws the mark at this share of its square, centered.
 
 // #endregion Constants
+
+
+
+// #region Module State
+
+const SOU_B64_STR = readFileSync( SOU_SVG_STR ).toString( 'base64' ); // What: Source Base64 String. Why: The browser draws the mark from data rather than a file path. How: This reads the artwork and encodes it.
+
+// #endregion Module State
 
 
 

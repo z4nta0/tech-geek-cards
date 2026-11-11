@@ -38,28 +38,12 @@ import type { LazyExoticComponent } from 'react';          // What: Lazy Exotic 
  * its preview in src/assets/.
  *
  * Sections:
- *  - Types
  *  - Constants
  *  - Exports
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
-
-
-
-// #region Types
-
-type CarRecTyp = CarDatTyp & { // What: Card Record Type. Why: The pages need a card's data, component, and preview together. How: This adds the two to the card's data.
-
-
-	carCom : LazyExoticComponent< ComponentType >, // What: Card Component. Why: The card's own page renders the card itself. How: This is the card's component, loaded the first time its page opens.
-	imaStr : string                                // What: Image String. Why: A tile shows a still of its card. How: This is the preview's fingerprinted address.
-
-
-};
-
-// #endregion Types
 
 
 
@@ -132,6 +116,15 @@ const CAR_IMA_OBJ : Record< string, string > = { // What: Card Image Object. Why
 // #endregion CAR_IMA_OBJ
 
 
+
+type CarRecTyp = CarDatTyp & { // What: Card Record Type. Why: The pages need a card's data, component, and preview together. How: This adds the two to the card's data.
+
+
+	carCom : LazyExoticComponent< ComponentType >, // What: Card Component. Why: The card's own page renders the card itself. How: This is the card's component, loaded the first time its page opens.
+	imaStr : string                                // What: Image String. Why: A tile shows a still of its card. How: This is the preview's fingerprinted address.
+
+
+};
 
 const CAR_REC_ARR : CarRecTyp[] = CAR_DAT_ARR.map( ( carDatObj ) => ( { ...carDatObj, carCom : CAR_COM_OBJ[ carDatObj.sluStr ], imaStr : CAR_IMA_OBJ[ carDatObj.sluStr ] } ) ); // What: Card Record Array. Why: Every page that shows or opens a card reads one catalog. How: This joins each card's data with its component and preview by its address, in the data's order.
 

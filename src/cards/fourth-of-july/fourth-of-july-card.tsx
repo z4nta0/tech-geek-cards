@@ -79,16 +79,22 @@ const COL_VAR_ARR = [ 'var( --foj-red-col )', 'var( --foj-whi-col )', 'var( --fo
 
 
 const FIR_POO_NUM = Math.ceil( ( durMilFun( 'p02' ) + durMilFun( 'p08' ) ) / durMilFun( 'p06' ) ); // What: Firework Pool Number. Why: The fireworks reuse a fixed pool of wraps, and a wrap mustn't be reused while its last burst still plays. How: This is how many bursts overlap at most, a firework's longest life, the particle delay plus the longest flight, over the launch interval, rounded up, which is 3. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms, Duration Animation Base Plus 6 ~= 853.0ms
-const PAR_COU_NUM = 14;                                                                            // What: Particle Count Number. Why: Each firework bursts into a ring of sparks. How: This is how many sparks it throws.
-const STA_COU_NUM = 80;                                                                            // What: Star Count Number. Why: The sky should feel full of stars without crowding the lettering. How: This is how many are scattered across it.
 
 
 
 const FLA_HEI_NUM = 100;               // What: Flag Height Number. Why: The flag is drawn in its own drawing space. How: This is its height in that space.
 const FLA_WID_NUM = 190;               // What: Flag Width Number. Why: The flag keeps the real flag's 1.9 to 1 proportions. How: This is its width in that space.
 const CAN_WID_NUM = FLA_WID_NUM * 0.4; // What: Canton Width Number. Why: The blue canton spans two fifths of the flag. How: This is its width in the flag's drawing space.
-const STR_HEI_NUM = FLA_HEI_NUM / 13;  // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
-const CAN_HEI_NUM = STR_HEI_NUM * 7;   // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
+
+
+
+const PAR_COU_NUM = 14; // What: Particle Count Number. Why: Each firework bursts into a ring of sparks. How: This is how many sparks it throws.
+const STA_COU_NUM = 80; // What: Star Count Number. Why: The sky should feel full of stars without crowding the lettering. How: This is how many are scattered across it.
+
+
+
+const STR_HEI_NUM = FLA_HEI_NUM / 13; // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
+const CAN_HEI_NUM = STR_HEI_NUM * 7;  // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
 
 
 
@@ -114,78 +120,6 @@ const staArrFun = () : StaRecTyp[] => Array.from( { length : STA_COU_NUM }, () =
 
 
 } ) );
-
-
-
-// #region staPatFun
-
-/**
- * staPatFun = Star Path Function
- *
- * @summary
- * One five-pointed star of the flag's canton, as a closed subpath in the
- * flag's drawing space, centered on the given point. Its ten corners
- * alternate between the outer points and the inner notches, starting from
- * the top point, at about the real flag's star size for a flag 100 units
- * tall. Every number here is in the flag's own drawing space, so none is a
- * CSS length.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param xcoNum - X-Coordinate Number: The star's center from the flag's left
- *                 edge.
- * @param ycoNum - Y-Coordinate Number: The star's center from the flag's top
- *                 edge.
- *
- * @returns The star's subpath.
- *
- * @example
- * ```ts
- * staPatFun(6.333, 5.385) // => 'M6.333 2.305L7.027 4.430...Z'
- * ```
- *
-*/
-
-const staPatFun = ( xcoNum : number, ycoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
-
-
-	const corPoiArr = Array.from( Array( 10 ).keys(), ( corIndNum ) => { // What: Corner Point Array. Why: A five-pointed star has ten corners. How: This places each one around the center, alternating the outer and inner radius.
-
-
-		const angRadNum = ( corIndNum * 36 - 90 ) * Math.PI / 180; // What: Angle Radian Number. Why: The corners sit every 36 degrees, starting straight up. How: This converts the corner's angle to radians.
-		const radValNum = corIndNum % 2 === 0 ? 3.08 : 1.18;       // What: Radius Value Number. Why: Points reach out and notches tuck in. How: This picks the point radius or the notch radius, in the flag's drawing space.
-
-
-
-		return `${ ( xcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( ycoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
-
-
-	} );
-
-
-
-	return `M${ corPoiArr.join( 'L' ) }Z`; // What: Star Path Return. Why: The star is one closed shape. How: This moves to the first corner, draws a line through the rest, and closes it.
-
-
-};
-
-// #endregion staPatFun
-
-
-
-const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: Flag Stars String. Why: The canton holds fifty stars in nine rows, six and five in turn. How: This finds each star's row and column and joins their subpaths into a single path, built once when the card's code loads.
-
-
-	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Every pair of rows holds eleven stars, six then five. How: This is the star's place within its pair.
-	const colIndNum = paiIndNum < 6 ? paiIndNum * 2 : ( paiIndNum - 6 ) * 2 + 1;    // What: Column Index Number. Why: The six-star rows sit on even columns and the five-star rows between them. How: This picks the star's place among the canton's eleven columns.
-	const rowIndNum = Math.floor( staIndNum / 11 ) * 2 + ( paiIndNum < 6 ? 0 : 1 ); // What: Row Index Number. Why: The rows alternate six and five. How: This counts the pairs before the star and adds one when it falls in its pair's second row.
-
-
-
-	return staPatFun( ( colIndNum + 1 ) * CAN_WID_NUM / 12, ( rowIndNum + 1 ) * CAN_HEI_NUM / 10 ); // What: Star Path Return. Why: The stars sit evenly spaced inside the canton. How: This draws the star at its column's twelfth of the canton's width and its row's tenth of its height.
-
-
-} ).join( '' );
 
 
 
@@ -351,6 +285,78 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 };
 
 // #endregion staFirFun
+
+
+
+// #region staPatFun
+
+/**
+ * staPatFun = Star Path Function
+ *
+ * @summary
+ * One five-pointed star of the flag's canton, as a closed subpath in the
+ * flag's drawing space, centered on the given point. Its ten corners
+ * alternate between the outer points and the inner notches, starting from
+ * the top point, at about the real flag's star size for a flag 100 units
+ * tall. Every number here is in the flag's own drawing space, so none is a
+ * CSS length.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param xcoNum - X-Coordinate Number: The star's center from the flag's left
+ *                 edge.
+ * @param ycoNum - Y-Coordinate Number: The star's center from the flag's top
+ *                 edge.
+ *
+ * @returns The star's subpath.
+ *
+ * @example
+ * ```ts
+ * staPatFun(6.333, 5.385) // => 'M6.333 2.305L7.027 4.430...Z'
+ * ```
+ *
+*/
+
+const staPatFun = ( xcoNum : number, ycoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
+
+
+	const corPoiArr = Array.from( Array( 10 ).keys(), ( corIndNum ) => { // What: Corner Point Array. Why: A five-pointed star has ten corners. How: This places each one around the center, alternating the outer and inner radius.
+
+
+		const angRadNum = ( corIndNum * 36 - 90 ) * Math.PI / 180; // What: Angle Radian Number. Why: The corners sit every 36 degrees, starting straight up. How: This converts the corner's angle to radians.
+		const radValNum = corIndNum % 2 === 0 ? 3.08 : 1.18;       // What: Radius Value Number. Why: Points reach out and notches tuck in. How: This picks the point radius or the notch radius, in the flag's drawing space.
+
+
+
+		return `${ ( xcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( ycoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
+
+
+	} );
+
+
+
+	return `M${ corPoiArr.join( 'L' ) }Z`; // What: Star Path Return. Why: The star is one closed shape. How: This moves to the first corner, draws a line through the rest, and closes it.
+
+
+};
+
+// #endregion staPatFun
+
+
+
+const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: Flag Stars String. Why: The canton holds fifty stars in nine rows, six and five in turn. How: This finds each star's row and column and joins their subpaths into a single path, built once when the card's code loads.
+
+
+	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Every pair of rows holds eleven stars, six then five. How: This is the star's place within its pair.
+	const colIndNum = paiIndNum < 6 ? paiIndNum * 2 : ( paiIndNum - 6 ) * 2 + 1;    // What: Column Index Number. Why: The six-star rows sit on even columns and the five-star rows between them. How: This picks the star's place among the canton's eleven columns.
+	const rowIndNum = Math.floor( staIndNum / 11 ) * 2 + ( paiIndNum < 6 ? 0 : 1 ); // What: Row Index Number. Why: The rows alternate six and five. How: This counts the pairs before the star and adds one when it falls in its pair's second row.
+
+
+
+	return staPatFun( ( colIndNum + 1 ) * CAN_WID_NUM / 12, ( rowIndNum + 1 ) * CAN_HEI_NUM / 10 ); // What: Star Path Return. Why: The stars sit evenly spaced inside the canton. How: This draws the star at its column's twelfth of the canton's width and its row's tenth of its height.
+
+
+} ).join( '' );
 
 // #endregion Helpers
 

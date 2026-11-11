@@ -6,8 +6,8 @@
  *
  * @summary
  * The random number helper the cards' animations share, picking each
- * confetti piece's, balloon's, star's, and firework's size, speed, and
- * position between two bounds, so no two plays of a card look quite alike.
+ * moving piece's size, speed, and position between two bounds, such as a
+ * confetti piece's, so no two plays of a card look quite alike.
  *
  * Sections:
  *  - Helpers
@@ -55,7 +55,7 @@ const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValN
 
 // #region Exports
 
-export { ranValFun }; // What: Named Export. Why: The Birthday and Fourth of July cards draw their random values the same way. How: This exports ranValFun by name.
+export { ranValFun }; // What: Named Export. Why: The animated cards draw their random values the same way. How: This exports ranValFun by name.
 
 // #endregion Exports
 

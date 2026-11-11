@@ -37,6 +37,7 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  *
  * Sections:
  *  - Constants
+ *  - Module State
  *  - Module Init
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -88,14 +89,20 @@ const ROO_DIR_STR = fileURLToPath( new URL( '../../', import.meta.url ) );      
 
 
 
-// #region Module Init
-
-const broInsObj = await chromium.launch();   // What: Browser Instance Object. Why: The images are drawn by a real browser. How: This launches Chromium.
-const encPagObj = await broInsObj.newPage(); // What: Encode Page Object. Why: The canvas work runs in a page. How: This opens a blank one.
+// #region Module State
 
 let aftBytNum = 0; // What: After Bytes Number. Why: The run reports how much smaller the images got. How: This adds up the encoded files' sizes.
 let befBytNum = 0; // What: Before Bytes Number. Why: The run reports how much smaller the images got. How: This adds up the originals' sizes.
 let wroCouNum = 0; // What: Written Count Number. Why: The run reports how many images it wrote. How: This counts them.
+
+// #endregion Module State
+
+
+
+// #region Module Init
+
+const broInsObj = await chromium.launch();   // What: Browser Instance Object. Why: The images are drawn by a real browser. How: This launches Chromium.
+const encPagObj = await broInsObj.newPage(); // What: Encode Page Object. Why: The canvas work runs in a page. How: This opens a blank one.
 
 
 for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each original is rebuilt the same way. How: This scales, encodes, and writes one image per pass.

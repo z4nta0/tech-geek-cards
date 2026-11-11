@@ -1,6 +1,14 @@
 
 
 
+// #region Imports
+
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each leaf's size, pace, spot, and spin are picked at random within set bounds. How: This returns a random number between two bounds.
+
+// #endregion Imports
+
+
+
 /**
  * leaf-fall.ts = Leaf Fall
  *
@@ -81,10 +89,6 @@ const FUL_TUR_NUM = 360;       // What: Full Turn Number. Why: A leaf starts at 
 
 // #region Helpers
 
-const ranNumFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Number Function. Why: Every leaf's size, pace, spot, and wait are picked at random within a range. How: This returns a number from the minimum up to the maximum.
-
-
-
 // #region resLeaFun
 
 /**
@@ -121,16 +125,16 @@ const resLeaFun = ( leaRecObj : LeaRecTyp, leaSetObj : LeaSetTyp, conWidNum : nu
 
 
 	const colIndNum = Math.floor( Math.random() * leaSetObj.colStrArr.length ); // What: Color Index Number. Why: Each fall gets a new color. How: This picks a position in the color list.
-	const durValNum = ranNumFun( leaSetObj.durMinNum, leaSetObj.durMaxNum );    // What: Duration Value Number. Why: The fall, drift, and spin are spread over one fall time. How: This picks it within the settings' range, in milliseconds.
-	const sizValNum = ranNumFun( leaSetObj.sizMinNum, leaSetObj.sizMaxNum );    // What: Size Value Number. Why: Each fall gets a new size. How: This picks it within the settings' range, in pixels.
+	const durValNum = ranValFun( leaSetObj.durMinNum, leaSetObj.durMaxNum );    // What: Duration Value Number. Why: The fall, drift, and spin are spread over one fall time. How: This picks it within the settings' range, in milliseconds.
+	const sizValNum = ranValFun( leaSetObj.sizMinNum, leaSetObj.sizMaxNum );    // What: Size Value Number. Why: Each fall gets a new size. How: This picks it within the settings' range, in pixels.
 
 
-	leaRecObj.rotNum    = ranNumFun( 0, FUL_TUR_NUM );                                            // What: Rotation Assignment. Why: The leaf starts at any angle. How: This picks one within a whole turn.
-	leaRecObj.rotSpeNum = ranNumFun( leaSetObj.spiMaxNum * -1, leaSetObj.spiMaxNum ) / durValNum; // What: Rotation Speed Assignment. Why: The leaf spins either way over its fall. How: This picks a turn within the spin range and spreads it over the fall time.
+	leaRecObj.rotNum    = ranValFun( 0, FUL_TUR_NUM );                                            // What: Rotation Assignment. Why: The leaf starts at any angle. How: This picks one within a whole turn.
+	leaRecObj.rotSpeNum = ranValFun( leaSetObj.spiMaxNum * -1, leaSetObj.spiMaxNum ) / durValNum; // What: Rotation Speed Assignment. Why: The leaf spins either way over its fall. How: This picks a turn within the spin range and spreads it over the fall time.
 	leaRecObj.sizNum    = sizValNum;                                                              // What: Size Assignment. Why: The frame loop reads the size. How: This keeps it.
-	leaRecObj.waiNum    = ranNumFun( 0, leaSetObj.waiMaxNum );                                    // What: Wait Assignment. Why: The leaf waits a moment before it falls. How: This picks a wait within the settings' range.
-	leaRecObj.xcoNum    = ranNumFun( 0, Math.max( 0, conWidNum - sizValNum ) );                   // What: X-Coordinate Assignment. Why: The leaf starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
-	leaRecObj.xcoSpeNum = ranNumFun( leaSetObj.driMaxNum * -1, leaSetObj.driMaxNum ) / durValNum; // What: X-Coordinate Speed Assignment. Why: The leaf drifts either way over its fall. How: This picks a drift within the range and spreads it over the fall time.
+	leaRecObj.waiNum    = ranValFun( 0, leaSetObj.waiMaxNum );                                    // What: Wait Assignment. Why: The leaf waits a moment before it falls. How: This picks a wait within the settings' range.
+	leaRecObj.xcoNum    = ranValFun( 0, Math.max( 0, conWidNum - sizValNum ) );                   // What: X-Coordinate Assignment. Why: The leaf starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
+	leaRecObj.xcoSpeNum = ranValFun( leaSetObj.driMaxNum * -1, leaSetObj.driMaxNum ) / durValNum; // What: X-Coordinate Speed Assignment. Why: The leaf drifts either way over its fall. How: This picks a drift within the range and spreads it over the fall time.
 	leaRecObj.ycoNum    = sizValNum * -1;                                                         // What: Y-Coordinate Assignment. Why: The leaf starts just out of sight. How: This puts it its own size above the top edge.
 	leaRecObj.ycoSpeNum = ( conHeiNum + sizValNum * 2 ) / durValNum;                              // What: Y-Coordinate Speed Assignment. Why: The leaf falls from above the top to below the bottom in its fall time. How: This spreads the container's height plus twice its size over the fall time.
 

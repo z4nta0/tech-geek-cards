@@ -64,10 +64,6 @@ type ArtRowTyp = { claStr : string, delNum : number }; // What: Art Row Type. Wh
 
 // #region Constants
 
-const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack-o'-lantern's body is four overlapping lobes. How: This lists each lobe's center across the drawing, in its own coordinates.
-
-
-
 /**
  * BAT_DEL_ARR = Bat Delay Array
  *
@@ -141,6 +137,10 @@ const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts ri
 
 
 ];
+
+
+
+const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack-o'-lantern's body is four overlapping lobes. How: This lists each lobe's center across the drawing, in its own coordinates.
 
 
 
