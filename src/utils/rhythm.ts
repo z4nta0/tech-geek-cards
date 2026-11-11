@@ -85,8 +85,7 @@ const steOffFun = ( steNamStr : string ) : number => steNamStr === 'bas' ? 0 : (
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param durSteStr - Duration Step String: The step's name, e.g. 'bas', 'p04',
- *                    or 'm01'.
+ * @param durSteStr - Duration Step String: The step's name, e.g. 'p04'.
  *
  * @returns The step's length in milliseconds.
  *
@@ -115,8 +114,7 @@ const durMilFun = ( durSteStr : string ) : number => cdnPowFun( 18 + steOffFun( 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param durSteStr - Duration Step String: The step's name, e.g. 'bas', 'p04',
- *                    or 'm01'.
+ * @param durSteStr - Duration Step String: The step's name, e.g. 'p04'.
  *
  * @returns The step's length in seconds.
  *
@@ -149,8 +147,7 @@ const durSecFun = ( durSteStr : string ) : number => durMilFun( durSteStr ) / 10
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param rhySteStr - Rhythm Step String: The step's name, e.g. 'bas', 'p03',
- *                    or 'm02'.
+ * @param rhySteStr - Rhythm Step String: The step's name, e.g. 'p03'.
  *
  * @returns The step's size in pixels at the current root font size.
  *

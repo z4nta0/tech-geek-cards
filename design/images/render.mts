@@ -26,10 +26,10 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  * encoded lossless. A card preview's box is about twice its largest display
  * size, and cuts it to exactly 16:9 around its center, so a 4:3 original
  * matches every other preview. A full-screen background's box is twice the
- * 1,920 by 1,080 stage, and the card illustrations and photos, shown up to
- * that stage's size, keep their full size. Everything is written as WebP
- * into src/assets, or into a converted card's own folder for images only it
- * shows.
+ * 1,920 by 1,080 stage, and the Family photos, shown up to that stage's size,
+ * keep their full size, as does the flat artwork. Everything is written as
+ * WebP into src/assets, or into a converted card's own folder for images only
+ * it shows.
  * The link preview images are captured from the site itself by
  * design/og-image/render.mts instead.
  * Run it with npm run images whenever an image is added or replaced, or a
@@ -54,7 +54,7 @@ const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. 
 
 
 	'artwork' : { cutBoo : false, heiNum : Infinity, losBoo : true,  widNum : Infinity }, // What: Artwork Box. Why: Flat cartoon artwork is encoded lossless, per the Images rule, and the card artwork shows smaller than its originals. How: This leaves it at full size and lossless.
-	'card'    : { cutBoo : false, heiNum : Infinity, losBoo : false, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
+	'card'    : { cutBoo : false, heiNum : Infinity, losBoo : false, widNum : Infinity }, // What: Card Box. Why: The Family photos fill a stage up to 1,920 by 1,080, larger than their 1,672 by 941 originals. How: This leaves them at full size.
 	'preview' : { cutBoo : true,  heiNum : 675,      losBoo : false, widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 563px wide on Home and the Gallery at a 640px viewport, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
 	'stage'   : { cutBoo : false, heiNum : 2160,     losBoo : false, widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
 

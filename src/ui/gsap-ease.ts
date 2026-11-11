@@ -50,7 +50,7 @@ import { motEasFun  } from '../utils/motion.ts'; // What: Motion Easing Function
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param easFamStr - Easing Family String: The family's 3-letter name, e.g.
- *                    'dec' or 'ino'.
+ *                    'dec'.
  *
  * @returns The ease's GSAP name.
  * @see {@link easNamStr}

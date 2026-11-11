@@ -200,7 +200,7 @@ function AboPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.aboFamSec }>{ /* What: About Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the heading, the three site cards, and the closing buttons. */ }
+				<section className={ cssModObj.aboFamSec }>{ /* What: About Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the family introduction, the three site cards, and the closing buttons. */ }
 
 
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }

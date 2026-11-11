@@ -459,7 +459,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 	const proLisArr : string[] = []; // What: Problem List Array. Why: Every problem should be reported, not just the first. How: This collects them.
 
 
-	if ( !conHanArr.length ) proLisArr.push( 'no control to probe' ); // What: Empty Probe Check. Why: A probe that finds nothing would pass without checking anything, and every state has at least the bar's brand. How: This records a problem when no control is found.
+	if ( !conHanArr.length ) proLisArr.push( 'no control to probe' ); // What: Empty Probe Check. Why: A probe that finds nothing would pass without checking anything, and every state has at least one reachable control, the open dialog's own where a dialog is open. How: This records a problem when no control is found.
 
 
 

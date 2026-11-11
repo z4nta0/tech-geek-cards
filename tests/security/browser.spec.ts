@@ -32,12 +32,13 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
  * response is given the headers the built dist/_headers sends with its path.
  * First a check proves the policy is live, by injecting an inline script and
  * seeing it refused and reported. Then every state the suites visit, the
- * reachable ones each control leads to and the Contact form's sent and failed
- * results included, is checked for policy violations, apart from the one
- * WebKit reports for every select element, and checked to close off every new
- * tab link, with neither an opener nor a referrer. Last, every card that shows
- * a name from its address is opened with script-like names, which have to show
- * as text rather than become markup.
+ * reachable ones each control leads to included, is checked for policy
+ * violations, apart from the one WebKit reports for every select element, and
+ * checked to close off every new tab link, with neither an opener nor a
+ * referrer. The Contact form's sent and failed results are checked for policy
+ * violations too. Last, every card that shows a name from its address is
+ * opened with script-like names, which have to show as text rather than
+ * become markup.
  *
  * Sections:
  *  - Constants

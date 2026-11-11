@@ -59,12 +59,10 @@
 			index.html = Icons Section
 
 			@summary
-			The SVG comes first, since modern browsers prefer it and it stays
-			sharp at any tab density, then the root favicon.ico for older
-			browsers, then the PNG sizes from smallest to largest. Every raster
-			icon is rendered from favicon.svg by npm run icons. The order is
-			the browser's order of preference, so it stays as written rather
-			than alphabetical.
+			The SVG is listed first, then the root favicon.ico, then the PNG
+			sizes from smallest to largest, each drawn at its own size. Every
+			raster icon is rendered from favicon.svg by npm run icons. The
+			order is kept as written rather than alphabetical.
 
 			@author z4nta0 <https://github.com/z4nta0>
 
@@ -72,9 +70,9 @@
 
 
 
-		<link href='/favicon.svg'         rel='icon' type='image/svg+xml' />             <!-- What: SVG Icon Link. Why: Modern browsers prefer a vector favicon that stays sharp at any tab density. How: This points at the hexagon mark in public/. -->
+		<link href='/favicon.svg'         rel='icon' type='image/svg+xml' />             <!-- What: SVG Icon Link. Why: A vector favicon stays sharp at any size, so it's listed first. How: This points at the hexagon mark in public/. -->
 		<link href='/favicon.ico'         rel='icon' sizes='any' />                      <!-- What: ICO Icon Link. Why: Older browsers read only a .ico favicon. How: This points at the root favicon.ico, which also answers the request browsers make for it on their own. -->
-		<link href='/favicon-16x16.png'   rel='icon' sizes='16x16'   type='image/png' /> <!-- What: Small PNG Icon Link. Why: Small tab icons look crisper drawn at their own size. How: This offers the 16px PNG. -->
+		<link href='/favicon-16x16.png'   rel='icon' sizes='16x16'   type='image/png' /> <!-- What: Small PNG Icon Link. Why: The smallest tab icon is drawn at its own size. How: This offers the 16px PNG. -->
 		<link href='/favicon-32x32.png'   rel='icon' sizes='32x32'   type='image/png' /> <!-- What: Medium PNG Icon Link. Why: A browser without SVG favicons needs a raster fallback at a tab icon's size. How: This offers the 32px PNG. -->
 		<link href='/favicon-192x192.png' rel='icon' sizes='192x192' type='image/png' /> <!-- What: Large PNG Icon Link. Why: A browser or device asking for a large icon gets one drawn at that size. How: This offers the 192px PNG. -->
 		<link href='/favicon-512x512.png' rel='icon' sizes='512x512' type='image/png' /> <!-- What: Extra Large PNG Icon Link. Why: High-density screens and app launchers can ask for a bigger icon still. How: This offers the 512px PNG. -->
