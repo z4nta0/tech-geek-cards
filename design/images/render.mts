@@ -93,7 +93,7 @@ const ROO_DIR_STR = fileURLToPath( new URL( '../../', import.meta.url ) );      
 
 let aftBytNum = 0; // What: After Bytes Number. Why: The run reports how much smaller the images got. How: This adds up the encoded files' sizes.
 let befBytNum = 0; // What: Before Bytes Number. Why: The run reports how much smaller the images got. How: This adds up the originals' sizes.
-let wroCouNum = 0; // What: Written Count Number. Why: The run reports how many images it wrote. How: This counts them.
+let wriCouNum = 0; // What: Written Count Number. Why: The run reports how many images it wrote. How: This counts them.
 
 // #endregion Module State
 
@@ -175,7 +175,7 @@ for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each o
 
 	aftBytNum += outBufObj.length;           // What: After Bytes Increase. Why: The total covers every encoded image. How: This adds this file's size.
 	befBytNum += statSync( souPatStr ).size; // What: Before Bytes Increase. Why: The total covers every original. How: This adds this original's size.
-	wroCouNum += 1;                          // What: Written Count Increase. Why: The total counts every image written. How: This adds one.
+	wriCouNum += 1;                          // What: Written Count Increase. Why: The total counts every image written. How: This adds one.
 
 
 }
@@ -186,7 +186,7 @@ await broInsObj.close(); // What: Browser Close Call. Why: The script should exi
 
 
 
-console.log( `Wrote ${ wroCouNum } images, ${ Math.round( befBytNum / 1024 ).toLocaleString() } KB down to ${ Math.round( aftBytNum / 1024 ).toLocaleString() } KB.` ); // What: Result Log Call. Why: The run should say what it wrote. How: This prints the count and the sizes before and after.
+console.log( `Wrote ${ wriCouNum } images, ${ Math.round( befBytNum / 1024 ).toLocaleString() } KB down to ${ Math.round( aftBytNum / 1024 ).toLocaleString() } KB.` ); // What: Result Log Call. Why: The run should say what it wrote. How: This prints the count and the sizes before and after.
 
 // #endregion Module Init
 

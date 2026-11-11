@@ -349,10 +349,10 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 
-	// #region burFun
+	// #region thrBurFun
 
 	/**
-	 * burFun = Burst Function
+	 * thrBurFun = Throw Burst Function
 	 *
 	 * @summary
 	 * Throws a number of pieces from a point on the canvas. Each is thrown at
@@ -375,12 +375,12 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	 *
 	 * @example
 	 * ```ts
-	 * burFun(burXcoNum, burYcoNum, pieCouNum) // => void
+	 * thrBurFun(burXcoNum, burYcoNum, pieCouNum) // => void
 	 * ```
 	 *
 	*/
 
-	const burFun = ( burXcoNum : number, burYcoNum : number, pieCouNum : number ) : void => { // What: Burst Function. Why: The card throws confetti when it opens and wherever it's tapped. How: This adds pieces at the point and starts the loop if it's idle.
+	const thrBurFun = ( burXcoNum : number, burYcoNum : number, pieCouNum : number ) : void => { // What: Throw Burst Function. Why: The card throws confetti when it opens and wherever it's tapped. How: This adds pieces at the point and starts the loop if it's idle.
 
 
 		const kicPixNum = rhyPixFun( 'm03' ); // What: Kick Pixel Number. Why: A burst throws upward before it falls. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px, taken off every piece's downward speed. // Vertical Rhythm Base Minus 3 ~= 6.268px
@@ -426,14 +426,14 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 	};
 
-	// #endregion burFun
+	// #endregion thrBurFun
 
 
 
 	return { // What: Confetti System Return. Why: The card throws bursts and stops the confetti later. How: This returns both functions.
 
 
-		burFun, // What: Burst Function. Why: The card throws bursts. How: This hands over the burst function.
+		burFun : thrBurFun, // What: Burst Function. Why: The card throws bursts. How: This hands over the throw burst function.
 
 		stoFun : () => { // What: Stop Function. Why: The confetti must stop when the card replays or closes. How: This cancels the next frame, stops measuring, and drops every piece.
 

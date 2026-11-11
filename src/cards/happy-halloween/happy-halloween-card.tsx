@@ -56,7 +56,7 @@ import type { JSX } from 'react'; // What: JSX. Why: Each component declares the
 
 // #region Types
 
-type ArtRowTyp = { claStr : string, delNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places and sizes it, and its delay in seconds.
+type ArtRowTyp = { claModStr : string, delSecNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places and sizes it, and its delay in seconds.
 
 // #endregion Types
 
@@ -93,10 +93,10 @@ const BAT_DEL_ARR = [ // What: Bat Delay Array. Why: The bats take off one at a 
  * CAN_ROW_ARR = Candle Row Array
  *
  * @summary
- * The four candles along the ground, each an ArtRowTyp: claStr, the modifier
- * class that places the candle across the hills, and delNum, the delay in
- * seconds before its flame starts to flicker, so the flames never flicker in
- * step. Every delay is a step on the duration scale.
+ * The four candles along the ground, each an ArtRowTyp: claModStr, the
+ * modifier class that places the candle across the hills, and delSecNum, the
+ * delay in seconds before its flame starts to flicker, so the flames never
+ * flicker in step. Every delay is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -105,10 +105,10 @@ const BAT_DEL_ARR = [ // What: Bat Delay Array. Why: The bats take off one at a 
 const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles stand at their own places and flicker out of step. How: The card renders one candle per row.
 
 
-	{ claStr : cssModObj.canFlaSvgFir, delNum : durSecFun( 'm02' ) }, // Duration Animation Base Minus 2 ~= 89.9ms
-	{ claStr : cssModObj.canFlaSvgSec, delNum : durSecFun( 'p04' ) }, // Duration Animation Base Plus 4 ~= 486.1ms
-	{ claStr : cssModObj.canFlaSvgThi, delNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claStr : cssModObj.canFlaSvgFou, delNum : durSecFun( 'p02' ) }  // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.canFlaSvgFir, delSecNum : durSecFun( 'm02' ) }, // Duration Animation Base Minus 2 ~= 89.9ms
+	{ claModStr : cssModObj.canFlaSvgSec, delSecNum : durSecFun( 'p04' ) }, // Duration Animation Base Plus 4 ~= 486.1ms
+	{ claModStr : cssModObj.canFlaSvgThi, delSecNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.canFlaSvgFou, delSecNum : durSecFun( 'p02' ) }  // Duration Animation Base Plus 2 ~= 277.0ms
 
 
 ];
@@ -119,8 +119,8 @@ const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles 
  * GHO_ROW_ARR = Ghost Row Array
  *
  * @summary
- * The three ghosts over the hills, each an ArtRowTyp: claStr, the modifier
- * class that places and sizes the ghost, and delNum, the delay in seconds
+ * The three ghosts over the hills, each an ArtRowTyp: claModStr, the modifier
+ * class that places and sizes the ghost, and delSecNum, the delay in seconds
  * before it rises, so they appear one at a time. Every delay is a step on the
  * duration scale.
  *
@@ -131,9 +131,9 @@ const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles 
 const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts rise at their own places, one after another. How: The card renders one ghost per row.
 
 
-	{ claStr : cssModObj.ghoFloSvgLef, delNum : 0                  }, // What: Left Ghost Row. Why: The left ghost rises first. How: It starts with no delay.
-	{ claStr : cssModObj.ghoFloSvgRig, delNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claStr : cssModObj.ghoFloSvgMid, delNum : durSecFun( 'p08' ) }  // Duration Animation Base Plus 8 ~= 1,497.0ms
+	{ claModStr : cssModObj.ghoFloSvgLef, delSecNum : 0                  }, // What: Left Ghost Row. Why: The left ghost rises first. How: It starts with no delay.
+	{ claModStr : cssModObj.ghoFloSvgRig, delSecNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.ghoFloSvgMid, delSecNum : durSecFun( 'p08' ) }  // Duration Animation Base Plus 8 ~= 1,497.0ms
 
 
 ];
@@ -148,10 +148,10 @@ const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack
  * PUM_ROW_ARR = Pumpkin Row Array
  *
  * @summary
- * The four jack-o'-lanterns along the ground, each an ArtRowTyp: claStr, the
- * modifier class that places and sizes it, and delNum, the delay in seconds
- * before its candle and glow start to flicker, so they never flicker in step.
- * Every delay is a step on the duration scale.
+ * The four jack-o'-lanterns along the ground, each an ArtRowTyp: claModStr,
+ * the modifier class that places and sizes it, and delSecNum, the delay in
+ * seconds before its candle and glow start to flicker, so they never flicker
+ * in step. Every delay is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -160,10 +160,10 @@ const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack
 const PUM_ROW_ARR : ArtRowTyp[] = [ // What: Pumpkin Row Array. Why: The jack-o'-lanterns sit at their own places and flicker out of step. How: The card renders one jack-o'-lantern per row.
 
 
-	{ claStr : cssModObj.pumLanSvgFir, delNum : 0                  }, // What: First Pumpkin Row. Why: The leftmost jack-o'-lantern flickers first. How: It starts with no delay.
-	{ claStr : cssModObj.pumLanSvgSec, delNum : durSecFun( 'p02' ) }, // Duration Animation Base Plus 2 ~= 277.0ms
-	{ claStr : cssModObj.pumLanSvgThi, delNum : durSecFun( 'p05' ) }, // Duration Animation Base Plus 5 ~= 643.9ms
-	{ claStr : cssModObj.pumLanSvgFou, delNum : durSecFun( 'p01' ) }  // Duration Animation Base Plus 1 ~= 209.1ms
+	{ claModStr : cssModObj.pumLanSvgFir, delSecNum : 0                  }, // What: First Pumpkin Row. Why: The leftmost jack-o'-lantern flickers first. How: It starts with no delay.
+	{ claModStr : cssModObj.pumLanSvgSec, delSecNum : durSecFun( 'p02' ) }, // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.pumLanSvgThi, delSecNum : durSecFun( 'p05' ) }, // Duration Animation Base Plus 5 ~= 643.9ms
+	{ claModStr : cssModObj.pumLanSvgFou, delSecNum : durSecFun( 'p01' ) }  // Duration Animation Base Plus 1 ~= 209.1ms
 
 
 ];
@@ -219,7 +219,7 @@ const staArrFun = () : StaRowTyp[] => Array.from( Array( 30 ).keys(), () => ( { 
 
 // #region Components
 
-type BfcProTyp = { delNum : number }; // What: Bat-Fly-Component Props Type. Why: Each bat takes off at its own time. How: This names its delay, in seconds.
+type BfcProTyp = { delSecNum : number }; // What: Bat-Fly-Component Props Type. Why: Each bat takes off at its own time. How: This names its delay, in seconds.
 
 // #region BatFlyCom
 
@@ -238,19 +238,19 @@ type BfcProTyp = { delNum : number }; // What: Bat-Fly-Component Props Type. Why
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.delNum - Delay Number: The delay, in seconds, before the bat
- *                       first flies.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the bat first flies.
  *
  * @returns The bat.
  *
  * @example
  * ```tsx
- * BatFlyCom({ delNum }) // => <BatFlyCom />
+ * BatFlyCom({ delSecNum }) // => <BatFlyCom />
  * ```
  *
 */
 
-function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
+function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 
 
 	const batDivRef = useRef< HTMLDivElement >( null ); // What: Bat Div Reference. Why: The bat flies across the sky. How: This holds the div that moves.
@@ -281,7 +281,7 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 		const winDurNum = durSecFun( 'bas' );                                                                              // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
 		const winEacNum = durSecFun( 'm02' );                                                                              // What: Wing Each Number. Why: The right wing beats a moment behind the left. How: This is the offset between them. // Duration Animation Base Minus 2 ~= 89.9ms
 		const winScaNum = 1 / cdnPowFun( 4 );                                                                              // What: Wing Scale Number. Why: A flap folds the wing nearly flat. How: This squashes it to about a third of its height. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
-		const batTimObj = gsap.timeline( { delay : delNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
+		const batTimObj = gsap.timeline( { delay : delSecNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
 		const bobTopNum = bobAmpNum * -1;                                                                                  // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
 		const finXcoFun = () : number => innerWidth + batWidNum;                                                           // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
 		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );                                        // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
@@ -408,21 +408,21 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places the
- *                       candle, from {@link CAN_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the flame
- *                       starts to flicker.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places the candle, from {@link CAN_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the flame starts to flicker.
  *
  * @returns The candle.
  *
  * @example
  * ```tsx
- * CanFlaCom({ claStr, delNum }) // => <CanFlaCom />
+ * CanFlaCom({ claModStr, delSecNum }) // => <CanFlaCom />
  * ```
  *
 */
 
-function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function CanFlaCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const flaEllRef = useRef< SVGEllipseElement >( null ); // What: Flame Ellipse Reference. Why: The flame flickers. How: This holds the outer flame.
@@ -442,7 +442,7 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		const flaWidNum = cdnPowFun( 1 );     // What: Flame Width Number. Why: A flicker spreads the flame wide. How: This scales its width up by about a third. // Core-Design-Number to the Power of 1 ~= 1.325
 
 
-		gsap.to( flaEllRef.current, { delay : delNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
+		gsap.to( flaEllRef.current, { delay : delSecNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
 
 
 	} );
@@ -453,7 +453,7 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 		<svg
-			className={` ${ cssModObj.canFlaSvg }   ${ claStr } `}
+			className={` ${ cssModObj.canFlaSvg }   ${ claModStr } `}
 
 			viewBox='0 0 30 70'
 
@@ -551,21 +551,22 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places and
- *                       sizes the ghost, from {@link GHO_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the ghost
- *                       rises.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places and sizes the ghost, from
+ *                          {@link GHO_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the ghost rises.
  *
  * @returns The ghost.
  *
  * @example
  * ```tsx
- * GhoFloCom({ claStr, delNum }) // => <GhoFloCom />
+ * GhoFloCom({ claModStr, delSecNum }) // => <GhoFloCom />
  * ```
  *
 */
 
-function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function GhoFloCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const ghoSvgRef = useRef< SVGSVGElement >( null ); // What: Ghost SVG Reference. Why: The ghost rises, bobs, and rocks. How: This holds its drawing.
@@ -584,7 +585,7 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		const decEasStr = gsaEasFun( 'dec' );                  // What: Decelerate Easing String. Why: The ghost slows as it arrives. How: This registers the decelerate token and keeps its GSAP name.
 		const entDurNum = durSecFun( 'p08' );                  // What: Entrance Duration Number. Why: The ghost rises into view slowly. How: This is the rise's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
 		const entShiNum = rhyPixFun( 'p04' );                  // What: Entrance Shift Number. Why: The ghost rises from below its place. How: This is how far below it starts. // Vertical Rhythm Base Plus 4 ~= 44.876px
-		const ghoTimObj = gsap.timeline( { delay : delNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
+		const ghoTimObj = gsap.timeline( { delay : delSecNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
 		const inoEasStr = gsaEasFun( 'ino' );                  // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
 		const rotAngNum = cdnPowFun( 5 );                      // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
 		const rotDurNum = durSecFun( 'p09' );                  // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two never line up. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
@@ -595,7 +596,7 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		ghoTimObj.to( ghoSvgRef.current, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobShiNum, yoyo : true } ); // What: Bob Step. Why: A ghost hovers. How: This floats it up and back forever once it has risen.
 
 
-		gsap.to( ghoSvgRef.current, { delay : delNum, duration : rotDurNum, ease : inoEasStr, repeat : -1, rotation : rotAngNum, yoyo : true } ); // What: Rock Tween. Why: The ghost sways as it hovers. How: This tilts it and back forever, starting as it rises.
+		gsap.to( ghoSvgRef.current, { delay : delSecNum, duration : rotDurNum, ease : inoEasStr, repeat : -1, rotation : rotAngNum, yoyo : true } ); // What: Rock Tween. Why: The ghost sways as it hovers. How: This tilts it and back forever, starting as it rises.
 
 
 	} );
@@ -608,7 +609,7 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		<svg
 			ref={ ghoSvgRef }
 
-			className={` ${ cssModObj.ghoFloSvg }   ${ claStr } `}
+			className={` ${ cssModObj.ghoFloSvg }   ${ claModStr } `}
 
 			viewBox='0 0 60 80'
 
@@ -691,21 +692,22 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places and
- *                       sizes the jack-o'-lantern, from {@link PUM_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the flame
- *                       and glow start to flicker.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places and sizes the jack-o'-lantern, from
+ *                          {@link PUM_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the flame and glow start to flicker.
  *
  * @returns The jack-o'-lantern.
  *
  * @example
  * ```tsx
- * PumLanCom({ claStr, delNum }) // => <PumLanCom />
+ * PumLanCom({ claModStr, delSecNum }) // => <PumLanCom />
  * ```
  *
 */
 
-function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function PumLanCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const flaEllRef = useRef< SVGEllipseElement >( null ); // What: Flame Ellipse Reference. Why: The candle on top flickers. How: This holds its outer flame.
@@ -729,10 +731,10 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		const gloScaNum = cdnPowFun( 1 );     // What: Glow Scale Number. Why: The glow spreads as it pulses. How: This grows it by about a third. // Core-Design-Number to the Power of 1 ~= 1.325
 
 
-		gsap.to( flaEllRef.current, { delay : delNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
+		gsap.to( flaEllRef.current, { delay : delSecNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
 
 
-		gsap.to( gloCirRef.current, { delay : delNum, duration : gloDurNum, ease : decEasStr, opacity : gloOpaNum, repeat : -1, scale : gloScaNum, transformOrigin : 'center center', yoyo : true } ); // What: Pulse Tween. Why: The pumpkin's glow wavers with the candle inside. How: This grows and dims the glow from its center and back forever after its delay.
+		gsap.to( gloCirRef.current, { delay : delSecNum, duration : gloDurNum, ease : decEasStr, opacity : gloOpaNum, repeat : -1, scale : gloScaNum, transformOrigin : 'center center', yoyo : true } ); // What: Pulse Tween. Why: The pumpkin's glow wavers with the candle inside. How: This grows and dims the glow from its center and back forever after its delay.
 
 
 	} );
@@ -743,7 +745,7 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 		<svg
-			className={` ${ cssModObj.pumLanSvg }   ${ claStr } `}
+			className={` ${ cssModObj.pumLanSvg }   ${ claModStr } `}
 
 			viewBox='0 0 80 88'
 
@@ -1238,10 +1240,10 @@ function HalCarCom () : JSX.Element {
 
 
 				<GhoFloCom
-					key={ ghoRowObj.claStr }
+					key={ ghoRowObj.claModStr }
 
-					claStr={ ghoRowObj.claStr }
-					delNum={ ghoRowObj.delNum }
+					claModStr={ ghoRowObj.claModStr }
+					delSecNum={ ghoRowObj.delSecNum }
 				/> // What: Ghost Float Component. Why: Each ghost rises and hovers. How: This draws one at its place, rising after its delay.
 
 
@@ -1274,10 +1276,10 @@ function HalCarCom () : JSX.Element {
 
 
 				<PumLanCom
-					key={ pumRowObj.claStr }
+					key={ pumRowObj.claModStr }
 
-					claStr={ pumRowObj.claStr }
-					delNum={ pumRowObj.delNum }
+					claModStr={ pumRowObj.claModStr }
+					delSecNum={ pumRowObj.delSecNum }
 				/> // What: Pumpkin Lantern Component. Why: Each jack-o'-lantern flickers. How: This draws one at its place, flickering after its delay.
 
 
@@ -1289,10 +1291,10 @@ function HalCarCom () : JSX.Element {
 
 
 				<CanFlaCom
-					key={ canRowObj.claStr }
+					key={ canRowObj.claModStr }
 
-					claStr={ canRowObj.claStr }
-					delNum={ canRowObj.delNum }
+					claModStr={ canRowObj.claModStr }
+					delSecNum={ canRowObj.delSecNum }
 				/> // What: Candle Flame Component. Why: Each candle flickers. How: This draws one at its place, flickering after its delay.
 
 
@@ -1337,7 +1339,7 @@ function HalCarCom () : JSX.Element {
 				<BatFlyCom
 					key={ batIndNum }
 
-					delNum={ batDelNum }
+					delSecNum={ batDelNum }
 				/> // What: Bat Fly Component. Why: Each bat flaps across the sky. How: This draws one that takes off after its delay.
 
 
