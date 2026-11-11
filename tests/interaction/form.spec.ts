@@ -56,7 +56,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helper dri
  *
  * @example
  * ```ts
- * forOpeFun(page) // => Promise<string[]>
+ * await forOpeFun(page) // => [] until the form sends
  * ```
  *
 */

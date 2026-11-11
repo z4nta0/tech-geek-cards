@@ -144,7 +144,7 @@ test( 'every unknown path falls back to the app, which shows the 404 page', () =
 
 // #region Build Checks
 
-test( 'every unlisted card sends a noindex header and every listed card none', () => { // What: Unlisted Noindex Test. Why: An unlisted card is made for one person, so it has to stay out of search even for crawlers that never run its script. How: This reads the built headers for each card's address and its page's file name, and checks that the unlisted ones carry noindex and the listed ones no robots header.
+test( 'every unlisted card sends a noindex header and every listed card none', () => { // What: Unlisted Noindex Test. Why: An unlisted card is kept off the Gallery and Home and reached only by its own address, so it has to stay out of search even for crawlers that never run its script. How: This reads the built headers for each card's address and its page's file name, and checks that the unlisted ones carry noindex and the listed ones no robots header.
 
 
 	for ( const carDatObj of CAR_DAT_ARR ) for ( const pagPatStr of [ `/${ carDatObj.sluStr }`, `/${ carDatObj.sluStr }.html` ] ) expect( heaPatFun( pagPatStr )[ 'x-robots-tag' ], pagPatStr ).toBe( carDatObj.lisBoo ? undefined : 'noindex' ); // What: Card Path Loop. Why: Netlify can serve a card's page at its address or its file name. How: This checks each path's robots header, naming the path when it fails.

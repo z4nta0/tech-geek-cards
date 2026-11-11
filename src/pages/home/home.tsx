@@ -6,10 +6,10 @@
 import cssModObj from './home.module.css'; // What: CSS Module Object. Why: Home's hero, steps, featured cards, and banner are styled in its own module. How: This maps each class name in home.module.css to its hashed module class.
 
 
-import { CAR_REC_ARR } from '../../ui/cards.ts';             // What: Card Record Array. Why: The hero and the featured cards show cards from the catalog. How: The page picks from it.
+import { CAR_REC_ARR } from '../../ui/cards.ts';             // What: Card Record Array. Why: The page's sections show cards from the catalog, such as the hero's. How: The page picks from it.
 import { CarTilCom   } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
-import { ConCirCom   } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The hero and the banner carry the site's motif. How: The page sets it behind them.
-import { Link        } from 'react-router';                  // What: Link. Why: The hero, the featured section, and the banner move to other pages without a full page load. How: This renders those links.
+import { ConCirCom   } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The page's sections carry the site's motif, such as the hero. How: The page sets it behind them.
+import { Link        } from 'react-router';                  // What: Link. Why: The page's links move to other pages without a full page load, such as the banner's. How: This renders those links.
 import { ShaDiaCom   } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's Share is pressed.
 import { useState    } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
 

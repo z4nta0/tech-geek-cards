@@ -170,7 +170,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.galLisSec }>{ /* What: Gallery List Section Element. Why: The controls and the cards are the page's content. How: This holds the controls, the count, and the grid or the empty message. */ }
+				<section className={ cssModObj.galLisSec }>{ /* What: Gallery List Section Element. Why: The controls and the cards are the page's content. How: This holds the page's controls and cards, such as the search, and its closing note. */ }
 
 
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }

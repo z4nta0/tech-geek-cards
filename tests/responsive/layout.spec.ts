@@ -19,7 +19,7 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * across a range of screen widths, in whichever engine the project runs, and
  * fails a width whose layout breaks: the page scrolling sideways, a visible
  * element reaching past either edge of the screen (unless an ancestor clips it
- * on purpose, which never excuses a link or button cut off at the edge), text
+ * on purpose, which doesn't excuse a link or button cut off at the edge), text
  * spilling out of its own box, or two controls a visitor can reach overlapping
  * each other. The widths run from 320px, WCAG's narrowest
  * reflow width, to 1,920px, and include a pixel either side of each of the

@@ -382,7 +382,7 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 			ref={ carDivRef }
 
 			className={ cssModObj.chrCarDiv }
-		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the wipe's grid and both scenes. */ }
+		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the snowy scene and, in the prank, the wipe's grid and the hacked scene before it. */ }
 
 
 			{ isaPraBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
