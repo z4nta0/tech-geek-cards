@@ -111,7 +111,7 @@ const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot th
 	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // What: Sprinkle Four Row. Why: A yellow sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Yellow Color = #FFD93D
 	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // What: Sprinkle Five Row. Why: A green sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Green Color = #6BCB77
 	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // What: Sprinkle Six Row. Why: A pink sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Pink Color = #FF6FCF
-	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // What: Sprinkle Seven Row. Why: A orange sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Orange Color = #FF9A3C
+	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // What: Sprinkle Seven Row. Why: An orange sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Orange Color = #FF9A3C
 
 
 ];
@@ -266,8 +266,8 @@ function BirCarCom () : JSX.Element {
 		const bouEasStr = gsaEasFun( 'bou' );                                                                     // What: Bounce Easing String. Why: The greeting and cake pop in with a springy overshoot, a celebration's flourish. How: This registers the bounce token and keeps its GSAP name.
 		const conSysObj = staConFun( conCanRef.current! );                                                        // What: Confetti System Object. Why: The timeline and taps throw bursts. How: This readies the confetti on its canvas. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and useGSAP runs after that render.
 		const decEasStr = gsaEasFun( 'dec' );                                                                     // What: Decelerate Easing String. Why: The fades slow as they land. How: This registers the decelerate token and keeps its GSAP name.
-		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The Birthday line starts as the Happy line lands. How: This GSAP position starts a step one Base Plus 1 step, about 209ms, before the last ends. // Duration Animation Base Plus 1 ~= 209.1ms
-		const sliPosStr = `-=${ durSecFun( 'm02' ) }`;                                                            // What: Slight Position String. Why: The wish and cake follow close on the step before. How: This GSAP position starts a step one Base Minus 2 step, about 90ms, before the last ends. // Duration Animation Base Minus 2 ~= 89.9ms
+		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The Birthday line starts as the Happy line lands. How: This GSAP position starts the step a Base Plus 1 step, about 209ms, before the one before it ends. // Duration Animation Base Plus 1 ~= 209.1ms
+		const sliPosStr = `-=${ durSecFun( 'm02' ) }`;                                                            // What: Slight Position String. Why: The wish and cake follow close on the step before. How: This GSAP position starts the step a Base Minus 2 step, about 90ms, before the one before it ends. // Duration Animation Base Minus 2 ~= 89.9ms
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                                   // What: Timeline Object. Why: The greeting plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
 		const titLinArr = [ titMaiRef.current, titNamRef.current ].filter( ( titSpaEle ) => titSpaEle !== null ); // What: Title Line Array. Why: The Birthday line and the name, when there is one, pop in together. How: This lists both spans, leaving out the name's when it isn't rendered.
 
@@ -497,7 +497,7 @@ function BirCarCom () : JSX.Element {
 					viewBox='0 0 140 110'
 
 					aria-hidden='true'
-				>{ /* What: Birthday Cake SVG Element. Why: A two-tier cake with candles is the card's centerpiece, decoration a screen reader should skip. How: This draws its shadow, tiers, icing, candles, flames, and sprinkles. */ }
+				>{ /* What: Birthday Cake SVG Element. Why: A two-tier cake with candles is the card's centerpiece, decoration a screen reader should skip. How: This draws its shadow, tiers, highlight bands, icing, candles, flames, and sprinkles. */ }
 
 
 					<ellipse

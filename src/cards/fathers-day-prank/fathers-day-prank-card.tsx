@@ -37,7 +37,7 @@ import type { JSX       } from 'react';                    // What: JSX. Why: Th
  * dad in every photo. It's a record handed to the shared Family engine
  * (ui/family-card.tsx), which plays every Family card the same way, and its
  * own module gives it the Father's Day card's sky blue, navy, and Permanent
- * Marker, so the joke lands only once the first photo opens.
+ * Marker, so only its words tell the two cards apart.
  *
  * Sections:
  *  - Constants

@@ -41,11 +41,11 @@ import type { SnoSetTyp } from './snowfall.ts'; // What: Snowfall Settings Type.
  * with a heading that scrambles into You've Just Been Hacked, a glitch, and a
  * message fading in letter by letter that admits it's a joke, before the
  * squares wipe back over it and away again to the snowy scene, signed by Mr.
- * Awesome unless the link says otherwise. Every distance and angle, and every
- * duration but the one-second pauses, is a step on the design scale, and the
- * curves are the stylesheet's easing tokens. Under reduced motion either
- * version opens straight on the finished snowy scene, without snow. Converted
- * from TechGeek.support's original.
+ * Awesome unless the link says otherwise. Every distance and angle in the
+ * timeline, and every duration but its one-second pauses, is a step on the
+ * design scale, and the curves are the stylesheet's easing tokens. Under
+ * reduced motion either version opens straight on the finished snowy scene,
+ * without snow. Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants

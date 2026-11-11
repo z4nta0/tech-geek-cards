@@ -292,7 +292,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 			leaRecObj.svgEle.style.opacity   = String( Math.min( 1, Math.max( 0, falFraNum ) ) );                                                       // What: Opacity Assignment. Why: The leaf fades in as it falls. How: This sets its opacity to its fall fraction, kept between 0 and 1.
-			leaRecObj.svgEle.style.transform = `translate3d( ${ leaRecObj.xcoNum }px, ${ leaRecObj.ycoNum }px, 0 ) rotate( ${ leaRecObj.rotNum }deg )`; // What: Transform Assignment. Why: Moving by transform skips layout, so thirty leaves stay smooth. How: This places and turns the leaf.
+			leaRecObj.svgEle.style.transform = `translate3d( ${ leaRecObj.xcoNum }px, ${ leaRecObj.ycoNum }px, 0 ) rotate( ${ leaRecObj.rotNum }deg )`; // What: Transform Assignment. Why: Moving by transform skips layout, so the leaves stay smooth. How: This places and turns the leaf.
 
 
 		}

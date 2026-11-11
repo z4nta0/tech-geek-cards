@@ -354,7 +354,7 @@
 
 
 	align-items    : center;
-	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to a side margin's step outside the card page. */
+	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
 	display        : flex;
 	flex-direction : column;
 	gap            : var( --spa-ver-m02 );                       /* Spacing Vertical Base Minus 2 ~= 8.304px */

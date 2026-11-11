@@ -257,7 +257,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 
-			flaRecObj.divEle.style.transform = `translate3d( ${ flaRecObj.xcoNum }px, ${ flaRecObj.ycoNum }px, 0 )`; // What: Transform Assignment. Why: Moving by transform skips layout, so a hundred flakes stay smooth. How: This places the flake at its new position.
+			flaRecObj.divEle.style.transform = `translate3d( ${ flaRecObj.xcoNum }px, ${ flaRecObj.ycoNum }px, 0 )`; // What: Transform Assignment. Why: Moving by transform skips layout, so the flakes stay smooth. How: This places the flake at its new position.
 
 
 		}

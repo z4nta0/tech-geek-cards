@@ -17,7 +17,7 @@ import { useEffect      } from 'react';              // What: Use Effect. Why: T
 import { useEffectEvent } from 'react';              // What: Use Effect Event. Why: The arrow and space keys drive the scene controls with the card's latest state, without re-adding the listener every render. How: This wraps the key handler so the effect always calls its newest version.
 import { useGSAP        } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef         } from 'react';              // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
-import { useState       } from 'react';              // What: Use State. Why: A tapped photo opens full size, and the controls show the card's place and whether it's paused. How: This holds the open photo, the position, the paused state, and the reduced-motion preference.
+import { useState       } from 'react';              // What: Use State. Why: The card keeps values that change what it shows. How: This holds the card's state, such as the open photo.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
