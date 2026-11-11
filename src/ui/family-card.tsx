@@ -647,7 +647,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			className={` ${ cssModObj.famCarDiv }   ${ theClaStr } `}
 
 			data-family-stills-mode={ redMotBoo || undefined } // What: Stills Mode Attribute. Why: Under reduced motion the controls stay on the finished card, where they'd cover the mosaic's bottom photos. How: This marks the card so its stylesheet gives the controls a strip of their own below the mosaic.
-		>{ /* What: Family Card Div Element. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This holds the photo grid, the heart stage, the lettering, the screen-reader copy, and the photo dialog. */ }
+		>{ /* What: Family Card Div Element. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This holds the photo grid, the heart stage, the lettering, the tap hint and scene controls, the screen-reader copy, and the photo dialog. */ }
 
 
 			<div

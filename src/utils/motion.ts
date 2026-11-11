@@ -64,9 +64,9 @@ const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.
  *
  * @summary
  * Whether the visitor asked their system for reduced motion. Animations
- * JavaScript plays itself (a GSAP timeline, a requestAnimationFrame loop)
- * check this, since the CSS media query alone can't stop them. It reads the
- * live setting on every call, so a change takes effect immediately.
+ * JavaScript plays itself (a GSAP timeline) check this, since the CSS media
+ * query alone can't stop them. It reads the live setting on every call, so a
+ * change takes effect immediately.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

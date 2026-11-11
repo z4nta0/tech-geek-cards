@@ -342,12 +342,13 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
  *
  * @summary
  * Opens one state on a page and waits until it's settled: sizes the viewport,
- * loads the path, under reduced motion for a card's row until the card has
- * mounted and opened, waits for the web fonts, scrolls through the page so
- * every lazily loaded image starts loading ({@link revPagFun}), waits for
- * every image to decode, runs the state's action if it has one, then waits
- * until the page stays still ({@link waiSetFun}), so a check never measures a
- * heading halfway through its entrance fade or a menu halfway open.
+ * loads the path, under reduced motion for a card's row, waits for a card to
+ * mount, waits for the web fonts, scrolls through the page so every lazily
+ * loaded image starts loading ({@link revPagFun}), waits for every image to
+ * decode, switches reduced motion back off for a card's row unless the test
+ * asked for it, runs the state's action if it has one, then waits until the
+ * page stays still ({@link waiSetFun}), so a check never measures a heading
+ * halfway through its entrance fade or a menu halfway open.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

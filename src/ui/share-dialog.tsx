@@ -141,9 +141,9 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 	 *
 	 * @summary
 	 * Writes the card's link to the clipboard and records whether it worked.
-	 * The clipboard can refuse, for example in an older browser or a page
-	 * without permission, and then the status asks the visitor to copy the
-	 * link by hand from its field.
+	 * The clipboard can refuse, for example in a page without permission,
+	 * and then the status asks the visitor to copy the link by hand from its
+	 * field.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -172,7 +172,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 		}
 
-		catch { setCopStaStr( 'failed' ); } // What: Copy Failure Fallback. Why: The clipboard can refuse in an older browser or without permission. How: This sets the failed status, which asks the visitor to copy the link by hand.
+		catch { setCopStaStr( 'failed' ); } // What: Copy Failure Fallback. Why: The clipboard can refuse, such as without permission. How: This sets the failed status, which asks the visitor to copy the link by hand.
 
 
 	};

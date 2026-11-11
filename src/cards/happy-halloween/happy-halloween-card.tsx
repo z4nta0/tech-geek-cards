@@ -1302,7 +1302,7 @@ function HalCarCom () : JSX.Element {
 
 
 
-			<div className={ cssModObj.titCenDiv }>{ /* What: Title Center Div Element. Why: The greeting sits in the middle of the night. How: This centers the heading and the wish over the scene. */ }
+			<div className={ cssModObj.titCenDiv }>{ /* What: Title Center Div Element. Why: The greeting sits in the middle of the night. How: This centers the heading and the wish across the scene, near its top. */ }
 
 
 				<div className={ cssModObj.titStaDiv }>{ /* What: Title Stack Div Element. Why: The greeting's glow and shadow are a still copy sitting exactly under its letters. How: This stacks the copy and the heading in one grid cell. */ }

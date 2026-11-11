@@ -7,7 +7,7 @@ import cssModObj from './about.module.css'; // What: CSS Module Object. Why: Abo
 
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
-import { Link         } from 'react-router';                           // What: Link. Why: The closing buttons move to the Gallery without a full page load. How: This renders that link.
+import { Link         } from 'react-router';                           // What: Link. Why: The closing Gallery button moves to the Gallery without a full page load. How: This renders that link.
 import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: About's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
 
 
