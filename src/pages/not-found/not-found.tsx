@@ -183,7 +183,7 @@ function NotFouCom () : JSX.Element {
 						The page you're looking for doesn't exist or has moved.
 					</p>
 
-					<div className={ cssModObj.nofActDiv }>{ /* What: Not-Found Actions Div Element. Why: A visitor who lands here gets two ways onward side by side. How: This sets the buttons in a row that wraps. */ }
+					<div className={ cssModObj.nofActDiv }>{ /* What: Not-Found Actions Div Element. Why: A visitor who lands here gets two ways onward side by side. How: This sets the buttons in a row, wrapping onto two lines at about 440px wide and below. */ }
 
 
 						<Link

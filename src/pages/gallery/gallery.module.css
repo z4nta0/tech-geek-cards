@@ -10,7 +10,7 @@
  * occasion pills whose chosen pill fills with ink; the result count; a grid of
  * tiles in centered rows, three, two, or one across, a short last row sitting
  * centered; the empty message; and the custom card note. The page fades up as
- * it opens, and every transition holds still under reduced motion.
+ * it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -80,7 +80,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names the page above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -139,7 +139,7 @@
 
 /* #region conBarDiv */
 
-.conBarDiv { /* What: Controls Bar Div. Why: The search and the occasion pills sit on one line on wide screens and wrap on phones. How: This spreads them apart along their bottom edge, wrapping when there's no room. */
+.conBarDiv { /* What: Controls Bar Div. Why: The search and the occasion pills share a line and wrap when there's no room. How: This spreads them apart along their bottom edge, wrapping onto two lines at about 630px wide and below. */
 
 
 	align-items     : flex-end;

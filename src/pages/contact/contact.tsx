@@ -325,7 +325,7 @@ function ConPagCom () : JSX.Element {
 				<section className={ cssModObj.conBodSec }>{ /* What: Contact Body Section Element. Why: The form and the sidebar are the page's content. How: This holds them in the site's centered column. */ }
 
 
-					<div className={ cssModObj.conInnDiv }>{ /* What: Contact Inner Div Element. Why: The form and the sidebar sit side by side on wide screens. How: This lays them out in two columns, stacking on phones. */ }
+					<div className={ cssModObj.conInnDiv }>{ /* What: Contact Inner Div Element. Why: The form and the sidebar sit side by side above 1,024px. How: This lays them out in two columns, stacking at 1,024px and below. */ }
 
 
 						{ isaSenBoo ? ( // What: Sent Check. Why: A sent message replaces the form with a thank-you. How: This renders the thank-you once sent, and the form until then.
@@ -398,7 +398,7 @@ function ConPagCom () : JSX.Element {
 								</p>
 
 
-								<div className={ cssModObj.fieRowDiv }>{ /* What: Field Row Div Element. Why: The name and email sit side by side on wide screens. How: This lays them out in two columns, stacking on phones. */ }
+								<div className={ cssModObj.fieRowDiv }>{ /* What: Field Row Div Element. Why: The name and email sit side by side above 640px. How: This lays them out in two columns, stacking at 640px and below. */ }
 
 
 									<div className={ cssModObj.fieGroDiv }>{ /* What: Field Group Div Element. Why: A label and its field read as one unit. How: This stacks them. */ }

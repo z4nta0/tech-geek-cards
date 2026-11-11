@@ -5,12 +5,11 @@
  * not-found.module.css = Not Found Module
  *
  * @summary
- * Styles for NotFouCom: a full-screen ivory panel that fades up into view
- * like every page, centering a huge quiet 404 with a tipped envelope laid
- * over it, a Return to Sender rubber stamp drawn on the envelope that
- * thunks down once, the heading and line, and two ways onward, an orange Go
- * Home button and an outlined Browse the Gallery button. Everything that
- * moves holds still under reduced motion.
+ * Styles for NotFouCom: a full-screen ivory panel that fades up into view like
+ * every page, centering a huge quiet 404 with a tipped envelope laid over it,
+ * a Return to Sender rubber stamp drawn on the envelope that thunks down once,
+ * the heading and line, and two ways onward, an orange Go Home button and an
+ * outlined Browse the Gallery button.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -178,7 +177,7 @@
 .retSenTex { /* What: Return Sender Text. Why: The stamp's words read like a rubber stamp's. How: This sets them in dark berry mono. */
 
 
-	fill        : var( --act-dar-col ); /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	fill        : var( --act-dar-col ); /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
 	font-weight : 500;
 
@@ -211,7 +210,7 @@
 
 /* #region nofActDiv */
 
-.nofActDiv { /* What: Not-Found Actions Div. Why: The two ways onward sit side by side, one height, and wrap on a narrow phone. How: This lines up the buttons centered in a wrapping row with gaps. */
+.nofActDiv { /* What: Not-Found Actions Div. Why: The two ways onward sit side by side, one height, and wrap when there's no room. How: This lines up the buttons centered in a row with gaps, wrapping onto two lines at about 440px wide and below. */
 
 
 	display         : flex;

@@ -5,14 +5,13 @@
  * contact.module.css = Contact Module
  *
  * @summary
- * Styles for ConPagCom: a hero on the warm sunken ivory with the site's
- * motif and a scalloped bottom edge, as on Home; the form in a white card,
- * its name and email side by side on wide screens, fields whose border
- * answers the pointer and whose focus ring eases in, the error in a pale red
- * panel, and an orange send button; the thank-you that replaces it; and the
- * sidebar card with the email and the custom card tips, each led by a dot of
- * confetti. The page fades up as it opens, and every animation and
- * transition holds still under reduced motion.
+ * Styles for ConPagCom: a hero on the warm sunken ivory with the site's motif
+ * and a scalloped bottom edge, as on Home; the form in a white card, its name
+ * and email side by side above 640px, fields whose border answers the pointer
+ * and whose focus ring eases in, the error in a pale red panel, and an orange
+ * send button; the thank-you that replaces it; and the sidebar card with the
+ * email and the custom card tips, each led by a dot of confetti. The page
+ * fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -82,7 +81,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names the page above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;

@@ -176,7 +176,7 @@ function GalPagCom () : JSX.Element {
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
 
 
-						<div className={ cssModObj.conBarDiv }>{ /* What: Controls Bar Div Element. Why: The search and the filter sit together above the cards. How: This sets them in a row that wraps. */ }
+						<div className={ cssModObj.conBarDiv }>{ /* What: Controls Bar Div Element. Why: The search and the filter sit together above the cards. How: This sets them in a row, wrapping onto two lines at about 630px wide and below. */ }
 
 
 							<div className={ cssModObj.seaFieDiv }>{ /* What: Search Field Div Element. Why: The search's label and field read as one unit. How: This stacks them. */ }
@@ -250,7 +250,7 @@ function GalPagCom () : JSX.Element {
 						{ shoCarArr.length > 0 ? ( // What: Results Check. Why: The grid only makes sense with cards to show. How: This renders the grid when any card matches, or the empty message when none does.
 
 
-							<div className={ cssModObj.galGriDiv }>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three, two, or one across. */ }
+							<div className={ cssModObj.galGriDiv }>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three across, two at 1,024px and below, and one at 640px and below. */ }
 
 
 								{ shoCarArr.map( ( carRecObj ) => ( // What: Card Map Call. Why: Every matching card gets a tile. How: This renders one per card.

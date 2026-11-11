@@ -51,7 +51,7 @@
  *
 */
 
-const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.documentElement ).getPropertyValue( `--mot-${ easFamStr }-eas` ).trim() || 'ease'; // What: Motion Easing Function. Why: JavaScript motion can't read a custom property, yet its curves should match the stylesheet's. How: This reads the family's token from the root element's computed style, falling back to ease.
+const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.documentElement ).getPropertyValue( `--mot-${ easFamStr }-eas` ).trim() || 'ease'; // What: Motion Easing Function. Why: JavaScript motion can't use a var() reference as its easing, yet its curves should match the stylesheet's. How: This reads the family's token from the root element's computed style, falling back to ease.
 
 // #endregion motEasFun
 

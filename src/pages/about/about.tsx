@@ -151,7 +151,7 @@ function AboPagCom () : JSX.Element {
 				<section className={ cssModObj.aboStoSec }>{ /* What: About Story Section Element. Why: The page explains how the cards are made. How: This holds the paragraphs and the fact list. */ }
 
 
-					<div className={ cssModObj.stoInnDiv }>{ /* What: Story Inner Div Element. Why: The paragraphs and the fact list sit side by side on wide screens. How: This lays them out in two columns in the site's centered column, stacking on phones. */ }
+					<div className={ cssModObj.stoInnDiv }>{ /* What: Story Inner Div Element. Why: The paragraphs and the fact list sit side by side above 768px. How: This lays them out in two columns in the site's centered column, stacking at 768px and below. */ }
 
 
 						<div className={ cssModObj.stoTexDiv }>{ /* What: Story Text Div Element. Why: The paragraphs read as one column. How: This stacks them. */ }
@@ -211,7 +211,7 @@ function AboPagCom () : JSX.Element {
 						<h2 className={ cssModObj.secTitHea }>Three sites, one maker</h2>{ /* What: Section Title Heading Element. Why: The heading introduces the sister sites. How: This shows the section's h2. */ }
 
 
-						<ul className={ cssModObj.famLisUno }>{ /* What: Family List Unordered Element. Why: The three sites sit side by side as equal cards. How: This lays them out three across, stacking on phones. */ }
+						<ul className={ cssModObj.famLisUno }>{ /* What: Family List Unordered Element. Why: The three sites sit side by side as equal cards. How: This lays them out three across, stacking into one column at 1,024px and below. */ }
 
 
 							{ FAM_SIT_ARR.map( ( famSitObj ) => ( // What: Family Site Map Call. Why: Every sister site gets a card. How: This renders one list item per site.
@@ -258,7 +258,7 @@ function AboPagCom () : JSX.Element {
 						</ul>
 
 
-						<div className={ cssModObj.famActDiv }>{ /* What: Family Actions Div Element. Why: The page ends on two ways onward. How: This sets the buttons in a row that wraps. */ }
+						<div className={ cssModObj.famActDiv }>{ /* What: Family Actions Div Element. Why: The page ends on two ways onward. How: This sets the buttons in a row, wrapping onto two lines at about 535px wide and below. */ }
 
 
 							<a

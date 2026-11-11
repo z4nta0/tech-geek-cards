@@ -9,11 +9,10 @@
  * screen that slides down over the card's corner when focused; the floating
  * bar, a dark ink pill pinned to the bottom center of the screen above the
  * card, rising into view a moment after the card opens, holding the mark and
- * wordmark (the mark alone on a phone), a More Cards link, a Replay button,
- * and an orange Share button; the bottom margin a card's lettering takes to
- * clear that bar; and the loading message centered on the screen while a
- * card's code arrives. Every animation and transition holds
- * still under reduced motion.
+ * wordmark (the mark alone at 640px and below), a More Cards link, a Replay
+ * button, and an orange Share button; the bottom margin a card's lettering
+ * takes to clear that bar; and the loading message centered on the screen
+ * while a card's code arrives.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -97,7 +96,7 @@
 	background    : var( --bac-inv-col );                                                                             /* Background Inverse Color = #1A1A2E */
 	border-radius : 999px;
 	bottom        : var( --spa-ver-bas );                                                                             /* Spacing Vertical Base ~= 14.572px */
-	box-shadow    : var( --ele-lar-sha );                                                                             /* Elevation Large Shadow, about 0 11px 44.9px plus 0 3.6px 11px -2.7px */
+	box-shadow    : var( --ele-lar-sha );                                                                             /* Elevation Large Shadow ~= 0 11px 44.876px plus 0 3.572px 11px -2.696px */
 	display       : flex;
 	gap           : var( --spa-hor-bas );                                                                             /* Spacing Horizontal Base ~= 14.572px */
 	left          : 50%;
@@ -361,7 +360,7 @@
 .carStaDiv { /* What: Card Stage Div. Why: Every card has to keep its lettering clear of the floating bar. How: This hands each card the margin that clears it. */
 
 
-	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together, plus a gap above it, which each card reads as its bottom margin. */
+	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together (58.7px in Firefox, whose bar draws 1px taller), plus a gap above it, which each card reads as its bottom margin. */
 
 
 }

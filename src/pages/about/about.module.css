@@ -8,11 +8,12 @@
  * Styles for AboPagCom: a hero on the warm sunken ivory with the site's motif
  * and a scalloped bottom edge, as on Home; the story's paragraphs beside a
  * white card listing its main points, each led by a dot of confetti, two by
- * two once it drops under the story on a tablet; and the three sister sites as
- * equal cards, this site's own on a pale berry with a You Are Here label, the
- * others with a link whose arrow nudges on hover; then the closing buttons,
- * and a white band with the Ko-fi invitation and its button. The page fades
- * up as it opens, and every transition holds still under reduced motion.
+ * two once it drops under the story at 768px and below, and one by one at
+ * 640px and below; and the three sister sites as equal cards, three across
+ * above 1,024px and one under another below, this site's own on a pale berry
+ * with a You Are Here label, the others with a link whose arrow nudges on
+ * hover; then the closing buttons, and a white band with the Ko-fi invitation
+ * and its button. The page fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -82,7 +83,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names each section above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -398,7 +399,7 @@
 .famHerSpa { /* What: Family Here Span. Why: The You Are Here label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -493,7 +494,7 @@
 
 /* #region famActDiv */
 
-.famActDiv { /* What: Family Actions Div. Why: The two closing buttons sit side by side and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+.famActDiv { /* What: Family Actions Div. Why: The two closing buttons sit side by side and wrap when there's no room. How: This lines them up in a wrapping row, wrapping onto two lines at about 535px wide and below. */
 
 
 	display   : flex;

@@ -10,11 +10,10 @@
  * button in its corner that lifts on hover, a berry eyebrow over the card's
  * title, labeled fields whose focus ring eases in, an orange Copy Link button
  * whose label fades in afresh each time it changes, an outlined share sheet
- * button, a preview text link with a nudging arrow, and the copy status
- * line, whose message fades in the same way. Every animation and transition
- * holds still under reduced motion, except that the panel's closing
- * animation shrinks to a hundredth of a millisecond, since the dialog waits
- * on its end to close.
+ * button, a preview text link with a nudging arrow, and the copy status line,
+ * whose message fades in the same way. Under reduced motion the panel's
+ * closing animation shrinks to a hundredth of a millisecond rather than
+ * stopping, since the dialog waits on its end to close.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -31,10 +30,10 @@
 	background    : var( --bac-sur-col );                                                           /* Background Surface Color = #FFFFFF */
 	border        : none;
 	border-radius : var( --rad-bor-xla );                                                           /* Radius Border Extra Large ~= 19.304px */
-	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow, about 0 19.3px 59.4px -11px plus 0 6.3px 14.6px -3.6px */
+	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow ~= 0 19.304px 59.447px -11px plus 0 6.268px 14.572px -3.572px */
 	color         : var( --tex-mai-col );                                                           /* Text Main Color = #1A1A2E */
 	margin        : auto;
-	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, about 493.3px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
+	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, ~= 493.3px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
 	padding       : 0;
 	width         : calc( 100% - var( --gut-sid-pad ) * 2 );                                        /* Gutter Side Padding, about 19.304px - 44.876px */
 
@@ -359,7 +358,7 @@
 
 /* #region shaActDiv */
 
-.shaActDiv { /* What: Share Actions Div. Why: The ways to send the card sit together and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+.shaActDiv { /* What: Share Actions Div. Why: The ways to send the card sit together and wrap when there's no room. How: This lines them up in a row, wrapping onto two lines at about 365px wide and below. */
 
 
 	align-items : center;

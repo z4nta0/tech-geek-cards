@@ -205,7 +205,7 @@ function HomPagCom () : JSX.Element {
 								Animated, interactive greeting cards for birthdays, holidays, and the people who matter. Pick one, add their name (if applicable), and send the link.
 							</p>
 
-							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row that wraps. */ }
+							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row, wrapping onto two lines from about 1,035px down to about 770px, where the hero's text column sits narrow beside the envelope, and again at about 490px wide and below. */ }
 
 
 								<Link
@@ -331,7 +331,7 @@ function HomPagCom () : JSX.Element {
 						<h2 className={ cssModObj.secTitHea }>Pick it. Personalize it. Send it.</h2>{ /* What: Section Title Heading Element. Why: The heading sums up the three steps. How: This shows the section's h2. */ }
 
 
-						<ol className={ cssModObj.steLisOrd }>{ /* What: Step List Ordered Element. Why: The steps happen in order. How: This lays the three steps out in a row, stacking on phones. */ }
+						<ol className={ cssModObj.steLisOrd }>{ /* What: Step List Ordered Element. Why: The steps happen in order. How: This lays the three steps out in a row, stacking at 768px and below. */ }
 
 
 							{ STE_REC_ARR.map( ( steRecObj, steIndNum ) => ( // What: Step Map Call. Why: Every step gets a card. How: This renders one list item per step.
@@ -377,7 +377,7 @@ function HomPagCom () : JSX.Element {
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
 
 
-						<div className={ cssModObj.feaHeaDiv }>{ /* What: Featured Header Div Element. Why: The heading and the link to every card sit on one line on wide screens. How: This spreads them apart, wrapping on phones. */ }
+						<div className={ cssModObj.feaHeaDiv }>{ /* What: Featured Header Div Element. Why: The heading and the link to every card share a line. How: This spreads them apart, wrapping onto two lines at about 415px wide and below. */ }
 
 
 							<div>{ /* What: Featured Heading Div Element. Why: The eyebrow and heading read as one block beside the link. How: This stacks them. */ }
@@ -402,7 +402,7 @@ function HomPagCom () : JSX.Element {
 						</div>
 
 
-						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four, two, or one across. */ }
+						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four across, two at 1,024px and below, and one at 640px and below. */ }
 
 
 							{ feaCarArr.map( ( carRecObj ) => ( // What: Featured Card Map Call. Why: Every featured card gets a tile. How: This renders one per picked card.
@@ -463,7 +463,7 @@ function HomPagCom () : JSX.Element {
 										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
-									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Postcard Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
+									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Postcard Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller at 640px and below so the long label doesn't wrap the button tall. */ }
 
 
 								</div>

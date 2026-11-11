@@ -12,8 +12,7 @@
  * wider on hover, a perforated stamp on its front, and confetti popping in
  * around it. Below come the three numbered step cards, the featured cards
  * four, two, or one across, and a perforated postcard banner with a postmark.
- * The page fades up as it opens, and every animation and transition holds
- * still under reduced motion.
+ * The page fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -115,7 +114,7 @@
 
 
 	align-items    : center;
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	display        : inline-flex;
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
@@ -155,7 +154,7 @@
 .herAccSpa { /* What: Hero Accent Span. Why: The words that say what's different are the playful part of the heading. How: This colors them dark berry under a bright berry squiggle. */
 
 
-	color                     : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color                     : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	text-decoration           : underline wavy var( --act-mai-col );    /* Accent-Tertiary Main Color = #E64E82 */
 	text-decoration-skip-ink  : none;
 	text-decoration-thickness : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
@@ -179,7 +178,7 @@
 
 /* #region herActDiv */
 
-.herActDiv { /* What: Hero Actions Div. Why: The two buttons sit side by side and wrap on a narrow phone. How: This lines them up in a wrapping row, a little apart from the lead. */
+.herActDiv { /* What: Hero Actions Div. Why: The two buttons sit side by side and wrap when there's no room. How: This lines them up in a wrapping row, a little apart from the lead, wrapping onto two lines from about 1,035px down to about 770px, where the hero's text column sits narrow beside the envelope, and again at about 490px wide and below. */
 
 
 	display     : flex;
@@ -367,7 +366,7 @@
 	border           : calc( var( --ver-rhy-m03 ) * 1rem ) solid var( --bac-sur-col );                                        /* Vertical Rhythm Base Minus 3 ~= 6.268px, Background Surface Color = #FFFFFF */
 	border-radius    : var( --rad-bor-xsm );                                                                                  /* Radius Border Extra Small ~= 3.572px */
 	bottom           : 30%;
-	box-shadow       : var( --ele-med-sha );                                                                                  /* Elevation Medium Shadow, about 0 4.7px 14.6px plus 0 1.5px 3.6px -1.2px */
+	box-shadow       : var( --ele-med-sha );                                                                                  /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
 	height           : auto;
 	left             : 22%;
 	position         : absolute;
@@ -534,7 +533,7 @@
 
 
 
-.conPieSpa { /* What: Confetti Piece Span. Why: Confetti bursts around the envelope as the cards come out. How: This places a small shape, sized and colored by its position below, and pops it in after the cards have risen. */
+.conPieSpa { /* What: Confetti Piece Span. Why: Confetti bursts around the envelope as the cards come out. How: This places a small shape, sized and colored by its position below, and pops it in as the last card rises. */
 
 
 	animation     : conPieSpaEnterPopIn var( --dur-ani-p02 ) var( --mot-bou-eas ) calc( var( --dur-ani-p04 ) + var( --dur-ani-p03 ) ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Plus 3 ~= 366.9ms */
@@ -678,7 +677,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names each section above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -846,7 +845,7 @@
 
 /* #region feaHeaDiv */
 
-.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line on wide screens and wrap on phones. How: This spreads them apart along their baseline, wrapping when there's no room. */
+.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line and wrap when there's no room. How: This spreads them apart along their baseline, wrapping onto two lines at about 415px wide and below. */
 
 
 	align-items     : flex-end;
