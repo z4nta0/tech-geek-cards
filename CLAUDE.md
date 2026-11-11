@@ -314,9 +314,27 @@ Chrome (`channel : 'chromium'`). The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
 and 1,440px, each converted card, the phone menu, the share dialog open on
 the Gallery at both widths, and a signable card's share dialog at 390px.
+The states a control leads to and a visitor can stay on (added 2026-11-10, in
+the audit) live in their own support files, kept out of the rendering suite:
+the Gallery narrowed to Family and after a search nothing matches
+(`tests/support/gallery.ts`), the Contact form after a refused empty send and
+its sent and failed results (`tests/support/contact.ts`, which answers
+Netlify's POST with a 200 or a 500), and the Mother's Day card's first photo
+open (`tests/support/family.ts`), each at both widths.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
   accessibility scan, whose names check also fails a shown link that opens a
-  new tab without "in a new tab)" in its name (added 2026-11-10).
+  new tab without "in a new tab)" in its name (added 2026-11-10). Both run on
+  every state above, the reachable ones included. Added 2026-11-10, in the
+  audit, from TechGeek.dev's: the names check fails a tree with no link or
+  button, the Tab walk fails one that reaches no stop and lists every enabled,
+  drawn, non-inert element from its first stop on that Tab never reached (only
+  the open dialog's while a modal dialog is open), a start already showing
+  the keyboard's ring counting as the first stop, and the reduced motion check records every lasting animation and transition
+  from the start of the load. `tests/accessibility/announce.spec.ts` checks
+  the Contact form's alert region is in the form and empty on load and holds
+  the error after a failed send, which keeps focus on Send Message, that the
+  thank-you takes focus as it replaces the form, and that "Send Another" puts
+  it on the name field.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
@@ -350,10 +368,11 @@ the Gallery at both widths, and a signable card's share dialog at 390px.
   unlisted card's address and file name and no listed one's, no secrets in
   `dist/`, and `npm audit` of the shipped dependencies (skipped with a message
   offline). In every engine, from the preview with each path's built headers
-  applied: an injected inline script is refused and reported, every state and
-  the Contact form's sent and failed results report no violation but WebKit's
-  select report, every new tab link carries `noopener` and `noreferrer`, and
-  each card that takes `?name=` or `?from=` shows script-like names as text.
+  applied: an injected inline script is refused and reported, every state, the
+  reachable ones above included, and the Contact form's sent and failed
+  results report no violation but WebKit's select report, every new tab link
+  carries `noopener` and `noreferrer`, and each card that takes `?name=` or
+  `?from=` shows script-like names as text.
   Each check was proven by breaking what it guards.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted one noindex), the

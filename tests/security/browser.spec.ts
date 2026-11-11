@@ -4,9 +4,13 @@
 // #region Imports
 
 import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: Every card that shows a name from its address is checked with script-like names. How: This lists every card and whether it takes a recipient's or a sender's name.
+import { EMP_STA_ARR } from '../support/gallery.ts';     // What: Empty State Array. Why: The Gallery's empty search swaps its grid for a message and a button, which the policy has to allow too. How: This lists the Gallery states after a search no card matches, one per width.
 import { expect      } from '@playwright/test';          // What: Expect. Why: Each check passes only when the policy is enforced and the page breaks none of its rules. How: This asserts on what each check collects from the page.
+import { FIL_STA_ARR } from '../support/gallery.ts';     // What: Filtered State Array. Why: A chosen occasion narrows the Gallery's grid, a state the policy has to allow too. How: This lists the Gallery states with Family chosen, one per width.
 import { heaPatFun   } from '../support/headers.ts';     // What: Headers Path Function. Why: The pages are loaded under the headers Netlify really sends with each path. How: This reads the headers the built dist/_headers sends with one path.
+import { INV_STA_ARR } from '../support/contact.ts';     // What: Invalid State Array. Why: The Contact form after a refused empty send is a state the policy has to allow too. How: This lists the Contact states after that send, one per width.
 import { opeStaFun   } from '../support/states.ts';      // What: Open State Function. Why: Each state is opened the way the other page suites open it. How: This loads the state and waits until it's settled.
+import { PHO_STA_ARR } from '../support/family.ts';      // What: Photo State Array. Why: A Family card's photo opened full size loads its image into a dialog, which the policy has to allow too. How: This lists the Mother's Day states with its first photo open, one per width.
 import { STA_REC_ARR } from '../support/states.ts';      // What: State Record Array. Why: The policy has to hold in every state the suites visit. How: This is the list of states to load.
 import { test        } from '@playwright/test';          // What: Test. Why: Each state is its own test. How: This declares them.
 
@@ -27,12 +31,13 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
  * policy would block. Neither server reads Netlify's headers file, so every
  * response is given the headers the built dist/_headers sends with its path.
  * First a check proves the policy is live, by injecting an inline script and
- * seeing it refused and reported. Then every state the suites visit, and the
- * Contact form's sent and failed results, is checked for policy violations,
- * apart from the one WebKit reports for every select element, and checked to
- * close off every new tab link, with neither an opener nor a referrer. Last,
- * every card that shows a name from its address is opened with script-like
- * names, which have to show as text rather than become markup.
+ * seeing it refused and reported. Then every state the suites visit, the
+ * reachable ones each control leads to and the Contact form's sent and failed
+ * results included, is checked for policy violations, apart from the one
+ * WebKit reports for every select element, and checked to close off every new
+ * tab link, with neither an opener nor a referrer. Last, every card that shows
+ * a name from its address is opened with script-like names, which have to show
+ * as text rather than become markup.
  *
  * Sections:
  *  - Constants
@@ -243,7 +248,7 @@ test( 'the policy refuses an injected inline script', async ( { browserName : br
 
 
 
-for ( const staRecObj of STA_REC_ARR ) { // What: State Loop. Why: Every state the suites visit has to work under the policy, every card's page included. How: This declares one test per state.
+for ( const staRecObj of [ ...STA_REC_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Loop. Why: Every state the suites visit has to work under the policy, every card's page, the Contact form's refused send, the Gallery's narrowed grids, and a Family card's open photo included. How: This declares one test per state.
 
 
 	test( `${ staRecObj.ideStr } breaks no rule of the security policy and closes off every new tab link`, async ( { browserName : broNamStr, page : curPagObj } ) => { // What: State Policy Test. Why: A blocked resource, such as a font, would break the page once deployed, and the policy can't be loosened to hide it. How: This opens the state under the policy and checks nothing was refused and every new tab link is closed off.

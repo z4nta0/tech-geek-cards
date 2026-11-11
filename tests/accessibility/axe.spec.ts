@@ -6,10 +6,15 @@
 import AxeBuilder from '@axe-core/playwright'; // What: Axe Builder. Why: axe-core finds the mechanical accessibility failures, such as low contrast, missing names, and misused ARIA. How: This runs its scan against a Playwright page.
 
 
-import { expect      } from '@playwright/test';     // What: Expect. Why: A state passes only with no violations. How: This asserts the violation list is empty.
-import { opeStaFun   } from '../support/states.ts'; // What: Open State Function. Why: Each state has to be opened and settled before it's scanned. How: This loads it and waits for it.
-import { STA_REC_ARR } from '../support/states.ts'; // What: State Record Array. Why: Every page state is scanned. How: This lists them.
-import { test        } from '@playwright/test';     // What: Test. Why: Each state is its own test. How: This declares them.
+import { EMP_STA_ARR } from '../support/gallery.ts'; // What: Empty State Array. Why: A search no card matches swaps the Gallery's grid for its empty message, a state a visitor reaches. How: This lists the Gallery states after that search, one per width.
+import { expect      } from '@playwright/test';      // What: Expect. Why: A state passes only with no violations. How: This asserts the violation list is empty.
+import { FIL_STA_ARR } from '../support/gallery.ts'; // What: Filtered State Array. Why: A chosen occasion narrows the Gallery's grid and count, a state a visitor reaches. How: This lists the Gallery states with Family chosen, one per width.
+import { INV_STA_ARR } from '../support/contact.ts'; // What: Invalid State Array. Why: The Contact form after a refused empty send is a state a visitor reaches. How: This lists the Contact states after that send, one per width.
+import { opeStaFun   } from '../support/states.ts';  // What: Open State Function. Why: Each state has to be opened and settled before it's scanned. How: This loads it and waits for it.
+import { PHO_STA_ARR } from '../support/family.ts';  // What: Photo State Array. Why: A Family card's photo opened full size is a state a visitor reaches. How: This lists the Mother's Day states with its first photo open, one per width.
+import { RES_STA_ARR } from '../support/contact.ts'; // What: Result State Array. Why: The Contact form's thank-you and error are states a visitor reaches too. How: This lists the Contact states with the form sent, one per result and width.
+import { STA_REC_ARR } from '../support/states.ts';  // What: State Record Array. Why: Every page state is scanned. How: This lists them.
+import { test        } from '@playwright/test';      // What: Test. Why: Each state is its own test. How: This declares them.
 
 
 import type { Page } from '@playwright/test'; // What: Page. Why: The scan helper drives a Playwright page. How: This types its page parameter.
@@ -136,7 +141,7 @@ function sumResFun ( resLisArr : AxeResTyp[ 'violations' ] ) : string[] {
 
 // #region Module Init
 
-for ( const staRecObj of STA_REC_ARR ) { // What: State Test Loop. Why: Every page state must pass the scan. How: This declares one axe test per state.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Test Loop. Why: Every page state must pass the scan, the Contact form's results and refused send, the Gallery's narrowed grids, and a Family card's open photo included. How: This declares one axe test per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } has no axe violations`, async ( { page : curPagObj }, tesInfObj ) => { // What: Axe Test. Why: A state passes only with zero axe violations. How: This opens the state, scans it, reports anything needing review, and fails on any violation.

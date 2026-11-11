@@ -335,12 +335,12 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
  *
  * @summary
  * Opens one state on a page and waits until it's settled: sizes the viewport,
- * loads the path, under reduced motion for a card's row until it's open, waits
- * for the web fonts, scrolls through the page so every lazily loaded image
- * starts loading ({@link revPagFun}), waits for every image to decode, runs
- * the state's action if it has one, then waits until the page stays still
- * ({@link waiSetFun}), so a check never measures a heading halfway through its
- * entrance fade or a menu halfway open.
+ * loads the path, under reduced motion for a card's row until the card has
+ * mounted and opened, waits for the web fonts, scrolls through the page so
+ * every lazily loaded image starts loading ({@link revPagFun}), waits for
+ * every image to decode, runs the state's action if it has one, then waits
+ * until the page stays still ({@link waiSetFun}), so a check never measures a
+ * heading halfway through its entrance fade or a menu halfway open.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -372,6 +372,8 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's server.
 
+	if ( staRecObj.redBoo ) await curPagObj.waitForFunction( () => !!document.querySelector( 'main [class*="carStaDiv"] > :not([class*="carLoaPar"])' ) ); // What: Card Mount Wait. Why: The card's code arrives on demand, and a card that mounts after reduced motion is lifted below would read the preference as off and play instead of opening finished. How: On a card's row, this waits until the stage holds something other than the loading message, found by the class names Vite keeps inside the hashed classes.
+
 	await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Text measured before its web font loads would have the wrong size and wrapping. How: This waits until every font face has loaded.
 
 	await revPagFun( curPagObj ); // What: Page Reveal Call. Why: Lazy images stay blank until scrolled near. How: This scrolls through the page and back to the top.
@@ -401,7 +403,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 // #region Exports
 
-export { opeStaFun, STA_REC_ARR }; // What: Named Exports. Why: The page suites share these states and their opener. How: This exports the state list and the helper that opens one.
+export { opeStaFun, STA_REC_ARR, type StaRecTyp }; // What: Named Exports. Why: The page suites share these states, their shape, and their opener. How: This exports the state list, its row type, and the helper that opens one.
 
 // #endregion Exports
 
