@@ -11,7 +11,7 @@ import { durSecFun       } from '../../utils/rhythm.ts'; // What: Duration Secon
 import { gsaEasFun       } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap            } from 'gsap';                  // What: GSAP. Why: The greeting and cake pop in as one timeline. How: This is the animation library that builds and plays it.
 import { PAR_TOK_ARR     } from './confetti.ts';         // What: Party Token Array. Why: The balloons share the confetti's palette. How: Each balloon takes one of its color tokens in turn.
-import { redMotFun       } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
+import { redMotFun       } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
 import { rhyPixFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are spacing steps. How: This returns a step's size in pixels.
 import { staBalFun       } from './balloons.ts';         // What: Start Balloons Function. Why: Balloons float up behind the greeting. How: This starts them and returns the function that stops them.
 import { staConFun       } from './confetti.ts';         // What: Start Confetti Function. Why: Confetti bursts when the card opens and wherever it's tapped. How: This readies the canvas and returns its burst and stop functions.
@@ -224,7 +224,7 @@ function BirCarCom () : JSX.Element {
 	const titNamRef = useRef< HTMLSpanElement >( null );      // What: Title Name Reference. Why: The recipient's name pops in with the Birthday line. How: This holds its span, null without a name.
 	const titTopRef = useRef< HTMLSpanElement >( null );      // What: Title Top Reference. Why: The greeting's Happy line pops in first. How: This holds its span.
 
-	const [ redMotBoo ] = useState( redMotFun ); // What: Reduce Motion Boolean. Why: The card plays or rests for its whole life, even if the setting changes while it's open. How: This reads the setting once, on the first render.
+	const [ redMotBoo ] = useState( redMotFun ); // What: Reduced Motion Boolean. Why: The card plays or rests for its whole life, even if the setting changes while it's open. How: This reads the setting once, on the first render.
 	const [ seaParObj ] = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
 	const namParStr = seaParObj.get( 'name' ); // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.

@@ -184,7 +184,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { CarTilCom }; // What: Named Exports. Why: Home and the Gallery both show card tiles. How: This exports CarTilCom.
+export { CarTilCom }; // What: Named Export. Why: Home and the Gallery both show card tiles. How: This exports CarTilCom.
 
 // #endregion Exports
 

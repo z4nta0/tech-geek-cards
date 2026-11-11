@@ -552,7 +552,7 @@ function HomPagCom () : JSX.Element {
 
 // #region Exports
 
-export { HomPagCom }; // What: Named Exports. Why: The router's root route renders the home page. How: This exports HomPagCom.
+export { HomPagCom }; // What: Named Export. Why: The router's root route renders the home page. How: This exports HomPagCom.
 
 // #endregion Exports
 

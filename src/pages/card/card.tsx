@@ -328,7 +328,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { CarPagCom }; // What: Named Exports. Why: The app root renders a card's page when the address names a card. How: This exports CarPagCom.
+export { CarPagCom }; // What: Named Export. Why: The app root renders a card's page when the address names a card. How: This exports CarPagCom.
 
 // #endregion Exports
 

@@ -341,7 +341,7 @@ function GalPagCom () : JSX.Element {
 
 // #region Exports
 
-export { GalPagCom }; // What: Named Exports. Why: The router's gallery route renders the Gallery. How: This exports GalPagCom.
+export { GalPagCom }; // What: Named Export. Why: The router's gallery route renders the Gallery. How: This exports GalPagCom.
 
 // #endregion Exports
 

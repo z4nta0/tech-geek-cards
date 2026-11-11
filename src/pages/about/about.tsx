@@ -332,7 +332,7 @@ function AboPagCom () : JSX.Element {
 
 // #region Exports
 
-export { AboPagCom }; // What: Named Exports. Why: The router's about route renders the About page. How: This exports AboPagCom.
+export { AboPagCom }; // What: Named Export. Why: The router's about route renders the About page. How: This exports AboPagCom.
 
 // #endregion Exports
 

@@ -621,7 +621,7 @@ function ConPagCom () : JSX.Element {
 
 // #region Exports
 
-export { ConPagCom }; // What: Named Exports. Why: The router's contact route renders the Contact page. How: This exports ConPagCom.
+export { ConPagCom }; // What: Named Export. Why: The router's contact route renders the Contact page. How: This exports ConPagCom.
 
 // #endregion Exports
 

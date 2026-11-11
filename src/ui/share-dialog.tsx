@@ -523,7 +523,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 // #region Exports
 
-export { ShaDiaCom }; // What: Named Exports. Why: Home, the Gallery, and the card pages open the share dialog. How: This exports ShaDiaCom.
+export { ShaDiaCom }; // What: Named Export. Why: Home, the Gallery, and the card pages open the share dialog. How: This exports ShaDiaCom.
 
 // #endregion Exports
 

@@ -47,7 +47,7 @@ const PAG_LIN_ARR : PagLinTyp[] = [ // What: Page Link Array. Why: The bar, the 
 
 // #region Exports
 
-export { PAG_LIN_ARR }; // What: Named Exports. Why: The bar, the phone menu, and the footer render their links from this list. How: This exports the list.
+export { PAG_LIN_ARR }; // What: Named Export. Why: The bar, the phone menu, and the footer render their links from this list. How: This exports the list.
 
 // #endregion Exports
 
