@@ -53,44 +53,6 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
 
 const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the home page's description, and every other page must swap it for its own. How: This is the exact text it should hold.
 const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: The canonical links, structured data, robots.txt, and sitemap all name the live site. How: This is its address.
-const PRE_URL_STR = 'http://localhost:5205';   // What: Preview URL String. Why: Link scrapers read the shipped page, which the build minifies and copies once per card, so the raw pages are read from the build rather than the dev server. How: This is the address the preview server answers on.
-
-
-
-/**
- * SOC_KEY_ARR = Social Key Array
- *
- * @summary
- * Every Open Graph and Twitter tag a complete link preview needs, per the
- * social preview rule; twitter:site and twitter:creator are left out, since
- * the site has no X account. Every row is one tag's property or name.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
-*/
-
-const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full card only when every tag is there. How: Each entry names one tag.
-
-
-	'og:description',
-	'og:image',
-	'og:image:alt',
-	'og:image:height',
-	'og:image:type',
-	'og:image:width',
-	'og:locale',
-	'og:site_name',
-	'og:title',
-	'og:type',
-	'og:url',
-	'twitter:card',
-	'twitter:description',
-	'twitter:image',
-	'twitter:image:alt',
-	'twitter:title'
-
-
-];
 
 
 
@@ -135,6 +97,47 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
 ];
 
 // #endregion PAG_HEA_ARR
+
+
+
+const PRE_URL_STR = 'http://localhost:5205'; // What: Preview URL String. Why: Link scrapers read the shipped page, which the build minifies and copies once per card, so the raw pages are read from the build rather than the dev server. How: This is the address the preview server answers on.
+
+
+
+/**
+ * SOC_KEY_ARR = Social Key Array
+ *
+ * @summary
+ * Every Open Graph and Twitter tag a complete link preview needs, per the
+ * social preview rule; twitter:site and twitter:creator are left out, since
+ * the site has no X account. Every row is one tag's property or name.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full card only when every tag is there. How: Each entry names one tag.
+
+
+	'og:description',
+	'og:image',
+	'og:image:alt',
+	'og:image:height',
+	'og:image:type',
+	'og:image:width',
+	'og:locale',
+	'og:site_name',
+	'og:title',
+	'og:type',
+	'og:url',
+	'twitter:card',
+	'twitter:description',
+	'twitter:image',
+	'twitter:image:alt',
+	'twitter:title'
+
+
+];
 
 // #endregion Constants
 
@@ -221,10 +224,6 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 
 
-const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
-
-
-
 // #region imaSizFun
 
 /**
@@ -283,6 +282,10 @@ function imaSizFun ( imaBufObj : Buffer ) : [ number, number ] {
 }
 
 // #endregion imaSizFun
+
+
+
+const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
 
 // #endregion Helpers
 

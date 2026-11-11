@@ -40,6 +40,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers th
  * the problems it found, most of them by element.
  *
  * Sections:
+ *  - Types
  *  - Constants
  *  - Helpers
  *  - Module Init
@@ -47,6 +48,24 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers th
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
+
+
+
+// #region Types
+
+type StoInfTyp = { // What: Stop Information Type. Why: The keyboard walk judges each stop outside the page. How: This describes what the page reports about one stop.
+
+
+	covBoo : boolean, // What: Covered Boolean. Why: A stop hidden behind another element can't be seen while focused. How: This is true when something else sits on top of the stop's center.
+	desStr : string,  // What: Description String. Why: A problem should name the element a person would recognize. How: This joins the stop's tag with its label, ID, or text.
+	indBoo : boolean, // What: Indicator Boolean. Why: A keyboard user has to see where focus is. How: This is true when focusing the stop changes how it looks.
+	ordNum : number,  // What: Order Number. Why: Focus order is compared with document order. How: This is the stop's position among every element in the page.
+	visBoo : boolean  // What: Visible Boolean. Why: A stop off screen leaves a keyboard user lost. How: This is true when the stop has a size and overlaps the viewport.
+
+
+};
+
+// #endregion Types
 
 
 
@@ -349,18 +368,6 @@ function scrSetFun () : Promise< void > {
 // #endregion scrSetFun
 
 
-
-type StoInfTyp = { // What: Stop Information Type. Why: The keyboard walk judges each stop outside the page. How: This describes what the page reports about one stop.
-
-
-	covBoo : boolean, // What: Covered Boolean. Why: A stop hidden behind another element can't be seen while focused. How: This is true when something else sits on top of the stop's center.
-	desStr : string,  // What: Description String. Why: A problem should name the element a person would recognize. How: This joins the stop's tag with its label, ID, or text.
-	indBoo : boolean, // What: Indicator Boolean. Why: A keyboard user has to see where focus is. How: This is true when focusing the stop changes how it looks.
-	ordNum : number,  // What: Order Number. Why: Focus order is compared with document order. How: This is the stop's position among every element in the page.
-	visBoo : boolean  // What: Visible Boolean. Why: A stop off screen leaves a keyboard user lost. How: This is true when the stop has a size and overlaps the viewport.
-
-
-};
 
 // #region stoInfFun
 

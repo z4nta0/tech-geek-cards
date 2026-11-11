@@ -40,6 +40,8 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
 
 // #region Constants
 
+const BOD_MAX_NUM = 75; // What: Body Maximum Number. Why: Paragraph text has to land within 45 to 75 characters a line. How: This is the upper limit body text is held to.
+
 type MeaCasTyp = { ideStr : string, menBoo : boolean, patStr : string }; // What: Measure Case Type. Why: Each test measures one page in one state. How: This names the case, whether it opens the menu, and its path.
 
 const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page and the open menu hold paragraphs. How: Each row names a case, whether it opens the menu, and its path.
@@ -64,9 +66,6 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 
 ];
 
-
-
-const BOD_MAX_NUM = 75;                                                                            // What: Body Maximum Number. Why: Paragraph text has to land within 45 to 75 characters a line. How: This is the upper limit body text is held to.
 const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The phone menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
 const SMA_MAX_NUM = 60;                                                                            // What: Small Maximum Number. Why: Small and secondary text has to land within 40 to 60 characters a line. How: This is the upper limit small text is held to.
 const SMA_SIZ_NUM = 14;                                                                            // What: Small Size Number. Why: Small text is anything set below the body size of about 14.572px. How: A paragraph whose font size is under this many pixels is held to the small limit.
