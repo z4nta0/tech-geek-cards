@@ -51,7 +51,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
 
 // #region Constants
 
-const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the home page's description, and every other page must swap it for its own. How: This is the exact text it should hold.
+const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the home page's description, and every page but Home and the 404 page must swap it for its own. How: This is the exact text it should hold.
 const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: The canonical links, structured data, robots.txt, and sitemap all name the live site. How: This is its address.
 
 

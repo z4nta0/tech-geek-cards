@@ -313,7 +313,7 @@ for ( const carDatObj of CAR_DAT_ARR.filter( ( carCurObj ) => carCurObj.cusBoo |
 
 		await polSetFun( curPagObj ); // What: Policy Setup Call. Why: An injected handler would also show up as a refused inline script. How: This adds the headers and the violation listener.
 
-		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Finished Card Emulation. Why: The names show once the card's scene is finished. How: This loads the card under reduced motion, which opens it on its finished scene.
+		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Finished Card Emulation. Why: The names show once the card's scene is finished. How: This turns reduced motion on before the card loads, so it opens on its finished scene.
 
 		await curPagObj.goto( `/${ carDatObj.sluStr }?${ namParObj }` ); // What: Card Open Call. Why: The names arrive through the card's own address, as a shared link carries them. How: This loads the card with both names.
 

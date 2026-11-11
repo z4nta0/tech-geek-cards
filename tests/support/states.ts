@@ -71,14 +71,20 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * Gallery at both widths, plus a signable card's at the phone width. Every row
  * shares the {@link StaRecTyp} shape, so its fields carry no comments of their
  * own:
+ *
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
  *    one.
+ *
  *  - `heiNum` (Number): Height Number, the viewport height in CSS pixels.
+ *
  *  - `ideStr` (String): Identifier String, the state's name in test titles.
+ *
  *  - `patStr` (String): Path String, the route loaded from the suite's server.
+ *
  *  - `redBoo` (Boolean): Reduced Boolean, true on a card's rows, which load
  *    under reduced motion so the card opens finished, then switch it off.
+ *
  *  - `widNum` (Number): Width Number, the viewport width in CSS pixels.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -367,7 +373,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 
 
-	if ( staRecObj.redBoo ) await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Card Finish Emulation. Why: A card would otherwise still be playing when it's checked. How: This loads the card under reduced motion, which opens it on its finished scene.
+	if ( staRecObj.redBoo ) await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Card Finish Emulation. Why: A card would otherwise still be playing when it's checked. How: This turns reduced motion on before the card loads, so it opens on its finished scene.
 
 
 

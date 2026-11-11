@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import AxeBuiCla from '@axe-core/playwright'; // What: Axe Builder Class. Why: axe-core finds the mechanical accessibility failures, such as low contrast, missing names, and misused ARIA. How: This runs its scan against a Playwright page.
+import AxeBuiCla from '@axe-core/playwright'; // What: Axe Builder Class. Why: axe-core finds the mechanical accessibility failures, such as low contrast. How: This runs its scan against a Playwright page.
 
 
 import { EMP_STA_ARR } from '../support/gallery.ts'; // What: Empty State Array. Why: A search no card matches swaps the Gallery's grid for its empty message, a state a visitor reaches. How: This lists the Gallery states after that search, one per width.

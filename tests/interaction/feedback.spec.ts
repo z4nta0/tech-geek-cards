@@ -828,7 +828,7 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as the Contact form's thank-you, the Gallery's empty search, and a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
 
 
 	test( `${ staRecObj.ideStr } gives every reachable link and button hover, press, and focus feedback, every form field its focus, and every toggle its switch`, async ( { page : curPagObj } ) => { // What: Feedback Test. Why: Every interaction should visibly register. How: This opens the state, blocks clicks, probes every reachable link, button, and form field and each reachable element of the toggle kinds listed for the state, and on the Home, Gallery, and About states every hover surface, and checks it finds no problems.
