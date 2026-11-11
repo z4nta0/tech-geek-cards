@@ -328,17 +328,31 @@ open (`tests/support/family.ts`), each at both widths.
   audit, from TechGeek.dev's: the names check fails a tree with no link or
   button, the Tab walk fails one that reaches no stop and lists every enabled,
   drawn, non-inert element from its first stop on that Tab never reached (only
-  the open dialog's while a modal dialog is open), a start already showing
-  the keyboard's ring counting as the first stop, and the reduced motion check records every lasting animation and transition
-  from the start of the load. `tests/accessibility/announce.spec.ts` checks
-  the Contact form's alert region is in the form and empty on load and holds
-  the error after a failed send, which keeps focus on Send Message, that the
-  thank-you takes focus as it replaces the form, and that "Send Another" puts
-  it on the name field.
+  the open dialog's while a modal dialog is open), a start already showing the
+  keyboard's ring counting as the first stop, and the reduced motion check
+  records every lasting animation and transition from the start of the load.
+  `tests/accessibility/announce.spec.ts` checks the Contact form's alert
+  region is in the form and empty on load and holds the error after a failed
+  send, which keeps focus on Send Message, that the thank-you takes focus as
+  it replaces the form, and that "Send Another" puts it on the name field.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
   specified when none is chosen).
+  - **Feedback probe** (rebuilt 2026-11-10, in the audit, from TechGeek.dev's,
+    helpers in `tests/support/feedback.ts`): on every shared state, the
+    Contact results, the Gallery's empty search, and the open photo, each
+    reachable link, button, and field is read at rest, hovered, pressed, and
+    focused through `focus( { focusVisible : true } )`, and every property
+    that changes on it or inside it, its `::before` and `::after` included,
+    has to ease, or switch at once under reduced motion. A control filling
+    the screen (the open photo) isn't held to a hover look, since it's always
+    under the pointer. The toggles in its `TOG_TAR_ARR` (the menu toggle, the
+    current bar and drawer links, the open drawer and scrim, the scrolled bar,
+    the chosen occasion, the sending button, and the Family scene dots) are
+    flipped off, on, and off; the card tiles, Home's envelope and steps, and
+    About's family cards have to show and ease their hover; and a state with
+    nothing opened fails without its skip link.
   - **Scroll position** (added 2026-11-10, in the audit, from TechGeek.dev's):
     a footer link from the bottom of each page opens the next at its top, the
     current page's own bar link and a phone menu link do too, back, forward,
