@@ -371,7 +371,11 @@ open (`tests/support/family.ts`), each at both widths.
 - `npm run test:rendering`: full-page screenshots against
   `tests/rendering/baselines/`, with the clock and `Math.random` fixed (Home
   picks its cards at random), the confetti circuit hidden in Chromium and
-  WebKit by its `conCirDiv` hook.
+  WebKit by its `conCirDiv` hook. The three share dialog states capture the
+  screen alone (decided by the user 2026-11-10): in full headless Chrome, a
+  repeated full-page capture with the dialog open redraws its link field's
+  corners differently each time, while screen captures, Firefox, and WebKit
+  stay steady, and the Gallery behind it has full-page states of its own.
 - `npm run test:responsive`: 14 widths from 320 to 1,920px, and the text
   measure.
 - `npm run test:security` (added 2026-11-10, in the audit, from

@@ -17,9 +17,10 @@ import { test          } from '@playwright/test';     // What: Test. Why: Each s
  * screens.spec.ts = Screens Spec
  *
  * @summary
- * Compares a full-page screenshot of every page state with its approved
- * baseline, in whichever engine the project runs, so a change that shifts the
- * layout or the styling anywhere on a page fails until it's looked at. Each
+ * Compares a full-page screenshot of each page state, or the screen alone
+ * for the share dialog states, with its approved baseline, in whichever
+ * engine the project runs, so a change that shifts the layout or the styling
+ * anywhere on a page fails until it's looked at. Each
  * state opens under reduced motion and is captured with animations stopped, so
  * it's always caught at rest, with the page's clock fixed to one date,
  * since the footer's copyright year comes from the current year and would
@@ -76,7 +77,7 @@ for ( const staRecObj of STA_REC_ARR ) { // What: State Test Loop. Why: Every pa
 
 
 			animations        : 'disabled',                                 // What: Animations. Why: A looping animation would never hold still for the capture. How: This fast-forwards every finite animation and transition to its end, and resets each looping one to its start, for the capture.
-			fullPage          : true,                                       // What: Full Page. Why: The whole state has to match, not just the first screen. How: This captures the page's full height.
+			fullPage          : !staRecObj.ideStr.startsWith( 'share-' ),   // What: Full Page. Why: The whole state has to match, not just the first screen, except the share dialog states, since Chromium redraws the open dialog's link field corners differently on repeated full-page captures while Firefox and WebKit stay steady, and the Gallery behind the dialog has full-page states of its own. How: This captures the page's full height for every state but the share dialog ones, which capture the screen the dialog shows on.
 			maxDiffPixelRatio : MAX_DIF_NUM,                                // What: Maximum Diff Pixel Ratio. Why: No pixel may differ from the baseline. How: This reads the suite's zero tolerance.
 			stylePath         : engNamStr === 'firefox' ? [] : HID_PAT_STR, // What: Style Path. Why: Chromium and WebKit don't draw the background patterns the same every run, while Firefox does. How: This hides the patterns for those two engines' captures and leaves Firefox's untouched.
 			threshold         : PIX_THR_NUM                                 // What: Threshold. Why: Even a slight color change should fail. How: This reads the suite's zero per-pixel threshold.
