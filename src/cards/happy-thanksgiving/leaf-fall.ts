@@ -244,7 +244,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 
-		return leaRecObj;
+		return leaRecObj; // What: Leaf Record Return. Why: The array keeps every leaf's values between frames. How: This hands the new leaf to Array.from as its entry.
 
 
 	} );

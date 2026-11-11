@@ -12,7 +12,7 @@ import { durSecFun          } from '../../utils/rhythm.ts';   // What: Duration 
 import { gsaEasFun          } from '../../ui/gsap-ease.ts';   // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap               } from 'gsap';                    // What: GSAP. Why: The card plays as one long timeline of wipes, text effects, and glitches. How: This is the animation library that builds and plays it.
 import { redMotFun          } from '../../utils/motion.ts';   // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the final scene at once. How: This reports whether reduced motion is on.
-import { rhyPixFun          } from '../../utils/rhythm.ts';   // What: Rhythm Pixel Function. Why: The lettering's slides and the glitch's shift are spacing steps. How: This returns a step's size in pixels.
+import { rhyPixFun          } from '../../utils/rhythm.ts';   // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as the glitch's shift. How: This returns a step's size in pixels.
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'; // What: Scramble Text Plugin. Why: The hacked heading types itself out through random characters. How: This GSAP plugin animates text that way.
 import { SplitText          } from 'gsap/SplitText';          // What: Split Text. Why: The messages fade in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { staSnoFun          } from './snowfall.ts';           // What: Start Snowfall Function. Why: Snow falls over the last scene. How: This starts it and returns the function that stops it.
@@ -83,10 +83,10 @@ const SQU_COU_NUM = 450;                         // What: Square Count Number. W
  * @summary
  * Adds the glitch to the timeline: the elements skew hard to the right and
  * snap back, flicker out and in, jump left and back, and stretch tall for an
- * instant, all within about a third of a second. Several elements glitch
- * together, in step. Every duration is a step on the duration scale below the
- * named interface steps, the skew a power of the core design number, and the
- * shift a spacing step; only the stretch's 1.1 stays literal, since no step
+ * instant, all within about 0.37 seconds. Several elements glitch together, in
+ * step. Every duration is a step on the duration scale below the named
+ * interface steps, the skew a power of the core design number, and the shift a
+ * vertical rhythm step; only the stretch's 1.1 stays literal, since no step
  * lands within 10% of it. The skew and stretch use the in-out curve and the
  * flicker and jump the decelerate curve.
  *
@@ -274,7 +274,7 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 	const snoTitRef = useRef< HTMLHeadingElement >( null );   // What: Snowy Title Reference. Why: The greeting fades in by letter. How: This holds the heading.
 	const snoVisRef = useRef< HTMLSpanElement >( null );      // What: Snowy Visible Reference. Why: The sign-off's visible copy fades in by letter. How: This holds the span SplitText splits.
 
-	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column And Row Numbers. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This runs griSizFun on the first render and keeps both counts.
+	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the column count griSizFun measures on the first render. // What: Square Row Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the row count griSizFun measures on the first render.
 	const [ seaParObj ]                = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
 	const froParStr = seaParObj.get( 'from' );                               // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.

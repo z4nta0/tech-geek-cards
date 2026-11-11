@@ -6,14 +6,14 @@
 import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Object. Why: The card's sky, fireworks, flag, and lettering are styled in its own module. How: This maps each class name in fourth-of-july-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The headline's starting scale, the stars' sizes and brightness, and the sparks' spread and shrink sit on the scale as powers of the core design number. How: This returns that power.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as a star's size. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every duration and delay in the card is a step on the duration scale. How: This returns a step's length in milliseconds.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
-import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: The card's random values stay within set bounds, such as a star's size. How: This returns a random number between two bounds.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as an entrance's slide. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps the scattered stars across renders.
@@ -211,7 +211,7 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 		const wraXcoNum = ranValFun( 0.15, 0.85 ) * firDivEle.clientWidth;      // What: Wrap X-Coordinate Number. Why: Fireworks burst across the sky, clear of its edges. How: This picks a spot between 15% and 85% across, a literal position in the sky, in pixels.
 		const wraYcoNum = ranValFun( 0.1, 0.55 ) * firDivEle.clientHeight;      // What: Wrap Y-Coordinate Number. Why: Fireworks burst in the upper middle of the sky. How: This picks a spot between 10% and 55% down, a literal position in the sky, in pixels.
 
-		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell, Ring, And Particle Div Elements. Why: The timeline animates each piece. How: This takes the wrap's children in the order the card renders them, shell, ring, then sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
+		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell Div Element. Why: The shell burns out as the firework bursts. How: This is the wrap's first child. // What: Ring Div Element. Why: The ring flashes outward from the burst. How: This is the wrap's second child. // What: Particle Div Array. Why: Each spark flies its own way. How: This gathers the wrap's remaining children, the sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
 
 
 		timLinArr[ wraIndNum ]?.kill(); // What: Last Timeline Kill Call. Why: A reused wrap's last burst must not keep playing over its new one. How: This kills the wrap's previous timeline, if any.
@@ -408,16 +408,16 @@ function FojCarCom () : JSX.Element {
 	 *
 	 * @summary
 	 * The card's entrance, as one timeline: the card fades in from the start,
-	 * the headline drops from a Base Plus 5 spacing step above and grows from
-	 * the Power of 1 Reciprocal scale on the bounce curve, the flag slides in
-	 * from a Base Plus 4 step to the left, and the wish rises from a Base
-	 * Plus 3 step below, each over the Base Plus 7 duration step and every
-	 * other one decelerating. Then every star twinkles between its own
+	 * the headline drops from a Base Plus 5 vertical rhythm step above and
+	 * grows from the Power of 1 Reciprocal scale on the bounce curve, the flag
+	 * slides in from a Base Plus 4 step to the left, and the wish rises from a
+	 * Base Plus 3 step below, each over the Base Plus 7 duration step and
+	 * every other one decelerating. Then every star twinkles between its own
 	 * brightness and a random one from the Power of 8 Reciprocal to fully
 	 * opaque, forever, after a random delay up to the Base Plus 9 duration
 	 * step, each swing taking from the Base Plus 6 to the Plus 10 step on the
-	 * in-out curve, and the fireworks start. Under reduced motion the
-	 * timeline jumps to its end, before the twinkle and fireworks begin.
+	 * in-out curve, and the fireworks start. Under reduced motion the timeline
+	 * jumps to its end, before the twinkle and fireworks begin.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *

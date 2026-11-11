@@ -12,7 +12,7 @@ import { gsaEasFun       } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Fu
 import { gsap            } from 'gsap';                  // What: GSAP. Why: The greeting and cake pop in as one timeline. How: This is the animation library that builds and plays it.
 import { PAR_TOK_ARR     } from './confetti.ts';         // What: Party Token Array. Why: The balloons share the confetti's palette. How: Each balloon takes one of its color tokens in turn.
 import { redMotFun       } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
-import { rhyPixFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are spacing steps. How: This returns a step's size in pixels.
+import { rhyPixFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are vertical rhythm steps. How: This returns a step's size in pixels.
 import { staBalFun       } from './balloons.ts';         // What: Start Balloons Function. Why: Balloons float up behind the greeting. How: This starts them and returns the function that stops them.
 import { staConFun       } from './confetti.ts';         // What: Start Confetti Function. Why: Confetti bursts when the card opens and wherever it's tapped. How: This readies the canvas and returns its burst and stop functions.
 import { useGSAP         } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
@@ -75,9 +75,9 @@ import type { MouseEvent } from 'react';         // What: Mouse Event. Why: A ta
 const CAD_ROW_ARR = [ // What: Candle Row Array. Why: The cake carries three candles, each with its own flame. How: The cake renders one candle and flame per row.
 
 
-	{ colStr : 'var( --bir-pin-col )', modStr : '',                        xcoNum : 41 }, // Birthday Pink Color = #FF6FCF
-	{ colStr : 'var( --bir-blu-col )', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 }, // Birthday Blue Color = #4D96FF
-	{ colStr : 'var( --bir-gre-col )', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }  // Birthday Green Color = #6BCB77
+	{ colStr : 'var( --bir-pin-col )', modStr : '',                        xcoNum : 41 }, // What: Left Candle Row. Why: The pink candle stands on the left. How: Its flame keeps the base flicker timing. // Birthday Pink Color = #FF6FCF
+	{ colStr : 'var( --bir-blu-col )', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 }, // What: Middle Candle Row. Why: The blue candle stands in the middle. How: Its flame takes the second flicker class. // Birthday Blue Color = #4D96FF
+	{ colStr : 'var( --bir-gre-col )', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }  // What: Right Candle Row. Why: The green candle stands on the right. How: Its flame takes the third flicker class. // Birthday Green Color = #6BCB77
 
 
 ];
@@ -105,13 +105,13 @@ const OPE_COU_NUM = 60;                      // What: Opening Count Number. Why:
 const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot the cake. How: The cake renders one tilted strip per row.
 
 
-	{ angNum : 0,  colStr : 'var( --bir-pur-col )', xcoNum : 40, ycoNum : 80 }, // Birthday Purple Color = #A78BFA
-	{ angNum : 30, colStr : 'var( --bir-red-col )', xcoNum : 60, ycoNum : 74 }, // Birthday Red Color = #FF6B6B
-	{ angNum : 60, colStr : 'var( --bir-blu-col )', xcoNum : 80, ycoNum : 82 }, // Birthday Blue Color = #4D96FF
-	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // Birthday Yellow Color = #FFD93D
-	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // Birthday Green Color = #6BCB77
-	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // Birthday Pink Color = #FF6FCF
-	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // Birthday Orange Color = #FF9A3C
+	{ angNum : 0,  colStr : 'var( --bir-pur-col )', xcoNum : 40, ycoNum : 80 }, // What: Sprinkle One Row. Why: A purple sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Purple Color = #A78BFA
+	{ angNum : 30, colStr : 'var( --bir-red-col )', xcoNum : 60, ycoNum : 74 }, // What: Sprinkle Two Row. Why: A red sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Red Color = #FF6B6B
+	{ angNum : 60, colStr : 'var( --bir-blu-col )', xcoNum : 80, ycoNum : 82 }, // What: Sprinkle Three Row. Why: A blue sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Blue Color = #4D96FF
+	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // What: Sprinkle Four Row. Why: A yellow sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Yellow Color = #FFD93D
+	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // What: Sprinkle Five Row. Why: A green sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Green Color = #6BCB77
+	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // What: Sprinkle Six Row. Why: A pink sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Pink Color = #FF6FCF
+	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // What: Sprinkle Seven Row. Why: A orange sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Orange Color = #FF9A3C
 
 
 ];

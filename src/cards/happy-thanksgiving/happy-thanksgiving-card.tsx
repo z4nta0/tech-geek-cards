@@ -6,13 +6,13 @@
 import cssModObj from './happy-thanksgiving-card.module.css'; // What: CSS Module Object. Why: The card's layout, lettering, illustrations, and leaves are styled in its own module. How: This maps each class name in happy-thanksgiving-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The turkey's wobble and the leaves' spin sit on the scale as powers of the core design number. How: This returns that power.
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every duration in the timeline and the leaves' fall times are steps on the duration scale. How: This returns a step's length in milliseconds.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Some of the card's angles sit on the scale as powers of the core design number, such as the turkey's wobble. How: This returns that power.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The leaves' fall times and waits are steps on the duration scale. How: This returns a step's length in milliseconds.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card plays as one timeline of entrances. How: This is the animation library that builds and plays it.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrances' slides and the leaves' sizes and drift are spacing steps. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as an entrance's slide. How: This returns a step's size in pixels.
 import { staLeaFun } from './leaf-fall.ts';        // What: Start Leaf Function. Why: Leaves fall over the card. How: This starts them and returns the function that stops them.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
@@ -69,11 +69,11 @@ import type { LeaSetTyp } from './leaf-fall.ts'; // What: Leaf Settings Type. Wh
 const GRA_POS_ARR = [ // What: Grape Position Array. Why: The grapes are five identical circles at different spots. How: The cornucopia draws one circle per row.
 
 
-	{ xcoNum : 26, ycoNum : 80 },
-	{ xcoNum : 34, ycoNum : 74 },
-	{ xcoNum : 42, ycoNum : 72 },
-	{ xcoNum : 30, ycoNum : 70 },
-	{ xcoNum : 38, ycoNum : 66 }
+	{ xcoNum : 26, ycoNum : 80 }, // What: Grape One Position. Why: This grape sits lowest in the bunch. How: The cornucopia centers one circle here.
+	{ xcoNum : 34, ycoNum : 74 }, // What: Grape Two Position. Why: This grape sits above and right of the first. How: The cornucopia centers one circle here.
+	{ xcoNum : 42, ycoNum : 72 }, // What: Grape Three Position. Why: This grape reaches furthest right. How: The cornucopia centers one circle here.
+	{ xcoNum : 30, ycoNum : 70 }, // What: Grape Four Position. Why: This grape sits left of the third. How: The cornucopia centers one circle here.
+	{ xcoNum : 38, ycoNum : 66 }  // What: Grape Five Position. Why: This grape sits highest in the bunch. How: The cornucopia centers one circle here.
 
 
 ];
@@ -114,11 +114,11 @@ const LEA_COL_ARR = [ // What: Leaf Color Array. Why: The falling leaves come in
 const TUR_FEA_ARR = [ // What: Turkey Feather Array. Why: The tail is five identical feathers at different angles and colors. How: The turkey draws one feather per row, in order, so the later ones overlap the earlier.
 
 
-	{ colStr : 'var( --tha-fea-col )', rotNum : -40 }, // Thanksgiving Feather Color = #8B0000
-	{ colStr : 'var( --tha-gol-col )', rotNum : -20 }, // Thanksgiving Gold Color = #DAA520
-	{ colStr : 'var( --tha-cin-col )', rotNum : 0   }, // Thanksgiving Cinnamon Color = #D2691E
-	{ colStr : 'var( --tha-gol-col )', rotNum : 20  }, // Thanksgiving Gold Color = #DAA520
-	{ colStr : 'var( --tha-fea-col )', rotNum : 40  }  // Thanksgiving Feather Color = #8B0000
+	{ colStr : 'var( --tha-fea-col )', rotNum : -40 }, // What: Outer Left Feather. Why: The fan opens with a deep red feather on the left. How: It turns 40 degrees left. // Thanksgiving Feather Color = #8B0000
+	{ colStr : 'var( --tha-gol-col )', rotNum : -20 }, // What: Inner Left Feather. Why: A gold feather sits inside it. How: It turns 20 degrees left. // Thanksgiving Gold Color = #DAA520
+	{ colStr : 'var( --tha-cin-col )', rotNum : 0   }, // What: Middle Feather. Why: The orange feather stands at the center. How: It stays upright. // Thanksgiving Cinnamon Color = #D2691E
+	{ colStr : 'var( --tha-gol-col )', rotNum : 20  }, // What: Inner Right Feather. Why: A gold feather mirrors the inner left one. How: It turns 20 degrees right. // Thanksgiving Gold Color = #DAA520
+	{ colStr : 'var( --tha-fea-col )', rotNum : 40  }  // What: Outer Right Feather. Why: A deep red feather closes the fan on the right. How: It turns 40 degrees right. // Thanksgiving Feather Color = #8B0000
 
 
 ];
@@ -248,7 +248,7 @@ function ThaCarCom () : JSX.Element {
 
 
 		const bouEasStr = gsaEasFun( 'bou' );                                   // What: Bounce Easing String. Why: The produce pops in with a springy bounce. How: This registers the bounce token and keeps its GSAP name.
-		const corOffNum = rhyPixFun( 'p06' ) * -1;                              // What: Cornucopia Offset Number. Why: The cornucopia slides in from the left. How: This is the Base Plus 6 rhythm step, negated, in pixels. // Vertical Rhythm Base Plus 6 ~= 78.751px
+		const corOffNum = rhyPixFun( 'p06' ) * -1;                              // What: Cornucopia Offset Number. Why: The cornucopia slides in from the left. How: This is the Base Plus 6 rhythm step, negated, in pixels. // Vertical Rhythm Base Plus 6 ~= -78.751px
 		const decEasStr = gsaEasFun( 'dec' );                                   // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
 		const entDurNum = durSecFun( 'p06' );                                   // What: Entrance Duration Number. Why: The cornucopia, heading, and message arrive at one unhurried pace. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
 		const feaDurNum = durSecFun( 'p04' );                                   // What: Feather Duration Number. Why: Each feather grows quickly. How: This is the Base Plus 4 step, in seconds. // Duration Animation Base Plus 4 ~= 486.1ms
@@ -267,7 +267,7 @@ function ThaCarCom () : JSX.Element {
 		const turDurNum = durSecFun( 'p05' );                                   // What: Turkey Duration Number. Why: The turkey rises a little quicker than the other entrances. How: This is the Base Plus 5 step, in seconds. // Duration Animation Base Plus 5 ~= 643.9ms
 		const turRisNum = rhyPixFun( 'p04' );                                   // What: Turkey Rise Number. Why: The turkey rises into place. How: This is the Base Plus 4 rhythm step, in pixels. // Vertical Rhythm Base Plus 4 ~= 44.876px
 		const turStaNum = durSecFun( 'p06' );                                   // What: Turkey Start Number. Why: The turkey joins once the cornucopia has arrived. How: This is the Base Plus 6 step, in seconds from the start. // Duration Animation Base Plus 6 ~= 853.0ms
-		const wobAngNum = cdnPowFun( 4 );                                       // What: Wobble Angle Number. Why: The turkey rocks only a few degrees. How: This is the core design number to the 4th power, in degrees, about 3.08.
+		const wobAngNum = cdnPowFun( 4 );                                       // What: Wobble Angle Number. Why: The turkey rocks only a few degrees. How: This is the core design number to the 4th power, in degrees, about 3.08. // Core-Design-Number to the Power of 4 ~= 3.080
 		const wobDurNum = durSecFun( 'p06' );                                   // What: Wobble Duration Number. Why: Each rock of the turkey takes a calm beat. How: This is the Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
 		const wobTweObj = gsap.to( turSvgRef.current, { duration : wobDurNum, ease : inoEasStr, paused : true, repeat : -1, rotation : wobAngNum, transformOrigin : '50% 100%', yoyo : true } ); // What: Wobble Tween Object. Why: Once in place, the turkey rocks gently for as long as the card is open. How: This tilts it about 3.1 degrees on its feet and back, forever, easing in and out over a Base Plus 6 step, created paused inside the context so leaving the card reverts it. // Duration Animation Base Plus 6 ~= 853.0ms, Core-Design-Number to the Power of 4 ~= 3.080
 

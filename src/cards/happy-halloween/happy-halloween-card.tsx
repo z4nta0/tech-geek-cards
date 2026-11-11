@@ -6,12 +6,12 @@
 import cssModObj from './happy-halloween-card.module.css'; // What: CSS Module Object. Why: The card's night sky, figures, and lettering are styled in its own module. How: This maps each class name in happy-halloween-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The card's angles, scales, and opacities sit on the scale as powers of the core design number. How: This returns that power.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as an angle. How: This returns that power.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: Every figure on the card floats, flies, or flickers. How: This is the animation library that plays it all.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the still scene at once. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' drops, bobs, and flight paths are rhythm steps. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' distances are vertical rhythm steps, such as a ghost's bob. How: This returns a step's size in pixels.
 import { SplitText } from 'gsap/SplitText';        // What: Split Text. Why: The greeting drops in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: Each figure's motion has to start after the card renders and stop when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The motion animates specific elements. How: Each animated element gets a ref.
@@ -105,10 +105,10 @@ const BAT_DEL_ARR = [ // What: Bat Delay Array. Why: The bats take off one at a 
 const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles stand at their own places and flicker out of step. How: The card renders one candle per row.
 
 
-	{ claModStr : cssModObj.canFlaSvgFir, delSecNum : durSecFun( 'm02' ) }, // Duration Animation Base Minus 2 ~= 89.9ms
-	{ claModStr : cssModObj.canFlaSvgSec, delSecNum : durSecFun( 'p04' ) }, // Duration Animation Base Plus 4 ~= 486.1ms
-	{ claModStr : cssModObj.canFlaSvgThi, delSecNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claModStr : cssModObj.canFlaSvgFou, delSecNum : durSecFun( 'p02' ) }  // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.canFlaSvgFir, delSecNum : durSecFun( 'm02' ) }, // What: First Candle Row. Why: The first candle's flame flickers soonest. How: Its delay is the shortest of the four. // Duration Animation Base Minus 2 ~= 89.9ms
+	{ claModStr : cssModObj.canFlaSvgSec, delSecNum : durSecFun( 'p04' ) }, // What: Second Candle Row. Why: The second candle's flame flickers out of step with the first. How: Its delay starts it later. // Duration Animation Base Plus 4 ~= 486.1ms
+	{ claModStr : cssModObj.canFlaSvgThi, delSecNum : durSecFun( 'p06' ) }, // What: Third Candle Row. Why: The third candle's flame flickers last. How: Its delay is the longest of the four. // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.canFlaSvgFou, delSecNum : durSecFun( 'p02' ) }  // What: Fourth Candle Row. Why: The fourth candle's flame flickers out of step with the others. How: Its delay starts it second. // Duration Animation Base Plus 2 ~= 277.0ms
 
 
 ];
@@ -132,8 +132,8 @@ const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts ri
 
 
 	{ claModStr : cssModObj.ghoFloSvgLef, delSecNum : 0                  }, // What: Left Ghost Row. Why: The left ghost rises first. How: It starts with no delay.
-	{ claModStr : cssModObj.ghoFloSvgRig, delSecNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claModStr : cssModObj.ghoFloSvgMid, delSecNum : durSecFun( 'p08' ) }  // Duration Animation Base Plus 8 ~= 1,497.0ms
+	{ claModStr : cssModObj.ghoFloSvgRig, delSecNum : durSecFun( 'p06' ) }, // What: Right Ghost Row. Why: The right ghost rises second. How: Its delay starts it after the left one. // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.ghoFloSvgMid, delSecNum : durSecFun( 'p08' ) }  // What: Middle Ghost Row. Why: The middle ghost rises last. How: Its delay is the longest of the three. // Duration Animation Base Plus 8 ~= 1,497.0ms
 
 
 ];
@@ -161,9 +161,9 @@ const PUM_ROW_ARR : ArtRowTyp[] = [ // What: Pumpkin Row Array. Why: The jack-o'
 
 
 	{ claModStr : cssModObj.pumLanSvgFir, delSecNum : 0                  }, // What: First Pumpkin Row. Why: The leftmost jack-o'-lantern flickers first. How: It starts with no delay.
-	{ claModStr : cssModObj.pumLanSvgSec, delSecNum : durSecFun( 'p02' ) }, // Duration Animation Base Plus 2 ~= 277.0ms
-	{ claModStr : cssModObj.pumLanSvgThi, delSecNum : durSecFun( 'p05' ) }, // Duration Animation Base Plus 5 ~= 643.9ms
-	{ claModStr : cssModObj.pumLanSvgFou, delSecNum : durSecFun( 'p01' ) }  // Duration Animation Base Plus 1 ~= 209.1ms
+	{ claModStr : cssModObj.pumLanSvgSec, delSecNum : durSecFun( 'p02' ) }, // What: Second Pumpkin Row. Why: The second jack-o'-lantern flickers out of step with the first. How: Its delay starts it third. // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.pumLanSvgThi, delSecNum : durSecFun( 'p05' ) }, // What: Third Pumpkin Row. Why: The third jack-o'-lantern flickers last. How: Its delay is the longest of the four. // Duration Animation Base Plus 5 ~= 643.9ms
+	{ claModStr : cssModObj.pumLanSvgFou, delSecNum : durSecFun( 'p01' ) }  // What: Fourth Pumpkin Row. Why: The fourth jack-o'-lantern flickers out of step with the others. How: Its delay starts it second. // Duration Animation Base Plus 1 ~= 209.1ms
 
 
 ];
