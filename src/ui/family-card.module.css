@@ -5,17 +5,17 @@
  * family-card.module.css = Family Card Module
  *
  * @summary
- * Styles for FamCarCom, the engine behind the Family cards. Every layer shares
- * the card's one grid cell, filling the screen, from the photo mosaic at the
- * bottom to the lettering on top. The card's own theme class sets its
- * background, text color, and font through the --fam-bac-col, --fam-tex-col,
- * and --fam-tex-fon properties, and may move the underline through
- * --fam-und-off. The heart is a mask scaled through --fam-hea-sca, and the key
- * words' underline is drawn through --fam-und-sca, both of which the timeline
- * animates, while the cursor blinks on its own. The mosaic is four columns,
- * three at the phone breakpoint, running behind the floating bar like the rest
- * of the card, and each photo zooms slightly on hover, presses in, and opens
- * in a dialog that fades in.
+ * Styles for FamCarCom, the engine behind the Family cards. The photo mosaic,
+ * the heart stage, and the lettering share the card's one grid cell, filling
+ * the screen, the mosaic at the bottom and the lettering on top. The card's
+ * own theme class sets its background, text color, and font through the
+ * --fam-bac-col, --fam-tex-col, and --fam-tex-fon properties, and may move the
+ * underline through --fam-und-off. The heart is a mask scaled through
+ * --fam-hea-sca, and the key words' underline is drawn through --fam-und-sca,
+ * both of which the timeline animates, while the cursor blinks on its own. The
+ * mosaic is four columns, three at the phone breakpoint, running behind the
+ * floating bar like the rest of the card, and each photo zooms slightly on
+ * hover, presses in, and opens in a dialog that fades in.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

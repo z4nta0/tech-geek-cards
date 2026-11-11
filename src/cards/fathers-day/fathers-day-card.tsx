@@ -62,8 +62,8 @@ import type { JSX       } from 'react';                    // What: JSX. Why: Th
  * the description a screen reader gives for the photo, and imaStr, its
  * fingerprinted address. The ten scenes' photos come first, in scene order,
  * then the two the photo grid adds. Every scene row is { aftStr, befStr,
- * higStr }: the parts of its line typed before its key words, the key words
- * that get underlined, and the part typed after them.
+ * higStr }: aftStr, the part of its line typed after its key words, befStr,
+ * the part typed before them, and higStr, the key words that get underlined.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

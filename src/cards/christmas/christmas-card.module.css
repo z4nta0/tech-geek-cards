@@ -45,7 +45,7 @@
 
 }
 
-@font-face { /* What: Gloria Hallelujah Extended Font Face. Why: A sender's or recipient's name can hold letters beyond basic Latin, such as Ł, Ő, or Ș, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
+@font-face { /* What: Gloria Hallelujah Extended Font Face. Why: A sender's or recipient's name can hold letters beyond basic Latin, such as Ł, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
 
 
 	font-display  : swap;
