@@ -114,7 +114,7 @@ test( 'an empty form stays put and sends nothing', async ( { page : curPagObj } 
 
 	expect( senBodArr ).toEqual( [] ); // What: Nothing Sent Assertion. Why: An empty form must never reach Netlify. How: This checks no POST was made.
 
-	await expect( curPagObj.getByRole( 'heading', { name : 'Message Sent!' } ) ).toHaveCount( 0 ); // What: No Thank-You Assertion. Why: The visitor shouldn't be told an empty form was sent. How: This checks the thank-you never appeared.
+	await expect( curPagObj.getByRole( 'heading', { name : 'Message sent!' } ) ).toHaveCount( 0 ); // What: No Thank-You Assertion. Why: The visitor shouldn't be told an empty form was sent. How: This checks the thank-you never appeared.
 
 
 } );
@@ -158,7 +158,7 @@ test( 'a filled-in form sends to Netlify and shows the thank-you', async ( { pag
 
 	await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The valid form is submitted. How: This presses Send.
 
-	await expect( curPagObj.getByRole( 'heading', { name : 'Message Sent!' } ) ).toBeVisible(); // What: Thank-You Assertion. Why: The visitor should learn the message went out. How: This checks the thank-you's heading shows.
+	await expect( curPagObj.getByRole( 'heading', { name : 'Message sent!' } ) ).toBeVisible(); // What: Thank-You Assertion. Why: The visitor should learn the message went out. How: This checks the thank-you's heading shows.
 
 	expect( senBodArr ).toHaveLength( 1 ); // What: One Send Assertion. Why: The message should be sent exactly once. How: This checks a single POST was made.
 

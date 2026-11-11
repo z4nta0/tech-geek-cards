@@ -270,7 +270,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EM
 
 
 
-for ( const [ resNamStr, staCodNum, resHeaStr ] of [ [ 'sent', 200, 'Message Sent!' ], [ 'failed', 500, '' ] ] as const ) { // What: Form Result Loop. Why: Sending the form posts to the site and swaps in the thank-you or the error, which the policy has to allow too. How: This declares one test per result, each with the status Netlify answers with and the heading the thank-you shows, empty for the error. // What: Type Assertion Note. Why: Each row has to keep its fixed types rather than widen to a mixed array. How: The as const keeps each row a tuple.
+for ( const [ resNamStr, staCodNum, resHeaStr ] of [ [ 'sent', 200, 'Message sent!' ], [ 'failed', 500, '' ] ] as const ) { // What: Form Result Loop. Why: Sending the form posts to the site and swaps in the thank-you or the error, which the policy has to allow too. How: This declares one test per result, each with the status Netlify answers with and the heading the thank-you shows, empty for the error. // What: Type Assertion Note. Why: Each row has to keep its fixed types rather than widen to a mixed array. How: The as const keeps each row a tuple.
 
 
 	test( `the Contact form's ${ resNamStr } result breaks no rule of the security policy`, async ( { browserName : broNamStr, page : curPagObj } ) => { // What: Form Result Policy Test. Why: Netlify Forms takes the post on the live site, and the result has to show without a refused resource. How: This sends the filled-in form with its post answered in the page, waits for the result, and checks nothing was refused.
