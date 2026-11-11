@@ -701,7 +701,7 @@ test( "the share dialog's preview link on a card's own page closes the dialog an
 
 	await curPagObj.goto( '/happy-birthday' ); // What: Card Navigation. Why: The preview starts from the card's own page. How: This loads the birthday card.
 
-	await curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( heaEleObj ) => heaEleObj.setAttribute( 'data-test-mount-marker', '' ) ); // What: Mount Marker Call. Why: A card that starts over is mounted fresh, without the mark. How: This sets a presence-only attribute on the greeting.
+	await curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( heaCurEle ) => heaCurEle.setAttribute( 'data-test-mount-marker', '' ) ); // What: Mount Marker Call. Why: A card that starts over is mounted fresh, without the mark. How: This sets a presence-only attribute on the greeting.
 
 	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's Share button. How: This presses it.
 
