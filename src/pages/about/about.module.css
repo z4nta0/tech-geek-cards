@@ -242,7 +242,7 @@
 
 
 }
-.facIteIte::before { /* What: Fact Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle centered on the first line, colored by the fact's position below. */
+.facIteIte::before { /* What: Fact Item Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle centered on the first line, colored by the fact's position below. */
 
 
 	background    : var( --acc-mai-col );                              /* Accent Main Color = #F26419 */
@@ -255,14 +255,14 @@
 
 
 }
-.facIteIte:nth-child( 2 )::before { /* What: Second Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
+.facIteIte:nth-child( 2 )::before { /* What: Fact Item Item Dot Second. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.facIteIte:nth-child( 3 )::before { /* What: Third Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
+.facIteIte:nth-child( 3 )::before { /* What: Fact Item Item Dot Third. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */

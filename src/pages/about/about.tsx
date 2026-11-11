@@ -273,7 +273,7 @@ function AboPagCom () : JSX.Element {
 								className={ cssModObj.butPriAnc }
 
 								to='/gallery'
-							>Browse the Gallery</Link>{ /* What: Browse The Gallery Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an orange button. */ }
+							>Browse the Gallery</Link>{ /* What: Button Primary Anchor Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an orange button. */ }
 
 
 						</div>

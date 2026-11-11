@@ -482,7 +482,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 						to={ prePatStr }
 
 						onClick={ cloDiaFun } // What: Preview Close Handler. Why: Opened on the card's own page, the preview reopens that page behind the dialog, which would otherwise stay on top of it. How: This starts the dialog's closing animation as the link navigates, and a link to another page unmounts the dialog anyway.
-					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Preview Card Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same names in its address, its arrow hidden from screen readers. */ }
+					>Preview card <span className={ cssModObj.shaArrSpa } aria-hidden='true'>→</span></Link>{ /* What: Share Preview Anchor Link. Why: The sender may want to see the card as it will arrive. How: This opens the card with the same names in its address, its arrow hidden from screen readers. */ }
 
 
 				</div>

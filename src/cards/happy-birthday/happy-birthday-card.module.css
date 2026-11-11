@@ -133,7 +133,7 @@
 
 
 }
-.staDotSpa--big { /* What: Big Star Dot Span. Why: Every fifth star shines larger. How: This sizes it a couple of steps up. */
+.staDotSpa--big { /* What: Star Dot Span Big. Why: Every fifth star shines larger. How: This sizes it a couple of steps up. */
 
 
 	height : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
@@ -315,7 +315,7 @@
 
 
 }
-.cakHigRec--top { /* What: Top Cake Highlight Rect. Why: The top tier's highlight was drawn a little stronger. How: This raises its opacity a step. */
+.cakHigRec--top { /* What: Cake Highlight Rect Top. Why: The top tier's highlight was drawn a little stronger. How: This raises its opacity a step. */
 
 
 	opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
@@ -335,7 +335,7 @@
 
 
 }
-.cakFlaGro--second { /* What: Second Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the middle flame a step and starts it a moment later. */
+.cakFlaGro--second { /* What: Cake Flame Group Second. Why: The flames shouldn't flicker in step. How: This slows the middle flame a step and starts it a moment later. */
 
 
 	animation-delay    : var( --dur-ani-m02 ); /* Duration Animation Base Minus 2 ~= 89.9ms */
@@ -343,7 +343,7 @@
 
 
 }
-.cakFlaGro--third { /* What: Third Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the last flame another step and starts it later still. */
+.cakFlaGro--third { /* What: Cake Flame Group Third. Why: The flames shouldn't flicker in step. How: This slows the last flame another step and starts it later still. */
 
 
 	animation-delay    : var( --dur-ani-bas ); /* Duration Animation Base ~= 157.8ms */

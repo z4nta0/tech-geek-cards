@@ -321,7 +321,7 @@
 
 
 }
-.fieTexInp.fieTexInp--link { /* What: Link Field Text Input. Why: The link reads as an address rather than prose, and a long one trails off rather than wrapping. How: This sets it in mono and ends overflowing text with an ellipsis. */
+.fieTexInp.fieTexInp--link { /* What: Field Text Input Link. Why: The link reads as an address rather than prose, and a long one trails off rather than wrapping. How: This sets it in mono and ends overflowing text with an ellipsis. */
 
 
 	font-family   : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */

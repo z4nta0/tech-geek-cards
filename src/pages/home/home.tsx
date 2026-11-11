@@ -212,7 +212,7 @@ function HomPagCom () : JSX.Element {
 									className={ cssModObj.butPriAnc }
 
 									to='/gallery'
-								>Browse the Gallery</Link>{ /* What: Browse Gallery Link. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
+								>Browse the Gallery</Link>{ /* What: Button Primary Anchor Link. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
 
 
 
@@ -396,7 +396,7 @@ function HomPagCom () : JSX.Element {
 								className={ cssModObj.allCarAnc }
 
 								to='/gallery'
-							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: See All Cards Link. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
+							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: All Cards Anchor Link. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
 
 
 						</div>
@@ -463,7 +463,7 @@ function HomPagCom () : JSX.Element {
 										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
-									>Request a Custom Card</Link>{ /* What: Request Custom Card Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
+									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
 
 
 								</div>

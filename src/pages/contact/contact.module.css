@@ -641,7 +641,7 @@
 
 
 }
-.sidTipIte::before { /* What: Sidebar Tip Dot. Why: A dot of confetti leads each tip. How: This draws a small circle centered on the first line, colored by the tip's position below. */
+.sidTipIte::before { /* What: Sidebar Tip Item Dot. Why: A dot of confetti leads each tip. How: This draws a small circle centered on the first line, colored by the tip's position below. */
 
 
 	background    : var( --acc-mai-col );                              /* Accent Main Color = #F26419 */
@@ -654,14 +654,14 @@
 
 
 }
-.sidTipIte:nth-child( 2 )::before { /* What: Second Sidebar Tip Dot. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
+.sidTipIte:nth-child( 2 )::before { /* What: Sidebar Tip Item Dot Second. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.sidTipIte:nth-child( 3 )::before { /* What: Third Sidebar Tip Dot. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
+.sidTipIte:nth-child( 3 )::before { /* What: Sidebar Tip Item Dot Third. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */

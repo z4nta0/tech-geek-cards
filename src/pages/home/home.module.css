@@ -239,7 +239,7 @@
 @media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, Request a Custom Card, wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
 
 
-	.butPriAnc--postcard { /* What: Postcard Button Primary Anchor. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
+	.butPriAnc--postcard { /* What: Button Primary Anchor Postcard. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
 
 
 		font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
@@ -377,7 +377,7 @@
 
 
 }
-.envCarIma:nth-of-type( 1 ) { /* What: Left Envelope Card Image. Why: The first card leans left in the fan and rises first. How: This turns it left and shifts it out, starting its rise after the page's own entrance. */
+.envCarIma:nth-of-type( 1 ) { /* What: Envelope Card Image Left. Why: The first card leans left in the fan and rises first. How: This turns it left and shifts it out, starting its rise after the page's own entrance. */
 
 
 	animation-delay : var( --dur-ani-p03 ); /* Duration Animation Base Plus 3 ~= 366.9ms */
@@ -386,7 +386,7 @@
 
 
 }
-.envCarIma:nth-of-type( 2 ) { /* What: Middle Envelope Card Image. Why: The middle card stands tallest in the fan and rises second. How: This lifts it and starts its rise one beat later. */
+.envCarIma:nth-of-type( 2 ) { /* What: Envelope Card Image Middle. Why: The middle card stands tallest in the fan and rises second. How: This lifts it and starts its rise one beat later. */
 
 
 	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
@@ -394,7 +394,7 @@
 
 
 }
-.envCarIma:nth-of-type( 3 ) { /* What: Right Envelope Card Image. Why: The last card leans right in the fan and rises last. How: This turns it right and shifts it out, starting its rise two beats later. */
+.envCarIma:nth-of-type( 3 ) { /* What: Envelope Card Image Right. Why: The last card leans right in the fan and rises last. How: This turns it right and shifts it out, starting its rise two beats later. */
 
 
 	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) * 2 ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
@@ -403,7 +403,7 @@
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 1 ) { /* What: Hovered Left Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the left card further out. */
+.envStaDiv:hover .envCarIma:nth-of-type( 1 ) { /* What: Hovered Envelope Card Image Left. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the left card further out. */
 
 
 	rotate    : -19deg;
@@ -411,14 +411,14 @@
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 2 ) { /* What: Hovered Middle Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This lifts the middle card higher. */
+.envStaDiv:hover .envCarIma:nth-of-type( 2 ) { /* What: Hovered Envelope Card Image Middle. Why: The fan opens wider under the pointer, the hero's flair. How: This lifts the middle card higher. */
 
 
 	translate : 0 -17%;
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 3 ) { /* What: Hovered Right Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the right card further out. */
+.envStaDiv:hover .envCarIma:nth-of-type( 3 ) { /* What: Hovered Envelope Card Image Right. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the right card further out. */
 
 
 	rotate    : 19deg;
@@ -545,7 +545,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 1 ) { /* What: First Confetti Piece Span. Why: An orange dot pops in at the upper left. How: This places and colors it. */
+.conPieSpa:nth-of-type( 1 ) { /* What: Confetti Piece Span First. Why: An orange dot pops in at the upper left. How: This places and colors it. */
 
 
 	background : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
@@ -554,7 +554,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 2 ) { /* What: Second Confetti Piece Span. Why: A tumbling berry square pops in near the top. How: This places it, squares and turns it, and colors it. */
+.conPieSpa:nth-of-type( 2 ) { /* What: Confetti Piece Span Second. Why: A tumbling berry square pops in near the top. How: This places it, squares and turns it, and colors it. */
 
 
 	background    : var( --act-mai-col );             /* Accent-Tertiary Main Color = #E64E82 */
@@ -565,7 +565,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 3 ) { /* What: Third Confetti Piece Span. Why: A blue dot pops in at the upper right. How: This places and colors it. */
+.conPieSpa:nth-of-type( 3 ) { /* What: Confetti Piece Span Third. Why: A blue dot pops in at the upper right. How: This places and colors it. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
@@ -574,7 +574,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 4 ) { /* What: Fourth Confetti Piece Span. Why: An orange streamer pops in at the right. How: This places it, stretches it into a tall rounded strip, turns it, and colors it. */
+.conPieSpa:nth-of-type( 4 ) { /* What: Confetti Piece Span Fourth. Why: An orange streamer pops in at the right. How: This places it, stretches it into a tall rounded strip, turns it, and colors it. */
 
 
 	background    : var( --acc-mai-col );                /* Accent Main Color = #F26419 */
@@ -587,7 +587,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 5 ) { /* What: Fifth Confetti Piece Span. Why: A tumbling blue square pops in at the left. How: This places it, squares and turns it, and colors it. */
+.conPieSpa:nth-of-type( 5 ) { /* What: Confetti Piece Span Fifth. Why: A tumbling blue square pops in at the left. How: This places it, squares and turns it, and colors it. */
 
 
 	background    : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
@@ -598,7 +598,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 6 ) { /* What: Sixth Confetti Piece Span. Why: A berry dot pops in above the middle card. How: This places and colors it. */
+.conPieSpa:nth-of-type( 6 ) { /* What: Confetti Piece Span Sixth. Why: A berry dot pops in above the middle card. How: This places and colors it. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
@@ -780,21 +780,21 @@
 
 
 }
-.steIteIte:nth-child( 1 ) .steNumSpa { /* What: First Step Number Span. Why: The first step's dot is the family's orange. How: This fills it orange. */
+.steIteIte:nth-child( 1 ) .steNumSpa { /* What: Step Number Span First. Why: The first step's dot is the family's orange. How: This fills it orange. */
 
 
 	background : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
 
 
 }
-.steIteIte:nth-child( 2 ) .steNumSpa { /* What: Second Step Number Span. Why: The second step's dot is this site's berry. How: This fills it berry. */
+.steIteIte:nth-child( 2 ) .steNumSpa { /* What: Step Number Span Second. Why: The second step's dot is this site's berry. How: This fills it berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.steIteIte:nth-child( 3 ) .steNumSpa { /* What: Third Step Number Span. Why: The third step's dot is the family's powder blue. How: This fills it blue. */
+.steIteIte:nth-child( 3 ) .steNumSpa { /* What: Step Number Span Third. Why: The third step's dot is the family's powder blue. How: This fills it blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */

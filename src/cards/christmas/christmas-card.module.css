@@ -206,7 +206,7 @@
 
 
 }
-.snoSceSec--open { /* What: Open Snowy Scene Section. Why: The listed card has no prank to play first, so its snowy scene is there from the start. How: This shows the scene without waiting on the timeline. */
+.snoSceSec--open { /* What: Snowy Scene Section Open. Why: The listed card has no prank to play first, so its snowy scene is there from the start. How: This shows the scene without waiting on the timeline. */
 
 
 	opacity : 1;

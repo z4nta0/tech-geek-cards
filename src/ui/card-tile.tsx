@@ -135,7 +135,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 						className={ cssModObj.carTitAnc }
 
 						to={ `/${ carRecObj.sluStr }` }
-					>{ carRecObj.titStr }</Link>{ /* What: Card Title Link. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
+					>{ carRecObj.titStr }</Link>{ /* What: Card Title Anchor Link. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
 
 
 				</h3>

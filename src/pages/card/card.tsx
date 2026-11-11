@@ -222,7 +222,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barHomAnc }
 
 					to='/'
-				>{ /* What: Home Link. Why: The site's mark and name lead back to its home page. How: This routes home, showing the mark beside the wordmark, or the mark alone on a phone, where the wordmark is hidden but still names the link. */ }
+				>{ /* What: Bar Home Anchor Link. Why: The site's mark and name lead back to its home page. How: This routes home, showing the mark beside the wordmark, or the mark alone on a phone, where the wordmark is hidden but still names the link. */ }
 
 
 					<img
@@ -246,7 +246,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barGalAnc }
 
 					to='/gallery'
-				>More cards</Link>{ /* What: More Cards Link. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
+				>More cards</Link>{ /* What: Bar Gallery Anchor Link. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
 
 
 

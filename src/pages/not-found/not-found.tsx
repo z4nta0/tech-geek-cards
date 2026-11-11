@@ -190,7 +190,7 @@ function NotFouCom () : JSX.Element {
 							className={ cssModObj.butPriAnc }
 
 							to='/'
-						>Go Home</Link>{ /* What: Go Home Link. Why: Home is the natural place to start over. How: This routes to the home page as a button. */ }
+						>Go Home</Link>{ /* What: Button Primary Anchor Link. Why: Home is the natural place to start over. How: This routes to the home page as a button. */ }
 
 
 
@@ -198,7 +198,7 @@ function NotFouCom () : JSX.Element {
 							className={ cssModObj.butSecAnc }
 
 							to='/gallery'
-						>Browse the Gallery</Link>{ /* What: Browse Gallery Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an outlined button. */ }
+						>Browse the Gallery</Link>{ /* What: Button Secondary Anchor Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an outlined button. */ }
 
 
 					</div>
