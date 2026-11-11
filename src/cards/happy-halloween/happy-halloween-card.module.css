@@ -125,7 +125,7 @@
 
 
 	position : absolute;
-	right    : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	right    : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 152.824px @ 1,920px width */
 	top      : var( --spa-ver-p03 );                /* Spacing Vertical Base Plus 3 ~= 33.876px */
 	width    : calc( var( --ver-rhy-p07 ) * 1rem ); /* Vertical Rhythm Base Plus 7 ~= 104.323px */
 
@@ -143,7 +143,7 @@
 .ghoFloSvg--lef { /* What: Ghost Float SVG Left. Why: The largest ghost hovers on the left. How: This places it near the left edge at the larger size. */
 
 
-	left  : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	left  : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 152.824px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
@@ -151,7 +151,7 @@
 .ghoFloSvg--rig { /* What: Ghost Float SVG Right. Why: A smaller ghost hovers on the right. How: This places it three quarters across at the smaller size. */
 
 
-	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 1,449.365px @ 1,920px width */
 	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
 
 
@@ -159,7 +159,7 @@
 .ghoFloSvg--mid { /* What: Ghost Float SVG Middle. Why: The last ghost hovers near the middle, behind the greeting. How: This places it a little left of center at the smaller size. */
 
 
-	left  : var( --hor-rhy-024 );                /* Horizontal Rhythm 24 ~= 43.02vw */
+	left  : var( --hor-rhy-024 );                /* Horizontal Rhythm 24 ~= 825.907px @ 1,920px width */
 	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
 
 
@@ -190,7 +190,7 @@
 .pumLanSvg--fir { /* What: Pumpkin Lantern SVG First. Why: A large jack-o'-lantern sits at the far left. How: This places it at the left edge at the larger size. */
 
 
-	left  : var( --hor-rhy-013 );                /* Horizontal Rhythm 13 ~= 1.95vw */
+	left  : var( --hor-rhy-013 );                /* Horizontal Rhythm 13 ~= 37.460px @ 1,920px width */
 	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
 
 
@@ -198,7 +198,7 @@
 .pumLanSvg--sec { /* What: Pumpkin Lantern SVG Second. Why: A small jack-o'-lantern sits left of center. How: This places it a fifth of the way across at the smaller size. */
 
 
-	left  : var( --hor-rhy-021 );                /* Horizontal Rhythm 21 ~= 18.50vw */
+	left  : var( --hor-rhy-021 );                /* Horizontal Rhythm 21 ~= 355.272px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
@@ -206,7 +206,7 @@
 .pumLanSvg--thi { /* What: Pumpkin Lantern SVG Third. Why: A large jack-o'-lantern sits right of center. How: This places it a little past halfway at the larger size. */
 
 
-	left  : var( --hor-rhy-025 );                /* Horizontal Rhythm 25 ~= 56.98vw */
+	left  : var( --hor-rhy-025 );                /* Horizontal Rhythm 25 ~= 1,094.093px @ 1,920px width */
 	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
 
 
@@ -214,7 +214,7 @@
 .pumLanSvg--fou { /* What: Pumpkin Lantern SVG Fourth. Why: A small jack-o'-lantern sits on the right. How: This places it three quarters across at the smaller size. */
 
 
-	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 1,449.365px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
@@ -233,28 +233,28 @@
 .canFlaSvg--fir { /* What: Candle Flame SVG First. Why: A candle stands between the first two jack-o'-lanterns. How: This places it about an eighth of the way across. */
 
 
-	left : var( --hor-rhy-020 ); /* Horizontal Rhythm 20 ~= 13.97vw */
+	left : var( --hor-rhy-020 ); /* Horizontal Rhythm 20 ~= 268.187px @ 1,920px width */
 
 
 }
 .canFlaSvg--sec { /* What: Candle Flame SVG Second. Why: A candle stands left of center. How: This places it about a third of the way across. */
 
 
-	left : var( --hor-rhy-023 ); /* Horizontal Rhythm 23 ~= 32.47vw */
+	left : var( --hor-rhy-023 ); /* Horizontal Rhythm 23 ~= 623.458px @ 1,920px width */
 
 
 }
 .canFlaSvg--thi { /* What: Candle Flame SVG Third. Why: A candle stands near the middle. How: This places it a little left of center, under the middle ghost. */
 
 
-	left : var( --hor-rhy-024 ); /* Horizontal Rhythm 24 ~= 43.02vw */
+	left : var( --hor-rhy-024 ); /* Horizontal Rhythm 24 ~= 825.907px @ 1,920px width */
 
 
 }
 .canFlaSvg--fou { /* What: Candle Flame SVG Fourth. Why: A candle stands near the right edge. How: This places it from the right, since no left step lands close to its old place. */
 
 
-	right : var( --hor-rhy-019 ); /* Horizontal Rhythm 19 ~= 10.54vw */
+	right : var( --hor-rhy-019 ); /* Horizontal Rhythm 19 ~= 202.448px @ 1,920px width */
 
 
 }
