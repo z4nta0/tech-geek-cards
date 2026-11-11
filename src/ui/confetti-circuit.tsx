@@ -223,7 +223,7 @@ function ConCirCom ( { patOpaStr } : CccProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { ConCirCom }; // What: Named Export. Why: Home, the Gallery, About, and Contact set the motif behind their sections. How: This exports ConCirCom.
+export { ConCirCom }; // What: Named Export. Why: The site's pages set the motif behind their sections, such as Home. How: This exports ConCirCom.
 
 // #endregion Exports
 

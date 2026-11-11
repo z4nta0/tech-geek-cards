@@ -55,7 +55,7 @@ const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. 
 
 	'artwork' : { cutBoo : false, heiNum : Infinity, losBoo : true,  widNum : Infinity }, // What: Artwork Box. Why: Flat cartoon artwork is encoded lossless, per the Images rule, and the card artwork shows smaller than its originals. How: This leaves it at full size and lossless.
 	'card'    : { cutBoo : false, heiNum : Infinity, losBoo : false, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
-	'preview' : { cutBoo : true,  heiNum : 675,      losBoo : false, widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
+	'preview' : { cutBoo : true,  heiNum : 675,      losBoo : false, widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 563px wide on Home and the Gallery at a 640px viewport, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
 	'stage'   : { cutBoo : false, heiNum : 2160,     losBoo : false, widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
 
 
@@ -72,7 +72,7 @@ const IMA_REC_ARR : ImaRecTyp[] = [ // What: Image Record Array. Why: Every imag
 
 	...[ 'christmas', 'fathers-day', 'fourth-of-july', 'happy-birthday', 'happy-halloween', 'happy-thanksgiving', 'mothers-day' ].map( ( carNamStr ) => ( { boxStr : 'preview', outStr : `src/assets/${ carNamStr }-card-preview-image.webp`, souStr : `${ carNamStr }-card-preview-image.png` } ) ), // What: Card Preview Rows. Why: Every card in the catalog shows a preview, and each prank shares its listed card's. How: This builds one row per distinct preview.
 
-	{ boxStr : 'artwork', outStr : 'src/cards/christmas/snowman.webp',           souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is flat cartoon art shown at about 115px wide, smaller than its original. How: This keeps it at full size, encoded lossless.
+	{ boxStr : 'artwork', outStr : 'src/cards/christmas/snowman.webp',           souStr : 'christmas-card/snowman.png'           }, // What: Christmas Snowman Row. Why: The snowman is flat cartoon art shown at most about 115px wide, at a 1,920px viewport, smaller than its original. How: This keeps it at full size, encoded lossless.
 	{ boxStr : 'stage',   outStr : 'src/cards/christmas/pirate-background.webp', souStr : 'christmas-card/pirate-background.jpg' }, // What: Christmas Pirate Background Row. Why: The hacked scene fills the screen. How: This fits it to the stage box.
 	{ boxStr : 'stage',   outStr : 'src/cards/christmas/snowy-background.webp',  souStr : 'christmas-card/snowy-background.jpg'  }  // What: Christmas Snowy Background Row. Why: The snowy scene fills the screen. How: This fits it to the stage box.
 

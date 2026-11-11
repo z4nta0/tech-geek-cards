@@ -20,7 +20,7 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
  * card-tile.tsx = Card Tile
  *
  * @summary
- * One card as Home and the Gallery show it: a still of the card in a
+ * One card as a page listing cards shows it: a still of the card in a
  * postage-stamp frame, tipped slightly as if dropped on a table, then its
  * occasion, title, and description, a reminder that it opens on a tap, and a
  * Share button. The title is the tile's link, stretched over the whole tile,
@@ -184,7 +184,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { CarTilCom }; // What: Named Export. Why: Home and the Gallery both show card tiles. How: This exports CarTilCom.
+export { CarTilCom }; // What: Named Export. Why: The pages that list cards show card tiles, such as the Gallery. How: This exports CarTilCom.
 
 // #endregion Exports
 

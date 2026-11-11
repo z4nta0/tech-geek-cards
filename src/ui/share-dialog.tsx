@@ -32,9 +32,9 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
  * dialog, so focus stays inside it, the page behind is inert, and Escape
  * closes it; Escape, a click on the backdrop, the close button, and the
  * preview link all play a short closing animation first, the link's so a
- * preview from the card's own page leaves the card in view. A page mounts it,
- * keyed by the card, when a Share button is pressed, and unmounts it when it
- * calls back that it has closed, so every opening starts fresh.
+ * preview from the card's own page leaves the card in view. A page mounts it
+ * when a Share button is pressed and unmounts it when it calls back that it
+ * has closed, so every share mounts a fresh one.
  *
  * Sections:
  *  - Components
@@ -105,7 +105,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 		if ( diaEleRef.current && !diaEleRef.current.open ) diaEleRef.current.showModal(); // What: Show Modal Call. Why: The dialog mounts closed. How: This opens it as a modal, unless development's double effect already has.
 
 
-	}, [] ); // What: Effect Dependency Array. Why: The dialog opens once per mount. How: The page remounts it, keyed by the card, for each new share.
+	}, [] ); // What: Effect Dependency Array. Why: The dialog opens once per mount. How: The page unmounts it on close and mounts a fresh one for each share.
 
 
 
@@ -122,7 +122,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 
 
-	const canShaBoo = typeof navigator.share === 'function'; // What: Can Share Boolean. Why: Only some browsers, mostly on phones, offer a share sheet. How: This checks whether navigator.share exists.
+	const canShaBoo = typeof navigator.share === 'function'; // What: Can Share Boolean. Why: Only some browsers offer a share sheet. How: This checks whether navigator.share exists.
 
 
 
@@ -523,7 +523,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 // #region Exports
 
-export { ShaDiaCom }; // What: Named Export. Why: Home, the Gallery, and the card pages open the share dialog. How: This exports ShaDiaCom.
+export { ShaDiaCom }; // What: Named Export. Why: Pages with a Share button open the share dialog, such as the Gallery. How: This exports ShaDiaCom.
 
 // #endregion Exports
 

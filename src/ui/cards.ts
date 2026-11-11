@@ -29,11 +29,10 @@ import type { LazyExoticComponent } from 'react';          // What: Lazy Exotic 
  * cards.ts = Cards
  *
  * @summary
- * The catalog every page reads: each card's plain data from card-data.ts,
- * in the same order, joined with its component and its tile preview by its
- * address. Home picks its featured cards from it, the Gallery lists and
- * filters it, the card route finds a card by its address, and the share
- * dialog builds a card's link from it. A new card is a row in card-data.ts
+ * The card catalog: each card's plain data from card-data.ts, in the same
+ * order, joined with its component and its tile preview by its address. The
+ * pages and parts that show or send cards read it, such as the Gallery,
+ * which lists and filters it. A new card is a row in card-data.ts
  * plus an entry in each lookup here, with its component in src/cards/ and
  * its preview in src/assets/.
  *
@@ -134,7 +133,7 @@ const CAR_REC_ARR : CarRecTyp[] = CAR_DAT_ARR.map( ( carDatObj ) => ( { ...carDa
 
 // #region Exports
 
-export { CAR_REC_ARR, type CarRecTyp }; // What: Named Exports. Why: Home, the Gallery, the card route, and the share dialog read the catalog and its type. How: This exports the catalog and its record type.
+export { CAR_REC_ARR, type CarRecTyp }; // What: Named Exports. Why: The pages and parts that show or send cards read the catalog and its type, such as the Gallery. How: This exports the catalog and its record type.
 
 // #endregion Exports
 

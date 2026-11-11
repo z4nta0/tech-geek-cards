@@ -120,9 +120,9 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * opening this same page, remount it, and every card replays the same way,
  * without reaching into its own code. The canonical address leaves out any
  * ?name= or ?from=, so every personalized copy of a card counts as the card's
- * one page. Share mounts the share dialog, keyed by the card, with its name
- * fields starting at the names the address carries, and the dialog's close
- * callback unmounts it.
+ * one page. Share mounts the share dialog fresh each time it's pressed, with
+ * its name fields starting at the names the address carries, and the dialog's
+ * close callback unmounts it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

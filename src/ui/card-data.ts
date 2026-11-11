@@ -229,7 +229,7 @@ const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: 
 
 // #region Exports
 
-export { CAR_DAT_ARR, OCC_NAM_ARR, type CarDatTyp, type OccNamTyp }; // What: Named Exports. Why: The card catalog, the Gallery, and the build all read the card data and its types. How: This exports the data, the occasion list, and both types.
+export { CAR_DAT_ARR, OCC_NAM_ARR, type CarDatTyp, type OccNamTyp }; // What: Named Exports. Why: The site's code and its build read the card data and its types, such as the card catalog. How: This exports the data, the occasion list, and both types.
 
 // #endregion Exports
 
