@@ -11,11 +11,11 @@
  * bar, and on top the canvas confetti.ts throws confetti on. The greeting
  * pops in Luckiest Guy, its Happy line glowing white and its Birthday and
  * name lines in a rainbow, and the wish is set in Mystery Quest, both
- * declared here so they load with the card; Mystery Quest's file is shared
- * with the Thanksgiving card. The candle flames flicker through CSS, and
- * stand still under reduced motion; everything else is played by the GSAP
- * timeline and the two loops, which skip their motion under reduced motion.
- * No layer needs a z-index, since each paints over the one before it.
+ * declared here so they load with the card from its own folder. The candle
+ * flames flicker through CSS, and stand still under reduced motion;
+ * everything else is played by the GSAP timeline and the two loops, which
+ * skip their motion under reduced motion. No layer needs a z-index, since
+ * each paints over the one before it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -47,13 +47,13 @@
 
 }
 
-@font-face { /* What: Mystery Quest Font Face. Why: The wish reads as playful handwriting. How: This loads the font's Latin regular weight from the shared fonts folder, where the Thanksgiving card reads it too. */
+@font-face { /* What: Mystery Quest Font Face. Why: The wish reads as playful handwriting. How: This loads the font's Latin regular weight from the card's folder. */
 
 
 	font-display : swap;
 	font-family  : 'Mystery Quest';
 	font-weight  : 400;
-	src          : url( '../../assets/fonts/mystery-quest-latin-400-normal.woff2' ) format( 'woff2' );
+	src          : url( './mystery-quest-latin-400-normal.woff2' ) format( 'woff2' );
 
 
 }
