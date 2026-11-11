@@ -665,7 +665,7 @@
 
 /* #region secInnDiv */
 
-.secInnDiv { /* What: Section Inner Div. Why: Every section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
+.secInnDiv { /* What: Section Inner Div. Why: A section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
 
 
 	margin    : 0 auto;

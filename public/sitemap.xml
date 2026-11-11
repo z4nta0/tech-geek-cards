@@ -10,7 +10,7 @@
 
 	</url>
 
-	<url><!-- What: Gallery URL Element. Why: The Gallery lists every card and is indexed. How: This lists it by its canonical address. -->
+	<url><!-- What: Gallery URL Element. Why: The Gallery lists every listed card and is indexed. How: This lists it by its canonical address. -->
 
 
 		<loc>https://techgeek.cards/gallery</loc><!-- What: Gallery Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->

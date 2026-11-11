@@ -7,7 +7,7 @@ import { AboPagCom    } from './pages/about/about.tsx';          // What: About 
 import { CAR_REC_ARR  } from './ui/cards.ts';                    // What: Card Record Array. Why: Every card opens at its own address. How: The root looks the current path up in the catalog.
 import { CarPagCom    } from './pages/card/card.tsx';            // What: Card Page Component. Why: A card's address plays the card full screen. How: The root renders it when the path names a card.
 import { ConPagCom    } from './pages/contact/contact.tsx';      // What: Contact Page Component. Why: The Contact route shows the form and the contact details. How: The contact route renders it.
-import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists every card. How: The gallery route renders it.
+import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists the listed cards. How: The gallery route renders it.
 import { HomPagCom    } from './pages/home/home.tsx';            // What: Home Page Component. Why: The site's root address is its home page. How: The home route renders it.
 import { NavBarCom    } from 'techgeek-design/ui/nav.tsx';       // What: Navigation Bar Component. Why: Every site page starts with the TechGeek family's shared bar. How: This renders above the routes.
 import { NotFouCom    } from './pages/not-found/not-found.tsx';  // What: Not Found Component. Why: Every unknown address shows the 404 page. How: The catch-all route renders it.
@@ -182,7 +182,7 @@ function AppRooCom () : JSX.Element {
 					<Route
 						element={ <GalPagCom /> }
 						path='/gallery'
-					/>{ /* What: Gallery Route. Why: Every card is listed on its own page. How: This renders GalPagCom at /gallery. */ }
+					/>{ /* What: Gallery Route. Why: The listed cards are gathered on one page. How: This renders GalPagCom at /gallery. */ }
 
 
 

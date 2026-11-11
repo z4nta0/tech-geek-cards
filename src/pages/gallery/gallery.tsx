@@ -28,11 +28,11 @@ import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name T
  * gallery.tsx = Gallery
  *
  * @summary
- * The page listing every card: a hero, a search field and occasion filter
- * buttons, a line saying how many cards match, the matching cards as tiles,
- * and a note inviting a custom card. The grid is exempt from even rows, as
- * TechGeek.dev's Work grid is, since its cards change with the search and the
- * filter and grow as cards are added: full rows read as three, two, or one
+ * The page listing the listed cards: a hero, a search field and occasion
+ * filter buttons, a line saying how many cards match, the matching cards as
+ * tiles, and a note inviting a custom card. The grid is exempt from even rows,
+ * as TechGeek.dev's Work grid is, since its cards change with the search and
+ * the filter and grow as cards are added: full rows read as three, two, or one
  * columns, and a short last row sits centered. Any card can be shared from its
  * tile through the share dialog.
  *
