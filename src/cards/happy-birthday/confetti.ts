@@ -65,7 +65,7 @@ const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                      
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param canConObj - Canvas Context Object: The canvas's 2D drawing context,
+ * @param canCotObj - Canvas Context Object: The canvas's 2D drawing context,
  *                    already moved and turned to the piece.
  * @param radValNum - Radius Value Number: The distance from the center to
  *                    each point, in pixels.
@@ -74,15 +74,15 @@ const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                      
  *
  * @example
  * ```ts
- * draStaFun(canConObj, radValNum) // => void
+ * draStaFun(canCotObj, radValNum) // => void
  * ```
  *
 */
 
-const draStaFun = ( canConObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
+const draStaFun = ( canCotObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
 
 
-	canConObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
+	canCotObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
 
 
 	for ( let poiIndNum = 0; poiIndNum < 5; poiIndNum++ ) { // What: Point Loop. Why: The star has five points, each with an inner corner after it. How: This adds both corners for each point.
@@ -92,16 +92,16 @@ const draStaFun = ( canConObj : CanvasRenderingContext2D, radValNum : number ) :
 		const innAngNum = outAngNum + Math.PI / 5;                   // What: Inner Angle Number. Why: Each inner corner sits halfway to the next point. How: This is a tenth of a turn past the point.
 
 
-		canConObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
-		canConObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
+		canCotObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
+		canCotObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
 
 
 	}
 
 
 
-	canConObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
-	canConObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
+	canCotObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
+	canCotObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
 
 
 };
@@ -176,7 +176,7 @@ type ConSysTyp = { // What: Confetti System Type. Why: The card throws bursts wh
 const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: Start Confetti Function. Why: The card throws confetti when it opens and whenever it's tapped. How: This readies the canvas and returns the functions that throw a burst and stop it all.
 
 
-	const canConObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
+	const canCotObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
 
 	const pieRecArr : PieRecTyp[] = []; // What: Piece Record Array. Why: Every piece in the air keeps its own values between frames. How: Bursts add to it, and each frame drops the pieces that are done.
 
@@ -203,7 +203,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		canWidNum = conCanEle.clientWidth;                          // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
 		conCanEle.height = Math.round( canHeiNum * pixRatNum );     // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
 		conCanEle.width  = Math.round( canWidNum * pixRatNum );     // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
-		canConObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
+		canCotObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
 
 
 	};
@@ -274,7 +274,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
-		canConObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
+		canCotObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
 
 
 
@@ -305,30 +305,30 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 
-			canConObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
-			canConObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
-			canConObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
-			canConObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
-			canConObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
+			canCotObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
+			canCotObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
+			canCotObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
+			canCotObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
+			canCotObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
 
 
-			if ( pieRecObj.shaStr === 'rect' ) canConObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
+			if ( pieRecObj.shaStr === 'rect' ) canCotObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
 
 			else if ( pieRecObj.shaStr === 'circle' ) { // What: Circle Draw Branch. Why: Some pieces are dots. How: This fills a circle as wide as the piece.
 
 
-				canConObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
-				canConObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
-				canConObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
+				canCotObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
+				canCotObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
+				canCotObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
 
 
 			}
 
-			else draStaFun( canConObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
+			else draStaFun( canCotObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
 
 
 
-			canConObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
+			canCotObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
 
 
 		}

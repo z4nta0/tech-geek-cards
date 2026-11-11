@@ -143,7 +143,7 @@ async function renPngFun ( icoSizNum : number, icoOpaBoo : boolean ) : Promise< 
 		finCanEle.width  = tarSizNum; // What: Final Width Assignment. Why: The icon is square at its target size. How: This sets the width.
 
 
-		const finConObj = finCanEle.getContext( '2d' )!;                 // What: Final Context Object. Why: Drawing goes through the canvas's 2D context. How: This gets it. // What: Non-Null Note. Why: getContext can return null for an unsupported type. How: A 2D context is always available on a fresh canvas.
+		const finCotObj = finCanEle.getContext( '2d' )!;                 // What: Final Context Object. Why: Drawing goes through the canvas's 2D context. How: This gets it. // What: Non-Null Note. Why: getContext can return null for an unsupported type. How: A 2D context is always available on a fresh canvas.
 		const marSizNum = solBacBoo ? tarSizNum * touScaNum : tarSizNum; // What: Mark Size Number. Why: The touch icon leaves room around the mark for iOS's rounded corners. How: This shrinks the mark for the opaque icon and fills the square otherwise.
 		const marOffNum = ( tarSizNum - marSizNum ) / 2;                 // What: Mark Offset Number. Why: The shrunk mark sits in the middle of its square. How: This splits the spare room evenly on each side.
 
@@ -151,16 +151,16 @@ async function renPngFun ( icoSizNum : number, icoOpaBoo : boolean ) : Promise< 
 		if ( solBacBoo ) { // What: Solid Background Fill. Why: iOS fills transparency with black. How: For the opaque icon, this paints the square ivory before the mark goes on.
 
 
-			finConObj.fillStyle = '#F5F0E8'; // What: Ivory Fill Assignment. Why: The background has to be solid, and the site's page ivory matches its pages. How: This sets the fill color, the default value of the page background role, since a script's canvas can't read the stylesheet's tokens.
+			finCotObj.fillStyle = '#F5F0E8'; // What: Ivory Fill Assignment. Why: The background has to be solid, and the site's page ivory matches its pages. How: This sets the fill color, the default value of the page background role, since a script's canvas can't read the stylesheet's tokens.
 
-			finConObj.fillRect( 0, 0, tarSizNum, tarSizNum ); // What: Background Fill Call. Why: Every pixel under the mark has to be opaque. How: This paints the whole square.
+			finCotObj.fillRect( 0, 0, tarSizNum, tarSizNum ); // What: Background Fill Call. Why: Every pixel under the mark has to be opaque. How: This paints the whole square.
 
 
 		}
 
 
 
-		finConObj.drawImage( souImaEle, marOffNum, marOffNum, marSizNum, marSizNum ); // What: Mark Draw Call. Why: This draws the icon itself. How: This rasterizes the mark at its size and offset.
+		finCotObj.drawImage( souImaEle, marOffNum, marOffNum, marSizNum, marSizNum ); // What: Mark Draw Call. Why: This draws the icon itself. How: This rasterizes the mark at its size and offset.
 
 
 
