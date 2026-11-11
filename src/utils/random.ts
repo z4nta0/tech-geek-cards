@@ -45,7 +45,7 @@
  *
 */
 
-const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Value Function. Why: Every animated card picks its pieces' sizes, speeds, and places at random within set bounds. How: This scales a random fraction across the range and adds the minimum.
+const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Value Function. Why: The cards that scatter pieces, such as falling leaves, pick their sizes, speeds, and places at random within set bounds. How: This scales a random fraction across the range and adds the minimum.
 
 // #endregion ranValFun
 
@@ -55,7 +55,7 @@ const ranValFun = ( minValNum : number, maxValNum : number ) : number => minValN
 
 // #region Exports
 
-export { ranValFun }; // What: Named Export. Why: The animated cards draw their random values the same way. How: This exports ranValFun by name.
+export { ranValFun }; // What: Named Export. Why: The cards that scatter pieces draw their random values the same way. How: This exports ranValFun by name.
 
 // #endregion Exports
 

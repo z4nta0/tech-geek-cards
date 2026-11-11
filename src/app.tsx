@@ -154,7 +154,7 @@ function AppRooCom () : JSX.Element {
 				pagLinArr={ PAG_LIN_ARR }
 				tagLinStr={ SIT_TAG_STR }
 				worEndStr={ WOR_END_STR }
-			/>{ /* What: Navigation Bar Component. Why: Every site page starts with the family's shared bar. How: This renders it above the page with this site's details, leaving out the availability line, which only TechGeek.dev shows. */ }
+			/>{ /* What: Navigation Bar Component. Why: Every site page starts with the family's shared bar. How: This renders it above the page with this site's details, leaving out the optional availability label. */ }
 
 
 

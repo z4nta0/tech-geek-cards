@@ -70,7 +70,7 @@ async function forOpeFun ( curPagObj : Page ) : Promise< string[] > {
 	await curPagObj.route( ( urlCurObj ) => urlCurObj.pathname === '/', async ( rouCurObj ) => { // What: Root Route Handler. Why: Netlify Forms answers the root's POST on the live site, but not in testing. How: This answers a POST with an empty success and records its body, letting the page's own load through.
 
 
-		if ( rouCurObj.request().method() !== 'POST' ) return rouCurObj.continue(); // What: Page Load Guard. Why: Loading the page also requests the root. How: This lets any request but a POST through untouched.
+		if ( rouCurObj.request().method() !== 'POST' ) return rouCurObj.continue(); // What: Page Load Guard. Why: The route matches every request to the root, and only the form's POST needs answering. How: This lets any request but a POST through untouched.
 
 
 

@@ -53,7 +53,7 @@
 
 	/* #region Motion Tokens */
 
-	--mot-ino-eas : cubic-bezier( .83, 0, .17, 1 ); /* What: Motion In-Out Easing. Why: This site's animations need a curve that starts and ends slowly with a sharp middle, which the family's five curves don't include, and no other TechGeek site needs one. How: This is the quint ease-in-out, matching GSAP's power4.inOut, and a GSAP timeline reads it through CustomEase. */
+	--mot-ino-eas : cubic-bezier( .83, 0, .17, 1 ); /* What: Motion In-Out Easing. Why: This site's animations need a curve that starts and ends slowly with a sharp middle, which the family's five curves don't include. How: This is the quint ease-in-out, matching GSAP's power4.inOut, and a GSAP timeline reads it through CustomEase. */
 
 	/* #endregion Motion Tokens */
 

@@ -245,7 +245,7 @@
 
 }
 
-.leaFalSvg { /* What: Leaf Fall SVG. Why: Each leaf is a copy of the drawing that leaf-fall.ts moves every frame. How: This places it at the layer's top left and keeps it on its own layer, since it moves the whole time it exists. */
+.leaFalSvg { /* What: Leaf Fall SVG. Why: Each leaf is a copy of the drawing that leaf-fall.ts moves every frame. How: This places it at the layer's top left and keeps it on its own layer, since it moves every frame it is falling and waits hidden between falls. */
 
 
 	left        : 0;

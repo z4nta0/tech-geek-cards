@@ -291,8 +291,8 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
  * flag's drawing space, centered on the given point. Its ten corners
  * alternate between the outer points and the inner notches, starting from
  * the top point, at about the real flag's star size for a flag 100 units
- * tall. Every number here is in the flag's own drawing space, so none is a
- * CSS length.
+ * tall. The center and radii are in the flag's own drawing space, so none of
+ * them is a CSS length.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

@@ -13,7 +13,8 @@
 # a different value than 'self' (frame-src, object-src), are never covered by
 # default-src at all (base-uri, form-action, frame-ancestors), or just state
 # the default for clarity (script-src, style-src). form-action stays 'self'
-# so the form can still post to the site if its script ever fails.
+# so a form injected into a page can't post a visitor's details to another
+# site; the contact form itself posts by fetch.
 # style-src needs no 'unsafe-inline': the build ships no inline styles, and
 # React and the cards' animation library set their dynamic styles through
 # the DOM, which the policy doesn't restrict.
@@ -23,8 +24,8 @@
 # browsers' built-in HTTPS list and is slow to undo. Referrer-Policy is
 # strict-origin-when-cross-origin: the sister sites see that a visit came
 # from techgeek.cards, never a page's full address, which for a card can
-# hold its recipient's name. Permissions-Policy turns off every powerful
-# browser feature the site never uses; the clipboard and the share sheet the
+# hold its recipient's name. Permissions-Policy turns off a set of powerful
+# browser features the site never uses; the clipboard and the share sheet the
 # share dialog uses stay allowed, and so does the screen wake lock, which the
 # longer cards hold so a phone's screen doesn't dim partway through.
 #
