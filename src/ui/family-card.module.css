@@ -5,19 +5,17 @@
  * family-card.module.css = Family Card Module
  *
  * @summary
- * Styles for FamCarCom, the engine behind the three Family cards. Every layer
- * shares the card's one grid cell, filling the screen: the photo mosaic at the
- * bottom, the heart stage over it, and the lettering on top. The card's own
- * theme class sets its background, text color, and font through the
- * --fam-bac-col, --fam-tex-col, and --fam-tex-fon properties, and may move
- * the underline through --fam-und-off. The heart is a mask scaled through
- * --fam-hea-sca, and the key words' underline is drawn through
- * --fam-und-sca, both of which the timeline animates, while the cursor
- * blinks on its own. The mosaic is four columns, three at the phone
- * breakpoint, running behind the floating bar like the rest of the card,
- * and each photo zooms slightly on hover, presses in, and opens in a dialog
- * that fades in. Every transition and animation holds still under reduced
- * motion.
+ * Styles for FamCarCom, the engine behind the Family cards. Every layer shares
+ * the card's one grid cell, filling the screen, from the photo mosaic at the
+ * bottom to the lettering on top. The card's own theme class sets its
+ * background, text color, and font through the --fam-bac-col, --fam-tex-col,
+ * and --fam-tex-fon properties, and may move the underline through
+ * --fam-und-off. The heart is a mask scaled through --fam-hea-sca, and the key
+ * words' underline is drawn through --fam-und-sca, both of which the timeline
+ * animates, while the cursor blinks on its own. The mosaic is four columns,
+ * three at the phone breakpoint, running behind the floating bar like the rest
+ * of the card, and each photo zooms slightly on hover, presses in, and opens
+ * in a dialog that fades in.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -130,7 +128,7 @@
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Cell Button. Why: Someone who asked for less motion shouldn't see the focus ring grow. How: This applies only when the reduced-motion preference is set. */
 
 
-	.famCelBut { /* What: Motionless Family Cell Button. Why: The focus ring should simply appear. How: This turns the ring's transition off, as the base stylesheet does for every other button. */
+	.famCelBut { /* What: Motionless Family Cell Button. Why: The focus ring should simply appear. How: This turns the ring's transition off. */
 
 
 		transition : none;
@@ -222,7 +220,7 @@
 
 /* #region famTexDiv */
 
-.famTexDiv { /* What: Family Text Div. Why: The lines type out in the middle of the screen, over everything else. How: This centers the lettering with side room, hidden until the timeline fades it in, letting taps through to the photos. */
+.famTexDiv { /* What: Family Text Div. Why: The lines type out in the middle of the screen, over the photos. How: This centers the lettering with side room, hidden until the timeline fades it in, letting taps through to the photos. */
 
 
 	align-content  : center;
@@ -241,7 +239,7 @@
 
 /* #region famLinDiv */
 
-.famLinDiv { /* What: Family Line Div. Why: The lines read as handwriting, glowing in the background color so they stay clear over the photos. How: This sets them in the card's font at a size that grows with the screen, ringed and haloed in the background color. */
+.famLinDiv { /* What: Family Line Div. Why: The lines read as handwriting, glowing in the background color so they stay clear over the photos. How: This sets them in the card's font at a size that grows with the screen, haloed in the background color. */
 
 
 	font-family : var( --fam-tex-fon );                                     /* Family Text Font, set by the card's theme class */
@@ -356,7 +354,7 @@
 
 
 	align-items    : center;
-	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to a side margin's step outside the card page. */
+	bottom         : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Offset. Why: The stack sits just above the floating bar. How: This lifts it clear of the bar, falling back to a side margin's step outside the card page. */
 	display        : flex;
 	flex-direction : column;
 	gap            : var( --spa-ver-m02 );                       /* Spacing Vertical Base Minus 2 ~= 8.304px */
@@ -376,7 +374,7 @@
 
 }
 
-.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a small mono pill in the card's colors, left out of the page until the grid appears. */
+.famTapPar { /* What: Family Tap Paragraph. Why: The visitor should know the photos open, and the hint has to read over them. How: This sets a mono pill in the card's colors, left out of the page until the grid appears. */
 
 
 	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */

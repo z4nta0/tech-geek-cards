@@ -73,25 +73,25 @@ const MOT_CAR_OBJ : FamCarTyp = { // What: Mother's Card Object. Why: The engine
 
 
 	behStr    : 'On behalf of the rest of us...',         // What: Behalf String. Why: The card closes on everyone's behalf. How: The engine types and erases it before the greeting.
-	finPowArr : [ 4, 2, 1, 1 ],                           // What: Final Power Array. Why: The greeting grows less on a smaller screen. How: These are the powers of the core design number it grows by above 1,024px, at 1,024px, 768px, and 640px and below.
+	finPowArr : [ 4, 2, 1, 1 ],                           // What: Final Power Array. Why: The greeting grows less on a smaller screen. How: These are the powers of the core design number it grows by above 1,024px, at 1,024px and below, at 768px and below, and at 640px and below.
 	greStr    : "Happy Mother's Day!",                    // What: Greeting String. Why: The card ends on its greeting. How: The engine types it last and makes it the card's heading.
 	griIndArr : [ 6, 2, 9, 7, 4, 11, 10, 3, 5, 1, 0, 8 ], // What: Grid Index Array. Why: The photo grid mixes the photos up. How: These are the photos' places, cell by cell.
 
 	phoRecArr : [ // What: Photo Record Array. Why: The scenes and the grid share one set of photos. How: These are the ten scenes' photos, then the grid's two extras.
 
 
-		{ altStr : 'A mother in a patterned headscarf kissing her baby daughter in a field by a fence.', imaStr : thaYouUrl },
-		{ altStr : 'A mother on a floral couch holding her baby beside a big teddy bear.', imaStr : eveYouUrl },
-		{ altStr : 'A grandmother on a plaid couch sharing a snack with a toddler in red.', imaStr : litThiUrl },
-		{ altStr : 'A smiling mother hugging her laughing toddler son on a floral couch.', imaStr : ourWorUrl },
-		{ altStr : 'A mother on snowy steps watching her bundled-up toddler and a toy bunny.', imaStr : motLovUrl },
-		{ altStr : 'A mother helping a little girl in a party hat blow out her birthday candles.', imaStr : celPhoUrl },
-		{ altStr : 'A big family gathered on the floor in front of a Christmas tree.', imaStr : ourResUrl },
-		{ altStr : 'A woman hugging her elderly mother from behind in a kitchen.', imaStr : lovYouUrl },
-		{ altStr : 'A woman and her elderly mother, wearing a red rose corsage, hugging and smiling.', imaStr : appYouUrl },
-		{ altStr : 'A grown son hugging his elderly mother in a garden.', imaStr : neeYouUrl },
-		{ altStr : 'A mother cradling her newborn in an armchair.', imaStr : extOneUrl },
-		{ altStr : 'A grandmother holding a baby while a little girl brings her a big box of presents.', imaStr : extTwoUrl }
+		{ altStr : 'A mother in a patterned headscarf kissing her baby daughter in a field by a fence.', imaStr : thaYouUrl }, // What: Scene One Photo Record. Why: The first scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A mother on a floral couch holding her baby beside a big teddy bear.', imaStr : eveYouUrl },               // What: Scene Two Photo Record. Why: The second scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A grandmother on a plaid couch sharing a snack with a toddler in red.', imaStr : litThiUrl },              // What: Scene Three Photo Record. Why: The third scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A smiling mother hugging her laughing toddler son on a floral couch.', imaStr : ourWorUrl },               // What: Scene Four Photo Record. Why: The fourth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A mother on snowy steps watching her bundled-up toddler and a toy bunny.', imaStr : motLovUrl },           // What: Scene Five Photo Record. Why: The fifth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A mother helping a little girl in a party hat blow out her birthday candles.', imaStr : celPhoUrl },       // What: Scene Six Photo Record. Why: The sixth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A big family gathered on the floor in front of a Christmas tree.', imaStr : ourResUrl },                   // What: Scene Seven Photo Record. Why: The seventh scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A woman hugging her elderly mother from behind in a kitchen.', imaStr : lovYouUrl },                       // What: Scene Eight Photo Record. Why: The eighth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A woman and her elderly mother, wearing a red rose corsage, hugging and smiling.', imaStr : appYouUrl },   // What: Scene Nine Photo Record. Why: The ninth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A grown son hugging his elderly mother in a garden.', imaStr : neeYouUrl },                                // What: Scene Ten Photo Record. Why: The tenth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A mother cradling her newborn in an armchair.', imaStr : extOneUrl },                                      // What: Grid Extra One Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the first of them.
+		{ altStr : 'A grandmother holding a baby while a little girl brings her a big box of presents.', imaStr : extTwoUrl }  // What: Grid Extra Two Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the second of them.
 
 
 	],
@@ -99,16 +99,16 @@ const MOT_CAR_OBJ : FamCarTyp = { // What: Mother's Card Object. Why: The engine
 	sceRecArr : [ // What: Scene Record Array. Why: The card plays ten lines in order. How: Each row is one line's three parts.
 
 
-		{ aftStr : '!',                                  befStr : 'To all of the mothers out there, ', higStr : 'thank you' },
-		{ aftStr : ' that you do for us.',               befStr : 'For ', higStr : 'everything' },
-		{ aftStr : '.',                                  befStr : 'Especially the ', higStr : 'little things' },
-		{ aftStr : '.',                                  befStr : 'To the world you are a mother, but to us you are ', higStr : 'our world' },
-		{ aftStr : ' thing indeed!',                     befStr : "A mother's love is a ", higStr : 'special' },
-		{ aftStr : '.',                                  befStr : 'You definitely deserve more than one day of ', higStr : 'celebration' },
-		{ aftStr : ' to make the most of this one day.', befStr : 'So it is ', higStr : 'our responsibility' },
-		{ aftStr : " (even when we don't show it).",     befStr : 'You are ', higStr : 'loved' },
-		{ aftStr : " (even when we don't give it).",     befStr : 'And you are ', higStr : 'appreciated' },
-		{ aftStr : ' in our lives.',                     befStr : 'So please never get discouraged, because we ', higStr : 'need you' }
+		{ aftStr : '!',                                  befStr : 'To all of the mothers out there, ', higStr : 'thank you' },                 // What: Scene One Record. Why: This is the card's first line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : ' that you do for us.',               befStr : 'For ', higStr : 'everything' },                                             // What: Scene Two Record. Why: This is the card's second line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : '.',                                  befStr : 'Especially the ', higStr : 'little things' },                               // What: Scene Three Record. Why: This is the card's third line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : '.',                                  befStr : 'To the world you are a mother, but to us you are ', higStr : 'our world' }, // What: Scene Four Record. Why: This is the card's fourth line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : ' thing indeed!',                     befStr : "A mother's love is a ", higStr : 'special' },                               // What: Scene Five Record. Why: This is the card's fifth line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : '.',                                  befStr : 'You definitely deserve more than one day of ', higStr : 'celebration' },    // What: Scene Six Record. Why: This is the card's sixth line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : ' to make the most of this one day.', befStr : 'So it is ', higStr : 'our responsibility' },                                // What: Scene Seven Record. Why: This is the card's seventh line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : " (even when we don't show it).",     befStr : 'You are ', higStr : 'loved' },                                              // What: Scene Eight Record. Why: This is the card's eighth line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : " (even when we don't give it).",     befStr : 'And you are ', higStr : 'appreciated' },                                    // What: Scene Nine Record. Why: This is the card's ninth line. How: The engine types its three parts in turn and underlines its key words.
+		{ aftStr : ' in our lives.',                     befStr : 'So please never get discouraged, because we ', higStr : 'need you' }        // What: Scene Ten Record. Why: This is the card's tenth line. How: The engine types its three parts in turn and underlines its key words.
 
 
 	]

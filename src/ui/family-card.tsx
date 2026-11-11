@@ -13,7 +13,7 @@ import { gsap           } from 'gsap';               // What: GSAP. Why: The car
 import { redMotFun      } from '../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once, with stills to step back through. How: This reports whether reduced motion is on.
 import { rhyPixFun      } from '../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The grown greeting keeps a margin from the screen's edges. How: This returns a step's size in pixels.
 import { TextPlugin     } from 'gsap/TextPlugin';    // What: Text Plugin. Why: Each line types itself out a letter at a time. How: This GSAP plugin animates an element's text that way.
-import { useEffect      } from 'react';              // What: Use Effect. Why: The screen should stay awake while the card plays, and an open photo closes on Escape through its dialog. How: This holds the wake lock's request and release.
+import { useEffect      } from 'react';              // What: Use Effect. Why: The card runs side effects once it renders, such as keeping the screen awake while it plays. How: This runs each effect after the render and its cleanup when the card closes.
 import { useEffectEvent } from 'react';              // What: Use Effect Event. Why: The arrow and space keys drive the scene controls with the card's latest state, without re-adding the listener every render. How: This wraps the key handler so the effect always calls its newest version.
 import { useGSAP        } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef         } from 'react';              // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
@@ -30,20 +30,20 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * family-card.tsx = Family Card
  *
  * @summary
- * The engine behind the three Family cards (Mother's Day, Father's Day, and
- * the Father's Day prank), which differ only in their words, photos,
- * colors, and font. Each card hands it a record of ten scenes, twelve photos,
- * the order the photo grid shows them in, the closing lines, and how far the
- * greeting grows, plus a class from its own module that sets its colors and
- * font. In each scene a line types itself out with its key words underlined,
- * shrinks away, and a heart opens over that scene's photo and closes again.
- * Then the closing line types and erases itself, the greeting types and grows,
- * and the photo grid wipes in, each photo opening full size when tapped. The
- * heart is a CSS mask scaled over the photo, so it works the same on a
- * phone held upright or sideways. Every duration is a step on the duration
- * scale, and the curves are the stylesheet's easing tokens. Under reduced
- * motion the card opens straight on the finished greeting and photo grid.
- * Built from TechGeek.support's three hand-written copies of one card.
+ * The engine behind the Family cards, such as Mother's Day, which differ only
+ * in their words, photos, colors, and font. Each card hands it a record of ten
+ * scenes, twelve photos, the order the photo grid shows them in, the closing
+ * lines, and how far the greeting grows, plus a class from its own module that
+ * sets its colors and font. In each scene a line types itself out with its key
+ * words underlined, shrinks away, and a heart opens over that scene's photo
+ * and closes again. Then the closing line types and erases itself, the
+ * greeting types and grows, and the photo grid wipes in, each photo opening
+ * full size when tapped. The heart is a CSS mask scaled over the photo, so it
+ * works the same on a phone held upright or sideways. Every duration is a step
+ * on the duration scale, and the curves are the stylesheet's easing tokens.
+ * Under reduced motion the card opens straight on the finished greeting and
+ * photo grid. Built from TechGeek.support's three hand-written copies of one
+ * card.
  *
  * Sections:
  *  - Types
@@ -266,7 +266,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		};
 
 
-	}, [] ); // What: Effect Dependency Array. Why: The lock is held once per showing of the card. How: The card page remounts the card for a replay.
+	}, [] ); // What: Effect Dependency Array. Why: The lock is held once per showing of the card. How: The empty array runs the effect once, as the card mounts, and its cleanup once, as it unmounts.
 
 
 
@@ -308,7 +308,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const chaDurNum = durSecFun( 'm03' );                                          // What: Character Duration Number. Why: The lines type at a steady pace. How: This is one letter's time, the duration scale's Base Minus 3 step, in seconds. // Duration Animation Base Minus 3 ~= 67.9ms
 		const decEasStr = gsaEasFun( 'dec' );                                          // What: Decelerate Easing String. Why: The photos settle as they uncover. How: This registers the decelerate token and keeps its GSAP name.
 		const fadDurNum = durSecFun( 'p07' );                                          // What: Fade Duration Number. Why: The lettering, the heart, and the cursor move at one unhurried pace. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPixFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPixFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, about the bar's height, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPixFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPixFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, about the bar's height, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it. // Vertical Rhythm Base Plus 1 ~= 19.304px, Vertical Rhythm Base Plus 6 ~= 78.751px
 		const griImaArr = Array.from( griDivRef.current!.querySelectorAll( 'img' ) );  // What: Grid Image Array. Why: Each photo in the grid uncovers on its own. How: This lists the grid's photos. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const holDurNum = durSecFun( 'p08' );                                          // What: Hold Duration Number. Why: Each line and each photo stays up long enough to take in. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
 		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in an even spread. How: This registers the in-out token and keeps its GSAP name.
@@ -583,14 +583,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const modKeyBoo = altPreBoo || conPreBoo || metPreBoo; // What: Modifier Key Boolean. Why: A key held with a modifier belongs to the browser. How: This combines the three flags.
 
 
-		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar already presses a focused button or link. How: This checks the key went to one.
+		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar presses a focused button, so the card leaves the key to a focused button or link. How: This checks the key went to one.
 		const phoOpeBoo = !!expDiaRef.current?.open;                                                                      // What: Photo Open Boolean. Why: An open photo keeps the keys for itself. How: This checks whether the dialog is open.
 
-		const conFreBoo = !conFocBoo;            // What: Control Free Boolean. Why: The space bar already presses a focused button or link. How: This checks focus isn't on one.
+		const conFreBoo = !conFocBoo;            // What: Control Free Boolean. Why: The space bar is the card's only while focus isn't on a button or link. How: This checks focus isn't on one.
 		const motPlaBoo = !redMotBoo;            // What: Motion Playing Boolean. Why: Under reduced motion nothing plays, so there's nothing to pause. How: This checks the card plays its motion.
 		const spaKeyBoo = keyEveObj.key === ' '; // What: Space Key Boolean. Why: The space bar pauses and plays. How: This checks the key pressed was the space bar.
 
-		const spaPauBoo = conFreBoo && motPlaBoo && spaKeyBoo; // What: Space Pause Boolean. Why: The space bar toggles the pause only when it isn't pressing a control and the card plays its motion. How: This combines the three checks.
+		const spaPauBoo = conFreBoo && motPlaBoo && spaKeyBoo; // What: Space Pause Boolean. Why: The space bar toggles the pause only while focus isn't on a button or link and the card plays its motion. How: This combines the three checks.
 
 
 
@@ -701,7 +701,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			>{ /* What: Family Photo Div Element. Why: Each scene's photo is revealed through a growing heart. How: This stacks every scene's photo under the heart-shaped mask, each hidden until its scene. */ }
 
 
-				{ famCarObj.phoRecArr.slice( 0, famCarObj.sceRecArr.length ).map( ( phoRecObj, sceIndNum ) => ( // What: Scene Photo Map Call. Why: Each scene has its own photo ready under the heart. How: This renders the first photo of the list for each scene, keyed by its place.
+				{ famCarObj.phoRecArr.slice( 0, famCarObj.sceRecArr.length ).map( ( phoRecObj, sceIndNum ) => ( // What: Scene Photo Map Call. Why: Each scene has its own photo ready under the heart. How: This renders the list's first photos, one per scene, keyed by place.
 
 
 					<img
