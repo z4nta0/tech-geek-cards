@@ -25,8 +25,10 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
  * at 0.85 quality, the lowest that showed no difference from the original at
  * 3x zoom. The card illustrations are shown at up to 1,920 by 1,080, larger
  * than their originals, so they keep their full size, while a full-screen
- * background covers twice that stage. Everything is written as WebP into
- * src/assets, or into a converted card's own folder for images only it shows.
+ * background covers twice that stage. A card preview's box cuts it to
+ * exactly 16:9 around its center, so a 4:3 original matches every other
+ * preview. Everything is written as WebP into src/assets, or into a converted
+ * card's own folder for images only it shows.
  * The link preview images are captured from the site itself by
  * design/og-image/render.mts instead.
  * Run it with npm run images whenever an image is added or replaced, or a
@@ -44,16 +46,16 @@ import { writeFileSync } from 'node:fs';          // What: Write File Sync. Why:
 
 // #region Constants
 
-type BoxRecTyp = { heiNum : number, widNum : number }; // What: Box Record Type. Why: Each kind of image is fitted to cover its own box. How: This holds the box's height and width in pixels, Infinity for no limit.
+type BoxRecTyp = { cutBoo : boolean, heiNum : number, widNum : number }; // What: Box Record Type. Why: A kind of image is either fitted to cover its box or cut to exactly its size. How: This names whether it's cut, and the box's height and width in pixels, Infinity for no limit.
 
 const BOX_REC_OBJ : Record< string, BoxRecTyp > = { // What: Box Record Object. Why: Each kind of image is shown at a different largest size, and its file should be no more than twice that. How: This maps each kind to its box.
 
 
-	'card'     : { heiNum : Infinity, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
-	'portrait' : { heiNum : 640,      widNum : 560      }, // What: Portrait Box. Why: The About portrait fills a 280 by 320 frame. How: This covers twice that.
-	'preview'  : { heiNum : 675,      widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery. How: This covers about twice that.
-	'project'  : { heiNum : 698,      widNum : 1240     }, // What: Project Box. Why: A project screenshot fills a 16:9 frame up to about 620px wide. How: This covers twice that.
-	'stage'    : { heiNum : 2160,     widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
+	'card'     : { cutBoo : false, heiNum : Infinity, widNum : Infinity }, // What: Card Box. Why: The card illustrations fill a 1,920 by 1,080 stage, larger than their originals. How: This leaves them at full size.
+	'portrait' : { cutBoo : false, heiNum : 640,      widNum : 560      }, // What: Portrait Box. Why: The About portrait fills a 280 by 320 frame. How: This covers twice that.
+	'preview'  : { cutBoo : true,  heiNum : 675,      widNum : 1200     }, // What: Preview Box. Why: A card preview shows at its own 16:9 shape, up to about 574px wide in the Gallery, and the 4:3 Family originals would otherwise come out 1,200 by 900. How: This cuts every preview to 1,200 by 675, centered, the size the tiles declare.
+	'project'  : { cutBoo : false, heiNum : 698,      widNum : 1240     }, // What: Project Box. Why: A project screenshot fills a 16:9 frame up to about 620px wide. How: This covers twice that.
+	'stage'    : { cutBoo : false, heiNum : 2160,     widNum : 3840     }  // What: Stage Box. Why: A full-screen card background covers a stage up to 1,920 by 1,080. How: This covers twice that.
 
 
 };
@@ -133,11 +135,13 @@ for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each o
 		const scaValNum = Math.min( 1, Math.max( boxRecObj.widNum / souWidNum, boxRecObj.heiNum / souHeiNum ) ); // What: Scale Value Number. Why: The image covers its box, as object-fit cover shows it, but is never enlarged. How: This takes the larger of the two fits, capped at 1.
 		const draHeiNum = Math.round( souHeiNum * scaValNum );                                                   // What: Drawn Height Number. Why: The original is drawn at the fitted size. How: This scales its height.
 		const draWidNum = Math.round( souWidNum * scaValNum );                                                   // What: Drawn Width Number. Why: The original is drawn at the fitted size. How: This scales its width.
+		const outHeiNum = boxRecObj.cutBoo ? boxRecObj.heiNum : draHeiNum;                                       // What: Output Height Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
+		const outWidNum = boxRecObj.cutBoo ? boxRecObj.widNum : draWidNum;                                       // What: Output Width Number. Why: A cut image is exactly its box, and any other is its fitted size. How: This picks between them.
 		const outCanEle = document.createElement( 'canvas' );                                                    // What: Output Canvas Element. Why: The image is redrawn at its new size. How: This creates the canvas.
 
 
-		outCanEle.height = draHeiNum; // What: Canvas Height Assignment. Why: The canvas has to match the fitted size. How: This sets its height.
-		outCanEle.width  = draWidNum; // What: Canvas Width Assignment. Why: The canvas has to match the fitted size. How: This sets its width.
+		outCanEle.height = outHeiNum; // What: Canvas Height Assignment. Why: The canvas has to match the output size. How: This sets its height.
+		outCanEle.width  = outWidNum; // What: Canvas Width Assignment. Why: The canvas has to match the output size. How: This sets its width.
 
 
 		const outConObj = outCanEle.getContext( '2d' )!; // What: Output Context Object. Why: Drawing goes through the canvas's 2D context. How: This reads it. // What: Non-Null Note. Why: getContext can return null for an unsupported type. How: Every browser supports a 2D context.
@@ -145,7 +149,7 @@ for ( const imaRecObj of IMA_REC_ARR ) { // What: Image Record Loop. Why: Each o
 
 		outConObj.imageSmoothingQuality = 'high'; // What: Smoothing Quality Assignment. Why: A large downscale should stay sharp without jagged edges. How: This asks for the browser's best resampling.
 
-		outConObj.drawImage( souImaEle, 0, 0, draWidNum, draHeiNum ); // What: Image Draw Call. Why: The image is redrawn at its fitted size. How: This draws the scaled original across the whole canvas.
+		outConObj.drawImage( souImaEle, ( outWidNum - draWidNum ) / 2, ( outHeiNum - draHeiNum ) / 2, draWidNum, draHeiNum ); // What: Image Draw Call. Why: A cut image keeps its center, the way object-fit cover crops it. How: This draws the scaled original centered on the canvas, which crops nothing unless the box is cut.
 
 
 
