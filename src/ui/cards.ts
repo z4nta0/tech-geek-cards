@@ -67,15 +67,15 @@ import type { LazyExoticComponent } from 'react';          // What: Lazy Exotic 
 const CAR_COM_OBJ : Record< string, LazyExoticComponent< ComponentType > > = { // What: Card Component Object. Why: Each card's page plays its own component. How: Each key is a card's address.
 
 
-	'fathers-day'           : lazy( () => import( '../cards/fathers-day/fathers-day-card.tsx' ).then( ( modObj ) => ( { default : modObj.FatCarCom } ) ) ),
-	'fathers-day-prank'     : lazy( () => import( '../cards/fathers-day-prank/fathers-day-prank-card.tsx' ).then( ( modObj ) => ( { default : modObj.FdpCarCom } ) ) ),
-	'fourth-of-july'        : lazy( () => import( '../cards/fourth-of-july/fourth-of-july-card.tsx' ).then( ( modObj ) => ( { default : modObj.FojCarCom } ) ) ),
-	'happy-birthday'        : lazy( () => import( '../cards/happy-birthday/happy-birthday-card.tsx' ).then( ( modObj ) => ( { default : modObj.BirCarCom } ) ) ),
-	'happy-halloween'       : lazy( () => import( '../cards/happy-halloween/happy-halloween-card.tsx' ).then( ( modObj ) => ( { default : modObj.HalCarCom } ) ) ),
-	'happy-thanksgiving'    : lazy( () => import( '../cards/happy-thanksgiving/happy-thanksgiving-card.tsx' ).then( ( modObj ) => ( { default : modObj.ThaCarCom } ) ) ),
-	'merry-christmas'       : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : modObj.ChrCarCom } ) ) ),
-	'merry-christmas-prank' : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( modObj ) => ( { default : () => createElement( modObj.ChrCarCom, { praBoo : true } ) } ) ) ),
-	'mothers-day'           : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( modObj ) => ( { default : modObj.MotCarCom } ) ) )
+	'fathers-day'           : lazy( () => import( '../cards/fathers-day/fathers-day-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.FatCarCom } ) ) ),
+	'fathers-day-prank'     : lazy( () => import( '../cards/fathers-day-prank/fathers-day-prank-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.FdpCarCom } ) ) ),
+	'fourth-of-july'        : lazy( () => import( '../cards/fourth-of-july/fourth-of-july-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.FojCarCom } ) ) ),
+	'happy-birthday'        : lazy( () => import( '../cards/happy-birthday/happy-birthday-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.BirCarCom } ) ) ),
+	'happy-halloween'       : lazy( () => import( '../cards/happy-halloween/happy-halloween-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.HalCarCom } ) ) ),
+	'happy-thanksgiving'    : lazy( () => import( '../cards/happy-thanksgiving/happy-thanksgiving-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.ThaCarCom } ) ) ),
+	'merry-christmas'       : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.ChrCarCom } ) ) ),
+	'merry-christmas-prank' : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( carModObj ) => ( { default : () => createElement( carModObj.ChrCarCom, { praBoo : true } ) } ) ) ),
+	'mothers-day'           : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.MotCarCom } ) ) )
 
 
 };

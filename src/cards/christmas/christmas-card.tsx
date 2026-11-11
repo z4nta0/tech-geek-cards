@@ -113,7 +113,7 @@ const gliTimFun = ( timLinObj : gsap.core.Timeline, tarEleArr : HTMLElement[], d
 	const skeAngNum = cdnPowFun( 15 );         // What: Skew Angle Number. Why: The skew tears the letters sideways. How: This is the core design number to the power of 15, about 67.9 degrees. // Core-Design-Number to the Power of 15 ~= 67.897
 	const skeDurNum = durSecFun( 'm01' );      // What: Skew Duration Number. Why: The skew is the glitch's longest step. How: This is the duration scale's Base Minus 1 step, about 119.2ms, in seconds. // Duration Animation Base Minus 1 ~= 119.2ms
 	const shiPixNum = rhyPixFun( 'p01' ) * -1; // What: Shift Pixel Number. Why: The jump throws the letters left. How: This is the Spacing Horizontal Base Plus 1 step, about 19.3px, negated. // Vertical Rhythm Base Plus 1 ~= -19.304px
-	const strDurNum = durSecFun( 'm07' );      // What: Stretch Duration Number. Why: The stretch is the glitch's quickest step. How: This is the duration scale's Base Minus 7 step, about 22.0ms, in seconds. // Duration Animation Base Minus 7 ~= 22.0ms
+	const sttDurNum = durSecFun( 'm07' );      // What: Stretch Duration Number. Why: The stretch is the glitch's quickest step. How: This is the duration scale's Base Minus 7 step, about 22.0ms, in seconds. // Duration Animation Base Minus 7 ~= 22.0ms
 
 
 	timLinObj.to( tarEleArr, { duration : skeDurNum, ease : inoEasStr, skewX   : skeAngNum } ); // What: Skew Step. Why: The glitch starts by tearing the letters sideways. How: This skews them to the right.
@@ -122,7 +122,7 @@ const gliTimFun = ( timLinObj : gsap.core.Timeline, tarEleArr : HTMLElement[], d
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, opacity : 1         } ); // What: Flicker In Step. Why: The letters come back. How: This fades them in again.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, x       : shiPixNum } ); // What: Jump Step. Why: The letters jolt sideways. How: This shifts them left.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, x       : 0         } ); // What: Return Step. Why: The jolt snaps back. How: This returns them to their place.
-	timLinObj.to( tarEleArr, { duration : strDurNum, ease : inoEasStr, scaleY  : 1.1       } ); // What: Stretch Step. Why: The letters stretch tall for an instant. How: This scales them 10% taller, a literal since no step lands within 10%.
+	timLinObj.to( tarEleArr, { duration : sttDurNum, ease : inoEasStr, scaleY  : 1.1       } ); // What: Stretch Step. Why: The letters stretch tall for an instant. How: This scales them 10% taller, a literal since no step lands within 10%.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : inoEasStr, scaleY  : 1         } ); // What: Unstretch Step. Why: The glitch ends with the letters back to normal. How: This returns their height.
 
 

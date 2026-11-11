@@ -75,12 +75,12 @@ const STA_COU_NUM = 80; // What: Star Count Number. Why: The sky should feel ful
 
 
 
-const STR_HEI_NUM = FLA_HEI_NUM / 13; // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
-const CAN_HEI_NUM = STR_HEI_NUM * 7;  // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
+const STI_HEI_NUM = FLA_HEI_NUM / 13; // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
+const CAN_HEI_NUM = STI_HEI_NUM * 7;  // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
 
 
 
-const FLA_STR_STR = Array.from( Array( 6 ).keys(), ( strIndNum ) => `M0 ${ ( ( strIndNum * 2 + 1 ) * STR_HEI_NUM ).toFixed( 3 ) }h${ FLA_WID_NUM }v${ STR_HEI_NUM.toFixed( 3 ) }H0z` ).join( '' ); // What: Flag Stripes String. Why: The six white stripes lie between the seven red ones. How: This joins one rectangle per white stripe, every other stripe from the second, into a single path.
+const FLA_STI_STR = Array.from( Array( 6 ).keys(), ( stiIndNum ) => `M0 ${ ( ( stiIndNum * 2 + 1 ) * STI_HEI_NUM ).toFixed( 3 ) }h${ FLA_WID_NUM }v${ STI_HEI_NUM.toFixed( 3 ) }H0z` ).join( '' ); // What: Flag Stripes String. Why: The six white stripes lie between the seven red ones. How: This joins one rectangle per white stripe, every other stripe from the second, into a single path.
 
 // #endregion Constants
 
@@ -595,7 +595,7 @@ function FojCarCom () : JSX.Element {
 					<path
 						style={{ fill : 'var( --foj-whi-col )' }} // Fourth-Of-July White Color = #FFFFFF
 
-						d={ FLA_STR_STR }
+						d={ FLA_STI_STR }
 					/>{ /* What: White Stripes Path Element. Why: Six white stripes lie between the red. How: This draws them all from the prebuilt path. */ }
 
 					<rect
