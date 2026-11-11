@@ -428,28 +428,30 @@
 
 }
 
-.famDotSpa { /* What: Family Dot Span. Why: Each dot stands for a scene, faint until the card reaches it. How: This draws a small circle in the text color, mostly transparent, easing its fill. */
+.famDotSpa { /* What: Family Dot Span. Why: Each dot stands for a scene, faint until the card reaches it. How: This draws a small circle in the text color, mostly transparent, easing its fill in on the decelerating curve and out on the accelerating one. */
 
 
 	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Family Text Color @ 0.325 opacity */
 	border-radius    : 50%;
 	height           : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
-	transition       : background-color var( --dur-tra-p02 ) var( --mot-dec-eas );          /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition       : background-color var( --dur-tra-p02 ) var( --mot-acc-eas );          /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
 	width            : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
 
 
 }
-.famDotSpa[data-scene-dot-filled] { /* What: Filled Family Dot Span. Why: A dot fills in once its scene begins. How: This sets it in the full text color. */
+.famDotSpa[data-scene-dot-filled] { /* What: Filled Family Dot Span. Why: A dot fills in once its scene begins. How: This sets it in the full text color, arriving on the decelerating curve, while the base rule's accelerating one carries it back out when a step back empties it. */
 
 
-	background-color : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */
+	background-color : var( --fam-tex-col );                                       /* Family Text Color, set by the card's theme class */
+	transition       : background-color var( --dur-tra-p02 ) var( --mot-dec-eas ); /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Dot Span. Why: Someone who asked for less motion should see the dots simply change. How: This applies only when the reduced-motion preference is set. */
 
 
-	.famDotSpa { /* What: Still Family Dot Span. Why: The dot should fill at once. How: This turns the transition off. */
+	.famDotSpa,
+	.famDotSpa[data-scene-dot-filled] { /* What: Still Family Dot Span. Why: The dot should fill and empty at once. How: This turns the transition off on both states, since the filled state's own transition outranks the base. */
 
 
 		transition : none;
