@@ -104,6 +104,8 @@ const PRE_URL_STR = 'http://localhost:5205'; // What: Preview URL String. Why: L
 
 
 
+// #region SOC_KEY_ARR
+
 /**
  * SOC_KEY_ARR = Social Key Array
  *
@@ -138,6 +140,8 @@ const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full
 
 
 ];
+
+// #endregion SOC_KEY_ARR
 
 // #endregion Constants
 
