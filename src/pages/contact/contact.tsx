@@ -30,7 +30,8 @@ import type { JSX         } from 'react'; // What: JSX. Why: The component decla
  * what to include when asking for a custom card. The form sends through
  * Netlify Forms, as TechGeek.dev's does: a hidden copy in index.html registers
  * its fields, and the page posts them to the site's root under the form name
- * `contact`, with a honeypot for bots. A sent message swaps the form for a thank-you.
+ * `contact`, with a honeypot for bots. A sent message swaps the form for a
+ * thank-you.
  *
  * Sections:
  *  - Constants
