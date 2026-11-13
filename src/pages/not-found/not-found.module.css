@@ -141,14 +141,14 @@
 
 
 }
-@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from 160% and transparent to full size, the bounce easing giving it a small rebound. */
+@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from about 175.5% and transparent to full size, the bounce easing giving it a small rebound. */
 
 
 	from {
 
 
 		opacity   : 0;
-		transform : scale( 1.6 ); /* What: Stamp Start Scale. Why: The stamp starts as if held above the envelope. How: This begins it at 160%, a literal since no scale step lands within 10%. */
+		transform : scale( var( --cdn-pow-002 ) ); /* Core-Design-Number to the Power of 2 ~= 1.755 */ /* What: Stamp Start Scale. Why: The stamp starts as if held above the envelope. How: This begins it at the Power of 2 step, about 175.5%. */
 
 
 	}
