@@ -103,6 +103,7 @@ tests/
 ├── interaction/       navigation, phone menu, contact form, Ko-fi button, and hover, press, and focus feedback checks
 ├── rendering/         screenshot comparisons, their baselines/, and the stylesheet that hides the background pattern
 ├── responsive/        layout checks across screen widths
+├── security/          header, build, dependency, and content security policy checks
 ├── seo/               head tags, structured data, icon, and crawler file checks
 ├── support/           the page states the suites visit
 └── playwright.config.ts

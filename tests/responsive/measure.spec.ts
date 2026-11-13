@@ -253,7 +253,7 @@ for ( const meaCasObj of MEA_CAS_ARR ) { // What: Case Test Loop. Why: Every pag
 			const proWidArr = await curPagObj.evaluate( meaProFun, { bodNum : BOD_MAX_NUM, sizNum : SMA_SIZ_NUM, smaNum : SMA_MAX_NUM } ); // What: Problem Width Array. Why: This width's problems are collected. How: This measures every paragraph in the page.
 
 
-			proAllArr.push( ...proWidArr.map( ( proCurStr ) => `${ widValNum }px ${ proCurStr }` ) ); // What: Problem Record Call. Why: A problem should say the width it appeared at. How: This prefixes each with the width.
+			proAllArr.push( ...proWidArr.map( ( proCurStr ) => `${ widValNum.toLocaleString( 'en-US' ) }px ${ proCurStr }` ) ); // What: Problem Record Call. Why: A problem should say the width it appeared at. How: This prefixes each with the width.
 
 
 		}

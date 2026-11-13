@@ -107,6 +107,7 @@ const COP_STA_ARR : StaRecTyp[] = SHA_OPE_ARR.flatMap( ( staRecObj ) => COP_RES_
 
 
 } ) ) );
+
 // #endregion Constants
 
 

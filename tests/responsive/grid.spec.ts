@@ -198,7 +198,7 @@ for ( const pagGriObj of PAG_GRI_ARR ) { // What: Page Loop. Why: Each page with
 
 
 
-			for ( const griCasObj of pagGriObj.griArr ) proLisArr.push( ...( await curPagObj.evaluate( griProFun, griCasObj ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum }px` ) ); // What: Grid Problems Loop. Why: Each grid on the page is judged at this width. How: This runs the check in the page and tags each finding with the width.
+			for ( const griCasObj of pagGriObj.griArr ) proLisArr.push( ...( await curPagObj.evaluate( griProFun, griCasObj ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum.toLocaleString( 'en-US' ) }px` ) ); // What: Grid Problems Loop. Why: Each grid on the page is judged at this width. How: This runs the check in the page and tags each finding with the width.
 
 
 		}
@@ -234,7 +234,7 @@ for ( const occNamStr of OCC_NAM_ARR ) { // What: Occasion Loop. Why: A chosen o
 
 			await expect( curPagObj.getByRole( 'button', { exact : true, name : occNamStr } ) ).toHaveAttribute( 'aria-pressed', 'true' ); // What: Chosen Filter Assertion. Why: The grid is measured only once the filter has applied. How: This waits until the occasion's button reads as chosen.
 
-			proLisArr.push( ...( await curPagObj.evaluate( griProFun, { cenBoo : true, claStr : 'galGriDiv' } ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum }px` ) ); // What: Grid Problems Call. Why: The narrowed grid is judged at this width. How: This runs the check in the page and tags each finding with the width.
+			proLisArr.push( ...( await curPagObj.evaluate( griProFun, { cenBoo : true, claStr : 'galGriDiv' } ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum.toLocaleString( 'en-US' ) }px` ) ); // What: Grid Problems Call. Why: The narrowed grid is judged at this width. How: This runs the check in the page and tags each finding with the width.
 
 
 		}
