@@ -200,7 +200,7 @@ function layProFun () : string[] {
 
 
 
-	if ( document.documentElement.scrollWidth > vieWidNum ) proLisArr.push( `the page scrolls sideways by ${ document.documentElement.scrollWidth - vieWidNum }px` ); // What: Sideways Scroll Check. Why: Nobody should have to scroll sideways to read the page. How: This records how far the page reaches past the visible width.
+	if ( document.documentElement.scrollWidth > vieWidNum ) proLisArr.push( `the page scrolls sideways by ${ ( document.documentElement.scrollWidth - vieWidNum ).toLocaleString( 'en-US' ) }px` ); // What: Sideways Scroll Check. Why: Nobody should have to scroll sideways to read the page. How: This records how far the page reaches past the visible width.
 
 
 

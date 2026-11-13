@@ -14,6 +14,7 @@ import { INV_STA_ARR } from '../support/contact.ts';     // What: Invalid State 
 import { opeStaFun   } from '../support/states.ts';      // What: Open State Function. Why: Each state is opened the way the other page suites open it. How: This loads the state and waits until it's settled.
 import { PHO_STA_ARR } from '../support/family.ts';      // What: Photo State Array. Why: A Family card's photo opened full size loads its image into a dialog, which the policy has to allow too. How: This lists the Mother's Day states with its first photo open, one per width.
 import { STA_REC_ARR } from '../support/states.ts';      // What: State Record Array. Why: The policy has to hold in every state the suites visit. How: This is the list of states to load.
+import { STI_STA_ARR } from '../support/family.ts';      // What: Still State Array. Why: The Family scene controls step back through stills under reduced motion, looks a visitor can stay on. How: This lists the Mother's Day card's last photo and line stills, one per width.
 import { test        } from '@playwright/test';          // What: Test. Why: Each state is its own test. How: This declares them.
 
 
@@ -253,7 +254,7 @@ test( 'the policy refuses an injected inline script', async ( { browserName : br
 
 
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Loop. Why: Every state the suites visit has to work under the policy, every card's page, the Contact form's refused send, the Gallery's narrowed grids, a Family card's open photo, and the share dialog's copy results and card page opening included. How: This declares one test per state.
+for ( const staRecObj of [ ...STA_REC_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Loop. Why: Every state the suites visit has to work under the policy, every card's page, the Contact form's refused send, the Gallery's narrowed grids, a Family card's open photo and scene stills, and the share dialog's copy results and card page opening included. How: This declares one test per state.
 
 
 	test( `${ staRecObj.ideStr } breaks no rule of the security policy and closes off every new tab link`, async ( { browserName : broNamStr, page : curPagObj } ) => { // What: State Policy Test. Why: A blocked resource, such as a font, would break the page once deployed, and the policy can't be loosened to hide it. How: This opens the state under the policy and checks nothing was refused and every new tab link is closed off.

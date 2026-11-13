@@ -16,6 +16,7 @@ import { opeStaFun   } from '../support/states.ts';  // What: Open State Functio
 import { PHO_STA_ARR } from '../support/family.ts';  // What: Photo State Array. Why: A Family card's photo opened full size is a state a visitor reaches. How: This lists the Mother's Day states with its first photo open, one per width.
 import { RES_STA_ARR } from '../support/contact.ts'; // What: Result State Array. Why: The Contact form's thank-you and error are states a visitor reaches too. How: This lists the Contact states with the form sent, one per result and width.
 import { STA_REC_ARR } from '../support/states.ts';  // What: State Record Array. Why: Every page state is scanned. How: This lists them.
+import { STI_STA_ARR } from '../support/family.ts';  // What: Still State Array. Why: The Family scene controls step back through stills under reduced motion, looks a visitor can stay on. How: This lists the Mother's Day card's last photo and line stills, one per width.
 import { test        } from '@playwright/test';      // What: Test. Why: Each state is its own test. How: This declares them.
 
 
@@ -143,7 +144,7 @@ function sumResFun ( resLisArr : AxeResTyp[ 'violations' ] ) : string[] {
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state must pass the scan, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's open photo, and the share dialog's copy results and card page opening included. How: This declares one axe test per state, the shared states first, then the reachable ones each control leads to.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state must pass the scan, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's open photo and scene stills, and the share dialog's copy results and card page opening included. How: This declares one axe test per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } has no axe violations`, async ( { page : curPagObj }, tesInfObj ) => { // What: Axe Test. Why: A state passes only with zero axe violations. How: This opens the state, scans it, reports anything needing review, and fails on any violation.

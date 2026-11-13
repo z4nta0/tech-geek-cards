@@ -153,7 +153,7 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 		const rigGapNum = griRecObj.right - Math.max( ...lasRowArr.map( ( recCurObj ) => recCurObj.right ) ); // What: Right Gap Number. Why: A centered row leaves the same room on both sides. How: This is the room after its last child.
 
 
-		if ( Math.abs( lefGapNum - rigGapNum ) > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has its last row ${ Math.round( lefGapNum - rigGapNum ) }px off center` ); // What: Off Center Check. Why: A last row more than a pixel off center reads as left hanging. How: This reports how far off it sits.
+		if ( Math.abs( lefGapNum - rigGapNum ) > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has its last row ${ Math.round( lefGapNum - rigGapNum ).toLocaleString( 'en-US' ) }px off center` ); // What: Off Center Check. Why: A last row more than a pixel off center reads as left hanging. How: This reports how far off it sits.
 
 
 	}

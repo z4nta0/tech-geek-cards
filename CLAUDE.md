@@ -357,7 +357,8 @@ the Gallery narrowed to Family and after a search nothing matches
 (`tests/support/gallery.ts`), the Contact form after a refused empty send and
 its sent and failed results (`tests/support/contact.ts`, which answers
 Netlify's POST with a 200 or a 500), the Mother's Day card's first photo
-open (`tests/support/family.ts`), and the share dialog after a copy that
+open and its last scene's photo and line stills under reduced motion
+(`tests/support/family.ts`), and the share dialog after a copy that
 worked or was refused (`tests/support/share.ts`), each at both widths, plus
 the share dialog opened from the Birthday card's floating bar at 390px.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
