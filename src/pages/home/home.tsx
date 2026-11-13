@@ -6,12 +6,15 @@
 import cssModObj from './home.module.css'; // What: CSS Module Object. Why: Home's hero, steps, featured cards, and banner are styled in its own module. How: This maps each class name in home.module.css to its hashed module class.
 
 
-import { CAR_REC_ARR } from '../../ui/cards.ts';             // What: Card Record Array. Why: The page's sections show cards from the catalog, such as the hero's. How: The page picks from it.
-import { CarTilCom   } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
-import { ConCirCom   } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The page's sections carry the site's motif, such as the hero. How: The page sets it behind them.
-import { Link        } from 'react-router';                  // What: Link. Why: The page's links move to other pages without a full page load, such as the banner's. How: This renders those links.
-import { ShaDiaCom   } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's "Share" is pressed.
-import { useState    } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
+import { CAR_REC_ARR  } from '../../ui/cards.ts';             // What: Card Record Array. Why: The page's sections show cards from the catalog, such as the hero's. How: The page picks from it.
+import { CarTilCom    } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
+import { ConCirCom    } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The page's sections carry the site's motif, such as the hero. How: The page sets it behind them.
+import { Link         } from 'react-router';                  // What: Link. Why: The page's links move to other pages without a full page load, such as the banner's. How: This renders those links.
+import { ShaDiaCom    } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's "Share" is pressed.
+import { useEffect    } from 'react';                         // What: Use Effect. Why: The page handles a section's hash once it has rendered. How: This runs the hash arrival effect.
+import { useLocation  } from 'react-router';                  // What: Use Location. Why: The page needs the hash a shared address or another page's section link arrived with. How: This reads the current location.
+import { useSecCliFun } from '../../ui/section-link.ts';      // What: Use Section Click Function. Why: The hero's "How It Works" button reaches the steps without leaving a hash in the address. How: This returns secCliFun, the shared section link click handler.
+import { useState     } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
 
 
 import type { CarRecTyp } from '../../ui/cards.ts'; // What: Card Record Type. Why: The page holds the card being shared. How: This types that state.
@@ -29,7 +32,9 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * site's pitch (above it at 768px and below), the three steps of sending a
  * card, four cards from the Gallery picked at random on each visit, and a
  * postcard banner inviting a custom card. Any featured card can be shared from
- * its tile through the share dialog.
+ * its tile through the share dialog. A visitor arriving with a section's ID as
+ * the hash, such as /#how-it-works, lands on that section, and the hash is
+ * cleared from the address once used.
  *
  * Sections:
  *  - Constants
@@ -183,7 +188,10 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
  * mounts, and stay put while it's open, four so the featured grid's rows
  * always stay even. A featured tile's "Share" mounts the share dialog for its
  * card, keyed by the card, and the dialog's close callback unmounts it. The
- * envelope drawing is decoration, hidden from screen readers.
+ * envelope drawing is decoration, hidden from screen readers. When the address
+ * arrives with a hash naming an element on the page, the page jumps to it once
+ * the fonts have loaded and its entrance has ended, and then drops the hash
+ * from the address through the history API, so the router sees no navigation.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -204,6 +212,50 @@ function HomPagCom () : JSX.Element {
 
 	const [ feaCarArr ]               = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
 	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                      // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
+
+	const locCurObj = useLocation();  // What: Location Current Object. Why: A visitor can arrive with a section's ID as the hash. How: This holds the current address, a new object on every navigation, whose hash is e.g. #how-it-works or an empty string.
+	const secCliFun = useSecCliFun(); // What: Section Click Function. Why: The hero's "How It Works" button reaches the steps the shared way. How: This leaves a modified click to the browser and otherwise scrolls to the section without a hash.
+
+
+
+	useEffect( () => { // What: Hash Arrival Effect. Why: A visitor arriving from a shared address or another page's section link should land on that section, with no hash left in the address. How: Once the fonts have loaded and the page's entrance has settled, this jumps to the element the hash names, then replaces the address with one without the hash.
+
+
+		const ancIdeStr = locCurObj.hash.slice( 1 ); // What: Anchor Identifier String. Why: The hash names the element to land on. How: This holds the hash without its #, or an empty string when there's none.
+
+
+		if ( !ancIdeStr ) return; // What: No Hash Guard. Why: Most visits arrive without a hash. How: This does nothing when the hash is empty.
+
+
+
+		void document.fonts.ready.then( async () => { // What: Fonts Ready Callback. Why: The jump should land where the section sits once the fonts have reflowed the page above it. How: This waits for the fonts the page uses to load, then for the target's entrance, then jumps and clears the hash; void marks the returned promise as deliberately not awaited.
+
+
+			const ancTarEle = document.getElementById( ancIdeStr ); // What: Anchor Target Element. Why: Only a hash naming an element on the page is a section to land on. How: This finds the element the hash names, or holds null.
+
+
+			if ( !ancTarEle ) return; // What: No Target Guard. Why: A hash naming nothing on the page isn't this page's to handle, so it's left in the address as it came. How: This stops when no element matches.
+
+
+
+			const movAniArr : Animation[] = []; // What: Moving Animations Array. Why: The page fades up into view as it opens, and a jump made while it's still rising lands short by what it has left to rise, about 25px in Chromium. How: This collects the animations running on the target and every element around it.
+
+
+			for ( let curAncEle : Element | null = ancTarEle; curAncEle; curAncEle = curAncEle.parentElement ) movAniArr.push( ...curAncEle.getAnimations() ); // What: Ancestor Animation Loop. Why: An animation on any element holding the target moves the target with it. How: This walks up from the target to the root, adding each element's running animations.
+
+
+
+			await Promise.allSettled( movAniArr.filter( ( aniCurObj ) => aniCurObj.effect?.getComputedTiming().iterations !== Infinity ).map( ( aniCurObj ) => aniCurObj.finished ) ); // What: Entrance Settle Wait. Why: The jump should land where the section rests once the entrance ends. How: This waits for every animation that ends, skipping any that loops forever, settling whether each finishes or is cancelled.
+
+			ancTarEle.scrollIntoView( { behavior : 'instant' } ); // What: Arrival Scroll Call. Why: The visitor should land on the section, as a normal link arrival would. How: This jumps to the element, without the html element's smooth scrolling, since gliding down from the top of a freshly loaded page would be slow.
+
+			history.replaceState( history.state, '', location.pathname + location.search ); // What: Hash Clear Call. Why: The address should stay as clean as it does for an in-page link, and clearing it through the router would count as a navigation, which the design package's scroll hook answers by jumping to the top. How: This replaces the current history entry's address with the same path and query and no hash, keeping the router's state, its key and index, and firing no navigation.
+
+
+		} );
+
+
+	}, [ locCurObj ] ); // What: Effect Dependency Array. Why: Each arrival with a hash has to be handled once, even one repeating the last hash. How: locCurObj is a new object on every navigation.
 
 
 
@@ -267,8 +319,10 @@ function HomPagCom () : JSX.Element {
 								<a
 									className={ cssModObj.butSecAnc }
 
-									href='#how-it-works'
-								>How It Works</a>{ /* What: Button Secondary Anchor Element. Why: A first-time visitor may want to know how sending works. How: This jumps to the steps below as an outlined button. */ }
+									href='/#how-it-works'
+
+									onClick={ ( cliEveObj ) => secCliFun( cliEveObj, 'how-it-works' ) }
+								>How It Works</a>{ /* What: Button Secondary Anchor Element. Why: A first-time visitor may want to know how sending works. How: This scrolls to the steps below as an outlined button, leaving no hash in the address, while a modified click opens them in a new tab. */ }
 
 
 							</div>
@@ -365,7 +419,7 @@ function HomPagCom () : JSX.Element {
 
 
 				<section
-					id='how-it-works' // What: How It Works Identifier. Why: The hero's "How It Works" button jumps here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's ID appears in the address.
+					id='how-it-works' // What: How It Works Identifier. Why: The hero's "How It Works" button leads here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's ID appears in the address.
 
 					className={ cssModObj.homHiwSec }
 				>{ /* What: Home How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }

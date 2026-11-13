@@ -8,6 +8,7 @@ import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark 
 
 
 import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the Home page and the Gallery without a full page load. How: This renders those two links.
+import { modCliFun       } from '../../ui/section-link.ts';               // What: Modified Click Function. Why: The skip link leaves a Ctrl, Cmd, Shift, Alt, or middle click to the browser. How: Its click handler returns early when this reports such a click.
 import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when "Share" is pressed.
 import { Suspense        } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
 import { useLocation     } from 'react-router';                           // What: Use Location. Why: The share dialog's preview link can open the card's own page again. How: The page reads the location's key, which changes on every navigation.
@@ -37,65 +38,12 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * short loading message shows until it has.
  *
  * Sections:
- *  - Helpers
  *  - Components
  *  - Exports
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
-
-
-
-// #region Helpers
-
-// #region modCliFun
-
-/**
- * modCliFun = Modified Click Function
- *
- * @summary
- * Whether a click on the skip link should be left to the browser: one made
- * with a modifier key held (Ctrl or Cmd to open a new tab, Shift for a new
- * window, Alt to download) or with any button but the main one. The skip
- * link's handler returns early when this is true, so the link's own address
- * opens the browser's own way.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param cliEveObj - Click Event Object: The skip link's click event.
- *
- * @returns Whether the browser should handle the click itself.
- * @see {@link modCliBoo}
- *
- * @example
- * ```ts
- * modCliFun(cliEveObj) // => false for a plain click
- * ```
- *
-*/
-
-function modCliFun ( cliEveObj : React.MouseEvent< HTMLAnchorElement > ) : boolean {
-
-
-	const altKeyBoo = cliEveObj.altKey;       // What: Alt Key Boolean. Why: An Alt click is one the browser handles its own way. How: This reads whether Alt was held.
-	const conKeyBoo = cliEveObj.ctrlKey;      // What: Control Key Boolean. Why: Ctrl-click opens a new tab elsewhere. How: This reads whether Ctrl was held.
-	const metKeyBoo = cliEveObj.metaKey;      // What: Meta Key Boolean. Why: Cmd-click opens a new tab on a Mac. How: This reads whether Cmd was held.
-	const othButBoo = cliEveObj.button !== 0; // What: Other Button Boolean. Why: A middle click opens a new tab. How: This checks the click wasn't made with the main button.
-	const shiKeyBoo = cliEveObj.shiftKey;     // What: Shift Key Boolean. Why: Shift-click opens a new window. How: This reads whether Shift was held.
-
-	const modCliBoo = altKeyBoo || conKeyBoo || metKeyBoo || othButBoo || shiKeyBoo; // What: Modified Click Boolean. Why: Any one of these means the visitor asked the browser to open the link its own way. How: This combines them.
-
-
-
-	return modCliBoo; // What: Modified Click Return. Why: The link's handler decides from this whether to step aside. How: This hands back the combined answer.
-
-
-}
-
-// #endregion modCliFun
-
-// #endregion Helpers
 
 
 
