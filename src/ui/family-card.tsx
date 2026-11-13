@@ -201,6 +201,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const [ expIndNum, setExpIndNum ] = useState< number | null >( null ); // What: Expanded Index Number And Setter. Why: Only one photo opens full size at a time. How: This holds the open photo's index, or null.
 	const [ carPauBoo, setCarPauBoo ] = useState( false );                 // What: Card Paused Boolean And Setter. Why: The pause button shows play while the card is paused. How: This mirrors the timeline's paused state.
 	const [ posIndNum, setPosIndNum ] = useState( 0 );                     // What: Position Index Number And Setter. Why: The dots fill in as the card plays. How: This holds the current scene's place, or the scene count once the closing line begins.
+	const [ phoCloBoo, setPhoCloBoo ] = useState( false );                 // What: Photo Closing Boolean And Setter. Why: The open photo plays a fade out before its dialog closes. How: This turns the dialog's closing class on until the fade ends.
 	const [ redMotBoo ]               = useState( redMotFun );             // What: Reduced Motion Boolean. Why: Under reduced motion the card opens finished, the controls step through stills, and there's nothing to pause. How: This reads the preference once, as the card opens.
 
 
@@ -983,11 +984,33 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			<dialog
 				ref={ expDiaRef }
 
-				className={ cssModObj.famExpDia }
+				className={` ${ cssModObj.famExpDia }   ${ phoCloBoo ? cssModObj.famExpDiaClosing : '' } `}
 
 				aria-label='Photo'
 
-				onClose={ () => setExpIndNum( null ) } // What: Dialog Close Handler. Why: Escape or a tap closes the photo, and the card should forget it. How: This clears the open photo.
+				onAnimationEnd={ ( aniEveObj ) => { // What: Closing Animation End Handler. Why: The dialog should only close once its fade out has played. How: When the dialog's own closing keyframe ends, this closes it and turns the closing class off; any other animation's end is ignored.
+
+
+					if ( aniEveObj.animationName !== cssModObj.famExpDiaCloseFadeOut ) return; // What: Closing Keyframe Guard. Why: Animation end events bubble up from the photo and the opening fade too. How: This acts only when the closing keyframe has ended.
+
+
+
+					expDiaRef.current?.close(); // What: Dialog Close Call. Why: The fade out has played. How: This closes the native dialog, whose close event forgets the photo.
+
+					setPhoCloBoo( false ); // What: Closing Reset Call. Why: The next photo should open without the closing class. How: This turns it off.
+
+
+				} }
+				onCancel={ ( canEveObj ) => { // What: Cancel Handler. Why: Escape would close the dialog at once, skipping its fade out. How: This stops the browser's own close and starts the fade.
+
+
+					canEveObj.preventDefault(); // What: Native Close Prevention Call. Why: The browser would close the dialog before its fade plays. How: This stops the browser's own close.
+
+					setPhoCloBoo( true ); // What: Animated Close Call. Why: Escape should still close the photo. How: This starts the fade out, whose end closes the dialog.
+
+
+				} }
+				onClose={ () => setExpIndNum( null ) } // What: Dialog Close Handler. Why: The card should forget the photo once its dialog has closed. How: This clears the open photo.
 			>{ /* What: Family Expanded Dialog Element. Why: A tapped photo should fill the screen. How: This shows the chosen photo as a modal, which Escape closes. */ }
 
 
@@ -1001,8 +1024,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 						aria-label='Close photo'
 
-						onClick={ () => expDiaRef.current?.close() }
-					>{ /* What: Family Expanded Button Element. Why: Tapping the full-size photo closes it. How: This holds the photo and closes the dialog when pressed. */ }
+						onClick={ () => setPhoCloBoo( true ) } // What: Photo Click Handler. Why: Tapping the photo closes it, after its fade out. How: This starts the fade, whose end closes the dialog.
+					>{ /* What: Family Expanded Button Element. Why: Tapping the full-size photo closes it. How: This holds the photo and fades the dialog out when pressed. */ }
 
 
 						<img

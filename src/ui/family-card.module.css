@@ -565,7 +565,7 @@
 
 /* #region famExpDia */
 
-.famExpDia { /* What: Family Expanded Dialog. Why: A tapped photo fills the screen over the card. How: This clears the dialog's frame and sizes it to the whole viewport in the card's background color, fading in. */
+.famExpDia { /* What: Family Expanded Dialog. Why: A tapped photo fills the screen over the card. How: This clears the dialog's frame and sizes it to the whole viewport in the card's background color, fading in, while its closing variant fades it out. */
 
 
 	animation        : famExpDiaOpenFadeIn var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
@@ -580,6 +580,13 @@
 
 
 }
+.famExpDia.famExpDia--closing { /* What: Closing Family Expanded Dialog. Why: The photo leaves the way it arrived, rather than vanishing. How: This fades the dialog out on the accelerating curve, and the animation's end closes it. */
+
+
+	animation : famExpDiaCloseFadeOut var( --dur-ani-m01 ) var( --mot-acc-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+
+
+}
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Expanded Dialog. Why: Someone who asked for less motion shouldn't see the photo fade. How: This applies only when the reduced-motion preference is set. */
 
 
@@ -590,6 +597,13 @@
 
 
 	}
+	.famExpDia.famExpDia--closing { /* What: Instant Closing Family Expanded Dialog. Why: The dialog closes when its fade out ends, so the fade can't simply be none. How: This keeps the closing animation but shrinks it to a hundredth of a millisecond, so it ends at once. */
+
+
+		animation-duration : .01ms;
+
+
+	}
 
 
 }
@@ -597,6 +611,20 @@
 
 
 	from {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+
+@keyframes famExpDiaCloseFadeOut { /* What: Family Expanded Dialog Close Fade Out. Why: The photo leaves softly. How: This fades it out to transparent. */
+
+
+	to {
 
 
 		opacity : 0;
