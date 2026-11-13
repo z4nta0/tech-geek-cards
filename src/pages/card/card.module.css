@@ -211,7 +211,7 @@
 
 }
 
-.barEndSpa { /* What: Bar Ending Span. Why: The wordmark's domain ending takes the family's orange, as in the site's bar. How: This colors it orange. */
+.barEndSpa { /* What: Bar Ending Span. Why: The wordmark's domain ending takes the design package's orange, as in the site's bar. How: This colors it orange. */
 
 
 	color : var( --acc-mai-col ); /* Accent Main Color = #F26419 */

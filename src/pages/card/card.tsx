@@ -4,7 +4,7 @@
 // #region Imports
 
 import cssModObj from './card.module.css';                        // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.
-import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the family's hexagon mark, which stands in for the wordmark at 640px and below. How: This is the design package's mark, fingerprinted by Vite.
+import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the design package's hexagon mark, which stands in for the wordmark at 640px and below. How: This is the design package's mark, fingerprinted by Vite.
 
 
 import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the Home page and the Gallery without a full page load. How: This renders those two links.
