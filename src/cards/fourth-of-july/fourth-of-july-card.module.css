@@ -185,7 +185,7 @@
 	height        : auto;
 	margin        : 0 auto var( --spa-ver-p02 );                                                                  /* Spacing Vertical Base Plus 2 ~= 25.572px */
 	overflow      : hidden;
-	width         : calc( var( --ver-rhy-p09 ) * 1rem );                                                            /* Vertical Rhythm Base Plus 9 ~= 183.074px */
+	width         : calc( var( --ver-rhy-p09 ) * 1rem );                                                          /* Vertical Rhythm Base Plus 9 ~= 183.074px */
 
 
 }

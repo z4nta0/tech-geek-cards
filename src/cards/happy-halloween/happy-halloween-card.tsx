@@ -941,8 +941,8 @@ function HalCarCom () : JSX.Element {
 
 		SplitText.create( titShaRef.current, { aria : 'none', type : 'words, chars' } ); // What: Shadow Split Call. Why: The shadow copy has to line up with the split heading letter for letter, and splitting drops the kerning between letters. How: This wraps the copy's words and letters the same way, adding no labels, since the copy is hidden from screen readers.
 
-		titTimObj.from( titSplObj.chars, { autoAlpha : 0, duration : titDurNum, ease : bouEasStr, rotation : titRotFun, stagger : titStaNum, y : titShiNum } ); // What: Drop Step. Why: The greeting arrives with a playful spring. How: This drops each letter in from above, tilted, fading in and springing upright.
-		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr } );                                                         // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
+		titTimObj.from( titSplObj.chars,   { autoAlpha : 0, duration : titDurNum, ease : bouEasStr, rotation : titRotFun, stagger : titStaNum, y : titShiNum } ); // What: Drop Step. Why: The greeting arrives with a playful spring. How: This drops each letter in from above, tilted, fading in and springing upright.
+		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr                                                           } ); // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
 
 		gsap.to( titSplObj.chars, { color : gloColStr, delay : gloDelNum, duration : gloDurNum, ease : inoEasStr, stagger : gloStaObj } ); // What: Shimmer Tween. Why: The greeting flickers like candlelight. How: This shifts each letter to candle yellow and back forever, in a wave.
 
@@ -1314,7 +1314,6 @@ function HalCarCom () : JSX.Element {
 
 
 				</div>
-
 
 				<p className={ cssModObj.wisMesPar }><span aria-hidden='true'>👻</span> Wishing you a frightfully fun night! <span aria-hidden='true'>🎃</span></p>{ /* What: Wish Message Paragraph Element. Why: The card adds a wish under the greeting. How: This shows it between a ghost and a jack-o'-lantern, which screen readers skip. */ }
 

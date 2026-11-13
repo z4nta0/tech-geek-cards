@@ -193,7 +193,7 @@
 	display               : grid;
 	grid-area             : 1 / 1;
 	grid-template-columns : minmax( 0, 1fr );
-	grid-template-rows    : minmax( 0, 1fr );                                                                                                /* What: Fixed Stage Row. Why: A plain 1fr row would grow to the photos' natural height, pushing the stage past the screen. How: This lets the row shrink to the screen. */
+	grid-template-rows    : minmax( 0, 1fr ); /* What: Fixed Stage Row. Why: A plain 1fr row would grow to the photos' natural height, pushing the stage past the screen. How: This lets the row shrink to the screen. */
 	mask                  : url( './family-heart.svg' ) center / calc( var( --fam-hea-sca, 0 ) * var( --cdn-pow-004 ) * 100vmax ) no-repeat; /* Family Heart Scale, set by the timeline, Core-Design-Number to the Power of 4 ~= 3.080 */ /* What: Animated Mask Size. Why: The heart grows through its mask's size rather than a transform, since the mask has to stay fixed to the photos, and scaling the photos or a wrapper would scale the pictures too. How: The timeline steps the scale, which resizes only the heart. */
 	pointer-events        : none;
 

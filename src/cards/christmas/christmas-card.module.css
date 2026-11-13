@@ -245,11 +245,11 @@
 	filter        : drop-shadow( 0 calc( var( --ver-rhy-m01 ) * 1rem ) calc( var( --ver-rhy-m03 ) * 1rem ) var( --chr-sha-col ) ); /* Vertical Rhythm Base Minus 1 = 11px, Vertical Rhythm Base Minus 3 ~= 6.268px, Christmas Shadow Color = #4A4A4A */
 	height        : auto;
 	left          : 0;
-	margin        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                                                                     /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );                                                                    /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the snowman clear of it, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
+	margin        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                        /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );                       /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the snowman clear of it, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
 	position      : absolute;
-	rotate        : calc( var( --cdn-pow-007 ) * 1deg );                                                                           /* Core-Design-Number to the Power of 7 ~= 7.159deg */
-	width         : max( calc( var( --ver-rhy-p05 ) * 1rem ), var( --hor-rhy-017 ) );                                              /* Vertical Rhythm Base Plus 5 ~= 59.447px, Horizontal Rhythm 17 ~= 115.363px @ 1,920px width */ /* What: Snowman Width. Why: The snowman grows with the screen but would shrink to a speck on a phone. How: This takes the larger of a fixed step and the screen-wide step. */
+	rotate        : calc( var( --cdn-pow-007 ) * 1deg );                              /* Core-Design-Number to the Power of 7 ~= 7.159deg */
+	width         : max( calc( var( --ver-rhy-p05 ) * 1rem ), var( --hor-rhy-017 ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Horizontal Rhythm 17 ~= 115.363px @ 1,920px width */ /* What: Snowman Width. Why: The snowman grows with the screen but would shrink to a speck on a phone. How: This takes the larger of a fixed step and the screen-wide step. */
 
 
 }

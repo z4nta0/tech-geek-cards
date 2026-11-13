@@ -243,7 +243,8 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 		for ( const flaRecObj of flaRecArr ) { // What: Flake Step Loop. Why: Every flake moves each frame. How: This sways, drops, and draws each one, restarting any that left.
 
 
-			flaRecObj.oscNum += flaRecObj.oscSteNum * fraValNum;          // What: Oscillation Increase. Why: The sway angle grows with time. How: This adds the flake's pace for the frame's length.
+			flaRecObj.oscNum += flaRecObj.oscSteNum * fraValNum; // What: Oscillation Increase. Why: The sway angle grows with time. How: This adds the flake's pace for the frame's length.
+
 			flaRecObj.xcoNum += Math.cos( flaRecObj.oscNum ) * fraValNum; // What: X-Coordinate Increase. Why: The flake sways side to side. How: This adds the cosine of its angle, which swings between -1 and 1, for the frame's length.
 			flaRecObj.ycoNum += flaRecObj.speNum * fraValNum;             // What: Y-Coordinate Increase. Why: The flake falls. How: This adds its speed for the frame's length.
 

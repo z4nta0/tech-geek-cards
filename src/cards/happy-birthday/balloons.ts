@@ -213,7 +213,8 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 		elaTimNum += fraMilNum; // What: Elapsed Time Increase. Why: The sway follows the time the balloons have been rising. How: This adds the frame's length.
-		preTimNum  = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
+
+		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
 

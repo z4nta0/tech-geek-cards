@@ -299,9 +299,12 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 			pieRecObj.xcoNum += pieRecObj.velXcoNum * velMulNum * fraValNum; // What: X-Coordinate Increase. Why: The piece drifts sideways. How: This adds its scaled sideways speed for the frame's length.
 			pieRecObj.ycoNum += pieRecObj.velYcoNum * velMulNum * fraValNum; // What: Y-Coordinate Increase. Why: The piece rises or falls. How: This adds its scaled downward speed for the frame's length.
-			pieRecObj.velYcoNum += graPixNum * fraValNum;                    // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
-			pieRecObj.velXcoNum *= draFacNum;                                // What: Velocity X-Coordinate Decrease. Why: The sideways drift dies away. How: This keeps the frame's share of it.
-			pieRecObj.rotNum += pieRecObj.spiNum * fraValNum;                // What: Rotation Increase. Why: The piece tumbles. How: This adds its spin for the frame's length.
+
+			pieRecObj.velYcoNum += graPixNum * fraValNum; // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
+
+			pieRecObj.velXcoNum *= draFacNum; // What: Velocity X-Coordinate Decrease. Why: The sideways drift dies away. How: This keeps the frame's share of it.
+
+			pieRecObj.rotNum += pieRecObj.spiNum * fraValNum; // What: Rotation Increase. Why: The piece tumbles. How: This adds its spin for the frame's length.
 
 
 			if ( pieRecObj.ycoNum > canHeiNum * fadFraNum ) pieRecObj.alpNum -= fraValNum * FRA_MIL_NUM / fadDurNum; // What: Fade Check. Why: Pieces fade out as they near the bottom rather than vanish. How: Below the fade line, this takes off the frame's share of the fade.
