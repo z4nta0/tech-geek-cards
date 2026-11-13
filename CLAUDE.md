@@ -308,13 +308,12 @@ rest follow the same pattern.
   for most of the time it's shown; the hint is dropped under reduced motion,
   where the bats never fly and no leaf is made. Decided by the user
   2026-11-13: Halloween's twinkling stars (`.staTwiDiv`, `will-change :
-  opacity`) and Birthday's balloons (`.balFloSvg`, `will-change :
-  transform`) keep theirs on the same terms, since each twinkles or floats
-  the whole time it shows, and the Fourth of July headline's spring keeps
-  GSAP's `force3D :
+  opacity`) and Birthday's balloons (`.balFloSvg`, `will-change : transform`)
+  keep theirs on the same terms, since each twinkles or floats the whole time
+  it shows, and the Fourth of July headline's spring keeps GSAP's `force3D :
   true`, holding its layer after the spring ends, since WebKit otherwise
-  repainted its wide glow whenever something under it changed, stalling
-  frames for up to 250ms.
+  repainted its wide glow whenever something under it changed, stalling frames
+  for up to 250ms.
 - **The Family cards** (Mother's Day, Father's Day, and the Father's Day prank)
   are one engine, `ui/family-card.tsx`, each card only a record of its lines,
   photos, grid order, and greeting plus a theme class setting `--fam-bac-col`,
