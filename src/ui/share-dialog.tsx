@@ -439,8 +439,9 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 				</div>
 
-				<div className={ cssModObj.shaActDiv }>{ /* What: Share Actions Div Element. Why: The ways to send the card sit together. How: This sets the buttons and the preview link in a row, wrapping onto two lines at about 365px wide and below. */ }
 
+
+				<div className={ cssModObj.shaActDiv }>{ /* What: Share Actions Div Element. Why: The ways to send the card sit together. How: This sets the buttons and the preview link in a row, wrapping onto two lines at about 365px wide and below. */ }
 
 
 					<button
@@ -488,10 +489,9 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 				</div>
 
+
+
 				<p
-
-
-
 					className={ cssModObj.shaStaPar }
 
 					role='status'
