@@ -194,7 +194,7 @@
 	grid-area             : 1 / 1;
 	grid-template-columns : minmax( 0, 1fr );
 	grid-template-rows    : minmax( 0, 1fr );                                                                                                /* What: Fixed Stage Row. Why: A plain 1fr row would grow to the photos' natural height, pushing the stage past the screen. How: This lets the row shrink to the screen. */
-	mask                  : url( './family-heart.svg' ) center / calc( var( --fam-hea-sca, 0 ) * var( --cdn-pow-004 ) * 100vmax ) no-repeat; /* Family Heart Scale, set by the timeline, Core-Design-Number to the Power of 4 ~= 3.080 */
+	mask                  : url( './family-heart.svg' ) center / calc( var( --fam-hea-sca, 0 ) * var( --cdn-pow-004 ) * 100vmax ) no-repeat; /* Family Heart Scale, set by the timeline, Core-Design-Number to the Power of 4 ~= 3.080 */ /* What: Animated Mask Size. Why: The heart grows through its mask's size rather than a transform, since the mask has to stay fixed to the photos, and scaling the photos or a wrapper would scale the pictures too. How: The timeline steps the scale, which resizes only the heart. */
 	pointer-events        : none;
 
 
@@ -401,14 +401,14 @@
 	--foc-rin-col : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */ /* What: Focus Ring Color. Why: The family's orange ring clashes with the card's colors. How: The card's text color keeps the ring visible on its own background. */
 
 	align-items      : center;
-	backdrop-filter  : blur( calc( var( --ver-rhy-m03 ) * 1rem ) );                                                    /* Vertical Rhythm Base Minus 3 ~= 6.268px */
-	background-color : oklch( from var( --fam-bac-col ) l c h / var( --cdn-pow-002-rec ) );                            /* Family Background Color @ 0.570 opacity */
-	border           : var( --bor-wid-sma ) solid oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Border Width Small ~= 0.499px, Family Text Color @ 0.325 opacity */
-	border-radius    : var( --rad-bor-xla );                                                                           /* Radius Border Extra Large ~= 19.304px */
+	backdrop-filter  : blur( calc( var( --ver-rhy-m03 ) * 1rem ) );                                                  /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	background-color : rgb( from var( --fam-bac-col ) r g b / var( --cdn-pow-002-rec ) );                            /* Family Background Color @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+	border           : var( --bor-wid-sma ) solid rgb( from var( --fam-tex-col ) r g b / var( --cdn-pow-004-rec ) ); /* Border Width Small ~= 0.499px, Family Text Color @ 0.325 opacity, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
+	border-radius    : var( --rad-bor-xla );                                                                         /* Radius Border Extra Large ~= 19.304px */
 	display          : flex;
 	flex-direction   : column;
-	gap              : var( --spa-ver-m04 );                                                                           /* Spacing Vertical Base Minus 4 ~= 4.732px */
-	padding          : var( --spa-ver-m02 ) var( --spa-hor-m02 ) var( --spa-ver-m04 );                                 /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Minus 2 ~= 8.304px, Spacing Vertical Base Minus 4 ~= 4.732px */
+	gap              : var( --spa-ver-m04 );                                                                         /* Spacing Vertical Base Minus 4 ~= 4.732px */
+	padding          : var( --spa-ver-m02 ) var( --spa-hor-m02 ) var( --spa-ver-m04 );                               /* Spacing Vertical Base Minus 2 ~= 8.304px, Spacing Horizontal Base Minus 2 ~= 8.304px, Spacing Vertical Base Minus 4 ~= 4.732px */
 	pointer-events   : auto;
 
 
@@ -429,11 +429,11 @@
 .famDotSpa { /* What: Family Dot Span. Why: Each dot stands for a scene, faint until the card reaches it. How: This draws a small circle in the text color, mostly transparent, easing its fill in on the decelerating curve and out on the accelerating one. */
 
 
-	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-004-rec ) ); /* Family Text Color @ 0.325 opacity */
+	background-color : rgb( from var( --fam-tex-col ) r g b / var( --cdn-pow-004-rec ) ); /* Family Text Color @ 0.325 opacity, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
 	border-radius    : 50%;
-	height           : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
-	transition       : background-color var( --dur-tra-p02 ) var( --mot-acc-eas );          /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
-	width            : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+	height           : calc( var( --ver-rhy-m04 ) * 1rem );                               /* Vertical Rhythm Base Minus 4 ~= 4.732px */
+	transition       : background-color var( --dur-tra-p02 ) var( --mot-acc-eas );        /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Accelerate Easing = cubic-bezier( .4, 0, 1, 1 ) */
+	width            : calc( var( --ver-rhy-m04 ) * 1rem );                               /* Vertical Rhythm Base Minus 4 ~= 4.732px */
 
 
 }
@@ -498,7 +498,7 @@
 .famConBut:hover { /* What: Hovered Family Control Button. Why: A control responds to the pointer, without lifting out of the bar's row. How: This tints its circle faintly in the text color. */
 
 
-	background-color : oklch( from var( --fam-tex-col ) l c h / var( --cdn-pow-006-rec ) ); /* Family Text Color @ 0.185 opacity */
+	background-color : rgb( from var( --fam-tex-col ) r g b / var( --cdn-pow-006-rec ) ); /* Family Text Color @ 0.185 opacity, Core-Design-Number to the Power of 6 Reciprocal ~= 0.185 */
 
 
 }

@@ -110,9 +110,9 @@ const BRE_WID_ARR = [ 1024, 768, 640 ]; // What: Breakpoint Width Array. Why: Th
  * @summary
  * The scene controls' icons, drawn in a 24 by 24 box and filled with the
  * text color. Every row is one icon's SVG path data, keyed by its control:
- * nex (next scene, a triangle and bar), pau (pause, two bars), pla (play, a
- * triangle), pre (previous scene, a bar and triangle), and ski (skip to the
- * end, two triangles and a bar).
+ * nexStr (next scene, a triangle and bar), pauStr (pause, two bars), plaStr
+ * (play, a triangle), preStr (previous scene, a bar and triangle), and
+ * skiStr (skip to the end, two triangles and a bar).
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -121,11 +121,11 @@ const BRE_WID_ARR = [ 1024, 768, 640 ]; // What: Breakpoint Width Array. Why: Th
 const ICO_PAT_OBJ = { // What: Icon Path Object. Why: The controls draw their own small icons, so no icon set has to load. How: Each key holds one icon's path data.
 
 
-	nex : 'M5 5v14l10-7zM16 5h2v14h-2z',
-	pau : 'M7 5h4v14H7zM13 5h4v14h-4z',
-	pla : 'M8 5v14l11-7z',
-	pre : 'M6 5h2v14H6zM19 5v14L9 12z',
-	ski : 'M3 5v14l7.5-7zM10.5 5v14l7.5-7zM18.5 5h2v14h-2z'
+	nexStr : 'M5 5v14l10-7zM16 5h2v14h-2z',
+	pauStr : 'M7 5h4v14H7zM13 5h4v14h-4z',
+	plaStr : 'M8 5v14l11-7z',
+	preStr : 'M6 5h2v14H6zM19 5v14L9 12z',
+	skiStr : 'M3 5v14l7.5-7zM10.5 5v14l7.5-7zM18.5 5h2v14h-2z'
 
 
 };
@@ -839,7 +839,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.pre } />{ /* What: Previous Icon Path Element. Why: A bar and a left triangle read as previous. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.preStr } />{ /* What: Previous Icon Path Element. Why: A bar and a left triangle read as previous. How: This draws them. */ }
 
 
 							</svg>
@@ -871,7 +871,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 								>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-									<path d={ carPauBoo ? ICO_PAT_OBJ.pla : ICO_PAT_OBJ.pau } />{ /* What: Pause Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars while playing. */ }
+									<path d={ carPauBoo ? ICO_PAT_OBJ.plaStr : ICO_PAT_OBJ.pauStr } />{ /* What: Pause Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars while playing. */ }
 
 
 								</svg>
@@ -903,7 +903,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.nex } />{ /* What: Next Icon Path Element. Why: A right triangle and a bar read as next. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.nexStr } />{ /* What: Next Icon Path Element. Why: A right triangle and a bar read as next. How: This draws them. */ }
 
 
 							</svg>
@@ -932,7 +932,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.ski } />{ /* What: Skip Icon Path Element. Why: Two triangles and a bar read as skipping to the end. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.skiStr } />{ /* What: Skip Icon Path Element. Why: Two triangles and a bar read as skipping to the end. How: This draws them. */ }
 
 
 							</svg>
