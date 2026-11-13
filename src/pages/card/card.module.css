@@ -360,7 +360,7 @@
 .carStaDiv { /* What: Card Stage Div. Why: Every card has to keep its lettering clear of the floating bar. How: This hands each card the margin that clears it. */
 
 
-	--car-bar-mar : calc( var( --ver-rhy-p05 ) * 1rem + var( --spa-ver-bas ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together (58.7px in Firefox, whose bar draws 1px taller), plus a gap above it, which each card reads as its bottom margin. */
+	--car-bar-mar : calc( var( --spa-ver-p05 ) + var( --spa-ver-bas ) ); /* Spacing Vertical Base Plus 5 ~= 59.447px, Spacing Vertical Base ~= 14.572px */ /* What: Card Bar Margin. Why: The floating bar covers the bottom of every card, so lettering a card pins to its bottom edge has to clear it. How: This is room for the bar's height and offset, about 57.7px together (58.7px in Firefox, whose bar draws 1px taller), plus a gap above it, which each card reads as its bottom margin. */
 
 
 }
