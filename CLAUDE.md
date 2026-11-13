@@ -177,6 +177,9 @@ the family's fonts and colors.
   content cap, gutter, and hero gap), kept by the user 2026-10-14 after
   looking at the initial version; its responsiveness tested by hand by the
   user on 2026-10-16.
+- **Settled in the audit** (decided by the user 2026-11-12): the visually
+  hidden technique keeps its literal 1px width and height and its -1px
+  margin, since they're part of the technique rather than sizes or spacing.
 
 ## Card Grids exception
 Decided by the user 2026-10-14, as on TechGeek.dev's Work page. The Gallery's
@@ -274,6 +277,11 @@ rest follow the same pattern.
   balloons, fireworks) returns a stop function the card's `useGSAP` cleanup
   calls, steps by elapsed time so 60Hz and 120Hz screens match, and never
   starts under reduced motion.
+- **Kept layer hints** (decided by the user 2026-11-12, in the audit):
+  Halloween's bats (`.batFlyDiv`) and Thanksgiving's falling leaves
+  (`.leaFalSvg`) keep `will-change : transform` in their CSS, since each moves
+  for most of the time it's shown; the hint is dropped under reduced motion,
+  where the bats never fly and no leaf is made.
 - **The Family cards** (Mother's Day, Father's Day, and the Father's Day prank)
   are one engine, `ui/family-card.tsx`, each card only a record of its lines,
   photos, grid order, and greeting plus a theme class setting `--fam-bac-col`,
