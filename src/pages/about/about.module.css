@@ -348,7 +348,7 @@
 
 
 }
-.famIteIte:hover { /* What: Hovered Family Item Item. Why: Cards answer the pointer like the rest of the family's cards. How: This turns the border the strong blue and lifts the card about 3px. */
+.famIteIte:hover { /* What: Hovered Family Item Item. Why: Cards answer the pointer like the rest of the sister sites' cards. How: This turns the border the strong blue and lifts the card about 3px. */
 
 
 	border-color : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */

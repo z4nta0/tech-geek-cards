@@ -23,7 +23,7 @@
 .carSkiAnc { /* What: Card Skip Anchor. Why: A keyboard user should be able to jump straight to the card, and the link shouldn't show until it's needed. How: This sets it as an orange button in mono capitals, like the shared bar's skip link, fixed just above the screen's top edge at the page's side gutter, and eases its slide into view and back out, leaving on the accelerating curve, along with its hover color and lift, its press, and its focus ring. */
 
 
-	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The family's dark orange ring can vanish on a dark card. How: The bright orange matches the floating bar's rings, since the base styles draw every ring in this color. */
+	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The design package's dark orange ring can vanish on a dark card. How: The bright orange matches the floating bar's rings, since the base styles draw every ring in this color. */
 
 	background      : var( --acc-mai-col );                               /* Accent Main Color = #F26419 */
 	border-radius   : var( --rad-bor-xsm );                               /* Radius Border Extra Small ~= 3.572px */
@@ -89,7 +89,7 @@
 .carBarNav { /* What: Card Bar Nav. Why: The bar floats over the card without covering much of it, and arrives after the card so it doesn't steal its opening. How: This pins a dark ink pill to the bottom center above the card's layers, lining up its links and button, and fades it up after a short delay. */
 
 
-	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The family's dark orange ring would vanish on the ink. How: The bright orange keeps the bar's focus rings visible, since the base styles draw every ring in this color. */
+	--foc-rin-col : var( --acc-mai-col ); /* Accent Main Color = #F26419 */ /* What: Focus Ring Color. Why: The design package's dark orange ring would vanish on the ink. How: The bright orange keeps the bar's focus rings visible, since the base styles draw every ring in this color. */
 
 	align-items   : center;
 	animation     : global( contentEnterFadeUp ) var( --dur-ani-p03 ) var( --mot-dec-eas ) var( --dur-ani-p05 ) both; /* Duration Animation Base Plus 3 ~= 366.9ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Animation Base Plus 5 ~= 643.9ms */
