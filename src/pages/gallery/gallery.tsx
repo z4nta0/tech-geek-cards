@@ -85,7 +85,7 @@ function GalPagCom () : JSX.Element {
 	const seaInpRef = useRef< HTMLInputElement >( null ); // What: Search Input Reference. Why: "Show All Cards" disappears as the grid comes back, so focus needs somewhere to go. How: This holds the search field, which takes it.
 
 	const [ actOccStr, setActOccStr ] = useState< OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion or every card. How: This starts on "All".
-	const [ resChoBoo, setResChoBoo ] = useState( false );                      // What: Result Chosen Boolean And Setter. Why: The results fade in only after a visitor changes them, not on the page's own arrival. How: This starts false and turns true once a search or a filter changes them.
+	const [ resChoBoo, setResChoBoo ] = useState( false );                      // What: Result Chosen Boolean And Setter. Why: The results fade in only after a visitor's first choice, not on the page's own arrival. How: This starts false and turns true at the first search, filter, or "Show All Cards", which fades the results in once even when they stay the same.
 	const [ seaTexStr, setSeaTexStr ] = useState( '' );                         // What: Search Text String And Setter. Why: The search field narrows the cards as a visitor types. How: This holds the field's text.
 	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );   // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
 
@@ -116,7 +116,7 @@ function GalPagCom () : JSX.Element {
 
 	} );
 
-	const resKeyStr = shoCarArr.map( ( carRecObj ) => carRecObj.sluStr ).join( ' ' ); // What: Result Key String. Why: The results should fade in only when the cards shown change, not on every keystroke that leaves them the same. How: This joins the shown cards' addresses, which the count and the grid are keyed by.
+	const resKeyStr = shoCarArr.map( ( carRecObj ) => carRecObj.sluStr ).join( ' ' ); // What: Result Key String. Why: After the first choice, the results should fade in only when the cards shown change, not on every keystroke that leaves them the same. How: This joins the shown cards' addresses, which the count and the grid are keyed by.
 
 
 
