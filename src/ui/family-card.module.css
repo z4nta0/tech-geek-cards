@@ -398,7 +398,7 @@
 .famConDiv { /* What: Family Controls Div. Why: The scene controls stay out of the way but stay noticeable, over plain backgrounds and photos alike. How: This sets a rounded, see-through bar in the card's own background color, blurring what's behind it, with the dots over the buttons and focus rings in the card's text color. */
 
 
-	--foc-rin-col : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */ /* What: Focus Ring Color. Why: The family's orange ring clashes with the card's colors. How: The card's text color keeps the ring visible on its own background. */
+	--foc-rin-col : var( --fam-tex-col ); /* Family Text Color, set by the card's theme class */ /* What: Focus Ring Color. Why: The design package's orange ring clashes with the card's colors. How: The card's text color keeps the ring visible on its own background. */
 
 	align-items      : center;
 	backdrop-filter  : blur( calc( var( --ver-rhy-m03 ) * 1rem ) );                                                  /* Vertical Rhythm Base Minus 3 ~= 6.268px */

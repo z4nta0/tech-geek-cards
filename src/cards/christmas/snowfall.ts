@@ -16,7 +16,7 @@
  *
  * The animation began as a Codecademy holiday card tutorial
  * (https://s3.amazonaws.com/codecademy-content/courses/holiday-cards/
- * snowfall.min.js), no longer online, and has been rewritten since.
+ * snowfall.min.js), and has been rewritten since.
  *
  * Sections:
  *  - Types
