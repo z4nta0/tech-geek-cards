@@ -3,6 +3,8 @@
 
 // #region Imports
 
+import { BAR_STA_ARR } from '../support/share.ts';   // What: Bar State Array. Why: The share dialog opened from a card page's floating bar sits over the card, a state a visitor reaches. How: This lists the Birthday card's page at the phone width with its dialog open.
+import { COP_STA_ARR } from '../support/share.ts';   // What: Copy State Array. Why: The share dialog after a copy, worked or refused, is a state a visitor reaches. How: This lists the dialog after each result at both widths.
 import { EMP_STA_ARR } from '../support/gallery.ts'; // What: Empty State Array. Why: A search no card matches swaps the Gallery's grid for its empty message, a state a visitor reaches. How: This lists the Gallery states after that search, one per width.
 import { expect      } from '@playwright/test';      // What: Expect. Why: Each check passes only with no problems found. How: This asserts each problem list is empty.
 import { FIL_STA_ARR } from '../support/gallery.ts'; // What: Filtered State Array. Why: A chosen occasion narrows the Gallery's grid and count, a state a visitor reaches. How: This lists the Gallery states with "Family" chosen, one per width.
@@ -649,7 +651,7 @@ async function keyProFun ( curPagObj : Page, engNamStr : string ) : Promise< str
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, the Contact form's results and refused send, the Gallery's narrowed grids, and a Family card's open photo included. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's open photo, and the share dialog's copy results and card page opening included. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } names every link and button cleanly`, async ( { page : curPagObj } ) => { // What: Names Test. Why: Every link and button must be announced by a clean name. How: This opens the state and checks its accessibility tree.

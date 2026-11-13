@@ -347,8 +347,10 @@ the audit) live in their own support files, kept out of the rendering suite:
 the Gallery narrowed to Family and after a search nothing matches
 (`tests/support/gallery.ts`), the Contact form after a refused empty send and
 its sent and failed results (`tests/support/contact.ts`, which answers
-Netlify's POST with a 200 or a 500), and the Mother's Day card's first photo
-open (`tests/support/family.ts`), each at both widths.
+Netlify's POST with a 200 or a 500), the Mother's Day card's first photo
+open (`tests/support/family.ts`), and the share dialog after a copy that
+worked or was refused (`tests/support/share.ts`), each at both widths, plus
+the share dialog opened from the Birthday card's floating bar at 390px.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
   accessibility scan, whose names check also fails a shown link that opens a
   new tab without "in a new tab)" in its name (added 2026-11-10). Both run on

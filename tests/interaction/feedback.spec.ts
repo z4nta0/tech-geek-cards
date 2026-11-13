@@ -3,8 +3,10 @@
 
 // #region Imports
 
+import { BAR_STA_ARR } from '../support/share.ts';    // What: Bar State Array. Why: The share dialog opened from a card page's floating bar sits over the card, a state a visitor reaches. How: This lists the Birthday card's page at the phone width with its dialog open.
 import { cliBloFun   } from '../support/feedback.ts'; // What: Click Block Function. Why: Pressing a control shouldn't navigate or close anything mid-check. How: This cancels every click in the page.
 import { CON_PRO_ARR } from '../support/feedback.ts'; // What: Control Property Array. Why: A control's looks, such as its hover, are compared over the same properties. How: This lists them.
+import { COP_STA_ARR } from '../support/share.ts';    // What: Copy State Array. Why: The share dialog after a copy, worked or refused, is a state a visitor reaches. How: This lists the dialog after each result at both widths.
 import { EMP_STA_ARR } from '../support/gallery.ts';  // What: Empty State Array. Why: The Gallery's empty search holds a button the plain states don't, its "Show all cards". How: This lists the Gallery states after a search no card matches, one per width.
 import { expect      } from '@playwright/test';       // What: Expect. Why: Each state passes only when every reachable control and toggle responds. How: This asserts on what each check reads, such as that its problem list is empty.
 import { FOC_PRO_ARR } from '../support/feedback.ts'; // What: Focus Property Array. Why: A focus look is compared over the control properties and the ring's outline. How: This lists them.
@@ -828,7 +830,7 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
 
 
 	test( `${ staRecObj.ideStr } gives every reachable link and button hover, press, and focus feedback, every form field its focus, and every toggle its switch`, async ( { page : curPagObj } ) => { // What: Feedback Test. Why: Every interaction should visibly register. How: This opens the state, blocks clicks, probes every reachable link, button, and form field and each reachable element of the toggle kinds listed for the state, and on the Home, Gallery, and About states every hover surface, and checks it finds no problems.
