@@ -68,7 +68,7 @@ await capPagObj.screenshot( { path : OUT_PAT_STR, type : 'png' } ); // What: Sit
 
 
 
-if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.png is at or over the ${ MAX_BYT_NUM } byte limit.` ); // What: Site Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
+if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.png is at or over the ${ MAX_BYT_NUM.toLocaleString( 'en-US' ) } byte limit.` ); // What: Site Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
 
 
 
@@ -113,11 +113,11 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 
 
 
-	if ( statSync( imaPatStr ).size >= MAX_BYT_NUM ) throw new Error( `${ carDatObj.sluStr }.jpg is over the ${ MAX_BYT_NUM } byte limit even at quality 50.` ); // What: Card Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
+	if ( statSync( imaPatStr ).size >= MAX_BYT_NUM ) throw new Error( `${ carDatObj.sluStr }.jpg is over the ${ MAX_BYT_NUM.toLocaleString( 'en-US' ) } byte limit even at quality 50.` ); // What: Card Size Guard. Why: An image over the limit would break the cap kept as WhatsApp's safe margin. How: This fails the run.
 
 
 
-	console.log( `Wrote ${ imaPatStr } (${ statSync( imaPatStr ).size } bytes).` ); // What: Card Result Log Call. Why: The run should say what it wrote. How: This prints the path and size.
+	console.log( `Wrote ${ imaPatStr } (${ statSync( imaPatStr ).size.toLocaleString( 'en-US' ) } bytes).` ); // What: Card Result Log Call. Why: The run should say what it wrote. How: This prints the path and size.
 
 
 }
@@ -129,7 +129,7 @@ await broInsObj.close(); // What: Browser Close Call. Why: The script should exi
 
 
 
-console.log( `Wrote ${ OUT_PAT_STR } (${ statSync( OUT_PAT_STR ).size } bytes).` ); // What: Site Result Log Call. Why: The run should say what it wrote. How: This prints the site image's path and size.
+console.log( `Wrote ${ OUT_PAT_STR } (${ statSync( OUT_PAT_STR ).size.toLocaleString( 'en-US' ) } bytes).` ); // What: Site Result Log Call. Why: The run should say what it wrote. How: This prints the site image's path and size.
 
 // #endregion Module Init
 
