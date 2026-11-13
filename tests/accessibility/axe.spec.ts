@@ -107,7 +107,7 @@ async function scaStaFun ( curPagObj : Page ) : Promise< AxeResTyp > {
  *
  * @summary
  * Turns one list of axe results into one readable line per rule: the rule's
- * id, its impact where axe gives one, its help text, and the selectors of
+ * ID, its impact where axe gives one, its help text, and the selectors of
  * the elements it flagged. Used for both the violations, which fail the
  * test, and the incomplete results, which are only reported.
  *
@@ -128,7 +128,7 @@ async function scaStaFun ( curPagObj : Page ) : Promise< AxeResTyp > {
 function sumResFun ( resLisArr : AxeResTyp[ 'violations' ] ) : string[] {
 
 
-	return resLisArr.map( ( resCurObj ) => `${ resCurObj.id } (${ resCurObj.impact || 'no impact' }): ${ resCurObj.help } at ${ resCurObj.nodes.map( ( nodCurObj ) => nodCurObj.target.join( ' ' ) ).join( ', ' ) }` ); // What: Result Lines Return. Why: A failure should say what broke and where without opening the report. How: This joins each rule's id, impact, help, and flagged selectors into one line.
+	return resLisArr.map( ( resCurObj ) => `${ resCurObj.id } (${ resCurObj.impact || 'no impact' }): ${ resCurObj.help } at ${ resCurObj.nodes.map( ( nodCurObj ) => nodCurObj.target.join( ' ' ) ).join( ', ' ) }` ); // What: Result Lines Return. Why: A failure should say what broke and where without opening the report. How: This joins each rule's ID, impact, help, and flagged selectors into one line.
 
 
 }

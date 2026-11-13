@@ -56,7 +56,7 @@ type LayCasTyp = { // What: Layout Case Type. Why: Each test measures one page i
 const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page and the open menu are measured the same way. How: Each row names a case, its path, and whether it opens the menu.
 
 
-	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
+	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The Home page holds the envelope hero, the steps, the featured cards, and the postcard banner. How: This measures it as loaded.
 	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds its sections, such as the listed cards' tiles. How: This measures it as loaded.
 	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds its sections, such as the story. How: This measures it as loaded.
 	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its sections, such as the form. How: This measures it as loaded.
@@ -70,7 +70,7 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 	{ ideStr : 'thanksgiving',      menBoo : false, patStr : '/happy-thanksgiving'    }, // What: Thanksgiving Case. Why: The Thanksgiving card's illustrations and message stack on a phone. How: This measures its finished illustrations and message, which reduced motion shows at once.
 	{ ideStr : 'christmas-prank',   menBoo : false, patStr : '/merry-christmas-prank' }, // What: Christmas Prank Case. Why: The Christmas prank opens on a fake hacked screen no other card shows. How: This measures its finished snowy scene, which reduced motion shows at once.
 	{ ideStr : 'fathers-day-prank', menBoo : false, patStr : '/fathers-day-prank'     }, // What: Father's Day Prank Case. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
-	{ ideStr : 'menu',              menBoo : true,  patStr : '/'                      }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the home page with the menu open.
+	{ ideStr : 'menu',              menBoo : true,  patStr : '/'                      }  // What: Menu Case. Why: The open menu stacks the page links its own way. How: This measures the Home page with the menu open.
 
 
 ];

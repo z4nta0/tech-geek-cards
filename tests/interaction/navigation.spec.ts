@@ -624,16 +624,16 @@ for ( const { sluStr : carSluStr } of CAR_DAT_ARR ) { // What: Card Skip Link Lo
 
 
 
-test( 'the Send a Card button opens the Gallery without reloading the site', async ( { page : curPagObj } ) => { // What: Send A Card Link Test. Why: A plain link would reload the whole site instead of switching pages. How: This marks the document, clicks the bar's Send a Card, and checks the mark survived, which only happens without a reload.
+test( 'the "Send a Card" button opens the Gallery without reloading the site', async ( { page : curPagObj } ) => { // What: Send A Card Link Test. Why: A plain link would reload the whole site instead of switching pages. How: This marks the document, clicks the bar's "Send a Card", and checks the mark survived, which only happens without a reload.
 
 
-	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The bar shows its Send a Card button at desktop width. How: This sizes the page before it loads.
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The bar shows its "Send a Card" button at desktop width. How: This sizes the page before it loads.
 
 	await curPagObj.goto( '/' ); // What: Home Page Navigation. Why: The check starts away from the Gallery. How: This loads Home.
 
 	await curPagObj.evaluate( () => document.documentElement.setAttribute( 'data-test-reload-marker', '' ) ); // What: Reload Marker Call. Why: A reload would build a fresh document without the mark. How: This sets a presence-only attribute on the root element.
 
-	await curPagObj.getByRole( 'banner' ).getByRole( 'link', { exact : true, name : 'Send a Card' } ).click(); // What: Send A Card Click. Why: This is the bar's main action. How: This clicks the bar's Send a Card.
+	await curPagObj.getByRole( 'banner' ).getByRole( 'link', { exact : true, name : 'Send a Card' } ).click(); // What: Send A Card Click. Why: This is the bar's main action. How: This clicks the bar's "Send a Card".
 
 	await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Destination Assertion. Why: The button has to reach the Gallery. How: This waits for the address to change.
 
@@ -644,7 +644,7 @@ test( 'the Send a Card button opens the Gallery without reloading the site', asy
 
 
 
-test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the birthday card from its tile without a reload, checks the card's page, then follows More cards back to the Gallery at its top.
+test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the Birthday card from its tile without a reload, checks the card's page, then follows "More cards" back to the Gallery at its top.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The tiles sit three across at desktop width. How: This sizes the page before it loads.
@@ -653,16 +653,16 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 	await curPagObj.evaluate( () => document.documentElement.setAttribute( 'data-test-reload-marker', '' ) ); // What: Reload Marker Call. Why: A reload would build a fresh document without the mark. How: This sets a presence-only attribute on the root element.
 
-	await curPagObj.getByRole( 'link', { exact : true, name : 'Happy Birthday' } ).click(); // What: Tile Click. Why: A tile's title is its link. How: This clicks the birthday card's tile.
+	await curPagObj.getByRole( 'link', { exact : true, name : 'Happy Birthday' } ).click(); // What: Tile Click. Why: A tile's title is its link. How: This clicks the Birthday card's tile.
 
 	await expect( curPagObj ).toHaveURL( '/happy-birthday' );                             // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
 	await expect( curPagObj.getByRole( 'navigation', { name : 'Card' } ) ).toBeVisible(); // What: Card Bar Assertion. Why: Every card page floats its own small bar instead of the site's. How: This checks the bar is there.
 
 	expect( await curPagObj.evaluate( () => document.documentElement.hasAttribute( 'data-test-reload-marker' ) ) ).toBe( true ); // What: No Reload Assertion. Why: The router should switch to the card within the same document. How: This checks the mark is still on the root element.
 
-	await curPagObj.getByRole( 'link', { exact : true, name : 'More cards' } ).click(); // What: More Cards Click. Why: The card's bar leads back to the Gallery. How: This clicks More cards.
+	await curPagObj.getByRole( 'link', { exact : true, name : 'More cards' } ).click(); // What: More Cards Click. Why: The card's bar leads back to the Gallery. How: This clicks "More cards".
 
-	await expect( curPagObj ).toHaveURL( '/gallery' );                               // What: Return Assertion. Why: More cards has to reach the Gallery. How: This waits for the address to change back.
+	await expect( curPagObj ).toHaveURL( '/gallery' );                               // What: Return Assertion. Why: "More cards" has to reach the Gallery. How: This waits for the address to change back.
 	await expect.poll( () => curPagObj.evaluate( () => window.scrollY ) ).toBe( 0 ); // What: Top Assertion. Why: A link opens its page at the top. How: This polls until the Gallery sits at its top.
 
 
@@ -670,14 +670,14 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 
 
-test( "the share dialog's preview link opens its card from the Gallery", async ( { page : curPagObj } ) => { // What: Gallery Preview Test. Why: A sender may want to see a card as it will arrive before sending it. How: This opens the birthday card's share dialog from its tile, names the recipient, follows Preview card, and checks the card opens with the name and no dialog.
+test( "the share dialog's preview link opens its card from the Gallery", async ( { page : curPagObj } ) => { // What: Gallery Preview Test. Why: A sender may want to see a card as it will arrive before sending it. How: This opens the Birthday card's share dialog from its tile, names the recipient, follows "Preview card", and checks the card opens with the name and no dialog.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The tiles sit three across at desktop width. How: This sizes the page before it loads.
 
-	await curPagObj.goto( '/gallery' ); // What: Gallery Navigation. Why: The preview starts from a tile's Share button. How: This loads the Gallery.
+	await curPagObj.goto( '/gallery' ); // What: Gallery Navigation. Why: The preview starts from a tile's "Share" button. How: This loads the Gallery.
 
-	await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click. Why: The dialog opens from the tile's Share button. How: This presses the birthday card's.
+	await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click. Why: The dialog opens from the tile's "Share" button. How: This presses the Birthday card's.
 
 	await curPagObj.getByLabel( 'Their name (optional)' ).fill( 'Sam' ); // What: Name Fill. Why: The preview should carry the name the link will. How: This types a recipient's name.
 
@@ -692,16 +692,16 @@ test( "the share dialog's preview link opens its card from the Gallery", async (
 
 
 
-test( "the share dialog's preview link on a card's own page closes the dialog and replays the card", async ( { page : curPagObj } ) => { // What: Own Page Preview Test. Why: On the card's own page the preview opens that same page, so it has to close the dialog and start the card over itself. How: This marks the card's greeting, opens Share, names the recipient, follows Preview card, and checks the dialog closed and a fresh greeting holds the name.
+test( "the share dialog's preview link on a card's own page closes the dialog and replays the card", async ( { page : curPagObj } ) => { // What: Own Page Preview Test. Why: On the card's own page the preview opens that same page, so it has to close the dialog and start the card over itself. How: This marks the card's greeting, opens "Share", names the recipient, follows "Preview card", and checks the dialog closed and a fresh greeting holds the name.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The card's bar shows its full wordmark at desktop width. How: This sizes the page before it loads.
 
-	await curPagObj.goto( '/happy-birthday' ); // What: Card Navigation. Why: The preview starts from the card's own page. How: This loads the birthday card.
+	await curPagObj.goto( '/happy-birthday' ); // What: Card Navigation. Why: The preview starts from the card's own page. How: This loads the Birthday card.
 
 	await curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( heaCurEle ) => heaCurEle.setAttribute( 'data-test-mount-marker', '' ) ); // What: Mount Marker Call. Why: A card that starts over is mounted fresh, without the mark. How: This sets a presence-only attribute on the greeting.
 
-	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's Share button. How: This presses it.
+	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's "Share" button. How: This presses it.
 
 	await curPagObj.getByLabel( 'Their name (optional)' ).fill( 'Sam' ); // What: Name Fill. Why: The replayed card should carry the name the link will. How: This types a recipient's name.
 
@@ -717,14 +717,14 @@ test( "the share dialog's preview link on a card's own page closes the dialog an
 
 
 
-test( "a card's share dialog starts with the names its address carries", async ( { page : curPagObj } ) => { // What: Carried Names Test. Why: A sender who previewed a card, or opened a named one, shouldn't have to type its names again to share it. How: This opens the signable Christmas card with both names in its address, opens Share, and checks both fields start with them.
+test( "a card's share dialog starts with the names its address carries", async ( { page : curPagObj } ) => { // What: Carried Names Test. Why: A sender who previewed a card, or opened a named one, shouldn't have to type its names again to share it. How: This opens the signable Christmas card with both names in its address, opens "Share", and checks both fields start with them.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The card's bar shows its full wordmark at desktop width. How: This sizes the page before it loads.
 
 	await curPagObj.goto( '/merry-christmas?name=Sam&from=Alex' ); // What: Named Card Navigation. Why: The Christmas card takes both a recipient's and a sender's name. How: This loads it with both in its address.
 
-	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's Share button. How: This presses it.
+	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's "Share" button. How: This presses it.
 
 	await expect( curPagObj.getByLabel( 'Their name (optional)' ) ).toHaveValue( 'Sam' ); // What: Recipient Field Assertion. Why: The recipient's name should carry over. How: This checks the field holds the address's name.
 	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( 'Alex' ); // What: Sender Field Assertion. Why: The sender's name should carry over. How: This checks the field holds the address's from.

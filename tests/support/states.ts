@@ -94,8 +94,8 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites share one list of states, so a shared state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
 
 
-	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: The home page opens the site at a desktop width. How: This loads the home page at 1,440px.
-	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
+	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: The Home page opens the site at a desktop width. How: This loads the Home page at 1,440px.
+	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Home page at 390px.
 	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds its sections, such as the listed cards' tiles. How: This loads the Gallery at 1,440px.
 	{ heiNum : 844, ideStr : 'gallery-phone',             patStr : '/gallery',               redBoo : false, widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
 	{ heiNum : 900, ideStr : 'about-desktop',             patStr : '/about',                 redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds its sections, such as the story. How: This loads the About page at 1,440px.
@@ -123,7 +123,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 	{ heiNum : 900, ideStr : 'fathers-day-prank-desktop', patStr : '/fathers-day-prank',     redBoo : true,  widNum : 1440 }, // What: Father's Day Prank Desktop State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 	{ heiNum : 844, ideStr : 'fathers-day-prank-phone',   patStr : '/fathers-day-prank',     redBoo : true,  widNum : 390  }, // What: Father's Day Prank Phone State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 
-	{ // What: Menu Phone State. Why: The open menu holds the bar's links, which the phone layout hides until it opens. How: This loads the home page at 390px and opens the menu through its toggle button.
+	{ // What: Menu Phone State. Why: The open menu holds the bar's links, which the phone layout hides until it opens. How: This loads the Home page at 390px and opens the menu through its toggle button.
 
 
 		heiNum : 844,
@@ -144,7 +144,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 
 	},
 
-	{ // What: Share Desktop State. Why: The share dialog is how every card is sent, so it gets the same checks as a page. How: This loads the Gallery at 1,440px and opens the share dialog for the birthday card.
+	{ // What: Share Desktop State. Why: The share dialog is how every card is sent, so it gets the same checks as a page. How: This loads the Gallery at 1,440px and opens the share dialog for the Birthday card.
 
 
 		heiNum : 900,
@@ -152,10 +152,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 		patStr : '/gallery',
 		widNum : 1440,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Birthday tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Birthday card's, which has a name field.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -165,7 +165,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 
 	},
 
-	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen. How: This loads the Gallery at 390px and opens the share dialog for the birthday card.
+	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen. How: This loads the Gallery at 390px and opens the share dialog for the Birthday card.
 
 
 		heiNum : 844,
@@ -173,10 +173,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 		patStr : '/gallery',
 		widNum : 390,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Birthday tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Birthday card's, which has a name field.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -194,10 +194,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites
 		patStr : '/gallery',
 		widNum : 390,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Merry Christmas tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Merry Christmas tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the Merry Christmas card's, which has both name fields.
+			await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Merry Christmas card's, which has both name fields.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 

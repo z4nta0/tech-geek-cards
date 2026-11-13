@@ -212,12 +212,12 @@ async function relCheFun ( curPagObj : Page ) : Promise< void > {
 
 // #region Module Init
 
-test( 'the policy refuses an injected inline script', async ( { browserName : broNamStr, page : curPagObj } ) => { // What: Policy Live Test. Why: A clean run means nothing unless the policy was really applied and its violations really recorded. How: This loads the home page under the policy, injects an inline script, and checks it didn't run and was reported.
+test( 'the policy refuses an injected inline script', async ( { browserName : broNamStr, page : curPagObj } ) => { // What: Policy Live Test. Why: A clean run means nothing unless the policy was really applied and its violations really recorded. How: This loads the Home page under the policy, injects an inline script, and checks it didn't run and was reported.
 
 
 	await polSetFun( curPagObj ); // What: Policy Setup Call. Why: The page has to load under the policy. How: This adds the headers and the violation listener.
 
-	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The script is injected into a real page. How: This loads the home page.
+	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The script is injected into a real page. How: This loads the Home page.
 
 
 	const injRanBoo = await curPagObj.evaluate( async () => { // What: Injection Ran Boolean. Why: A refused script never sets its flag. How: This adds an inline script that sets a flag, waits a moment for any violation event, and reports whether the flag was set.
@@ -287,7 +287,7 @@ for ( const [ resNamStr, staCodNum, resHeaStr ] of [ [ 'sent', 200, 'Message sen
 		await curPagObj.getByRole( 'main' ).getByLabel( 'Your email' ).fill( 'visitor@example.com' ); // What: Email Fill Call. Why: Every required field is filled. How: This fills in a reserved example address.
 		await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' );                 // What: Message Fill Call. Why: Every required field is filled. How: This fills in a message.
 
-		await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The filled-in form is sent. How: This presses Send.
+		await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The filled-in form is sent. How: This presses "Send Message".
 
 		await expect( resHeaStr ? curPagObj.getByRole( 'heading', { name : resHeaStr } ) : curPagObj.getByRole( 'alert' ) ).toBeVisible(); // What: Result Shown Assertion. Why: The check means something only once the result is on screen. How: This waits for the thank-you's heading, or the error's alert.
 
