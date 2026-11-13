@@ -42,7 +42,7 @@ type SnaRecTyp = { // What: Snapshot Record Type. Why: An element's look, and wh
 // #region Constants
 
 const CON_PRO_ARR = [ 'color', 'background-color', 'border-color', 'box-shadow', 'filter', 'transform', 'scale', 'translate', 'rotate', 'opacity' ]; // What: Control Property Array. Why: Hover, press, and toggle feedback changes these, on a control and on what's inside it, such as a bar link's underline. How: Each is compared between moments, and each that changes has to be transitioned, the separate scale, translate, and rotate properties included, since this site's buttons and tiles move through them.
-const FOC_PRO_ARR = [ ...CON_PRO_ARR, 'outline-color', 'outline-offset', 'outline-width' ];                                                             // What: Focus Property Array. Why: A control's focus can change its look as well as draw its ring. How: Each is compared between unfocused and focused, and each that changes has to be transitioned.
+const FOC_PRO_ARR = [ ...CON_PRO_ARR, 'outline-color', 'outline-offset', 'outline-width' ];                                                          // What: Focus Property Array. Why: A control's focus can change its look as well as draw its ring. How: Each is compared between unfocused and focused, and each that changes has to be transitioned.
 const SET_WAI_NUM = 400; // What: Settle Wait Number. Why: Each look is read once its transition has finished, and the longest interface transition, the scrim's fade, runs about 367ms. How: This is the pause, in milliseconds, before each look is read.
 
 // #endregion Constants

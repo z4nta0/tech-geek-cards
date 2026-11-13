@@ -40,6 +40,9 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
 
 // #region Constants
 
+const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The mobile menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
+const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: Layouts crowd at the narrowest widths and switch at the breakpoints. How: This lists common screen widths (1,280px a laptop) plus the site's 640px, 768px, and 1,024px breakpoints and the pixel past each.
+
 type LayCasTyp = { // What: Layout Case Type. Why: Each test measures one page in one state. How: This names the case, its path, and whether it opens the menu.
 
 
@@ -71,11 +74,6 @@ const LAY_CAS_ARR : LayCasTyp[] = [ // What: Layout Case Array. Why: Every page 
 
 
 ];
-
-
-
-const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The mobile menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
-const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: Layouts crowd at the narrowest widths and switch at the breakpoints. How: This lists common screen widths (1,280px a laptop) plus the site's 640px, 768px, and 1,024px breakpoints and the pixel past each.
 
 // #endregion Constants
 
