@@ -82,7 +82,6 @@ await capPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced M
 mkdirSync( SOC_DIR_STR, { recursive : true } ); // What: Social Folder Creation. Why: The cards' images need their folder. How: This creates it if it's missing.
 
 
-
 for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every card gets its own preview. How: This captures each in turn.
 
 
