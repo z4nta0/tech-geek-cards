@@ -275,6 +275,26 @@
 
 
 }
+.conForFor--returning { /* What: Contact Form Form Returning. Why: The form takes the thank-you's place again after "Send Another", and the swap should be seen, while a first visit arrives with the page's own entrance. How: This fades it up into view with the shared entrance, the same as the thank-you. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Contact Form Form Returning. Why: Someone who asked for less motion shouldn't see the form slide back in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.conForFor--returning { /* What: Motionless Contact Form Form Returning. Why: The returning form should simply appear. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
 
 .botFiePar { /* What: Bot Field Paragraph. Why: The honeypot has to stay in the form without a person ever seeing it. How: This moves it far off screen, a literal offset since it isn't spacing. */
 
@@ -484,6 +504,9 @@
 /* #endregion errAleDiv */
 
 
+
+/* #region subForBut */
+
 .subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's start, easing its color, lift, press, and focus, dimmed while sending. */
 
 
@@ -537,6 +560,44 @@
 
 
 }
+
+.subLabSpa { /* What: Submit Label Span. Why: The button's change to "Sending…" and back is the result of the press, so the new words should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
+
+
+	animation : subLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	display   : inline-block;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Submit Label Span. Why: Someone who asked for less motion should see the label simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.subLabSpa { /* What: Motionless Submit Label Span. Why: The label should switch at once. How: This turns the animation off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes subLabSpaSwapFadeIn { /* What: Submit Label Span Swap Fade In. Why: A new label should arrive softly. How: This fades it in from about 3.6px low. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m05 ) ); /* Spacing Vertical Base Minus 5 ~= 3.572px */
+
+
+	}
+
+
+}
+
+/* #endregion subForBut */
 
 /* #endregion conForFor */
 

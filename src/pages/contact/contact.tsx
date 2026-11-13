@@ -142,7 +142,7 @@ function ConPagCom () : JSX.Element {
 	// #region Result Focus
 
 	const forNamRef = useRef< HTMLInputElement >( null );  // What: Form Name Reference. Why: Focus returns to the first field when the form comes back. How: This holds the name input.
-	const retForRef = useRef( false );                     // What: Return Form Reference. Why: Only a return from the thank-you moves focus to the name field, never a first visit. How: This starts false, and resForFun sets it true.
+	const retForRef = useRef( false );                     // What: Return Form Reference. Why: Only a return from the thank-you moves focus to the name field and fades the form in, never a first visit. How: This starts false, and resForFun sets it true.
 	const subForRef = useRef< HTMLButtonElement >( null ); // What: Submit Form Reference. Why: A failed send puts focus back on the submit button. How: This holds the button.
 	const thaYouRef = useRef< HTMLDivElement >( null );    // What: Thank You Reference. Why: The thank-you takes focus as it replaces the form. How: This holds the thank-you panel.
 
@@ -150,7 +150,7 @@ function ConPagCom () : JSX.Element {
 	const resForFun = () => { // What: Reset Form Function. Why: The thank-you's button lets a visitor send another message. How: This marks the form as returning, hides the thank-you, and empties the fields.
 
 
-		retForRef.current = true; // What: Return Flag Set. Why: The focus effect moves focus to the name field only when the form comes back from the thank-you. How: This marks the return before the swap renders, so the effect after it already reads it.
+		retForRef.current = true; // What: Return Flag Set. Why: The focus effect moves focus to the name field only when the form comes back from the thank-you. How: This marks the return before the swap renders, so the effect after it already reads it, and the returning form fades in.
 
 
 		setIsaSenBoo( false ); // What: Sent Flag Reset Call. Why: The form shows again in place of the thank-you. How: This clears the sent flag.
@@ -362,7 +362,7 @@ function ConPagCom () : JSX.Element {
 
 
 							<form
-								className={ cssModObj.conForFor }
+								className={` ${ cssModObj.conForFor }   ${ retForRef.current ? cssModObj.conForForReturning : '' } `}
 
 								name='contact'
 
@@ -560,7 +560,17 @@ function ConPagCom () : JSX.Element {
 
 									disabled={ isaLoaBoo }
 									type='submit'
-								>{ isaLoaBoo ? 'Sending…' : 'Send Message' }</button>{ /* What: Submit Form Button Element. Why: The visitor sends the message. How: This submits the form, reading "Sending…" and turning off while the message is on its way. */ }
+								>{ /* What: Submit Form Button Element. Why: The visitor sends the message. How: This submits the form, reading "Sending…" and turning off while the message is on its way. */ }
+
+
+									<span
+										key={ isaLoaBoo ? 'sending' : 'ready' } // What: Label Key. Why: The label should fade in afresh each time it changes. How: A new key remounts the span, replaying its entrance.
+
+										className={ cssModObj.subLabSpa }
+									>{ isaLoaBoo ? 'Sending…' : 'Send Message' }</span>{ /* What: Submit Label Span Element. Why: The button says when the message is on its way. How: This shows "Sending…" while it sends and "Send Message" otherwise, fading each change in. */ }
+
+
+								</button>
 
 
 							</form>
