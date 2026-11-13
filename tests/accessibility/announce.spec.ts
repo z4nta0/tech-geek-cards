@@ -21,7 +21,9 @@ import { test        } from '@playwright/test';      // What: Test. Why: Each ch
  * in the form and empty on load and holds the error after a failed send, which
  * also leaves focus on the submit button, a sent message moves focus to the
  * thank-you that replaces the form, and its "Send Another" button moves focus
- * back to the name field. Adapted from TechGeek.dev's own.
+ * back to the name field. The share dialog's status region is empty when the
+ * dialog opens and holds the copy result once "Copy Link" is pressed, whether
+ * the clipboard takes the link or refuses it. Adapted from TechGeek.dev's own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -77,5 +79,32 @@ test( 'a sent message moves focus to the thank-you, and sending another moves it
 
 
 } );
+
+
+
+for ( const copRowObj of [ { mesStr : 'Link copied. Paste it into a text, an email, or a message.', resStr : 'copied' }, { mesStr : 'Your browser blocked copying. Select the link above and copy it.', resStr : 'failed' } ] ) { // What: Copy Result Loop. Why: The share dialog announces both a copy that worked and one the browser refused. How: This declares one test per result, with the message each should announce.
+
+
+	test( `the share status region is empty on open and announces the ${ copRowObj.resStr } result`, async ( { page : curPagObj } ) => { // What: Share Status Test. Why: The copy result has to reach screen reader users, and a region added as it speaks is often missed. How: This stubs the clipboard to take or refuse the link, opens the Birthday card's share dialog on the Gallery, checks its status region is empty, presses "Copy Link", and checks the region holds the message.
+
+
+		await curPagObj.addInitScript( ( resStr ) => Object.defineProperty( navigator, 'clipboard', { value : { writeText : () => resStr === 'copied' ? Promise.resolve() : Promise.reject( new Error( 'Blocked' ) ) } } ), copRowObj.resStr ); // What: Clipboard Stub Call. Why: A headless browser's clipboard may refuse without permission, and each result has to be reached on purpose. How: This replaces the page's clipboard with one that takes the link or refuses it, before the site loads.
+
+		await curPagObj.goto( '/gallery' ); // What: Gallery Page Navigation. Why: The share dialog opens from a card tile. How: This loads the Gallery.
+
+		await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Birthday tile's.
+
+		await expect( curPagObj.getByRole( 'dialog' ).getByRole( 'status' ) ).toHaveCount( 1 ); // What: One Status Assertion. Why: The status region has to be in the dialog from its first render. How: This checks exactly one status region exists in the dialog.
+		await expect( curPagObj.getByRole( 'dialog' ).getByRole( 'status' ) ).toBeEmpty();      // What: Empty Status Assertion. Why: Nothing has been copied yet. How: This checks the region holds no text.
+
+		await curPagObj.getByRole( 'button', { name : 'Copy Link' } ).click(); // What: Copy Click Call. Why: The status speaks only once a copy is tried. How: This presses "Copy Link".
+
+		await expect( curPagObj.getByRole( 'dialog' ).getByRole( 'status' ) ).toHaveText( copRowObj.mesStr ); // What: Copy Status Assertion. Why: The region announces the copy's result. How: This checks it holds the message for that result.
+
+
+	} );
+
+
+}
 
 
