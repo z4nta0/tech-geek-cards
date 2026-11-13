@@ -1233,6 +1233,7 @@ function HalCarCom () : JSX.Element {
 					key={ ghoRowObj.claModStr }
 
 					claModStr={ ghoRowObj.claModStr }
+
 					delSecNum={ ghoRowObj.delSecNum }
 				/> // What: Ghost Float Component. Why: Each ghost rises and hovers. How: This draws one at its place, rising after its delay.
 
@@ -1269,6 +1270,7 @@ function HalCarCom () : JSX.Element {
 					key={ pumRowObj.claModStr }
 
 					claModStr={ pumRowObj.claModStr }
+
 					delSecNum={ pumRowObj.delSecNum }
 				/> // What: Pumpkin Lantern Component. Why: Each jack-o'-lantern flickers. How: This draws one at its place, flickering after its delay.
 
@@ -1284,6 +1286,7 @@ function HalCarCom () : JSX.Element {
 					key={ canRowObj.claModStr }
 
 					claModStr={ canRowObj.claModStr }
+
 					delSecNum={ canRowObj.delSecNum }
 				/> // What: Candle Flame Component. Why: Each candle flickers. How: This draws one at its place, flickering after its delay.
 

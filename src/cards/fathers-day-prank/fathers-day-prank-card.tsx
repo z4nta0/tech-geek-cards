@@ -346,8 +346,9 @@ const FdpCarCom = () : JSX.Element => ( // What: Father's-Day-Prank Card Compone
 
 
 	<FamCarCom
-		famCarObj={ FDP_CAR_OBJ }
 		theClaStr={ cssModObj.fdpCarDiv }
+
+		famCarObj={ FDP_CAR_OBJ }
 	/> // What: Family Card Component. Why: The engine plays the card. How: This hands it the card's record and its theme class.
 
 

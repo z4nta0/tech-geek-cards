@@ -239,8 +239,9 @@ const FatCarCom = () : JSX.Element => ( // What: Father's Card Component. Why: T
 
 
 	<FamCarCom
-		famCarObj={ FAT_CAR_OBJ }
 		theClaStr={ cssModObj.fatCarDiv }
+
+		famCarObj={ FAT_CAR_OBJ }
 	/> // What: Family Card Component. Why: The engine plays the card. How: This hands it the card's record and its theme class.
 
 

@@ -275,7 +275,6 @@ function BirCarCom () : JSX.Element {
 		conSysRef.current = conSysObj; // What: Confetti System Assignment. Why: Taps throw bursts through the same confetti. How: This keeps its functions for the tap handler.
 
 
-
 		timLinObj.call( () => { // What: Opening Burst Call. Why: The card opens with a burst from the greeting. How: This throws a big burst from the heading's middle, measured against the card.
 
 

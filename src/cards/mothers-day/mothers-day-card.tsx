@@ -346,8 +346,9 @@ const MotCarCom = () : JSX.Element => ( // What: Mother's Card Component. Why: T
 
 
 	<FamCarCom
-		famCarObj={ MOT_CAR_OBJ }
 		theClaStr={ cssModObj.motCarDiv }
+
+		famCarObj={ MOT_CAR_OBJ }
 	/> // What: Family Card Component. Why: The engine plays the card. How: This hands it the card's record and its theme class.
 
 

@@ -217,7 +217,6 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
-
 		balRecArr.forEach( ( balRecObj, balIndNum ) => { // What: Balloon Step Loop. Why: Every balloon moves each frame. How: This raises, restarts, and draws each one.
 
 
