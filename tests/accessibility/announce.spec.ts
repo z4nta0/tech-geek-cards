@@ -40,9 +40,9 @@ test( 'the alert region is in the form and empty on load, and focus stays put', 
 
 	await curPagObj.goto( '/contact' ); // What: Contact Page Navigation. Why: The form lives on the Contact page. How: This loads it.
 
-	await expect( curPagObj.getByRole( 'main' ).getByRole( 'alert' ) ).toHaveCount( 1 );       // What: One Alert Assertion. Why: The alert region has to be in the form from the first render. How: This checks exactly one alert region exists in the main content.
-	await expect( curPagObj.getByRole( 'main' ).getByRole( 'alert' ) ).toBeEmpty();            // What: Empty Alert Assertion. Why: Nothing has gone wrong yet. How: This checks the region holds no text.
-	await expect( curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ) ).not.toBeFocused(); // What: Unmoved Focus Assertion. Why: Only a return from the thank-you moves focus to the name field. How: This checks the field isn't focused on load.
+	await expect( curPagObj.locator( 'form[name="contact"]' ).getByRole( 'alert' ) ).toHaveCount( 1 ); // What: One Alert Assertion. Why: The alert region has to be in the form from the first render. How: This checks exactly one alert region exists in the form.
+	await expect( curPagObj.locator( 'form[name="contact"]' ).getByRole( 'alert' ) ).toBeEmpty();      // What: Empty Alert Assertion. Why: Nothing has gone wrong yet. How: This checks the region holds no text.
+	await expect( curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ) ).not.toBeFocused();         // What: Unmoved Focus Assertion. Why: Only a return from the thank-you moves focus to the name field. How: This checks the field isn't focused on load.
 
 
 } );
@@ -56,8 +56,8 @@ test( 'a failed send puts the error in the alert region and keeps focus on the s
 
 	await senForFun( curPagObj, 500 ); // What: Failed Send Call. Why: The error shows only after a failed send. How: This sends the form with the root's POST answered by a 500.
 
-	await expect( curPagObj.getByRole( 'main' ).getByRole( 'alert' ) ).toHaveText( ERR_MES_STR ); // What: Error Alert Assertion. Why: The alert region announces the error. How: This checks it holds the error message.
-	await expect( curPagObj.getByRole( 'button', { name : 'Send Message' } ) ).toBeFocused();     // What: Submit Focus Assertion. Why: Focus never falls to the page, so the visitor can try again from where they were. How: This checks the submit button is the focused element once sending ends.
+	await expect( curPagObj.locator( 'form[name="contact"]' ).getByRole( 'alert' ) ).toHaveText( ERR_MES_STR ); // What: Error Alert Assertion. Why: The alert region announces the error. How: This checks it holds the error message.
+	await expect( curPagObj.getByRole( 'button', { name : 'Send Message' } ) ).toBeFocused();                   // What: Submit Focus Assertion. Why: Focus never falls to the page, so the visitor can try again from where they were. How: This checks the submit button is the focused element once sending ends.
 
 
 } );
