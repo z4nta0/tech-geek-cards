@@ -644,7 +644,7 @@ test( 'the "Send a Card" button opens the Gallery without reloading the site', a
 
 
 
-test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the Birthday card from its tile without a reload, checks the card's page, then follows "More cards" back to the Gallery at its top.
+test( 'a card tile opens its card, and the card leads back to the Gallery', async ( { page : curPagObj } ) => { // What: Card Round Trip Test. Why: Opening a card and coming back are the site's main path. How: This opens the Birthday card from its tile without a reload, checks the card's page and its own description, then follows "More cards" back to the Gallery at its top.
 
 
 	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The tiles sit three across at desktop width. How: This sizes the page before it loads.
@@ -655,8 +655,9 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 	await curPagObj.getByRole( 'link', { exact : true, name : 'Happy Birthday' } ).click(); // What: Tile Click. Why: A tile's title is its link. How: This clicks the Birthday card's tile.
 
-	await expect( curPagObj ).toHaveURL( '/happy-birthday' );                             // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
-	await expect( curPagObj.getByRole( 'navigation', { name : 'Card' } ) ).toBeVisible(); // What: Card Bar Assertion. Why: Every card page floats its own small bar instead of the site's. How: This checks the bar is there.
+	await expect( curPagObj ).toHaveURL( '/happy-birthday' );                                                                                                                         // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
+	await expect( curPagObj.getByRole( 'navigation', { name : 'Card' } ) ).toBeVisible();                                                                                             // What: Card Bar Assertion. Why: Every card page floats its own small bar instead of the site's. How: This checks the bar is there.
+	await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveAttribute( 'content', CAR_DAT_ARR.find( ( carDatObj ) => carDatObj.sluStr === 'happy-birthday' )!.seaStr ); // What: Card Description Assertion. Why: A card opened inside the site has to swap in its own search description, which only its page's hook sets after a router move. How: This waits for the one description to read the Birthday card's. // What: Non-Null Note. Why: TypeScript can't see the catalog holds the Birthday card. How: The test opened that card's tile by its title just above.
 
 	expect( await curPagObj.evaluate( () => document.documentElement.hasAttribute( 'data-test-reload-marker' ) ) ).toBe( true ); // What: No Reload Assertion. Why: The router should switch to the card within the same document. How: This checks the mark is still on the root element.
 
