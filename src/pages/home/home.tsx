@@ -485,7 +485,7 @@ function HomPagCom () : JSX.Element {
 							<div>{ /* What: Featured Heading Div Element. Why: The eyebrow and heading read as one block beside the link. How: This stacks them. */ }
 
 
-								<p className={ cssModObj.secEyePar }>From the gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
+								<p className={ cssModObj.secEyePar }>From the Gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
 
 								<h2 className={ cssModObj.secTitHea }>A few favorites</h2>{ /* What: Section Title Heading Element. Why: The heading introduces the featured cards. How: This shows the section's h2. */ }
 

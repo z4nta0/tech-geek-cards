@@ -134,6 +134,11 @@ field to the share dialog).
   calls its code open source.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
+- **Page names and control case** (decided by the user 2026-11-13, in the
+  audit): page copy capitalizes the Gallery wherever it names the page ("a
+  card in the Gallery"), eyebrows included. Buttons, including those styled
+  as buttons, are written in Title Case ("Browse the Gallery", "Show All
+  Cards"), and text links in sentence case ("See all cards", "More cards").
 
 ## Hosting and DNS
 Set up with the user 2026-10-16, following TechGeek.dev's steps (see its

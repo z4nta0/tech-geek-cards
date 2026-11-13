@@ -154,7 +154,7 @@ function GalPagCom () : JSX.Element {
 					<div className={ cssModObj.herInnDiv }>{ /* What: Hero Inner Div Element. Why: The hero's text sits in the site's centered column. How: This caps, centers, and stacks it. */ }
 
 
-						<p className={ cssModObj.secEyePar }>The gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the page. How: This shows it in berry mono capitals. */ }
+						<p className={ cssModObj.secEyePar }>The Gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the page. How: This shows it in berry mono capitals. */ }
 
 						<h1 className={ cssModObj.herTitHea }>Find the right card</h1>{ /* What: Hero Title Heading Element. Why: The heading says what the page is for. How: This shows the page's h1. */ }
 
@@ -285,7 +285,7 @@ function GalPagCom () : JSX.Element {
 									type='button'
 
 									onClick={ cleFilFun }
-								>Show all cards</button>{ /* What: Button Secondary Button Element. Why: The way back is one press. How: This clears the search and the filter. */ }
+								>Show All Cards</button>{ /* What: Button Secondary Button Element. Why: The way back is one press. How: This clears the search and the filter. */ }
 
 
 							</div>
