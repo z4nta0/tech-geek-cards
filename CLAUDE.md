@@ -382,11 +382,14 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   and that the Gallery's "Show All Cards" hands focus to the search field.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
-  feedback, the phone menu, and the contact form (its topic arriving as Not
-  specified when none is chosen).
+  feedback, the phone menu, the contact form (its topic arriving as Not
+  specified when none is chosen), the "How It Works" section link, the Family
+  photo's closing fade, the Ko-fi link, and the extended name fonts, with the
+  checks below.
   - **Feedback probe** (rebuilt 2026-11-10, in the audit, from TechGeek.dev's,
     helpers in `tests/support/feedback.ts`): on every shared state, the
-    Contact results, the Gallery's empty search, and the open photo, each
+    Contact results, the Gallery's empty search, the open photo, and the
+    share dialog after a copy and opened from a card's bar, each
     reachable link, button, and field is read at rest, hovered, pressed, and
     focused through `focus( { focusVisible : true } )`, and every property
     that changes on it or inside it, its `::before` and `::after` included,
@@ -436,10 +439,11 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   reachable ones above included, and the Contact form's sent and failed
   results report no violation but WebKit's select report, every new tab link
   carries `noopener` and `noreferrer`, and each card that takes `?name=` or
-  `?from=` shows script-like names as text.
+  `?from=` shows script-like names as text, as do the share dialog's name
+  fields.
   Each check was proven by breaking what it guards.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
-  indexed with their own `seaStr` description, the unlisted one noindex), the
+  indexed with their own `seaStr` description, the unlisted ones noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
   The raw page checks (Home's title and description, and the link preview
   tags of Home and every card's own `<address>.html`) read the build from the
