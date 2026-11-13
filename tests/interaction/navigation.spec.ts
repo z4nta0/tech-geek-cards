@@ -727,7 +727,7 @@ test( "a card's share dialog starts with the names its address carries", async (
 	await curPagObj.getByRole( 'button', { exact : true, name : 'Share' } ).click(); // What: Share Click. Why: The dialog opens from the card bar's "Share" button. How: This presses it.
 
 	await expect( curPagObj.getByLabel( 'Their name (optional)' ) ).toHaveValue( 'Sam' ); // What: Recipient Field Assertion. Why: The recipient's name should carry over. How: This checks the field holds the address's name.
-	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( 'Alex' ); // What: Sender Field Assertion. Why: The sender's name should carry over. How: This checks the field holds the address's from.
+	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( 'Alex' ); // What: Sender Field Assertion. Why: The sender's name should carry over. How: This checks the field holds the address's `from`.
 
 
 } );

@@ -21,7 +21,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helper dri
  * browser checks the required fields and the email format before the form
  * sends, so an empty form or a malformed address never reaches Netlify, and
  * a filled-in form posts its fields form-encoded to the site's root as form
- * contact, then shows the thank-you. Netlify isn't there in testing, so the
+ * `contact`, then shows the thank-you. Netlify isn't there in testing, so the
  * root's POST is answered here instead and counted.
  *
  * Sections:
@@ -143,7 +143,7 @@ test( 'a malformed email stays put and sends nothing', async ( { page : curPagOb
 
 
 
-test( 'a filled-in form sends to Netlify and shows the thank-you', async ( { page : curPagObj } ) => { // What: Sent Form Test. Why: A valid message has to reach Netlify as form contact and thank the visitor. How: This fills the form, presses "Send Message", and checks the thank-you and the posted fields.
+test( 'a filled-in form sends to Netlify and shows the thank-you', async ( { page : curPagObj } ) => { // What: Sent Form Test. Why: A valid message has to reach Netlify as form `contact` and thank the visitor. How: This fills the form, presses "Send Message", and checks the thank-you and the posted fields.
 
 
 	const senBodArr = await forOpeFun( curPagObj ); // What: Sent Body Array. Why: The check reads what was sent. How: This opens the form with the root's POST answered and counted.
