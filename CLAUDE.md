@@ -46,6 +46,10 @@ made while the page was still rising landed about 25px short in Chromium.
   tonys-toppers' hook reads a `cleBoo` state flag for this case, which
   techgeek-design could adopt in a later release, letting this site go back
   to the router.
+- **The effect is keyed on the whole location**, not just its `hash` as the
+  user-level rule has it: after `history.replaceState` clears the address,
+  the router still holds the old hash, so a second arrival with the same hash
+  would otherwise be missed.
 - **A hash naming nothing on the page** is left in the address as it came.
 
 ## Origin and sibling sites
