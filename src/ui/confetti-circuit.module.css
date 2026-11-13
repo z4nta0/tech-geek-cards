@@ -18,14 +18,13 @@
 
 /* #region conCirDiv */
 
-.conCirDiv { /* What: Confetti Circuit Div. Why: The pattern fills its section behind the content without catching clicks. How: This pins it over the whole section at the bottom of the stack, in the strong blue the traces draw with. */
+.conCirDiv { /* What: Confetti Circuit Div. Why: The pattern fills its section behind the content without catching clicks. How: This pins it over the whole section in the strong blue the traces draw with, first in its section, so the positioned content after it paints over it. */
 
 
 	color          : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
 	inset          : 0;
 	pointer-events : none;
 	position       : absolute;
-	z-index        : 0;
 
 
 }
