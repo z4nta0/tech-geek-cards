@@ -85,6 +85,7 @@ function GalPagCom () : JSX.Element {
 	const seaInpRef = useRef< HTMLInputElement >( null ); // What: Search Input Reference. Why: "Show All Cards" disappears as the grid comes back, so focus needs somewhere to go. How: This holds the search field, which takes it.
 
 	const [ actOccStr, setActOccStr ] = useState< OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion or every card. How: This starts on "All".
+	const [ resChoBoo, setResChoBoo ] = useState( false );                      // What: Result Chosen Boolean And Setter. Why: The results fade in only after a visitor changes them, not on the page's own arrival. How: This starts false and turns true once a search or a filter changes them.
 	const [ seaTexStr, setSeaTexStr ] = useState( '' );                         // What: Search Text String And Setter. Why: The search field narrows the cards as a visitor types. How: This holds the field's text.
 	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );   // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
 
@@ -115,6 +116,8 @@ function GalPagCom () : JSX.Element {
 
 	} );
 
+	const resKeyStr = shoCarArr.map( ( carRecObj ) => carRecObj.sluStr ).join( ' ' ); // What: Result Key String. Why: The results should fade in only when the cards shown change, not on every keystroke that leaves them the same. How: This joins the shown cards' addresses, which the count and the grid are keyed by.
+
 
 
 	const cleFilFun = () => { // What: Clear Filters Function. Why: A search with no matches needs a quick way back. How: This empties the search, chooses "All", and focuses the search field.
@@ -123,6 +126,8 @@ function GalPagCom () : JSX.Element {
 		setSeaTexStr( '' ); // What: Search Clear Call. Why: The search no longer narrows the cards. How: This empties the field.
 
 		setActOccStr( 'All' ); // What: Occasion Reset Call. Why: The filter no longer narrows the cards. How: This chooses "All".
+
+		setResChoBoo( true ); // What: Result Chosen Setter Call. Why: The returning cards are the result of the press. How: This turns on the results' arriving fade.
 
 		seaInpRef.current?.focus(); // What: Search Focus Call. Why: The pressed button leaves with the empty message, and focus must never fall to the page. How: This moves focus to the cleared search field, where a visitor would try again.
 
@@ -205,7 +210,15 @@ function GalPagCom () : JSX.Element {
 									type='search'
 									value={ seaTexStr }
 
-									onChange={ ( chaEveObj ) => setSeaTexStr( chaEveObj.target.value ) }
+									onChange={ ( chaEveObj ) => { // What: Search Change Handler. Why: Typing narrows the cards, and the new result should be seen arriving. How: This stores the text and turns on the results' arriving fade.
+
+
+										setSeaTexStr( chaEveObj.target.value ); // What: Search Text Setter Call. Why: The search narrows the cards. How: This stores the text.
+
+										setResChoBoo( true ); // What: Result Chosen Setter Call. Why: From now on each new result should fade in. How: This turns on the results' arriving fade.
+
+
+									} }
 								/>{ /* What: Search Text Input Element. Why: A visitor can narrow the cards by typing. How: This filters the grid as they type. */ }
 
 
@@ -231,7 +244,15 @@ function GalPagCom () : JSX.Element {
 
 										aria-pressed={ actOccStr === occNamStr }
 
-										onClick={ () => setActOccStr( occNamStr ) }
+										onClick={ () => { // What: Occasion Click Handler. Why: Choosing an occasion narrows the cards, and the new result should be seen arriving. How: This chooses the occasion and turns on the results' arriving fade.
+
+
+											setActOccStr( occNamStr ); // What: Occasion Setter Call. Why: The filter narrows the cards to this occasion. How: This chooses it.
+
+											setResChoBoo( true ); // What: Result Chosen Setter Call. Why: From now on each new result should fade in. How: This turns on the results' arriving fade.
+
+
+										} }
 									>{ occNamStr }</button> // What: Occasion Filter Button Element. Why: Each button chooses its occasion. How: This chooses it, reporting whether it's the chosen one through aria-pressed.
 
 
@@ -248,7 +269,17 @@ function GalPagCom () : JSX.Element {
 							className={ cssModObj.resCouPar }
 
 							role='status'
-						>{ `${ shoCarArr.length } ${ shoCarArr.length === 1 ? 'card' : 'cards' }` }</p>{ /* What: Result Count Paragraph Element. Why: A visitor, and a screen reader, should know how many cards match. How: This live region shows the count, announcing each change. */ }
+						>{ /* What: Result Count Paragraph Element. Why: A visitor, and a screen reader, should know how many cards match. How: This live region shows the count, announcing each change. */ }
+
+
+							<span
+								key={ resKeyStr } // What: Count Key. Why: A new count should fade in with its result. How: A new key remounts the span inside the live region, replaying its entrance while the region itself stays.
+
+								className={` ${ cssModObj.resCouSpa }   ${ resChoBoo ? cssModObj.resCouSpaArriving : '' } `}
+							>{ `${ shoCarArr.length } ${ shoCarArr.length === 1 ? 'card' : 'cards' }` }</span>{ /* What: Result Count Span Element. Why: The count changes with the result. How: This shows the number of matching cards, fading each new count in once a visitor has changed the result. */ }
+
+
+						</p>
 
 						<h2 className={ cssModObj.galHidHea }>Cards</h2>{ /* What: Gallery Hidden Heading Element. Why: The tiles' titles are h3s, and the page's headings should step down in order from its h1. How: This names the Cards section with an h2 that only screen readers and the outline see. */ }
 
@@ -257,7 +288,11 @@ function GalPagCom () : JSX.Element {
 						{ shoCarArr.length > 0 ? ( // What: Results Check. Why: The grid only makes sense with cards to show. How: This renders the grid when any card matches, or the empty message when none does.
 
 
-							<div className={ cssModObj.galGriDiv }>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three across, two at 1,024px and below, and one at 640px and below. */ }
+							<div
+								key={ resKeyStr } // What: Grid Key. Why: A new result should fade in as a whole. How: A new key remounts the grid, replaying its entrance.
+
+								className={` ${ cssModObj.galGriDiv }   ${ resChoBoo ? cssModObj.galGriDivArriving : '' } `}
+							>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three across, two at 1,024px and below, and one at 640px and below. */ }
 
 
 								{ shoCarArr.map( ( carRecObj ) => ( // What: Card Map Call. Why: Every matching card gets a tile. How: This renders one per card.
@@ -281,7 +316,7 @@ function GalPagCom () : JSX.Element {
 						) : ( // What: Empty Results Branch. Why: A search with no matches needs a way back. How: This renders the empty message instead of the grid.
 
 
-							<div className={ cssModObj.empResDiv }>{ /* What: Empty Results Div Element. Why: A search with no matches should say so kindly. How: This centers the message and the button. */ }
+							<div className={` ${ cssModObj.empResDiv }   ${ resChoBoo ? cssModObj.empResDivArriving : '' } `}>{ /* What: Empty Results Div Element. Why: A search with no matches should say so kindly. How: This centers the message and the button. */ }
 
 
 								<p className={ cssModObj.empResPar }>No cards match that search yet.</p>{ /* What: Empty Results Paragraph Element. Why: The visitor should know why the grid is empty. How: This says nothing matched. */ }

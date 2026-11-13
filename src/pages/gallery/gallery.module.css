@@ -315,6 +315,8 @@
 
 
 
+/* #region resCouPar */
+
 .resCouPar { /* What: Result Count Paragraph. Why: The count is a quiet note between the controls and the cards. How: This sets it in muted mono at the base size with room above and below. */
 
 
@@ -325,6 +327,37 @@
 
 
 }
+
+.resCouSpa { /* What: Result Count Span. Why: The count fades as one piece when it changes. How: This makes it an inline block, so its fade can lift it. */
+
+
+	display : inline-block;
+
+
+}
+.resCouSpa--arriving { /* What: Result Count Span Arriving. Why: The count changes with each result a visitor chooses, and the change should be seen. How: This plays the shared fade up on the decelerating curve each time the count remounts. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Result Count Span Arriving. Why: Someone who asked for less motion shouldn't see the count rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.resCouSpa--arriving { /* What: Motionless Result Count Span Arriving. Why: The new count should simply appear. How: This turns the fade off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+
+/* #endregion resCouPar */
+
 
 .galHidHea { /* What: Gallery Hidden Heading. Why: The cards' heading is for screen readers and the page's outline only. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
 
@@ -380,6 +413,26 @@
 
 
 }
+.galGriDiv--arriving { /* What: Gallery Grid Div Arriving. Why: Choosing an occasion or searching should show its result arriving rather than the cards just swapping. How: This plays the shared fade up on the decelerating curve each time the grid remounts. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Gallery Grid Div Arriving. Why: Someone who asked for less motion shouldn't see the cards rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.galGriDiv--arriving { /* What: Motionless Gallery Grid Div Arriving. Why: The new cards should simply appear. How: This turns the fade off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
 
 
 /* #region empResDiv */
@@ -393,6 +446,26 @@
 	gap            : var( --spa-ver-p01 );   /* Spacing Vertical Base Plus 1 ~= 19.304px */
 	padding        : var( --spa-ver-p05 ) 0; /* Spacing Vertical Base Plus 5 ~= 59.447px */
 	text-align     : center;
+
+
+}
+.empResDiv--arriving { /* What: Empty Results Div Arriving. Why: The empty message is the result of a search, and it should be seen arriving. How: This plays the shared fade up on the decelerating curve as it appears. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Empty Results Div Arriving. Why: Someone who asked for less motion shouldn't see the message rise. How: This applies only when the reduced-motion preference is set. */
+
+
+	.empResDiv--arriving { /* What: Motionless Empty Results Div Arriving. Why: The new message should simply appear. How: This turns the fade off. */
+
+
+		animation : none;
+
+
+	}
 
 
 }
