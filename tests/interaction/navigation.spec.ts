@@ -798,7 +798,6 @@ test.describe( 'with smooth scrolling on', () => { // What: Smooth Scroll Group.
 		} );
 
 
-
 		await curPagObj.getByRole( 'navigation', { name : 'Footer navigation' } ).getByRole( 'link', { exact : true, name : 'Gallery' } ).click(); // What: Footer Link Click. Why: This is the navigation under test. How: This clicks the footer's "Gallery" link from the bottom of Home.
 
 		await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Destination Assertion. Why: The readings only mean something on the new page. How: This waits for the address to change.
