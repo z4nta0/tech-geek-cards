@@ -99,7 +99,7 @@
 	flex-direction : column;
 	gap            : var( --spa-ver-p03 );                       /* Spacing Vertical Base Plus 3 ~= 33.876px */
 	margin         : auto;                                       /* What: Safe Centering Margin. Why: Centering with justify-content cuts off the top of content taller than the screen. How: Auto margins center it in the card's column and let it scroll from the top when it doesn't fit. */
-	max-width      : calc( var( --ver-rhy-p14 ) * 1rem );        /* Vertical Rhythm Base Plus 14 ~= 746.874px */
+	max-width      : calc( var( --ver-rhy-p14 ) * 1rem );        /* Vertical Rhythm Base Plus 14 ~= 746.868px */
 	padding        : var( --spa-ver-p03 ) var( --gut-sid-pad );  /* Spacing Vertical Base Plus 3 ~= 33.876px, Gutter Side Padding, about 19.304px - 44.876px */ /* What: Gutter Side Padding. Why: The original's 32px sides left too little room for the heading on a 320px phone. How: This takes the site's gutter, which narrows on a phone. */
 	padding-bottom : var( --car-bar-mar, var( --spa-ver-p03 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 3 ~= 33.876px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the content clear of it, falling back to the top padding's step outside the card page. */
 	width          : 100%;

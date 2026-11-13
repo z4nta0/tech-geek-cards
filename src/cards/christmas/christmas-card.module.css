@@ -101,7 +101,7 @@
 	display  : grid;
 	inset    : 0;
 	position : absolute;
-	z-index  : 2; /* What: Layer Above The Snowy Scene. Why: The wipe has to cover the snowy scene, at 1, too. How: This sets it one higher. */
+	z-index  : 1; /* What: Layer Above The Scenes. Why: The wipe has to cover both scenes, which paint in DOM order after it with no layer of their own. How: This lifts it one layer above them. */
 
 
 }
@@ -201,7 +201,6 @@
 	overflow   : hidden;
 	position   : absolute;
 	text-align : center;
-	z-index    : 1;                    /* What: Layer Above The Hacked Scene. Why: Once shown, the snowy scene covers the hacked one, at 0. How: This sets it one higher. */
 
 
 }
