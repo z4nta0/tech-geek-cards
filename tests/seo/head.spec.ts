@@ -35,7 +35,9 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * page and every card's, read from the build, carry a complete set of link
  * preview tags with absolute addresses, the card's own title, description,
  * address, and image, and every preview image is served at 1,200x630 under
- * 300 KB. Adapted from TechGeek.dev.
+ * 300 KB. Every card in the catalog has its own head row, indexed exactly
+ * when it's listed, so neither the head checks nor the sitemap can miss one.
+ * Adapted from TechGeek.dev.
  *
  * Sections:
  *  - Constants
@@ -617,6 +619,40 @@ test( 'robots.txt welcomes crawlers and names the sitemap', async ( { request : 
 
 	expect( robTexStr ).toContain( 'User-agent: *\nAllow: /' );              // What: Allow All Assertion. Why: Every crawler may read the site, since the unwanted pages keep themselves out with noindex. How: This checks the one rule group.
 	expect( robTexStr ).toContain( `Sitemap: ${ LIV_URL_STR }sitemap.xml` ); // What: Sitemap Line Assertion. Why: Crawlers find the sitemap from this line. How: This checks it names the live sitemap.
+
+
+} );
+
+
+
+test( 'every card in the catalog has a head row that matches whether it is listed', () => { // What: Catalog Rows Test. Why: The head and sitemap checks read the hand-written rows, so a card added to the catalog without a row would escape both. How: This checks every catalog card has a row at its address, with its card title, and a canonical address exactly when it's listed.
+
+
+	const proLisArr = CAR_DAT_ARR.flatMap( ( carDatObj ) => { // What: Problem List Array. Why: Every card's problem is reported together. How: This lists, for each card, what its row gets wrong.
+
+
+		const heaRowObj = PAG_HEA_ARR.find( ( heaCurObj ) => heaCurObj.patStr === `/${ carDatObj.sluStr }` ); // What: Head Row Object. Why: Each card should have its own row. How: This finds the row at the card's address.
+
+
+
+		if ( !heaRowObj ) return [ `card "${ carDatObj.sluStr }" has no head row` ]; // What: Missing Row Guard. Why: A card with no row is checked by neither the head test nor the sitemap test. How: This reports it and moves on.
+
+
+
+		return [ // What: Row Problems Return. Why: A row can be wrong in its title or its canonical address. How: This lists each mismatch found.
+
+
+			...( heaRowObj.titStr === `${ carDatObj.titStr } Card | TechGeek.cards` ? [] : [ `card "${ carDatObj.sluStr }" has the title "${ heaRowObj.titStr }"` ] ),                                                       // What: Title Problem Spread. Why: The row's title should be the card's own. How: This reports a title that isn't.
+			...( heaRowObj.canStr === ( carDatObj.lisBoo ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : null ) ? [] : [ `card "${ carDatObj.sluStr }" has the canonical address ${ String( heaRowObj.canStr ) }` ] ) // What: Canonical Problem Spread. Why: A listed card is indexed at its own address, and an unlisted one carries noindex with no canonical link. How: This reports a row whose canonical address doesn't follow the card's listing.
+
+
+		];
+
+
+	} );
+
+
+	expect( proLisArr ).toEqual( [] ); // What: No Row Problems Assertion. Why: Every card has to be covered by the head and sitemap checks. How: This compares the problems with an empty list, so a failure prints each one.
 
 
 } );
