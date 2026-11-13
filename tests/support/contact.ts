@@ -67,8 +67,6 @@ const INV_STA_ARR : StaRecTyp[] = CON_STA_ARR.map( ( staRecObj ) => ( { // What:
 
 
 
-// #region RES_REC_ARR
-
 /**
  * RES_REC_ARR = Result Record Array
  *
@@ -92,8 +90,6 @@ const RES_REC_ARR = [ // What: Result Record Array. Why: Both the thank-you and 
 
 
 ];
-
-// #endregion RES_REC_ARR
 
 // #endregion Constants
 
