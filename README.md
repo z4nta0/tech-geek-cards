@@ -2,7 +2,7 @@
 
 Animated digital greeting cards by z4nta0, a full stack web developer. Every card is hand-coded and plays right in the browser: pick one from the Gallery, add a name to the cards that take one, and send the link.
 
-To be live at [techgeek.cards](https://techgeek.cards/).
+Live at [techgeek.cards](https://techgeek.cards/).
 
 It's one of three sister sites that share a design so they read as one family, and its footer links to the other two. The shared design (the tokens, fonts, base styles, bar, footer, and mark) lives in the [techgeek-design](https://github.com/z4nta0/techgeek-design) package, which each site installs:
 

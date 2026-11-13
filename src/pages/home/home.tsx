@@ -10,7 +10,7 @@ import { CAR_REC_ARR } from '../../ui/cards.ts';             // What: Card Recor
 import { CarTilCom   } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
 import { ConCirCom   } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The page's sections carry the site's motif, such as the hero. How: The page sets it behind them.
 import { Link        } from 'react-router';                  // What: Link. Why: The page's links move to other pages without a full page load, such as the banner's. How: This renders those links.
-import { ShaDiaCom   } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's Share is pressed.
+import { ShaDiaCom   } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's "Share" is pressed.
 import { useState    } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
 
 
@@ -181,7 +181,7 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
  * description are index.html's own, so crawlers that never run the script
  * read them too. Four listed cards are picked at random once, when the page
  * mounts, and stay put while it's open, four so the featured grid's rows
- * always stay even. A featured tile's Share mounts the share dialog for its
+ * always stay even. A featured tile's "Share" mounts the share dialog for its
  * card, keyed by the card, and the dialog's close callback unmounts it. The
  * envelope drawing is decoration, hidden from screen readers.
  *
@@ -203,7 +203,7 @@ function HomPagCom () : JSX.Element {
 
 
 	const [ feaCarArr ]               = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
-	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                      // What: Share Card Object And Setter. Why: The share dialog shows the card whose Share was pressed. How: This starts with no card, so no dialog.
+	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                      // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
 
 
 
@@ -365,7 +365,7 @@ function HomPagCom () : JSX.Element {
 
 
 				<section
-					id='how-it-works' // What: How It Works Identifier. Why: The hero's How It Works button jumps here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's id appears in the address.
+					id='how-it-works' // What: How It Works Identifier. Why: The hero's "How It Works" button jumps here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's ID appears in the address.
 
 					className={ cssModObj.homHiwSec }
 				>{ /* What: Home How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }
@@ -463,7 +463,7 @@ function HomPagCom () : JSX.Element {
 									carRecObj={ carRecObj }
 
 									onShaCarFun={ setShaCarObj }
-								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its Share opening the dialog for it.
+								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its "Share" opening the dialog for it.
 
 
 							))}
@@ -572,7 +572,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's Share is pressed.
+			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's "Share" is pressed.
 
 
 				<ShaDiaCom

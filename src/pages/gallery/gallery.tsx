@@ -11,14 +11,14 @@ import { CarTilCom    } from '../../ui/card-tile.tsx';                 // What: 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
 import { Link         } from 'react-router';                           // What: Link. Why: The custom card note moves to the Contact page without a full page load. How: This renders that link.
 import { OCC_NAM_ARR  } from '../../ui/card-data.ts';                  // What: Occasion Name Array. Why: The filter offers every occasion. How: The page renders a button for each.
-import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: A card can be shared straight from its tile. How: The page mounts it when a tile's Share is pressed.
+import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: A card can be shared straight from its tile. How: The page mounts it when a tile's "Share" is pressed.
 import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: The Gallery's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the search, the chosen occasion, and the card being shared. How: This holds each of them.
 
 
 import type { CarRecTyp } from '../../ui/cards.ts';     // What: Card Record Type. Why: The page holds the card being shared. How: This types that state.
 import type { JSX       } from 'react';                 // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
-import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name Type. Why: The chosen filter is an occasion or All. How: This types that state.
+import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name Type. Why: The chosen filter is an occasion or "All". How: This types that state.
 
 // #endregion Imports
 
@@ -56,12 +56,12 @@ import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name T
  * @summary
  * Renders the Gallery and its title and canonical link, and swaps in its
  * search description. A card matches when it's listed, belongs to the chosen
- * occasion (any, for All), and holds every word of the search in its title,
+ * occasion (any, for "All"), and holds every word of the search in its title,
  * occasion, or description, ignoring case. The occasion buttons report which
  * one is chosen through aria-pressed. The count line is a live region, so a
  * screen reader hears how many cards match as the search changes. With no
  * matches, the grid gives way to a message and a button that clears the
- * search and the filter. A tile's Share mounts the share dialog for its
+ * search and the filter. A tile's "Share" mounts the share dialog for its
  * card, keyed by the card, and the dialog's close callback unmounts it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -81,9 +81,9 @@ import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name T
 function GalPagCom () : JSX.Element {
 
 
-	const [ actOccStr, setActOccStr ] = useState< OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion or every card. How: This starts on All.
+	const [ actOccStr, setActOccStr ] = useState< OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion or every card. How: This starts on "All".
 	const [ seaTexStr, setSeaTexStr ] = useState( '' );                         // What: Search Text String And Setter. Why: The search field narrows the cards as a visitor types. How: This holds the field's text.
-	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );   // What: Share Card Object And Setter. Why: The share dialog shows the card whose Share was pressed. How: This starts with no card, so no dialog.
+	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );   // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
 
 
 
@@ -100,7 +100,7 @@ function GalPagCom () : JSX.Element {
 		const carTexStr = `${ carRecObj.titStr } ${ carRecObj.occStr } ${ carRecObj.desStr }`.toLowerCase(); // What: Card Text String. Why: A search word may appear in the title, the occasion, or the description. How: This joins and lowercases all three.
 
 		const lisCarBoo = carRecObj.lisBoo;                                                    // What: Listed Card Boolean. Why: An unlisted card is reached only by its own link. How: This is true when the card is listed.
-		const occMatBoo = actOccStr === 'All' || carRecObj.occStr === actOccStr;               // What: Occasion Match Boolean. Why: The filter narrows the cards to one occasion. How: This is true on All, or when the card's occasion is the chosen one.
+		const occMatBoo = actOccStr === 'All' || carRecObj.occStr === actOccStr;               // What: Occasion Match Boolean. Why: The filter narrows the cards to one occasion. How: This is true on "All", or when the card's occasion is the chosen one.
 		const seaMatBoo = seaWorArr.every( ( seaWorStr ) => carTexStr.includes( seaWorStr ) ); // What: Search Match Boolean. Why: Every word typed should narrow the cards. How: This is true when the card's text holds each word.
 
 		const carMatBoo = lisCarBoo && occMatBoo && seaMatBoo; // What: Card Match Boolean. Why: A card shows only when it's listed and matches both the filter and the search. How: This combines the three checks.
@@ -114,12 +114,12 @@ function GalPagCom () : JSX.Element {
 
 
 
-	const cleFilFun = () => { // What: Clear Filters Function. Why: A search with no matches needs a quick way back. How: This empties the search and chooses All.
+	const cleFilFun = () => { // What: Clear Filters Function. Why: A search with no matches needs a quick way back. How: This empties the search and chooses "All".
 
 
 		setSeaTexStr( '' ); // What: Search Clear Call. Why: The search no longer narrows the cards. How: This empties the field.
 
-		setActOccStr( 'All' ); // What: Occasion Reset Call. Why: The filter no longer narrows the cards. How: This chooses All.
+		setActOccStr( 'All' ); // What: Occasion Reset Call. Why: The filter no longer narrows the cards. How: This chooses "All".
 
 
 	};
@@ -186,7 +186,7 @@ function GalPagCom () : JSX.Element {
 									className={ cssModObj.seaLabLab }
 
 									htmlFor='galSeaInp'
-								>Search cards</label>{ /* What: Search Label Label Element. Why: The search field needs a visible label. How: This labels galSeaInp. */ }
+								>Search cards</label>{ /* What: Search Label Label Element. Why: The search field needs a visible label. How: This labels `galSeaInp`. */ }
 
 								<input
 									id='galSeaInp'
@@ -212,7 +212,7 @@ function GalPagCom () : JSX.Element {
 							>{ /* What: Occasion Filter Div Element. Why: A visitor can narrow the cards to one occasion. How: This groups the occasion buttons under one name, in a row wrapping onto two lines at about 365px wide and below. */ }
 
 
-								{ [ 'All' as const, ...OCC_NAM_ARR ].map( ( occNamStr ) => ( // What: Occasion Button Map Call. Why: Every occasion, after All, gets a button. How: This renders one per occasion. // What: Type Assertion Note. Why: A plain 'All' would widen the array to string, losing the occasion type the state needs. How: as const keeps it the literal All.
+								{ [ 'All' as const, ...OCC_NAM_ARR ].map( ( occNamStr ) => ( // What: Occasion Button Map Call. Why: Every occasion, after "All", gets a button. How: This renders one per occasion. // What: Type Assertion Note. Why: A plain 'All' would widen the array to string, losing the occasion type the state needs. How: as const keeps it the literal All.
 
 
 									<button
@@ -262,7 +262,7 @@ function GalPagCom () : JSX.Element {
 										carRecObj={ carRecObj }
 
 										onShaCarFun={ setShaCarObj }
-									/> // What: Card Tile Component. Why: Each card shows as a tile. How: This renders the card's tile, its Share opening the dialog for it.
+									/> // What: Card Tile Component. Why: Each card shows as a tile. How: This renders the card's tile, its "Share" opening the dialog for it.
 
 
 								))}
@@ -310,7 +310,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's Share is pressed.
+			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's "Share" is pressed.
 
 
 				<ShaDiaCom

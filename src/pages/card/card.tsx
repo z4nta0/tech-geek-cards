@@ -8,7 +8,7 @@ import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark 
 
 
 import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
-import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when Share is pressed.
+import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when "Share" is pressed.
 import { Suspense        } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
 import { useLocation     } from 'react-router';                           // What: Use Location. Why: The share dialog's preview link can open the card's own page again. How: The page reads the location's key, which changes on every navigation.
 import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
@@ -30,8 +30,8 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * The page at each card's own address: a skip link to the card, the card
  * itself, playing full screen as the page's main content, and a small floating
  * bar over it with the TechGeek mark and TechGeek.cards name, the mark alone
- * at 640px and below (back to the home page), a link to more cards, a Replay
- * button that plays the card again from the start, and a Share button that
+ * at 640px and below (back to the home page), a link to more cards, a "Replay"
+ * button that plays the card again from the start, and a "Share" button that
  * opens the share dialog for this card. The page sets its own title,
  * description, and canonical address. The card's code arrives on demand, so a
  * short loading message shows until it has.
@@ -116,11 +116,11 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * floating bar. The skip link comes first, waiting above the screen until
  * it's focused, and its plain click focuses the main element without putting
  * #main in the address. The card is keyed by the location's
- * key and a replay count, so Replay, and the share dialog's preview link
+ * key and a replay count, so "Replay", and the share dialog's preview link
  * opening this same page, remount it, and every card replays the same way,
  * without reaching into its own code. The canonical address leaves out any
  * ?name= or ?from=, so every personalized copy of a card counts as the card's
- * one page. Share mounts the share dialog fresh each time it's pressed, with
+ * one page. "Share" mounts the share dialog fresh each time it's pressed, with
  * its name fields starting at the names the address carries, and the dialog's
  * close callback unmounts it.
  *
@@ -146,8 +146,8 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: Replay starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
-	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after Share is pressed. How: This starts closed.
+	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: "Replay" starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
+	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after "Share" is pressed. How: This starts closed.
 	const [ seaParObj ]               = useSearchParams(); // What: Search Parameters Object. Why: The share dialog should start with the names the card is showing. How: This reads the card's own address, whose ?name= and ?from= the card shows.
 
 
@@ -284,7 +284,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
 
 
-						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
+						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or "Replay" mounts it fresh and it plays again from the start. */ }
 
 
 					</Suspense>
@@ -297,7 +297,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-			{ shaOpeBoo && ( // What: Share Dialog Check. Why: The dialog only exists while it's open. How: This mounts it after Share is pressed.
+			{ shaOpeBoo && ( // What: Share Dialog Check. Why: The dialog only exists while it's open. How: This mounts it after "Share" is pressed.
 
 
 				<ShaDiaCom

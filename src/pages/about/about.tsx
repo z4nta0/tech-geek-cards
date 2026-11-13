@@ -281,7 +281,7 @@ function AboPagCom () : JSX.Element {
 									className={ cssModObj.famIteIte }
 
 									data-site-current-page={ famSitObj.herBoo || undefined } // What: Site Current Page Attribute. Why: This site's own card is marked as the one the visitor is on. How: The module styles the card by this attribute, present only on this site's card.
-								>{ /* What: Family Item Item Element. Why: Each site is a card naming it and what it's for. How: This holds the site's name, its description, and its link or a You Are Here label. */ }
+								>{ /* What: Family Item Item Element. Why: Each site is a card naming it and what it's for. How: This holds the site's name, its description, and its link or a "You are here" label. */ }
 
 
 									<h3 className={ cssModObj.famNamHea }>{ famSitObj.namStr }</h3>{ /* What: Family Name Heading Element. Why: The site's name heads its card. How: This shows it as an h3. */ }

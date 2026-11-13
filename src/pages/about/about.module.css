@@ -11,7 +11,7 @@
  * two once it drops under the story at 768px and below, and one by one at
  * 640px and below; and the three sister sites as equal cards, three across
  * above 1,024px and one under another below, this site's own on a pale berry
- * with a You Are Here label, the others with a link whose arrow nudges on
+ * with a "You are here" label, the others with a link whose arrow nudges on
  * hover; then the closing buttons, and a white band with the Ko-fi invitation
  * and its button. The page fades up as it opens.
  *
@@ -301,7 +301,7 @@
 
 }
 
-/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Family section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the herInnDiv and stoTexDiv regions above. */
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Family section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `herInnDiv` and `stoTexDiv` regions above. */
 
 
 
@@ -395,7 +395,7 @@
 
 }
 
-.famHerSpa { /* What: Family Here Span. Why: The You Are Here label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
+.famHerSpa { /* What: Family Here Span. Why: The "You are here" label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
 
 
 	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
@@ -636,7 +636,7 @@
 
 }
 
-/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Support section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the herInnDiv and stoTexDiv regions above. */
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Support section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `herInnDiv` and `stoTexDiv` regions above. */
 
 .supTexPar { /* What: Support Text Paragraph. Why: The invitation reads a step larger than body text, with room before its button. How: This sets it at the base plus 2 size, capped at the paragraph measure, with a small step below. */
 
@@ -651,7 +651,7 @@
 
 /* #region butPriAnc */
 
-/* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the family section's orange button. How: Its rule sits in the famActDiv region above. */
+/* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the Family section's orange button. How: Its rule sits in the `famActDiv` region above. */
 
 .visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, while sighted visitors see Ko-fi named in the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
 

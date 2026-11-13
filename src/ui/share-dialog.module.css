@@ -8,10 +8,10 @@
  * Styles for ShaDiaCom: a white rounded panel that pops in over a dimmed
  * backdrop with a gentle overshoot and fades out when closed, a round close
  * button in its corner that lifts on hover, a berry eyebrow over the card's
- * title, labeled fields whose focus ring eases in, an orange Copy Link button
- * whose label fades in afresh each time it changes, an outlined share sheet
- * button, a preview text link with a nudging arrow, and the copy status line,
- * whose message fades in the same way. Under reduced motion the panel's
+ * title, labeled fields whose focus ring eases in, an orange "Copy Link"
+ * button whose label fades in afresh each time it changes, an outlined share
+ * sheet button, a preview text link with a nudging arrow, and the copy status
+ * line, whose message fades in the same way. Under reduced motion the panel's
  * closing animation shrinks to a hundredth of a millisecond rather than
  * stopping, since the dialog waits on its end to close.
  *
@@ -421,7 +421,7 @@
 
 }
 
-.copLabSpa { /* What: Copy Label Span. Why: The label's change to Copied is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
+.copLabSpa { /* What: Copy Label Span. Why: The label's change to "Copied!" is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
 
 
 	animation : copLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */

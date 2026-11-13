@@ -26,14 +26,14 @@ import type { SyntheticEvent } from 'react';      // What: Synthetic Event. Why:
  * @summary
  * The dialog that sends a card: the card's name, a field for the recipient's
  * name on a card that shows one and for the sender's on a card that can be
- * signed, the card's link (with the names added to it), a Copy Link button,
+ * signed, the card's link (with the names added to it), a "Copy Link" button,
  * the device's own share sheet where the browser offers one, and a link to
  * preview the card exactly as it will arrive. It's the browser's native modal
  * dialog, so focus stays inside it, the page behind is inert, and Escape
  * closes it; Escape, a click on the backdrop, the close button, and the
  * preview link all play a short closing animation first, the link's so a
  * preview from the card's own page leaves the card in view. A page mounts it
- * when a Share button is pressed and unmounts it when it calls back that it
+ * when a "Share" button is pressed and unmounts it when it calls back that it
  * has closed, so every share mounts a fresh one.
  *
  * Sections:
@@ -60,7 +60,7 @@ type SdcProTyp = { carRecObj : CarRecTyp, froIniStr? : string, namIniStr? : stri
  * mounts, its name fields starting with any names the page passes in. The link
  * is the card's address on this site, plus ?name= with the trimmed name for a
  * card that takes one and ?from= with the sender's for a card that can be
- * signed. Copy Link writes the link to the clipboard and says so (or, if the
+ * signed. "Copy Link" writes the link to the clipboard and says so (or, if the
  * browser refuses, says to copy it by hand); typing a new name in either field
  * resets that message. The share sheet button only renders where
  * navigator.share exists, and a dismissed sheet is ignored. Closing sets the
@@ -93,7 +93,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 	const diaEleRef = useRef< HTMLDialogElement >( null ); // What: Dialog Element Reference. Why: Opening and closing are methods on the dialog element. How: This holds the rendered dialog.
 
 	const [ isaCloBoo, setIsaCloBoo ] = useState( false );                                  // What: Is-A Closing Boolean And Setter. Why: The dialog plays its closing animation before it actually closes. How: This turns the closing class on.
-	const [ copStaStr, setCopStaStr ] = useState< 'copied' | 'failed' | 'idle' >( 'idle' ); // What: Copy Status String And Setter. Why: The dialog says whether the link was copied. How: This starts idle, and Copy Link sets it.
+	const [ copStaStr, setCopStaStr ] = useState< 'copied' | 'failed' | 'idle' >( 'idle' ); // What: Copy Status String And Setter. Why: The dialog says whether the link was copied. How: This starts idle, and "Copy Link" sets it.
 	const [ froValStr, setFroValStr ] = useState( froIniStr );                              // What: From Value String And Setter. Why: A signable card's link carries the sender's name typed. How: This holds the sender field's text, starting with the name the page passed in.
 	const [ namValStr, setNamValStr ] = useState( namIniStr );                              // What: Name Value String And Setter. Why: A customizable card's link carries the name typed. How: This holds the name field's text, starting with the name the page passed in.
 
@@ -167,7 +167,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 			await navigator.clipboard.writeText( linUrlObj.href ); // What: Clipboard Write Call. Why: The visitor pastes the link into a message. How: This writes the full link.
 
-			setCopStaStr( 'copied' ); // What: Copied Status Set. Why: The visitor should know it worked. How: This switches the button and status to Copied.
+			setCopStaStr( 'copied' ); // What: Copied Status Set. Why: The visitor should know it worked. How: This switches the button and status to "Copied!".
 
 
 		}
@@ -327,7 +327,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 							className={ cssModObj.fieLabLab }
 
 							htmlFor='recNamInp'
-						>Their name (optional)</label>{ /* What: Field Label Label Element. Why: The name field needs a visible label. How: This labels recNamInp. */ }
+						>Their name (optional)</label>{ /* What: Field Label Label Element. Why: The name field needs a visible label. How: This labels `recNamInp`. */ }
 
 						<input
 							id='recNamInp'
@@ -343,7 +343,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 							aria-describedby='recNamHin'
 
-							onChange={ ( chaEveObj ) => { // What: Name Change Handler. Why: A changed name makes a new link, so an earlier Copied no longer applies. How: This stores the text and resets the copy status.
+							onChange={ ( chaEveObj ) => { // What: Name Change Handler. Why: A changed name makes a new link, so an earlier "Copied!" no longer applies. How: This stores the text and resets the copy status.
 
 
 								setNamValStr( chaEveObj.target.value ); // What: Name Value Set Call. Why: The field is controlled. How: This stores the text typed.
@@ -376,7 +376,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 							className={ cssModObj.fieLabLab }
 
 							htmlFor='senNamInp'
-						>Your name (optional)</label>{ /* What: Field Label Label Element. Why: The sender field needs a visible label. How: This labels senNamInp. */ }
+						>Your name (optional)</label>{ /* What: Field Label Label Element. Why: The sender field needs a visible label. How: This labels `senNamInp`. */ }
 
 						<input
 							id='senNamInp'
@@ -392,7 +392,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 							aria-describedby='senNamHin'
 
-							onChange={ ( chaEveObj ) => { // What: From Change Handler. Why: A changed sender makes a new link, so an earlier Copied no longer applies. How: This stores the text and resets the copy status.
+							onChange={ ( chaEveObj ) => { // What: From Change Handler. Why: A changed sender makes a new link, so an earlier "Copied!" no longer applies. How: This stores the text and resets the copy status.
 
 
 								setFroValStr( chaEveObj.target.value ); // What: From Value Set Call. Why: The field is controlled. How: This stores the text typed.
@@ -422,7 +422,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 						className={ cssModObj.fieLabLab }
 
 						htmlFor='carLinInp'
-					>Card link</label>{ /* What: Field Label Label Element. Why: The link field needs a visible label. How: This labels carLinInp. */ }
+					>Card link</label>{ /* What: Field Label Label Element. Why: The link field needs a visible label. How: This labels `carLinInp`. */ }
 
 					<input
 						id='carLinInp'
@@ -450,14 +450,14 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 						type='button'
 
 						onClick={ copLinFun }
-					>{ /* What: Copy Link Button Element. Why: Copying the link is the main way to send a card. How: This copies it and swaps its label to Copied. */ }
+					>{ /* What: Copy Link Button Element. Why: Copying the link is the main way to send a card. How: This copies it and swaps its label to "Copied!". */ }
 
 
 						<span
 							key={ copStaStr } // What: Copy Label Key. Why: The label should fade in afresh each time it changes. How: A new key remounts the span, replaying its entrance.
 
 							className={ cssModObj.copLabSpa }
-						>{ copStaStr === 'copied' ? 'Copied!' : 'Copy Link' }</span>{ /* What: Copy Label Span Element. Why: The button says when the link is on the clipboard. How: This shows Copied after a copy, and Copy Link otherwise. */ }
+						>{ copStaStr === 'copied' ? 'Copied!' : 'Copy Link' }</span>{ /* What: Copy Label Span Element. Why: The button says when the link is on the clipboard. How: This shows "Copied!" after a copy, and "Copy Link" otherwise. */ }
 
 
 					</button>
@@ -527,7 +527,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 // #region Exports
 
-export { ShaDiaCom }; // What: Named Export. Why: Pages with a Share button open the share dialog, such as the Gallery. How: This exports ShaDiaCom.
+export { ShaDiaCom }; // What: Named Export. Why: Pages with a "Share" button open the share dialog, such as the Gallery. How: This exports ShaDiaCom.
 
 // #endregion Exports
 

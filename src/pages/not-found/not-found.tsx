@@ -20,7 +20,7 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  *
  * @summary
  * The page every unknown address shows, themed as a card lost in the mail: a
- * tipped envelope stamped Return to Sender, a large quiet 404 behind it, a
+ * tipped envelope stamped "RETURN TO SENDER", a large quiet 404 behind it, a
  * heading and a line saying the page doesn't exist, and two ways onward,
  * back home and to the Gallery. Its own title and a noindex robots tag keep
  * search engines from indexing it under every mistyped address. The
@@ -47,8 +47,8 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * Renders the 404 page's title and its noindex robots tag, which React moves
  * into the document head, and the page itself. The large 404 and the
  * envelope drawing are hidden from screen readers as decoration, since the
- * heading already says the page wasn't found. Go Home routes to the root
- * path, and Browse the Gallery to the Gallery, the site's main action.
+ * heading already says the page wasn't found. "Go Home" routes to the root
+ * path, and "Browse the Gallery" to the Gallery, the site's main action.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -103,7 +103,7 @@ function NotFouCom () : JSX.Element {
 						viewBox='0 0 200 140'
 
 						aria-hidden='true'
-					>{ /* What: Envelope Drawing SVG Element. Why: A lost envelope stamped Return to Sender gives the missing page the site's mail theme. How: This draws the envelope, its flap, a stamp, and a Return to Sender rubber stamp over the number, hidden from screen readers as decoration. */ }
+					>{ /* What: Envelope Drawing SVG Element. Why: A lost envelope stamped "RETURN TO SENDER" gives the missing page the site's mail theme. How: This draws the envelope, its flap, a stamp, and a "RETURN TO SENDER" rubber stamp over the number, hidden from screen readers as decoration. */ }
 
 
 						<rect

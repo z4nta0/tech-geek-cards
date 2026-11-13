@@ -9,10 +9,10 @@
  * screen that slides down over the card's corner when focused; the floating
  * bar, a dark ink pill pinned to the bottom center of the screen above the
  * card, rising into view a moment after the card opens, holding the mark and
- * wordmark (the mark alone at 640px and below), a More Cards link, a Replay
- * button, and an orange Share button; the bottom margin a card's lettering
- * takes to clear that bar; and the loading message centered on the screen
- * while a card's code arrives.
+ * wordmark (the mark alone at 640px and below), a "More cards" link, a
+ * "Replay" button, and an orange "Share" button; the bottom margin a card's
+ * lettering takes to clear that bar; and the loading message centered on the
+ * screen while a card's code arrives.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -225,7 +225,7 @@
 
 
 
-.barGalAnc { /* What: Bar Gallery Anchor. Why: More Cards is a quiet text link on the ink. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
+.barGalAnc { /* What: Bar Gallery Anchor. Why: "More cards" is a quiet text link on the ink. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
 
 
 	color          : var( --tex-inm-col );                   /* Text Inverse-Muted Color = #8181a1 */
@@ -266,7 +266,7 @@
 
 }
 
-.barRepBut { /* What: Bar Replay Button. Why: Replay is a quiet text button on the ink, matching More Cards beside it. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
+.barRepBut { /* What: Bar Replay Button. Why: "Replay" is a quiet text button on the ink, matching "More cards" beside it. How: This sets it in pale mono capitals, easing its color, dimming, and focus. */
 
 
 	color          : var( --tex-inm-col );                   /* Text Inverse-Muted Color = #8181a1 */

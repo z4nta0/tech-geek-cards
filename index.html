@@ -161,7 +161,7 @@
 					}
 				]
 			}
-		</script> <!-- What: Site Structured Data Script. Why: Search engines read JSON-LD to tell who a site belongs to, and this site belongs to a person, never a business. How: This describes this domain as a website by z4nta0, the same person, under the same id, that TechGeek.dev describes, with the GitHub and LinkedIn profiles the footer links to. -->
+		</script> <!-- What: Site Structured Data Script. Why: Search engines read JSON-LD to tell who a site belongs to, and this site belongs to a person, never a business. How: This describes this domain as a website by z4nta0, the same person, under the same ID, that TechGeek.dev describes, with the GitHub and LinkedIn profiles the footer links to. -->
 
 		<!-- #endregion Structured Data -->
 
@@ -173,7 +173,7 @@
 	<body><!-- What: Document Body Element. Why: This holds the site's mount point, the hidden copy of the contact form Netlify reads, and the entry script. How: The mount point stays empty until React renders the site into it. -->
 
 
-		<div id='appMouDiv'></div><!-- What: App Mount Div Element. Why: React needs one element to render the site into. How: main.tsx renders the app into this id. -->
+		<div id='appMouDiv'></div><!-- What: App Mount Div Element. Why: React needs one element to render the site into. How: main.tsx renders the app into this ID. -->
 
 		<form
 			name='contact'
@@ -184,7 +184,7 @@
 		><!-- What: Contact Form Element. Why: Netlify registers a site's forms by reading the built HTML, and the Contact page's form only exists once React runs. How: This hidden copy carries the form and field names Netlify needs. --><!-- Netlify finds forms by parsing the built HTML at deploy time, never running the site, so the React form in pages/contact/contact.tsx is invisible to it. This copy registers the form and its fields, and the page then POSTs to '/' with a matching form-name. Keep the name and every field name in sync with ConPagCom's submit, or submissions are rejected. hidden keeps it off the page, and Netlify still parses it. -->
 
 
-			<label for='hidNamInp'>Name</label><!-- What: Name Label Element. Why: The name field needs a label for Netlify's form record. How: This labels hidNamInp. -->
+			<label for='hidNamInp'>Name</label><!-- What: Name Label Element. Why: The name field needs a label for Netlify's form record. How: This labels `hidNamInp`. -->
 
 			<input
 				id='hidNamInp'
@@ -194,7 +194,7 @@
 				type='text'
 			/><!-- What: Hidden Name Input Element. Why: Netlify registers the name field by its name. How: This declares the name text field. -->
 
-			<label for='hidEmaInp'>Email</label><!-- What: Email Label Element. Why: The email field needs a label for Netlify's form record. How: This labels hidEmaInp. -->
+			<label for='hidEmaInp'>Email</label><!-- What: Email Label Element. Why: The email field needs a label for Netlify's form record. How: This labels `hidEmaInp`. -->
 
 			<input
 				id='hidEmaInp'
@@ -204,7 +204,7 @@
 				type='email'
 			/><!-- What: Hidden Email Input Element. Why: Netlify registers the email field by its name and uses it as the notification's reply-to. How: This declares the email field. -->
 
-			<label for='hidTopInp'>Topic</label><!-- What: Topic Label Element. Why: The topic field needs a label for Netlify's form record. How: This labels hidTopInp. -->
+			<label for='hidTopInp'>Topic</label><!-- What: Topic Label Element. Why: The topic field needs a label for Netlify's form record. How: This labels `hidTopInp`. -->
 
 			<input
 				id='hidTopInp'
@@ -214,7 +214,7 @@
 				type='text'
 			/><!-- What: Hidden Topic Input Element. Why: Netlify registers the topic field by its name. How: This declares the topic text field, which the page fills from its topic menu. -->
 
-			<label for='hidMesTex'>Message</label><!-- What: Message Label Element. Why: The message field needs a label for Netlify's form record. How: This labels hidMesTex. -->
+			<label for='hidMesTex'>Message</label><!-- What: Message Label Element. Why: The message field needs a label for Netlify's form record. How: This labels `hidMesTex`. -->
 
 			<textarea
 				id='hidMesTex'
@@ -222,7 +222,7 @@
 				name='message'
 			></textarea><!-- What: Hidden Message Textarea Element. Why: Netlify registers the message field by its name. How: This declares the message text area. -->
 
-			<label for='hidBotInp'>Leave this field blank</label><!-- What: Bot Label Element. Why: The honeypot field needs a label for Netlify's form record. How: This labels hidBotInp. -->
+			<label for='hidBotInp'>Leave this field blank</label><!-- What: Bot Label Element. Why: The honeypot field needs a label for Netlify's form record. How: This labels `hidBotInp`. -->
 
 			<input
 				id='hidBotInp'

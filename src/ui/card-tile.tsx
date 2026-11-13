@@ -23,8 +23,8 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
  * One card as a page listing cards shows it: a still of the card in a
  * postage-stamp frame, tipped slightly as if dropped on a table, then its
  * occasion, title, and description, a reminder that it opens on a tap, and a
- * Share button. The title is the tile's link, stretched over the whole tile,
- * so the tile opens the card anywhere it's clicked, while Share sits above
+ * "Share" button. The title is the tile's link, stretched over the whole tile,
+ * so the tile opens the card anywhere it's clicked, while "Share" sits above
  * that link and asks the page to open its share dialog for this card.
  *
  * Sections:
@@ -39,7 +39,7 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
 
 // #region Components
 
-type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card and hands Share presses back to its page. How: This types CarTilCom's props.
+type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card and hands "Share" presses back to its page. How: This types CarTilCom's props.
 
 // #region CarTilCom
 
@@ -49,10 +49,10 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  * @summary
  * Renders one card's tile as an article: the preview in its stamp frame, the
  * occasion tag (with a Personalize tag beside it for a card that takes a
- * name), the title linking to the card's page, the description, an Open
- * Card cue whose arrow nudges on hover, and the Share button. The title's
+ * name), the title linking to the card's page, the description, an "Open
+ * card" cue whose arrow nudges on hover, and the "Share" button. The title's
  * link covers the whole tile through its ::after, so the tile is one large
- * target without nesting links, and the Share button is lifted above it.
+ * target without nesting links, and the "Share" button is lifted above it.
  * The preview is decoration beside the title, so it carries alt text for
  * the card's look but isn't a link of its own.
  *
@@ -60,7 +60,7 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  *
  * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
  * @param props.onShaCarFun - On Share Card Function: Called with the card
- *                            when its Share button is pressed, so the page
+ *                            when its "Share" button is pressed, so the page
  *                            can open its share dialog.
  *
  * @returns The tile's article element.
@@ -147,7 +147,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 				<p className={ cssModObj.carDesPar }>{ carRecObj.desStr }</p>{ /* What: Card Description Paragraph Element. Why: A short line says what the card is like. How: This shows the card's description. */ }
 
-				<div className={ cssModObj.carActDiv }>{ /* What: Card Actions Div Element. Why: Opening and sharing sit together at the tile's foot. How: This sets the cue and the Share button in a row. */ }
+				<div className={ cssModObj.carActDiv }>{ /* What: Card Actions Div Element. Why: Opening and sharing sit together at the tile's foot. How: This sets the cue and the "Share" button in a row. */ }
 
 
 					<span

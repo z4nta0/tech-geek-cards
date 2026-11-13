@@ -234,7 +234,7 @@
 
 
 }
-@media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, Request a Custom Card, wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
+@media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, "Request a Custom Card", wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
 
 
 	.butPriAnc--postcard { /* What: Button Primary Anchor Postcard. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
@@ -839,7 +839,7 @@
 
 /* #region secInnDiv */
 
-/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
+/* What: Section Inner Div Pointer. Why: This section's content sits in `secInnDiv` too, whose rule is written once, where the class is first used. How: Its rule is in the `homHiwSec` region above. */
 
 
 /* #region feaHeaDiv */
@@ -857,7 +857,7 @@
 
 }
 
-/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Featured section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the homHiwSec region above. */
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Featured section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `homHiwSec` region above. */
 
 
 /* #region allCarAnc */
@@ -993,7 +993,7 @@
 
 /* #region secInnDiv */
 
-/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
+/* What: Section Inner Div Pointer. Why: This section's content sits in `secInnDiv` too, whose rule is written once, where the class is first used. How: Its rule is in the `homHiwSec` region above. */
 
 
 /* #region posShaDiv */
@@ -1054,7 +1054,7 @@
 
 }
 
-/* What: Section Eyebrow Paragraph Pointer. Why: The Commission section's eyebrow shares its rule with the other sections'. How: Its rule sits in the homHiwSec region above. */
+/* What: Section Eyebrow Paragraph Pointer. Why: The Commission section's eyebrow shares its rule with the other sections'. How: Its rule sits in the `homHiwSec` region above. */
 
 .posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color. How: This sets its color and the base plus 4 size. */
 
@@ -1073,7 +1073,7 @@
 
 }
 
-/* What: Button Primary Anchor Pointer. Why: The Commission section's button shares the hero's orange button, its postcard modifier included. How: Their rules sit in the herActDiv region above. */
+/* What: Button Primary Anchor Pointer. Why: The Commission section's button shares the hero's orange button, its postcard modifier included. How: Their rules sit in the `herActDiv` region above. */
 
 /* #endregion posTexDiv */
 

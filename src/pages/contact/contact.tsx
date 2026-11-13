@@ -68,9 +68,9 @@ const TOP_OPT_ARR = [ 'A custom card', 'A question about a card', 'Something els
  * handler keyed by each field's name. The browser checks the required
  * fields and the email format before the submit handler runs, which posts
  * the fields form-encoded to the site's root under the contact form's name,
- * with the topic or Not specified when none was chosen. Only an ok reply
+ * with the topic or "Not specified" when none was chosen. Only an ok reply
  * counts as sent; a failed reply or a network failure is logged and shown
- * above the button. The button reads Sending while the message is on its
+ * above the button. The button reads "Sending…" while the message is on its
  * way. A sent message shows the thank-you, whose button empties the form for
  * another message. The error's alert region is in the form, empty, from the
  * first render, and the thank-you takes focus as it replaces the form, which
@@ -97,7 +97,7 @@ function ConPagCom () : JSX.Element {
 
 	const [ errMesStr, setErrMesStr ] = useState< string | null >( null ); // What: Error Message String And Setter. Why: A failed send has to say so. How: This starts with no error.
 	const [ forDatObj, setForDatObj ] = useState( EMP_FOR_OBJ );           // What: Form Data Object And Setter. Why: The fields are controlled, so their values live here. How: This starts with every field empty.
-	const [ isaLoaBoo, setIsaLoaBoo ] = useState( false );                 // What: Is-A Loading Boolean And Setter. Why: The button shows Sending while the message is on its way. How: This starts false.
+	const [ isaLoaBoo, setIsaLoaBoo ] = useState( false );                 // What: Is-A Loading Boolean And Setter. Why: The button shows "Sending…" while the message is on its way. How: This starts false.
 	const [ isaSenBoo, setIsaSenBoo ] = useState( false );                 // What: Is-A Sent Boolean And Setter. Why: A sent message swaps the form for a thank-you. How: This starts false.
 
 
@@ -218,7 +218,7 @@ function ConPagCom () : JSX.Element {
 
 		subEveObj.preventDefault(); // What: Default Submission Prevention Call. Why: The browser would otherwise reload the page to submit the form. How: This stops it, so the message is sent in the background.
 
-		setIsaLoaBoo( true ); // What: Loading Flag Set Call. Why: The button shows Sending while the message is on its way. How: This sets the loading flag.
+		setIsaLoaBoo( true ); // What: Loading Flag Set Call. Why: The button shows "Sending…" while the message is on its way. How: This sets the loading flag.
 
 		setErrMesStr( null ); // What: Error Clear Call. Why: A new attempt shouldn't show the last one's error. How: This clears it.
 
@@ -241,7 +241,7 @@ function ConPagCom () : JSX.Element {
 					'form-name' : 'contact',                         // What: Form Name. Why: Netlify matches the POST to its detected form by this field. How: This names the contact form.
 					message     : forDatObj.message,                 // What: Message. Why: The message is the point of the email. How: This sends what they wrote.
 					name        : forDatObj.name,                    // What: Name. Why: The email says who wrote. How: This sends the name they entered.
-					topic       : forDatObj.topic || 'Not specified' // What: Topic. Why: The email says what the message is about. How: This sends the choice, or Not specified when none was made.
+					topic       : forDatObj.topic || 'Not specified' // What: Topic. Why: The email says what the message is about. How: This sends the choice, or "Not specified" when none was made.
 
 
 				}).toString() // What: Body String Call. Why: Netlify reads the fields as one form-encoded string. How: This serializes the URLSearchParams into it.
@@ -408,7 +408,7 @@ function ConPagCom () : JSX.Element {
 											className={ cssModObj.fieLabLab }
 
 											htmlFor='conNamInp'
-										>Your name</label>{ /* What: Field Label Label Element. Why: The name field needs a visible label. How: This labels conNamInp. */ }
+										>Your name</label>{ /* What: Field Label Label Element. Why: The name field needs a visible label. How: This labels `conNamInp`. */ }
 
 										<input
 											ref={ forNamRef }
@@ -438,7 +438,7 @@ function ConPagCom () : JSX.Element {
 											className={ cssModObj.fieLabLab }
 
 											htmlFor='conEmaInp'
-										>Your email</label>{ /* What: Field Label Label Element. Why: The email field needs a visible label. How: This labels conEmaInp. */ }
+										>Your email</label>{ /* What: Field Label Label Element. Why: The email field needs a visible label. How: This labels `conEmaInp`. */ }
 
 										<input
 											id='conEmaInp'
@@ -470,7 +470,7 @@ function ConPagCom () : JSX.Element {
 										className={ cssModObj.fieLabLab }
 
 										htmlFor='conTopSel'
-									>What's it about?</label>{ /* What: Field Label Label Element. Why: The topic menu needs a visible label. How: This labels conTopSel. */ }
+									>What's it about?</label>{ /* What: Field Label Label Element. Why: The topic menu needs a visible label. How: This labels `conTopSel`. */ }
 
 									<select
 										id='conTopSel'
@@ -513,7 +513,7 @@ function ConPagCom () : JSX.Element {
 										className={ cssModObj.fieLabLab }
 
 										htmlFor='conMesTex'
-									>Message</label>{ /* What: Field Label Label Element. Why: The message field needs a visible label. How: This labels conMesTex. */ }
+									>Message</label>{ /* What: Field Label Label Element. Why: The message field needs a visible label. How: This labels `conMesTex`. */ }
 
 									<textarea
 										id='conMesTex'
@@ -558,7 +558,7 @@ function ConPagCom () : JSX.Element {
 
 									disabled={ isaLoaBoo }
 									type='submit'
-								>{ isaLoaBoo ? 'Sending…' : 'Send Message' }</button>{ /* What: Submit Form Button Element. Why: The visitor sends the message. How: This submits the form, reading Sending and turning off while the message is on its way. */ }
+								>{ isaLoaBoo ? 'Sending…' : 'Send Message' }</button>{ /* What: Submit Form Button Element. Why: The visitor sends the message. How: This submits the form, reading "Sending…" and turning off while the message is on its way. */ }
 
 
 							</form>
