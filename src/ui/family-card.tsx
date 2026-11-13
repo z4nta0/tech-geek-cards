@@ -882,7 +882,13 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 								>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-									<path d={ carPauBoo ? ICO_PAT_OBJ.plaStr : ICO_PAT_OBJ.pauStr } />{ /* What: Pause Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars while playing. */ }
+									<path
+										key={ carPauBoo ? 'play' : 'pause' } // What: Icon Key. Why: The new icon should fade in each time the button changes. How: A new key remounts the path, replaying its entrance.
+
+										className={ cssModObj.famIcoPat }
+
+										d={ carPauBoo ? ICO_PAT_OBJ.plaStr : ICO_PAT_OBJ.pauStr }
+									/>{ /* What: Family Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars, fading each new icon in, while playing. */ }
 
 
 								</svg>

@@ -523,6 +523,9 @@
 
 }
 
+
+/* #region famConSvg */
+
 .famConSvg { /* What: Family Control SVG. Why: The icon sits centered in its button at an easy size, and a press on it should land on the button itself. How: This sizes it to a rhythm step, fills it with the button's color, and lets the pointer pass through it to the button. */
 
 
@@ -534,6 +537,42 @@
 
 
 }
+
+.famIcoPat { /* What: Family Icon Path. Why: The Pause button's icon changes with the press, the result of the action, so the new icon should fade in rather than snap. How: This fades it in each time the path remounts. */
+
+
+	animation : famIcoPatSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Family Icon Path. Why: Someone who asked for less motion should see the icon simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.famIcoPat { /* What: Motionless Family Icon Path. Why: The icon should switch at once. How: This turns the fade off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes famIcoPatSwapFadeIn { /* What: Family Icon Path Swap Fade In. Why: A new icon should arrive softly. How: This fades it in from transparent. */
+
+
+	from {
+
+
+		opacity : 0;
+
+
+	}
+
+
+}
+
+/* #endregion famConSvg */
 
 /* #endregion famConBut */
 
