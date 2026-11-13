@@ -197,7 +197,7 @@ function ConPagCom () : JSX.Element {
 	 * own submission, marks the form as sending, and clears any earlier error,
 	 * then posts the fields form-encoded to the site's root under the contact
 	 * form's name, which Netlify matches to the hidden copy of the form in
-	 * index.html. Only an ok reply counts as success; a failed reply or a
+	 * index.html. Only an `ok` reply counts as success; a failed reply or a
 	 * network failure is logged and shown as an error. Sending ends either
 	 * way.
 	 *
