@@ -81,6 +81,7 @@ async function forOpeFun ( curPagObj : Page ) : Promise< string[] > {
 
 	} );
 
+
 	await curPagObj.goto( '/contact' ); // What: Contact Page Navigation. Why: The form lives on the Contact page. How: This loads it.
 
 
@@ -127,11 +128,9 @@ test( 'a malformed email stays put and sends nothing', async ( { page : curPagOb
 	const senBodArr = await forOpeFun( curPagObj ); // What: Sent Body Array. Why: The check needs to know whether anything was sent. How: This opens the form with the root's POST answered and counted.
 
 
-	await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' ); // What: Name Fill Call. Why: Only the email should be wrong. How: This fills in a name.
-
+	await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' );  // What: Name Fill Call. Why: Only the email should be wrong. How: This fills in a name.
 	await curPagObj.getByRole( 'main' ).getByLabel( 'Your email' ).fill( 'not-an-email' ); // What: Bad Email Fill Call. Why: The address has no @, so it isn't an email. How: This fills it in.
-
-	await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' ); // What: Message Fill Call. Why: Only the email should be wrong. How: This fills in a message.
+	await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' );          // What: Message Fill Call. Why: Only the email should be wrong. How: This fills in a message.
 
 	await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The form with the bad email is submitted. How: This presses Send.
 
@@ -150,11 +149,9 @@ test( 'a filled-in form sends to Netlify and shows the thank-you', async ( { pag
 	const senBodArr = await forOpeFun( curPagObj ); // What: Sent Body Array. Why: The check reads what was sent. How: This opens the form with the root's POST answered and counted.
 
 
-	await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' ); // What: Name Fill Call. Why: Every required field is filled. How: This fills in a name.
-
+	await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' );         // What: Name Fill Call. Why: Every required field is filled. How: This fills in a name.
 	await curPagObj.getByRole( 'main' ).getByLabel( 'Your email' ).fill( 'visitor@example.com' ); // What: Email Fill Call. Why: Every required field is filled. How: This fills in a reserved example address.
-
-	await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' ); // What: Message Fill Call. Why: Every required field is filled. How: This fills in a message.
+	await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' );                 // What: Message Fill Call. Why: Every required field is filled. How: This fills in a message.
 
 	await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The valid form is submitted. How: This presses Send.
 

@@ -92,7 +92,6 @@ for ( const namRowObj of NAM_ROW_ARR ) { // What: Name Test Loop. Why: Every row
 
 		await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Every font the name needs has to have been asked for. How: This waits until the page's fonts have loaded.
 
-
 		expect( fonUrlArr.some( ( fonUrlStr ) => fonUrlStr.includes( namRowObj.filStr ) ) ).toBe( namRowObj.extBoo ); // What: Extended Font Assertion. Why: The extended file should load exactly when the name needs it. How: This checks whether it was requested against the row's expectation.
 
 

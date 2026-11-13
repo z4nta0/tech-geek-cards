@@ -17,23 +17,22 @@ import { test          } from '@playwright/test';     // What: Test. Why: Each s
  * screens.spec.ts = Screens Spec
  *
  * @summary
- * Compares a full-page screenshot of each page state, or the screen alone
- * for the share dialog states, with its approved baseline, in whichever
- * engine the project runs, so a change that shifts the layout or the styling
- * anywhere on a page fails until it's looked at. Each
- * state opens under reduced motion and is captured with animations stopped, so
- * it's always caught at rest, with the page's clock fixed to one date,
- * since the footer's copyright year comes from the current year and would
- * otherwise fail the baselines every January, and with Math.random fixed,
- * since Home picks its featured cards at random. Chromium and WebKit
- * capture with hide-patterns.css, which hides the faint background patterns
- * they tile slightly differently from run to run. Baselines live in
- * tests/rendering/baselines, one per state and engine, captured on Linux;
- * another system's font rendering would differ, so baselines are refreshed on
- * the machine that runs the suite. When a change is meant to alter how a page
- * looks, review the failing diff in the report, then refresh the baselines
- * with npm run test:rendering -- --update-snapshots and commit them with the
- * change.
+ * Compares a full-page screenshot of each page state, or the screen alone for
+ * the share dialog states, with its approved baseline, in whichever engine the
+ * project runs, so a change that shifts the layout or the styling anywhere on
+ * a page fails until it's looked at. Each state opens under reduced motion and
+ * is captured with animations stopped, so it's always caught at rest, with the
+ * page's clock fixed to one date, since the footer's copyright year comes from
+ * the current year and would otherwise fail the baselines every January, and
+ * with Math.random fixed, since Home picks its featured cards at random.
+ * Chromium and WebKit capture with hide-patterns.css, which hides the faint
+ * background patterns they tile slightly differently from run to run.
+ * Baselines live in tests/rendering/baselines, one per state and engine,
+ * captured on Linux; another system's font rendering would differ, so
+ * baselines are refreshed on the machine that runs the suite. When a change is
+ * meant to alter how a page looks, review the failing diff in the report, then
+ * refresh the baselines with npm run test:rendering -- --update-snapshots and
+ * commit them with the change.
  *
  * Sections:
  *  - Constants
@@ -71,7 +70,6 @@ for ( const staRecObj of STA_REC_ARR ) { // What: State Test Loop. Why: Every pa
 		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: Entrance animations would otherwise be caught partway. How: This makes the page match prefers-reduced-motion, which turns them off.
 
 		await opeStaFun( curPagObj, staRecObj ); // What: State Open Call. Why: The state is captured settled. How: This loads and settles it.
-
 
 		await expect( curPagObj ).toHaveScreenshot( `${ staRecObj.ideStr }.png`, { // What: Baseline Comparison Assertion. Why: The state should look exactly as approved. How: This captures the whole page with animations stopped and compares it with the state's baseline pixel for pixel, color for color.
 

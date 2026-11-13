@@ -175,7 +175,7 @@ test( 'the open menu offers the pages, profiles, and email over a dimmed page', 
 
 	await expect( curPagObj.getByRole( 'navigation', { name : 'Menu navigation' } ).getByRole( 'link' ) ).toHaveCount( 4 ); // What: Page Links Assertion. Why: Every page should be one tap away. How: This counts the links in the menu's navigation landmark.
 	await expect( curPagObj.getByRole( 'banner' ).locator( 'a[target="_blank"][aria-label]' ) ).toHaveCount( 2 );           // What: Profile Links Assertion. Why: Both of z4nta0's profiles should be one tap away. How: This counts the menu's named links that open in a new tab.
-	await expect( curPagObj.getByRole( 'banner' ).getByRole( 'link', { name : 'contact@techgeek.cards' } ) ).toBeVisible();   // What: Email Link Assertion. Why: The contact email should be one tap away. How: This checks the menu shows the mailto link.
+	await expect( curPagObj.getByRole( 'banner' ).getByRole( 'link', { name : 'contact@techgeek.cards' } ) ).toBeVisible(); // What: Email Link Assertion. Why: The contact email should be one tap away. How: This checks the menu shows the mailto link.
 
 	expect( await curPagObj.evaluate( () => document.elementFromPoint( 200, 800 )?.getAttribute( 'aria-hidden' ) ) ).toBe( 'true' ); // What: Scrim On Top Assertion. Why: A tap on the page below the menu has to land on the scrim, not the page. How: This checks the element at a point below the panel is the scrim, the one element there hidden from screen readers.
 

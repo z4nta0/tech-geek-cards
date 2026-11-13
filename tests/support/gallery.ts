@@ -21,9 +21,9 @@ import type { StaRecTyp } from './states.ts';      // What: State Record Type. W
  * The Gallery's narrowed states, for the suites that check every state a
  * visitor can reach: the grid narrowed to the Family occasion's two listed
  * cards, and a search no card matches, which swaps the grid for its empty
- * message, each at the Gallery's phone and desktop widths.
- * They're kept out of the shared state list, since the rendering suite
- * captures every state there against a baseline.
+ * message, each at the Gallery's phone and desktop widths. They're kept out of
+ * the shared state list, since the rendering suite captures every state there
+ * against a baseline.
  *
  * Sections:
  *  - Constants
@@ -38,6 +38,7 @@ import type { StaRecTyp } from './states.ts';      // What: State Record Type. W
 // #region Constants
 
 const GAL_STA_ARR = STA_REC_ARR.filter( ( staRecObj ) => staRecObj.patStr === '/gallery' && !staRecObj.actFun ); // What: Gallery State Array. Why: Each narrowed state is opened at the Gallery's phone and desktop widths. How: This picks the Gallery rows from the shared state list, leaving out the share dialog's.
+
 
 const EMP_STA_ARR : StaRecTyp[] = GAL_STA_ARR.map( ( staRecObj ) => ( { // What: Empty State Array. Why: A search no card matches swaps the grid for a message and a button, a look of its own. How: For each Gallery state, this copies the state, types a search nothing holds in its action, and names it after the state.
 

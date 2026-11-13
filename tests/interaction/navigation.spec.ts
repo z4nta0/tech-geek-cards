@@ -655,16 +655,14 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 	await curPagObj.getByRole( 'link', { exact : true, name : 'Happy Birthday' } ).click(); // What: Tile Click. Why: A tile's title is its link. How: This clicks the birthday card's tile.
 
-	await expect( curPagObj ).toHaveURL( '/happy-birthday' ); // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
-
+	await expect( curPagObj ).toHaveURL( '/happy-birthday' );                             // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
 	await expect( curPagObj.getByRole( 'navigation', { name : 'Card' } ) ).toBeVisible(); // What: Card Bar Assertion. Why: Every card page floats its own small bar instead of the site's. How: This checks the bar is there.
 
 	expect( await curPagObj.evaluate( () => document.documentElement.hasAttribute( 'data-test-reload-marker' ) ) ).toBe( true ); // What: No Reload Assertion. Why: The router should switch to the card within the same document. How: This checks the mark is still on the root element.
 
 	await curPagObj.getByRole( 'link', { exact : true, name : 'More cards' } ).click(); // What: More Cards Click. Why: The card's bar leads back to the Gallery. How: This clicks More cards.
 
-	await expect( curPagObj ).toHaveURL( '/gallery' ); // What: Return Assertion. Why: More cards has to reach the Gallery. How: This waits for the address to change back.
-
+	await expect( curPagObj ).toHaveURL( '/gallery' );                               // What: Return Assertion. Why: More cards has to reach the Gallery. How: This waits for the address to change back.
 	await expect.poll( () => curPagObj.evaluate( () => window.scrollY ) ).toBe( 0 ); // What: Top Assertion. Why: A link opens its page at the top. How: This polls until the Gallery sits at its top.
 
 

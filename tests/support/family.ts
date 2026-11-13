@@ -22,10 +22,9 @@ import type { StaRecTyp } from './states.ts';      // What: State Record Type. W
  * visitor can reach: the Mother's Day card's first photo opened full size in
  * its dialog from the finished mosaic by keyboard, the way a keyboard user
  * reaches it, so the dialog's one control holds the keyboard's focus ring, at
- * the card's phone and desktop widths.
- * The Family cards share one engine, so one card stands for all three. They're
- * kept out of the shared state list, since the rendering suite captures every
- * state there against a baseline.
+ * the card's phone and desktop widths. The Family cards share one engine, so
+ * one card stands for all three. They're kept out of the shared state list,
+ * since the rendering suite captures every state there against a baseline.
  *
  * Sections:
  *  - Constants

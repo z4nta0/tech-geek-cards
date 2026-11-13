@@ -283,11 +283,9 @@ for ( const [ resNamStr, staCodNum, resHeaStr ] of [ [ 'sent', 200, 'Message sen
 
 		await curPagObj.goto( '/contact' ); // What: Contact Open Call. Why: The form lives on the Contact page. How: This loads it.
 
-		await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' ); // What: Name Fill Call. Why: Every required field is filled. How: This fills in a name.
-
+		await curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ).fill( 'Test Visitor' );         // What: Name Fill Call. Why: Every required field is filled. How: This fills in a name.
 		await curPagObj.getByRole( 'main' ).getByLabel( 'Your email' ).fill( 'visitor@example.com' ); // What: Email Fill Call. Why: Every required field is filled. How: This fills in a reserved example address.
-
-		await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' ); // What: Message Fill Call. Why: Every required field is filled. How: This fills in a message.
+		await curPagObj.getByRole( 'main' ).getByLabel( 'Message' ).fill( 'Hello.' );                 // What: Message Fill Call. Why: Every required field is filled. How: This fills in a message.
 
 		await curPagObj.getByRole( 'button', { name : 'Send Message' } ).click(); // What: Send Click Call. Why: The filled-in form is sent. How: This presses Send.
 

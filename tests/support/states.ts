@@ -321,7 +321,9 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
 
 		const stiPagBoo = await curPagObj.evaluate( () => document.getAnimations().every( ( aniCurObj ) => aniCurObj.playState !== 'running' || aniCurObj.effect?.getComputedTiming().iterations === Infinity ) ); // What: Still Page Boolean. Why: Each check asks whether anything that ends is still moving. How: This is true when every running animation or transition is one that repeats forever.
 
+
 		quiCouNum = stiPagBoo ? quiCouNum + 1 : 0; // What: Quiet Count Update. Why: Any movement restarts the count, so the page has to stay still the whole half second. How: This adds one for a still check and resets to zero otherwise.
+
 
 		await curPagObj.waitForTimeout( 100 ); // What: Check Pause Wait. Why: The checks have to span time to prove the page stays still. How: This waits 100ms before the next one.
 
@@ -370,6 +372,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 	await curPagObj.setViewportSize( { height : staRecObj.heiNum, width : staRecObj.widNum } ); // What: Viewport Size Call. Why: The state's layout depends on its width. How: This sizes the page before it loads, so breakpoints apply from the first paint.
 
+
 	const redPreBoo = await curPagObj.evaluate( () => matchMedia( '(prefers-reduced-motion: reduce)' ).matches ); // What: Reduced Preset Boolean. Why: A test that asked for reduced motion itself has to keep it. How: This reads the preference before the state touches it.
 
 
@@ -380,7 +383,10 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's server.
 
+
 	if ( staRecObj.redBoo ) await curPagObj.waitForFunction( () => !!document.querySelector( 'main [class*="carStaDiv"] > :not([class*="carLoaPar"])' ) ); // What: Card Mount Wait. Why: The card's code arrives on demand, and a card that mounts after reduced motion is lifted below would read the preference as off and play instead of opening finished. How: On a card's row, this waits until the stage holds something other than the loading message, found by the class names Vite keeps inside the hashed classes.
+
+
 
 	await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Text measured before its web font loads would have the wrong size and wrapping. How: This waits until every font face has loaded.
 

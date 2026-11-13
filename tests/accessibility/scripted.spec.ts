@@ -73,7 +73,7 @@ type StoInfTyp = { // What: Stop Information Type. Why: The keyboard walk judges
 
 const GLY_DEC_REG = /[←↑→↓·•]|\p{Extended_Pictographic}/u; // What: Glyph Decorative Regular Expression. Why: A decorative glyph inside a name is read aloud as noise, such as right arrow. How: This matches the arrows and dots a decorative glyph would add to a name, plus any emoji or pictograph.
 const REF_WID_NUM = 320;                                   // What: Reflow Width Number. Why: WCAG's reflow criterion asks for no sideways scrolling at 320 CSS pixels, the width of 1,280px at 400% zoom. How: This is the viewport width the reflow check opens each state at.
-const TAB_HIN_REG = /in a new tab\)/;                     // What: Tab Hint Regular Expression. Why: A link that opens a new tab has to say so in its announced name. How: This matches the note's closing words, such as "(opens in a new tab)".
+const TAB_HIN_REG = /in a new tab\)/;                      // What: Tab Hint Regular Expression. Why: A link that opens a new tab has to say so in its announced name. How: This matches the note's closing words, such as "(opens in a new tab)".
 const TAB_MAX_NUM = 80;                                    // What: Tab Maximum Number. Why: A keyboard trap would otherwise keep the walk going forever. How: This caps the walk at far more Tab presses than the site has stops.
 
 // #endregion Constants
@@ -493,9 +493,9 @@ function stoInfFun () : StoInfTyp | null {
  * anything else given a tabindex of 0 or more, leaving out what's disabled,
  * inert, or not drawn, and, while a modal dialog is open, what sits outside
  * it, since the browser keeps Tab inside the dialog without marking the page
- * behind it inert. Each one is described the way {@link stoInfFun}
- * describes a stop, with its position among every element in the page.
- * Passed to Playwright's evaluate, so it can't read anything from this file.
+ * behind it inert. Each one is described the way {@link stoInfFun} describes a
+ * stop, with its position among every element in the page. Passed to
+ * Playwright's evaluate, so it can't read anything from this file.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -586,6 +586,8 @@ async function keyProFun ( curPagObj : Page, engNamStr : string ) : Promise< str
 
 		if ( tabCouNum || !staFocBoo ) await curPagObj.keyboard.press( tabKeyStr ); // What: Tab Press Call. Why: Each pass moves focus to the next stop, while a start that's already a keyboard stop is measured where it is. How: This presses the engine's Tab key, skipping the first press when the walk starts on a keyboard-focused control.
 
+
+
 		await curPagObj.evaluate( scrSetFun ); // What: Scroll Settled Wait. Why: Some engines scroll a focused field into view a few frames late. How: This waits until the page has stopped scrolling.
 
 
@@ -602,6 +604,8 @@ async function keyProFun ( curPagObj : Page, engNamStr : string ) : Promise< str
 
 
 		if ( firOrdNum < 0 ) firOrdNum = stoInfObj.ordNum; // What: First Stop Record. Why: The walk ends if focus comes back to it. How: This remembers the first stop's position.
+
+
 
 		reaOrdSet.add( stoInfObj.ordNum ); // What: Reached Stop Record. Why: The stops reached are compared with every one Tab should reach once the walk ends. How: This adds this stop's position.
 
