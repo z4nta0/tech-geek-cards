@@ -523,13 +523,14 @@
 
 }
 
-.famConSvg { /* What: Family Control SVG. Why: The icon sits centered in its button at an easy size. How: This sizes it to a rhythm step and fills it with the button's color. */
+.famConSvg { /* What: Family Control SVG. Why: The icon sits centered in its button at an easy size, and a press on it should land on the button itself. How: This sizes it to a rhythm step, fills it with the button's color, and lets the pointer pass through it to the button. */
 
 
-	display : block;
-	fill    : currentColor;
-	height  : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
-	width   : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+	display        : block;
+	fill           : currentColor;
+	height         : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+	pointer-events : none;
+	width          : calc( var( --ver-rhy-p01 ) * 1rem ); /* Vertical Rhythm Base Plus 1 ~= 19.304px */
 
 
 }

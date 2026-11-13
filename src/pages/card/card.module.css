@@ -167,14 +167,15 @@
 
 }
 
-.barMarIma { /* What: Bar Mark Image. Why: The hexagon mark leads the bar at the size the site's own bar draws it, a large enough target to tap alone on a phone. How: This sizes it to a rhythm step and keeps it from shrinking. */
+.barMarIma { /* What: Bar Mark Image. Why: The hexagon mark leads the bar at the size the site's own bar draws it, a large enough target to tap alone on a phone, and a press on it should land on its link. How: This sizes it to a rhythm step, keeps it from shrinking, and lets the pointer pass through it to the link. */
 
 
-	display     : block;
-	flex-shrink : 0;
-	height      : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
-	max-width   : none;                                /* What: Uncapped Width. Why: The base style caps images at their parent's width, and on a phone the mark is its link's only visible content, so the cap resolves to nothing and the mark vanishes. How: This lifts the cap, leaving its fixed size. */
-	width       : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+	display        : block;
+	flex-shrink    : 0;
+	height         : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+	max-width      : none;                                /* What: Uncapped Width. Why: The base style caps images at their parent's width, and on a phone the mark is its link's only visible content, so the cap resolves to nothing and the mark vanishes. How: This lifts the cap, leaving its fixed size. */
+	pointer-events : none;
+	width          : calc( var( --ver-rhy-p02 ) * 1rem ); /* Vertical Rhythm Base Plus 2 ~= 25.572px */
 
 
 }
