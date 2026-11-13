@@ -315,7 +315,7 @@
 
 }
 
-.titLinSpa { /* What: Title Line Span. Why: The greeting reads as two lines, Happy over Halloween. How: This sets each word on a line of its own, in the copy and the heading alike. */
+.titLinSpa { /* What: Title Line Span. Why: The greeting reads as two lines, "Happy" over "Halloween!". How: This sets each word on a line of its own, in the copy and the heading alike. */
 
 
 	display : block;
@@ -339,7 +339,7 @@
 
 }
 
-/* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the titShaSpa region above. */
+/* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the `titShaSpa` region above. */
 
 /* #endregion titHalHea */
 

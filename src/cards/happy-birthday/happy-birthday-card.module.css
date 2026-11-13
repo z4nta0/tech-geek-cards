@@ -68,7 +68,7 @@
 	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
 	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
 	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, one of the card's party colors. */
-	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The Happy line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
+	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The "Happy" line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
 	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: A bright green is one of the card's party colors, such as a candle's. How: This is #6BCB77. */
 	--bir-nav-col : #0A1A4A;                               /* What: Birthday Navy Color. Why: The night sky deepens to navy at its far corner. How: This is #0A1A4A, the sky gradient's last stop. */
 	--bir-ora-col : #FF9A3C;                               /* What: Birthday Orange Color. Why: A bright orange is one of the card's party colors, such as a sprinkle's. How: This is #FF9A3C. */
@@ -242,7 +242,7 @@
 
 }
 
-.titTopSpa { /* What: Title Top Span. Why: Happy opens the greeting in white with a warm glow. How: This sets the line a step smaller than Birthday, growing with the screen, with a soft gold shadow. */
+.titTopSpa { /* What: Title Top Span. Why: "Happy" opens the greeting in white with a warm glow. How: This sets the line a step smaller than "Birthday", growing with the screen, with a soft gold shadow. */
 
 
 	display     : block;
@@ -252,7 +252,7 @@
 
 }
 
-.titMaiSpa { /* What: Title Main Span. Why: Birthday, and the name when there is one, are the greeting's biggest lines, in a rainbow. How: This sets each line growing with the screen, its letters cut out of a left-to-right rainbow, and lets a long name break anywhere rather than run off a phone. */
+.titMaiSpa { /* What: Title Main Span. Why: "Birthday", and the name when there is one, are the greeting's biggest lines, in a rainbow. How: This sets each line growing with the screen, its letters cut out of a left-to-right rainbow, and lets a long name break anywhere rather than run off a phone. */
 
 
 	-webkit-background-clip : text;

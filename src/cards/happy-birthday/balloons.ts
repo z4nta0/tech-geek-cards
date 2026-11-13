@@ -201,7 +201,7 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 	// #region Frame Loop
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the balloons has to cancel the next frame. How: This holds the pending frame's id.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the balloons has to cancel the next frame. How: This holds the pending frame's ID.
 	let elaTimNum = 0; // What: Elapsed Time Number. Why: The sway picks up from the first placement without a jump. How: This holds the time the balloons have been rising, in milliseconds, counted from 0.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
@@ -237,13 +237,13 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 
-		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The balloons keep rising. How: This asks for the next frame and keeps its id.
+		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The balloons keep rising. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The balloons start rising. How: This asks for the first frame and keeps its id.
+	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The balloons start rising. How: This asks for the first frame and keeps its ID.
 
 	// #endregion Frame Loop
 

@@ -220,9 +220,9 @@ function BirCarCom () : JSX.Element {
 	const subParRef = useRef< HTMLParagraphElement >( null ); // What: Subtitle Paragraph Reference. Why: The wish fades in. How: This holds the paragraph.
 	const tapParRef = useRef< HTMLParagraphElement >( null ); // What: Tap Paragraph Reference. Why: The invitation to tap fades in last. How: This holds the paragraph.
 	const titHeaRef = useRef< HTMLHeadingElement >( null );   // What: Title Heading Reference. Why: The opening burst starts from the greeting's middle. How: This holds the heading.
-	const titMaiRef = useRef< HTMLSpanElement >( null );      // What: Title Main Reference. Why: The greeting's Birthday line pops in. How: This holds its span.
-	const titNamRef = useRef< HTMLSpanElement >( null );      // What: Title Name Reference. Why: The recipient's name pops in with the Birthday line. How: This holds its span, null without a name.
-	const titTopRef = useRef< HTMLSpanElement >( null );      // What: Title Top Reference. Why: The greeting's Happy line pops in first. How: This holds its span.
+	const titMaiRef = useRef< HTMLSpanElement >( null );      // What: Title Main Reference. Why: The greeting's "Birthday" line pops in. How: This holds its span.
+	const titNamRef = useRef< HTMLSpanElement >( null );      // What: Title Name Reference. Why: The recipient's name pops in with the "Birthday" line. How: This holds its span, null without a name.
+	const titTopRef = useRef< HTMLSpanElement >( null );      // What: Title Top Reference. Why: The greeting's "Happy" line pops in first. How: This holds its span.
 
 	const [ redMotBoo ] = useState( redMotFun ); // What: Reduced Motion Boolean. Why: The card plays or rests for its whole life, even if the setting changes while it's open. How: This reads the setting once, on the first render.
 	const [ seaParObj ] = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
@@ -239,14 +239,14 @@ function BirCarCom () : JSX.Element {
 	 * @summary
 	 * Starts the balloons, then, unless motion is reduced, the confetti and
 	 * the card's one timeline, in order: a burst from the greeting's middle;
-	 * the Happy line pops up from a Base Plus 3 step below; the Birthday and
-	 * name lines pop in, overlapping it by a Base Plus 1 step; the wish fades
-	 * in; the cake bounces up from a Base Plus 4 step below at about 0.57 of
-	 * its size; and after a pause the invitation fades in as a shower falls
-	 * from the top. The pops and the cake use the bounce curve, the fades
-	 * the decelerate curve. Under reduced motion the balloons rest and the
-	 * elements simply stay in place. The cleanup stops the balloons and the
-	 * confetti.
+	 * the "Happy" line pops up from a Base Plus 3 step below; the "Birthday"
+	 * and name lines pop in, overlapping it by a Base Plus 1 step; the wish
+	 * fades in; the cake bounces up from a Base Plus 4 step below at about
+	 * 0.57 of its size; and after a pause the invitation fades in as a shower
+	 * falls from the top. The pops and the cake use the bounce curve, the
+	 * fades the decelerate curve. Under reduced motion the balloons rest and
+	 * the elements simply stay in place. The cleanup stops the balloons and
+	 * the confetti.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -266,10 +266,10 @@ function BirCarCom () : JSX.Element {
 		const bouEasStr = gsaEasFun( 'bou' );                                                                     // What: Bounce Easing String. Why: The greeting and cake pop in with a springy overshoot, a celebration's flourish. How: This registers the bounce token and keeps its GSAP name.
 		const conSysObj = staConFun( conCanRef.current! );                                                        // What: Confetti System Object. Why: The timeline and taps throw bursts. How: This readies the confetti on its canvas. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and useGSAP runs after that render.
 		const decEasStr = gsaEasFun( 'dec' );                                                                     // What: Decelerate Easing String. Why: The fades slow as they land. How: This registers the decelerate token and keeps its GSAP name.
-		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The Birthday line starts as the Happy line lands. How: This GSAP position starts the step a Base Plus 1 step, about 209ms, before the one before it ends. // Duration Animation Base Plus 1 ~= 209.1ms
+		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The "Birthday" line starts as the "Happy" line lands. How: This GSAP position starts the step a Base Plus 1 step, about 209ms, before the one before it ends. // Duration Animation Base Plus 1 ~= 209.1ms
 		const sliPosStr = `-=${ durSecFun( 'm02' ) }`;                                                            // What: Slight Position String. Why: The wish and cake follow close on the step before. How: This GSAP position starts the step a Base Minus 2 step, about 90ms, before the one before it ends. // Duration Animation Base Minus 2 ~= 89.9ms
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                                   // What: Timeline Object. Why: The greeting plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
-		const titLinArr = [ titMaiRef.current, titNamRef.current ].filter( ( titSpaEle ) => titSpaEle !== null ); // What: Title Line Array. Why: The Birthday line and the name, when there is one, pop in together. How: This lists both spans, leaving out the name's when it isn't rendered.
+		const titLinArr = [ titMaiRef.current, titNamRef.current ].filter( ( titSpaEle ) => titSpaEle !== null ); // What: Title Line Array. Why: The "Birthday" line and the name, when there is one, pop in together. How: This lists both spans, leaving out the name's when it isn't rendered.
 
 
 		conSysRef.current = conSysObj; // What: Confetti System Assignment. Why: Taps throw bursts through the same confetti. How: This keeps its functions for the tap handler.
@@ -287,8 +287,8 @@ function BirCarCom () : JSX.Element {
 
 		} );
 
-		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0,               y : rhyPixFun( 'p03' ) } );                              // What: Happy Line Pop. Why: The greeting starts with Happy. How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
-		timLinObj.from( titLinArr,         { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0                                       }, ovePosStr );                   // What: Birthday Line Pop. Why: Birthday and the name follow close behind. How: This grows them from nothing, overlapping the Happy line. // Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0,               y : rhyPixFun( 'p03' ) } );                              // What: Happy Line Pop. Why: The greeting starts with "Happy". How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
+		timLinObj.from( titLinArr,         { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0                                       }, ovePosStr );                   // What: Birthday Line Pop. Why: "Birthday" and the name follow close behind. How: This grows them from nothing, overlapping the "Happy" line. // Duration Animation Base Plus 4 ~= 486.1ms
 		timLinObj.from( subParRef.current, { autoAlpha : 0, duration : durSecFun( 'p04' )                                                                    }, sliPosStr );                   // What: Wish Fade. Why: The wish arrives once the greeting has. How: This fades it in. // Duration Animation Base Plus 4 ~= 486.1ms
 		timLinObj.from( cakSvgRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : cdnPowFun( -2 ), y : rhyPixFun( 'p04' ) }, sliPosStr );                   // What: Cake Bounce. Why: The cake arrives after the greeting and the wish. How: This grows it from about 0.57 of its size as it rises from a Base Plus 4 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570, Vertical Rhythm Base Plus 4 ~= 44.876px
 		timLinObj.from( tapParRef.current, { autoAlpha : 0, duration : durSecFun( 'p03' )                                                                    }, `+=${ durSecFun( 'p04' ) }` ); // What: Invitation Fade. Why: Once the card has settled, it invites a tap. How: After a Base Plus 4 step's pause, this fades the invitation in. // Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Plus 4 ~= 486.1ms
@@ -447,7 +447,7 @@ function BirCarCom () : JSX.Element {
 						ref={ titTopRef }
 
 						className={ cssModObj.titTopSpa }
-					><span aria-hidden='true'>🎉</span> Happy</span>{ /* What: Title Top Span Element. Why: The greeting starts with Happy, after a party popper. How: This sets the line in white with a warm glow, the popper hidden from screen readers. */ }
+					><span aria-hidden='true'>🎉</span> Happy</span>{ /* What: Title Top Span Element. Why: The greeting starts with "Happy", after a party popper. How: This sets the line in white with a warm glow, the popper hidden from screen readers. */ }
 
 					{ ' ' }
 
@@ -455,7 +455,7 @@ function BirCarCom () : JSX.Element {
 						ref={ titMaiRef }
 
 						className={ cssModObj.titMaiSpa }
-					>Birthday{ namParStr ? ',' : '!' }</span>{ /* What: Title Main Span Element. Why: Birthday is the greeting's biggest line. How: This sets it in a rainbow, ending in a comma before a name or an exclamation mark without one. */ }
+					>Birthday{ namParStr ? ',' : '!' }</span>{ /* What: Title Main Span Element. Why: "Birthday" is the greeting's biggest line. How: This sets it in a rainbow, ending in a comma before a name or an exclamation mark without one. */ }
 
 					{ namParStr && ( // What: Name Line Check. Why: A shared link can name the recipient. How: This renders the name on its own line only when the link carries one.
 
@@ -469,7 +469,7 @@ function BirCarCom () : JSX.Element {
 								ref={ titNamRef }
 
 								className={ cssModObj.titMaiSpa }
-							>{ namParStr }!</span>{ /* What: Title Main Span Element. Why: The recipient's name is as big as Birthday. How: This sets the name and an exclamation mark in the same rainbow. */ }
+							>{ namParStr }!</span>{ /* What: Title Main Span Element. Why: The recipient's name is as big as "Birthday". How: This sets the name and an exclamation mark in the same rainbow. */ }
 
 
 						</>

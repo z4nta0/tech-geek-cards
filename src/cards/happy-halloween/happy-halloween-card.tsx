@@ -1307,13 +1307,13 @@ function HalCarCom () : JSX.Element {
 						className={ cssModObj.titShaSpa }
 
 						aria-hidden='true'
-					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets Happy on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets Halloween on the second. */ }</span>{ /* What: Title Shadow Span Element. Why: The greeting glows and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This holds a copy of the greeting under the heading, hidden from screen readers, whose glow and shadow are drawn once. */ }
+					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets "Happy" on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets "Halloween!" on the second. */ }</span>{ /* What: Title Shadow Span Element. Why: The greeting glows and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This holds a copy of the greeting under the heading, hidden from screen readers, whose glow and shadow are drawn once. */ }
 
 					<h1
 						ref={ titHalRef }
 
 						className={ cssModObj.titHalHea }
-					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets Happy on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets Halloween on the second. */ }</h1>{ /* What: Title Halloween Heading Element. Why: The greeting leads the card. How: This wishes a Happy Halloween, its letters dropping in and shimmering. */ }
+					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets "Happy" on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets "Halloween!" on the second. */ }</h1>{ /* What: Title Halloween Heading Element. Why: The greeting leads the card. How: This wishes a Happy Halloween, its letters dropping in and shimmering. */ }
 
 
 				</div>

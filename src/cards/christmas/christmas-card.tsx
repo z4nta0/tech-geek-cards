@@ -38,8 +38,8 @@ import type { SnoSetTyp } from './snowfall.ts'; // What: Snowfall Settings Type.
  * ?name=, and the sign-off, signed by its sender through ?from= or by Tech
  * Geek, fade in letter by letter. The unlisted prank turns into that greeting:
  * a grid of dark squares wipes away to a fake hacked screen, a pirate flag
- * with a heading that scrambles into You've Just Been Hacked, a glitch, and a
- * message fading in letter by letter that admits it's a joke, before the
+ * with a heading that scrambles into "You've Just Been Hacked!!", a glitch,
+ * and a message fading in letter by letter that admits it's a joke, before the
  * squares wipe back over it and away again to the snowy scene, signed by Mr.
  * Awesome unless the link says otherwise. Every distance and angle in the
  * timeline, and every duration but its one-second pauses, is a step on the
@@ -483,7 +483,7 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 					alt='A cartoon snowman with his stick arms raised'
 				/>{ /* What: Snowman Image Element. Why: A snowman waves from the corner. How: This shows the snowman, tilted, in the lower left. */ }
 
-				<p className={ cssModObj.snoSigPar }>{ /* What: Snowy Signature Paragraph Element. Why: The card is signed like a real one. How: This signs it in the lower right, its From in the festive font, with a visible copy that fades in by letter and a hidden copy. */ }
+				<p className={ cssModObj.snoSigPar }>{ /* What: Snowy Signature Paragraph Element. Why: The card is signed like a real one. How: This signs it in the lower right, its "From," in the festive font, with a visible copy that fades in by letter and a hidden copy. */ }
 
 
 					<span

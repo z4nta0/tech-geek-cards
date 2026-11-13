@@ -274,7 +274,7 @@
 
 }
 
-.snoFroSpa { /* What: Snowy From Span. Why: The From matches the greeting rather than the handwritten name. How: This sets it in the festive font. */
+.snoFroSpa { /* What: Snowy From Span. Why: The "From," matches the greeting rather than the handwritten name. How: This sets it in the festive font. */
 
 
 	font-family : var( --chr-fes-fon ); /* Christmas Festive Font = 'Mountains of Christmas', 'Gloria Hallelujah', main font */
@@ -283,7 +283,7 @@
 
 }
 
-/* What: Screen Reader Span Pointer. Why: The sign-off's hidden copy shares the message's visually hidden class, written once where the class is first used. How: Its rule is in the hacMesPar region above. */
+/* What: Screen Reader Span Pointer. Why: The sign-off's hidden copy shares the message's visually hidden class, written once where the class is first used. How: Its rule is in the `hacMesPar` region above. */
 
 /* #endregion snoSigPar */
 

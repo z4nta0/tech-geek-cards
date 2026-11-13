@@ -234,7 +234,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	const outPixNum = rhyPixFun( 'p01' ); // What: Out Pixel Number. Why: A piece is dropped once it has fallen past the bottom. How: This is the Vertical Rhythm Base Plus 1 step, about 19.3px, below the bottom edge. // Vertical Rhythm Base Plus 1 ~= 19.304px
 	const velMulNum = cdnPowFun( -2 );    // What: Velocity Multiplier Number. Why: The pieces were tuned to move at just over half their speed. How: This is the core design number to the power of -2, about 0.570. // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the confetti has to cancel the next frame, and a burst has to know whether the loop is running. How: This holds the pending frame's id, 0 while the loop is idle.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the confetti has to cancel the next frame, and a burst has to know whether the loop is running. How: This holds the pending frame's ID, 0 while the loop is idle.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
 
@@ -453,7 +453,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 			cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
 
 
-			aniFraNum = 0; // What: Idle Assignment. Why: A stopped loop is idle. How: This clears the frame's id.
+			aniFraNum = 0; // What: Idle Assignment. Why: A stopped loop is idle. How: This clears the frame's ID.
 
 
 			resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The canvas no longer needs measuring. How: This stops watching it.

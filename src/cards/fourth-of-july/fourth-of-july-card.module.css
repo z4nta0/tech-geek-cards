@@ -9,7 +9,7 @@
  * glow. Layers over the sky hold its pieces, such as the pool of fireworks the
  * card launches in turn, each glowing in its own color and hidden until it
  * bursts. Over them, a centered column holds the card's lettering and
- * decorations, such as the Happy 4th of July headline with its red and blue
+ * decorations, such as the "Happy 4th of July!" headline with its red and blue
  * glow, all in the card's own serif. The column centers in the space above the
  * card page's floating bar and scrolls if a short screen can't fit it. Nothing
  * here animates through CSS: GSAP plays every motion.
@@ -90,7 +90,7 @@
 
 /* #region firLayDiv */
 
-/* What: Firework Layer Div Pointer. Why: The firework layer shares the star layer's rule. How: Its rule is in the staLayDiv region above. */
+/* What: Firework Layer Div Pointer. Why: The firework layer shares the star layer's rule. How: Its rule is in the `staLayDiv` region above. */
 
 
 /* #region firWraDiv */

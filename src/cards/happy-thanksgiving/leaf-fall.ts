@@ -254,7 +254,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 	// #region Frame Loop
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the leaves has to cancel the next frame. How: This holds the pending frame's id.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the leaves has to cancel the next frame. How: This holds the pending frame's ID.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
 
@@ -298,13 +298,13 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 
-		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The leaves keep falling. How: This asks for the next frame and keeps its id.
+		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The leaves keep falling. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The leaves start falling. How: This asks for the first frame and keeps its id.
+	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The leaves start falling. How: This asks for the first frame and keeps its ID.
 
 	// #endregion Frame Loop
 

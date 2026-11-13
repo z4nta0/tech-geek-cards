@@ -802,7 +802,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 					<div
 						className={ cssModObj.famDotDiv }
 
-						aria-label={ posIndNum < famCarObj.sceRecArr.length ? `Scene ${ posIndNum + 1 } of ${ famCarObj.sceRecArr.length }` : 'Closing' } // What: Dots Label. Why: Screen readers hear where the card is, which the dots only show. How: This names the current scene and the count, or the closing.
+						aria-label={ posIndNum < famCarObj.sceRecArr.length ? `Scene ${ posIndNum + 1 } of ${ famCarObj.sceRecArr.length }` : 'Closing' } // What: Dots Label. Why: Screen readers hear where the card is, which the dots only show. How: This names the current scene and the count, or reads "Closing".
 						role='img'
 					>{ /* What: Family Dots Div Element. Why: The dots show how far along the card is, more so once a visitor can jump around. How: This lays out one dot per scene, read as a single image with its label. */ }
 
@@ -866,7 +866,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 								type='button'
 
-								aria-label={ carPauBoo ? 'Play' : 'Pause' } // What: Pause Label. Why: The button says what it will do. How: This reads Play while paused and Pause while playing.
+								aria-label={ carPauBoo ? 'Play' : 'Pause' } // What: Pause Label. Why: The button says what it will do. How: This reads "Play" while paused and "Pause" while playing.
 
 								onClick={ togPauFun }
 							>{ /* What: Family Control Button Element. Why: Anything that moves on its own for long has to be pausable. How: This pauses or plays the card. */ }

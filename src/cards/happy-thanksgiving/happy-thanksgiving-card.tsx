@@ -31,13 +31,13 @@ import type { LeaSetTyp } from './leaf-fall.ts'; // What: Leaf Settings Type. Wh
  * @summary
  * The Happy Thanksgiving card: on a warm autumn gradient, a cornucopia slides
  * in from the left and its fruit and vegetables pop out one by one, a turkey
- * rises beside it and fans out its tail, the Happy Thanksgiving heading rises
- * into view, and a short handwritten message follows, while autumn leaves
- * fall over everything. Once in place the turkey keeps rocking gently. Every
- * duration, distance, and angle is a step on the design scale, and the curves
- * are the stylesheet's easing tokens. Under reduced motion the card opens
- * finished, without falling leaves or the turkey's rocking. Converted from
- * TechGeek.support's original.
+ * rises beside it and fans out its tail, the "Happy Thanksgiving" heading
+ * rises into view, and a short handwritten message follows, while autumn
+ * leaves fall over everything. Once in place the turkey keeps rocking gently.
+ * Every duration, distance, and angle is a step on the design scale, and the
+ * curves are the stylesheet's easing tokens. Under reduced motion the card
+ * opens finished, without falling leaves or the turkey's rocking. Converted
+ * from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
