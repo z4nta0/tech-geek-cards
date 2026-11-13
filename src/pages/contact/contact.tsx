@@ -69,7 +69,7 @@ const TOP_OPT_ARR = [ 'A custom card', 'A question about a card', 'Something els
  * handler keyed by each field's name. The browser checks the required
  * fields and the email format before the submit handler runs, which posts
  * the fields form-encoded to the site's root under the contact form's name,
- * with the topic or "Not specified" when none was chosen. Only an ok reply
+ * with the topic or "Not specified" when none was chosen. Only an `ok` reply
  * counts as sent; a failed reply or a network failure is logged and shown
  * above the button. The button reads "Sending…" while the message is on its
  * way. A sent message shows the thank-you, whose button empties the form for
