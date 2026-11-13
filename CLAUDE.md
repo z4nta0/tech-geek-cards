@@ -395,7 +395,11 @@ the share dialog opened from the Birthday card's floating bar at 390px.
     that changes on it or inside it, its `::before` and `::after` included,
     has to ease, or switch at once under reduced motion. A control filling
     the screen (the open photo) isn't held to a hover look, since it's always
-    under the pointer. The toggles in its `TOG_TAR_ARR` (the menu toggle, the
+    under the pointer. The Family cards' Pause button, which shows only while
+    a card plays with motion, isn't reached, since every card state opens
+    finished under reduced motion; it shares its class with the probed
+    Previous, Next, and Skip buttons (decided by the user 2026-11-13). The
+    toggles in its `TOG_TAR_ARR` (the menu toggle, the
     current bar and drawer links, the open drawer and scrim, the scrolled bar,
     the chosen occasion, the sending button, and the Family scene dots) are
     flipped off, on, and off; the card tiles, Home's envelope and steps, and

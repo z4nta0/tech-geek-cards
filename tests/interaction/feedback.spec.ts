@@ -36,9 +36,10 @@ import type { Page          } from '@playwright/test'; // What: Page. Why: The h
  * Checks the interaction feedback rule on every page state, in whichever
  * engine the project runs. Every reachable link and button has to look
  * different hovered than at rest, pressed than hovered, and focused than
- * unfocused, and every form field focused than unfocused, and every property
- * each of those changes, on it or anything inside it, its shadow layers
- * included, has to be eased by a transition, its focus ring included. Each
+ * unfocused, and every form field focused than unfocused, and every probed
+ * property each of those changes, on it or anything inside it, its shadow
+ * layers included, has to be eased by a transition, its focus ring included.
+ * The probed properties are the ones the site's controls change. Each
  * kind of element with a state that switches on and off, such as the phone
  * menu's toggle or Contact's sending button, is flipped off, on, and off again
  * by its attribute, and has to look different and ease each change both ways.

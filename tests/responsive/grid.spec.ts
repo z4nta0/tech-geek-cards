@@ -20,9 +20,9 @@ import { test        } from '@playwright/test';          // What: Test. Why: Eac
  * layout spec, in whichever engine the project runs, per the Card Grids rule.
  * An even grid has the same number of cards in every row, and the Gallery,
  * exempt as its cards change with the search and the filter, keeps every row
- * but its last full and centers that last row, unfiltered at every width and
- * under each occasion filter at a few. Pages open under reduced
- * motion, so no card is measured mid-entrance.
+ * but its last full and centers that last row at the others' card width,
+ * unfiltered at every width and under each occasion filter at a few. Pages
+ * open under reduced motion, so no card is measured mid-entrance.
  *
  * Sections:
  *  - Types
@@ -81,8 +81,9 @@ const PAG_GRI_ARR : { griArr : GriCasTyp[], patStr : string }[] = [ // What: Pag
  * Runs in the page and lists what's wrong with one grid's rows. It groups the
  * grid's shown children by the top of their boxes, then reports a missing
  * grid, rows of different lengths, or, for a centered grid, a row before the
- * last that's shorter than the first, or a last row sitting more than a pixel
- * off center.
+ * last that's shorter than the first, a last row sitting more than a pixel
+ * off center, or a last-row card more than a pixel off the first row's
+ * width.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -144,9 +145,10 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 
 
 
-	if ( griCasObj.cenBoo && rowLisArr.length > 0 ) { // What: Centered Last Row Check. Why: The Gallery's last row sits centered under the rows above it. How: This compares the space left and right of the last row inside the grid.
+	if ( griCasObj.cenBoo && rowLisArr.length > 0 ) { // What: Centered Last Row Check. Why: The Gallery's last row sits centered under the rows above it. How: This compares the space left and right of the last row inside the grid, and its cards' width with the first row's.
 
 
+		const firWidNum = rowLisArr[ 0 ][ 0 ].width;                                                         // What: First Width Number. Why: A leftover card keeps the others' width rather than stretching across its row. How: This is the first row's first card's width.
 		const griRecObj = griCurEle.getBoundingClientRect();                                                 // What: Grid Rect Object. Why: The last row is centered within the grid. How: This reads the grid's box.
 		const lasRowArr = rowLisArr[ rowLisArr.length - 1 ];                                                 // What: Last Row Array. Why: Only the last row may be short. How: This is its boxes.
 		const lefGapNum = Math.min( ...lasRowArr.map( ( recCurObj ) => recCurObj.left ) ) - griRecObj.left;   // What: Left Gap Number. Why: A centered row leaves the same room on both sides. How: This is the room before its first child.
@@ -154,6 +156,10 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 
 
 		if ( Math.abs( lefGapNum - rigGapNum ) > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has its last row ${ Math.round( lefGapNum - rigGapNum ).toLocaleString( 'en-US' ) }px off center` ); // What: Off Center Check. Why: A last row more than a pixel off center reads as left hanging. How: This reports how far off it sits.
+
+
+
+		for ( const recCurObj of lasRowArr ) if ( Math.abs( recCurObj.width - firWidNum ) > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has a last-row card ${ Math.round( recCurObj.width ).toLocaleString( 'en-US' ) }px wide against ${ Math.round( firWidNum ).toLocaleString( 'en-US' ) }px above` ); // What: Leftover Width Loop. Why: A stretched leftover card would still read as centered, while the rule keeps it at the others' width. How: This reports any last-row card more than a pixel wider or narrower than the first row's.
 
 
 	}
