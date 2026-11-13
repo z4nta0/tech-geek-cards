@@ -26,11 +26,11 @@ import { test          } from '@playwright/test';          // What: Test. Why: E
  * Checks the security policy and what ships rather than a page, so it runs in
  * the Chromium project only, since a file reads the same in every engine. The
  * headers public/_headers sends have to hold the site to its own strict
- * policy, such as refusing framing, and public/_redirects has to hand every
- * unknown path to the app with a 200, so the 404 page shows on the live site.
- * The production build, which the preview server builds before the run, has to
- * send a noindex header with every unlisted card's page and no other, and has
- * to hold no private key or provider token. npm audit has to find no high or
+ * policy, such as refusing framing. The production build, which the preview
+ * server builds before the run, has to hand every unknown path to the app with
+ * a 200 after every card's own rule, so the 404 page shows on the live site,
+ * send a noindex header with every unlisted card's page and no other, and
+ * hold no private key or provider token. npm audit has to find no high or
  * critical advisory in the shipped dependencies, and skips with a message when
  * npm can't be reached.
  *
@@ -48,7 +48,7 @@ import { test          } from '@playwright/test';          // What: Test. Why: E
 
 const BIN_EXT_REG = /\.(ico|jpg|png|webp|woff2)$/;                                          // What: Binary Extension Regular Expression. Why: Raster images and fonts hold no text to search, and their bytes could match a pattern by chance. How: This matches the built file types the secret search skips.
 const DIS_DIR_STR = fileURLToPath( new URL( '../../dist/', import.meta.url ) );             // What: Distribution Directory String. Why: The secret search reads what visitors download. How: This resolves the build folder, dist/.
-const RED_FIL_STR = fileURLToPath( new URL( '../../public/_redirects', import.meta.url ) ); // What: Redirects File String. Why: The 404 page is reached on the live site only through the host's fallback rule, which the dev and preview servers apply on their own. How: This resolves the path of Netlify's redirects file.
+const RED_FIL_STR = fileURLToPath( new URL( '../../dist/_redirects', import.meta.url ) );   // What: Redirects File String. Why: The 404 page is reached on the live site only through the host's fallback rule, and the build adds each card's rule ahead of it, so the built copy is what Netlify reads. How: This resolves the built dist/_redirects from this file's own address.
 const ROO_DIR_STR = fileURLToPath( new URL( '../..', import.meta.url ) );                   // What: Root Directory String. Why: npm audit reads the repo's lockfile. How: This resolves the repo root.
 
 const SEC_PAT_ARR = [ // What: Secret Pattern Array. Why: A key pasted into the source would ship to every visitor. How: Each entry matches one well-known kind of private key or provider token.
@@ -127,13 +127,15 @@ test( 'the other hardening headers are set', () => { // What: Hardening Headers 
 
 
 
-test( 'every unknown path falls back to the app, which shows the 404 page', () => { // What: Fallback Rule Test. Why: Netlify answers a path with no file of its own with its own error page unless a rule hands it to the app, while the dev and preview servers fall back on their own, so the page suites can't tell. How: This reads public/_redirects and checks its last rule rewrites every path to index.html with a 200.
+test( 'every unknown path falls back to the app, which shows the 404 page', () => { // What: Fallback Rule Test. Why: Netlify answers a path with no file of its own with its own error page unless a rule hands it to the app, while the dev and preview servers fall back on their own, so the page suites can't tell. How: This reads the built dist/_redirects, checks its last rule rewrites every path to index.html with a 200, and checks every card's rule sits ahead of it.
 
 
 	const rulLisArr = readFileSync( RED_FIL_STR, 'utf8' ).split( '\n' ).map( ( linCurStr ) => linCurStr.trim() ).filter( ( linCurStr ) => linCurStr && !linCurStr.startsWith( '#' ) ); // What: Rule List Array. Why: Netlify reads the file's rules top to bottom and ignores comments and blank lines. How: This keeps each rule line, trimmed.
 
 
 	expect( rulLisArr.at( -1 )?.split( /\s+/ ) ).toEqual( [ '/*', '/index.html', '200' ] ); // What: Fallback Rule Assertion. Why: The catch-all has to come last, so the rules above it still match first, and has to rewrite with a 200 rather than redirect, so the address stays and the app's router shows the 404 page. How: This checks the last rule's three fields.
+
+	for ( const carDatObj of CAR_DAT_ARR ) expect( rulLisArr.slice( 0, -1 ).map( ( rulCurStr ) => rulCurStr.split( /\s+/ ).join( ' ' ) ), carDatObj.sluStr ).toContain( `/${ carDatObj.sluStr } /${ carDatObj.sluStr }.html 200` ); // What: Card Rules Loop. Why: Each card's address has to serve its own page, with its link preview, before the catch-all hands it to the app. How: This checks every catalog card's rewrite is among the rules above the catch-all.
 
 
 } );
