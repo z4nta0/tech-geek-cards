@@ -73,7 +73,6 @@
 
 
 	}
-
 	.shaDiaDia.shaDiaDia--closing { /* What: Instant Closing Share Dialog Dialog. Why: The dialog closes when the panel's closing animation ends, so it can't simply have none. How: This shrinks the panel's animation to a hundredth of a millisecond, so it ends at once. */
 
 
