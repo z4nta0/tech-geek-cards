@@ -38,7 +38,8 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
  * referrer. The Contact form's sent and failed results are checked for policy
  * violations too. Last, every card that shows a name from its address is
  * opened with script-like names, which have to show as text rather than
- * become markup.
+ * become markup, and the share dialog is given a short one in both its name
+ * fields, which have to keep it as a value and carry it encoded in the link.
  *
  * Sections:
  *  - Constants
@@ -53,6 +54,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
 
 // #region Constants
 
+const INJ_FIE_STR = '<img src=x onerror=a() id=z>';                          // What: Injected Field String. Why: A name typed into the share dialog that became markup would run code on the sender's own page. How: This is an image tag with an inline handler and an id, short enough for a 30-character field, which a page keeping it as text never turns into an element.
 const INJ_MAR_STR = '<img src=x onerror=alert(1) data-test-injected-markup>'; // What: Injected Markup String. Why: A name that became markup would let a shared link run code in a visitor's browser. How: This is an image tag with an inline handler and a marker attribute, which a page showing it as text never turns into an element.
 
 // #endregion Constants
@@ -326,6 +328,30 @@ for ( const carDatObj of CAR_DAT_ARR.filter( ( carCurObj ) => carCurObj.cusBoo |
 
 
 }
+
+
+
+test( 'the share dialog keeps script-like names as text', async ( { browserName : broNamStr, page : curPagObj } ) => { // What: Untrusted Field Test. Why: The share dialog builds its link and preview from what the sender types, which must never run code or add markup. How: This opens the Merry Christmas card's share dialog under the policy, types script-like text into both name fields, then checks the fields and the link keep it as text, no element came of it, and nothing was refused.
+
+
+	await polSetFun( curPagObj ); // What: Policy Setup Call. Why: An injected handler would also show up as a refused inline script. How: This adds the headers and the violation listener.
+
+	await curPagObj.goto( '/gallery' ); // What: Gallery Open Call. Why: The share dialog opens from a card tile. How: This loads the Gallery.
+
+	await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The Merry Christmas card takes both a recipient's and a sender's name. How: This opens its share dialog.
+
+	await curPagObj.getByLabel( 'Their name (optional)' ).fill( INJ_FIE_STR ); // What: Recipient Fill Call. Why: The recipient's name feeds the link. How: This types the script-like text into it.
+	await curPagObj.getByLabel( 'Your name (optional)' ).fill( INJ_FIE_STR );  // What: Sender Fill Call. Why: The sender's name feeds the link too. How: This types the script-like text into it.
+
+	await expect( curPagObj.getByLabel( 'Their name (optional)' ) ).toHaveValue( INJ_FIE_STR ); // What: Recipient Value Assertion. Why: The field has to hold the characters typed. How: This checks its value is the text whole.
+	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( INJ_FIE_STR );  // What: Sender Value Assertion. Why: The field has to hold the characters typed. How: This checks its value is the text whole.
+
+	expect( await curPagObj.getByLabel( 'Card link' ).inputValue() ).toContain( `?${ new URLSearchParams( { name : INJ_FIE_STR } ) }` ); // What: Encoded Link Assertion. Why: The link has to carry the name as encoded text, not markup. How: This checks the link field holds the name encoded as ?name=, the way the dialog's URL builder writes it.
+	expect( await curPagObj.locator( '#z' ).count() ).toBe( 0 );                                                                         // What: No Markup Assertion. Why: A name rendered as HTML would turn into an image element with the id z. How: This checks no such element exists.
+	expect( await polVioFun( curPagObj, broNamStr ) ).toEqual( [] );                                                                     // What: No Violation Assertion. Why: An inline handler the name added would be refused and reported. How: This checks nothing was refused.
+
+
+} );
 
 // #endregion Module Init
 
