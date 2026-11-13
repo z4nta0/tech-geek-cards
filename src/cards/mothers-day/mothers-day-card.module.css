@@ -34,7 +34,7 @@
 
 	--fam-bac-col : #F9E8EC;                             /* What: Family Background Color. Why: A soft blush sets a tender tone. How: This is a fixed hex color the card's root sets for the shared engine. */
 	--fam-tex-col : #8B2A3A;                             /* What: Family Text Color. Why: Deep rose reads clearly on the blush and over the photos' blush halo. How: This is a fixed hex color the card's root sets for the shared engine. */
-	--fam-tex-fon : 'Great Vibes', var( --fon-fam-mai ); /* What: Family Text Font. Why: A flowing script feels like a handwritten note. How: This names Great Vibes, falling back to the main font. */
+	--fam-tex-fon : 'Great Vibes', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Family Text Font. Why: A flowing script feels like a handwritten note. How: This names Great Vibes, falling back to the main font. */
 
 
 }

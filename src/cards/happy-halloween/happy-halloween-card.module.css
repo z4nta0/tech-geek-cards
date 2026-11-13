@@ -54,7 +54,7 @@
 	--hal-eye-col : #FF9F00;                            /* What: Halloween Eye Color. Why: Glowing eyes make the bats spooky. How: This is #FF9F00, the orange of every bat's eyes. */
 	--hal-ghf-col : #5B2D8E;                            /* What: Halloween Ghost-Face Color. Why: The ghosts look out with friendly faces. How: This is #5B2D8E, the purple of each ghost's eyes and smile. */
 	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the greeting's own orange, such as its glow's. */
-	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
+	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
 	--hal-hil-col : #0F0020;                            /* What: Halloween Hill Color. Why: The hills are a dark silhouette. How: This is #0F0020, the near-black purple of the hills along the bottom edge. */
 	--hal-hor-col : #1A0A00;                            /* What: Halloween Horizon Color. Why: The sky warms at the horizon. How: This is #1A0A00, the dark brown at the bottom of the sky's gradient. */
 	--hal-lig-col : #C8D8FF;                            /* What: Halloween Lightning Color. Why: Lightning lights the whole scene for an instant. How: This is #C8D8FF, the pale blue of the lightning flash. */
@@ -69,7 +69,7 @@
 	--hal-wax-col : #E8C46A;                            /* What: Halloween Wax Color. Why: The candles are pale gold wax. How: This is #E8C46A, the color of each candle and its drip. */
 	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: White is the scene's brightest light, such as the stars'. How: This is #FFFFFF. */
 	--hal-wic-col : #333333;                            /* What: Halloween Wick Color. Why: The flame burns from a dark wick. How: This is #333333, the dark gray of each candle's wick. */
-	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
+	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
 	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the card's warm lights together, such as the flames. How: This is #FFE066. */
 	--hal-zen-col : #0A0015;                            /* What: Halloween Zenith Color. Why: The sky darkens toward the top. How: This is #0A0015, the near black at the top of the sky's gradient. */
 

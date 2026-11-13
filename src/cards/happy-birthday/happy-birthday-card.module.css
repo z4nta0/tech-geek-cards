@@ -65,8 +65,8 @@
 
 	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: A bright blue is one of the card's party colors, such as a balloon's. How: This is #4D96FF. */
 	--bir-boh-col : #FF9A9A;                               /* What: Birthday Bottom-Highlight Color. Why: The bottom tier's top catches the light. How: This is #FF9A9A, a pale coral the cake's bottom highlight band reads. */
-	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
-	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
+	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
+	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
 	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, one of the card's party colors. */
 	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The Happy line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
 	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: A bright green is one of the card's party colors, such as a candle's. How: This is #6BCB77. */

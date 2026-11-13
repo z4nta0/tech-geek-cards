@@ -35,7 +35,7 @@
 
 	--fam-bac-col : #B8E3E9;                                  /* What: Family Background Color. Why: A pale sky blue sets a bright, easy tone. How: This is a fixed hex color the card's root sets for the shared engine. */
 	--fam-tex-col : #192A55;                                  /* What: Family Text Color. Why: Navy reads clearly on the sky blue and over the photos' sky blue halo. How: This is a fixed hex color the card's root sets for the shared engine. */
-	--fam-tex-fon : 'Permanent Marker', var( --fon-fam-mai ); /* What: Family Text Font. Why: A bold marker hand feels like a note on the fridge. How: This names Permanent Marker, falling back to the main font. */
+	--fam-tex-fon : 'Permanent Marker', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Family Text Font. Why: A bold marker hand feels like a note on the fridge. How: This names Permanent Marker, falling back to the main font. */
 	--fam-und-off : calc( var( --cdn-pow-006-rec ) * 1em );   /* Core-Design-Number to the Power of 6 Reciprocal ~= 0.185em */ /* What: Family Underline Offset. Why: Permanent Marker sits low on its line, so the default underline touched its letters. How: This drops the underline one step lower than the engine's default. */
 
 
