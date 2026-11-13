@@ -71,6 +71,8 @@ type PhoRecTyp = { // What: Photo Record Type. Why: Every photo is shown with a 
 
 };
 
+
+
 type SceRecTyp = { // What: Scene Record Type. Why: Each scene types one line and underlines its key words. How: This holds the line's three parts; the scene opens its heart over the photo at its own place in the photo list.
 
 
