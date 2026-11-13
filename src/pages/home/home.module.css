@@ -64,7 +64,7 @@
 
 /* #region herInnDiv */
 
-.herInnDiv { /* What: Hero Inner Div. Why: The text and the envelope sit side by side on wide screens, above the motif. How: This lays them out in two columns in the site's centered column, lifted over the motif. */
+.herInnDiv { /* What: Hero Inner Div. Why: The text and the envelope sit side by side on wide screens, above the motif. How: This lays them out in two columns in the site's centered column, positioned so they paint over the motif, which comes before them. */
 
 
 	align-items           : center;
@@ -75,7 +75,6 @@
 	max-width             : var( --con-max-wid );                      /* Container Maximum Width ~= 1,449.365px */
 	padding               : 0 var( --gut-sid-pad );                    /* Gutter Side Padding, about 19.304px - 44.876px */
 	position              : relative;
-	z-index               : 1;                                         /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
 
 
 }
@@ -1042,7 +1041,7 @@
 
 /* #region posTexDiv */
 
-.posTexDiv { /* What: Postcard Text Div. Why: The invitation reads as one column, padded well inside the perforated edge, above the motif. How: This stacks its parts and lifts them over the motif. */
+.posTexDiv { /* What: Postcard Text Div. Why: The invitation reads as one column, padded well inside the perforated edge, above the motif. How: This stacks its parts, positioned so they paint over the motif, which comes before them. */
 
 
 	align-items    : flex-start;
@@ -1051,7 +1050,6 @@
 	gap            : var( --spa-ver-p01 );                      /* Spacing Vertical Base Plus 1 ~= 19.304px */
 	padding        : var( --spa-ver-p04 ) var( --spa-hor-p04 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 4 ~= 44.876px */
 	position       : relative;
-	z-index        : 1;                                         /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the text. How: This lifts the text one layer above it. */
 
 
 }
@@ -1080,7 +1078,7 @@
 /* #endregion posTexDiv */
 
 
-.posMarSvg { /* What: Postcard Mark SVG. Why: A tipped blue postmark finishes the postcard. How: This sizes it, tilts it, colors it the strong blue through currentColor, and lifts it over the motif. */
+.posMarSvg { /* What: Postcard Mark SVG. Why: A tipped blue postmark finishes the postcard. How: This sizes it, tilts it, colors it the strong blue through currentColor, and positions it so it paints over the motif, which comes before it. */
 
 
 	color        : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
@@ -1088,7 +1086,6 @@
 	position     : relative;
 	rotate       : -8deg;
 	width        : calc( var( --ver-rhy-p09 ) * 1rem ); /* Vertical Rhythm Base Plus 9 ~= 183.074px */
-	z-index      : 1;                                   /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the postmark. How: This lifts the postmark one layer above it. */
 
 
 }

@@ -62,7 +62,7 @@
 
 /* #region herInnDiv */
 
-.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, lifted over the motif. */
+.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, positioned so it paints over the motif, which comes before it. */
 
 
 	align-items    : flex-start;
@@ -73,7 +73,6 @@
 	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 	position       : relative;
-	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
 
 
 }

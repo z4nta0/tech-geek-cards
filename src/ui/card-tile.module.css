@@ -348,7 +348,7 @@
 /* #endregion opeCueSpa */
 
 
-.carShaBut { /* What: Card Share Button. Why: Share sits above the stretched title link, as an outlined pill. How: This lifts it a layer over the link and sets it in mono capitals, easing its border, color, lift, press, and focus. */
+.carShaBut { /* What: Card Share Button. Why: Share sits above the stretched title link, as an outlined pill. How: This positions it so it paints over the link's stretched box, which comes before it, and sets it in mono capitals, easing its border, color, lift, press, and focus. */
 
 
 	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
@@ -363,7 +363,6 @@
 	position       : relative;
 	text-transform : uppercase;
 	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
-	z-index        : 1;                                               /* What: Stretched Link Clearing Layer. Why: The title link's stretched box covers the tile, so it would catch Share's clicks. How: This lifts the button one layer above it. */
 
 
 }
