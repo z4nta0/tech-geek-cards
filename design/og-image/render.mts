@@ -128,6 +128,8 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 await vitSerObj.close(); // What: Server Close Call. Why: The script's server shouldn't outlive it. How: This stops the dev server.
 await broInsObj.close(); // What: Browser Close Call. Why: The script should exit once every image is saved. How: This shuts Chromium down.
 
+
+
 console.log( `Wrote ${ OUT_PAT_STR } (${ statSync( OUT_PAT_STR ).size } bytes).` ); // What: Site Result Log Call. Why: The run should say what it wrote. How: This prints the site image's path and size.
 
 // #endregion Module Init
