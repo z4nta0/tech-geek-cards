@@ -3,8 +3,10 @@
 
 // #region Imports
 
+import { EMP_STA_ARR } from '../support/gallery.ts'; // What: Empty State Array. Why: The Gallery's "Show All Cards" only shows after a search nothing matches. How: This lists the Gallery states after that search.
 import { ERR_MES_STR } from '../support/contact.ts'; // What: Error Message String. Why: A failed send has to put this message in the alert region. How: This is the error the page shows.
 import { expect      } from '@playwright/test';      // What: Expect. Why: Each check passes only when the result is announced and focus lands where it should. How: This asserts on what each check reads, such as the alert region.
+import { opeStaFun   } from '../support/states.ts';  // What: Open State Function. Why: The empty Gallery is opened like any other state. How: This loads the state and runs its action.
 import { senForFun   } from '../support/contact.ts'; // What: Send Form Function. Why: The focus and alert checks send the form themselves. How: This answers the root's POST at a given status, fills in and sends the form, and waits for its result.
 import { test        } from '@playwright/test';      // What: Test. Why: Each check is its own test. How: This declares them.
 
@@ -23,7 +25,9 @@ import { test        } from '@playwright/test';      // What: Test. Why: Each ch
  * thank-you that replaces the form, and its "Send Another" button moves focus
  * back to the name field. The share dialog's status region is empty when the
  * dialog opens and holds the copy result once "Copy Link" is pressed, whether
- * the clipboard takes the link or refuses it. Adapted from TechGeek.dev's own.
+ * the clipboard takes the link or refuses it. The Gallery's "Show All Cards",
+ * which leaves with the empty message, hands focus to the search field.
+ * Adapted from TechGeek.dev's own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -76,6 +80,20 @@ test( 'a sent message moves focus to the thank-you, and sending another moves it
 	await curPagObj.getByRole( 'button', { name : 'Send Another' } ).click(); // What: Send Another Click Call. Why: The form comes back for another message. How: This presses "Send Another".
 
 	await expect( curPagObj.getByRole( 'main' ).getByLabel( 'Your name' ) ).toBeFocused(); // What: Name Field Focus Assertion. Why: The visitor starts the next message at the first field. How: This checks the name field is focused.
+
+
+} );
+
+
+
+test( 'pressing "Show All Cards" moves focus to the search field', async ( { page : curPagObj } ) => { // What: Show All Focus Test. Why: The pressed button leaves with the empty message, and focus must never fall to the page. How: This opens the Gallery after a search nothing matches, presses "Show All Cards", and checks the search field holds focus.
+
+
+	await opeStaFun( curPagObj, EMP_STA_ARR[ 0 ] ); // What: Empty Gallery Open Call. Why: The button shows only after a search nothing matches. How: This opens the Gallery with that search typed.
+
+	await curPagObj.getByRole( 'button', { name : 'Show All Cards' } ).click(); // What: Show All Click Call. Why: The way back from an empty search is this button. How: This presses it.
+
+	await expect( curPagObj.getByLabel( 'Search cards' ) ).toBeFocused(); // What: Search Focus Assertion. Why: Focus has to land somewhere useful once the button is gone. How: This checks the search field holds it.
 
 
 } );

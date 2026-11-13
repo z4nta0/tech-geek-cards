@@ -13,6 +13,7 @@ import { Link         } from 'react-router';                           // What: 
 import { OCC_NAM_ARR  } from '../../ui/card-data.ts';                  // What: Occasion Name Array. Why: The filter offers every occasion. How: The page renders a button for each.
 import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: A card can be shared straight from its tile. How: The page mounts it when a tile's "Share" is pressed.
 import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: The Gallery's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { useRef       } from 'react';                                  // What: Use Reference. Why: "Show All Cards" hands focus to the search field. How: This holds the field.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the search, the chosen occasion, and the card being shared. How: This holds each of them.
 
 
@@ -81,6 +82,8 @@ import type { OccNamTyp } from '../../ui/card-data.ts'; // What: Occasion Name T
 function GalPagCom () : JSX.Element {
 
 
+	const seaInpRef = useRef< HTMLInputElement >( null ); // What: Search Input Reference. Why: "Show All Cards" disappears as the grid comes back, so focus needs somewhere to go. How: This holds the search field, which takes it.
+
 	const [ actOccStr, setActOccStr ] = useState< OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion or every card. How: This starts on "All".
 	const [ seaTexStr, setSeaTexStr ] = useState( '' );                         // What: Search Text String And Setter. Why: The search field narrows the cards as a visitor types. How: This holds the field's text.
 	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );   // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
@@ -114,12 +117,14 @@ function GalPagCom () : JSX.Element {
 
 
 
-	const cleFilFun = () => { // What: Clear Filters Function. Why: A search with no matches needs a quick way back. How: This empties the search and chooses "All".
+	const cleFilFun = () => { // What: Clear Filters Function. Why: A search with no matches needs a quick way back. How: This empties the search, chooses "All", and focuses the search field.
 
 
 		setSeaTexStr( '' ); // What: Search Clear Call. Why: The search no longer narrows the cards. How: This empties the field.
 
 		setActOccStr( 'All' ); // What: Occasion Reset Call. Why: The filter no longer narrows the cards. How: This chooses "All".
+
+		seaInpRef.current?.focus(); // What: Search Focus Call. Why: The pressed button leaves with the empty message, and focus must never fall to the page. How: This moves focus to the cleared search field, where a visitor would try again.
 
 
 	};
@@ -189,6 +194,8 @@ function GalPagCom () : JSX.Element {
 								>Search cards</label>{ /* What: Search Label Label Element. Why: The search field needs a visible label. How: This labels `galSeaInp`. */ }
 
 								<input
+									ref={ seaInpRef }
+
 									id='galSeaInp'
 
 									className={ cssModObj.seaTexInp }
@@ -285,7 +292,7 @@ function GalPagCom () : JSX.Element {
 									type='button'
 
 									onClick={ cleFilFun }
-								>Show All Cards</button>{ /* What: Button Secondary Button Element. Why: The way back is one press. How: This clears the search and the filter. */ }
+								>Show All Cards</button>{ /* What: Button Secondary Button Element. Why: The way back is one press. How: This clears the search and the filter and hands focus to the search field. */ }
 
 
 							</div>

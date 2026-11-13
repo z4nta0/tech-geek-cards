@@ -374,6 +374,8 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   region is in the form and empty on load and holds the error after a failed
   send, which keeps focus on Send Message, that the thank-you takes focus as
   it replaces the form, and that "Send Another" puts it on the name field.
+  It also checks the share dialog's status region announces a copy's result,
+  and that the Gallery's "Show All Cards" hands focus to the search field.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, and the contact form (its topic arriving as Not
