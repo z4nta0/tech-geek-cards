@@ -85,7 +85,7 @@ const INV_STA_ARR : StaRecTyp[] = CON_STA_ARR.map( ( staRecObj ) => ( { // What:
 const RES_REC_ARR = [ // What: Result Record Array. Why: Both the thank-you and the error are states a visitor can reach. How: Each row names a result and the status that brings it about.
 
 
-	{ ideStr : 'sent',   staNum : 200 }, // What: Sent Result Row. Why: An ok reply shows the thank-you. How: This answers with a 200.
+	{ ideStr : 'sent',   staNum : 200 }, // What: Sent Result Row. Why: An `ok` reply shows the thank-you. How: This answers with a 200.
 	{ ideStr : 'failed', staNum : 500 }  // What: Failed Result Row. Why: A failed reply shows the error. How: This answers with a 500.
 
 
@@ -136,7 +136,7 @@ async function senForFun ( curPagObj : Page, staCodNum : number ) : Promise< voi
 
 
 
-		await rouCurObj.fulfill( { body : '', status : staCodNum } ); // What: Status Answer Call. Why: The form shows its thank-you only on an ok reply, and its error otherwise. How: This answers with an empty body at the given status.
+		await rouCurObj.fulfill( { body : '', status : staCodNum } ); // What: Status Answer Call. Why: The form shows its thank-you only on an `ok` reply, and its error otherwise. How: This answers with an empty body at the given status.
 
 
 	} );

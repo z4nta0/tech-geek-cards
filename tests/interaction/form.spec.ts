@@ -76,7 +76,7 @@ async function forOpeFun ( curPagObj : Page ) : Promise< string[] > {
 
 		senBodArr.push( rouCurObj.request().postData() ?? '' ); // What: Sent Body Record. Why: The test checks what the form sent. How: This keeps the POST's body.
 
-		await rouCurObj.fulfill( { body : '', status : 200 } ); // What: Success Answer Call. Why: The form shows its thank-you only on an ok reply. How: This answers with an empty 200, as Netlify does.
+		await rouCurObj.fulfill( { body : '', status : 200 } ); // What: Success Answer Call. Why: The form shows its thank-you only on an `ok` reply. How: This answers with an empty 200, as Netlify does.
 
 
 	} );
@@ -163,7 +163,7 @@ test( 'a filled-in form sends to Netlify and shows the thank-you', async ( { pag
 	const senParObj = new URLSearchParams( senBodArr[ 0 ] ); // What: Sent Parameters Object. Why: The body's fields are checked one by one. How: This parses the form-encoded body.
 
 
-	expect( [ senParObj.get( 'form-name' ), senParObj.get( 'email' ), senParObj.get( 'name' ), senParObj.get( 'topic' ) ] ).toEqual( [ 'contact', 'visitor@example.com', 'Test Visitor', 'Not specified' ] ); // What: Sent Fields Assertion. Why: Netlify matches the form by its name and reads the fields by theirs. How: This checks the form name, the email, and the name came through, and that a topic left unchosen arrives as Not specified.
+	expect( [ senParObj.get( 'form-name' ), senParObj.get( 'email' ), senParObj.get( 'name' ), senParObj.get( 'topic' ) ] ).toEqual( [ 'contact', 'visitor@example.com', 'Test Visitor', 'Not specified' ] ); // What: Sent Fields Assertion. Why: Netlify matches the form by its name and reads the fields by theirs. How: This checks the form name, the email, and the name came through, and that a topic left unchosen arrives as "Not specified".
 
 
 } );
