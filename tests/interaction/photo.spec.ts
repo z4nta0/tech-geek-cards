@@ -3,10 +3,10 @@
 
 // #region Imports
 
-import { expect      } from '@playwright/test';    // What: Expect. Why: Each check passes only when the photo fades out and its dialog closes. How: This asserts on what each check reads, such as the dialog's animations.
+import { expect      } from '@playwright/test';     // What: Expect. Why: Each check passes only when the photo fades out and its dialog closes. How: This asserts on what each check reads, such as the dialog's animations.
 import { opeStaFun   } from '../support/states.ts'; // What: Open State Function. Why: The photo opens from a settled card. How: This loads the state and runs its action.
 import { PHO_STA_ARR } from '../support/family.ts'; // What: Photo State Array. Why: Each check starts from the Mother's Day card's first photo open. How: This lists that state at both widths.
-import { test        } from '@playwright/test';    // What: Test. Why: Each way of closing is its own test. How: This declares them.
+import { test        } from '@playwright/test';     // What: Test. Why: Each way of closing is its own test. How: This declares them.
 
 // #endregion Imports
 
