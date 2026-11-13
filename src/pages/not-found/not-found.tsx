@@ -137,7 +137,6 @@ function NotFouCom () : JSX.Element {
 						/>{ /* What: Envelope Stamp Rect Element. Why: A stamp sits in the corner, its dashed edge standing for perforations. How: This draws a berry stamp in the upper right. */ }
 
 
-
 						<g transform='rotate( -8 92 108 )'>{ /* What: Stamp Tilt Group Element. Why: A rubber stamp lands at an angle. How: This tips the stamp eight degrees around its own center, inside the envelope's lower half. */ }
 
 
@@ -182,6 +181,8 @@ function NotFouCom () : JSX.Element {
 					<p className={ cssModObj.nofDesPar }>{ /* What: Not-Found Description Paragraph Element. Why: A short line explains why the page is missing. How: This says the address doesn't exist or has moved. */ }
 						The page you're looking for doesn't exist or has moved.
 					</p>
+
+
 
 					<div className={ cssModObj.nofActDiv }>{ /* What: Not-Found Actions Div Element. Why: A visitor who lands here gets two ways onward side by side. How: This sets the buttons in a row, wrapping onto two lines at about 440px wide and below. */ }
 

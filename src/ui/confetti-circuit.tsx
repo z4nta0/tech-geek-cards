@@ -197,6 +197,7 @@ function ConCirCom ( { patOpaStr } : CccProTyp ) : JSX.Element {
 
 				</defs>
 
+
 				<rect
 					fill={ `url(#${ patIdeStr })` }
 					height='100%'

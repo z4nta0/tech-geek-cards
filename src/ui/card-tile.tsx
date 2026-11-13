@@ -109,6 +109,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 			</div>
 
 
+
 			<div className={ cssModObj.carBodDiv }>{ /* What: Card Body Div Element. Why: The card's details sit under its stamp. How: This stacks the tags, title, description, and actions. */ }
 
 
@@ -128,6 +129,8 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 				</div>
 
+
+
 				<h3 className={ cssModObj.carTitHea }>{ /* What: Card Title Heading Element. Why: The card's name heads its details. How: This holds the link to the card. */ }
 
 
@@ -139,6 +142,8 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 
 				</h3>
+
+
 
 				<p className={ cssModObj.carDesPar }>{ carRecObj.desStr }</p>{ /* What: Card Description Paragraph Element. Why: A short line says what the card is like. How: This shows the card's description. */ }
 

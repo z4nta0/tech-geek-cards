@@ -54,15 +54,71 @@ const FAC_LIS_ARR = [ // What: Fact List Array. Why: The story's side list sums 
 
 
 
+// #region FAM_SIT_ARR
+
+/**
+ * FAM_SIT_ARR = Family Site Array
+ *
+ * @summary
+ * The three sister sites the family section introduces, in order. Every row
+ * shares one shape, so its fields carry no comments of their own:
+ *
+ * - `desStr` (String): Description String, what the site is for.
+ *
+ * - `herBoo` (Boolean): Here Boolean, whether the site is this one, which
+ *   gets a "You are here" label instead of a link.
+ *
+ * - `hreStr` (String): Hypertext-Reference String, the site's address.
+ *
+ * - `namStr` (String): Name String, the site's name, also its React key.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
 const FAM_SIT_ARR = [ // What: Family Site Array. Why: The family section introduces the three sister sites in the same order every visit. How: Each row holds a site's name, address, description, and whether it's this site.
 
 
-	{ herBoo : false, hreStr : 'https://techgeek.dev/',     namStr : 'TechGeek.dev',     desStr : 'The developer side: the websites and web apps I have designed and built, and how to hire me for one.' }, // What: Developer Site Row. Why: The cards come from a working developer. How: This describes and links the portfolio.
-	{ herBoo : false, hreStr : 'https://techgeek.support/', namStr : 'TechGeek.support', desStr : 'Tech support: answers and how-to guides for everyday computer and phone questions.' }, // What: Support Site Row. Why: A visitor may need help with a device. How: This describes and links the support site.
-	{ herBoo : true,  hreStr : 'https://techgeek.cards/',   namStr : 'TechGeek.cards',   desStr : 'Animated greeting cards to send to the people you care about.' } // What: Cards Site Row. Why: The family list includes this site, marked as the one the visitor is on. How: This describes it without linking away.
+	{ // What: Developer Site Row. Why: The cards come from a working developer. How: This describes and links the portfolio.
+
+
+		herBoo : false,
+		hreStr : 'https://techgeek.dev/',
+		namStr : 'TechGeek.dev',
+
+		desStr : 'The developer side: the websites and web apps I have designed and built, and how to hire me for one.'
+
+
+	},
+
+	{ // What: Support Site Row. Why: A visitor may need help with a device. How: This describes and links the support site.
+
+
+		herBoo : false,
+		hreStr : 'https://techgeek.support/',
+		namStr : 'TechGeek.support',
+
+		desStr : 'Tech support: answers and how-to guides for everyday computer and phone questions.'
+
+
+	},
+
+	{ // What: Cards Site Row. Why: The family list includes this site, marked as the one the visitor is on. How: This describes it without linking away.
+
+
+		herBoo : true,
+		hreStr : 'https://techgeek.cards/',
+		namStr : 'TechGeek.cards',
+
+		desStr : 'Animated greeting cards to send to the people you care about.'
+
+
+	}
 
 
 ];
+
+// #endregion FAM_SIT_ARR
 
 
 
@@ -258,6 +314,7 @@ function AboPagCom () : JSX.Element {
 
 
 						</ul>
+
 
 
 						<div className={ cssModObj.famActDiv }>{ /* What: Family Actions Div Element. Why: The page ends on two ways onward. How: This sets the buttons in a row, wrapping onto two lines at about 535px wide and below. */ }

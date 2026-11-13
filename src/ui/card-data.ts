@@ -73,15 +73,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Happy Birthday Card Row. Why: The birthday card can greet its recipient by name. How: Its link takes the name as ?name=.
 
 
-		altStr : 'The Happy Birthday card, with its greeting over a festive scene.',
 		cusBoo : true,
-		desStr : 'An animated birthday card with confetti, balloons, and a message, made out to them by name.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Birthday',
-		seaStr : 'Send an animated Happy Birthday card with confetti, balloons, and their own name on it. Free to share with a single link.',
 		sluStr : 'happy-birthday',
-		titStr : 'Happy Birthday'
+		titStr : 'Happy Birthday',
+
+		altStr : 'The Happy Birthday card, with its greeting over a festive scene.',
+		desStr : 'An animated birthday card with confetti, balloons, and a message, made out to them by name.',
+		seaStr : 'Send an animated Happy Birthday card with confetti, balloons, and their own name on it. Free to share with a single link.'
 
 
 	},
@@ -89,15 +90,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Mother's Day Card Row. Why: The Mother's Day card celebrates mothers. How: Its page plays the card full screen.
 
 
-		altStr : "The Mother's Day card's closing mosaic of family photos under its greeting.",
 		cusBoo : false,
-		desStr : 'A heartfelt thank-you to mothers, typed line by line, with family photos opening in hearts.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Family',
-		seaStr : "Send an animated Mother's Day card that thanks mom for everything, with heartfelt words and family photos. Free to share.",
 		sluStr : 'mothers-day',
-		titStr : "Mother's Day"
+		titStr : "Mother's Day",
+
+		altStr : "The Mother's Day card's closing mosaic of family photos under its greeting.",
+		desStr : 'A heartfelt thank-you to mothers, typed line by line, with family photos opening in hearts.',
+		seaStr : "Send an animated Mother's Day card that thanks mom for everything, with heartfelt words and family photos. Free to share."
 
 
 	},
@@ -105,15 +107,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Father's Day Card Row. Why: The Father's Day card celebrates fathers. How: Its page plays the card full screen.
 
 
-		altStr : "The Father's Day card's closing mosaic of family photos under its greeting.",
 		cusBoo : false,
-		desStr : 'A heartfelt thank-you to fathers, typed line by line, with family photos opening in hearts.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Family',
-		seaStr : "Send an animated Father's Day card that thanks dad for everything, with heartfelt words and family photos. Free to share.",
 		sluStr : 'fathers-day',
-		titStr : "Father's Day"
+		titStr : "Father's Day",
+
+		altStr : "The Father's Day card's closing mosaic of family photos under its greeting.",
+		desStr : 'A heartfelt thank-you to fathers, typed line by line, with family photos opening in hearts.',
+		seaStr : "Send an animated Father's Day card that thanks dad for everything, with heartfelt words and family photos. Free to share."
 
 
 	},
@@ -121,15 +124,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Fourth Of July Card Row. Why: The Fourth of July card celebrates Independence Day. How: Its page plays the card full screen.
 
 
-		altStr : 'The Fourth of July card, with its greeting under a sky of fireworks.',
 		cusBoo : false,
-		desStr : 'An Independence Day celebration with fireworks and patriotic animations.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Fourth of July card with fireworks and patriotic flair to celebrate Independence Day. Free to share by link.',
 		sluStr : 'fourth-of-july',
-		titStr : 'Fourth of July'
+		titStr : 'Fourth of July',
+
+		altStr : 'The Fourth of July card, with its greeting under a sky of fireworks.',
+		desStr : 'An Independence Day celebration with fireworks and patriotic animations.',
+		seaStr : 'Send an animated Fourth of July card with fireworks and patriotic flair to celebrate Independence Day. Free to share by link.'
 
 
 	},
@@ -137,15 +141,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Happy Halloween Card Row. Why: The Halloween card brings a spooky greeting. How: Its page plays the card full screen.
 
 
-		altStr : 'The Happy Halloween card, with its greeting in a spooky night scene.',
 		cusBoo : false,
-		desStr : 'A spooky Halloween card with eerie animations and effects.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Happy Halloween card with spooky effects and eerie animations to all your favorite ghouls. Free to share.',
 		sluStr : 'happy-halloween',
-		titStr : 'Happy Halloween'
+		titStr : 'Happy Halloween',
+
+		altStr : 'The Happy Halloween card, with its greeting in a spooky night scene.',
+		desStr : 'A spooky Halloween card with eerie animations and effects.',
+		seaStr : 'Send an animated Happy Halloween card with spooky effects and eerie animations to all your favorite ghouls. Free to share.'
 
 
 	},
@@ -153,15 +158,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Happy Thanksgiving Card Row. Why: The Thanksgiving card brings a festive greeting. How: Its page plays the card full screen.
 
 
-		altStr : 'The Happy Thanksgiving card, with its greeting in an autumn scene.',
 		cusBoo : false,
-		desStr : 'A festive Thanksgiving card with warm, autumn animations and effects.',
 		froBoo : false,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Happy Thanksgiving card with warm autumn colors and festive animations. Free to share with a single link.',
 		sluStr : 'happy-thanksgiving',
-		titStr : 'Happy Thanksgiving'
+		titStr : 'Happy Thanksgiving',
+
+		altStr : 'The Happy Thanksgiving card, with its greeting in an autumn scene.',
+		desStr : 'A festive Thanksgiving card with warm, autumn animations and effects.',
+		seaStr : 'Send an animated Happy Thanksgiving card with warm autumn colors and festive animations. Free to share with a single link.'
 
 
 	},
@@ -169,15 +175,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Merry Christmas Card Row. Why: The Christmas card's snowy scene is listed on its own, made out to them by name and signed with the sender's. How: Its link takes the names as ?name= and ?from=.
 
 
-		altStr : 'The Merry Christmas card, with its greeting over a snowy cabin.',
 		cusBoo : true,
-		desStr : 'A snowy cabin with snow falling, wishing them a Merry Christmas by name and signed with yours.',
 		froBoo : true,
 		lisBoo : true,
 		occStr : 'Holiday',
-		seaStr : 'Send an animated Merry Christmas card with snow falling over a cozy cabin, made out to them and signed by you. Free to share.',
 		sluStr : 'merry-christmas',
-		titStr : 'Merry Christmas'
+		titStr : 'Merry Christmas',
+
+		altStr : 'The Merry Christmas card, with its greeting over a snowy cabin.',
+		desStr : 'A snowy cabin with snow falling, wishing them a Merry Christmas by name and signed with yours.',
+		seaStr : 'Send an animated Merry Christmas card with snow falling over a cozy cabin, made out to them and signed by you. Free to share.'
 
 
 	},
@@ -185,15 +192,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Father's Day Special Card Row. Why: A playful second Father's Day card was never listed in TechGeek.support's gallery. How: It keeps its own address but stays out of the Gallery and Home.
 
 
-		altStr : "The special Father's Day card, with its playful thank-you to fathers.",
 		cusBoo : false,
-		desStr : "A playful Father's Day card for a dad with a wild side.",
 		froBoo : false,
 		lisBoo : false,
 		occStr : 'Family',
-		seaStr : "A playful animated Father's Day card for a dad with a wild side, coded by hand and shared with a single link. Free to send.",
 		sluStr : 'fathers-day-prank',
-		titStr : "Father's Day Special"
+		titStr : "Father's Day Special",
+
+		altStr : "The special Father's Day card, with its playful thank-you to fathers.",
+		desStr : "A playful Father's Day card for a dad with a wild side.",
+		seaStr : "A playful animated Father's Day card for a dad with a wild side, coded by hand and shared with a single link. Free to send."
 
 
 	},
@@ -201,15 +209,16 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 	{ // What: Christmas Prank Card Row. Why: The full Christmas card, a fake hack before the snowy greeting, was made for the maker's own family, so it stays unlisted. How: It keeps its own address, and plays the Christmas card with its prank flag set.
 
 
-		altStr : 'The Christmas Prank card, with its greeting over a snowy cabin.',
 		cusBoo : true,
-		desStr : 'A prank Christmas card: a fake hacked screen that glitches into a snowy cabin, made out to them by name.',
 		froBoo : true,
 		lisBoo : false,
 		occStr : 'Holiday',
-		seaStr : 'A prank Christmas card that opens on a fake hack and glitches into a snowy cabin greeting, coded by hand. Free to share.',
 		sluStr : 'merry-christmas-prank',
-		titStr : 'Christmas Prank'
+		titStr : 'Christmas Prank',
+
+		altStr : 'The Christmas Prank card, with its greeting over a snowy cabin.',
+		desStr : 'A prank Christmas card: a fake hacked screen that glitches into a snowy cabin, made out to them by name.',
+		seaStr : 'A prank Christmas card that opens on a fake hack and glitches into a snowy cabin greeting, coded by hand. Free to share.'
 
 
 	}

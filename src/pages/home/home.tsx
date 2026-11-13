@@ -49,15 +49,61 @@ const HER_CAR_ARR = [ 'happy-halloween', 'happy-birthday', 'mothers-day' ].map( 
 
 
 
+// #region STE_REC_ARR
+
+/**
+ * STE_REC_ARR = Step Record Array
+ *
+ * @summary
+ * The three steps How It Works walks through, in order. Every row shares one
+ * shape, so its fields carry no comments of their own:
+ *
+ * - `desStr` (String): Description String, the line explaining the step.
+ *
+ * - `titStr` (String): Title String, the step's short name, also its React
+ *   key.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
 const STE_REC_ARR = [ // What: Step Record Array. Why: How It Works walks through the same three steps every visit. How: Each row holds a step's title and description.
 
 
-	{ titStr : 'Pick a card',    desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.' }, // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
-	{ titStr : 'Make it theirs', desStr : "Add their name to the cards that take one, and it's part of the card as it opens." }, // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
-	{ titStr : 'Send the link',  desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.' } // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
+	{ // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
+
+
+		titStr : 'Pick a card',
+
+		desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.'
+
+
+	},
+
+	{ // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
+
+
+		titStr : 'Make it theirs',
+
+		desStr : "Add their name to the cards that take one, and it's part of the card as it opens."
+
+
+	},
+
+	{ // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
+
+
+		titStr : 'Send the link',
+
+		desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.'
+
+
+	}
 
 
 ];
+
+// #endregion STE_REC_ARR
 
 // #endregion Constants
 
@@ -156,8 +202,8 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
 function HomPagCom () : JSX.Element {
 
 
-	const [ feaCarArr                ] = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
-	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                       // What: Share Card Object And Setter. Why: The share dialog shows the card whose Share was pressed. How: This starts with no card, so no dialog.
+	const [ feaCarArr ]               = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
+	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                      // What: Share Card Object And Setter. Why: The share dialog shows the card whose Share was pressed. How: This starts with no card, so no dialog.
 
 
 
@@ -204,6 +250,8 @@ function HomPagCom () : JSX.Element {
 							<p className={ cssModObj.herLeaPar }>{ /* What: Hero Lead Paragraph Element. Why: A short paragraph says what a visitor can do here. How: This sums up the cards and the three steps. */ }
 								Animated, interactive greeting cards for birthdays, holidays, and the people who matter. Pick one, add their name (if applicable), and send the link.
 							</p>
+
+
 
 							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row, wrapping onto two lines from about 1,035px down to about 770px, where the hero's text column sits narrow beside the envelope, and again at about 490px wide and below. */ }
 
@@ -402,6 +450,7 @@ function HomPagCom () : JSX.Element {
 						</div>
 
 
+
 						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four across, two at 1,024px and below, and one at 640px and below. */ }
 
 
@@ -467,6 +516,8 @@ function HomPagCom () : JSX.Element {
 
 
 								</div>
+
+
 
 								<svg
 									className={ cssModObj.posMarSvg }

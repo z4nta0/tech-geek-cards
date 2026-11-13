@@ -56,7 +56,7 @@ const SOC_DIR_STR = fileURLToPath( new URL( '../../public/social/', import.meta.
 
 // #region Module Init
 
-const broInsObj = await chromium.launch();                                                 // What: Browser Instance Object. Why: Every image is drawn by a real browser. How: This launches Chromium.
+const broInsObj = await chromium.launch();                                                  // What: Browser Instance Object. Why: Every image is drawn by a real browser. How: This launches Chromium.
 const capPagObj = await broInsObj.newPage( { viewport : { height : 630, width : 1200 } } ); // What: Capture Page Object. Why: Every capture has to be exactly 1,200x630. How: This opens a page at that size.
 
 

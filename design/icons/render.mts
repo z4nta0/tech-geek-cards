@@ -74,7 +74,7 @@ const ICO_SIZ_ARR = [ 16, 32, 48 ]; // What: ICO Size Array. Why: favicon.ico pa
 
 
 
-const OUT_DIR_STR = fileURLToPath( new URL( '../../public/', import.meta.url ) );                                                       // What: Output Directory String. Why: Browsers request icons from the site's root. How: This resolves public/ from this script's folder.
+const OUT_DIR_STR = fileURLToPath( new URL( '../../public/', import.meta.url ) );                                                   // What: Output Directory String. Why: Browsers request icons from the site's root. How: This resolves public/ from this script's folder.
 const SOU_SVG_STR = fileURLToPath( new URL( '../../node_modules/techgeek-design/src/assets/brand/favicon.svg', import.meta.url ) ); // What: Source SVG String. Why: The TechGeek family's mark lives in the shared design package. How: This resolves the installed package's artwork from this script's folder.
 const TOU_SCA_NUM = 0.8; // What: Touch Scale Number. Why: iOS rounds the touch icon's corners, which would crowd a mark drawn edge to edge. How: The touch icon draws the mark at this share of its square, centered.
 
@@ -133,6 +133,7 @@ async function renPngFun ( icoSizNum : number, icoOpaBoo : boolean ) : Promise< 
 
 		souImaEle.src = `data:image/svg+xml;base64,${ souB64Str }`; // What: Source Address Assignment. Why: The image loads from the data handed in. How: This sets it as an SVG data URL.
 
+
 		await souImaEle.decode(); // What: Source Decode Wait. Why: Drawing an undecoded image draws nothing. How: This waits until it's ready.
 
 
@@ -152,6 +153,7 @@ async function renPngFun ( icoSizNum : number, icoOpaBoo : boolean ) : Promise< 
 
 
 			finCotObj.fillStyle = '#F5F0E8'; // What: Ivory Fill Assignment. Why: The background has to be solid, and the site's page ivory matches its pages. How: This sets the fill color, the default value of the page background role, since a script's canvas can't read the stylesheet's tokens.
+
 
 			finCotObj.fillRect( 0, 0, tarSizNum, tarSizNum ); // What: Background Fill Call. Why: Every pixel under the mark has to be opaque. How: This paints the whole square.
 
@@ -202,10 +204,12 @@ for ( const [ icoIndNum, icoPngObj ] of icoPngArr.entries() ) { // What: ICO Ent
 	const entSizNum = ICO_SIZ_ARR[ icoIndNum ]; // What: Entry Size Number. Why: The entry names its image's width and height. How: This reads the size it was rendered at.
 
 
-	icoHeaObj.writeUInt8( entSizNum, entOffNum );               // What: Entry Width Write. Why: The entry names the image's width. How: This writes it.
-	icoHeaObj.writeUInt8( entSizNum, entOffNum + 1 );           // What: Entry Height Write. Why: The entry names the image's height. How: This writes it.
-	icoHeaObj.writeUInt16LE( 1, entOffNum + 4 );                // What: Entry Planes Write. Why: The format expects one color plane. How: This writes it.
-	icoHeaObj.writeUInt16LE( 32, entOffNum + 6 );               // What: Entry Depth Write. Why: The images are full-color PNGs with alpha. How: This writes 32 bits per pixel.
+	icoHeaObj.writeUInt8( entSizNum, entOffNum );     // What: Entry Width Write. Why: The entry names the image's width. How: This writes it.
+	icoHeaObj.writeUInt8( entSizNum, entOffNum + 1 ); // What: Entry Height Write. Why: The entry names the image's height. How: This writes it.
+
+	icoHeaObj.writeUInt16LE( 1, entOffNum + 4 );  // What: Entry Planes Write. Why: The format expects one color plane. How: This writes it.
+	icoHeaObj.writeUInt16LE( 32, entOffNum + 6 ); // What: Entry Depth Write. Why: The images are full-color PNGs with alpha. How: This writes 32 bits per pixel.
+
 	icoHeaObj.writeUInt32LE( icoPngObj.length, entOffNum + 8 ); // What: Entry Size Write. Why: The entry says how many bytes its image takes. How: This writes the PNG's length.
 	icoHeaObj.writeUInt32LE( icoOffNum, entOffNum + 12 );       // What: Entry Offset Write. Why: The entry says where its image starts. How: This writes the running offset.
 

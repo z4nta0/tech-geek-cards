@@ -62,6 +62,7 @@ const WOR_END_STR = '.cards';                               // What: Wordmark En
 const CTA_LIN_OBJ : PagLinTyp = { labStr : 'Send a Card', patStr : '/gallery' }; // What: Call-To-Action Link Object. Why: The bar's one button asks a visitor to send a card, the site's main action. How: The bar and the drawer both route it to the Gallery.
 
 
+
 const SIS_LIN_ARR : SisLinTyp[] = [ // What: Sister Link Array. Why: TechGeek.cards is one of three sister sites, and a visitor here may want z4nta0's portfolio or tech support. How: The footer links to each row in the same tab.
 
 

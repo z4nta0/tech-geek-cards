@@ -101,7 +101,6 @@ const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { //
 	const carTitStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` ); // What: Card Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
 	const carUrlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                    // What: Card URL String. Why: The preview links to the card's own address. How: This is its absolute address.
 
-
 	const tagRowArr : [ string, string ][] = [ // What: Tag Row Array. Why: Every tag the card changes is found and replaced the same way. How: Each row pairs a tag's name or property with its card value.
 
 
@@ -190,8 +189,7 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 
 			await Promise.all( CAR_DAT_ARR.map( ( carDatObj ) => writeFile( resolve( buiRecObj.outStr, `${ carDatObj.sluStr }.html` ), carTagFun( indHtmStr, carDatObj ) ) ) ); // What: Card Pages Write. Why: Each card needs its own page. How: This writes one tagged copy of the built page per card.
 
-			await writeFile( heaPatStr, `${ heaTexStr }\n\n\n\n# What: Unlisted Card Rules. Why: An unlisted card is made for one person and should stay out of search. How: These send a noindex header with each unlisted card's page.\n${ unlRulStr }\n` ); // What: Headers Write. Why: The unlisted cards' noindex rules join the site's headers. How: This appends them.
-
+			await writeFile( heaPatStr, `${ heaTexStr }\n\n\n\n# What: Unlisted Card Rules. Why: An unlisted card is made for one person and should stay out of search. How: These send a noindex header with each unlisted card's page.\n${ unlRulStr }\n` );        // What: Headers Write. Why: The unlisted cards' noindex rules join the site's headers. How: This appends them.
 			await writeFile( redPatStr, `# What: Card Page Rules. Why: Each card's address serves its own page, which carries its link preview. How: These rewrite each card's address to its page, ahead of the catch-all.\n${ carRulStr }\n\n\n\n${ redTexStr }` ); // What: Redirects Write. Why: The card rules must come before the catch-all, which would otherwise answer every card's address. How: This writes them ahead of the existing rules.
 
 
