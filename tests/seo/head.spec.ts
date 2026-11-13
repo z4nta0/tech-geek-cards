@@ -253,8 +253,9 @@ const PRE_URL_STR = 'http://localhost:5205'; // What: Preview URL String. Why: L
  *
  * @summary
  * Every Open Graph and Twitter tag a complete link preview needs, per the
- * social preview rule; twitter:site and twitter:creator are left out, since
- * the site has no X account. Every row is one tag's property or name.
+ * social preview rule, plus theme-color, which Discord edges its embed in;
+ * twitter:site and twitter:creator are left out, since the site has no X
+ * account. Every row is one tag's property or name.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -274,6 +275,7 @@ const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full
 	'og:title',
 	'og:type',
 	'og:url',
+	'theme-color',
 	'twitter:card',
 	'twitter:description',
 	'twitter:image',
@@ -573,6 +575,8 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] ); // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
 		expect( [ socTagObj[ 'og:url' ], socTagObj[ 'og:image' ], socTagObj[ 'twitter:image' ] ] ).toEqual( [ expUrlStr, expImaStr, expImaStr ] );                                                                                               // What: Address Assertion. Why: Scrapers need absolute addresses for the page and its image. How: This checks each against the page's own.
 		expect( [ socTagObj[ 'og:title' ], socTagObj[ 'twitter:title' ], socTagObj[ 'description' ], socTagObj[ 'og:description' ], socTagObj[ 'twitter:description' ] ] ).toEqual( [ expTitStr, expTitStr, expDesStr, expDesStr, expDesStr ] ); // What: Text Assertion. Why: The preview names and describes the page as the page itself does. How: This checks the titles and descriptions.
+		expect( expDesStr.length ).toBeGreaterThanOrEqual( 120 ); // What: Description Minimum Assertion. Why: Link preview checkers flag a summary under 120 characters, and the unlisted cards' own descriptions are checked only here. How: This checks the page's description runs at least 120 characters.
+		expect( expDesStr.length ).toBeLessThanOrEqual( 125 ); // What: Description Maximum Assertion. Why: Mobile cards cut a summary off around 125 characters. How: This checks the page's description stays within that.
 		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] );      // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
 
 
