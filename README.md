@@ -44,7 +44,7 @@ npm test                    # every suite
 npm run test:accessibility  # axe-core plus scripted keyboard, naming, reflow, and motion checks
 npm run test:interaction    # page navigation, a card's round trip, the phone menu, the contact form, the Ko-fi button, and every link and button's hover, press, and focus feedback
 npm run test:rendering      # full-page screenshots of each page state against approved baselines
-npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, and every paragraph within its measure
+npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, every card grid's rows, and every paragraph within its measure
 npm run test:security       # the security headers, the catch-all redirect, the unlisted cards' noindex, no secrets in the build, the dependency audit, and, in the browser, the content security policy, new tab links, and names shown as text
 npm run test:seo            # titles, descriptions, canonical links, robots, link previews, structured data, icons, robots.txt, and the sitemap, for every page and card
 ```

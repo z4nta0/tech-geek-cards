@@ -404,8 +404,9 @@ open (`tests/support/family.ts`), each at both widths.
   repeated full-page capture with the dialog open redraws its link field's
   corners differently each time, while screen captures, Firefox, and WebKit
   stay steady, and the Gallery behind it has full-page states of its own.
-- `npm run test:responsive`: 14 widths from 320 to 1,920px, and the text
-  measure.
+- `npm run test:responsive`: 14 widths from 320 to 1,920px, the text
+  measure, and the card grids' rows (even on Home and About, the Gallery's
+  last row centered).
 - `npm run test:security` (added 2026-11-10, in the audit, from
   TechGeek.dev's): in Chromium only, since they read files, `public/_headers`'
   policy (`default-src 'self'`, every directive only `'self'` or `'none'`, no
