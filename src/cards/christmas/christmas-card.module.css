@@ -101,7 +101,7 @@
 	display  : grid;
 	inset    : 0;
 	position : absolute;
-	z-index  : 1; /* What: Layer Above The Scenes. Why: The wipe has to cover both scenes, which paint in DOM order after it with no layer of their own. How: This lifts it one layer above them. */
+	z-index  : 1;        /* What: Layer Above The Scenes. Why: The wipe has to cover both scenes, which paint in DOM order after it with no layer of their own. How: This lifts it one layer above them. */
 
 
 }
@@ -124,7 +124,7 @@
 
 
 	background : url( './pirate-background.webp' ) center / cover no-repeat;
-	color      : var( --chr-hac-col ); /* Christmas Hacked Color = #F00000 */
+	color      : var( --chr-hac-col );                                       /* Christmas Hacked Color = #F00000 */
 	inset      : 0;
 	position   : absolute;
 	text-align : center;
@@ -195,7 +195,7 @@
 
 
 	background : url( './snowy-background.webp' ) center / cover no-repeat;
-	color      : var( --chr-whi-col ); /* Christmas White Color = #FFFFFF */
+	color      : var( --chr-whi-col );                                      /* Christmas White Color = #FFFFFF */
 	inset      : 0;
 	opacity    : 0;
 	overflow   : hidden;

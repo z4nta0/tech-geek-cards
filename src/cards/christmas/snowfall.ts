@@ -109,11 +109,12 @@ const ranIntFun = ( minValNum : number, maxValNum : number ) : number => Math.ro
 const resFlaFun = ( flaRecObj : FlaRecTyp, snoSetObj : SnoSetTyp, widValNum : number ) : void => { // What: Reset Flake Function. Why: A flake that leaves the snow should fall again from the top. How: This picks a new size, speed, sway, and spot, and resizes the flake's element.
 
 
-	flaRecObj.oscSteNum = ranIntFun( 1, 10 ) / 100;                                    // What: Oscillation Step Assignment. Why: Each flake sways at its own pace. How: This picks 0.01 to 0.1 radians per 60th of a second.
-	flaRecObj.sizNum    = ranIntFun( snoSetObj.sizMinNum, snoSetObj.sizMaxNum );       // What: Size Assignment. Why: Each fall gets a new size. How: This picks one within the settings' range.
-	flaRecObj.speNum    = ranIntFun( snoSetObj.speMinNum, snoSetObj.speMaxNum );       // What: Speed Assignment. Why: Each fall gets a new speed. How: This picks one within the settings' range.
-	flaRecObj.xcoNum    = ranIntFun( 0, Math.max( 0, widValNum - flaRecObj.sizNum ) ); // What: X-Coordinate Assignment. Why: The flake starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
-	flaRecObj.ycoNum    = 0;                                                           // What: Y-Coordinate Assignment. Why: The flake starts again at the top. How: This puts it at the top edge.
+	flaRecObj.oscSteNum = ranIntFun( 1, 10 ) / 100;                              // What: Oscillation Step Assignment. Why: Each flake sways at its own pace. How: This picks 0.01 to 0.1 radians per 60th of a second.
+	flaRecObj.sizNum    = ranIntFun( snoSetObj.sizMinNum, snoSetObj.sizMaxNum ); // What: Size Assignment. Why: Each fall gets a new size. How: This picks one within the settings' range.
+	flaRecObj.speNum    = ranIntFun( snoSetObj.speMinNum, snoSetObj.speMaxNum ); // What: Speed Assignment. Why: Each fall gets a new speed. How: This picks one within the settings' range.
+
+	flaRecObj.xcoNum = ranIntFun( 0, Math.max( 0, widValNum - flaRecObj.sizNum ) ); // What: X-Coordinate Assignment. Why: The flake starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
+	flaRecObj.ycoNum = 0;                                                           // What: Y-Coordinate Assignment. Why: The flake starts again at the top. How: This puts it at the top edge.
 
 	flaRecObj.divEle.style.height = `${ flaRecObj.sizNum }px`; // What: Height Assignment. Why: The element has to match the new size. How: This sets its height.
 	flaRecObj.divEle.style.width  = `${ flaRecObj.sizNum }px`; // What: Width Assignment. Why: The element has to match the new size. How: This sets its width.
