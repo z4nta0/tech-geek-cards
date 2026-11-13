@@ -3,9 +3,10 @@
 
 // #region Imports
 
-import { expect    } from '@playwright/test';     // What: Expect. Why: Each page passes only when every paragraph keeps its measure. How: This asserts the problem list is empty.
-import { opeStaFun } from '../support/states.ts'; // What: Open State Function. Why: Each width is measured settled. How: This loads the page and waits for it.
-import { test      } from '@playwright/test';     // What: Test. Why: Each page is its own test. How: This declares them.
+import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: A card's page is opened like the other suites open it, waiting for its code to mount. How: This lists every card's address.
+import { expect      } from '@playwright/test';          // What: Expect. Why: Each page passes only when every paragraph keeps its measure. How: This asserts the problem list is empty.
+import { opeStaFun   } from '../support/states.ts';      // What: Open State Function. Why: Each width is measured settled. How: This loads the page and waits for it.
+import { test        } from '@playwright/test';          // What: Test. Why: Each page is its own test. How: This declares them.
 
 // #endregion Imports
 
@@ -239,10 +240,11 @@ for ( const meaCasObj of MEA_CAS_ARR ) { // What: Case Test Loop. Why: Every pag
 			await opeStaFun( curPagObj, { // What: Case Open Call. Why: The text is measured settled. How: This opens the case's path at the width, opening the menu first for the menu case.
 
 
-				heiNum : 900,              // What: Height Number. Why: Only the width changes how text wraps. How: Every case is measured at the same height.
-				ideStr : meaCasObj.ideStr, // What: Identifier String. Why: The state names its case. How: This reuses the case's name.
-				patStr : meaCasObj.patStr, // What: Path String. Why: The state opens the case's route. How: This reuses the case's path.
-				widNum : widValNum,        // What: Width Number. Why: The width is what this test varies. How: This sizes the viewport to the loop's width.
+				heiNum : 900,                                                                                // What: Height Number. Why: Only the width changes how text wraps. How: Every case is measured at the same height.
+				ideStr : meaCasObj.ideStr,                                                                   // What: Identifier String. Why: The state names its case. How: This reuses the case's name.
+				patStr : meaCasObj.patStr,                                                                   // What: Path String. Why: The state opens the case's route. How: This reuses the case's path.
+				redBoo : CAR_DAT_ARR.some( ( carDatObj ) => `/${ carDatObj.sluStr }` === meaCasObj.patStr ), // What: Reduced Boolean. Why: A card's code arrives on demand, so a card case has to wait for it to mount rather than measure its loading message. How: This is true for a card's address, which makes the open call wait for the card and keep the reduced motion set above.
+				widNum : widValNum,                                                                          // What: Width Number. Why: The width is what this test varies. How: This sizes the viewport to the loop's width.
 
 				...( meaCasObj.menBoo ? { actFun : async ( actPagObj ) => { await actPagObj.getByRole( 'button', { name : 'Toggle menu' } ).click(); } } : {} ) // What: Menu Action Spread. Why: Only the menu case opens the menu. How: This adds the toggle click as the state's action for that case.
 
