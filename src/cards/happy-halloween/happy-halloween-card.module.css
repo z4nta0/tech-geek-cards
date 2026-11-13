@@ -310,7 +310,7 @@
 
 	color   : var( --hal-gre-col ); /* Halloween Greeting Color = #FF6B00 */
 	display : block;
-	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 var( --hal-pur-col ) ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) rgb( from var( --hal-gre-col ) r g b / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Halloween Purple Color = #1A0533, Vertical Rhythm Base ~= 14.572px, Halloween Greeting Color = #FF6B00 @ 0.755 opacity */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
+	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 var( --hal-pur-col ) ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) rgb( from var( --hal-gre-col ) r g b / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Halloween Purple Color = #1A0533, Vertical Rhythm Base ~= 14.572px, Halloween Greeting Color = #FF6B00 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
 
 
 }
@@ -376,7 +376,7 @@
 	top         : 0;
 	visibility  : hidden;
 	width       : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
-	will-change : transform;
+	will-change : transform;                           /* What: Kept Transform Hint. Why: A bat is moving for most of the time it's shown, so its layer is worth holding rather than promoting it at each flight. How: The hint stays on while the bat is in the card, and the reduced-motion variant below drops it, since the bats never fly there. */
 
 
 }

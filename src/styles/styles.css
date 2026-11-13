@@ -31,9 +31,9 @@
 
 	/* CTRL+ALT+C to toggle color swatches on and off *Requires Extension Toggle by Peng Lv */
 
-	--act-dar-col : oklch( from var( --act-mai-col ) calc( l - 0.15 ) c h ); /* What: Accent-Tertiary Dark Color ~= #b11157. Why: The bright berry is too light to read as text on the ivory. How: This darkens the berry's lightness by 0.15 through relative color syntax, for berry text such as an accent word. */
-	--act-mai-col : #E64E82;                                                 /* What: Accent-Tertiary Main Color = #E64E82. Why: Confetti needs a third, celebratory color beside the family's orange and blue, and it gives TechGeek.cards a color of its own. How: This is a berry lightened from #E2457A so ink text on it reaches 4.69:1, for celebratory touches such as confetti, never buttons or links, which stay orange. */
-	--act-tin-col : #FAD3E0;                                                 /* What: Accent-Tertiary Tint Color = #FAD3E0. Why: Some tiles and tags sit on a pale berry. How: This is a pale berry, for a surface behind berry accents such as an occasion tag. */
+	--act-dar-col : oklch( from var( --act-mai-col ) calc( l - 0.15 ) c h ); /* What: Accent-Tertiary Dark Color. Why: The bright berry is too light to read as text on the ivory. How: This darkens the berry's lightness by 0.15 through relative color syntax, giving about #b11157, for berry text such as an accent word. */
+	--act-mai-col : #E64E82;                                                 /* What: Accent-Tertiary Main Color. Why: Confetti needs a third, celebratory color beside the family's orange and blue, and it gives TechGeek.cards a color of its own. How: This is a berry, #E64E82, lightened from #E2457A so ink text on it reaches 4.69:1, for celebratory touches such as confetti, never buttons or links, which stay orange. */
+	--act-tin-col : #FAD3E0;                                                 /* What: Accent-Tertiary Tint Color. Why: Some tiles and tags sit on a pale berry. How: This is a pale berry, #FAD3E0, for a surface behind berry accents such as an occasion tag. */
 
 	/* #endregion Color Tokens */
 

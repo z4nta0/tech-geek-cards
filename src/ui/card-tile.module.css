@@ -68,7 +68,7 @@
 .staWraDiv { /* What: Stamp Wrap Div. Why: The stamp's shadow has to follow its perforated edge, and the stamp tips as if dropped on a table. How: This casts a drop shadow from the masked frame inside it and tilts it a degree and a half, easing the tilt. */
 
 
-	filter     : drop-shadow( 0 calc( var( --ver-rhy-m06 ) * 1rem ) calc( var( --ver-rhy-m04 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 6 ~= 2.696px, Vertical Rhythm Base Minus 4 ~= 4.732px, Shadow Main Color = #1A1A2E @ 0.105 opacity */ /* What: Perforated Shadow. Why: A box shadow would draw a plain rectangle behind the holes. How: A drop shadow follows the frame's mask instead. */
+	filter     : drop-shadow( 0 calc( var( --ver-rhy-m06 ) * 1rem ) calc( var( --ver-rhy-m04 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 6 ~= 2.696px, Vertical Rhythm Base Minus 4 ~= 4.732px, Shadow Main Color = #1A1A2E @ 0.105 opacity, Core-Design-Number to the Power of 8 Reciprocal ~= 0.105 */ /* What: Perforated Shadow. Why: A box shadow would draw a plain rectangle behind the holes. How: A drop shadow follows the frame's mask instead. */
 	rotate     : -1.5deg;
 	transition : rotate var( --dur-tra-p02 ) var( --mot-ove-eas ); /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
 

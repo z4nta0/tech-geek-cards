@@ -43,7 +43,7 @@
 
 
 	animation  : shaDiaDiaShadeFadeIn var( --dur-ani-p01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
-	background : oklch( from var( --scr-mai-col ) l c h / var( --cdn-pow-002-rec ) ); /* Scrim Main Color = #1A1A2E @ 0.570 opacity */
+	background : oklch( from var( --scr-mai-col ) l c h / var( --cdn-pow-002-rec ) ); /* Scrim Main Color = #1A1A2E @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
 
 
 }
@@ -251,7 +251,7 @@
 
 	font-size     : var( --fon-siz-p04 );                /* Font Size Base Plus 4 ~= 33.876px */
 	margin-top    : calc( var( --spa-ver-m02 ) * -1 );   /* Spacing Vertical Base Minus 2 ~= -8.304px */ /* What: Eyebrow Snug. Why: The eyebrow belongs to the title, closer than the stack's gap. How: This pulls the title up one m02 step. */
-	padding-right : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+	padding-right : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */ /* What: Close Button Clearance. Why: A long card name would run under the close button in the corner. How: This mirrors the button's own size, the same rhythm step as its width, so the title stops short of it. */
 
 
 }

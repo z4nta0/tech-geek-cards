@@ -488,7 +488,7 @@
 
 
 	bottom   : 14%;
-	filter   : drop-shadow( 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m05 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-007-rec ) ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 5 ~= 3.572px, Shadow Main Color = #1A1A2E @ 0.140 opacity */
+	filter   : drop-shadow( 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m05 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-007-rec ) ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 5 ~= 3.572px, Shadow Main Color = #1A1A2E @ 0.140 opacity, Core-Design-Number to the Power of 7 Reciprocal ~= 0.140 */
 	position : absolute;
 	right    : 8%;
 	rotate   : 8deg;
@@ -1002,7 +1002,7 @@
 .posShaDiv { /* What: Postcard Shadow Div. Why: The postcard's shadow has to follow its perforated edge. How: This casts a drop shadow from the masked postcard inside it. */
 
 
-	filter : drop-shadow( 0 calc( var( --ver-rhy-m04 ) * 1rem ) calc( var( --ver-rhy-bas ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 4 ~= 4.732px, Vertical Rhythm Base ~= 14.572px, Shadow Main Color = #1A1A2E @ 0.105 opacity */
+	filter : drop-shadow( 0 calc( var( --ver-rhy-m04 ) * 1rem ) calc( var( --ver-rhy-bas ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 4 ~= 4.732px, Vertical Rhythm Base ~= 14.572px, Shadow Main Color = #1A1A2E @ 0.105 opacity, Core-Design-Number to the Power of 8 Reciprocal ~= 0.105 */
 
 
 }

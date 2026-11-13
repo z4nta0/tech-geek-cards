@@ -251,7 +251,7 @@
 	left        : 0;
 	position    : absolute;
 	top         : 0;
-	will-change : transform;
+	will-change : transform; /* What: Kept Transform Hint. Why: A leaf is falling for most of the time it's shown, so its layer is worth holding rather than promoting it at each fall. How: The hint stays on while the leaf is in the card, and under reduced motion no leaf is made, so nothing holds it. */
 
 
 }
