@@ -28,6 +28,26 @@ leaves no hash in the address.
   the share dialog outside it. The skip link sits at layer 1, above the
   card's fixed root and level with the floating bar at the bottom edge.
 
+## Section links
+Decided 2026-11-13, in the audit. The site has one section link: Home's
+hero "How It Works" button, whose `href` is `/#how-it-works` and which leads
+to the steps section (`id='how-it-works'`). It goes through the shared
+helper in `ui/section-link.ts` (`modCliFun`, `useSecLinFun`, `useSecCliFun`,
+adapted from hair-designs'), whose `modCliFun` the card page's skip link
+shares. Home's hash arrival effect jumps to the element a hash names once
+the fonts load and the page's entrance animation has ended, since a jump
+made while the page was still rising landed about 25px short in Chromium.
+- **Where it differs from the user-level rule**: the hash is cleared with
+  `history.replaceState( history.state, '', path + query )` rather than the
+  router's `navigate( { hash : '' }, { replace : true } )`, since the design
+  package's scroll hook answers every router PUSH or REPLACE without a hash by
+  jumping to the top, which would undo the arrival. Keeping `history.state`
+  keeps React Router's key and index, and the router sees no navigation.
+  tonys-toppers' hook reads a `cleBoo` state flag for this case, which
+  techgeek-design could adopt in a later release, letting this site go back
+  to the router.
+- **A hash naming nothing on the page** is left in the address as it came.
+
 ## Origin and sibling sites
 Decided 2026-10-12, recorded 2026-10-14. TechGeek.support
 (`../tech-geek-support`) once held the portfolio, the support articles, and
