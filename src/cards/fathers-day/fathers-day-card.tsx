@@ -80,18 +80,18 @@ const FAT_CAR_OBJ : FamCarTyp = { // What: Father's Card Object. Why: The engine
 	phoRecArr : [ // What: Photo Record Array. Why: The scenes and the grid share one set of photos. How: These are the ten scenes' photos, then the grid's two extras.
 
 
-		{ altStr : 'A young father carrying his baby on his shoulders in front of an old shed.', imaStr : thaYouUrl },     // What: Scene One Photo Record. Why: The first scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A father napping on a striped couch with his toddler asleep on his chest.', imaStr : evePhoUrl },      // What: Scene Two Photo Record. Why: The second scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A father in bed with his two young daughters under a blue blanket.', imaStr : litThiUrl },             // What: Scene Three Photo Record. Why: The third scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A father in a white tuxedo helping his little son into a matching one.', imaStr : impRolUrl },         // What: Scene Four Photo Record. Why: The fourth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A young father carrying his baby on his shoulders in front of an old shed.',     imaStr : thaYouUrl }, // What: Scene One Photo Record. Why: The first scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A father napping on a striped couch with his toddler asleep on his chest.',      imaStr : evePhoUrl }, // What: Scene Two Photo Record. Why: The second scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A father in bed with his two young daughters under a blue blanket.',             imaStr : litThiUrl }, // What: Scene Three Photo Record. Why: The third scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A father in a white tuxedo helping his little son into a matching one.',         imaStr : impRolUrl }, // What: Scene Four Photo Record. Why: The fourth scene shows this photo. How: The photo grid shows it too.
 		{ altStr : 'A father building a wooden frame while his toddler daughter smiles beside him.', imaStr : proForUrl }, // What: Scene Five Photo Record. Why: The fifth scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A father in sunglasses with his three young sons beside a race car.', imaStr : thrGenUrl },            // What: Scene Six Photo Record. Why: The sixth scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A family laughing together around a grandfather in overalls.', imaStr : speDayUrl },                   // What: Scene Seven Photo Record. Why: The seventh scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A father in a gray suit hugging his son on his wedding day.', imaStr : lovYouUrl },                    // What: Scene Eight Photo Record. Why: The eighth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A father in sunglasses with his three young sons beside a race car.',            imaStr : thrGenUrl }, // What: Scene Six Photo Record. Why: The sixth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A family laughing together around a grandfather in overalls.',                   imaStr : speDayUrl }, // What: Scene Seven Photo Record. Why: The seventh scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A father in a gray suit hugging his son on his wedding day.',                    imaStr : lovYouUrl }, // What: Scene Eight Photo Record. Why: The eighth scene shows this photo. How: The photo grid shows it too.
 		{ altStr : 'Three grown men on a couch, one kissing the father in the middle on the cheek.', imaStr : appPhoUrl }, // What: Scene Nine Photo Record. Why: The ninth scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A grandfather in an armchair holding two babies on his lap.', imaStr : neeYouUrl },                    // What: Scene Ten Photo Record. Why: The tenth scene shows this photo. How: The photo grid shows it too.
-		{ altStr : 'A smiling father holding his baby daughter up to his cheek.', imaStr : extOneUrl },                    // What: Grid Extra One Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the first of them.
-		{ altStr : 'A father lying on a shag carpet beside his sleeping toddler.', imaStr : extTwoUrl }                    // What: Grid Extra Two Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the second of them.
+		{ altStr : 'A grandfather in an armchair holding two babies on his lap.',                    imaStr : neeYouUrl }, // What: Scene Ten Photo Record. Why: The tenth scene shows this photo. How: The photo grid shows it too.
+		{ altStr : 'A smiling father holding his baby daughter up to his cheek.',                    imaStr : extOneUrl }, // What: Grid Extra One Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the first of them.
+		{ altStr : 'A father lying on a shag carpet beside his sleeping toddler.',                   imaStr : extTwoUrl }  // What: Grid Extra Two Photo Record. Why: The photo grid holds two photos no scene shows. How: This is the second of them.
 
 
 	],
@@ -99,16 +99,105 @@ const FAT_CAR_OBJ : FamCarTyp = { // What: Father's Card Object. Why: The engine
 	sceRecArr : [ // What: Scene Record Array. Why: The card plays ten lines in order. How: Each row is one line's three parts.
 
 
-		{ aftStr : '!',                                          befStr : 'To all of the fathers out there, ', higStr : 'thank you' },   // What: Scene One Record. Why: This is the card's first line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' that you do for us.',                       befStr : 'For ', higStr : 'everything' },                               // What: Scene Two Record. Why: This is the card's second line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : '.',                                          befStr : 'Especially the ', higStr : 'little things' },                 // What: Scene Three Record. Why: This is the card's third line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' in our lives.',                             befStr : 'You play such an ', higStr : 'important role' },              // What: Scene Four Record. Why: This is the card's fourth line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' goes beyond words!',                        befStr : 'What fathers ', higStr : 'provide for us' },                  // What: Scene Five Record. Why: This is the card's fifth line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : '.',                                          befStr : 'And gets passed down ', higStr : 'through the generations' }, // What: Scene Six Record. Why: This is the card's sixth line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' we take great delight in celebrating you.', befStr : 'So on this ', higStr : 'special day' },                       // What: Scene Seven Record. Why: This is the card's seventh line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' always and unconditionally.',               befStr : 'We do ', higStr : 'love you' },                               // What: Scene Eight Record. Why: This is the card's eighth line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' all that you do.',                          befStr : 'We do ', higStr : 'appreciate' },                             // What: Scene Nine Record. Why: This is the card's ninth line. How: The engine types its three parts in turn and underlines its key words.
-		{ aftStr : ' in our lives.',                             befStr : 'And we will always ', higStr : 'need you' }                   // What: Scene Ten Record. Why: This is the card's tenth line. How: The engine types its three parts in turn and underlines its key words.
+		{ // What: Scene One Record. Why: This is the card's first line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : '!',
+			befStr : 'To all of the fathers out there, ',
+			higStr : 'thank you'
+
+
+		},
+
+		{ // What: Scene Two Record. Why: This is the card's second line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' that you do for us.',
+			befStr : 'For ',
+			higStr : 'everything'
+
+
+		},
+
+		{ // What: Scene Three Record. Why: This is the card's third line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : '.',
+			befStr : 'Especially the ',
+			higStr : 'little things'
+
+
+		},
+
+		{ // What: Scene Four Record. Why: This is the card's fourth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' in our lives.',
+			befStr : 'You play such an ',
+			higStr : 'important role'
+
+
+		},
+
+		{ // What: Scene Five Record. Why: This is the card's fifth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' goes beyond words!',
+			befStr : 'What fathers ',
+			higStr : 'provide for us'
+
+
+		},
+
+		{ // What: Scene Six Record. Why: This is the card's sixth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : '.',
+			befStr : 'And gets passed down ',
+			higStr : 'through the generations'
+
+
+		},
+
+		{ // What: Scene Seven Record. Why: This is the card's seventh line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' we take great delight in celebrating you.',
+			befStr : 'So on this ',
+			higStr : 'special day'
+
+
+		},
+
+		{ // What: Scene Eight Record. Why: This is the card's eighth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' always and unconditionally.',
+			befStr : 'We do ',
+			higStr : 'love you'
+
+
+		},
+
+		{ // What: Scene Nine Record. Why: This is the card's ninth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' all that you do.',
+			befStr : 'We do ',
+			higStr : 'appreciate'
+
+
+		},
+
+		{ // What: Scene Ten Record. Why: This is the card's tenth line. How: The engine types its three parts in turn and underlines its key words.
+
+
+			aftStr : ' in our lives.',
+			befStr : 'And we will always ',
+			higStr : 'need you'
+
+
+		}
 
 
 	]

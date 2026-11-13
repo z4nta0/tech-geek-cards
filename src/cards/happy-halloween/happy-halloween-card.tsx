@@ -259,7 +259,6 @@ function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 	const rigWinRef = useRef< SVGPathElement >( null ); // What: Right Wing Reference. Why: The wings flap. How: This holds the right wing.
 
 
-
 	useGSAP( () => { // What: Bat Motion Hook. Why: The bat flies only after it renders, and stops when the card leaves. How: This builds its flight, bob, and flaps in a GSAP context.
 
 
@@ -267,26 +266,28 @@ function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 
 
 
-		const batWidNum = rhyPixFun( 'p06' );                                                                              // What: Bat Width Number. Why: The bat starts and ends just past the edges, and drifts up or down by about as much. How: This is the bat's own width, the Vertical Rhythm Base Plus 6 step. // Vertical Rhythm Base Plus 6 ~= 78.751px
-		const bobAmpNum = rhyPixFun( 'p01' );                                                                              // What: Bob Amplitude Number. Why: The bat bobs up and down as it flies. How: This is how far it swings each way. // Vertical Rhythm Base Plus 1 ~= 19.304px
-		const bobDurNum = durSecFun( 'p06' );                                                                              // What: Bob Duration Number. Why: Each swing of the bob takes a moment. How: This is one swing's length. // Duration Animation Base Plus 6 ~= 853.0ms
-		const decEasStr = gsaEasFun( 'dec' );                                                                              // What: Decelerate Easing String. Why: The bat's fades settle as they finish. How: This registers the decelerate token and keeps its GSAP name.
-		const fadDurNum = durSecFun( 'p02' );                                                                              // What: Fade Duration Number. Why: The bat fades in and out at the edges. How: This is each fade's length. // Duration Animation Base Plus 2 ~= 277.0ms
-		const fadPosStr = `-=${ durSecFun( 'p03' ) }`;                                                                     // What: Fade Position String. Why: The bat fades out before it reaches the far edge. How: This GSAP position starts the fade before the flight ends. // Duration Animation Base Plus 3 ~= 366.9ms
-		const flyDurNum = gsap.utils.random( durSecFun( 'p11' ), durSecFun( 'p13' ) );                                     // What: Fly Duration Number. Why: Each bat crosses at its own pace. How: This picks the flight's length once, between the two steps. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
-		const heiMaxNum = rhyPixFun( 'p10' );                                                                              // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
-		const heiMinNum = rhyPixFun( 'p04' );                                                                              // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
-		const inoEasStr = gsaEasFun( 'ino' );                                                                              // What: In-Out Easing String. Why: The bob and the flaps turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
-		const repDelNum = gsap.utils.random( durSecFun( 'p07' ), durSecFun( 'p11' ) );                                     // What: Repeat Delay Number. Why: Each bat rests for its own while between flights. How: This picks the pause once, between the two steps. // Duration Animation Base Plus 7 ~= 1,130.0ms, Duration Animation Base Plus 11 ~= 3,480.0ms
-		const winDurNum = durSecFun( 'bas' );                                                                              // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
-		const winEacNum = durSecFun( 'm02' );                                                                              // What: Wing Each Number. Why: The right wing beats a moment behind the left. How: This is the offset between them. // Duration Animation Base Minus 2 ~= 89.9ms
-		const winScaNum = 1 / cdnPowFun( 4 );                                                                              // What: Wing Scale Number. Why: A flap folds the wing nearly flat. How: This squashes it to about a third of its height. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+		const batWidNum = rhyPixFun( 'p06' );                                                                                 // What: Bat Width Number. Why: The bat starts and ends just past the edges, and drifts up or down by about as much. How: This is the bat's own width, the Vertical Rhythm Base Plus 6 step. // Vertical Rhythm Base Plus 6 ~= 78.751px
+		const bobAmpNum = rhyPixFun( 'p01' );                                                                                 // What: Bob Amplitude Number. Why: The bat bobs up and down as it flies. How: This is how far it swings each way. // Vertical Rhythm Base Plus 1 ~= 19.304px
+		const bobDurNum = durSecFun( 'p06' );                                                                                 // What: Bob Duration Number. Why: Each swing of the bob takes a moment. How: This is one swing's length. // Duration Animation Base Plus 6 ~= 853.0ms
+		const decEasStr = gsaEasFun( 'dec' );                                                                                 // What: Decelerate Easing String. Why: The bat's fades settle as they finish. How: This registers the decelerate token and keeps its GSAP name.
+		const fadDurNum = durSecFun( 'p02' );                                                                                 // What: Fade Duration Number. Why: The bat fades in and out at the edges. How: This is each fade's length. // Duration Animation Base Plus 2 ~= 277.0ms
+		const fadPosStr = `-=${ durSecFun( 'p03' ) }`;                                                                        // What: Fade Position String. Why: The bat fades out before it reaches the far edge. How: This GSAP position starts the fade before the flight ends. // Duration Animation Base Plus 3 ~= 366.9ms
+		const flyDurNum = gsap.utils.random( durSecFun( 'p11' ), durSecFun( 'p13' ) );                                        // What: Fly Duration Number. Why: Each bat crosses at its own pace. How: This picks the flight's length once, between the two steps. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
+		const heiMaxNum = rhyPixFun( 'p10' );                                                                                 // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
+		const heiMinNum = rhyPixFun( 'p04' );                                                                                 // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const inoEasStr = gsaEasFun( 'ino' );                                                                                 // What: In-Out Easing String. Why: The bob and the flaps turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
+		const repDelNum = gsap.utils.random( durSecFun( 'p07' ), durSecFun( 'p11' ) );                                        // What: Repeat Delay Number. Why: Each bat rests for its own while between flights. How: This picks the pause once, between the two steps. // Duration Animation Base Plus 7 ~= 1,130.0ms, Duration Animation Base Plus 11 ~= 3,480.0ms
+		const winDurNum = durSecFun( 'bas' );                                                                                 // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
+		const winEacNum = durSecFun( 'm02' );                                                                                 // What: Wing Each Number. Why: The right wing beats a moment behind the left. How: This is the offset between them. // Duration Animation Base Minus 2 ~= 89.9ms
+		const winScaNum = 1 / cdnPowFun( 4 );                                                                                 // What: Wing Scale Number. Why: A flap folds the wing nearly flat. How: This squashes it to about a third of its height. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
 		const batTimObj = gsap.timeline( { delay : delSecNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
-		const bobTopNum = bobAmpNum * -1;                                                                                  // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
-		const finXcoFun = () : number => innerWidth + batWidNum;                                                           // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
-		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );                                        // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
-		const staXcoNum = batWidNum * -1;                                                                                  // What: Start X-Coordinate Number. Why: The flight starts just past the left edge, out of sight. How: This is the bat's width to the left of the edge.
-		const ranDriFun = () : string => `+=${ gsap.utils.random( staXcoNum, batWidNum ) }`;                               // What: Random Drift Function. Why: Each flight rises or falls a little. How: This picks a drift up to about a bat's width either way, relative to where the flight starts.
+		const bobTopNum = bobAmpNum * -1;                                                                                     // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
+		const staXcoNum = batWidNum * -1;                                                                                     // What: Start X-Coordinate Number. Why: The flight starts just past the left edge, out of sight. How: This is the bat's width to the left of the edge.
+
+
+		const finXcoFun = () : number => innerWidth + batWidNum;                             // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
+		const ranDriFun = () : string => `+=${ gsap.utils.random( staXcoNum, batWidNum ) }`; // What: Random Drift Function. Why: Each flight rises or falls a little. How: This picks a drift up to about a bat's width either way, relative to where the flight starts.
+		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );          // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
 
 
 		batTimObj.to( batDivRef.current, { autoAlpha : 1, duration : fadDurNum, ease : decEasStr } ); // What: Fade In Step. Why: The bat appears as it sets off. How: This fades it in just past the left edge.
@@ -295,9 +296,7 @@ function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 
 		batTimObj.to( batDivRef.current, { autoAlpha : 0, duration : fadDurNum, ease : decEasStr }, fadPosStr ); // What: Fade Out Step. Why: The bat vanishes as it leaves. How: This fades it out just before the flight ends.
 
-
 		gsap.fromTo( batSvgRef.current, { y : bobTopNum }, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobAmpNum, yoyo : true } ); // What: Bob Tween. Why: A bat's flight dips and rises. How: This swings the drawing up and down forever, independent of the flight.
-
 
 		gsap.to( [ lefWinRef.current, rigWinRef.current ], { duration : winDurNum, ease : inoEasStr, scaleY : winScaNum, stagger : { each : winEacNum, repeat : -1, yoyo : true }, transformOrigin : 'center bottom' } ); // What: Flap Tween. Why: The wings beat. How: This folds each wing down toward its base and back forever, the right a beat behind the left.
 
@@ -426,7 +425,6 @@ function CanFlaCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const flaEllRef = useRef< SVGEllipseElement >( null ); // What: Flame Ellipse Reference. Why: The flame flickers. How: This holds the outer flame.
-
 
 
 	useGSAP( () => { // What: Candle Motion Hook. Why: The flame flickers only after it renders, and stops when the card leaves. How: This builds the flicker in a GSAP context.
@@ -572,7 +570,6 @@ function GhoFloCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 	const ghoSvgRef = useRef< SVGSVGElement >( null ); // What: Ghost SVG Reference. Why: The ghost rises, bobs, and rocks. How: This holds its drawing.
 
 
-
 	useGSAP( () => { // What: Ghost Motion Hook. Why: The ghost moves only after it renders, and stops when the card leaves. How: This builds its rise, bob, and rock in a GSAP context.
 
 
@@ -580,21 +577,20 @@ function GhoFloCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 
-		const bobDurNum = durSecFun( 'p08' );                  // What: Bob Duration Number. Why: A ghost bobs slowly. How: This is each rise or fall's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const bobShiNum = rhyPixFun( 'p01' ) * -1;             // What: Bob Shift Number. Why: The ghost floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Plus 1 ~= -19.304px
-		const decEasStr = gsaEasFun( 'dec' );                  // What: Decelerate Easing String. Why: The ghost slows as it arrives. How: This registers the decelerate token and keeps its GSAP name.
-		const entDurNum = durSecFun( 'p08' );                  // What: Entrance Duration Number. Why: The ghost rises into view slowly. How: This is the rise's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const entShiNum = rhyPixFun( 'p04' );                  // What: Entrance Shift Number. Why: The ghost rises from below its place. How: This is how far below it starts. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const bobDurNum = durSecFun( 'p08' );                     // What: Bob Duration Number. Why: A ghost bobs slowly. How: This is each rise or fall's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const bobShiNum = rhyPixFun( 'p01' ) * -1;                // What: Bob Shift Number. Why: The ghost floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Plus 1 ~= -19.304px
+		const decEasStr = gsaEasFun( 'dec' );                     // What: Decelerate Easing String. Why: The ghost slows as it arrives. How: This registers the decelerate token and keeps its GSAP name.
+		const entDurNum = durSecFun( 'p08' );                     // What: Entrance Duration Number. Why: The ghost rises into view slowly. How: This is the rise's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const entShiNum = rhyPixFun( 'p04' );                     // What: Entrance Shift Number. Why: The ghost rises from below its place. How: This is how far below it starts. // Vertical Rhythm Base Plus 4 ~= 44.876px
 		const ghoTimObj = gsap.timeline( { delay : delSecNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
-		const inoEasStr = gsaEasFun( 'ino' );                  // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
-		const rotAngNum = cdnPowFun( 5 );                      // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
-		const rotDurNum = durSecFun( 'p09' );                  // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two drift out of step. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		const inoEasStr = gsaEasFun( 'ino' );                     // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
+		const rotAngNum = cdnPowFun( 5 );                         // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
+		const rotDurNum = durSecFun( 'p09' );                     // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two drift out of step. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 		ghoTimObj.fromTo( ghoSvgRef.current, { autoAlpha : 0, y : entShiNum }, { autoAlpha : 1, duration : entDurNum, ease : decEasStr, y : 0 } ); // What: Rise Step. Why: The ghost appears over the hills. How: This fades it in as it rises to its place.
 
 		ghoTimObj.to( ghoSvgRef.current, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobShiNum, yoyo : true } ); // What: Bob Step. Why: A ghost hovers. How: This floats it up and back forever once it has risen.
-
 
 		gsap.to( ghoSvgRef.current, { delay : delSecNum, duration : rotDurNum, ease : inoEasStr, repeat : -1, rotation : rotAngNum, yoyo : true } ); // What: Rock Tween. Why: The ghost sways as it hovers. How: This tilts it and back forever, starting as it rises.
 
@@ -714,7 +710,6 @@ function PumLanCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 	const gloCirRef = useRef< SVGCircleElement >( null );  // What: Glow Circle Reference. Why: The glow behind the pumpkin pulses. How: This holds the glow.
 
 
-
 	useGSAP( () => { // What: Pumpkin Motion Hook. Why: The flame and glow flicker only after they render, and stop when the card leaves. How: This builds both in a GSAP context.
 
 
@@ -732,8 +727,6 @@ function PumLanCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 		gsap.to( flaEllRef.current, { delay : delSecNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
-
-
 		gsap.to( gloCirRef.current, { delay : delSecNum, duration : gloDurNum, ease : decEasStr, opacity : gloOpaNum, repeat : -1, scale : gloScaNum, transformOrigin : 'center center', yoyo : true } ); // What: Pulse Tween. Why: The pumpkin's glow wavers with the candle inside. How: This grows and dims the glow from its center and back forever after its delay.
 
 
@@ -948,11 +941,8 @@ function HalCarCom () : JSX.Element {
 
 		SplitText.create( titShaRef.current, { aria : 'none', type : 'words, chars' } ); // What: Shadow Split Call. Why: The shadow copy has to line up with the split heading letter for letter, and splitting drops the kerning between letters. How: This wraps the copy's words and letters the same way, adding no labels, since the copy is hidden from screen readers.
 
-
 		titTimObj.from( titSplObj.chars, { autoAlpha : 0, duration : titDurNum, ease : bouEasStr, rotation : titRotFun, stagger : titStaNum, y : titShiNum } ); // What: Drop Step. Why: The greeting arrives with a playful spring. How: This drops each letter in from above, tilted, fading in and springing upright.
-
-		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr } ); // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
-
+		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr } );                                                         // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
 
 		gsap.to( titSplObj.chars, { color : gloColStr, delay : gloDelNum, duration : gloDurNum, ease : inoEasStr, stagger : gloStaObj } ); // What: Shimmer Tween. Why: The greeting flickers like candlelight. How: This shifts each letter to candle yellow and back forever, in a wave.
 
@@ -1011,6 +1001,7 @@ function HalCarCom () : JSX.Element {
 		let ligDelObj : gsap.core.Tween | null = null; // What: Lightning Delay Object. Why: The cleanup has to cancel the next strike. How: This holds the pending delayed call.
 
 
+
 		ligTimObj.to( ligFlaRef.current, { duration : ligFirNum, opacity : ligBriNum } ); // What: First Flare Step. Why: Lightning strikes. How: This flashes the sky brightly.
 		ligTimObj.to( ligFlaRef.current, { duration : ligFadNum, opacity : 0         } ); // What: First Fade Step. Why: The flash vanishes. How: This fades it out.
 		ligTimObj.to( ligFlaRef.current, { duration : ligSecNum, opacity : ligDimNum } ); // What: Second Flare Step. Why: Lightning often strikes twice. How: This flashes the sky again, fainter.
@@ -1054,7 +1045,6 @@ function HalCarCom () : JSX.Element {
 		};
 
 		// #endregion flaLigFun
-
 
 
 		ligDelObj = gsap.delayedCall( ligStaNum, flaLigFun ); // What: First Strike Assignment. Why: The first strike comes a few seconds in. How: This schedules it and keeps the call.

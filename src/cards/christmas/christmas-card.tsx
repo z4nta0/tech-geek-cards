@@ -277,8 +277,8 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the column count griSizFun measures on the first render. // What: Square Row Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the row count griSizFun measures on the first render.
 	const [ seaParObj ]                = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
-	const froParStr = seaParObj.get( 'from' );                               // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
-	const namParStr = seaParObj.get( 'name' );                               // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
+	const froParStr = seaParObj.get( 'from' );                                  // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
+	const namParStr = seaParObj.get( 'name' );                                  // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
 	const sigNamStr = froParStr || ( isaPraBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
 
 
@@ -317,9 +317,9 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 		const splFroObj = { autoAlpha : 0, duration : fadDurNum, stagger : splStaNum, x : splShiNum };     // What: Split From Object. Why: Both messages fade in the same way. How: Each letter starts hidden and shifted right, fading in over the long fade.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                            // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
 
-		let stoSnoFun = () => {}; // What: Stop Snowfall Function. Why: The cleanup has to stop the snow if it started. How: This holds the stop function staSnoFun returns, a no-op until then.
 
 
+		let stoSnoFun   = () => {};                                                                                                     // What: Stop Snowfall Function. Why: The cleanup has to stop the snow if it started. How: This holds the stop function staSnoFun returns, a no-op until then.
 		const begSnoFun = () => { if ( !redMotFun() ) stoSnoFun = staSnoFun( snoSceRef.current!, cssModObj.snoFlaDiv, snoSetFun() ); }; // What: Begin Snowfall Function. Why: Both versions start the snow, but never under reduced motion. How: This starts it in the snowy scene and keeps its stop function. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The timeline only runs after the render that attaches it.
 
 

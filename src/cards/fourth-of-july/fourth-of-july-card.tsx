@@ -170,9 +170,9 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 	const timLinArr : ( gsap.core.Timeline | null )[] = Array( FIR_POO_NUM ).fill( null );                 // What: Timeline Array. Why: Stopping has to end every firework still bursting, and a reused wrap's last burst has to end before its next. How: This holds each wrap's latest timeline, null before its first.
 	const wraDivArr : HTMLElement[]                   = Array.from( firDivEle.children ) as HTMLElement[]; // What: Wrap Div Array. Why: The pool's wraps are reused in turn. How: This lists the firework layer's children. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every wrap the card renders is a div.
 
-	let lauCalObj : gsap.core.Tween | null = null; // What: Launch Call Object. Why: Stopping has to cancel the next launch. How: This holds the pending delayed call, null before the first.
-
 	let wraIndNum = 0; // What: Wrap Index Number. Why: The wraps take turns. How: This holds the next wrap's place in the pool.
+
+	let lauCalObj : gsap.core.Tween | null = null; // What: Launch Call Object. Why: Stopping has to cancel the next launch. How: This holds the pending delayed call, null before the first.
 
 
 
@@ -214,8 +214,8 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell Div Element. Why: The shell burns out as the firework bursts. How: This is the wrap's first child. // What: Ring Div Element. Why: The ring flashes outward from the burst. How: This is the wrap's second child. // What: Particle Div Array. Why: Each spark flies its own way. How: This gathers the wrap's remaining children, the sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
 
 
-		timLinArr[ wraIndNum ]?.kill(); // What: Last Timeline Kill Call. Why: A reused wrap's last burst must not keep playing over its new one. How: This kills the wrap's previous timeline, if any.
 
+		timLinArr[ wraIndNum ]?.kill(); // What: Last Timeline Kill Call. Why: A reused wrap's last burst must not keep playing over its new one. How: This kills the wrap's previous timeline, if any.
 
 		timLinObj.set( wraDivEle, { x : wraXcoNum, y : wraYcoNum }, 0 ); // What: Wrap Placement. Why: The firework bursts at its picked spot. How: This moves the wrap there by transform, so placing it needs no layout.
 
@@ -235,11 +235,11 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 			parDivEle.style.setProperty( '--foj-par-col', ranColFun() ); // What: Particle Color Assignment. Why: The sparks burst in mixed colors. How: This sets the custom property the spark reads to a random palette color.
 
-
 			timLinObj.fromTo( parDivEle, { opacity : 1, scale : 1, x : 0, y : 0 }, { duration : fliSecNum, opacity : 0, scale : parScaNum, x : xcoPixNum, y : ycoPixNum }, parDelNum ); // What: Particle Flight. Why: The sparks fly out, shrink, and burn out. How: This shows the spark at the burst point, then after the particle delay moves it to its end point over its flight.
 
 
 		}
+
 
 
 		wraDivEle.style.setProperty( '--foj-fir-col', ranColFun() ); // What: Firework Color Assignment. Why: The shell and ring share one color. How: This sets the custom property they read to a random palette color.
@@ -249,14 +249,12 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 		wraIndNum = ( wraIndNum + 1 ) % FIR_POO_NUM; // What: Turn Assignment. Why: The next launch plays the next wrap. How: This moves the turn on, wrapping back to the first.
 
-
 		lauCalObj = gsap.delayedCall( intSecNum, lauFirFun ); // What: Next Launch Call. Why: The fireworks keep coming. How: This schedules the next launch on GSAP's ticker, which pauses with a hidden tab.
 
 
 	};
 
 	// #endregion lauFirFun
-
 
 
 	lauFirFun(); // What: First Launch Call. Why: The sky shouldn't wait an interval for its first firework. How: This launches one at once.

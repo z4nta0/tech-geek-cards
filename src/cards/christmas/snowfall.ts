@@ -115,7 +115,6 @@ const resFlaFun = ( flaRecObj : FlaRecTyp, snoSetObj : SnoSetTyp, widValNum : nu
 	flaRecObj.xcoNum    = ranIntFun( 0, Math.max( 0, widValNum - flaRecObj.sizNum ) ); // What: X-Coordinate Assignment. Why: The flake starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
 	flaRecObj.ycoNum    = 0;                                                           // What: Y-Coordinate Assignment. Why: The flake starts again at the top. How: This puts it at the top edge.
 
-
 	flaRecObj.divEle.style.height = `${ flaRecObj.sizNum }px`; // What: Height Assignment. Why: The element has to match the new size. How: This sets its height.
 	flaRecObj.divEle.style.width  = `${ flaRecObj.sizNum }px`; // What: Width Assignment. Why: The element has to match the new size. How: This sets its width.
 
@@ -280,7 +279,6 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

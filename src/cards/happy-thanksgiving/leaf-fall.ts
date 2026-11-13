@@ -142,6 +142,7 @@ const resLeaFun = ( leaRecObj : LeaRecTyp, leaSetObj : LeaSetTyp, conWidNum : nu
 	leaRecObj.svgEle.setAttribute( 'height', String( sizValNum ) ); // What: Height Attribute Call. Why: The element has to match the new size. How: This sets its height.
 	leaRecObj.svgEle.setAttribute( 'width', String( sizValNum ) );  // What: Width Attribute Call. Why: The element has to match the new size. How: This sets its width.
 
+
 	leaRecObj.svgEle.style.color   = leaSetObj.colStrArr[ colIndNum ]; // What: Color Assignment. Why: The leaf's shapes fill with the current color. How: This tints it the picked color.
 	leaRecObj.svgEle.style.opacity = '0';                              // What: Opacity Assignment. Why: The leaf stays hidden while it waits. How: This hides it until the frame loop fades it in.
 
@@ -236,9 +237,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 		leaRecObj.svgEle.setAttribute( 'class', leaClaStr ); // What: Leaf Class Assignment. Why: The copy keeps the template's hiding class, which the leaf mustn't. How: This replaces it with the falling leaf's class.
 
-
 		resLeaFun( leaRecObj, leaSetObj, conWidNum, conHeiNum ); // What: Leaf Reset Call. Why: A new leaf needs a size, color, spot, pace, and wait. How: This picks them the same way a fallen leaf's restart does.
-
 
 		conDivEle.appendChild( leaRecObj.svgEle ); // What: Leaf Append Call. Why: The leaf has to be in the page to be seen. How: This adds it to the container.
 
@@ -298,6 +297,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 		}
 
 
+
 		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The leaves keep falling. How: This asks for the next frame and keeps its id.
 
 
@@ -314,7 +314,6 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

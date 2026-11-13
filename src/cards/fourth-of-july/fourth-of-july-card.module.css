@@ -178,12 +178,12 @@
 .flaImaSvg { /* What: Flag Image SVG. Why: The flag leads the card, framed and lifted off the sky. How: This centers it above the headline at a fixed width, its height following the flag's proportions, with a faint white border, rounded corners, and a soft shadow. */
 
 
-	border        : var( --bor-wid-lar ) solid rgb( from var( --foj-whi-col ) r g b / var( --cdn-pow-004-rec ) );   /* Border Width Large ~= 2.035px, Fourth-Of-July White Color = #FFFFFF @ 0.325 opacity, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
-	border-radius : var( --rad-bor-sma );                                                                           /* Radius Border Small ~= 8.304px */
+	border        : var( --bor-wid-lar ) solid rgb( from var( --foj-whi-col ) r g b / var( --cdn-pow-004-rec ) ); /* Border Width Large ~= 2.035px, Fourth-Of-July White Color = #FFFFFF @ 0.325 opacity, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
+	border-radius : var( --rad-bor-sma );                                                                         /* Radius Border Small ~= 8.304px */
 	box-shadow    : 0 calc( var( --ver-rhy-m05 ) * 1rem ) calc( var( --ver-rhy-p02 ) * 1rem ) rgb( from var( --foj-sha-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Vertical Rhythm Base Plus 2 ~= 25.572px, Fourth-Of-July Shadow Color = #000000 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
 	display       : block;
 	height        : auto;
-	margin        : 0 auto var( --spa-ver-p02 );                                                                    /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	margin        : 0 auto var( --spa-ver-p02 );                                                                  /* Spacing Vertical Base Plus 2 ~= 25.572px */
 	overflow      : hidden;
 	width         : calc( var( --ver-rhy-p09 ) * 1rem );                                                            /* Vertical Rhythm Base Plus 9 ~= 183.074px */
 

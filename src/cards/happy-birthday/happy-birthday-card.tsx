@@ -303,8 +303,8 @@ function BirCarCom () : JSX.Element {
 
 			stoBalFun(); // What: Balloons Stop Call. Why: The balloons' loop must not outlive the card. How: This stops it.
 
-
 			conSysObj.stoFun(); // What: Confetti Stop Call. Why: The confetti's loop must not outlive the card. How: This stops it.
+
 
 			conSysRef.current = null; // What: Confetti System Clear. Why: A tap after the cleanup shouldn't reach stopped confetti. How: This forgets its functions.
 

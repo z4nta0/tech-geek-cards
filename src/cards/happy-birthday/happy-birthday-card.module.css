@@ -167,8 +167,8 @@
 	overflow    : visible;
 	position    : absolute;
 	top         : 0;
-	will-change : transform;
 	width       : auto;
+	will-change : transform;
 
 
 }
@@ -246,8 +246,8 @@
 
 
 	display     : block;
-	font-size   : clamp( var( --fon-siz-p04 ), 10vw, var( --fon-siz-p06 ) );                                                                                     /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
-	text-shadow : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) rgb( from var( --bir-glo-col ) r g b / var( --cdn-pow-002-rec ) );   /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Plus 1 ~= 19.304px, Birthday Glow Color = #FFB400 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Line Glow. Why: The line glows gold. How: The shadow is cast by the whole line, which pops in as one piece rather than letter by letter. */
+	font-size   : clamp( var( --fon-siz-p04 ), 10vw, var( --fon-siz-p06 ) );                                                                                   /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
+	text-shadow : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) rgb( from var( --bir-glo-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Plus 1 ~= 19.304px, Birthday Glow Color = #FFB400 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Line Glow. Why: The line glows gold. How: The shadow is cast by the whole line, which pops in as one piece rather than letter by letter. */
 
 
 }
@@ -273,12 +273,12 @@
 .birSubPar { /* What: Birthday Subtitle Paragraph. Why: The wish follows the greeting in playful handwriting. How: This sets Mystery Quest in soft white, growing with the screen, within the small text measure. */
 
 
-	color         : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-001-rec ) );   /* Birthday White Color = #FFFFFF @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Soft White. Why: The base paragraph rule sets the secondary text color, but the wish sits on the night sky. How: This sets a slightly see-through white. */
-	font-family   : var( --bir-dec-fon );                                                /* Birthday Decorative Font = 'Mystery Quest', main font */
-	font-size     : clamp( var( --fon-siz-p01 ), 4vw, var( --fon-siz-p03 ) );            /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish should read comfortably on a big screen without crowding a phone. How: This grows it with the screen between the two steps. */
-	line-height   : var( --ver-rhy-p01 );                                                /* Vertical Rhythm Base Plus 1 ~= 1.755 */
-	margin-bottom : var( --spa-ver-p02 );                                                /* Spacing Vertical Base Plus 2 ~= 25.572px */
-	max-width     : var( --tex-wid-sma );                                                /* Text Width Small ~= 22.047em */
+	color         : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-001-rec ) ); /* Birthday White Color = #FFFFFF @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Soft White. Why: The base paragraph rule sets the secondary text color, but the wish sits on the night sky. How: This sets a slightly see-through white. */
+	font-family   : var( --bir-dec-fon );                                              /* Birthday Decorative Font = 'Mystery Quest', main font */
+	font-size     : clamp( var( --fon-siz-p01 ), 4vw, var( --fon-siz-p03 ) );          /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish should read comfortably on a big screen without crowding a phone. How: This grows it with the screen between the two steps. */
+	line-height   : var( --ver-rhy-p01 );                                              /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-bottom : var( --spa-ver-p02 );                                              /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	max-width     : var( --tex-wid-sma );                                              /* Text Width Small ~= 22.047em */
 
 
 }
@@ -393,11 +393,11 @@
 .birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets slightly spaced main-font text in a quiet white, a little below the cake. */
 
 
-	color          : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-002-rec ) );   /* Birthday White Color = #FFFFFF @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */
-	font-size      : var( --fon-siz-p01 );                                                /* Font Size Base Plus 1 ~= 14.572px */
-	letter-spacing : calc( var( --cdn-pow-012-rec ) * 1em );                              /* Core-Design-Number to the Power of 12 Reciprocal ~= 0.034em */
-	line-height    : var( --ver-rhy-p01 );                                                /* Vertical Rhythm Base Plus 1 ~= 1.755 */
-	margin-top     : var( --spa-ver-m02 );                                                /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	color          : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-002-rec ) ); /* Birthday White Color = #FFFFFF @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */
+	font-size      : var( --fon-siz-p01 );                                              /* Font Size Base Plus 1 ~= 14.572px */
+	letter-spacing : calc( var( --cdn-pow-012-rec ) * 1em );                            /* Core-Design-Number to the Power of 12 Reciprocal ~= 0.034em */
+	line-height    : var( --ver-rhy-p01 );                                              /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-top     : var( --spa-ver-m02 );                                              /* Spacing Vertical Base Minus 2 ~= 8.304px */
 
 
 }

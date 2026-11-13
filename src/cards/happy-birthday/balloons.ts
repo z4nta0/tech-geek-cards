@@ -189,7 +189,6 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 	// #endregion draBalFun
 
 
-
 	balRecArr.forEach( ( balRecObj, balIndNum ) => draBalFun( balRecObj, balIndNum, 0 ) ); // What: First Placement Call. Why: The balloons should be in place before the card is first drawn. How: This draws each one at time 0.
 
 	// #endregion Balloon Placing
@@ -254,7 +253,6 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

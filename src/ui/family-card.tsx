@@ -261,6 +261,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			wakLocRef.current?.release(); // What: Lock Release Call. Why: The browser holds the screen on until the lock is released. How: This releases it if one was granted.
 
+
 			wakLocRef.current = null; // What: Lock Forget Assignment. Why: A released lock shouldn't be released twice. How: This clears the reference.
 
 
@@ -305,11 +306,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	useGSAP( () => { // What: Family Timeline Hook. Why: The timeline has to run after the card renders and be undone when it leaves. How: This builds and plays it in a GSAP context.
 
 
+		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPixFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPixFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, the bar's room, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it. // Vertical Rhythm Base Plus 1 ~= 19.304px, Vertical Rhythm Base Plus 6 ~= 78.751px
+
+
+
 		const accEasStr = gsaEasFun( 'acc' );                                          // What: Accelerate Easing String. Why: Most of the card's motion speeds up as it goes, as the original's did. How: This registers the accelerate token and keeps its GSAP name.
 		const chaDurNum = durSecFun( 'm03' );                                          // What: Character Duration Number. Why: The lines type at a steady pace. How: This is one letter's time, the duration scale's Base Minus 3 step, in seconds. // Duration Animation Base Minus 3 ~= 67.9ms
 		const decEasStr = gsaEasFun( 'dec' );                                          // What: Decelerate Easing String. Why: The photos settle as they uncover. How: This registers the decelerate token and keeps its GSAP name.
 		const fadDurNum = durSecFun( 'p07' );                                          // What: Fade Duration Number. Why: The card's fades and growths move at one unhurried pace, such as the heart opening. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPixFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPixFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, the bar's room, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it. // Vertical Rhythm Base Plus 1 ~= 19.304px, Vertical Rhythm Base Plus 6 ~= 78.751px
 		const griImaArr = Array.from( griDivRef.current!.querySelectorAll( 'img' ) );  // What: Grid Image Array. Why: Each photo in the grid uncovers on its own. How: This lists the grid's photos. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const holDurNum = durSecFun( 'p08' );                                          // What: Hold Duration Number. Why: Each line and each photo stays up long enough to take in. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
 		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in an even spread. How: This registers the in-out token and keeps its GSAP name.
@@ -375,7 +379,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		}
 
 
+
 		behTimRef.current = timLinObj.duration(); // What: Behalf Time Record. Why: Next jumps from the last scene to the closing line. How: This stores the time the closing line begins.
+
 
 		timLinObj.set( typSpaArr,         { text : '' } ); // What: Closing Clear. Why: The closing line starts empty. How: This clears all three parts.
 		timLinObj.set( texDivRef.current, { scale : 1 } ); // What: Closing Lettering Reset. Why: The last line shrank away. How: This restores its size.
@@ -447,6 +453,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			wakLocRef.current?.release(); // What: Lock Release Call. Why: The browser holds the screen on until the lock is released. How: This releases it if one was granted.
 
+
 			wakLocRef.current = null; // What: Lock Forget Assignment. Why: A released lock shouldn't be released twice. How: This clears the reference.
 
 
@@ -456,7 +463,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		timLinObj.pause(); // What: Font Wait Pause. Why: The lines shouldn't type in a fallback font, and the greeting's fit is measured in the real one. How: This holds the timeline until the card's font has loaded.
 
+
 		timLinRef.current = timLinObj; // What: Timeline Store. Why: The controls move this timeline. How: This keeps it for their handlers.
+
 
 		timLinObj.eventCallback( 'onUpdate', posUpdFun ); // What: Position Update Callback. Why: The dots fill in as the card plays. How: This updates the position on every frame the timeline renders.
 
@@ -513,8 +522,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const endTimNum = timLinObj.duration();                                                                                     // What: End Time Number. Why: The last stop is the finished card. How: This is the timeline's length.
 		const stoTimArr = redMotBoo ? [ ...stiTimRef.current, endTimNum ] : [ ...staTimRef.current, behTimRef.current, endTimNum ]; // What: Stop Time Array. Why: Reduced motion steps through stills, and motion through scene starts. How: This lists the stops for the visitor's preference, ending at the end.
 		const curTimNum = timLinObj.time() + 0.001;                                                                                 // What: Current Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
-
-		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= curTimNum ).length - 1; // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
+		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= curTimNum ).length - 1;                                   // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
 
 		const bacDirBoo = dirValNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
 		const farPasBoo = curTimNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
@@ -624,7 +632,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const winKeyFun = ( keyEveObj : KeyboardEvent ) => keyDowFun( keyEveObj ); // What: Window Key Function. Why: The listener hands each press to the newest key handler. How: This calls it with the event.
 
 
-
 		addEventListener( 'keydown', winKeyFun ); // What: Key Listener Add. Why: The card hears every key press. How: This listens on the window.
 
 
@@ -692,6 +699,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 			</div>
+
 
 			<div
 				ref={ phoDivRef }
@@ -968,6 +976,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 			</div>
+
 
 			<dialog
 				ref={ expDiaRef }

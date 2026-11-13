@@ -42,10 +42,10 @@ import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
 
 // #region Constants
 
-const FRA_MAX_NUM = 4;                                                                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
-const FRA_MIL_NUM = 1000 / 60;                                                                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
+const FRA_MAX_NUM = 4;                                     // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
+const FRA_MIL_NUM = 1000 / 60;                             // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
 const PAR_TOK_ARR = [ '--bir-red-col', '--bir-yel-col', '--bir-gre-col', '--bir-blu-col', '--bir-pin-col', '--bir-ora-col', '--bir-pur-col', '--bir-eme-col' ]; // What: Party Token Array. Why: The confetti and the balloons share one bright palette, whose colors are the card's own tokens. How: The confetti reads each token's color once it starts and each piece picks one at random, while each balloon takes one in turn. // Birthday Red Color = #FF6B6B, Birthday Yellow Color = #FFD93D, Birthday Green Color = #6BCB77, Birthday Blue Color = #4D96FF, Birthday Pink Color = #FF6FCF, Birthday Orange Color = #FF9A3C, Birthday Purple Color = #A78BFA, Birthday Emerald Color = #34D399
-const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random. // What: Type Assertion Note. Why: Without it the array widens to string[], so a piece's shape couldn't be typed as one of the three names. How: as const keeps each entry its literal type.
+const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const; // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random. // What: Type Assertion Note. Why: Without it the array widens to string[], so a piece's shape couldn't be typed as one of the three names. How: as const keeps each entry its literal type.
 
 // #endregion Constants
 
@@ -101,7 +101,8 @@ const draStaFun = ( canCotObj : CanvasRenderingContext2D, radValNum : number ) :
 
 
 	canCotObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
-	canCotObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
+
+	canCotObj.fill(); // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
 
 
 };
@@ -199,10 +200,13 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		const pixRatNum = window.devicePixelRatio || 1; // What: Pixel Ratio Number. Why: A dense screen has more device pixels than CSS pixels. How: This reads the ratio, 1 if the browser doesn't say.
 
 
-		canHeiNum = conCanEle.clientHeight;                         // What: Height Remeasure. Why: The canvas's box may have changed. How: This reads its height.
-		canWidNum = conCanEle.clientWidth;                          // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
-		conCanEle.height = Math.round( canHeiNum * pixRatNum );     // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
-		conCanEle.width  = Math.round( canWidNum * pixRatNum );     // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
+		canHeiNum = conCanEle.clientHeight; // What: Height Remeasure. Why: The canvas's box may have changed. How: This reads its height.
+		canWidNum = conCanEle.clientWidth;  // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
+
+		conCanEle.height = Math.round( canHeiNum * pixRatNum ); // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
+		conCanEle.width  = Math.round( canWidNum * pixRatNum ); // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
+
+
 		canCotObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
 
 
@@ -213,7 +217,6 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 	resObsObj.observe( conCanEle ); // What: Canvas Observe Call. Why: Measuring only happens while the confetti is ready. How: This starts watching the canvas, which also measures it once.
-
 
 	meaCanFun(); // What: First Measure Call. Why: A burst can come before the observer's first report. How: This measures the canvas right away.
 
@@ -305,11 +308,16 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 
-			canCotObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
-			canCotObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
-			canCotObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
+			canCotObj.save(); // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
+
+
+			canCotObj.globalAlpha = Math.max( 0, pieRecObj.alpNum ); // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
+			canCotObj.fillStyle   = pieRecObj.colStr;                // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
+
+
 			canCotObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
-			canCotObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
+
+			canCotObj.rotate( pieRecObj.rotNum * Math.PI / 180 ); // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
 
 
 			if ( pieRecObj.shaStr === 'rect' ) canCotObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
@@ -317,9 +325,11 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 			else if ( pieRecObj.shaStr === 'circle' ) { // What: Circle Draw Branch. Why: Some pieces are dots. How: This fills a circle as wide as the piece.
 
 
-				canCotObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
+				canCotObj.beginPath(); // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
+
 				canCotObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
-				canCotObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
+
+				canCotObj.fill(); // What: Fill Call. Why: The dot is solid. How: This fills it.
 
 
 			}
@@ -391,7 +401,6 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		const spiMaxNum = cdnPowFun( 6 );     // What: Spin Maximum Number. Why: Pieces spin up to a limit either way. How: This is the core design number to the power of 6, about 5.40 degrees per 60th of a second. // Core-Design-Number to the Power of 6 ~= 5.404
 
 
-
 		for ( let pieIndNum = 0; pieIndNum < pieCouNum; pieIndNum++ ) { // What: Piece Creation Loop. Why: A burst throws many pieces at once. How: This adds one piece per count.
 
 
@@ -439,6 +448,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 			cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
+
 
 			aniFraNum = 0; // What: Idle Assignment. Why: A stopped loop is idle. How: This clears the frame's id.
 
