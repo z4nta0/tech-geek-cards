@@ -293,8 +293,11 @@ rest follow the same pattern.
 - **Shadows on split text** go on the whole heading or paragraph as a
   `filter: drop-shadow()`, never a `text-shadow` on every letter, which made
   WebKit's frames take up to 700ms and stalled the timeline.
-- **Tests**: each converted card joins every suite at 1,440px and 390px,
-  captured at its finished scene under reduced motion.
+- **Tests**: each converted card is a shared state at 1,440px and 390px,
+  opened at its finished scene under reduced motion, which the accessibility,
+  rendering, feedback, and security suites visit; the responsive suite
+  measures it across its 14 widths, and the SEO and skip link checks open its
+  page once.
 - **No z-index between a card and the bar**: every card's root is fixed, so
   its own layers stay inside it, and the floating bar sits one layer above
   the stage.
@@ -434,8 +437,9 @@ the share dialog opened from the Birthday card's floating bar at 390px.
 - `npm run test:security` (added 2026-11-10, in the audit, from
   TechGeek.dev's): in Chromium only, since they read files, `public/_headers`'
   policy (`default-src 'self'`, every directive only `'self'` or `'none'`, no
-  `'unsafe-inline'` or `'unsafe-eval'`) and hardening headers, the catch-all in
-  `public/_redirects`, the built `dist/_headers` sending noindex with every
+  `'unsafe-inline'` or `'unsafe-eval'`) and hardening headers, the built
+  `dist/_redirects` ending in the catch-all with every card's rewrite ahead of
+  it, the built `dist/_headers` sending noindex with every
   unlisted card's address and file name and no listed one's, no secrets in
   `dist/`, and `npm audit` of the shipped dependencies (skipped with a message
   offline). In every engine, from the preview with each path's built headers
