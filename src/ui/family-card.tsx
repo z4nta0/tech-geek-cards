@@ -443,7 +443,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		timLinObj.to( griImaArr, { // What: Grid Wipe. Why: The photos fill in one after another. How: This uncovers each from left to right, in random order.
 
 
-			clipPath : 'inset( 0 0% 0 0 )',                                    // What: Clip Path. Why: The photo ends fully uncovered. How: This clears the clip from the right.
+			clipPath : 'inset( 0 0% 0 0 )',                                    // What: Clip Path. Why: The photo ends fully uncovered. How: This clears the clip from the right. // What: Compositor Exception Note. Why: An animated clip path repaints each frame, which the animation performance rule allows only where a transform can't do the job. How: The photo has to uncover from one edge while staying in place, and a transform would slide it instead.
 			duration : holDurNum,                                              // What: Duration. Why: Each photo uncovers at an easy pace. How: This uses the hold step.
 			ease     : decEasStr,                                              // What: Ease. Why: The photo settles as it uncovers. How: This decelerates.
 			stagger  : { each : shoDurNum, ease : inoEasStr, from : 'random' } // What: Stagger. Why: The photos start one after another, in no set order. How: Each starts a Base Minus 2 step after the last, in random order, spread in-out.
