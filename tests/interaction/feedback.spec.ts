@@ -83,7 +83,7 @@ type TogTarTyp = { // What: Toggle Target Type. Why: Each kind of element with a
 
 const CON_SEL_STR = 'a, button, input:not([type="hidden"]), select, textarea';                                // What: Control Selector String. Why: Focusing or filling a form field is an interaction too, so Contact's fields are probed beside every link and button, while a hidden input never shows. How: This matches the links, the buttons, and every form field but a hidden input, and the reachable check drops the honeypot, which is taken out of the tab order.
 const FIE_SEL_STR = 'input, select, textarea';                                                                // What: Field Selector String. Why: A form field has no hover or press look of its own, since pressing one only focuses it. How: This matches the fields, which the probe reads for focus alone.
-const HOV_TAR_STR = '[class*="carTilArt"], [class*="envStaDiv"], [class*="famIteIte"], [class*="steIteIte"]'; // What: Hover Target String. Why: The card tiles on Home and the Gallery, Home's envelope and its step cards, and About's family cards respond to hover without being controls, so the control probe never reaches them. How: This matches each by its CSS module class, whose name Vite keeps inside the hashed class.
+const HOV_TAR_STR = '[class*="carTilArt"], [class*="envStaDiv"], [class*="famIteIte"], [class*="steIteIte"]'; // What: Hover Target String. Why: The card tiles on Home and the Gallery, Home's envelope and its step cards, and About's sister-site cards respond to hover without being controls, so the control probe never reaches them. How: This matches each by its CSS module class, whose name Vite keeps inside the hashed class.
 
 const HOV_KIN_OBJ : Record< string, string[] > = { about : [ 'famIteIte' ], gallery : [ 'carTilArt' ], home : [ 'carTilArt', 'envStaDiv', 'steIteIte' ] }; // What: Hover Kind Object. Why: A kind of surface that stopped matching, such as after a class rename, would drop out without failing while another kind still filled the list. How: This lists, by page, the classes of the surfaces the hover probe has to find there.
 
@@ -598,18 +598,18 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
  * hovProFun = Hover Problems Function
  *
  * @summary
- * Probes the reachable card tiles, envelope, step cards, and family cards, the
- * surfaces that respond to hover without being controls, and returns a problem
- * for each one that gives no hover feedback, a single problem when it finds
- * none, and one for each kind {@link HOV_KIN_OBJ} names for the page that it
- * doesn't find. Only hover is checked: each card is scrolled into view, read
- * at rest with the pointer away and again while hovered, every look read once
- * its transition has settled, and one that looks the same both ways is a
- * problem. Normally every probed property that changes, on the card or
- * anything inside it, its shadow layers included, has to be eased by a
- * transition ({@link snaProFun}); under reduced motion none of them may ease
- * ({@link movProFun}), and every one of the card's own transition durations
- * must be zero, while the hover look still has to change.
+ * Probes the reachable card tiles, envelope, step cards, and About's
+ * sister-site cards, the surfaces that respond to hover without being
+ * controls, and returns a problem for each one that gives no hover feedback, a
+ * single problem when it finds none, and one for each kind {@link HOV_KIN_OBJ}
+ * names for the page that it doesn't find. Only hover is checked: each card is
+ * scrolled into view, read at rest with the pointer away and again while
+ * hovered, every look read once its transition has settled, and one that looks
+ * the same both ways is a problem. Normally every probed property that
+ * changes, on the card or anything inside it, its shadow layers included, has
+ * to be eased by a transition ({@link snaProFun}); under reduced motion none
+ * of them may ease ({@link movProFun}), and every one of the card's own
+ * transition durations must be zero, while the hover look still has to change.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

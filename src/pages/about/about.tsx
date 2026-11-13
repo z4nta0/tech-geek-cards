@@ -60,7 +60,7 @@ const FAC_LIS_ARR = [ // What: Fact List Array. Why: The story's side list sums 
  * FAM_SIT_ARR = Family Site Array
  *
  * @summary
- * The three sister sites the family section introduces, in order. Every row
+ * The three sister sites the Family section introduces, in order. Every row
  * shares one shape, so its fields carry no comments of their own:
  *
  * - `desStr` (String): Description String, what the site is for.
@@ -76,7 +76,7 @@ const FAC_LIS_ARR = [ // What: Fact List Array. Why: The story's side list sums 
  *
 */
 
-const FAM_SIT_ARR = [ // What: Family Site Array. Why: The family section introduces the three sister sites in the same order every visit. How: Each row holds a site's name, address, description, and whether it's this site.
+const FAM_SIT_ARR = [ // What: Family Site Array. Why: The Family section introduces the three sister sites in the same order every visit. How: Each row holds a site's name, address, description, and whether it's this site.
 
 
 	{ // What: Developer Site Row. Why: The cards come from a working developer. How: This describes and links the portfolio.

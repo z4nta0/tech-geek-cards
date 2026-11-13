@@ -243,7 +243,7 @@ function GalPagCom () : JSX.Element {
 							role='status'
 						>{ `${ shoCarArr.length } ${ shoCarArr.length === 1 ? 'card' : 'cards' }` }</p>{ /* What: Result Count Paragraph Element. Why: A visitor, and a screen reader, should know how many cards match. How: This live region shows the count, announcing each change. */ }
 
-						<h2 className={ cssModObj.galHidHea }>Cards</h2>{ /* What: Gallery Hidden Heading Element. Why: The tiles' titles are h3s, and the page's headings should step down in order from its h1. How: This names the cards section with an h2 that only screen readers and the outline see. */ }
+						<h2 className={ cssModObj.galHidHea }>Cards</h2>{ /* What: Gallery Hidden Heading Element. Why: The tiles' titles are h3s, and the page's headings should step down in order from its h1. How: This names the Cards section with an h2 that only screen readers and the outline see. */ }
 
 
 

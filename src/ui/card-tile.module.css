@@ -173,7 +173,7 @@
 
 
 }
-.carTilArt[data-card-occasion-name='Birthday'] .occTagSpa { /* What: Occasion Tag Span Birthday. Why: Each occasion has its own color, and birthdays take the family's orange. How: This sets dark orange text on a pale orange pill. */
+.carTilArt[data-card-occasion-name='Birthday'] .occTagSpa { /* What: Occasion Tag Span Birthday. Why: Each occasion has its own color, and birthdays take the design package's orange. How: This sets dark orange text on a pale orange pill. */
 
 
 	background : var( --acc-tin-col ); /* Accent Tint Color = #FDDCC8 */
@@ -189,7 +189,7 @@
 
 
 }
-.carTilArt[data-card-occasion-name='Holiday'] .occTagSpa { /* What: Occasion Tag Span Holiday. Why: Each occasion has its own color, and holidays take the family's blue. How: This sets dark blue text on a pale blue pill. */
+.carTilArt[data-card-occasion-name='Holiday'] .occTagSpa { /* What: Occasion Tag Span Holiday. Why: Each occasion has its own color, and holidays take the design package's blue. How: This sets dark blue text on a pale blue pill. */
 
 
 	background : var( --acs-tin-col ); /* Accent-Secondary Tint Color = #B8D9EC */
