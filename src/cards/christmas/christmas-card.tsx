@@ -281,6 +281,8 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 	const namParStr = seaParObj.get( 'name' );                                  // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
 	const sigNamStr = froParStr || ( isaPraBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
 
+	const SnoTitTag = isaPraBoo ? 'h2' : 'h1'; // What: Snowy Title Tag. Why: The page's first heading should be its h1, and the prank opens on the hacked scene, whose heading comes first. How: This makes the greeting an h2 in the prank, under the hacked h1, and the h1 when the card opens on the snowy scene.
+
 
 
 	// #region Christmas Timeline
@@ -427,13 +429,13 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 				<section className={ cssModObj.hacSceSec }>{ /* What: Hacked Scene Section Element. Why: The card opens as a fake hacked screen. How: This holds the scrambled heading and the message over the pirate flag. */ }
 
 
-					<h2
+					<h1
 						ref={ hacTitRef }
 
 						className={ cssModObj.hacTitHea }
 
 						aria-label={ HAC_TIT_STR }
-					></h2>{ /* What: Hacked Title Heading Element. Why: The hack announces itself. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
+					></h1>{ /* What: Hacked Title Heading Element. Why: The hack announces itself, and as the prank's first heading it's the page's h1. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
 
 					<p
 						ref={ hacMesRef }
@@ -467,11 +469,11 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 			>{ /* What: Snowy Scene Section Element. Why: The real greeting is a snowy cabin with snow falling. How: This holds the greeting, the snowman, and the sign-off, and the snow falls inside it. */ }
 
 
-				<h1
+				<SnoTitTag
 					ref={ snoTitRef }
 
 					className={ cssModObj.snoTitHea }
-				>Merry Christmas{ namParStr ? `, ${ namParStr }` : '' }!</h1>{ /* What: Snowy Title Heading Element. Why: The greeting leads the scene. How: This wishes a Merry Christmas, adding the recipient's name when the link carries one. */ }
+				>Merry Christmas{ namParStr ? `, ${ namParStr }` : '' }!</SnoTitTag>{ /* What: Snowy Title Heading Element. Why: The greeting leads the scene. How: This wishes a Merry Christmas, adding the recipient's name when the link carries one, as the page's h1 on the listed card and an h2 under the hacked heading in the prank. */ }
 
 				<img
 					className={ cssModObj.snoManIma }
