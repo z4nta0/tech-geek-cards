@@ -29,8 +29,8 @@ import type { JSX         } from 'react'; // What: JSX. Why: The component decla
  * sidebar (stacking with it at 1,024px and below) with the email address and
  * what to include when asking for a custom card. The form sends through
  * Netlify Forms, as TechGeek.dev's does: a hidden copy in index.html registers
- * its fields, and the page posts them to the site's root as form contact, with
- * a honeypot for bots. A sent message swaps the form for a thank-you.
+ * its fields, and the page posts them to the site's root under the form name
+ * `contact`, with a honeypot for bots. A sent message swaps the form for a thank-you.
  *
  * Sections:
  *  - Constants
@@ -114,9 +114,10 @@ function ConPagCom () : JSX.Element {
 	 * @summary
 	 * Writes one field's edit into the form's state. The edited field's name
 	 * attribute picks the key it writes, so every field's name has to match a
-	 * key of EMP_FOR_OBJ (name, email, topic, message, or bot-field); a field
-	 * named anything else would add a stray key that never posts. The previous
-	 * fields are copied, so the other fields keep their values.
+	 * key of EMP_FOR_OBJ (`name`, `email`, `topic`, `message`, or
+	 * `bot-field`); a field named anything else would add a stray key that
+	 * never posts. The previous fields are copied, so the other fields keep
+	 * their values.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *

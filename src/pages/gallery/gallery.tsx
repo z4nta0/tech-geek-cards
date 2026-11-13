@@ -212,7 +212,7 @@ function GalPagCom () : JSX.Element {
 							>{ /* What: Occasion Filter Div Element. Why: A visitor can narrow the cards to one occasion. How: This groups the occasion buttons under one name, in a row wrapping onto two lines at about 365px wide and below. */ }
 
 
-								{ [ 'All' as const, ...OCC_NAM_ARR ].map( ( occNamStr ) => ( // What: Occasion Button Map Call. Why: Every occasion, after "All", gets a button. How: This renders one per occasion. // What: Type Assertion Note. Why: A plain 'All' would widen the array to string, losing the occasion type the state needs. How: as const keeps it the literal `'All'`.
+								{ [ 'All' as const, ...OCC_NAM_ARR ].map( ( occNamStr ) => ( // What: Occasion Button Map Call. Why: Every occasion, after "All", gets a button. How: This renders one per occasion. // What: Type Assertion Note. Why: A plain `'All'` would widen the array to string, losing the occasion type the state needs. How: as const keeps it the literal `'All'`.
 
 
 									<button

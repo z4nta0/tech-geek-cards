@@ -230,7 +230,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 
 
-const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after All.
+const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after "All".
 
 // #endregion Constants
 
