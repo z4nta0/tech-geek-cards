@@ -25,7 +25,7 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * home.tsx = Home
  *
  * @summary
- * The home page: a hero whose cards fan out of an open envelope beside the
+ * The Home page: a hero whose cards fan out of an open envelope beside the
  * site's pitch (above it at 768px and below), the three steps of sending a
  * card, four cards from the Gallery picked at random on each visit, and a
  * postcard banner inviting a custom card. Any featured card can be shared from
@@ -177,7 +177,7 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
  * HomPagCom = Home Page Component
  *
  * @summary
- * Renders the home page and its canonical link. The page's title and
+ * Renders the Home page and its canonical link. The page's title and
  * description are index.html's own, so crawlers that never run the script
  * read them too. Four listed cards are picked at random once, when the page
  * mounts, and stay put while it's open, four so the featured grid's rows
@@ -603,7 +603,7 @@ function HomPagCom () : JSX.Element {
 
 // #region Exports
 
-export { HomPagCom }; // What: Named Export. Why: The router's root route renders the home page. How: This exports HomPagCom.
+export { HomPagCom }; // What: Named Export. Why: The router's root route renders the Home page. How: This exports HomPagCom.
 
 // #endregion Exports
 

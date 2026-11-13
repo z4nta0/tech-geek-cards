@@ -167,7 +167,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 
 			await navigator.clipboard.writeText( linUrlObj.href ); // What: Clipboard Write Call. Why: The visitor pastes the link into a message. How: This writes the full link.
 
-			setCopStaStr( 'copied' ); // What: Copied Status Set. Why: The visitor should know it worked. How: This switches the button and status to "Copied!".
+			setCopStaStr( 'copied' ); // What: Copied Status Set. Why: The visitor should know it worked. How: This switches the button's label to "Copied!" and the status to its copied message.
 
 
 		}

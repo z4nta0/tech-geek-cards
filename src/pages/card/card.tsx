@@ -7,11 +7,11 @@ import cssModObj from './card.module.css';                        // What: CSS M
 import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the family's hexagon mark, which stands in for the wordmark at 640px and below. How: This is the design package's mark, fingerprinted by Vite.
 
 
-import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
+import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the Home page and the Gallery without a full page load. How: This renders those two links.
 import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when "Share" is pressed.
 import { Suspense        } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
 import { useLocation     } from 'react-router';                           // What: Use Location. Why: The share dialog's preview link can open the card's own page again. How: The page reads the location's key, which changes on every navigation.
-import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useSearchParams } from 'react-router';                           // What: Use Search Parameters. Why: The share dialog should start with the names the card is showing. How: The page reads them from its address.
 import { useState        } from 'react';                                  // What: Use State. Why: The page remembers whether its share dialog is open and how many times the card has been replayed. How: This holds both.
 
@@ -30,7 +30,7 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * The page at each card's own address: a skip link to the card, the card
  * itself, playing full screen as the page's main content, and a small floating
  * bar over it with the TechGeek mark and TechGeek.cards name, the mark alone
- * at 640px and below (back to the home page), a link to more cards, a "Replay"
+ * at 640px and below (back to the Home page), a link to more cards, a "Replay"
  * button that plays the card again from the start, and a "Share" button that
  * opens the share dialog for this card. The page sets its own title,
  * description, and canonical address. The card's code arrives on demand, so a
@@ -152,7 +152,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-	usePagDesFun( carRecObj.seaStr ); // What: Page Description Call. Why: Search listings should describe this card, not repeat the home page. How: This swaps the one description tag's text for the card's own search description while it shows.
+	usePagDesFun( carRecObj.seaStr ); // What: Page Description Call. Why: Search listings should describe this card, not repeat the Home page. How: This swaps the one description tag's text for the card's own search description while it shows.
 
 
 
@@ -222,7 +222,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barHomAnc }
 
 					to='/'
-				>{ /* What: Bar Home Anchor Link. Why: The site's mark and name lead back to its home page. How: This routes home, showing the mark beside the wordmark, or the mark alone at 640px and below, where the wordmark is hidden but still names the link. */ }
+				>{ /* What: Bar Home Anchor Link. Why: The site's mark and name lead back to its Home page. How: This routes home, showing the mark beside the wordmark, or the mark alone at 640px and below, where the wordmark is hidden but still names the link. */ }
 
 
 					<img

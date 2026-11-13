@@ -8,7 +8,7 @@ import cssModObj from './contact.module.css'; // What: CSS Module Object. Why: C
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
 import { useEffect    } from 'react';                                  // What: Use Effect. Why: Focus has to follow the swap between the form and the thank-you. How: This runs the focus move once the swap has rendered.
-import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Contact's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Contact's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useRef       } from 'react';                                  // What: Use Reference. Why: The focus moves need the elements they land on and whether the form is coming back. How: This holds each of those across renders.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the form's fields and whether a message is sending, sent, or failed. How: This holds each of them.
 
@@ -103,7 +103,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-	usePagDesFun( 'Ask about a custom greeting card, or about a card in the gallery. Write to TechGeek.cards and z4nta0 will reply by email.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Ask about a custom greeting card, or about a card in the gallery. Write to TechGeek.cards and z4nta0 will reply by email.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the Home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
@@ -624,7 +624,7 @@ function ConPagCom () : JSX.Element {
 
 // #region Exports
 
-export { ConPagCom }; // What: Named Export. Why: The router's contact route renders the Contact page. How: This exports ConPagCom.
+export { ConPagCom }; // What: Named Export. Why: The router's Contact route renders the Contact page. How: This exports ConPagCom.
 
 // #endregion Exports
 

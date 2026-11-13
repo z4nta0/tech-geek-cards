@@ -6,7 +6,7 @@
 import cssModObj from './not-found.module.css'; // What: CSS Module Object. Why: The 404 page's own layout, drawing, and button styles live in its own module. How: This maps each class name in not-found.module.css to its hashed module class.
 
 
-import { Link } from 'react-router'; // What: Link. Why: The page's buttons move to the home page and the Gallery without a full page load. How: This renders them as router links.
+import { Link } from 'react-router'; // What: Link. Why: The page's buttons move to the Home page and the Gallery without a full page load. How: This renders them as router links.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -191,7 +191,7 @@ function NotFouCom () : JSX.Element {
 							className={ cssModObj.butPriAnc }
 
 							to='/'
-						>Go Home</Link>{ /* What: Button Primary Anchor Link. Why: Home is the natural place to start over. How: This routes to the home page as a button. */ }
+						>Go Home</Link>{ /* What: Button Primary Anchor Link. Why: Home is the natural place to start over. How: This routes to the Home page as a button. */ }
 
 
 

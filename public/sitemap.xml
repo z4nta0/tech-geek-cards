@@ -2,7 +2,7 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'><!-- What: URL Set Element. Why: Search engines read the sitemap to find every page worth indexing. How: This holds one entry per indexable page, in the sitemaps.org format, leaving out the unlisted cards. -->
 
 
-	<url><!-- What: Home URL Element. Why: The home page is the first of the indexed pages. How: This lists it by its canonical address. -->
+	<url><!-- What: Home URL Element. Why: The Home page is the first of the indexed pages. How: This lists it by its canonical address. -->
 
 
 		<loc>https://techgeek.cards/</loc><!-- What: Home Location Element. Why: The entry has to name the page's address. How: This gives the canonical address, matching the page's canonical link. -->

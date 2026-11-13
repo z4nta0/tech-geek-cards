@@ -3,12 +3,12 @@
 
 // #region Imports
 
-import { AboPagCom    } from './pages/about/about.tsx';          // What: About Page Component. Why: The About route says who makes the cards and introduces the sister sites. How: The about route renders it.
+import { AboPagCom    } from './pages/about/about.tsx';          // What: About Page Component. Why: The About route says who makes the cards and introduces the sister sites. How: The About route renders it.
 import { CAR_REC_ARR  } from './ui/cards.ts';                    // What: Card Record Array. Why: Every card opens at its own address. How: The root looks the current path up in the catalog.
 import { CarPagCom    } from './pages/card/card.tsx';            // What: Card Page Component. Why: A card's address plays the card full screen. How: The root renders it when the path names a card.
-import { ConPagCom    } from './pages/contact/contact.tsx';      // What: Contact Page Component. Why: The Contact route shows the form and the contact details. How: The contact route renders it.
-import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists the listed cards. How: The gallery route renders it.
-import { HomPagCom    } from './pages/home/home.tsx';            // What: Home Page Component. Why: The site's root address is its home page. How: The home route renders it.
+import { ConPagCom    } from './pages/contact/contact.tsx';      // What: Contact Page Component. Why: The Contact route shows the form and the contact details. How: The Contact route renders it.
+import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists the listed cards. How: The Gallery route renders it.
+import { HomPagCom    } from './pages/home/home.tsx';            // What: Home Page Component. Why: The site's root address is its Home page. How: The Home route renders it.
 import { NavBarCom    } from 'techgeek-design/ui/nav.tsx';       // What: Navigation Bar Component. Why: Every site page starts with the TechGeek family's shared bar. How: This renders above the routes.
 import { NotFouCom    } from './pages/not-found/not-found.tsx';  // What: Not Found Component. Why: Every unknown address shows the 404 page. How: The catch-all route renders it.
 import { PAG_LIN_ARR  } from './ui/page-links.ts';               // What: Page Link Array. Why: The bar and the footer link to the site's pages. How: This is the list the root hands them.
@@ -176,7 +176,7 @@ function AppRooCom () : JSX.Element {
 					<Route
 						element={ <HomPagCom /> }
 						path='/'
-					/>{ /* What: Home Route. Why: The site's root address is its home page. How: This renders HomPagCom at the root path. */ }
+					/>{ /* What: Home Route. Why: The site's root address is its Home page. How: This renders HomPagCom at the root path. */ }
 
 
 

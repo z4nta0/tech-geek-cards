@@ -33,7 +33,7 @@ import type { PagLinTyp } from 'techgeek-design/ui/link-types.ts'; // What: Page
 const PAG_LIN_ARR : PagLinTyp[] = [ // What: Page Link Array. Why: The bar, the phone menu, and the footer all link to the same pages in the same order. How: Each row names a page's label and route.
 
 
-	{ labStr : 'Home',    patStr : '/'        }, // What: Home Link Row. Why: Every page links back to the home page. How: This routes to the root path.
+	{ labStr : 'Home',    patStr : '/'        }, // What: Home Link Row. Why: Every page links back to the Home page. How: This routes to the root path.
 	{ labStr : 'Gallery', patStr : '/gallery' }, // What: Gallery Link Row. Why: The cards are the site's main content. How: This routes to the Gallery page.
 	{ labStr : 'About',   patStr : '/about'   }, // What: About Link Row. Why: A visitor can read who makes the cards. How: This routes to the About page.
 	{ labStr : 'Contact', patStr : '/contact' }  // What: Contact Link Row. Why: A visitor can ask for a custom card or get in touch. How: This routes to the Contact page.

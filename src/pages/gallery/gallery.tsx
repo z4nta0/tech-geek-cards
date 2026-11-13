@@ -12,7 +12,7 @@ import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: 
 import { Link         } from 'react-router';                           // What: Link. Why: The custom card note moves to the Contact page without a full page load. How: This renders that link.
 import { OCC_NAM_ARR  } from '../../ui/card-data.ts';                  // What: Occasion Name Array. Why: The filter offers every occasion. How: The page renders a button for each.
 import { ShaDiaCom    } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: A card can be shared straight from its tile. How: The page mounts it when a tile's "Share" is pressed.
-import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: The Gallery's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: The Gallery's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useState     } from 'react';                                  // What: Use State. Why: The page remembers the search, the chosen occasion, and the card being shared. How: This holds each of them.
 
 
@@ -87,7 +87,7 @@ function GalPagCom () : JSX.Element {
 
 
 
-	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then send your favorite one to a friend for free.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Browse animated greeting cards for birthdays, holidays, and family days, then send your favorite one to a friend for free.' ); // What: Page Description Call. Why: Search listings should describe the Gallery, not repeat the Home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
@@ -341,7 +341,7 @@ function GalPagCom () : JSX.Element {
 
 // #region Exports
 
-export { GalPagCom }; // What: Named Export. Why: The router's gallery route renders the Gallery. How: This exports GalPagCom.
+export { GalPagCom }; // What: Named Export. Why: The router's Gallery route renders the Gallery. How: This exports GalPagCom.
 
 // #endregion Exports
 

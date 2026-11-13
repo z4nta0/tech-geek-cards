@@ -8,7 +8,7 @@ import cssModObj from './about.module.css'; // What: CSS Module Object. Why: Abo
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
 import { Link         } from 'react-router';                           // What: Link. Why: The closing Gallery button moves to the Gallery without a full page load. How: This renders that link.
-import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: About's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: About's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -158,7 +158,7 @@ const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Wh
 function AboPagCom () : JSX.Element {
 
 
-	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the two sister sites that sit behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the two sister sites that sit behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the Home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
@@ -391,7 +391,7 @@ function AboPagCom () : JSX.Element {
 
 // #region Exports
 
-export { AboPagCom }; // What: Named Export. Why: The router's about route renders the About page. How: This exports AboPagCom.
+export { AboPagCom }; // What: Named Export. Why: The router's About route renders the About page. How: This exports AboPagCom.
 
 // #endregion Exports
 

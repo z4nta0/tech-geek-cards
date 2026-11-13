@@ -68,7 +68,7 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
  * carTagFun = Card Tag Function
  *
  * @summary
- * Rewrites the home page's head tags for one card: the title, the
+ * Rewrites the Home page's head tags for one card: the title, the
  * description, and every Open Graph and Twitter tag that names the page,
  * its address, or its image. Each tag is found by its name or property,
  * whichever quotes it uses and whether or not the page has been compacted,
@@ -80,10 +80,10 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param htmTexStr - HTML Text String: The home page's HTML.
+ * @param htmTexStr - HTML Text String: The Home page's HTML.
  * @param carDatObj - Card Data Object: {@link CarDatTyp}
  *
- * @returns The page's HTML with the card's tags in place of the home page's.
+ * @returns The page's HTML with the card's tags in place of the Home page's.
  *
  * @example
  * ```ts
@@ -92,7 +92,7 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
  *
 */
 
-const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { // What: Card Tag Function. Why: Each card's page has to name the card to link scrapers. How: This swaps each of the home page's tags for the card's.
+const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { // What: Card Tag Function. Why: Each card's page has to name the card to link scrapers. How: This swaps each of the Home page's tags for the card's.
 
 
 	const carDesStr = htmEscFun( carDatObj.seaStr );                              // What: Card Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
@@ -218,7 +218,7 @@ const carPagFun = () : Plugin => { // What: Card Pages Function. Why: Link scrap
 
 
 
-			return carDatObj ? carTagFun( htmTexStr, carDatObj ) : htmTexStr; // What: Page Return. Why: Every other page keeps the home page's tags. How: This returns the card's page or the page as it was.
+			return carDatObj ? carTagFun( htmTexStr, carDatObj ) : htmTexStr; // What: Page Return. Why: Every other page keeps the Home page's tags. How: This returns the card's page or the page as it was.
 
 
 		}
