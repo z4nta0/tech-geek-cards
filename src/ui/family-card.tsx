@@ -664,7 +664,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 				ref={ griDivRef }
 
 				className={ cssModObj.famGriDiv }
-			>{ /* What: Family Grid Div Element. Why: The card ends on all its photos at once. How: This lays them out in a mosaic, hidden until the timeline shows it. */ }
+			>{ /* What: Family Grid Div Element. Why: The card ends on all its photos at once. How: This lays them out in a mosaic four columns wide, three at 640px and below, hidden until the timeline shows it. */ }
 
 
 				{ famCarObj.griIndArr.map( ( phoIndNum, celIndNum ) => ( // What: Grid Cell Map Call. Why: Every cell of the mosaic shows one photo. How: This renders a button per cell, keyed by its place.
