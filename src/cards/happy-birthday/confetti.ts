@@ -6,7 +6,7 @@
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Some of the confetti's limits sit on the scale as powers of the core design number, such as its spin. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The confetti's timings are steps on the duration scale, such as how fast it fades. How: This returns a step's length in milliseconds.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each piece's values are random within set bounds, such as its size. How: This returns a random number between two bounds.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's lengths are vertical rhythm steps, such as each piece's size. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's lengths are vertical rhythm steps or run between them, such as each piece's size. How: This returns a step's size in pixels.
 
 // #endregion Imports
 

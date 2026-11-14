@@ -182,7 +182,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const aftSpaRef = useRef< HTMLSpanElement >( null );           // What: After Span Reference. Why: The line's last part types itself out. How: This holds its span.
 	const befSpaRef = useRef< HTMLSpanElement >( null );           // What: Before Span Reference. Why: The line's first part types itself out. How: This holds its span.
 	const behTimRef = useRef< number >( 0 );                       // What: Behalf Time Reference. Why: The controls jump to the closing line and count it as past every scene. How: This holds the time, in seconds, its lettering starts.
-	const conDivRef = useRef< HTMLDivElement >( null );            // What: Controls Div Reference. Why: The scene controls fade away as the greeting grows. How: This holds the controls' bar.
+	const conDivRef = useRef< HTMLDivElement >( null );            // What: Controls Div Reference. Why: The scene controls fade away with the cursor, once the greeting is typed. How: This holds the controls' bar.
 	const curSpaRef = useRef< HTMLSpanElement >( null );           // What: Cursor Span Reference. Why: The cursor fades once the greeting is typed. How: This holds its span.
 	const expDiaRef = useRef< HTMLDialogElement >( null );         // What: Expanded Dialog Reference. Why: A tapped photo opens in a modal dialog. How: This holds the dialog.
 	const famDivRef = useRef< HTMLDivElement >( null );            // What: Family Div Reference. Why: The timeline is scoped to the card. How: This holds the card's root.

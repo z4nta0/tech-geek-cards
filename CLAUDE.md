@@ -353,7 +353,7 @@ rest follow the same pattern.
   steady, see-through bar above the floating bar, in the card's own colors,
   with a dot per scene over Previous, Pause or Play, Next, and Skip to end;
   the arrow keys step and the space bar pauses. Previous more than about a
-  second into a scene restarts it. The bar fades out as the greeting grows.
+  second into a scene restarts it. The bar fades out with the cursor once the greeting is typed, before it grows.
   Under reduced motion it stays on the finished card, in a strip of its own
   below the mosaic, with no Pause, and steps through each scene as two
   stills: its line written out, then its photo.

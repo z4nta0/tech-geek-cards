@@ -11,7 +11,7 @@ import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Func
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: Every figure on the card floats, flies, or flickers. How: This is the animation library that plays it all.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the still scene at once. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' distances are vertical rhythm steps, such as a ghost's bob. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' distances are vertical rhythm steps or run between them, such as a ghost's bob. How: This returns a step's size in pixels.
 import { SplitText } from 'gsap/SplitText';        // What: Split Text. Why: The greeting drops in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: Each figure's motion has to start after the card renders and stop when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The motion animates specific elements. How: Each animated element gets a ref.

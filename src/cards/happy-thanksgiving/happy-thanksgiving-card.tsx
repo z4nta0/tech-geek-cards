@@ -12,7 +12,7 @@ import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Func
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card plays as one timeline of entrances. How: This is the animation library that builds and plays it.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as an entrance's slide. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps or run between them, such as an entrance's slide. How: This returns a step's size in pixels.
 import { staLeaFun } from './leaf-fall.ts';        // What: Start Leaf Function. Why: Leaves fall over the card. How: This starts them and returns the function that stops them.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.

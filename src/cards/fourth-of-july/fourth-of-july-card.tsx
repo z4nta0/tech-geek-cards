@@ -13,7 +13,7 @@ import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: The card's random values stay within set bounds, such as a star's size. How: This returns a random number between two bounds.
 import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
-import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as an entrance's slide. How: This returns a step's size in pixels.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps or run between them, such as an entrance's slide. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
 import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps the scattered stars across renders.
