@@ -59,9 +59,32 @@ const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1
 const PAG_GRI_ARR : { griArr : GriCasTyp[], patStr : string }[] = [ // What: Page Grid Array. Why: Each page with a card grid is checked at every width. How: Each row names a page and its grids.
 
 
-	{ griArr : [ { cenBoo : false, claStr : 'steLisOrd' }, { cenBoo : false, claStr : 'feaGriDiv' } ], patStr : '/'        }, // What: Home Row. Why: Home's steps and featured cards each keep even rows. How: This checks both grids.
-	{ griArr : [ { cenBoo : false, claStr : 'facLisUno' }, { cenBoo : false, claStr : 'famLisUno' } ], patStr : '/about'   }, // What: About Row. Why: About's facts and sister sites each keep even rows. How: This checks both grids.
-	{ griArr : [ { cenBoo : true,  claStr : 'galGriDiv' }                                           ], patStr : '/gallery' }  // What: Gallery Row. Why: The Gallery's rows wrap with a centered last row. How: This checks its one grid.
+	{ // What: Home Row. Why: Home's steps and featured cards each keep even rows. How: This checks both grids.
+
+
+		griArr : [ { cenBoo : false, claStr : 'steLisOrd' }, { cenBoo : false, claStr : 'feaGriDiv' } ], // What: Grid Array. Why: Home holds two card grids. How: This names the steps list and the featured grid, each with even rows.
+		patStr : '/'                                                                                     // What: Path String. Why: The row's grids are on the Home page. How: This loads Home.
+
+
+	},
+
+	{ // What: About Row. Why: About's facts and sister sites each keep even rows. How: This checks both grids.
+
+
+		griArr : [ { cenBoo : false, claStr : 'facLisUno' }, { cenBoo : false, claStr : 'famLisUno' } ], // What: Grid Array. Why: About holds two card grids. How: This names the facts list and the sister sites list, each with even rows.
+		patStr : '/about'                                                                                // What: Path String. Why: The row's grids are on the About page. How: This loads About.
+
+
+	},
+
+	{ // What: Gallery Row. Why: The Gallery's rows wrap with a centered last row. How: This checks its one grid.
+
+
+		griArr : [ { cenBoo : true, claStr : 'galGriDiv' } ], // What: Grid Array. Why: The Gallery holds one card grid. How: This names it, with its last row centered.
+		patStr : '/gallery'                                   // What: Path String. Why: The row's grid is on the Gallery page. How: This loads the Gallery.
+
+
+	}
 
 
 ];
