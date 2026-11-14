@@ -33,9 +33,10 @@ import type { Plugin    } from 'vite';                  // What: Plugin. Why: Th
  * copy of index.html carrying the card's title, description, and link preview
  * tags, since link scrapers read only a page's raw HTML: the dev server serves
  * each card's address that way, and the build writes the copies with the
- * rewrite rules that serve them. Every other setting stays at Vite's default,
- * including copying the files in public/ (such as the crawler files) into the
- * build untouched.
+ * rewrite rules that serve them. The dev server's file watcher stays off
+ * folders that hold no app code, such as the test output. Every other setting
+ * stays at Vite's default, including copying the files in public/ (such as
+ * the crawler files) into the build untouched.
  *
  * Sections:
  *  - Constants
