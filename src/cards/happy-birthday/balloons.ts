@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise and sway take steps on the duration scale. How: This returns a step's length in milliseconds.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise times and sway periods run between steps on the duration scale. How: This returns a step's length in milliseconds.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each balloon's rise, sway, and size are picked at random within set bounds. How: This returns a random number between two bounds.
 import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway is a rhythm step. How: This returns a step's size in pixels.
 
