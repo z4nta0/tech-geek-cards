@@ -53,8 +53,8 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  * card" cue whose arrow nudges on hover, and the "Share" button. The title's
  * link covers the whole tile through its ::after, so the tile is one large
  * target without nesting links, and the "Share" button is lifted above it.
- * The preview is decoration beside the title, so it carries alt text for
- * the card's look but isn't a link of its own.
+ * The preview sits beside the title, carrying alt text for the card's look,
+ * but isn't a link of its own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
