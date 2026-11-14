@@ -34,8 +34,9 @@ import type { LeaSetTyp } from './leaf-fall.ts'; // What: Leaf Settings Type. Wh
  * rises beside it and fans out its tail, the "Happy Thanksgiving" heading
  * rises into view, and a short handwritten message follows, while autumn
  * leaves fall over everything. Once in place the turkey keeps rocking gently.
- * Every duration, distance, and angle is a step on the design scale, and the
- * curves are the stylesheet's easing tokens. Under reduced motion the card
+ * Every duration and distance in the timeline, and the turkey's rocking
+ * angle, is a step on the design scale, and the curves are the stylesheet's
+ * easing tokens. Under reduced motion the card
  * opens finished, without falling leaves or the turkey's rocking. Converted
  * from TechGeek.support's original.
  *
@@ -236,9 +237,10 @@ function ThaCarCom () : JSX.Element {
 	 * turkey rises in and its feathers fan up from their base, a Base Minus 2
 	 * step apart; at Base Plus 8 the heading rises in; and at Base Plus 9 the
 	 * message follows and the turkey starts rocking a few degrees back and
-	 * forth for as long as the card is open. The leaves start falling as the
-	 * card opens. Under reduced motion the timeline jumps straight to its end,
-	 * and neither the rocking nor the leaves ever start.
+	 * forth for as long as the card is open. The leaf loop starts as the card
+	 * opens, each leaf falling after its own random wait. Under reduced motion
+	 * the timeline jumps straight to its end, and neither the rocking nor the
+	 * leaves ever start.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -290,7 +292,7 @@ function ThaCarCom () : JSX.Element {
 
 
 
-		const stoLeaFun = redMotBoo ? () => {} : staLeaFun( leaLayRef.current!, leaTemRef.current!, cssModObj.leaFalSvg, leaSetFun() ); // What: Stop Leaf Function. Why: The leaves fall from the start, but never under reduced motion, and the cleanup has to stop them. How: This starts them in the leaf layer and keeps their stop function, or a no-op under reduced motion. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: useGSAP runs after the render that attaches them.
+		const stoLeaFun = redMotBoo ? () => {} : staLeaFun( leaLayRef.current!, leaTemRef.current!, cssModObj.leaFalSvg, leaSetFun() ); // What: Stop Leaf Function. Why: The leaves are set going from the start, each falling after its own wait, but never under reduced motion, and the cleanup has to stop them. How: This starts them in the leaf layer and keeps their stop function, or a no-op under reduced motion. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: useGSAP runs after the render that attaches them.
 
 
 
