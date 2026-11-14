@@ -5,8 +5,8 @@
  * motion.ts = Motion
  *
  * @summary
- * The reduced-motion check every animation JavaScript plays itself consults
- * first: whether the visitor's system asks for reduced motion. It reads the
+ * The reduced-motion check for motion JavaScript plays itself: whether the
+ * visitor's system asks for reduced motion. It reads the
  * live media query on every call, so a change to the setting takes effect
  * without a reload. It also reads the stylesheet's easing curves, for motion
  * that can't read a custom property through var(), such as a GSAP timeline.
@@ -91,7 +91,7 @@ const redMotFun = () : boolean => window.matchMedia( '(prefers-reduced-motion: r
 
 // #region Exports
 
-export { motEasFun, redMotFun }; // What: Named Exports. Why: Every animated card checks the same reduced-motion preference, and its JavaScript motion reads the same curves as the stylesheet. How: This exports motEasFun and redMotFun by name.
+export { motEasFun, redMotFun }; // What: Named Exports. Why: JavaScript motion checks the reduced-motion preference and reads the same curves as the stylesheet. How: This exports motEasFun and redMotFun by name.
 
 // #endregion Exports
 
