@@ -314,7 +314,8 @@ async function namProFun ( curPagObj : Page ) : Promise< string[] > {
  * @summary
  * Runs inside the page and watches it for a while once a state has opened,
  * listing every element a script rewrites in that time: its inline style or
- * transform attribute, its text, or its children, and every canvas drawn on.
+ * transform attribute, its text, or its children, and any canvas drawn on
+ * through its common 2D drawing calls.
  * Motion a script drives frame by frame starts no CSS or Web Animation, but
  * it writes one of these on every frame: a GSAP tween or a loop of animation
  * frames moving snow, leaves, or balloons rewrites the moving element's style,

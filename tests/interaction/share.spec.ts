@@ -17,7 +17,7 @@ import { test        } from '@playwright/test';     // What: Test. Why: Each way
  *
  * @summary
  * Checks that the share dialog leaves the way it arrived, in whichever engine
- * the project runs: its Close button, Escape, and a tap on the dimmed page
+ * the project runs: its "Close" button, Escape, and a tap on the dimmed page
  * around it each start the dialog's closing fade, and the dialog closes once
  * it ends. The dialog opens at the desktop width with motion allowed, so the
  * fade really plays, and is closed again with reduced motion turned on just
@@ -35,7 +35,7 @@ import { test        } from '@playwright/test';     // What: Test. Why: Each way
 
 // #region Constants
 
-const CLO_KIN_ARR = [ 'button', 'Escape', 'backdrop' ];                                         // What: Close Kind Array. Why: The Close button, Escape, and a tap outside the panel each close the dialog. How: This names each way, one test per way and per motion setting.
+const CLO_KIN_ARR = [ 'button', 'Escape', 'backdrop' ];                                         // What: Close Kind Array. Why: The "Close" button, Escape, and a tap outside the panel each close the dialog. How: This names each way, one test per way and per motion setting.
 const SHA_STA_OBJ = STA_REC_ARR.find( ( staRecObj ) => staRecObj.ideStr === 'share-desktop' )!; // What: Share State Object. Why: The dialog is closed from its open state at the desktop width. How: This picks that row from the shared state list. // What: Non-Null Note. Why: TypeScript can't see that the row exists. How: The shared state list always carries the share-desktop row.
 
 // #endregion Constants
@@ -47,7 +47,7 @@ const SHA_STA_OBJ = STA_REC_ARR.find( ( staRecObj ) => staRecObj.ideStr === 'sha
 for ( const cloKinStr of CLO_KIN_ARR ) { // What: Close Kind Loop. Why: Each way of closing should fade the dialog out. How: This declares one test per way, with motion and under reduced motion.
 
 
-	test( `the share dialog closed by its ${ cloKinStr === 'button' ? 'Close button' : cloKinStr === 'Escape' ? 'Escape key' : 'backdrop' } fades out before it closes`, async ( { page : curPagObj } ) => { // What: Share Close Test. Why: A dialog that vanished at once would read as the screen breaking rather than closing. How: This opens the dialog, closes it, checks the closing fade is playing, then checks the dialog closed.
+	test( `the share dialog closed by its ${ cloKinStr === 'button' ? '"Close" button' : cloKinStr === 'Escape' ? 'Escape key' : 'backdrop' } fades out before it closes`, async ( { page : curPagObj } ) => { // What: Share Close Test. Why: A dialog that vanished at once would read as the screen breaking rather than closing. How: This opens the dialog, closes it, checks the closing fade is playing, then checks the dialog closed.
 
 
 		await opeStaFun( curPagObj, SHA_STA_OBJ ); // What: Dialog Open Call. Why: The dialog has to be open to close. How: This opens the Gallery with the share dialog showing.
@@ -70,7 +70,7 @@ for ( const cloKinStr of CLO_KIN_ARR ) { // What: Close Kind Loop. Why: Each way
 
 
 
-	test( `the share dialog closed by its ${ cloKinStr === 'button' ? 'Close button' : cloKinStr === 'Escape' ? 'Escape key' : 'backdrop' } under reduced motion still closes`, async ( { page : curPagObj } ) => { // What: Reduced Share Close Test. Why: Under reduced motion the dialog still closes only once its shortened fade ends, so a variant that never ended would leave it stuck open. How: This opens the dialog, turns reduced motion on, closes it, and checks the dialog closed.
+	test( `the share dialog closed by its ${ cloKinStr === 'button' ? '"Close" button' : cloKinStr === 'Escape' ? 'Escape key' : 'backdrop' } under reduced motion still closes`, async ( { page : curPagObj } ) => { // What: Reduced Share Close Test. Why: Under reduced motion the dialog still closes only once its shortened fade ends, so a variant that never ended would leave it stuck open. How: This opens the dialog, turns reduced motion on, closes it, and checks the dialog closed.
 
 
 		await opeStaFun( curPagObj, SHA_STA_OBJ ); // What: Dialog Open Call. Why: The dialog has to be open to close. How: This opens the Gallery with the share dialog showing.
