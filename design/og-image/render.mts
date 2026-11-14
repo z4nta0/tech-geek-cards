@@ -23,7 +23,7 @@ import { statSync      } from 'node:fs';                   // What: Stat Sync. W
  * hexagon mark, the TechGeek.cards wordmark, and "Animated Greeting Cards"
  * between two fanned stacks of card previews, as a PNG since it's flat
  * artwork. Each card's, public/social/<address>.jpg, is captured from the card
- * itself, played by the site's own dev server on port 5196 under reduced
+ * itself, played by the site's own dev server on port 5207 under reduced
  * motion so it opens on its finished scene, with the floating bar and the
  * Family cards' controls hidden; those are JPEGs, which keep a finished card
  * screen under 300 KB, the cap the social preview rule keeps as a safe margin
@@ -72,7 +72,7 @@ if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.pn
 
 
 
-const vitSerObj = await createServer( { server : { port : 5196, strictPort : true } } ); // What: Vite Server Object. Why: The cards are captured as the site plays them, on a port of the script's own. How: This starts the dev server on 5196, failing rather than taking another.
+const vitSerObj = await createServer( { server : { port : 5207, strictPort : true } } ); // What: Vite Server Object. Why: The cards are captured as the site plays them, on a port of the script's own. How: This starts the dev server on 5196, failing rather than taking another.
 
 
 await vitSerObj.listen(); // What: Server Listen Call. Why: The cards load from the server. How: This starts it.
@@ -88,7 +88,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 	const imaPatStr = `${ SOC_DIR_STR }${ carDatObj.sluStr }.jpg`; // What: Image Path String. Why: Each card's tags point at its image by its address. How: This is the card's file in public/social/.
 
 
-	await capPagObj.goto( `http://localhost:5196/${ carDatObj.sluStr }` ); // What: Card Load Call. Why: The card has to be on screen before it's captured. How: This opens the card's page.
+	await capPagObj.goto( `http://localhost:5207/${ carDatObj.sluStr }` ); // What: Card Load Call. Why: The card has to be on screen before it's captured. How: This opens the card's page.
 
 	await capPagObj.waitForLoadState( 'networkidle' ); // What: Network Idle Wait. Why: A card's code and images arrive after its page. How: This waits until nothing more is loading.
 
