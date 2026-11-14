@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import { expect      } from '@playwright/test';     // What: Expect. Why: Each check passes only when the dialog fades out and closes. How: This asserts on what each check reads, such as the dialog's animations.
+import { expect      } from '@playwright/test';     // What: Expect. Why: The checks pass only when the dialog closes, and the motion checks also need its closing fade to play. How: This asserts on what each check reads, such as the dialog's animations.
 import { opeStaFun   } from '../support/states.ts'; // What: Open State Function. Why: The dialog closes from a settled state. How: This loads the state and runs its action, which opens the dialog.
 import { STA_REC_ARR } from '../support/states.ts'; // What: State Record Array. Why: The checks start from the Gallery with the share dialog open. How: This lists every state, from which that one is picked.
 import { test        } from '@playwright/test';     // What: Test. Why: Each way of closing is its own test. How: This declares them.
