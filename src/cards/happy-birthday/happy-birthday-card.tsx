@@ -193,8 +193,8 @@ const TOP_COU_NUM = 30; // What: Top Count Number. Why: A last shower falls from
  * both loops. The greeting adds the recipient's name from ?name= on a line of
  * its own. Whether motion is reduced is read once, when the card opens: under
  * reduced motion the timeline is never built, the balloons rest, and no
- * confetti or tap invitation appears. Every tap on the card throws a burst of
- * confetti where it lands.
+ * confetti or tap invitation appears. Otherwise every tap on the card throws
+ * a burst of confetti where it lands.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

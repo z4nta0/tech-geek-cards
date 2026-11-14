@@ -60,7 +60,7 @@
 
 /* #region birCarDiv */
 
-.birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
+.birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and while motion is allowed every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
 
 
 	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: A bright blue is one of the card's party colors, such as a balloon's. How: This is #4D96FF. */
