@@ -420,7 +420,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		timLinObj.to( curSpaRef.current, { autoAlpha : 0, duration : fadDurNum } ); // What: Cursor Fade. Why: Nothing more is typed. How: This fades the cursor out.
 
 
-
 		if ( !redMotBoo ) { // What: Controls Exit Check. Why: Once the greeting grows there's nothing left to step through, but under reduced motion the controls are the way back into the scenes. How: This adds the controls' exit only when the card plays its motion.
 
 
