@@ -6,16 +6,16 @@
 import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Object. Why: The card's sky, fireworks, flag, and lettering are styled in its own module. How: This maps each class name in fourth-of-july-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The headline's starting scale, the stars' sizes and brightness, and the sparks' spread and shrink sit on the scale as powers of the core design number. How: This returns that power.
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every duration and delay in the card is a step on the duration scale. How: This returns a step's length in milliseconds.
-import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as the bounds of a star's size. How: This returns that power.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs up to or between steps. How: This returns a step's length in milliseconds.
+import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every fixed duration is a step on the duration scale, each random one runs between two, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
-import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
-import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The entrance's slides and the sparks' flight are spacing steps. How: This returns a step's size in pixels.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: The card's random values stay within set bounds, such as a star's size. How: This returns a random number between two bounds.
+import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once, with no fireworks. How: This reports whether reduced motion is on.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps or run between them, such as an entrance's slide. How: This returns a step's size in pixels.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: The entrance and the fireworks have to start after the card renders and stop when it leaves. How: This GSAP hook runs them in a context it reverts on unmount.
-import { useRef    } from 'react';                 // What: Use Ref. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
+import { useRef    } from 'react';                 // What: Use Reference. Why: The timeline animates specific elements, and the fireworks burst in the sky. How: Each of them gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps the scattered stars across renders.
 
 
@@ -29,20 +29,19 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * fourth-of-july-card.tsx = Fourth Of July Card
  *
  * @summary
- * The Happy 4th of July card: a night sky fading from navy to a dark red
- * glow, scattered with twinkling stars and fireworks bursting at random, over
- * an American flag that slides in, the Happy 4th of July headline springing
+ * The Happy 4th of July card: a night sky fading from navy to a dark red glow,
+ * scattered with twinkling stars and fireworks bursting at random, above an
+ * American flag that slides in, the "Happy 4th of July!" headline springing
  * down into place, and a short wish that rises in below it, between a row of
- * gold stars and a row of red sparkles. Every duration, distance, size, and
- * scale is a step on the design scale, and the curves are the stylesheet's
- * easing tokens. The fireworks are a small pool of elements the card
- * renders once and launches in turn, each burst its own GSAP timeline, and
- * they stop when the card replays or closes. Under reduced motion the card
- * opens finished, with still stars and no fireworks. Converted from
- * TechGeek.support's original.
+ * gold stars and a row of red sparkles. Every fixed duration, distance, size,
+ * and scale is a step on the design scale, each random one runs up to or
+ * between steps, and the curves are the stylesheet's easing tokens. The
+ * fireworks are a small pool of elements the card renders once and launches in
+ * turn, each burst its own GSAP timeline, and they stop when the card replays
+ * or closes. Under reduced motion the card opens finished, with still stars
+ * and no fireworks. Converted from TechGeek.support's original.
  *
  * Sections:
- *  - Types
  *  - Constants
  *  - Helpers
  *  - Components
@@ -55,23 +54,6 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
 
 
 
-// #region Types
-
-type StaRecTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
-
-
-	lefNum : number, // What: Left Number. Why: Stars are scattered across the sky. How: This holds its distance from the left edge, in percent.
-	opaNum : number, // What: Opacity Number. Why: Some stars shine brighter than others. How: This holds its starting opacity.
-	sizNum : number, // What: Size Number. Why: Stars come in different sizes. How: This holds its width and height, in rem.
-	topNum : number  // What: Top Number. Why: Stars fill the upper part of the sky. How: This holds its distance from the top edge, in percent.
-
-
-};
-
-// #endregion Types
-
-
-
 // #region Constants
 
 const COL_VAR_ARR = [ 'var( --foj-red-col )', 'var( --foj-whi-col )', 'var( --foj-blu-col )', 'var( --foj-gol-col )', 'var( --foj-cor-col )', 'var( --foj-ice-col )' ]; // What: Color Variable Array. Why: The fireworks burst in the flag's colors and gold, which the card's stylesheet defines. How: Each firework and each spark draws one of these token references at random, which its custom property resolves against the card's root. // Fourth-Of-July Red Color = #FF4444, Fourth-Of-July White Color = #FFFFFF, Fourth-Of-July Blue Color = #4488FF, Fourth-Of-July Gold Color = #FFD700, Fourth-Of-July Coral Color = #FF6B6B, Fourth-Of-July Ice Color = #88CCFF
@@ -79,20 +61,26 @@ const COL_VAR_ARR = [ 'var( --foj-red-col )', 'var( --foj-whi-col )', 'var( --fo
 
 
 const FIR_POO_NUM = Math.ceil( ( durMilFun( 'p02' ) + durMilFun( 'p08' ) ) / durMilFun( 'p06' ) ); // What: Firework Pool Number. Why: The fireworks reuse a fixed pool of wraps, and a wrap mustn't be reused while its last burst still plays. How: This is how many bursts overlap at most, a firework's longest life, the particle delay plus the longest flight, over the launch interval, rounded up, which is 3. // Duration Animation Base Plus 2 ~= 277.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms, Duration Animation Base Plus 6 ~= 853.0ms
-const PAR_COU_NUM = 14;                                                                            // What: Particle Count Number. Why: Each firework bursts into a ring of sparks. How: This is how many sparks it throws.
-const STA_COU_NUM = 80;                                                                            // What: Star Count Number. Why: The sky should feel full of stars without crowding the lettering. How: This is how many are scattered across it.
 
 
 
 const FLA_HEI_NUM = 100;               // What: Flag Height Number. Why: The flag is drawn in its own drawing space. How: This is its height in that space.
 const FLA_WID_NUM = 190;               // What: Flag Width Number. Why: The flag keeps the real flag's 1.9 to 1 proportions. How: This is its width in that space.
 const CAN_WID_NUM = FLA_WID_NUM * 0.4; // What: Canton Width Number. Why: The blue canton spans two fifths of the flag. How: This is its width in the flag's drawing space.
-const STR_HEI_NUM = FLA_HEI_NUM / 13;  // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
-const CAN_HEI_NUM = STR_HEI_NUM * 7;   // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
 
 
 
-const FLA_STR_STR = Array.from( Array( 6 ).keys(), ( strIndNum ) => `M0 ${ ( ( strIndNum * 2 + 1 ) * STR_HEI_NUM ).toFixed( 3 ) }h${ FLA_WID_NUM }v${ STR_HEI_NUM.toFixed( 3 ) }H0z` ).join( '' ); // What: Flag Stripes String. Why: The six white stripes lie between the seven red ones. How: This joins one rectangle per white stripe, every other stripe from the second, into a single path.
+const PAR_COU_NUM = 14; // What: Particle Count Number. Why: Each firework bursts into a ring of sparks. How: This is how many sparks it throws.
+const STA_COU_NUM = 80; // What: Star Count Number. Why: The sky should feel full of stars without crowding the lettering. How: This is how many are scattered across it.
+
+
+
+const STI_HEI_NUM = FLA_HEI_NUM / 13; // What: Stripe Height Number. Why: The flag has thirteen stripes. How: This is one stripe's height in the flag's drawing space.
+const CAN_HEI_NUM = STI_HEI_NUM * 7;  // What: Canton Height Number. Why: The canton covers the top seven stripes. How: This is its height in the flag's drawing space.
+
+
+
+const FLA_STI_STR = Array.from( Array( 6 ).keys(), ( stiIndNum ) => `M0 ${ ( ( stiIndNum * 2 + 1 ) * STI_HEI_NUM ).toFixed( 3 ) }h${ FLA_WID_NUM }v${ STI_HEI_NUM.toFixed( 3 ) }H0z` ).join( '' ); // What: Flag Stripes String. Why: The six white stripes lie between the seven red ones. How: This joins one rectangle per white stripe, every other stripe from the second, into a single path.
 
 // #endregion Constants
 
@@ -104,7 +92,18 @@ const ranColFun = () : string => COL_VAR_ARR[ Math.floor( Math.random() * COL_VA
 
 
 
-const staArrFun = () : StaRecTyp[] => Array.from( { length : STA_COU_NUM }, () => ( { // What: Star Array Function. Why: The stars are scattered once, when the card opens. How: This builds each star's record from random values within its ranges.
+type StaReoTyp = { // What: Star Record Type. Why: Each star keeps its own place, size, and brightness. How: This holds the values its span is drawn with.
+
+
+	lefNum : number, // What: Left Number. Why: Stars are scattered across the sky. How: This holds its distance from the left edge, in percent.
+	opaNum : number, // What: Opacity Number. Why: Some stars shine brighter than others. How: This holds its starting opacity.
+	sizNum : number, // What: Size Number. Why: Stars come in different sizes. How: This holds its width and height, in rem.
+	topNum : number  // What: Top Number. Why: Stars fill the upper part of the sky. How: This holds its distance from the top edge, in percent.
+
+
+};
+
+const staArrFun = () : StaReoTyp[] => Array.from( { length : STA_COU_NUM }, () => ( { // What: Star Array Function. Why: The stars are scattered once, when the card opens. How: This builds each star's record from random values within its ranges.
 
 
 	lefNum : ranValFun( 0, 100 ),                           // What: Left Number. Why: Stars spread across the whole sky. How: This picks 0% to 100% across.
@@ -114,78 +113,6 @@ const staArrFun = () : StaRecTyp[] => Array.from( { length : STA_COU_NUM }, () =
 
 
 } ) );
-
-
-
-// #region staPatFun
-
-/**
- * staPatFun = Star Path Function
- *
- * @summary
- * One five-pointed star of the flag's canton, as a closed subpath in the
- * flag's drawing space, centered on the given point. Its ten corners
- * alternate between the outer points and the inner notches, starting from
- * the top point, at about the real flag's star size for a flag 100 units
- * tall. Every number here is in the flag's own drawing space, so none is a
- * CSS length.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param xcoNum - X-Coordinate Number: The star's center from the flag's left
- *                 edge.
- * @param ycoNum - Y-Coordinate Number: The star's center from the flag's top
- *                 edge.
- *
- * @returns The star's subpath.
- *
- * @example
- * ```ts
- * staPatFun(6.333, 5.385) // => 'M6.333 2.305L7.027 4.430...Z'
- * ```
- *
-*/
-
-const staPatFun = ( xcoNum : number, ycoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
-
-
-	const corPoiArr = Array.from( Array( 10 ).keys(), ( corIndNum ) => { // What: Corner Point Array. Why: A five-pointed star has ten corners. How: This places each one around the center, alternating the outer and inner radius.
-
-
-		const angRadNum = ( corIndNum * 36 - 90 ) * Math.PI / 180; // What: Angle Radian Number. Why: The corners sit every 36 degrees, starting straight up. How: This converts the corner's angle to radians.
-		const radValNum = corIndNum % 2 === 0 ? 3.08 : 1.18;       // What: Radius Value Number. Why: Points reach out and notches tuck in. How: This picks the point radius or the notch radius, in the flag's drawing space.
-
-
-
-		return `${ ( xcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( ycoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
-
-
-	} );
-
-
-
-	return `M${ corPoiArr.join( 'L' ) }Z`; // What: Star Path Return. Why: The star is one closed shape. How: This moves to the first corner, draws a line through the rest, and closes it.
-
-
-};
-
-// #endregion staPatFun
-
-
-
-const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: Flag Stars String. Why: The canton holds fifty stars in nine rows, six and five in turn. How: This finds each star's row and column and joins their subpaths into a single path, built once when the card's code loads.
-
-
-	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Every pair of rows holds eleven stars, six then five. How: This is the star's place within its pair.
-	const colIndNum = paiIndNum < 6 ? paiIndNum * 2 : ( paiIndNum - 6 ) * 2 + 1;    // What: Column Index Number. Why: The six-star rows sit on even columns and the five-star rows between them. How: This picks the star's place among the canton's eleven columns.
-	const rowIndNum = Math.floor( staIndNum / 11 ) * 2 + ( paiIndNum < 6 ? 0 : 1 ); // What: Row Index Number. Why: The rows alternate six and five. How: This counts the pairs before the star and adds one when it falls in its pair's second row.
-
-
-
-	return staPatFun( ( colIndNum + 1 ) * CAN_WID_NUM / 12, ( rowIndNum + 1 ) * CAN_HEI_NUM / 10 ); // What: Star Path Return. Why: The stars sit evenly spaced inside the canton. How: This draws the star at its column's twelfth of the canton's width and its row's tenth of its height.
-
-
-} ).join( '' );
 
 
 
@@ -228,11 +155,11 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 	const accEasStr = gsaEasFun( 'acc' ); // What: Accelerate Easing String. Why: The shell fades out faster as it goes. How: This registers the accelerate token and keeps its GSAP name.
 	const decEasStr = gsaEasFun( 'dec' ); // What: Decelerate Easing String. Why: The ring and sparks burst fast and slow as they spread. How: This registers the decelerate token and keeps its GSAP name.
-	const disMaxNum = rhyPxlFun( 'p08' ); // What: Distance Maximum Number. Why: The farthest sparks fly well out from the burst. How: This is the Vertical Rhythm Base Plus 8 step, in pixels. // Vertical Rhythm Base Plus 8 ~= 138.199px
-	const disMinNum = rhyPxlFun( 'p05' ); // What: Distance Minimum Number. Why: The nearest sparks still clear the ring. How: This is the Vertical Rhythm Base Plus 5 step, in pixels. // Vertical Rhythm Base Plus 5 ~= 59.447px
+	const disMaxNum = rhyPixFun( 'p08' ); // What: Distance Maximum Number. Why: The farthest sparks fly well out from the burst. How: This is the Vertical Rhythm Base Plus 8 step, in pixels. // Vertical Rhythm Base Plus 8 ~= 138.199px
+	const disMinNum = rhyPixFun( 'p05' ); // What: Distance Minimum Number. Why: The nearest sparks still clear the ring. How: This is the Vertical Rhythm Base Plus 5 step, in pixels. // Vertical Rhythm Base Plus 5 ~= 59.447px
 	const fliMaxNum = durSecFun( 'p08' ); // What: Flight Maximum Number. Why: The slowest sparks linger. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
 	const fliMinNum = durSecFun( 'p06' ); // What: Flight Minimum Number. Why: The quickest sparks burn out fast. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
-	const intSecNum = durSecFun( 'p06' ); // What: Interval Second Number. Why: A new firework bursts a little less than once a second. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
+	const intSecNum = durSecFun( 'p06' ); // What: Interval Second Number. Why: A new firework bursts a little more than once a second. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
 	const parDelNum = durSecFun( 'p02' ); // What: Particle Delay Number. Why: The sparks fly once the shell has burst. How: This is the duration scale's Base Plus 2 step, in seconds. // Duration Animation Base Plus 2 ~= 277.0ms
 	const parJitNum = cdnPowFun( 8 );     // What: Particle Jitter Number. Why: Evenly spaced sparks look mechanical. How: This is the core design number to the power of 8, the most each spark's angle strays, in degrees. // Core-Design-Number to the Power of 8 ~= 9.484
 	const parScaNum = cdnPowFun( -4 );    // What: Particle Scale Number. Why: Sparks shrink as they burn out. How: This is the Power of 4 Reciprocal, the size they end at. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
@@ -243,9 +170,9 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 	const timLinArr : ( gsap.core.Timeline | null )[] = Array( FIR_POO_NUM ).fill( null );                 // What: Timeline Array. Why: Stopping has to end every firework still bursting, and a reused wrap's last burst has to end before its next. How: This holds each wrap's latest timeline, null before its first.
 	const wraDivArr : HTMLElement[]                   = Array.from( firDivEle.children ) as HTMLElement[]; // What: Wrap Div Array. Why: The pool's wraps are reused in turn. How: This lists the firework layer's children. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every wrap the card renders is a div.
 
-	let lauCalObj : gsap.core.Tween | null = null; // What: Launch Call Object. Why: Stopping has to cancel the next launch. How: This holds the pending delayed call, null before the first.
-
 	let wraIndNum = 0; // What: Wrap Index Number. Why: The wraps take turns. How: This holds the next wrap's place in the pool.
+
+	let lauCalObj : gsap.core.Tween | null = null; // What: Launch Call Object. Why: Stopping has to cancel the next launch. How: This holds the pending delayed call, null before the first.
 
 
 
@@ -284,11 +211,11 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 		const wraXcoNum = ranValFun( 0.15, 0.85 ) * firDivEle.clientWidth;      // What: Wrap X-Coordinate Number. Why: Fireworks burst across the sky, clear of its edges. How: This picks a spot between 15% and 85% across, a literal position in the sky, in pixels.
 		const wraYcoNum = ranValFun( 0.1, 0.55 ) * firDivEle.clientHeight;      // What: Wrap Y-Coordinate Number. Why: Fireworks burst in the upper middle of the sky. How: This picks a spot between 10% and 55% down, a literal position in the sky, in pixels.
 
-		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell, Ring, And Particle Div Elements. Why: The timeline animates each piece. How: This takes the wrap's children in the order the card renders them, shell, ring, then sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
+		const [ sheDivEle, rinDivEle, ...parDivArr ] = Array.from( wraDivEle.children ) as HTMLElement[]; // What: Shell Div Element. Why: The shell burns out as the firework bursts. How: This is the wrap's first child. // What: Ring Div Element. Why: The ring flashes outward from the burst. How: This is the wrap's second child. // What: Particle Div Array. Why: Each spark flies its own way. How: This gathers the wrap's remaining children, the sparks. // What: Type Assertion Note. Why: An element's children are typed as plain elements. How: Every piece the card renders is a div.
+
 
 
 		timLinArr[ wraIndNum ]?.kill(); // What: Last Timeline Kill Call. Why: A reused wrap's last burst must not keep playing over its new one. How: This kills the wrap's previous timeline, if any.
-
 
 		timLinObj.set( wraDivEle, { x : wraXcoNum, y : wraYcoNum }, 0 ); // What: Wrap Placement. Why: The firework bursts at its picked spot. How: This moves the wrap there by transform, so placing it needs no layout.
 
@@ -300,19 +227,19 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 
 			const angRadNum = ( 360 / PAR_COU_NUM * parIndNum + ranValFun( parJitNum * -1, parJitNum ) ) * Math.PI / 180; // What: Angle Radian Number. Why: The sparks spread evenly around the circle, each straying a little. How: This is the spark's share of the circle plus a random jitter, in radians.
-			const disPxlNum = ranValFun( disMinNum, disMaxNum );                                                          // What: Distance Pixel Number. Why: Sparks fly different distances. How: This picks one within the range.
+			const disPixNum = ranValFun( disMinNum, disMaxNum );                                                          // What: Distance Pixel Number. Why: Sparks fly different distances. How: This picks one within the range.
 			const fliSecNum = ranValFun( fliMinNum, fliMaxNum );                                                          // What: Flight Second Number. Why: Sparks burn out at different times. How: This picks a duration within the range.
-			const xcoPxlNum = Math.cos( angRadNum ) * disPxlNum;                                                          // What: X-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's horizontal share.
-			const ycoPxlNum = Math.sin( angRadNum ) * disPxlNum;                                                          // What: Y-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's vertical share.
+			const xcoPixNum = Math.cos( angRadNum ) * disPixNum;                                                          // What: X-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's horizontal share.
+			const ycoPixNum = Math.sin( angRadNum ) * disPixNum;                                                          // What: Y-Coordinate Pixel Number. Why: The spark ends along its angle. How: This is its distance's vertical share.
 
 
 			parDivEle.style.setProperty( '--foj-par-col', ranColFun() ); // What: Particle Color Assignment. Why: The sparks burst in mixed colors. How: This sets the custom property the spark reads to a random palette color.
 
-
-			timLinObj.fromTo( parDivEle, { opacity : 1, scale : 1, x : 0, y : 0 }, { duration : fliSecNum, opacity : 0, scale : parScaNum, x : xcoPxlNum, y : ycoPxlNum }, parDelNum ); // What: Particle Flight. Why: The sparks fly out, shrink, and burn out. How: This shows the spark at the burst point, then after the particle delay moves it to its end point over its flight.
+			timLinObj.fromTo( parDivEle, { opacity : 1, scale : 1, x : 0, y : 0 }, { duration : fliSecNum, opacity : 0, scale : parScaNum, x : xcoPixNum, y : ycoPixNum }, parDelNum ); // What: Particle Flight. Why: The sparks fly out, shrink, and burn out. How: This shows the spark at the burst point, then after the particle delay moves it to its end point over its flight.
 
 
 		}
+
 
 
 		wraDivEle.style.setProperty( '--foj-fir-col', ranColFun() ); // What: Firework Color Assignment. Why: The shell and ring share one color. How: This sets the custom property they read to a random palette color.
@@ -322,14 +249,12 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 		wraIndNum = ( wraIndNum + 1 ) % FIR_POO_NUM; // What: Turn Assignment. Why: The next launch plays the next wrap. How: This moves the turn on, wrapping back to the first.
 
-
 		lauCalObj = gsap.delayedCall( intSecNum, lauFirFun ); // What: Next Launch Call. Why: The fireworks keep coming. How: This schedules the next launch on GSAP's ticker, which pauses with a hidden tab.
 
 
 	};
 
 	// #endregion lauFirFun
-
 
 
 	lauFirFun(); // What: First Launch Call. Why: The sky shouldn't wait an interval for its first firework. How: This launches one at once.
@@ -352,6 +277,78 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
 
 // #endregion staFirFun
 
+
+
+// #region staPatFun
+
+/**
+ * staPatFun = Star Path Function
+ *
+ * @summary
+ * One five-pointed star of the flag's canton, as a closed subpath in the
+ * flag's drawing space, centered on the given point. Its ten corners
+ * alternate between the outer points and the inner notches, starting from
+ * the top point, at about the real flag's star size for a flag 100 units
+ * tall. The center and radii are in the flag's own drawing space, so none of
+ * them is a CSS length.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param cenXcoNum - Center X-Coordinate Number: The star's center from the
+ *                    flag's left edge.
+ * @param cenYcoNum - Center Y-Coordinate Number: The star's center from the
+ *                    flag's top edge.
+ *
+ * @returns The star's subpath.
+ *
+ * @example
+ * ```ts
+ * staPatFun(6.333, 5.385) // => 'M6.333 2.305L7.027 4.430...Z'
+ * ```
+ *
+*/
+
+const staPatFun = ( cenXcoNum : number, cenYcoNum : number ) : string => { // What: Star Path Function. Why: The canton holds fifty stars. How: This draws one at the given center.
+
+
+	const corPoiArr = Array.from( Array( 10 ).keys(), ( corIndNum ) => { // What: Corner Point Array. Why: A five-pointed star has ten corners. How: This places each one around the center, alternating the outer and inner radius.
+
+
+		const angRadNum = ( corIndNum * 36 - 90 ) * Math.PI / 180; // What: Angle Radian Number. Why: The corners sit every 36 degrees, starting straight up. How: This converts the corner's angle to radians.
+		const radValNum = corIndNum % 2 === 0 ? 3.08 : 1.18;       // What: Radius Value Number. Why: Points reach out and notches tuck in. How: This picks the point radius or the notch radius, in the flag's drawing space.
+
+
+
+		return `${ ( cenXcoNum + Math.cos( angRadNum ) * radValNum ).toFixed( 3 ) } ${ ( cenYcoNum + Math.sin( angRadNum ) * radValNum ).toFixed( 3 ) }`; // What: Corner Point Return. Why: The path lists each corner as a pair of coordinates. How: This returns the corner's x and y, rounded to three places.
+
+
+	} );
+
+
+
+	return `M${ corPoiArr.join( 'L' ) }Z`; // What: Star Path Return. Why: The star is one closed shape. How: This moves to the first corner, draws a line through the rest, and closes it.
+
+
+};
+
+// #endregion staPatFun
+
+
+
+const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: Flag Stars String. Why: The canton holds fifty stars in nine rows, six and five in turn. How: This finds each star's row and column and joins their subpaths into a single path, built once when the card's code loads.
+
+
+	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Each full pair of rows holds eleven stars, six then five, and the ninth row's six stand alone. How: This is the star's place within its pair.
+	const colIndNum = paiIndNum < 6 ? paiIndNum * 2 : ( paiIndNum - 6 ) * 2 + 1;    // What: Column Index Number. Why: The six-star rows sit on even columns and the five-star rows between them. How: This picks the star's place among the canton's eleven columns.
+	const rowIndNum = Math.floor( staIndNum / 11 ) * 2 + ( paiIndNum < 6 ? 0 : 1 ); // What: Row Index Number. Why: The rows alternate six and five. How: This counts the pairs before the star and adds one when it falls in its pair's second row.
+
+
+
+	return staPatFun( ( colIndNum + 1 ) * CAN_WID_NUM / 12, ( rowIndNum + 1 ) * CAN_HEI_NUM / 10 ); // What: Star Path Return. Why: The stars sit evenly spaced inside the canton. How: This draws the star at its column's twelfth of the canton's width and its row's tenth of its height.
+
+
+} ).join( '' );
+
 // #endregion Helpers
 
 
@@ -364,16 +361,16 @@ const staFirFun = ( firDivEle : HTMLElement ) : () => void => { // What: Start F
  * FojCarCom = Fourth-Of-July Card Component
  *
  * @summary
- * The Fourth of July card. Its stars are scattered once, when the card
- * opens. One GSAP timeline, built in useGSAP, fades the card in over the
- * Base Plus 7 step of the duration scale, about 1.13s; after the Base Plus 3
- * step the headline springs down into place from a smaller scale; after the
- * Base Plus 6 step the flag slides in from the left; and once the card has
- * faded in, the wish rises in. The stars twinkle and the fireworks start at
- * once, and both stop when the card replays or closes, since the context
- * reverts the twinkles and the hook's cleanup stops the fireworks. Under
- * reduced motion the timeline jumps to its end, and neither the twinkle nor
- * the fireworks start.
+ * The Fourth of July card. Its stars are scattered once, when the card opens.
+ * One GSAP timeline, built in useGSAP, fades the card in over the Base Plus 7
+ * step of the duration scale, about 1.13s; after the Base Plus 3 step the
+ * headline springs down into place from a smaller scale; after the Base Plus 6
+ * step the flag slides in from the left; and once the card has faded in, the
+ * wish rises in. The fireworks start at once and each star starts twinkling
+ * after its own random delay, and both stop when the card replays or closes,
+ * since the context reverts the twinkles and the hook's cleanup stops the
+ * fireworks. Under reduced motion the timeline jumps to its end, and neither
+ * the twinkle nor the fireworks start.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -409,16 +406,17 @@ function FojCarCom () : JSX.Element {
 	 *
 	 * @summary
 	 * The card's entrance, as one timeline: the card fades in from the start,
-	 * the headline drops from a Base Plus 5 spacing step above and grows from
-	 * the Power of 1 Reciprocal scale on the bounce curve, the flag slides in
-	 * from a Base Plus 4 step to the left, and the wish rises from a Base
-	 * Plus 3 step below, each over the Base Plus 7 duration step and every
-	 * other one decelerating. Then every star twinkles between its own
-	 * brightness and a random one from the Power of 8 Reciprocal to fully
-	 * opaque, forever, after a random delay up to the Base Plus 9 duration
-	 * step, each swing taking from the Base Plus 6 to the Plus 10 step on the
-	 * in-out curve, and the fireworks start. Under reduced motion the
-	 * timeline jumps to its end, before the twinkle and fireworks begin.
+	 * the headline drops from a Base Plus 5 vertical rhythm step above and
+	 * grows from the Power of 1 Reciprocal scale on the bounce curve, the flag
+	 * slides in from a Base Plus 4 step to the left, and the wish rises from a
+	 * Base Plus 3 step below, each over the Base Plus 7 duration step and
+	 * every other one decelerating. The fireworks start with it, and every
+	 * star twinkles between its own brightness and a random one from the
+	 * Power of 8 Reciprocal to fully opaque, forever, each after its own
+	 * random delay up to the Base Plus 9 duration step, each swing taking from
+	 * the Base Plus 6 to the Plus 10 step on the in-out curve. Under reduced
+	 * motion the timeline jumps to its end, and neither the twinkle nor the
+	 * fireworks start.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -431,12 +429,12 @@ function FojCarCom () : JSX.Element {
 		const decEasStr = gsaEasFun( 'dec' );                                                         // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
 		const entDurNum = durSecFun( 'p07' );                                                         // What: Entrance Duration Number. Why: Every entrance plays at the same unhurried pace, and the wish starts once the card has faded in. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
 		const flaDelNum = durSecFun( 'p06' );                                                         // What: Flag Delay Number. Why: The flag follows the headline. How: This is the duration scale's Base Plus 6 step, in seconds. // Duration Animation Base Plus 6 ~= 853.0ms
-		const flaShiNum = rhyPxlFun( 'p04' ) * -1;                                                    // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
+		const flaShiNum = rhyPixFun( 'p04' ) * -1;                                                    // What: Flag Shift Number. Why: The flag slides in from the left. How: This is the Vertical Rhythm Base Plus 4 step, negated. // Vertical Rhythm Base Plus 4 ~= -44.876px
 		const greDelNum = durSecFun( 'p03' );                                                         // What: Greeting Delay Number. Why: The headline arrives just after the card starts fading in. How: This is the duration scale's Base Plus 3 step, in seconds. // Duration Animation Base Plus 3 ~= 366.9ms
 		const greScaNum = cdnPowFun( -1 );                                                            // What: Greeting Scale Number. Why: The headline grows as it drops. How: This is the Power of 1 Reciprocal, the scale it starts from. // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
-		const greShiNum = rhyPxlFun( 'p05' ) * -1;                                                    // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
+		const greShiNum = rhyPixFun( 'p05' ) * -1;                                                    // What: Greeting Shift Number. Why: The headline drops in from above. How: This is the Vertical Rhythm Base Plus 5 step, negated. // Vertical Rhythm Base Plus 5 ~= -59.447px
 		const timLinObj = gsap.timeline( { defaults : { duration : entDurNum, ease : decEasStr } } ); // What: Timeline Object. Why: The entrance plays as one sequence. How: This creates the timeline, its tweens taking the entrance duration and decelerating unless told otherwise.
-		const wisShiNum = rhyPxlFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
+		const wisShiNum = rhyPixFun( 'p03' );                                                         // What: Wish Shift Number. Why: The wish rises in from below. How: This is the Vertical Rhythm Base Plus 3 step. // Vertical Rhythm Base Plus 3 ~= 33.876px
 
 
 		timLinObj.from( carDivRef.current, { opacity : 0                                                                     }, 0 );         // What: Card Fade. Why: The card opens out of the dark. How: This fades it in from the start.
@@ -596,7 +594,7 @@ function FojCarCom () : JSX.Element {
 					<path
 						style={{ fill : 'var( --foj-whi-col )' }} // Fourth-Of-July White Color = #FFFFFF
 
-						d={ FLA_STR_STR }
+						d={ FLA_STI_STR }
 					/>{ /* What: White Stripes Path Element. Why: Six white stripes lie between the red. How: This draws them all from the prebuilt path. */ }
 
 					<rect

@@ -6,7 +6,7 @@
 import cssModObj from './confetti-circuit.module.css'; // What: CSS Module Object. Why: The pattern's positioning and confetti colors live in its own module. How: This maps each class name in confetti-circuit.module.css to its hashed module class.
 
 
-import { useId } from 'react'; // What: Use ID. Why: Each pattern needs an id no other pattern on the page shares. How: This gives every instance its own stable id.
+import { useId } from 'react'; // What: Use ID. Why: Each pattern needs an ID no other pattern on the page shares. How: This gives every instance its own stable ID.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -47,11 +47,11 @@ type CccProTyp = { patOpaStr : string }; // What: Confetti-Circuit-Component Pro
  *
  * @summary
  * Renders the confetti circuit pattern across its positioned parent: an SVG
- * filled with a pattern tile of traces, pads, confetti pieces, and a
- * sparkle. The traces and pads draw in the wrapper's strong blue through
- * currentColor, and each confetti piece fills with its own color role. The
- * pattern's id comes from useId, so two patterns on one page never clash.
- * The wrapper is hidden from screen readers and lets every click through.
+ * filled with a pattern tile of traces, pads, confetti pieces, and a sparkle.
+ * The traces and pads draw in the wrapper's strong blue through currentColor,
+ * and each confetti piece takes its own color role, filled or stroked. The
+ * pattern's ID comes from useId, so two patterns on one page never clash. The
+ * wrapper is hidden from screen readers and lets every click through.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -72,7 +72,7 @@ type CccProTyp = { patOpaStr : string }; // What: Confetti-Circuit-Component Pro
 function ConCirCom ( { patOpaStr } : CccProTyp ) : JSX.Element {
 
 
-	const patIdeStr = `conCirPat${ useId().replace( /[^a-zA-Z0-9]/g, '' ) }`; // What: Pattern Identifier String. Why: A pattern is filled by its id, which has to be unique on the page. How: This joins the pattern's name with React's id for this instance, keeping only letters and digits so it reads cleanly inside url().
+	const patIdeStr = `conCirPat${ useId().replace( /[^a-zA-Z0-9]/g, '' ) }`; // What: Pattern Identifier String. Why: A pattern is filled by its ID, which has to be unique on the page. How: This joins the pattern's name with React's ID for this instance, keeping only letters and digits so it reads cleanly inside url().
 
 
 
@@ -197,6 +197,7 @@ function ConCirCom ( { patOpaStr } : CccProTyp ) : JSX.Element {
 
 				</defs>
 
+
 				<rect
 					fill={ `url(#${ patIdeStr })` }
 					height='100%'
@@ -223,7 +224,7 @@ function ConCirCom ( { patOpaStr } : CccProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { ConCirCom }; // What: Named Exports. Why: Home, the Gallery, About, and Contact set the motif behind their sections. How: This exports ConCirCom.
+export { ConCirCom }; // What: Named Export. Why: The site's pages set the motif behind their sections, such as Home. How: This exports ConCirCom.
 
 // #endregion Exports
 

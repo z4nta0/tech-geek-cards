@@ -33,14 +33,19 @@ import { test   } from '@playwright/test'; // What: Test. Why: Each card and nam
 
 // #region Constants
 
+// #region NAM_ROW_ARR
+
 /**
  * NAM_ROW_ARR = Name Row Array
  *
  * @summary
  * The names each card is opened with. Every row shares one shape:
+ *
  * - `extBoo` (Boolean): Extended Boolean, whether the name needs the
  *   extended Latin file.
+ *
  * - `filStr` (String): File String, the start of the extended file's name.
+ *
  * - `patStr` (String): Path String, the card's address with its name.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -50,13 +55,15 @@ import { test   } from '@playwright/test'; // What: Test. Why: Each card and nam
 const NAM_ROW_ARR = [ // What: Name Row Array. Why: Each name card is checked with a plain name and one that needs more letters. How: Each row names a card's address with its name, whether that name needs the extended file, and the file's name.
 
 
-	{ extBoo : false, filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=Zo%C3%AB'                   },
-	{ extBoo : true,  filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=%C5%81ukasz'                },
-	{ extBoo : false, filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=Sam'         },
-	{ extBoo : true,  filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=%C5%81ukasz' }
+	{ extBoo : false, filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=Zo%C3%AB'                   }, // What: Birthday Basic Name Row. Why: Zoë's letters are all in the basic Latin file. How: This expects the Birthday card to skip the extended file.
+	{ extBoo : true,  filStr : 'luckiest-guy-latin-ext',      patStr : '/happy-birthday?name=%C5%81ukasz'                }, // What: Birthday Extended Name Row. Why: Łukasz's Ł is only in the extended Latin file. How: This expects the Birthday card to load the extended file.
+	{ extBoo : false, filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=Sam'         }, // What: Christmas Basic Names Row. Why: Zoë and Sam use only letters in the basic Latin file. How: This expects the Christmas card to skip the extended file.
+	{ extBoo : true,  filStr : 'gloria-hallelujah-latin-ext', patStr : '/merry-christmas?name=Zo%C3%AB&from=%C5%81ukasz' }  // What: Christmas Extended Sender Row. Why: The sender's Ł is only in the extended Latin file. How: This expects the Christmas card to load the extended file for the sender's name.
 
 
 ];
+
+// #endregion NAM_ROW_ARR
 
 // #endregion Constants
 
@@ -84,7 +91,6 @@ for ( const namRowObj of NAM_ROW_ARR ) { // What: Name Test Loop. Why: Every row
 		await curPagObj.waitForLoadState( 'networkidle' ); // What: Network Idle Wait. Why: A font is requested only once the text that needs it is laid out. How: This waits until nothing more is loading.
 
 		await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Every font the name needs has to have been asked for. How: This waits until the page's fonts have loaded.
-
 
 		expect( fonUrlArr.some( ( fonUrlStr ) => fonUrlStr.includes( namRowObj.filStr ) ) ).toBe( namRowObj.extBoo ); // What: Extended Font Assertion. Why: The extended file should load exactly when the name needs it. How: This checks whether it was requested against the row's expectation.
 

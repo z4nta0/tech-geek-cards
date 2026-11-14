@@ -6,16 +6,13 @@
  *
  * @summary
  * Styles for HalCarCom, a full-screen night scene drawn in layers, each placed
- * over the one before by the order the card draws them: a purple sky fading
- * to a warm horizon, its twinkling stars, the floating moon in the top right,
- * three ghosts over the hills, the hills along the bottom edge, the
- * jack-o'-lanterns and candles standing on them, the greeting and wish in the
- * middle, the bats flying over everything, and the lightning overlay on top.
- * The figures along the ground stand clear of the card page's floating bar.
- * The card brings its own two fonts, declared here so they load with the
- * card. Nothing here animates through CSS: GSAP plays every motion and skips
- * it under reduced motion, when the stars and bats also give up the layers
- * they'd hold for it.
+ * over the one before by the order the card draws them, from a purple sky
+ * fading to a warm horizon at the back to the lightning overlay on top, with
+ * the figures, such as the ghosts, and the greeting and wish between them. The
+ * figures along the ground stand clear of the card page's floating bar. The
+ * card brings its own fonts, declared here so they load with the card. Nothing
+ * here animates through CSS: GSAP plays every motion, and under reduced motion
+ * the stars and bats give up the layers they'd hold for it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -52,28 +49,28 @@
 .halCarDiv { /* What: Halloween Card Div. Why: The card fills the screen with a night sky. How: This fixes it over the whole viewport, clips anything past its edges, shades the sky from deep purple to a warm horizon, and sets the fonts and colors its pieces share. */
 
 
-	--hal-cor-col : #FFF5A0;                            /* What: Halloween Core Color. Why: A flame burns palest at its heart. How: This is #FFF5A0, the pale yellow core of every candle's and jack-o'-lantern's flame. */
+	--hal-cor-col : #FFF5A0;                            /* What: Halloween Core Color. Why: A flame burns palest at its heart. How: This is #FFF5A0, the pale yellow core of a flame. */
 	--hal-cra-col : #E6B820;                            /* What: Halloween Crater Color. Why: Craters make the disc read as the moon. How: This is #E6B820, the deep gold of the moon's three craters. */
 	--hal-eye-col : #FF9F00;                            /* What: Halloween Eye Color. Why: Glowing eyes make the bats spooky. How: This is #FF9F00, the orange of every bat's eyes. */
 	--hal-ghf-col : #5B2D8E;                            /* What: Halloween Ghost-Face Color. Why: The ghosts look out with friendly faces. How: This is #5B2D8E, the purple of each ghost's eyes and smile. */
-	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the color of the greeting, its shadow copy, and the copy's glow. */
-	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
+	--hal-gre-col : #FF6B00;                            /* What: Halloween Greeting Color. Why: The greeting glows orange. How: This is #FF6B00, the greeting's own orange, such as its glow's. */
+	--hal-gre-fon : 'Butcherman', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Halloween Greeting Font. Why: The greeting drips like a horror movie title. How: This names Butcherman, falling back to the main font. */
 	--hal-hil-col : #0F0020;                            /* What: Halloween Hill Color. Why: The hills are a dark silhouette. How: This is #0F0020, the near-black purple of the hills along the bottom edge. */
 	--hal-hor-col : #1A0A00;                            /* What: Halloween Horizon Color. Why: The sky warms at the horizon. How: This is #1A0A00, the dark brown at the bottom of the sky's gradient. */
 	--hal-lig-col : #C8D8FF;                            /* What: Halloween Lightning Color. Why: Lightning lights the whole scene for an instant. How: This is #C8D8FF, the pale blue of the lightning flash. */
 	--hal-mol-col : #FFF9C4;                            /* What: Halloween Moon-Light Color. Why: The moon is lit from its upper left. How: This is #FFF9C4, the pale yellow its shading starts from. */
 	--hal-moo-col : #F0C040;                            /* What: Halloween Moon Color. Why: The moon glows gold against the night. How: This is #F0C040, the gold of the moon's rim and its halo. */
-	--hal-ora-col : #FF8C00;                            /* What: Halloween Orange Color. Why: Warm orange light glows behind each jack-o'-lantern and around the wish. How: This is #FF8C00, the color of the jack-o'-lanterns' glows and the wish's text shadow. */
+	--hal-ora-col : #FF8C00;                            /* What: Halloween Orange Color. Why: Warm orange light glows around the scene's warm pieces, such as each jack-o'-lantern. How: This is #FF8C00, the color of those glows. */
 	--hal-pum-col : #E85D04;                            /* What: Halloween Pumpkin Color. Why: The jack-o'-lanterns are orange pumpkins. How: This is #E85D04, the orange of each pumpkin's lobes. */
-	--hal-pur-col : #1A0533;                            /* What: Halloween Purple Color. Why: The card's deepest purple ties the night together. How: This is #1A0533, the middle of the sky, the greeting's dark shadow, the bats' wings, and the jack-o'-lanterns' carved faces. */
+	--hal-pur-col : #1A0533;                            /* What: Halloween Purple Color. Why: A deep purple ties the night together. How: This is #1A0533, a deep purple of the scene, such as the middle of the sky. */
 	--hal-shi-col : #F5D98F;                            /* What: Halloween Shine Color. Why: A thin highlight rounds each candle's wax. How: This is #F5D98F, the light stripe down each candle. */
 	--hal-ste-col : #3D7A1E;                            /* What: Halloween Stem Color. Why: A pumpkin has a green stem. How: This is #3D7A1E, the green of each jack-o'-lantern's stem. */
-	--hal-vio-col : #2D0D52;                            /* What: Halloween Violet Color. Why: A lighter purple lifts the lower sky and sets the bats' bodies off their wings. How: This is #2D0D52, the sky's lower band and the bats' bodies and ears. */
+	--hal-vio-col : #2D0D52;                            /* What: Halloween Violet Color. Why: A lighter purple lifts parts of the night off the deeper purple, such as the lower sky. How: This is #2D0D52. */
 	--hal-wax-col : #E8C46A;                            /* What: Halloween Wax Color. Why: The candles are pale gold wax. How: This is #E8C46A, the color of each candle and its drip. */
-	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: The stars and ghosts shine white. How: This is #FFFFFF, the stars, the ghosts' bodies, and the glints in their eyes. */
+	--hal-whi-col : #FFFFFF;                            /* What: Halloween White Color. Why: White is the scene's brightest light, such as the stars'. How: This is #FFFFFF. */
 	--hal-wic-col : #333333;                            /* What: Halloween Wick Color. Why: The flame burns from a dark wick. How: This is #333333, the dark gray of each candle's wick. */
-	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
-	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the wish, the flames, and the greeting's shimmer together. How: This is #FFE066, the color of the wish, every outer flame, and the shimmer the greeting's letters tween to. */
+	--hal-wis-fon : 'Barriecito', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Halloween Wish Font. Why: The wish looks scrawled by hand. How: This names Barriecito, falling back to the main font. */
+	--hal-yel-col : #FFE066;                            /* What: Halloween Yellow Color. Why: Candle yellow ties the card's warm lights together, such as the flames. How: This is #FFE066. */
 	--hal-zen-col : #0A0015;                            /* What: Halloween Zenith Color. Why: The sky darkens toward the top. How: This is #0A0015, the near black at the top of the sky's gradient. */
 
 	background : linear-gradient( to bottom, var( --hal-zen-col ) 0%, var( --hal-pur-col ) 45%, var( --hal-vio-col ) 70%, var( --hal-hor-col ) 100% ); /* Halloween Zenith Color = #0A0015, Halloween Purple Color = #1A0533, Halloween Violet Color = #2D0D52, Halloween Horizon Color = #1A0A00 */ /* What: Night Sky Gradient. Why: The sky darkens toward the top and warms at the horizon. How: Its colors and stops are the card's own art, kept as drawn. */
@@ -128,7 +125,7 @@
 
 
 	position : absolute;
-	right    : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	right    : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 152.824px @ 1,920px width */
 	top      : var( --spa-ver-p03 );                /* Spacing Vertical Base Plus 3 ~= 33.876px */
 	width    : calc( var( --ver-rhy-p07 ) * 1rem ); /* Vertical Rhythm Base Plus 7 ~= 104.323px */
 
@@ -143,26 +140,26 @@
 
 
 }
-.ghoFloSvg--lef { /* What: Left Ghost Float SVG. Why: The largest ghost hovers on the left. How: This places it near the left edge at the larger size. */
+.ghoFloSvg--lef { /* What: Ghost Float SVG Left. Why: The largest ghost hovers on the left. How: This places it near the left edge at the larger size. */
 
 
-	left  : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 7.96vw */
+	left  : var( --hor-rhy-018 );                /* Horizontal Rhythm 18 ~= 152.824px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
 }
-.ghoFloSvg--rig { /* What: Right Ghost Float SVG. Why: A smaller ghost hovers on the right. How: This places it three quarters across at the smaller size. */
+.ghoFloSvg--rig { /* What: Ghost Float SVG Right. Why: A smaller ghost hovers on the right. How: This places it three quarters across at the smaller size. */
 
 
-	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 1,449.365px @ 1,920px width */
 	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
 
 
 }
-.ghoFloSvg--mid { /* What: Middle Ghost Float SVG. Why: The last ghost hovers near the middle, behind the greeting. How: This places it a little left of center at the smaller size. */
+.ghoFloSvg--mid { /* What: Ghost Float SVG Middle. Why: The last ghost hovers near the middle, behind the greeting. How: This places it a little left of center at the smaller size. */
 
 
-	left  : var( --hor-rhy-024 );                /* Horizontal Rhythm 24 ~= 43.02vw */
+	left  : var( --hor-rhy-024 );                /* Horizontal Rhythm 24 ~= 825.907px @ 1,920px width */
 	width : calc( var( --ver-rhy-p04 ) * 1rem ); /* Vertical Rhythm Base Plus 4 ~= 44.876px */
 
 
@@ -190,34 +187,34 @@
 
 
 }
-.pumLanSvg--fir { /* What: First Pumpkin Lantern SVG. Why: A large jack-o'-lantern sits at the far left. How: This places it at the left edge at the larger size. */
+.pumLanSvg--fir { /* What: Pumpkin Lantern SVG First. Why: A large jack-o'-lantern sits at the far left. How: This places it at the left edge at the larger size. */
 
 
-	left  : var( --hor-rhy-013 );                /* Horizontal Rhythm 13 ~= 1.95vw */
+	left  : var( --hor-rhy-013 );                /* Horizontal Rhythm 13 ~= 37.460px @ 1,920px width */
 	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
 
 
 }
-.pumLanSvg--sec { /* What: Second Pumpkin Lantern SVG. Why: A small jack-o'-lantern sits left of center. How: This places it a fifth of the way across at the smaller size. */
+.pumLanSvg--sec { /* What: Pumpkin Lantern SVG Second. Why: A small jack-o'-lantern sits left of center. How: This places it a fifth of the way across at the smaller size. */
 
 
-	left  : var( --hor-rhy-021 );                /* Horizontal Rhythm 21 ~= 18.50vw */
+	left  : var( --hor-rhy-021 );                /* Horizontal Rhythm 21 ~= 355.272px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
 }
-.pumLanSvg--thi { /* What: Third Pumpkin Lantern SVG. Why: A large jack-o'-lantern sits right of center. How: This places it a little past halfway at the larger size. */
+.pumLanSvg--thi { /* What: Pumpkin Lantern SVG Third. Why: A large jack-o'-lantern sits right of center. How: This places it a little past halfway at the larger size. */
 
 
-	left  : var( --hor-rhy-025 );                /* Horizontal Rhythm 25 ~= 56.98vw */
+	left  : var( --hor-rhy-025 );                /* Horizontal Rhythm 25 ~= 1,094.093px @ 1,920px width */
 	width : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
 
 
 }
-.pumLanSvg--fou { /* What: Fourth Pumpkin Lantern SVG. Why: A small jack-o'-lantern sits on the right. How: This places it three quarters across at the smaller size. */
+.pumLanSvg--fou { /* What: Pumpkin Lantern SVG Fourth. Why: A small jack-o'-lantern sits on the right. How: This places it three quarters across at the smaller size. */
 
 
-	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 75.49vw */
+	left  : var( --hor-rhy-max );                /* Horizontal Rhythm Maximum ~= 1,449.365px @ 1,920px width */
 	width : calc( var( --ver-rhy-p05 ) * 1rem ); /* Vertical Rhythm Base Plus 5 ~= 59.447px */
 
 
@@ -233,31 +230,31 @@
 
 
 }
-.canFlaSvg--fir { /* What: First Candle Flame SVG. Why: A candle stands between the first two jack-o'-lanterns. How: This places it about an eighth of the way across. */
+.canFlaSvg--fir { /* What: Candle Flame SVG First. Why: A candle stands between the first two jack-o'-lanterns. How: This places it about an eighth of the way across. */
 
 
-	left : var( --hor-rhy-020 ); /* Horizontal Rhythm 20 ~= 13.97vw */
-
-
-}
-.canFlaSvg--sec { /* What: Second Candle Flame SVG. Why: A candle stands left of center. How: This places it about a third of the way across. */
-
-
-	left : var( --hor-rhy-023 ); /* Horizontal Rhythm 23 ~= 32.47vw */
+	left : var( --hor-rhy-020 ); /* Horizontal Rhythm 20 ~= 268.187px @ 1,920px width */
 
 
 }
-.canFlaSvg--thi { /* What: Third Candle Flame SVG. Why: A candle stands near the middle. How: This places it a little left of center, under the middle ghost. */
+.canFlaSvg--sec { /* What: Candle Flame SVG Second. Why: A candle stands left of center. How: This places it about a third of the way across. */
 
 
-	left : var( --hor-rhy-024 ); /* Horizontal Rhythm 24 ~= 43.02vw */
+	left : var( --hor-rhy-023 ); /* Horizontal Rhythm 23 ~= 623.458px @ 1,920px width */
 
 
 }
-.canFlaSvg--fou { /* What: Fourth Candle Flame SVG. Why: A candle stands near the right edge. How: This places it from the right, since no left step lands close to its old place. */
+.canFlaSvg--thi { /* What: Candle Flame SVG Third. Why: A candle stands near the middle. How: This places it a little left of center, under the middle ghost. */
 
 
-	right : var( --hor-rhy-019 ); /* Horizontal Rhythm 19 ~= 10.54vw */
+	left : var( --hor-rhy-024 ); /* Horizontal Rhythm 24 ~= 825.907px @ 1,920px width */
+
+
+}
+.canFlaSvg--fou { /* What: Candle Flame SVG Fourth. Why: A candle stands near the right edge. How: This places it from the right, since no left step lands close to its old place. */
+
+
+	right : var( --hor-rhy-019 ); /* Horizontal Rhythm 19 ~= 202.448px @ 1,920px width */
 
 
 }
@@ -313,12 +310,12 @@
 
 	color   : var( --hal-gre-col ); /* Halloween Greeting Color = #FF6B00 */
 	display : block;
-	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 var( --hal-pur-col ) ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) rgb( from var( --hal-gre-col ) r g b / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Halloween Purple Color = #1A0533, Vertical Rhythm Base ~= 14.572px, Halloween Greeting Color = #FF6B00 @ 0.755 opacity */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
+	filter  : drop-shadow( 0 calc( var( --ver-rhy-m05 ) * 1rem ) 0 var( --hal-pur-col ) ) drop-shadow( 0 0 calc( var( --ver-rhy-bas ) * 1rem ) rgb( from var( --hal-gre-col ) r g b / var( --cdn-pow-001-rec ) ) ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Halloween Purple Color = #1A0533, Vertical Rhythm Base ~= 14.572px, Halloween Greeting Color = #FF6B00 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Lettering Shadow. Why: The letters glow and cast a dark shadow. How: This casts both around the whole copy, the glow's blur set to half the old text shadow's radius, since a drop shadow's blur is a standard deviation. */
 
 
 }
 
-.titLinSpa { /* What: Title Line Span. Why: The greeting reads as two lines, Happy over Halloween. How: This sets each word on a line of its own, in the copy and the heading alike. */
+.titLinSpa { /* What: Title Line Span. Why: The greeting reads as two lines, "Happy" over "Halloween!". How: This sets each word on a line of its own, in the copy and the heading alike. */
 
 
 	display : block;
@@ -327,6 +324,7 @@
 }
 
 /* #endregion titShaSpa */
+
 
 
 /* #region titHalHea */
@@ -341,7 +339,7 @@
 
 }
 
-/* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the titShaSpa region above. */
+/* What: Title Line Span Pointer. Why: The heading's lines share the copy's line class, written once where the class is first used. How: Its rule is in the `titShaSpa` region above. */
 
 /* #endregion titHalHea */
 
@@ -378,7 +376,7 @@
 	top         : 0;
 	visibility  : hidden;
 	width       : calc( var( --ver-rhy-p06 ) * 1rem ); /* Vertical Rhythm Base Plus 6 ~= 78.751px */
-	will-change : transform;
+	will-change : transform;                           /* What: Kept Transform Hint. Why: A bat is moving for most of the time it's shown, so its layer is worth holding rather than promoting it at each flight. How: The hint stays on while the bat is in the card, and the reduced-motion variant below drops it, since the bats never fly there. */
 
 
 }

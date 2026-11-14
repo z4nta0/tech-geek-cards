@@ -10,12 +10,11 @@
  * snowy scene, open from the start. The squares sit on top and fade away in a
  * scattered pixelated wipe. Under them is the snowy scene, hidden until the
  * timeline shows it, and at the bottom the hacked scene, red glitch lettering
- * over a pirate flag. The snowy scene carries the Merry Christmas heading, a
- * tilted snowman in the lower left, the handwritten sign-off in the lower
- * right, and the falling snowflakes snowfall.ts adds. The card brings its own
- * three fonts, declared here so they load with the card. Nothing here animates
- * through CSS: the GSAP timeline and the snowfall play everything, and both
- * skip their motion under reduced motion.
+ * over a pirate flag. Each scene holds its own lettering and art, such as the
+ * snowy scene's tilted snowman, and the snowy scene also holds the falling
+ * snowflakes snowfall.ts adds. The card brings its own fonts, declared here so
+ * they load with the card. Nothing here animates through CSS: the GSAP
+ * timeline and the snowfall play everything.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -46,7 +45,7 @@
 
 }
 
-@font-face { /* What: Gloria Hallelujah Extended Font Face. Why: A sender's or recipient's name can hold letters beyond basic Latin, such as Ł, Ő, or Ș, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
+@font-face { /* What: Gloria Hallelujah Extended Font Face. Why: A sender's or recipient's name can hold letters beyond basic Latin, such as Ł, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
 
 
 	font-display  : swap;
@@ -58,7 +57,7 @@
 
 }
 
-@font-face { /* What: Mountains Of Christmas Font Face. Why: The greeting and the sign-off's From read as a festive cartoon. How: This loads the font's Latin bold weight from the card's folder. */
+@font-face { /* What: Mountains Of Christmas Font Face. Why: The greeting and the sign-off's "From," read as a festive cartoon. How: This loads the font's Latin bold weight from the card's folder. */
 
 
 	font-display : swap;
@@ -76,15 +75,15 @@
 .chrCarDiv { /* What: Christmas Card Div. Why: The card fills the screen, its scenes stacked in it. How: This fixes it over the whole viewport, clips anything past its edges, and sets the fonts, colors, and shadow its scenes share. */
 
 
-	--chr-fes-fon : 'Mountains of Christmas', 'Gloria Hallelujah', var( --fon-fam-mai ); /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon, and a recipient's name may hold letters Mountains of Christmas lacks, which it has only in basic Latin. How: This names Mountains of Christmas, then Gloria Hallelujah, whose extended Latin file draws those letters in a handwritten style, then the main font. */
-	--chr-gli-fon : 'Rubik Glitch', var( --fon-fam-mai );                                /* What: Christmas Glitch Font. Why: The hacked scene's lettering looks broken up. How: This names Rubik Glitch, falling back to the main font. */
+	--chr-fes-fon : 'Mountains of Christmas', 'Gloria Hallelujah', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Christmas Festive Font. Why: The greeting reads as a festive cartoon, and a recipient's name may hold letters Mountains of Christmas lacks, which it has only in basic Latin. How: This names Mountains of Christmas, then Gloria Hallelujah, whose extended Latin file draws those letters in a handwritten style, then the main font. */
+	--chr-gli-fon : 'Rubik Glitch', var( --fon-fam-mai );                                /* Font Family Main = 'Syne', sans-serif */ /* What: Christmas Glitch Font. Why: The hacked scene's lettering looks broken up. How: This names Rubik Glitch, falling back to the main font. */
 	--chr-hac-col : #F00000;                                                             /* What: Christmas Hacked Color. Why: The fake hacked screen's lettering is an alarming red. How: This is #F00000, the hacked scene's lettering color. */
-	--chr-han-fon : 'Gloria Hallelujah', var( --fon-fam-mai );                           /* What: Christmas Handwritten Font. Why: The sign-off's name looks handwritten. How: This names Gloria Hallelujah, falling back to the main font. */
+	--chr-han-fon : 'Gloria Hallelujah', var( --fon-fam-mai );                           /* Font Family Main = 'Syne', sans-serif */ /* What: Christmas Handwritten Font. Why: The sign-off's name looks handwritten. How: This names Gloria Hallelujah, falling back to the main font. */
 	--chr-pix-col : #1A1A2E;                                                             /* What: Christmas Pixel Color. Why: The wipe's squares are a near-black ink, matching the site's dark ink without reading the site's colors. How: This is #1A1A2E, the fill of every square in the pixelated wipe. */
 	--chr-sha-col : #4A4A4A;                                                             /* What: Christmas Shadow Color. Why: A soft gray shadow lifts the lettering off both busy backgrounds. How: This is the card's own dark gray. */
 	--chr-sha-spr : calc( var( --ver-rhy-m04 ) * 1rem );                                 /* Vertical Rhythm Base Minus 4 ~= 4.732px */ /* What: Christmas Shadow Spread. Why: The outline should be soft. How: This is each shadow's blur. */
-	--chr-tex-sha : drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ) drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ); /* What: Christmas Text Shadow. Why: The lettering can be hard to read over the backgrounds, and a shadow on every letter makes the letter-by-letter fades too slow to paint. How: This doubles a soft gray drop shadow, cast once around each whole heading or paragraph. */
-	--chr-whi-col : #FFFFFF;                                                             /* What: Christmas White Color. Why: The snowy scene's lettering and its snowflakes are white. How: This is #FFFFFF, read by the snowy scene's lettering and by every flake. */
+	--chr-tex-sha : drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ) drop-shadow( 0 0 var( --chr-sha-spr ) var( --chr-sha-col ) ); /* Christmas Shadow Spread ~= 4.732px, Christmas Shadow Color = #4A4A4A */ /* What: Christmas Text Shadow. Why: The lettering can be hard to read over the backgrounds, and a shadow on every letter makes the letter-by-letter fades too slow to paint. How: This doubles a soft gray drop shadow, cast once around each whole heading or paragraph. */
+	--chr-whi-col : #FFFFFF;                                                             /* What: Christmas White Color. Why: White is the snowy scene's light color, such as its lettering's. How: This is #FFFFFF. */
 
 	inset    : 0;
 	overflow : hidden;
@@ -102,7 +101,7 @@
 	display  : grid;
 	inset    : 0;
 	position : absolute;
-	z-index  : 2; /* What: Layer Above The Snowy Scene. Why: The wipe has to cover the snowy scene, at 1, too. How: This sets it one higher. */
+	z-index  : 1;        /* What: Layer Above The Scenes. Why: The wipe has to cover both scenes, which paint in DOM order after it with no layer of their own. How: This lifts it one layer above them. */
 
 
 }
@@ -125,7 +124,7 @@
 
 
 	background : url( './pirate-background.webp' ) center / cover no-repeat;
-	color      : var( --chr-hac-col ); /* Christmas Hacked Color = #F00000 */
+	color      : var( --chr-hac-col );                                       /* Christmas Hacked Color = #F00000 */
 	inset      : 0;
 	position   : absolute;
 	text-align : center;
@@ -160,7 +159,7 @@
 	inset-inline   : 0;
 	line-height    : var( --ver-rhy-m01 );                                     /* Vertical Rhythm Base Minus 1 = 1 */
 	margin         : var( --spa-ver-p02 ) auto;                                /* Spacing Vertical Base Plus 2 ~= 25.572px */
-	margin-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) );               /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the lettering clear of it, falling back to the side margin's step outside the card page. */
+	margin-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) );               /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the lettering clear of it, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
 	max-width      : var( --tex-wid-bas );                                     /* Text Width Base ~= 29.207em */
 	padding-inline : var( --spa-hor-p02 );                                     /* Spacing Horizontal Base Plus 2 ~= 25.572px */
 	position       : absolute;
@@ -196,17 +195,16 @@
 
 
 	background : url( './snowy-background.webp' ) center / cover no-repeat;
-	color      : var( --chr-whi-col ); /* Christmas White Color = #FFFFFF */
+	color      : var( --chr-whi-col );                                      /* Christmas White Color = #FFFFFF */
 	inset      : 0;
 	opacity    : 0;
 	overflow   : hidden;
 	position   : absolute;
 	text-align : center;
-	z-index    : 1;                    /* What: Layer Above The Hacked Scene. Why: Once shown, the snowy scene covers the hacked one, at 0. How: This sets it one higher. */
 
 
 }
-.snoSceSec--open { /* What: Open Snowy Scene Section. Why: The listed card has no prank to play first, so its snowy scene is there from the start. How: This shows the scene without waiting on the timeline. */
+.snoSceSec--open { /* What: Snowy Scene Section Open. Why: The listed card has no prank to play first, so its snowy scene is there from the start. How: This shows the scene without waiting on the timeline. */
 
 
 	opacity : 1;
@@ -247,11 +245,11 @@
 	filter        : drop-shadow( 0 calc( var( --ver-rhy-m01 ) * 1rem ) calc( var( --ver-rhy-m03 ) * 1rem ) var( --chr-sha-col ) ); /* Vertical Rhythm Base Minus 1 = 11px, Vertical Rhythm Base Minus 3 ~= 6.268px, Christmas Shadow Color = #4A4A4A */
 	height        : auto;
 	left          : 0;
-	margin        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                                                                     /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );                                                                    /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the snowman clear of it, falling back to the side margin's step outside the card page. */
+	margin        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                        /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );                       /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the snowman clear of it, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
 	position      : absolute;
-	rotate        : calc( var( --cdn-pow-007 ) * 1deg );                                                                           /* Core-Design-Number to the Power of 7 ~= 7.159deg */
-	width         : max( calc( var( --ver-rhy-p05 ) * 1rem ), var( --hor-rhy-017 ) );                                              /* Vertical Rhythm Base Plus 5 ~= 59.447px, Horizontal Rhythm 17 ~= 115.363px @ 1,920px width */ /* What: Snowman Width. Why: The snowman grows with the screen but would shrink to a speck on a phone. How: This takes the larger of a fixed step and the screen-wide step. */
+	rotate        : calc( var( --cdn-pow-007 ) * 1deg );                              /* Core-Design-Number to the Power of 7 ~= 7.159deg */
+	width         : max( calc( var( --ver-rhy-p05 ) * 1rem ), var( --hor-rhy-017 ) ); /* Vertical Rhythm Base Plus 5 ~= 59.447px, Horizontal Rhythm 17 ~= 115.363px @ 1,920px width */ /* What: Snowman Width. Why: The snowman grows with the screen but would shrink to a speck on a phone. How: This takes the larger of a fixed step and the screen-wide step. */
 
 
 }
@@ -269,14 +267,14 @@
 	font-size     : clamp( var( --fon-siz-p03 ), 3vw, var( --fon-siz-p05 ) ); /* Font Size Base Plus 3 ~= 25.572px, Font Size Base Plus 5 ~= 44.876px */ /* What: Fluid Lettering Size. Why: Full-size lettering buries a phone's screen. How: This grows it with the screen between the two steps. */
 	line-height   : var( --ver-rhy-m01 );                                     /* Vertical Rhythm Base Minus 1 = 1 */
 	margin        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );               /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the lettering clear of it, falling back to the side margin's step outside the card page. */
+	margin-bottom : var( --car-bar-mar, var( --spa-ver-p02 ) );               /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Margin. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the lettering clear of it, falling back to the Spacing Vertical Base Plus 2 step outside the card page. */
 	position      : absolute;
 	right         : 0;
 
 
 }
 
-.snoFroSpa { /* What: Snowy From Span. Why: The From matches the greeting rather than the handwritten name. How: This sets it in the festive font. */
+.snoFroSpa { /* What: Snowy From Span. Why: The "From," matches the greeting rather than the handwritten name. How: This sets it in the festive font. */
 
 
 	font-family : var( --chr-fes-fon ); /* Christmas Festive Font = 'Mountains of Christmas', 'Gloria Hallelujah', main font */
@@ -285,7 +283,7 @@
 
 }
 
-/* What: Screen Reader Span Pointer. Why: The sign-off's hidden copy shares the message's visually hidden class, written once where the class is first used. How: Its rule is in the hacMesPar region above. */
+/* What: Screen Reader Span Pointer. Why: The sign-off's hidden copy shares the message's visually hidden class, written once where the class is first used. How: Its rule is in the `hacMesPar` region above. */
 
 /* #endregion snoSigPar */
 

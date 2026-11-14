@@ -7,8 +7,8 @@ import cssModObj from './about.module.css'; // What: CSS Module Object. Why: Abo
 
 
 import { ConCirCom    } from '../../ui/confetti-circuit.tsx';          // What: Confetti Circuit Component. Why: The hero carries the site's motif. How: The page sets it behind the hero.
-import { Link         } from 'react-router';                           // What: Link. Why: The closing buttons move to the Gallery without a full page load. How: This renders that link.
-import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: About's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { Link         } from 'react-router';                           // What: Link. Why: The closing Gallery button moves to the Gallery without a full page load. How: This renders that link.
+import { usePagDesFun } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: About's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -21,11 +21,12 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * about.tsx = About
  *
  * @summary
- * The page about who makes the cards and how: a hero, a few paragraphs on
- * how each card is built beside a short list of what that means for whoever
- * receives one, the TechGeek family of three sister sites with the way to
- * z4nta0's portfolio and back to the Gallery, and a closing invitation to
- * support the work with a tip on Ko-fi.
+ * The page about who makes the cards and how: a hero, a few paragraphs on how
+ * each card is built beside a short list of what that means for whoever
+ * receives one (the list stacking under them at 768px and below), the TechGeek
+ * family of three sister sites with the way to z4nta0's portfolio and back to
+ * the Gallery, and a closing invitation to support the work with a tip on
+ * Ko-fi.
  *
  * Sections:
  *  - Constants
@@ -53,19 +54,75 @@ const FAC_LIS_ARR = [ // What: Fact List Array. Why: The story's side list sums 
 
 
 
-const FAM_SIT_ARR = [ // What: Family Site Array. Why: The family section introduces the three sister sites in the same order every visit. How: Each row holds a site's name, address, description, and whether it's this site.
+// #region FAM_SIT_ARR
+
+/**
+ * FAM_SIT_ARR = Family Site Array
+ *
+ * @summary
+ * The three sister sites the Family section introduces, in order. Every row
+ * shares one shape, so its fields carry no comments of their own:
+ *
+ * - `desStr` (String): Description String, what the site is for.
+ *
+ * - `herBoo` (Boolean): Here Boolean, whether the site is this one, which
+ *   gets a "You are here" label instead of a link.
+ *
+ * - `hreStr` (String): Hypertext-Reference String, the site's address.
+ *
+ * - `namStr` (String): Name String, the site's name, also its React key.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+const FAM_SIT_ARR = [ // What: Family Site Array. Why: The Family section introduces the three sister sites in the same order every visit. How: Each row holds a site's name, address, description, and whether it's this site.
 
 
-	{ herBoo : false, hreStr : 'https://techgeek.dev/',     namStr : 'TechGeek.dev',     desStr : 'The developer side: the websites and web apps I have designed and built, and how to hire me for one.' }, // What: Developer Site Row. Why: The cards come from a working developer. How: This describes and links the portfolio.
-	{ herBoo : false, hreStr : 'https://techgeek.support/', namStr : 'TechGeek.support', desStr : 'Tech support: answers and how-to guides for everyday computer and phone questions.' }, // What: Support Site Row. Why: A visitor may need help with a device. How: This describes and links the support site.
-	{ herBoo : true,  hreStr : 'https://techgeek.cards/',   namStr : 'TechGeek.cards',   desStr : 'Animated greeting cards to send to the people you care about.' } // What: Cards Site Row. Why: The family list includes this site, marked as the one the visitor is on. How: This describes it without linking away.
+	{ // What: Developer Site Row. Why: The cards come from a working developer. How: This describes and links the portfolio.
+
+
+		herBoo : false,
+		hreStr : 'https://techgeek.dev/',
+		namStr : 'TechGeek.dev',
+
+		desStr : 'The developer side: the websites and web apps I have designed and built, and how to hire me for one.'
+
+
+	},
+
+	{ // What: Support Site Row. Why: A visitor may need help with a device. How: This describes and links the support site.
+
+
+		herBoo : false,
+		hreStr : 'https://techgeek.support/',
+		namStr : 'TechGeek.support',
+
+		desStr : 'Tech support: answers and how-to guides for everyday computer and phone questions.'
+
+
+	},
+
+	{ // What: Cards Site Row. Why: The family list includes this site, marked as the one the visitor is on. How: This describes it without linking away.
+
+
+		herBoo : true,
+		hreStr : 'https://techgeek.cards/',
+		namStr : 'TechGeek.cards',
+
+		desStr : 'Animated greeting cards to send to the people you care about.'
+
+
+	}
 
 
 ];
 
+// #endregion FAM_SIT_ARR
 
 
-const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The Support section's button opens z4nta0's Ko-fi page, the same address every README links. How: This is the page's public address, written here since it never changes between builds.
+
+const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The Support section's button opens z4nta0's Ko-fi page, the same address this project's README links. How: This is the page's public address, written here since it never changes between builds.
 
 // #endregion Constants
 
@@ -80,9 +137,10 @@ const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Wh
  *
  * @summary
  * Renders the About page and its title and canonical link, and swaps in its
- * search description. The story's paragraphs sit beside the fact list. Each
- * sister site is a card linking to that site in the same tab, except this
- * site's own, which says the visitor is here instead of linking to itself.
+ * search description. The story's paragraphs sit beside the fact list above
+ * 768px, the list stacking under them at 768px and below. Each sister site is
+ * a card linking to that site in the same tab, except this site's own, which
+ * says the visitor is here instead of linking to itself.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -100,7 +158,7 @@ const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Wh
 function AboPagCom () : JSX.Element {
 
 
-	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the two sister sites that sit behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the home page. How: This swaps the one description tag's text for the page's own while it shows.
+	usePagDesFun( 'Meet z4nta0, the developer who codes every TechGeek.cards greeting card by hand, and the two sister sites that sit behind it.' ); // What: Page Description Call. Why: Search listings should describe this page, not repeat the Home page. How: This swaps the one description tag's text for the page's own while it shows.
 
 
 
@@ -151,7 +209,7 @@ function AboPagCom () : JSX.Element {
 				<section className={ cssModObj.aboStoSec }>{ /* What: About Story Section Element. Why: The page explains how the cards are made. How: This holds the paragraphs and the fact list. */ }
 
 
-					<div className={ cssModObj.stoInnDiv }>{ /* What: Story Inner Div Element. Why: The paragraphs and the fact list sit side by side on wide screens. How: This lays them out in two columns in the site's centered column, stacking on phones. */ }
+					<div className={ cssModObj.stoInnDiv }>{ /* What: Story Inner Div Element. Why: The paragraphs and the fact list sit side by side above 768px. How: This lays them out in two columns in the site's centered column, stacking at 768px and below. */ }
 
 
 						<div className={ cssModObj.stoTexDiv }>{ /* What: Story Text Div Element. Why: The paragraphs read as one column. How: This stacks them. */ }
@@ -174,7 +232,7 @@ function AboPagCom () : JSX.Element {
 
 						</div>
 
-						<ul className={ cssModObj.facLisUno }>{ /* What: Fact List Unordered Element. Why: The story's main points read at a glance. How: This lists them in a white card beside the paragraphs. */ }
+						<ul className={ cssModObj.facLisUno }>{ /* What: Fact List Unordered Element. Why: The story's main points read at a glance. How: This lists them in a white card beside the paragraphs above 768px, stacking under them at 768px and below. */ }
 
 
 							{ FAC_LIS_ARR.map( ( facTexStr ) => ( // What: Fact Map Call. Why: Every fact gets a row. How: This renders one list item per fact.
@@ -200,7 +258,7 @@ function AboPagCom () : JSX.Element {
 
 
 
-				<section className={ cssModObj.aboFamSec }>{ /* What: About Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the heading, the three site cards, and the closing buttons. */ }
+				<section className={ cssModObj.aboFamSec }>{ /* What: About Family Section Element. Why: TechGeek.cards is one of three sister sites. How: This holds the family introduction, the three site cards, and the closing buttons. */ }
 
 
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
@@ -211,7 +269,7 @@ function AboPagCom () : JSX.Element {
 						<h2 className={ cssModObj.secTitHea }>Three sites, one maker</h2>{ /* What: Section Title Heading Element. Why: The heading introduces the sister sites. How: This shows the section's h2. */ }
 
 
-						<ul className={ cssModObj.famLisUno }>{ /* What: Family List Unordered Element. Why: The three sites sit side by side as equal cards. How: This lays them out three across, stacking on phones. */ }
+						<ul className={ cssModObj.famLisUno }>{ /* What: Family List Unordered Element. Why: The three sites sit side by side as equal cards. How: This lays them out three across, stacking into one column at 1,024px and below. */ }
 
 
 							{ FAM_SIT_ARR.map( ( famSitObj ) => ( // What: Family Site Map Call. Why: Every sister site gets a card. How: This renders one list item per site.
@@ -223,7 +281,7 @@ function AboPagCom () : JSX.Element {
 									className={ cssModObj.famIteIte }
 
 									data-site-current-page={ famSitObj.herBoo || undefined } // What: Site Current Page Attribute. Why: This site's own card is marked as the one the visitor is on. How: The module styles the card by this attribute, present only on this site's card.
-								>{ /* What: Family Item Item Element. Why: Each site is a card naming it and what it's for. How: This holds the site's name, its description, and its link or a You Are Here label. */ }
+								>{ /* What: Family Item Item Element. Why: Each site is a card naming it and what it's for. How: This holds the site's name, its description, and its link or a "You are here" label. */ }
 
 
 									<h3 className={ cssModObj.famNamHea }>{ famSitObj.namStr }</h3>{ /* What: Family Name Heading Element. Why: The site's name heads its card. How: This shows it as an h3. */ }
@@ -258,7 +316,8 @@ function AboPagCom () : JSX.Element {
 						</ul>
 
 
-						<div className={ cssModObj.famActDiv }>{ /* What: Family Actions Div Element. Why: The page ends on two ways onward. How: This sets the buttons in a row that wraps. */ }
+
+						<div className={ cssModObj.famActDiv }>{ /* What: Family Actions Div Element. Why: The page ends on two ways onward. How: This sets the buttons in a row, wrapping onto two lines at about 535px wide and below. */ }
 
 
 							<a
@@ -273,7 +332,7 @@ function AboPagCom () : JSX.Element {
 								className={ cssModObj.butPriAnc }
 
 								to='/gallery'
-							>Browse the Gallery</Link>{ /* What: Browse The Gallery Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an orange button. */ }
+							>Browse the Gallery</Link>{ /* What: Button Primary Anchor Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an orange button. */ }
 
 
 						</div>
@@ -332,7 +391,7 @@ function AboPagCom () : JSX.Element {
 
 // #region Exports
 
-export { AboPagCom }; // What: Named Exports. Why: The router's about route renders the About page. How: This exports AboPagCom.
+export { AboPagCom }; // What: Named Export. Why: The router's About route renders the About page. How: This exports AboPagCom.
 
 // #endregion Exports
 

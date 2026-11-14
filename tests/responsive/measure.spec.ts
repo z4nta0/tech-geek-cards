@@ -3,9 +3,10 @@
 
 // #region Imports
 
-import { expect    } from '@playwright/test';     // What: Expect. Why: Each page passes only when every paragraph keeps its measure. How: This asserts the problem list is empty.
-import { opeStaFun } from '../support/states.ts'; // What: Open State Function. Why: Each width is measured settled. How: This loads the page and waits for it.
-import { test      } from '@playwright/test';     // What: Test. Why: Each page is its own test. How: This declares them.
+import { CAR_DAT_ARR } from '../../src/ui/card-data.ts'; // What: Card Data Array. Why: A card's page is opened like the other suites open it, waiting for its code to mount. How: This lists every card's address.
+import { expect      } from '@playwright/test';          // What: Expect. Why: Each page passes only when every paragraph keeps its measure. How: This asserts the problem list is empty.
+import { opeStaFun   } from '../support/states.ts';      // What: Open State Function. Why: Each width is measured settled. How: This loads the page and waits for it.
+import { test        } from '@playwright/test';          // What: Test. Why: Each page is its own test. How: This declares them.
 
 // #endregion Imports
 
@@ -17,8 +18,8 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
  * @summary
  * Checks the text measure rule on every route, every card, the 404 page, and
  * the open phone menu, in whichever engine the project runs: no line of a
- * paragraph may run past 75 characters, or past 60 for small text (anything
- * set below the 14.572px body size, such as captions and labels). Each
+ * paragraph may run past 75 characters, or past 60 for small text (text set
+ * under 14px, below the 14.572px body size, such as captions). Each
  * paragraph's text is walked one character at a time and split into its
  * rendered lines by where each character lands, so the count is what a reader
  * actually sees at that width, skipping a visually hidden copy meant only for
@@ -40,15 +41,21 @@ import { test      } from '@playwright/test';     // What: Test. Why: Each page 
 
 // #region Constants
 
+const BOD_MAX_NUM = 75;                                                                            // What: Body Maximum Number. Why: Paragraph text has to land within 45 to 75 characters a line. How: This is the upper limit body text is held to.
+const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The phone menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
+const SMA_MAX_NUM = 60;                                                                            // What: Small Maximum Number. Why: Small and secondary text has to land within 40 to 60 characters a line. How: This is the upper limit small text is held to.
+const SMA_SIZ_NUM = 14;                                                                            // What: Small Size Number. Why: Small text is set below the body size of about 14.572px, and a 14px cutoff keeps text at the body size out. How: A paragraph whose font size is under this many pixels is held to the small limit.
+const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: A column is at its widest just before a layout switches. How: This lists the responsive suite's widths, the site's breakpoints and the pixel past each included.
+
 type MeaCasTyp = { ideStr : string, menBoo : boolean, patStr : string }; // What: Measure Case Type. Why: Each test measures one page in one state. How: This names the case, whether it opens the menu, and its path.
 
 const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page and the open menu hold paragraphs. How: Each row names a case, whether it opens the menu, and its path.
 
 
-	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The home page holds the hero's lead, the steps, the card descriptions, and the banner. How: This measures it as loaded.
-	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds every card's description and the custom card note. How: This measures it as loaded.
-	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds the story and the sister sites' descriptions. How: This measures it as loaded.
-	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its intro and the sidebar. How: This measures it as loaded.
+	{ ideStr : 'home',              menBoo : false, patStr : '/'                      }, // What: Home Case. Why: The Home page holds its paragraphs, such as the hero's lead. How: This measures it as loaded.
+	{ ideStr : 'gallery',           menBoo : false, patStr : '/gallery'               }, // What: Gallery Case. Why: The Gallery holds its paragraphs, such as each listed card's description. How: This measures it as loaded.
+	{ ideStr : 'about',             menBoo : false, patStr : '/about'                 }, // What: About Case. Why: The About page holds its paragraphs, such as the story. How: This measures it as loaded.
+	{ ideStr : 'contact',           menBoo : false, patStr : '/contact'               }, // What: Contact Case. Why: The Contact page holds its paragraphs, such as the intro. How: This measures it as loaded.
 	{ ideStr : 'not-found',         menBoo : false, patStr : '/missing'               }, // What: Not Found Case. Why: Every unknown address lands on the 404 page. How: This measures an address the site doesn't have.
 	{ ideStr : 'christmas',         menBoo : false, patStr : '/merry-christmas'       }, // What: Christmas Case. Why: The Christmas card is the first converted card, and its lettering grows with the screen. How: This measures its finished snowy scene, which reduced motion shows at once.
 	{ ideStr : 'birthday',          menBoo : false, patStr : '/happy-birthday'        }, // What: Birthday Case. Why: The Birthday card's message, cake, and balloons share the screen. How: This measures its message, cake, and balloons, still under reduced motion.
@@ -59,18 +66,10 @@ const MEA_CAS_ARR : MeaCasTyp[] = [ // What: Measure Case Array. Why: Every page
 	{ ideStr : 'thanksgiving',      menBoo : false, patStr : '/happy-thanksgiving'    }, // What: Thanksgiving Case. Why: The Thanksgiving card's illustrations and message stack on a phone. How: This measures its finished illustrations and message, which reduced motion shows at once.
 	{ ideStr : 'christmas-prank',   menBoo : false, patStr : '/merry-christmas-prank' }, // What: Christmas Prank Case. Why: The Christmas prank opens on a fake hacked screen no other card shows. How: This measures its finished snowy scene, which reduced motion shows at once.
 	{ ideStr : 'fathers-day-prank', menBoo : false, patStr : '/fathers-day-prank'     }, // What: Father's Day Prank Case. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This measures its finished greeting and mosaic, which reduced motion shows at once.
-	{ ideStr : 'menu',              menBoo : true,  patStr : '/'                      }  // What: Menu Case. Why: The open menu ends on its tagline. How: This measures the home page with the menu open.
+	{ ideStr : 'menu',              menBoo : true,  patStr : '/'                      }  // What: Menu Case. Why: The open menu ends on its tagline. How: This measures the Home page with the menu open.
 
 
 ];
-
-
-
-const BOD_MAX_NUM = 75;                                                                            // What: Body Maximum Number. Why: Paragraph text has to land within 45 to 75 characters a line. How: This is the upper limit body text is held to.
-const MEN_MAX_NUM = 1024;                                                                          // What: Menu Maximum Number. Why: The phone menu exists only up to the bar's 1,024px breakpoint. How: The menu case is measured only at widths up to this.
-const SMA_MAX_NUM = 60;                                                                            // What: Small Maximum Number. Why: Small and secondary text has to land within 40 to 60 characters a line. How: This is the upper limit small text is held to.
-const SMA_SIZ_NUM = 14;                                                                            // What: Small Size Number. Why: Small text is anything set below the body size of about 14.572px. How: A paragraph whose font size is under this many pixels is held to the small limit.
-const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: A column is at its widest just before a layout switches. How: This lists the responsive suite's widths, the site's breakpoints and the pixel past each included.
 
 // #endregion Constants
 
@@ -232,6 +231,7 @@ for ( const meaCasObj of MEA_CAS_ARR ) { // What: Case Test Loop. Why: Every pag
 		test.slow(); // What: Slow Test Mark. Why: Each case is measured at up to fourteen widths, one character at a time. How: This triples the test's timeout.
 
 
+
 		const proAllArr : string[] = []; // What: Problem All Array. Why: Every width's problems are reported together. How: This collects them.
 
 
@@ -241,10 +241,11 @@ for ( const meaCasObj of MEA_CAS_ARR ) { // What: Case Test Loop. Why: Every pag
 			await opeStaFun( curPagObj, { // What: Case Open Call. Why: The text is measured settled. How: This opens the case's path at the width, opening the menu first for the menu case.
 
 
-				heiNum : 900,              // What: Height Number. Why: Only the width changes how text wraps. How: Every case is measured at the same height.
-				ideStr : meaCasObj.ideStr, // What: Identifier String. Why: The state names its case. How: This reuses the case's name.
-				patStr : meaCasObj.patStr, // What: Path String. Why: The state opens the case's route. How: This reuses the case's path.
-				widNum : widValNum,        // What: Width Number. Why: The width is what this test varies. How: This sizes the viewport to the loop's width.
+				heiNum : 900,                                                                                // What: Height Number. Why: Only the width changes how text wraps. How: Every case is measured at the same height.
+				ideStr : meaCasObj.ideStr,                                                                   // What: Identifier String. Why: The state names its case. How: This reuses the case's name.
+				patStr : meaCasObj.patStr,                                                                   // What: Path String. Why: The state opens the case's route. How: This reuses the case's path.
+				redBoo : CAR_DAT_ARR.some( ( carDatObj ) => `/${ carDatObj.sluStr }` === meaCasObj.patStr ), // What: Reduced Boolean. Why: A card's code arrives on demand, so a card case has to wait for it to mount rather than measure its loading message. How: This is true for a card's address, which makes the open call wait for the card and keep the reduced motion set above.
+				widNum : widValNum,                                                                          // What: Width Number. Why: The width is what this test varies. How: This sizes the viewport to the loop's width.
 
 				...( meaCasObj.menBoo ? { actFun : async ( actPagObj ) => { await actPagObj.getByRole( 'button', { name : 'Toggle menu' } ).click(); } } : {} ) // What: Menu Action Spread. Why: Only the menu case opens the menu. How: This adds the toggle click as the state's action for that case.
 
@@ -255,7 +256,7 @@ for ( const meaCasObj of MEA_CAS_ARR ) { // What: Case Test Loop. Why: Every pag
 			const proWidArr = await curPagObj.evaluate( meaProFun, { bodNum : BOD_MAX_NUM, sizNum : SMA_SIZ_NUM, smaNum : SMA_MAX_NUM } ); // What: Problem Width Array. Why: This width's problems are collected. How: This measures every paragraph in the page.
 
 
-			proAllArr.push( ...proWidArr.map( ( proCurStr ) => `${ widValNum }px ${ proCurStr }` ) ); // What: Problem Record Call. Why: A problem should say the width it appeared at. How: This prefixes each with the width.
+			proAllArr.push( ...proWidArr.map( ( proCurStr ) => `${ widValNum.toLocaleString( 'en-US' ) }px ${ proCurStr }` ) ); // What: Problem Record Call. Why: A problem should say the width it appeared at. How: This prefixes each with the width.
 
 
 		}

@@ -25,16 +25,19 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
  * canonical link. Every page has exactly one description, index.html's, which
  * every page but Home and the 404 page swaps for its own, names z4nta0 as its
  * author, and has one h1; moving between pages swaps the tags rather than
- * piling them up. The raw page, read without running the site's script the way
- * link checkers read it, carries the home page's full title and description.
- * The structured data describes this domain as a WebSite whose author is
- * z4nta0, the same Person TechGeek.dev describes, with the GitHub and LinkedIn
- * profiles the footer links to. Every icon the head links to is served, the
- * PNGs at the size their links promise. robots.txt lets every crawler in and
- * names the sitemap, which lists every indexed page. Home's raw page and every
- * card's carry a complete set of link preview tags with absolute addresses,
- * the card's own title, description, address, and image, and every preview
- * image is served at 1,200x630 under 300 KB. Adapted from TechGeek.dev.
+ * piling them up. The raw page, read from the build without running the site's
+ * script the way link checkers read it, carries the Home page's full title and
+ * description. The structured data describes this domain as a WebSite whose
+ * author is z4nta0, the same Person TechGeek.dev describes, with the GitHub
+ * and LinkedIn profiles the footer links to. Every icon the head links to is
+ * served, the PNGs at the size their links promise. robots.txt lets every
+ * crawler in and names the sitemap, which lists every indexed page. Home's raw
+ * page and every card's, read from the build, carry a complete set of link
+ * preview tags with absolute addresses, the card's own title, description,
+ * address, and image, and every preview image is served at 1,200x630 under
+ * 300 KB. Every card in the catalog has its own head row, indexed exactly
+ * when it's listed, so neither the head checks nor the sitemap can miss one.
+ * Adapted from TechGeek.dev.
  *
  * Sections:
  *  - Constants
@@ -49,18 +52,212 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The head helpe
 
 // #region Constants
 
-const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the home page's description, and every other page must swap it for its own. How: This is the exact text it should hold.
-const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: The canonical links, structured data, robots.txt, and sitemap all name the live site. How: This is its address.
+const HOM_DES_STR = 'Hand-coded, animated greeting cards for birthdays, holidays, and family days. Pick one and send the link to someone special.'; // What: Home Description String. Why: The raw page carries the Home page's description, and every page but Home and the 404 page must swap it for its own. How: This is the exact text it should hold.
+const LIV_URL_STR = 'https://techgeek.cards/'; // What: Live URL String. Why: The checks that compare against the live site's absolute address share one value. How: This is its address.
 
 
+
+// #region PAG_HEA_ARR
+
+/**
+ * PAG_HEA_ARR = Page Head Array
+ *
+ * @summary
+ * What each page's head should say. Every row shares one shape, so its fields
+ * carry no comments of their own:
+ *
+ * - `canStr` (String or null): Canonical String, the page's canonical
+ *   address, or null for a page that carries noindex and no canonical link.
+ *
+ * - `heaBoo` (Boolean): Heading Boolean, whether the page's one h1 is checked,
+ *   now true on every row.
+ *
+ * - `patStr` (String): Path String, the address the page is loaded from.
+ *
+ * - `titStr` (String): Title String, the page's exact title.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checked against what it should say. How: Each row names one page, its title, its canonical address or null, and whether its h1 is checked.
+
+
+	{ // What: Home Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : LIV_URL_STR,
+		heaBoo : true,
+		patStr : '/',
+		titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards'
+
+
+	},
+
+	{ // What: Gallery Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }gallery`,
+		heaBoo : true,
+		patStr : '/gallery',
+		titStr : 'Greeting Card Gallery | TechGeek.cards'
+
+
+	},
+
+	{ // What: About Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }about`,
+		heaBoo : true,
+		patStr : '/about',
+		titStr : 'About the Maker | TechGeek.cards'
+
+
+	},
+
+	{ // What: Contact Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }contact`,
+		heaBoo : true,
+		patStr : '/contact',
+		titStr : 'Contact | TechGeek.cards'
+
+
+	},
+
+	{ // What: Not Found Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
+
+
+		canStr : null,
+		heaBoo : true,
+		patStr : '/no-such-page',
+		titStr : 'Page Not Found | TechGeek.cards'
+
+
+	},
+
+	{ // What: Happy Birthday Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }happy-birthday`,
+		heaBoo : true,
+		patStr : '/happy-birthday',
+		titStr : 'Happy Birthday Card | TechGeek.cards'
+
+
+	},
+
+	{ // What: Mother's Day Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }mothers-day`,
+		heaBoo : true,
+		patStr : '/mothers-day',
+		titStr : "Mother's Day Card | TechGeek.cards"
+
+
+	},
+
+	{ // What: Father's Day Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }fathers-day`,
+		heaBoo : true,
+		patStr : '/fathers-day',
+		titStr : "Father's Day Card | TechGeek.cards"
+
+
+	},
+
+	{ // What: Fourth of July Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }fourth-of-july`,
+		heaBoo : true,
+		patStr : '/fourth-of-july',
+		titStr : 'Fourth of July Card | TechGeek.cards'
+
+
+	},
+
+	{ // What: Happy Halloween Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }happy-halloween`,
+		heaBoo : true,
+		patStr : '/happy-halloween',
+		titStr : 'Happy Halloween Card | TechGeek.cards'
+
+
+	},
+
+	{ // What: Happy Thanksgiving Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }happy-thanksgiving`,
+		heaBoo : true,
+		patStr : '/happy-thanksgiving',
+		titStr : 'Happy Thanksgiving Card | TechGeek.cards'
+
+
+	},
+
+	{ // What: Merry Christmas Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }merry-christmas`,
+		heaBoo : true,
+		patStr : '/merry-christmas',
+		titStr : 'Merry Christmas Card | TechGeek.cards'
+
+
+	},
+
+	{ // What: Father's Day Prank Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
+
+
+		canStr : null,
+		heaBoo : true,
+		patStr : '/fathers-day-prank',
+		titStr : "Father's Day Special Card | TechGeek.cards"
+
+
+	},
+
+	{ // What: Merry Christmas Prank Page Head Row. Why: This page carries noindex, so it has no canonical link. How: This names its path, its title, and its canonical address as null.
+
+
+		canStr : null,
+		heaBoo : true,
+		patStr : '/merry-christmas-prank',
+		titStr : 'Christmas Prank Card | TechGeek.cards'
+
+
+	}
+
+
+];
+
+// #endregion PAG_HEA_ARR
+
+
+
+const PRE_URL_STR = 'http://localhost:5205'; // What: Preview URL String. Why: Link scrapers read the shipped page, which the build minifies and copies once per card, so the raw pages are read from the build rather than the dev server. How: This is the address the preview server answers on.
+
+
+
+// #region SOC_KEY_ARR
 
 /**
  * SOC_KEY_ARR = Social Key Array
  *
  * @summary
  * Every Open Graph and Twitter tag a complete link preview needs, per the
- * social preview rule; twitter:site and twitter:creator are left out, since
- * the site has no X account. Every row is one tag's property or name.
+ * social preview rule, plus theme-color, which Discord edges its embed in;
+ * twitter:site and twitter:creator are left out, since the site has no X
+ * account. Every row is one tag's property or name.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -80,6 +277,7 @@ const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full
 	'og:title',
 	'og:type',
 	'og:url',
+	'theme-color',
 	'twitter:card',
 	'twitter:description',
 	'twitter:image',
@@ -89,49 +287,7 @@ const SOC_KEY_ARR = [ // What: Social Key Array. Why: A shared link shows a full
 
 ];
 
-
-
-// #region PAG_HEA_ARR
-
-/**
- * PAG_HEA_ARR = Page Head Array
- *
- * @summary
- * What each page's head should say. Every row shares one shape, so its fields
- * carry no comments of their own:
- * - `canStr` (String or null): Canonical String, the page's canonical
- *   address, or null for a page that carries noindex and no canonical link.
- * - `heaBoo` (Boolean): Heading Boolean, whether the page's one h1 is checked,
- *   now true on every row.
- * - `patStr` (String): Path String, the address the page is loaded from.
- * - `titStr` (String): Title String, the page's exact title.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
-*/
-
-const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checked against what it should say. How: Each row names one page, its title, its canonical address or null, and whether its h1 is checked.
-
-
-	{ canStr : LIV_URL_STR,                          heaBoo : true,  patStr : '/',                      titStr : 'Animated Digital Greeting Cards to Send | TechGeek.cards' },
-	{ canStr : `${ LIV_URL_STR }gallery`,            heaBoo : true,  patStr : '/gallery',               titStr : 'Greeting Card Gallery | TechGeek.cards'                   },
-	{ canStr : `${ LIV_URL_STR }about`,              heaBoo : true,  patStr : '/about',                 titStr : 'About the Maker | TechGeek.cards'                         },
-	{ canStr : `${ LIV_URL_STR }contact`,            heaBoo : true,  patStr : '/contact',               titStr : 'Contact | TechGeek.cards'                                 },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/no-such-page',          titStr : 'Page Not Found | TechGeek.cards'                          },
-	{ canStr : `${ LIV_URL_STR }happy-birthday`,     heaBoo : true,  patStr : '/happy-birthday',        titStr : 'Happy Birthday Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }mothers-day`,        heaBoo : true,  patStr : '/mothers-day',           titStr : "Mother's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fathers-day`,        heaBoo : true,  patStr : '/fathers-day',           titStr : "Father's Day Card | TechGeek.cards"                       },
-	{ canStr : `${ LIV_URL_STR }fourth-of-july`,     heaBoo : true,  patStr : '/fourth-of-july',        titStr : 'Fourth of July Card | TechGeek.cards'                     },
-	{ canStr : `${ LIV_URL_STR }happy-halloween`,    heaBoo : true,  patStr : '/happy-halloween',       titStr : 'Happy Halloween Card | TechGeek.cards'                    },
-	{ canStr : `${ LIV_URL_STR }happy-thanksgiving`, heaBoo : true,  patStr : '/happy-thanksgiving',    titStr : 'Happy Thanksgiving Card | TechGeek.cards'                 },
-	{ canStr : `${ LIV_URL_STR }merry-christmas`,    heaBoo : true,  patStr : '/merry-christmas',       titStr : 'Merry Christmas Card | TechGeek.cards'                    },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/fathers-day-prank',     titStr : "Father's Day Special Card | TechGeek.cards"               },
-	{ canStr : null,                                 heaBoo : true,  patStr : '/merry-christmas-prank', titStr : 'Christmas Prank Card | TechGeek.cards'                    }
-
-
-];
-
-// #endregion PAG_HEA_ARR
+// #endregion SOC_KEY_ARR
 
 // #endregion Constants
 
@@ -175,8 +331,8 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 	expect( heaRowObj.titStr.length ).toBeLessThanOrEqual( 60 ); // What: Title Length Assertion. Why: Search listings and link cards cut long titles off. How: This keeps it to 60 characters.
 
 	await expect( curPagObj.locator( 'meta[name="author"]' ) ).toHaveAttribute( 'content', 'z4nta0' ); // What: Author Assertion. Why: The site names z4nta0, who built and owns it, as its author. How: This checks the author tag.
+	await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveCount( 1 );                  // What: Single Description Assertion. Why: Two descriptions leave search engines to guess. How: This checks there's exactly one, index.html's, on every page.
 
-	await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveCount( 1 ); // What: Single Description Assertion. Why: Two descriptions leave search engines to guess. How: This checks there's exactly one, index.html's, on every page.
 
 	if ( heaRowObj.heaBoo ) await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toHaveCount( 1 ); // What: Single Heading Assertion. Why: One h1 tells search engines and screen readers what the page is about. How: This checks there's exactly one on every page the row marks, now every page and every card.
 
@@ -186,8 +342,7 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 
 		await expect( curPagObj.locator( 'meta[name="robots"]' ) ).toHaveAttribute( 'content', 'noindex' ); // What: Noindex Assertion. Why: Search engines must leave the page out. How: This checks the one robots tag says noindex.
-
-		await expect( curPagObj.locator( 'link[rel="canonical"]' ) ).toHaveCount( 0 ); // What: No Canonical Assertion. Why: A page kept out of search has no use for a canonical address, and one left over from the previous page would contradict it. How: This checks there's none.
+		await expect( curPagObj.locator( 'link[rel="canonical"]' ) ).toHaveCount( 0 );                      // What: No Canonical Assertion. Why: A page kept out of search has no use for a canonical address, and one left over from the previous page would contradict it. How: This checks there's none.
 
 
 	}
@@ -199,14 +354,11 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 
 
 		expect( desConStr.length ).toBeGreaterThanOrEqual( 120 ); // What: Description Minimum Assertion. Why: A summary that's too short wastes the space a listing gives it, and link preview checkers flag one under 120 characters. How: This checks it runs at least 120 characters.
+		expect( desConStr.length ).toBeLessThanOrEqual( 125 );    // What: Description Maximum Assertion. Why: Phones cut a summary off around 125 characters. How: This checks it stays within that.
 
-		expect( desConStr.length ).toBeLessThanOrEqual( 125 ); // What: Description Maximum Assertion. Why: Phones cut a summary off around 125 characters. How: This checks it stays within that.
-
-		await expect( curPagObj.locator( 'link[rel="canonical"]' ) ).toHaveCount( 1 ); // What: Single Canonical Assertion. Why: Two canonical links leave search engines to guess. How: This checks there's exactly one.
-
+		await expect( curPagObj.locator( 'link[rel="canonical"]' ) ).toHaveCount( 1 );                            // What: Single Canonical Assertion. Why: Two canonical links leave search engines to guess. How: This checks there's exactly one.
 		await expect( curPagObj.locator( 'link[rel="canonical"]' ) ).toHaveAttribute( 'href', heaRowObj.canStr ); // What: Canonical Assertion. Why: Every address Netlify serves the page at should count as its live one. How: This checks the canonical link names it.
-
-		await expect( curPagObj.locator( 'meta[name="robots"]' ) ).toHaveCount( 0 ); // What: Indexable Assertion. Why: The page has to stay findable. How: This checks it carries no robots tag that could keep it out.
+		await expect( curPagObj.locator( 'meta[name="robots"]' ) ).toHaveCount( 0 );                              // What: Indexable Assertion. Why: The page has to stay findable. How: This checks it carries no robots tag that could keep it out.
 
 
 	}
@@ -215,10 +367,6 @@ async function heaCheFun ( curPagObj : Page, heaRowObj : typeof PAG_HEA_ARR[ num
 }
 
 // #endregion heaCheFun
-
-
-
-const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
 
 
 
@@ -281,6 +429,37 @@ function imaSizFun ( imaBufObj : Buffer ) : [ number, number ] {
 
 // #endregion imaSizFun
 
+
+
+// #region socTagFun
+
+/**
+ * socTagFun = Social Tag Function
+ *
+ * @summary
+ * Reads a page's meta tags from its raw HTML, the way a link scraper reads
+ * them without running a script. It only reads a tag whose `name` or
+ * `property` attribute comes directly before its `content`, the order the
+ * site's own tags use, and decodes only the `&quot;`, `&#39;`, and `&amp;`
+ * entities in each value. A name found twice keeps its last value.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param htmTexStr - HTML Text String: The page's raw HTML.
+ *
+ * @returns Each tag's name or property mapped to its decoded content.
+ *
+ * @example
+ * ```ts
+ * socTagFun(htmTexStr) // => { 'og:title' : 'Happy Birthday Card | ...', ... }
+ * ```
+ *
+*/
+
+const socTagFun = ( htmTexStr : string ) : Record< string, string > => Object.fromEntries( [ ...htmTexStr.matchAll( /<meta\s+(?:name|property)=(['"])([^'"]+)\1\s+content=(['"])(.*?)\3/g ) ].map( ( tagMatArr ) => [ tagMatArr[ 2 ], tagMatArr[ 4 ].replace( /&quot;/g, '"' ).replace( /&#39;/g, "'" ).replace( /&amp;/g, '&' ) ] ) ); // What: Social Tag Function. Why: The raw page's tags are read without a browser, the way a link scraper reads them. How: This maps each meta tag's name or property to its decoded content.
+
+// #endregion socTagFun
+
 // #endregion Helpers
 
 
@@ -308,7 +487,7 @@ for ( const heaRowObj of PAG_HEA_ARR ) { // What: Page Head Loop. Why: Every pag
 test( 'moving between pages swaps their head tags', async ( { page : curPagObj } ) => { // What: Navigation Head Test. Why: React adds and removes each page's tags as visitors move around, and a leftover description or canonical link would mislabel the next page. How: This walks from Home through the Gallery and About to Contact by the footer's links, checking each head.
 
 
-	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The walk starts on the home page. How: This loads the root path.
+	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The walk starts on the Home page. How: This loads the root path.
 
 	await curPagObj.waitForLoadState( 'networkidle' ); // What: Home Settled Wait. Why: A footer click landing while Home is still loading its cards and images can miss as the page shifts under it. How: This waits until nothing more is loading.
 
@@ -327,7 +506,7 @@ test( 'moving between pages swaps their head tags', async ( { page : curPagObj }
 
 		await heaCheFun( curPagObj, heaRowObj ); // What: Page Head Check. Why: The previous page's tags must be gone and this page's in place. How: This checks its head.
 
-		await expect( curPagObj.locator( 'meta[name="description"]' ) ).not.toHaveAttribute( 'content', HOM_DES_STR ); // What: Own Description Assertion. Why: Each page should describe itself, not repeat the home page. How: This checks the description changed.
+		await expect( curPagObj.locator( 'meta[name="description"]' ) ).not.toHaveAttribute( 'content', HOM_DES_STR ); // What: Own Description Assertion. Why: Each page should describe itself, not repeat the Home page. How: This checks the description changed.
 
 
 	}
@@ -337,15 +516,34 @@ test( 'moving between pages swaps their head tags', async ( { page : curPagObj }
 
 
 
+for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Move Loop. Why: The dev server already writes a card's own description into the page it serves, so only a move inside the site shows whether the card swaps its description itself. How: This declares one test per card.
+
+
+	test( `the ${ carDatObj.sluStr } card swaps in its own description after a move inside the site`, async ( { page : curPagObj } ) => { // What: Card Description Swap Test. Why: A visitor reaching a card from inside the site gets the description the card sets, not the page it came from. How: This opens the Gallery, moves to the card through the router without a reload, and checks the description is the card's own.
+
+
+		await curPagObj.goto( '/gallery' ); // What: Gallery Open Call. Why: The move starts from a page with a different description. How: This loads the Gallery.
+
+		await curPagObj.evaluate( ( sluValStr ) => { window.history.pushState( {}, '', `/${ sluValStr }` ); window.dispatchEvent( new PopStateEvent( 'popstate' ) ); }, carDatObj.sluStr ); // What: Router Move Call. Why: An unlisted card has no tile to click, so every card is reached the same way. How: This pushes the card's address and tells the router the location changed, which moves it without a reload.
+
+		await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveAttribute( 'content', carDatObj.seaStr ); // What: Card Description Assertion. Why: The card's head has to describe the card. How: This waits for the one description to hold the card's search description.
+
+
+	} );
+
+
+}
+
+
+
 test( 'the structured data describes z4nta0 and matches the pages', async ( { page : curPagObj } ) => { // What: Structured Data Test. Why: Search engines may show z4nta0's details from the JSON-LD, so every claim has to match what the pages show. How: This reads the data and checks the person, the site, and the profiles against the pages.
 
 
-	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The profiles in the data have to be the ones the footer links to. How: This loads the home page.
+	await curPagObj.goto( '/' ); // What: Home Open Call. Why: The profiles in the data have to be the ones the footer links to. How: This loads the Home page.
 
 
 	const ldjTexStr = await curPagObj.locator( 'script[type="application/ld+json"]' ).textContent() ?? '{}'; // What: Linked-Data-JSON Text String. Why: The data is checked as the page serves it. How: This reads the script's text.
-	const socHreArr = await curPagObj.getByRole( 'contentinfo' ).locator( 'a[href^="https://"][target="_blank"]' ).evaluateAll( ( ancEleArr ) => ancEleArr.map( ( ancCurEle ) => ancCurEle.getAttribute( 'href' ) ?? '' ) ); // What: Social Href Array. Why: The data's profiles have to be the footer's. How: This reads every outside link the footer opens in a new tab, which are its profiles, leaving out the sister sites, which open in the same tab.
-
+	const socHreArr = await curPagObj.getByRole( 'contentinfo' ).locator( 'a[href^="https://"][target="_blank"]' ).evaluateAll( ( ancEleArr ) => ancEleArr.map( ( ancCurEle ) => ancCurEle.getAttribute( 'href' ) ?? '' ) ); // What: Social Hypertext-Reference Array. Why: The data's profiles have to be the footer's. How: This reads every outside link the footer opens in a new tab, which are its profiles, leaving out the sister sites, which open in the same tab.
 
 	type LdjNodTyp = { '@id'? : string, '@type'? : string, author? : { '@id' : string }, name? : string, sameAs? : string[], url? : string }; // What: Linked-Data-JSON Node Type. Why: The checks read a handful of each node's fields. How: This types the fields they use.
 
@@ -355,10 +553,8 @@ test( 'the structured data describes z4nta0 and matches the pages', async ( { pa
 	const webNodObj = ldjGraArr.find( ( graNodObj ) => graNodObj[ '@type' ] === 'WebSite' ) ?? {}; // What: WebSite Node Object. Why: This site's details are checked together. How: This finds its node, or an empty object.
 
 
-	expect( [ perNodObj[ '@id' ], perNodObj.name, perNodObj.url, webNodObj.name, webNodObj.url ] ).toEqual( [ 'https://techgeek.dev/#person', 'z4nta0', 'https://techgeek.dev/', 'TechGeek.cards', LIV_URL_STR ] ); // What: Person And Site Assertion. Why: The site is z4nta0's, never a business's, and z4nta0 is the same person TechGeek.dev describes. How: This checks the person's id, name, and address match TechGeek.dev's, and the site's name and address are this one's.
-
-	expect( webNodObj.author?.[ '@id' ] ).toBe( perNodObj[ '@id' ] ); // What: Author Link Assertion. Why: Search engines join the nodes by their ids. How: This checks the site names z4nta0 as its author.
-
+	expect( [ perNodObj[ '@id' ], perNodObj.name, perNodObj.url, webNodObj.name, webNodObj.url ] ).toEqual( [ 'https://techgeek.dev/#person', 'z4nta0', 'https://techgeek.dev/', 'TechGeek.cards', LIV_URL_STR ] ); // What: Person And Site Assertion. Why: The site is z4nta0's, never a business's, and z4nta0 is the same person TechGeek.dev describes. How: This checks the person's ID, name, and address match TechGeek.dev's, and the site's name and address are this one's.
+	expect( webNodObj.author?.[ '@id' ] ).toBe( perNodObj[ '@id' ] );                      // What: Author Link Assertion. Why: Search engines join the nodes by their IDs. How: This checks the site names z4nta0 as its author.
 	expect( [ ...( perNodObj.sameAs ?? [] ) ].sort() ).toEqual( [ ...socHreArr ].sort() ); // What: Profiles Assertion. Why: Every profile in the data has to be one the site links to. How: This compares the data's profiles with the footer's outside links.
 
 
@@ -366,18 +562,16 @@ test( 'the structured data describes z4nta0 and matches the pages', async ( { pa
 
 
 
-test( 'the raw page carries the home title and description for script-free readers', async ( { request : reqConObj } ) => { // What: Raw Head Test. Why: Link checkers and many crawlers read the page without running the site's script, so the title and description have to be in index.html itself. How: This fetches the root as raw HTML and checks both.
+test( "the raw page carries the Home page's title and description for script-free readers", async ( { request : reqCotObj } ) => { // What: Raw Head Test. Why: Link checkers and many crawlers read the page without running the site's script, so the title and description have to be in index.html itself. How: This fetches the root as raw HTML and checks both.
 
 
-	const rawHtmStr = await ( await reqConObj.get( '/' ) ).text();                                        // What: Raw HTML String. Why: The page is read the way a script-free reader reads it. How: This fetches the root's HTML without a browser.
+	const rawHtmStr = await ( await reqCotObj.get( `${ PRE_URL_STR }/` ) ).text();                        // What: Raw HTML String. Why: The page is read the way a script-free reader reads what ships. How: This fetches the built root's HTML without a browser.
 	const titTexStr = rawHtmStr.match( /<title>([^<]*)<\/title>/ )?.[ 1 ].replace( /&amp;/g, '&' ) ?? ''; // What: Title Text String. Why: The raw title is checked as written. How: This reads the title element's text and decodes its ampersand.
 
 
-	expect( titTexStr ).toBe( PAG_HEA_ARR[ 0 ].titStr ); // What: Raw Title Assertion. Why: The raw page should name the home page in full, not the bare site name. How: This checks it matches the home page's title.
-
-	expect( titTexStr.length ).toBeGreaterThanOrEqual( 50 ); // What: Raw Title Length Assertion. Why: Checkers flag a title that leaves most of a listing's room unused. How: This checks it runs at least 50 characters.
-
-	expect( rawHtmStr ).toContain( `<meta name='description' content='${ HOM_DES_STR }' />` ); // What: Raw Description Assertion. Why: Checkers and crawlers without the script need a description to show. How: This checks the raw page carries the home page's.
+	expect( titTexStr ).toBe( PAG_HEA_ARR[ 0 ].titStr );                                       // What: Raw Title Assertion. Why: The raw page should name the Home page in full, not the bare site name. How: This checks it matches the Home page's title.
+	expect( titTexStr.length ).toBeGreaterThanOrEqual( 50 );                                   // What: Raw Title Length Assertion. Why: Checkers flag a title that leaves most of a listing's room unused. How: This checks it runs at least 50 characters.
+	expect( rawHtmStr ).toContain( `<meta name='description' content='${ HOM_DES_STR }' />` ); // What: Raw Description Assertion. Why: Checkers and crawlers without the script need a description to show. How: This checks the raw page carries the Home page's.
 
 
 } );
@@ -390,23 +584,22 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 	const pagPatStr = carDatObj ? `/${ carDatObj.sluStr }` : '/'; // What: Page Path String. Why: Each test loads its own page. How: This is the card's address, or the root.
 
 
-	test( `${ pagPatStr } raw page carries its link preview`, async ( { request : reqConObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
+	test( `${ pagPatStr } raw page carries its link preview`, async ( { request : reqCotObj } ) => { // What: Raw Preview Test. Why: Link scrapers never run the site's script, so the raw page alone decides the card a shared link shows. How: This fetches the page without a browser and checks every preview tag.
 
 
-		const socTagObj = socTagFun( await ( await reqConObj.get( `${ pagPatStr }?name=Sam` ) ).text() );                  // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the page, fetched with a name.
+		const socTagObj = socTagFun( await ( await reqCotObj.get( `${ PRE_URL_STR }${ pagPatStr }?name=Sam` ) ).text() );  // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the built page, fetched with a name.
 		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                               // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
-		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`; // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
+		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.socStr }` : `${ LIV_URL_STR }og-image-2.png`;   // What: Expected Image String. Why: Each page shows its own image. How: This is the card's image, or the site's card.
 		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;             // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.
 		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                      // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
 
 
-		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] ); // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
-
+		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] );                                                    // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
 		expect( [ socTagObj[ 'og:url' ], socTagObj[ 'og:image' ], socTagObj[ 'twitter:image' ] ] ).toEqual( [ expUrlStr, expImaStr, expImaStr ] ); // What: Address Assertion. Why: Scrapers need absolute addresses for the page and its image. How: This checks each against the page's own.
-
 		expect( [ socTagObj[ 'og:title' ], socTagObj[ 'twitter:title' ], socTagObj[ 'description' ], socTagObj[ 'og:description' ], socTagObj[ 'twitter:description' ] ] ).toEqual( [ expTitStr, expTitStr, expDesStr, expDesStr, expDesStr ] ); // What: Text Assertion. Why: The preview names and describes the page as the page itself does. How: This checks the titles and descriptions.
-
-		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
+		expect( expDesStr.length ).toBeGreaterThanOrEqual( 120 );                                                                                  // What: Description Minimum Assertion. Why: Link preview checkers flag a summary under 120 characters, and the unlisted cards' own descriptions are checked only here. How: This checks the page's description runs at least 120 characters.
+		expect( expDesStr.length ).toBeLessThanOrEqual( 125 );                                                                                     // What: Description Maximum Assertion. Why: Mobile cards cut a summary off around 125 characters. How: This checks the page's description stays within that.
+		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj?.socStr.endsWith( '.jpg' ) ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
 
 
 	} );
@@ -416,21 +609,19 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 
 
 
-test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqConObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and WhatsApp drops one of 300 KB or more. How: This fetches every preview image and reads its bytes.
+test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqCotObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and the social preview rule caps each at 300 KB as a safe margin for WhatsApp. How: This fetches every preview image and checks its type, dimensions, and size.
 
 
-	for ( const imaPatStr of [ '/og-image.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.sluStr }.jpg` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
+	for ( const imaPatStr of [ '/og-image-2.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.socStr }` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
 
 
-		const imaResObj = await reqConObj.get( imaPatStr ); // What: Image Response Object. Why: The image has to exist where the tags point. How: This fetches it.
+		const imaResObj = await reqCotObj.get( imaPatStr ); // What: Image Response Object. Why: The image has to exist where the tags point. How: This fetches it.
 		const imaBufObj = await imaResObj.body();           // What: Image Buffer Object. Why: The image's size is read from its bytes. How: This reads them.
 
 
 		expect( [ imaPatStr, imaResObj.headers()[ 'content-type' ] ] ).toEqual( [ imaPatStr, imaPatStr.endsWith( '.png' ) ? 'image/png' : 'image/jpeg' ] ); // What: Image Type Assertion. Why: A missing image falls through to the app's HTML. How: This checks the file is served as its type, naming it on failure.
-
-		expect( [ imaPatStr, ...imaSizFun( imaBufObj ) ] ).toEqual( [ imaPatStr, 1200, 630 ] ); // What: Image Size Assertion. Why: The tags promise 1,200x630. How: This reads the image's real size, naming it on failure.
-
-		expect( imaBufObj.length ).toBeLessThan( 300 * 1024 ); // What: Image Bytes Assertion. Why: WhatsApp drops a preview image of 300 KB or more. How: This checks the file is under the limit.
+		expect( [ imaPatStr, ...imaSizFun( imaBufObj ) ] ).toEqual( [ imaPatStr, 1200, 630 ] );                                                             // What: Image Size Assertion. Why: The tags promise 1,200x630. How: This reads the image's real size, naming it on failure.
+		expect( imaBufObj.length ).toBeLessThan( 300 * 1024 );                                                                                              // What: Image Bytes Assertion. Why: The social preview rule caps a preview image at 300 KB, a safe margin for WhatsApp. How: This checks the file is under the limit.
 
 
 	}
@@ -440,14 +631,13 @@ test( 'every link preview image is 1,200x630 and under 300 KB', async ( { reques
 
 
 
-test( 'robots.txt welcomes crawlers and names the sitemap', async ( { request : reqConObj } ) => { // What: Robots File Test. Why: Crawlers read robots.txt before anything else. How: This fetches it and checks its rules and sitemap line.
+test( 'robots.txt welcomes crawlers and names the sitemap', async ( { request : reqCotObj } ) => { // What: Robots File Test. Why: Crawlers read robots.txt before anything else. How: This fetches it and checks its rules and sitemap line.
 
 
-	const robTexStr = await ( await reqConObj.get( '/robots.txt' ) ).text(); // What: Robots Text String. Why: The file's rules are checked as served. How: This fetches and reads it.
+	const robTexStr = await ( await reqCotObj.get( '/robots.txt' ) ).text(); // What: Robots Text String. Why: The file's rules are checked as served. How: This fetches and reads it.
 
 
-	expect( robTexStr ).toContain( 'User-agent: *\nAllow: /' ); // What: Allow All Assertion. Why: Every crawler may read the site, since the unwanted pages keep themselves out with noindex. How: This checks the one rule group.
-
+	expect( robTexStr ).toContain( 'User-agent: *\nAllow: /' );              // What: Allow All Assertion. Why: Every crawler may read the site, since the unwanted pages keep themselves out with noindex. How: This checks the one rule group.
 	expect( robTexStr ).toContain( `Sitemap: ${ LIV_URL_STR }sitemap.xml` ); // What: Sitemap Line Assertion. Why: Crawlers find the sitemap from this line. How: This checks it names the live sitemap.
 
 
@@ -455,10 +645,43 @@ test( 'robots.txt welcomes crawlers and names the sitemap', async ( { request : 
 
 
 
-test( 'the sitemap lists every indexed page', async ( { request : reqConObj } ) => { // What: Sitemap Test. Why: The sitemap should list exactly the indexed pages, by their canonical addresses. How: This fetches it and compares its addresses with the indexed rows.
+test( 'every card in the catalog has a head row that matches whether it is listed', () => { // What: Catalog Rows Test. Why: The head and sitemap checks read the hand-written rows, so a card added to the catalog without a row would escape both. How: This checks every catalog card has a row at its address, with its card title, and a canonical address exactly when it's listed.
 
 
-	const sitXmlStr = await ( await reqConObj.get( '/sitemap.xml' ) ).text(); // What: Sitemap XML String. Why: The file's addresses are checked as served. How: This fetches and reads it.
+	const proLisArr = CAR_DAT_ARR.flatMap( ( carDatObj ) => { // What: Problem List Array. Why: Every card's problem is reported together. How: This lists, for each card, what its row gets wrong.
+
+
+		const heaRowObj = PAG_HEA_ARR.find( ( heaCurObj ) => heaCurObj.patStr === `/${ carDatObj.sluStr }` ); // What: Head Row Object. Why: Each card should have its own row. How: This finds the row at the card's address.
+
+
+		if ( !heaRowObj ) return [ `card "${ carDatObj.sluStr }" has no head row` ]; // What: Missing Row Guard. Why: A card with no row is checked by neither the head test nor the sitemap test. How: This reports it and moves on.
+
+
+
+		return [ // What: Row Problems Return. Why: A row can be wrong in its title or its canonical address. How: This lists each mismatch found.
+
+
+			...( heaRowObj.titStr === `${ carDatObj.titStr } Card | TechGeek.cards` ? [] : [ `card "${ carDatObj.sluStr }" has the title "${ heaRowObj.titStr }"` ] ),                                            // What: Title Problem Spread. Why: The row's title should be the card's own. How: This reports a title that isn't.
+			...( heaRowObj.canStr === ( carDatObj.lisBoo ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : null ) ? [] : [ `card "${ carDatObj.sluStr }" has the canonical address ${ String( heaRowObj.canStr ) }` ] ) // What: Canonical Problem Spread. Why: A listed card is indexed at its own address, and an unlisted one carries noindex with no canonical link. How: This reports a row whose canonical address doesn't follow the card's listing.
+
+
+		];
+
+
+	} );
+
+
+	expect( proLisArr ).toEqual( [] ); // What: No Row Problems Assertion. Why: Every card has to be covered by the head and sitemap checks. How: This compares the problems with an empty list, so a failure prints each one.
+
+
+} );
+
+
+
+test( 'the sitemap lists every indexed page', async ( { request : reqCotObj } ) => { // What: Sitemap Test. Why: The sitemap should list exactly the indexed pages, by their canonical addresses. How: This fetches it and compares its addresses with the indexed rows.
+
+
+	const sitXmlStr = await ( await reqCotObj.get( '/sitemap.xml' ) ).text(); // What: Sitemap XML String. Why: The file's addresses are checked as served. How: This fetches and reads it.
 
 
 	expect( [ ...sitXmlStr.matchAll( /<loc>([^<]+)<\/loc>/g ) ].map( ( locMatArr ) => locMatArr[ 1 ] ) ).toEqual( PAG_HEA_ARR.filter( ( heaRowObj ) => heaRowObj.canStr !== null ).map( ( heaRowObj ) => heaRowObj.canStr ) ); // What: Indexed Pages Assertion. Why: Listing a noindex page would contradict it, and missing an indexed page slows its discovery. How: This checks the sitemap's addresses equal the indexed pages' canonical addresses, in order.
@@ -468,10 +691,10 @@ test( 'the sitemap lists every indexed page', async ( { request : reqConObj } ) 
 
 
 
-test( 'every icon the head links to is served at its size', async ( { page : curPagObj, request : reqConObj } ) => { // What: Icons Test. Why: Browsers and apps fetch the icons the head names, and a missing or wrong-sized one shows a blank or blurry mark. How: This reads every icon link and checks each file exists and, for PNGs, has the size its link promises.
+test( 'every icon the head links to is served at its size', async ( { page : curPagObj, request : reqCotObj } ) => { // What: Icons Test. Why: Browsers and apps fetch the icons the head names, and a missing or wrong-sized one shows a blank or blurry mark. How: This reads every icon link and checks each file exists and, for PNGs, has the size its link promises.
 
 
-	await curPagObj.goto( '/' ); // What: Home Load Call. Why: The icon links live in the page's head. How: This opens the home page.
+	await curPagObj.goto( '/' ); // What: Home Load Call. Why: The icon links live in the page's head. How: This opens the Home page.
 
 
 	const icoLinArr = await curPagObj.locator( 'link[rel="icon"], link[rel="apple-touch-icon"]' ).evaluateAll( ( linEleArr ) => linEleArr.map( ( linCurEle ) => [ linCurEle.getAttribute( 'href' ) || '', linCurEle.getAttribute( 'sizes' ) || '' ] ) ); // What: Icon Link Array. Why: Each icon is checked against its own link. How: This reads every icon link's address and size.
@@ -483,7 +706,7 @@ test( 'every icon the head links to is served at its size', async ( { page : cur
 	for ( const [ icoHreStr, icoSizStr ] of icoLinArr ) { // What: Icon Check Loop. Why: Every linked icon has to be real. How: This fetches each one in turn.
 
 
-		const icoResObj = await reqConObj.get( icoHreStr ); // What: Icon Response Object. Why: The icon has to exist where its link points. How: This fetches it.
+		const icoResObj = await reqCotObj.get( icoHreStr ); // What: Icon Response Object. Why: The icon has to exist where its link points. How: This fetches it.
 		const icoBufObj = await icoResObj.body();           // What: Icon Buffer Object. Why: A PNG's size is written in its header. How: This reads the bytes.
 
 

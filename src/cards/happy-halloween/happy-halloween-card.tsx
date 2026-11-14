@@ -6,15 +6,15 @@
 import cssModObj from './happy-halloween-card.module.css'; // What: CSS Module Object. Why: The card's night sky, figures, and lettering are styled in its own module. How: This maps each class name in happy-halloween-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The card's angles, scales, and opacities sit on the scale as powers of the core design number. How: This returns that power.
-import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as an angle. How: This returns that power.
+import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every fixed duration is a step on the duration scale, each random one runs between two, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: Every figure on the card floats, flies, or flickers. How: This is the animation library that plays it all.
-import { redMotFun } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the still scene at once. How: This reports whether reduced motion is on.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' drops, bobs, and flight paths are rhythm steps. How: This returns a step's size in pixels.
+import { redMotFun } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the still scene at once. How: This reports whether reduced motion is on.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The figures' distances are vertical rhythm steps or run between them, such as a ghost's bob. How: This returns a step's size in pixels.
 import { SplitText } from 'gsap/SplitText';        // What: Split Text. Why: The greeting drops in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { useGSAP   } from '@gsap/react';           // What: Use GSAP. Why: Each figure's motion has to start after the card renders and stop when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef    } from 'react';                 // What: Use Ref. Why: The motion animates specific elements. How: Each animated element gets a ref.
+import { useRef    } from 'react';                 // What: Use Reference. Why: The motion animates specific elements. How: Each animated element gets a ref.
 import { useState  } from 'react';                 // What: Use State. Why: The stars are scattered once, when the card opens. How: This keeps their places.
 
 
@@ -34,11 +34,12 @@ import type { JSX } from 'react'; // What: JSX. Why: Each component declares the
  * ghosts rise and bob over the hills, bats flap across the sky on random
  * paths, jack-o'-lanterns and candles flicker along the ground, and lightning
  * flashes now and then. Every figure runs its own GSAP motion, built in
- * useGSAP so leaving the card or replaying it stops it all; every duration,
- * distance, angle, scale, and opacity is a step on the design scale, and the
- * curves are the stylesheet's easing tokens. Under reduced motion the card
- * opens on the still scene, with no bats and no lightning. Converted from
- * TechGeek.support's original.
+ * useGSAP so leaving the card or replaying it stops it all; every fixed
+ * duration, distance, angle, scale, and opacity is a step on the design scale,
+ * each random one runs up to or between steps, and the curves are the
+ * stylesheet's easing tokens. Under reduced motion the card opens on the still
+ * scene, with no bats and no lightning. Converted from TechGeek.support's
+ * original.
  *
  * Sections:
  *  - Types
@@ -56,7 +57,7 @@ import type { JSX } from 'react'; // What: JSX. Why: Each component declares the
 
 // #region Types
 
-type ArtRowTyp = { claStr : string, delNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places and sizes it, and its delay in seconds.
+type ArtRowTyp = { claModStr : string, delSecNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places it, and sizes a ghost or jack-o'-lantern too, and its delay in seconds.
 
 // #endregion Types
 
@@ -64,16 +65,12 @@ type ArtRowTyp = { claStr : string, delNum : number }; // What: Art Row Type. Wh
 
 // #region Constants
 
-const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack-o'-lantern's body is four overlapping lobes. How: This lists each lobe's center across the drawing, in its own coordinates.
-
-
-
 /**
  * BAT_DEL_ARR = Bat Delay Array
  *
  * @summary
  * The delay, in seconds, before each of the four bats first flies, so they
- * cross the sky one after another rather than as a flock. Every row is a
+ * take off one after another rather than as a flock. Every row is a
  * step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -97,10 +94,10 @@ const BAT_DEL_ARR = [ // What: Bat Delay Array. Why: The bats take off one at a 
  * CAN_ROW_ARR = Candle Row Array
  *
  * @summary
- * The four candles along the ground, each an ArtRowTyp: claStr, the modifier
- * class that places the candle across the hills, and delNum, the delay in
- * seconds before its flame starts to flicker, so the flames never flicker in
- * step. Every delay is a step on the duration scale.
+ * The four candles along the ground, each an ArtRowTyp: claModStr, the
+ * modifier class that places the candle across the hills, and delSecNum, the
+ * delay in seconds before its flame starts to flicker, so the flames never
+ * flicker in step. Every delay is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -109,10 +106,10 @@ const BAT_DEL_ARR = [ // What: Bat Delay Array. Why: The bats take off one at a 
 const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles stand at their own places and flicker out of step. How: The card renders one candle per row.
 
 
-	{ claStr : cssModObj.canFlaSvgFir, delNum : durSecFun( 'm02' ) }, // Duration Animation Base Minus 2 ~= 89.9ms
-	{ claStr : cssModObj.canFlaSvgSec, delNum : durSecFun( 'p04' ) }, // Duration Animation Base Plus 4 ~= 486.1ms
-	{ claStr : cssModObj.canFlaSvgThi, delNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claStr : cssModObj.canFlaSvgFou, delNum : durSecFun( 'p02' ) }  // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.canFlaSvgFir, delSecNum : durSecFun( 'm02' ) }, // What: First Candle Row. Why: The first candle's flame flickers soonest. How: Its delay is the shortest of the four. // Duration Animation Base Minus 2 ~= 89.9ms
+	{ claModStr : cssModObj.canFlaSvgSec, delSecNum : durSecFun( 'p04' ) }, // What: Second Candle Row. Why: The second candle's flame flickers out of step with the first. How: Its delay starts it later. // Duration Animation Base Plus 4 ~= 486.1ms
+	{ claModStr : cssModObj.canFlaSvgThi, delSecNum : durSecFun( 'p06' ) }, // What: Third Candle Row. Why: The third candle's flame flickers last. How: Its delay is the longest of the four. // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.canFlaSvgFou, delSecNum : durSecFun( 'p02' ) }  // What: Fourth Candle Row. Why: The fourth candle's flame flickers out of step with the others. How: Its delay starts it second. // Duration Animation Base Plus 2 ~= 277.0ms
 
 
 ];
@@ -123,10 +120,10 @@ const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles 
  * GHO_ROW_ARR = Ghost Row Array
  *
  * @summary
- * The three ghosts over the hills, each an ArtRowTyp: claStr, the modifier
- * class that places and sizes the ghost, and delNum, the delay in seconds
- * before it rises, so they appear one at a time. Every delay is a step on the
- * duration scale.
+ * The three ghosts over the hills, each an ArtRowTyp: claModStr, the modifier
+ * class that places and sizes the ghost, and delSecNum, the delay in seconds
+ * before it rises, so they appear one at a time. Every delay after the first
+ * is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -135,12 +132,16 @@ const CAN_ROW_ARR : ArtRowTyp[] = [ // What: Candle Row Array. Why: The candles 
 const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts rise at their own places, one after another. How: The card renders one ghost per row.
 
 
-	{ claStr : cssModObj.ghoFloSvgLef, delNum : 0                  }, // What: Left Ghost Row. Why: The left ghost rises first. How: It starts with no delay.
-	{ claStr : cssModObj.ghoFloSvgRig, delNum : durSecFun( 'p06' ) }, // Duration Animation Base Plus 6 ~= 853.0ms
-	{ claStr : cssModObj.ghoFloSvgMid, delNum : durSecFun( 'p08' ) }  // Duration Animation Base Plus 8 ~= 1,497.0ms
+	{ claModStr : cssModObj.ghoFloSvgLef, delSecNum : 0                  }, // What: Left Ghost Row. Why: The left ghost rises first. How: It starts with no delay.
+	{ claModStr : cssModObj.ghoFloSvgRig, delSecNum : durSecFun( 'p06' ) }, // What: Right Ghost Row. Why: The right ghost rises second. How: Its delay starts it after the left one. // Duration Animation Base Plus 6 ~= 853.0ms
+	{ claModStr : cssModObj.ghoFloSvgMid, delSecNum : durSecFun( 'p08' ) }  // What: Middle Ghost Row. Why: The middle ghost rises last. How: Its delay is the longest of the three. // Duration Animation Base Plus 8 ~= 1,497.0ms
 
 
 ];
+
+
+
+const PUM_LOB_ARR = [ 26, 34, 42, 50 ]; // What: Pumpkin Lobe Array. Why: A jack-o'-lantern's body is four overlapping lobes. How: This lists each lobe's center across the drawing, in its own coordinates.
 
 
 
@@ -148,10 +149,10 @@ const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts ri
  * PUM_ROW_ARR = Pumpkin Row Array
  *
  * @summary
- * The four jack-o'-lanterns along the ground, each an ArtRowTyp: claStr, the
- * modifier class that places and sizes it, and delNum, the delay in seconds
- * before its candle and glow start to flicker, so they never flicker in step.
- * Every delay is a step on the duration scale.
+ * The four jack-o'-lanterns along the ground, each an ArtRowTyp: claModStr,
+ * the modifier class that places and sizes it, and delSecNum, the delay in
+ * seconds before its candle and glow start to flicker, so they never flicker
+ * in step. Every delay after the first is a step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -160,10 +161,10 @@ const GHO_ROW_ARR : ArtRowTyp[] = [ // What: Ghost Row Array. Why: The ghosts ri
 const PUM_ROW_ARR : ArtRowTyp[] = [ // What: Pumpkin Row Array. Why: The jack-o'-lanterns sit at their own places and flicker out of step. How: The card renders one jack-o'-lantern per row.
 
 
-	{ claStr : cssModObj.pumLanSvgFir, delNum : 0                  }, // What: First Pumpkin Row. Why: The leftmost jack-o'-lantern flickers first. How: It starts with no delay.
-	{ claStr : cssModObj.pumLanSvgSec, delNum : durSecFun( 'p02' ) }, // Duration Animation Base Plus 2 ~= 277.0ms
-	{ claStr : cssModObj.pumLanSvgThi, delNum : durSecFun( 'p05' ) }, // Duration Animation Base Plus 5 ~= 643.9ms
-	{ claStr : cssModObj.pumLanSvgFou, delNum : durSecFun( 'p01' ) }  // Duration Animation Base Plus 1 ~= 209.1ms
+	{ claModStr : cssModObj.pumLanSvgFir, delSecNum : 0                  }, // What: First Pumpkin Row. Why: The leftmost jack-o'-lantern flickers first. How: It starts with no delay.
+	{ claModStr : cssModObj.pumLanSvgSec, delSecNum : durSecFun( 'p02' ) }, // What: Second Pumpkin Row. Why: The second jack-o'-lantern flickers out of step with the first. How: Its delay starts it third. // Duration Animation Base Plus 2 ~= 277.0ms
+	{ claModStr : cssModObj.pumLanSvgThi, delSecNum : durSecFun( 'p05' ) }, // What: Third Pumpkin Row. Why: The third jack-o'-lantern flickers last. How: Its delay is the longest of the four. // Duration Animation Base Plus 5 ~= 643.9ms
+	{ claModStr : cssModObj.pumLanSvgFou, delSecNum : durSecFun( 'p01' ) }  // What: Fourth Pumpkin Row. Why: The fourth jack-o'-lantern flickers out of step with the others. How: Its delay starts it second. // Duration Animation Base Plus 1 ~= 209.1ms
 
 
 ];
@@ -205,7 +206,7 @@ const staArrFun = () : StaRowTyp[] => Array.from( Array( 30 ).keys(), () => ( { 
 
 
 	lefNum : Math.random() * 100,                                   // What: Left Number. Why: Stars fill the whole width. How: This picks 0% to 100% from the left.
-	sizNum : gsap.utils.random( cdnPowFun( -8 ), cdnPowFun( -2 ) ), // What: Size Number. Why: Stars come in different sizes, the smallest still large enough for every engine to draw. How: This picks a width between the vertical rhythm's Base Minus 9 and Base Minus 3 steps, in rem. // Vertical Rhythm Base Minus 9 ~= 1.160px, Vertical Rhythm Base Minus 3 ~= 6.268px
+	sizNum : gsap.utils.random( cdnPowFun( -8 ), cdnPowFun( -2 ) ), // What: Size Number. Why: Stars come in different sizes. How: This picks a width between the vertical rhythm's Base Minus 9 and Base Minus 3 steps, in rem. // Vertical Rhythm Base Minus 9 ~= 1.160px, Vertical Rhythm Base Minus 3 ~= 6.268px
 	topNum : Math.random() * 55                                     // What: Top Number. Why: Stars stay above the ghosts and hills. How: This picks 0% to 55% from the top, a literal since it places the stars rather than spacing them.
 
 
@@ -219,7 +220,7 @@ const staArrFun = () : StaRowTyp[] => Array.from( Array( 30 ).keys(), () => ( { 
 
 // #region Components
 
-type BfcProTyp = { delNum : number }; // What: Bat-Fly-Component Props Type. Why: Each bat takes off at its own time. How: This names its delay, in seconds.
+type BfcProTyp = { delSecNum : number }; // What: Bat-Fly-Component Props Type. Why: Each bat takes off at its own time. How: This names its delay, in seconds.
 
 // #region BatFlyCom
 
@@ -231,33 +232,32 @@ type BfcProTyp = { delNum : number }; // What: Bat-Fly-Component Props Type. Why
  * in just past the left edge and flies straight across to just past the
  * right, rising or falling a little on the way, bobbing as it goes, and fades
  * out at the far side; after a pause it flies again at a new height. Its
- * wings flap the whole time, one a beat behind the other. The flight's
+ * wings flap the whole time, one a moment behind the other. The flight's
  * length and the pause between flights are picked once, at random, so each
  * bat keeps its own pace, while each flight's height is picked anew. Under
  * reduced motion the bat never flies and stays hidden.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.delNum - Delay Number: The delay, in seconds, before the bat
- *                       first flies.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the bat first flies.
  *
  * @returns The bat.
  *
  * @example
  * ```tsx
- * BatFlyCom({ delNum }) // => <BatFlyCom />
+ * BatFlyCom({ delSecNum }) // => <BatFlyCom />
  * ```
  *
 */
 
-function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
+function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 
 
 	const batDivRef = useRef< HTMLDivElement >( null ); // What: Bat Div Reference. Why: The bat flies across the sky. How: This holds the div that moves.
 	const batSvgRef = useRef< SVGSVGElement >( null );  // What: Bat SVG Reference. Why: The bat bobs as it flies. How: This holds the drawing inside the moving div.
 	const lefWinRef = useRef< SVGPathElement >( null ); // What: Left Wing Reference. Why: The wings flap. How: This holds the left wing.
 	const rigWinRef = useRef< SVGPathElement >( null ); // What: Right Wing Reference. Why: The wings flap. How: This holds the right wing.
-
 
 
 	useGSAP( () => { // What: Bat Motion Hook. Why: The bat flies only after it renders, and stops when the card leaves. How: This builds its flight, bob, and flaps in a GSAP context.
@@ -267,26 +267,28 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 
 
 
-		const batWidNum = rhyPxlFun( 'p06' );                                                                              // What: Bat Width Number. Why: The bat starts and ends just past the edges, and drifts up or down by about as much. How: This is the bat's own width, the Vertical Rhythm Base Plus 6 step. // Vertical Rhythm Base Plus 6 ~= 78.751px
-		const bobAmpNum = rhyPxlFun( 'p01' );                                                                              // What: Bob Amplitude Number. Why: The bat bobs up and down as it flies. How: This is how far it swings each way. // Vertical Rhythm Base Plus 1 ~= 19.304px
-		const bobDurNum = durSecFun( 'p06' );                                                                              // What: Bob Duration Number. Why: Each swing of the bob takes a moment. How: This is one swing's length. // Duration Animation Base Plus 6 ~= 853.0ms
-		const decEasStr = gsaEasFun( 'dec' );                                                                              // What: Decelerate Easing String. Why: The bat's fades settle as they finish. How: This registers the decelerate token and keeps its GSAP name.
-		const fadDurNum = durSecFun( 'p02' );                                                                              // What: Fade Duration Number. Why: The bat fades in and out at the edges. How: This is each fade's length. // Duration Animation Base Plus 2 ~= 277.0ms
-		const fadPosStr = `-=${ durSecFun( 'p03' ) }`;                                                                     // What: Fade Position String. Why: The bat fades out before it reaches the far edge. How: This GSAP position starts the fade before the flight ends. // Duration Animation Base Plus 3 ~= 366.9ms
-		const flyDurNum = gsap.utils.random( durSecFun( 'p11' ), durSecFun( 'p13' ) );                                     // What: Fly Duration Number. Why: Each bat crosses at its own pace. How: This picks the flight's length once, between the two steps. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
-		const heiMaxNum = rhyPxlFun( 'p10' );                                                                              // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
-		const heiMinNum = rhyPxlFun( 'p04' );                                                                              // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
-		const inoEasStr = gsaEasFun( 'ino' );                                                                              // What: In-Out Easing String. Why: The bob and the flaps turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
-		const repDelNum = gsap.utils.random( durSecFun( 'p07' ), durSecFun( 'p11' ) );                                     // What: Repeat Delay Number. Why: Each bat rests for its own while between flights. How: This picks the pause once, between the two steps. // Duration Animation Base Plus 7 ~= 1,130.0ms, Duration Animation Base Plus 11 ~= 3,480.0ms
-		const winDurNum = durSecFun( 'bas' );                                                                              // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
-		const winEacNum = durSecFun( 'm02' );                                                                              // What: Wing Each Number. Why: The right wing beats a moment behind the left. How: This is the offset between them. // Duration Animation Base Minus 2 ~= 89.9ms
-		const winScaNum = 1 / cdnPowFun( 4 );                                                                              // What: Wing Scale Number. Why: A flap folds the wing nearly flat. How: This squashes it to about a third of its height. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
-		const batTimObj = gsap.timeline( { delay : delNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
-		const bobTopNum = bobAmpNum * -1;                                                                                  // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
-		const finXcoFun = () : number => innerWidth + batWidNum;                                                           // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
-		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );                                        // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
-		const staXcoNum = batWidNum * -1;                                                                                  // What: Start X-Coordinate Number. Why: The flight starts just past the left edge, out of sight. How: This is the bat's width to the left of the edge.
-		const ranDriFun = () : string => `+=${ gsap.utils.random( staXcoNum, batWidNum ) }`;                               // What: Random Drift Function. Why: Each flight rises or falls a little. How: This picks a drift up to about a bat's width either way, relative to where the flight starts.
+		const batWidNum = rhyPixFun( 'p06' );                                                                                 // What: Bat Width Number. Why: The bat starts and ends just past the edges, and drifts up or down by about as much. How: This is the bat's own width, the Vertical Rhythm Base Plus 6 step. // Vertical Rhythm Base Plus 6 ~= 78.751px
+		const bobAmpNum = rhyPixFun( 'p01' );                                                                                 // What: Bob Amplitude Number. Why: The bat bobs up and down as it flies. How: This is how far it swings each way. // Vertical Rhythm Base Plus 1 ~= 19.304px
+		const bobDurNum = durSecFun( 'p06' );                                                                                 // What: Bob Duration Number. Why: Each swing of the bob takes a moment. How: This is one swing's length. // Duration Animation Base Plus 6 ~= 853.0ms
+		const decEasStr = gsaEasFun( 'dec' );                                                                                 // What: Decelerate Easing String. Why: The bat's fades settle as they finish. How: This registers the decelerate token and keeps its GSAP name.
+		const fadDurNum = durSecFun( 'p02' );                                                                                 // What: Fade Duration Number. Why: The bat fades in and out at the edges. How: This is each fade's length. // Duration Animation Base Plus 2 ~= 277.0ms
+		const fadPosStr = `-=${ durSecFun( 'p03' ) }`;                                                                        // What: Fade Position String. Why: The bat fades out before it reaches the far edge. How: This GSAP position starts the fade before the flight ends. // Duration Animation Base Plus 3 ~= 366.9ms
+		const flyDurNum = gsap.utils.random( durSecFun( 'p11' ), durSecFun( 'p13' ) );                                        // What: Fly Duration Number. Why: Each bat crosses at its own pace. How: This picks the flight's length once, between the two steps. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
+		const heiMaxNum = rhyPixFun( 'p10' );                                                                                 // What: Height Maximum Number. Why: Bats fly in the upper sky. How: This is the lowest a flight starts, from the top. // Vertical Rhythm Base Plus 10 ~= 242.522px
+		const heiMinNum = rhyPixFun( 'p04' );                                                                                 // What: Height Minimum Number. Why: Bats stay off the very top edge. How: This is the highest a flight starts, from the top. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const inoEasStr = gsaEasFun( 'ino' );                                                                                 // What: In-Out Easing String. Why: The bob and the flaps turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
+		const repDelNum = gsap.utils.random( durSecFun( 'p07' ), durSecFun( 'p11' ) );                                        // What: Repeat Delay Number. Why: Each bat rests for its own while between flights. How: This picks the pause once, between the two steps. // Duration Animation Base Plus 7 ~= 1,130.0ms, Duration Animation Base Plus 11 ~= 3,480.0ms
+		const winDurNum = durSecFun( 'bas' );                                                                                 // What: Wing Duration Number. Why: The wings beat quickly. How: This is one beat's length. // Duration Animation Base ~= 157.8ms
+		const winEacNum = durSecFun( 'm02' );                                                                                 // What: Wing Each Number. Why: The right wing beats a moment behind the left. How: This is the offset between them. // Duration Animation Base Minus 2 ~= 89.9ms
+		const winScaNum = 1 / cdnPowFun( 4 );                                                                                 // What: Wing Scale Number. Why: A flap folds the wing nearly flat. How: This squashes it to about a third of its height. // Core-Design-Number to the Power of 4 Reciprocal ~= 0.325
+		const batTimObj = gsap.timeline( { delay : delSecNum, repeat : -1, repeatDelay : repDelNum, repeatRefresh : true } ); // What: Bat Timeline Object. Why: The bat flies again and again, at a new height each time. How: This repeats the flight forever after its delay, pausing between flights and picking each flight's heights afresh.
+		const bobTopNum = bobAmpNum * -1;                                                                                     // What: Bob Top Number. Why: The bob swings above and below the flight path. How: This is the swing's top, the amplitude upward.
+		const staXcoNum = batWidNum * -1;                                                                                     // What: Start X-Coordinate Number. Why: The flight starts just past the left edge, out of sight. How: This is the bat's width to the left of the edge.
+
+
+		const finXcoFun = () : number => innerWidth + batWidNum;                             // What: Finish X-Coordinate Function. Why: The flight ends just past the right edge, wherever that is now. How: This reads the window's width at each flight's start, past it by the bat's width.
+		const ranDriFun = () : string => `+=${ gsap.utils.random( staXcoNum, batWidNum ) }`; // What: Random Drift Function. Why: Each flight rises or falls a little. How: This picks a drift up to about a bat's width either way, relative to where the flight starts.
+		const ranTopFun = () : number => gsap.utils.random( heiMinNum, heiMaxNum );          // What: Random Top Function. Why: Each flight crosses at its own height. How: This picks a height between the two steps.
 
 
 		batTimObj.to( batDivRef.current, { autoAlpha : 1, duration : fadDurNum, ease : decEasStr } ); // What: Fade In Step. Why: The bat appears as it sets off. How: This fades it in just past the left edge.
@@ -295,11 +297,9 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 
 		batTimObj.to( batDivRef.current, { autoAlpha : 0, duration : fadDurNum, ease : decEasStr }, fadPosStr ); // What: Fade Out Step. Why: The bat vanishes as it leaves. How: This fades it out just before the flight ends.
 
-
 		gsap.fromTo( batSvgRef.current, { y : bobTopNum }, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobAmpNum, yoyo : true } ); // What: Bob Tween. Why: A bat's flight dips and rises. How: This swings the drawing up and down forever, independent of the flight.
 
-
-		gsap.to( [ lefWinRef.current, rigWinRef.current ], { duration : winDurNum, ease : inoEasStr, scaleY : winScaNum, stagger : { each : winEacNum, repeat : -1, yoyo : true }, transformOrigin : 'center bottom' } ); // What: Flap Tween. Why: The wings beat. How: This folds each wing down toward its base and back forever, the right a beat behind the left.
+		gsap.to( [ lefWinRef.current, rigWinRef.current ], { duration : winDurNum, ease : inoEasStr, scaleY : winScaNum, stagger : { each : winEacNum, repeat : -1, yoyo : true }, transformOrigin : 'center bottom' } ); // What: Flap Tween. Why: The wings beat. How: This folds each wing down toward its base and back forever, the right a moment behind the left.
 
 
 	} );
@@ -341,7 +341,7 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
 					style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
 
 					d='M42,20 Q60,0 80,10 Q65,20 42,24 Z'
-				/>{ /* What: Right Wing Path Element. Why: The bat flaps. How: This draws the right wing, which folds a beat after the left. */ }
+				/>{ /* What: Right Wing Path Element. Why: The bat flaps. How: This draws the right wing, which folds a moment after the left. */ }
 
 				<ellipse
 					style={{ fill : 'var( --hal-vio-col )' }} // Halloween Violet Color = #2D0D52
@@ -408,25 +408,24 @@ function BatFlyCom ( { delNum } : BfcProTyp ) : JSX.Element {
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places the
- *                       candle, from {@link CAN_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the flame
- *                       starts to flicker.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places the candle, from {@link CAN_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the flame starts to flicker.
  *
  * @returns The candle.
  *
  * @example
  * ```tsx
- * CanFlaCom({ claStr, delNum }) // => <CanFlaCom />
+ * CanFlaCom({ claModStr, delSecNum }) // => <CanFlaCom />
  * ```
  *
 */
 
-function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function CanFlaCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const flaEllRef = useRef< SVGEllipseElement >( null ); // What: Flame Ellipse Reference. Why: The flame flickers. How: This holds the outer flame.
-
 
 
 	useGSAP( () => { // What: Candle Motion Hook. Why: The flame flickers only after it renders, and stops when the card leaves. How: This builds the flicker in a GSAP context.
@@ -442,7 +441,7 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		const flaWidNum = cdnPowFun( 1 );     // What: Flame Width Number. Why: A flicker spreads the flame wide. How: This scales its width up by about a third. // Core-Design-Number to the Power of 1 ~= 1.325
 
 
-		gsap.to( flaEllRef.current, { delay : delNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
+		gsap.to( flaEllRef.current, { delay : delSecNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
 
 
 	} );
@@ -453,7 +452,7 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 		<svg
-			className={` ${ cssModObj.canFlaSvg }   ${ claStr } `}
+			className={` ${ cssModObj.canFlaSvg }   ${ claModStr } `}
 
 			viewBox='0 0 30 70'
 
@@ -546,30 +545,30 @@ function CanFlaCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
  *
  * @summary
  * One ghost over the hills. After its delay it rises into view, fading in,
- * then bobs up and down forever, while it rocks gently side to side on its
- * own slower beat. Under reduced motion it's simply there, still.
+ * then bobs up and down forever, while it tilts a little to one side and back
+ * on its own slower beat. Under reduced motion it's simply there, still.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places and
- *                       sizes the ghost, from {@link GHO_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the ghost
- *                       rises.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places and sizes the ghost, from
+ *                          {@link GHO_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the ghost rises.
  *
  * @returns The ghost.
  *
  * @example
  * ```tsx
- * GhoFloCom({ claStr, delNum }) // => <GhoFloCom />
+ * GhoFloCom({ claModStr, delSecNum }) // => <GhoFloCom />
  * ```
  *
 */
 
-function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function GhoFloCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const ghoSvgRef = useRef< SVGSVGElement >( null ); // What: Ghost SVG Reference. Why: The ghost rises, bobs, and rocks. How: This holds its drawing.
-
 
 
 	useGSAP( () => { // What: Ghost Motion Hook. Why: The ghost moves only after it renders, and stops when the card leaves. How: This builds its rise, bob, and rock in a GSAP context.
@@ -579,23 +578,22 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 
-		const bobDurNum = durSecFun( 'p08' );                  // What: Bob Duration Number. Why: A ghost bobs slowly. How: This is each rise or fall's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const bobShiNum = rhyPxlFun( 'p01' ) * -1;             // What: Bob Shift Number. Why: The ghost floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Plus 1 ~= -19.304px
-		const decEasStr = gsaEasFun( 'dec' );                  // What: Decelerate Easing String. Why: The ghost slows as it arrives. How: This registers the decelerate token and keeps its GSAP name.
-		const entDurNum = durSecFun( 'p08' );                  // What: Entrance Duration Number. Why: The ghost rises into view slowly. How: This is the rise's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const entShiNum = rhyPxlFun( 'p04' );                  // What: Entrance Shift Number. Why: The ghost rises from below its place. How: This is how far below it starts. // Vertical Rhythm Base Plus 4 ~= 44.876px
-		const ghoTimObj = gsap.timeline( { delay : delNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
-		const inoEasStr = gsaEasFun( 'ino' );                  // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
-		const rotAngNum = cdnPowFun( 5 );                      // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
-		const rotDurNum = durSecFun( 'p09' );                  // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two never line up. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		const bobDurNum = durSecFun( 'p08' );                     // What: Bob Duration Number. Why: A ghost bobs slowly. How: This is each rise or fall's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const bobShiNum = rhyPixFun( 'p01' ) * -1;                // What: Bob Shift Number. Why: The ghost floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Plus 1 ~= -19.304px
+		const decEasStr = gsaEasFun( 'dec' );                     // What: Decelerate Easing String. Why: The ghost slows as it arrives. How: This registers the decelerate token and keeps its GSAP name.
+		const entDurNum = durSecFun( 'p08' );                     // What: Entrance Duration Number. Why: The ghost rises into view slowly. How: This is the rise's length. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const entShiNum = rhyPixFun( 'p04' );                     // What: Entrance Shift Number. Why: The ghost rises from below its place. How: This is how far below it starts. // Vertical Rhythm Base Plus 4 ~= 44.876px
+		const ghoTimObj = gsap.timeline( { delay : delSecNum } ); // What: Ghost Timeline Object. Why: The bob starts once the ghost has risen. How: This plays the rise, then the bob, after the ghost's delay.
+		const inoEasStr = gsaEasFun( 'ino' );                     // What: In-Out Easing String. Why: The bob and rock turn smoothly at each end. How: This registers the in-out token and keeps its GSAP name.
+		const rotAngNum = cdnPowFun( 5 );                         // What: Rotation Angle Number. Why: The ghost rocks a little to one side. How: This is the tilt, about 4 degrees. // Core-Design-Number to the Power of 5 ~= 4.080
+		const rotDurNum = durSecFun( 'p09' );                     // What: Rotation Duration Number. Why: The rock runs slower than the bob, so the two drift out of step. How: This is each tilt's length. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 		ghoTimObj.fromTo( ghoSvgRef.current, { autoAlpha : 0, y : entShiNum }, { autoAlpha : 1, duration : entDurNum, ease : decEasStr, y : 0 } ); // What: Rise Step. Why: The ghost appears over the hills. How: This fades it in as it rises to its place.
 
 		ghoTimObj.to( ghoSvgRef.current, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobShiNum, yoyo : true } ); // What: Bob Step. Why: A ghost hovers. How: This floats it up and back forever once it has risen.
 
-
-		gsap.to( ghoSvgRef.current, { delay : delNum, duration : rotDurNum, ease : inoEasStr, repeat : -1, rotation : rotAngNum, yoyo : true } ); // What: Rock Tween. Why: The ghost sways as it hovers. How: This tilts it and back forever, starting as it rises.
+		gsap.to( ghoSvgRef.current, { delay : delSecNum, duration : rotDurNum, ease : inoEasStr, repeat : -1, rotation : rotAngNum, yoyo : true } ); // What: Rock Tween. Why: The ghost sways as it hovers. How: This tilts it and back forever, starting as it rises.
 
 
 	} );
@@ -608,7 +606,7 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		<svg
 			ref={ ghoSvgRef }
 
-			className={` ${ cssModObj.ghoFloSvg }   ${ claStr } `}
+			className={` ${ cssModObj.ghoFloSvg }   ${ claModStr } `}
 
 			viewBox='0 0 60 80'
 
@@ -691,26 +689,26 @@ function GhoFloCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.claStr - Class String: The modifier class that places and
- *                       sizes the jack-o'-lantern, from {@link PUM_ROW_ARR}.
- * @param props.delNum - Delay Number: The delay, in seconds, before the flame
- *                       and glow start to flicker.
+ * @param props.claModStr - Class Modifier String: The modifier class that
+ *                          places and sizes the jack-o'-lantern, from
+ *                          {@link PUM_ROW_ARR}.
+ * @param props.delSecNum - Delay Seconds Number: The delay, in seconds,
+ *                          before the flame and glow start to flicker.
  *
  * @returns The jack-o'-lantern.
  *
  * @example
  * ```tsx
- * PumLanCom({ claStr, delNum }) // => <PumLanCom />
+ * PumLanCom({ claModStr, delSecNum }) // => <PumLanCom />
  * ```
  *
 */
 
-function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
+function PumLanCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
 
 
 	const flaEllRef = useRef< SVGEllipseElement >( null ); // What: Flame Ellipse Reference. Why: The candle on top flickers. How: This holds its outer flame.
 	const gloCirRef = useRef< SVGCircleElement >( null );  // What: Glow Circle Reference. Why: The glow behind the pumpkin pulses. How: This holds the glow.
-
 
 
 	useGSAP( () => { // What: Pumpkin Motion Hook. Why: The flame and glow flicker only after they render, and stop when the card leaves. How: This builds both in a GSAP context.
@@ -729,10 +727,8 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 		const gloScaNum = cdnPowFun( 1 );     // What: Glow Scale Number. Why: The glow spreads as it pulses. How: This grows it by about a third. // Core-Design-Number to the Power of 1 ~= 1.325
 
 
-		gsap.to( flaEllRef.current, { delay : delNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
-
-
-		gsap.to( gloCirRef.current, { delay : delNum, duration : gloDurNum, ease : decEasStr, opacity : gloOpaNum, repeat : -1, scale : gloScaNum, transformOrigin : 'center center', yoyo : true } ); // What: Pulse Tween. Why: The pumpkin's glow wavers with the candle inside. How: This grows and dims the glow from its center and back forever after its delay.
+		gsap.to( flaEllRef.current, { delay : delSecNum, duration : flaDurNum, ease : decEasStr, repeat : -1, scaleX : flaWidNum, scaleY : flaHeiNum, transformOrigin : 'center bottom', yoyo : true } ); // What: Flicker Tween. Why: The candle flame dances. How: This squashes and stretches it from its base forever after its delay.
+		gsap.to( gloCirRef.current, { delay : delSecNum, duration : gloDurNum, ease : decEasStr, opacity : gloOpaNum, repeat : -1, scale : gloScaNum, transformOrigin : 'center center', yoyo : true } ); // What: Pulse Tween. Why: The pumpkin's glow wavers with the candle inside. How: This grows and dims the glow from its center and back forever after its delay.
 
 
 	} );
@@ -743,7 +739,7 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
 
 
 		<svg
-			className={` ${ cssModObj.pumLanSvg }   ${ claStr } `}
+			className={` ${ cssModObj.pumLanSvg }   ${ claModStr } `}
 
 			viewBox='0 0 80 88'
 
@@ -862,10 +858,10 @@ function PumLanCom ( { claStr, delNum } : ArtRowTyp ) : JSX.Element {
  * @summary
  * The Happy Halloween card. It renders the night scene, its stars scattered
  * once when it opens, and plays the motion that belongs to the scene as a
- * whole: the greeting dropping in, its shimmer, the moon's float, the stars'
- * twinkle, and the lightning, all built in useGSAP so leaving the card or
- * replaying it reverts every tween and the letter split and cancels the next
- * flash. The ghosts, bats, jack-o'-lanterns, and candles run their own.
+ * whole, such as the greeting dropping in, all built in useGSAP so leaving
+ * the card or replaying it reverts every tween and the letter split and
+ * cancels the next flash. The ghosts, bats, jack-o'-lanterns, and candles run
+ * their own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -900,15 +896,16 @@ function HalCarCom () : JSX.Element {
 	 * happy-halloween-card.tsx = Halloween Timeline
 	 *
 	 * @summary
-	 * The scene's own motion, started together when the card opens. The
-	 * greeting's letters drop in one after another from above, tilted either
-	 * way, and spring upright into place, and once the last has landed the
-	 * greeting's glow and shadow fade in under them; from about a second and
-	 * a half in, the letters shimmer to candle yellow and back in a wave that
-	 * never stops. The moon floats up and down, each star twinkles at its own
-	 * pace, and the sky flashes with a double strike of lightning after a few
-	 * seconds and then every few seconds more, at random. Under reduced motion
-	 * none of it starts: the greeting stands whole, and the sky stays dark.
+	 * The scene's own motion, all built when the card opens, each piece on its
+	 * own timing. The greeting's letters drop in one after another from above,
+	 * tilted either way, and spring upright into place, and once the last has
+	 * landed the greeting's glow and shadow fade in under them; from about a
+	 * second and a half in, the letters shimmer to candle yellow and back in a
+	 * wave that never stops. The moon floats up and down, each star twinkles
+	 * at its own pace, and the sky flashes with a double strike of lightning
+	 * after a few seconds and then every few seconds more, at random. Under
+	 * reduced motion none of it starts: the greeting stands whole, and the sky
+	 * stays dark.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -936,7 +933,7 @@ function HalCarCom () : JSX.Element {
 		const titAngNum = cdnPowFun( 9 );                                                                    // What: Title Angle Number. Why: The letters fall tilted. How: This is the tilt, about 12.6 degrees. // Core-Design-Number to the Power of 9 ~= 12.564
 		const titDelNum = durSecFun( 'p03' );                                                                // What: Title Delay Number. Why: The scene settles a moment before the greeting arrives. How: This is the drop's delay. // Duration Animation Base Plus 3 ~= 366.9ms
 		const titDurNum = durSecFun( 'p05' );                                                                // What: Title Duration Number. Why: Each letter drops quickly. How: This is each drop's length. // Duration Animation Base Plus 5 ~= 643.9ms
-		const titShiNum = rhyPxlFun( 'p05' ) * -1;                                                           // What: Title Shift Number. Why: The letters drop from above. How: This is how far above their places they start. // Vertical Rhythm Base Plus 5 ~= -59.447px
+		const titShiNum = rhyPixFun( 'p05' ) * -1;                                                           // What: Title Shift Number. Why: The letters drop from above. How: This is how far above their places they start. // Vertical Rhythm Base Plus 5 ~= -59.447px
 		const titSplObj = SplitText.create( titHalRef.current, { type : 'words, chars' } );                  // What: Title Split Object. Why: The greeting drops in one letter at a time. How: This wraps its words and letters, labeling the heading with its full text.
 		const titStaNum = durSecFun( 'm03' );                                                                // What: Title Stagger Number. Why: The letters drop one after another. How: This is the offset between each letter's start. // Duration Animation Base Minus 3 ~= 67.9ms
 		const gloStaObj = { each : gloEacNum, repeat : -1, yoyo : true };                                    // What: Glow Stagger Object. Why: Each letter shimmers forever on its own offset. How: This repeats each letter's change back and forth, one offset after the last.
@@ -946,11 +943,8 @@ function HalCarCom () : JSX.Element {
 
 		SplitText.create( titShaRef.current, { aria : 'none', type : 'words, chars' } ); // What: Shadow Split Call. Why: The shadow copy has to line up with the split heading letter for letter, and splitting drops the kerning between letters. How: This wraps the copy's words and letters the same way, adding no labels, since the copy is hidden from screen readers.
 
-
-		titTimObj.from( titSplObj.chars, { autoAlpha : 0, duration : titDurNum, ease : bouEasStr, rotation : titRotFun, stagger : titStaNum, y : titShiNum } ); // What: Drop Step. Why: The greeting arrives with a playful spring. How: This drops each letter in from above, tilted, fading in and springing upright.
-
-		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr } ); // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
-
+		titTimObj.from( titSplObj.chars,   { autoAlpha : 0, duration : titDurNum, ease : bouEasStr, rotation : titRotFun, stagger : titStaNum, y : titShiNum } ); // What: Drop Step. Why: The greeting arrives with a playful spring. How: This drops each letter in from above, tilted, fading in and springing upright.
+		titTimObj.from( titShaRef.current, { autoAlpha : 0, duration : titDurNum, ease : decEasStr                                                           } ); // What: Shadow Step. Why: A glow drawn around falling letters would trail behind them, and redrawing it every frame is too slow for WebKit. How: Once every letter has landed, this fades in the still shadow copy, whose glow is drawn once.
 
 		gsap.to( titSplObj.chars, { color : gloColStr, delay : gloDelNum, duration : gloDurNum, ease : inoEasStr, stagger : gloStaObj } ); // What: Shimmer Tween. Why: The greeting flickers like candlelight. How: This shifts each letter to candle yellow and back forever, in a wave.
 
@@ -961,7 +955,7 @@ function HalCarCom () : JSX.Element {
 		// #region Moon Float
 
 		const mooDurNum = durSecFun( 'p11' );      // What: Moon Duration Number. Why: The moon drifts slowly. How: This is each rise or fall's length. // Duration Animation Base Plus 11 ~= 3,480.0ms
-		const mooShiNum = rhyPxlFun( 'm01' ) * -1; // What: Moon Shift Number. Why: The moon floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Minus 1 = -11px
+		const mooShiNum = rhyPixFun( 'm01' ) * -1; // What: Moon Shift Number. Why: The moon floats up from its place and back. How: This is how far it rises. // Vertical Rhythm Base Minus 1 = -11px
 
 
 		gsap.to( mooFloRef.current, { duration : mooDurNum, ease : inoEasStr, repeat : -1, y : mooShiNum, yoyo : true } ); // What: Float Tween. Why: The moon drifts in the sky. How: This floats it up and back forever.
@@ -1009,6 +1003,7 @@ function HalCarCom () : JSX.Element {
 		let ligDelObj : gsap.core.Tween | null = null; // What: Lightning Delay Object. Why: The cleanup has to cancel the next strike. How: This holds the pending delayed call.
 
 
+
 		ligTimObj.to( ligFlaRef.current, { duration : ligFirNum, opacity : ligBriNum } ); // What: First Flare Step. Why: Lightning strikes. How: This flashes the sky brightly.
 		ligTimObj.to( ligFlaRef.current, { duration : ligFadNum, opacity : 0         } ); // What: First Fade Step. Why: The flash vanishes. How: This fades it out.
 		ligTimObj.to( ligFlaRef.current, { duration : ligSecNum, opacity : ligDimNum } ); // What: Second Flare Step. Why: Lightning often strikes twice. How: This flashes the sky again, fainter.
@@ -1054,7 +1049,6 @@ function HalCarCom () : JSX.Element {
 		// #endregion flaLigFun
 
 
-
 		ligDelObj = gsap.delayedCall( ligStaNum, flaLigFun ); // What: First Strike Assignment. Why: The first strike comes a few seconds in. How: This schedules it and keeps the call.
 
 		// #endregion Lightning Flash
@@ -1077,7 +1071,7 @@ function HalCarCom () : JSX.Element {
 			ref={ carDivRef }
 
 			className={ cssModObj.halCarDiv }
-		>{ /* What: Halloween Card Div Element. Why: The card fills the screen with a night scene. How: This holds the sky, the figures, the greeting, and the lightning, layered in the order they're drawn. */ }
+		>{ /* What: Halloween Card Div Element. Why: The card fills the screen with a night scene. How: This holds the night scene's layers, such as the sky, layered in the order they're drawn. */ }
 
 
 			<div
@@ -1238,10 +1232,11 @@ function HalCarCom () : JSX.Element {
 
 
 				<GhoFloCom
-					key={ ghoRowObj.claStr }
+					key={ ghoRowObj.claModStr }
 
-					claStr={ ghoRowObj.claStr }
-					delNum={ ghoRowObj.delNum }
+					claModStr={ ghoRowObj.claModStr }
+
+					delSecNum={ ghoRowObj.delSecNum }
 				/> // What: Ghost Float Component. Why: Each ghost rises and hovers. How: This draws one at its place, rising after its delay.
 
 
@@ -1274,10 +1269,11 @@ function HalCarCom () : JSX.Element {
 
 
 				<PumLanCom
-					key={ pumRowObj.claStr }
+					key={ pumRowObj.claModStr }
 
-					claStr={ pumRowObj.claStr }
-					delNum={ pumRowObj.delNum }
+					claModStr={ pumRowObj.claModStr }
+
+					delSecNum={ pumRowObj.delSecNum }
 				/> // What: Pumpkin Lantern Component. Why: Each jack-o'-lantern flickers. How: This draws one at its place, flickering after its delay.
 
 
@@ -1289,10 +1285,11 @@ function HalCarCom () : JSX.Element {
 
 
 				<CanFlaCom
-					key={ canRowObj.claStr }
+					key={ canRowObj.claModStr }
 
-					claStr={ canRowObj.claStr }
-					delNum={ canRowObj.delNum }
+					claModStr={ canRowObj.claModStr }
+
+					delSecNum={ canRowObj.delSecNum }
 				/> // What: Candle Flame Component. Why: Each candle flickers. How: This draws one at its place, flickering after its delay.
 
 
@@ -1300,7 +1297,7 @@ function HalCarCom () : JSX.Element {
 
 
 
-			<div className={ cssModObj.titCenDiv }>{ /* What: Title Center Div Element. Why: The greeting sits in the middle of the night. How: This centers the heading and the wish over the scene. */ }
+			<div className={ cssModObj.titCenDiv }>{ /* What: Title Center Div Element. Why: The greeting sits in the middle of the night. How: This centers the heading and the wish across the scene, near its top. */ }
 
 
 				<div className={ cssModObj.titStaDiv }>{ /* What: Title Stack Div Element. Why: The greeting's glow and shadow are a still copy sitting exactly under its letters. How: This stacks the copy and the heading in one grid cell. */ }
@@ -1312,17 +1309,16 @@ function HalCarCom () : JSX.Element {
 						className={ cssModObj.titShaSpa }
 
 						aria-hidden='true'
-					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets Happy on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets Halloween on the second. */ }</span>{ /* What: Title Shadow Span Element. Why: The greeting glows and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This holds a copy of the greeting under the heading, hidden from screen readers, whose glow and shadow are drawn once. */ }
+					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets "Happy" on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The copy matches the heading's two lines. How: This sets "Halloween!" on the second. */ }</span>{ /* What: Title Shadow Span Element. Why: The greeting glows and casts a dark shadow, and a filter on the heading itself would be redrawn every frame its letters move or shimmer. How: This holds a copy of the greeting under the heading, hidden from screen readers, whose glow and shadow are drawn once. */ }
 
 					<h1
 						ref={ titHalRef }
 
 						className={ cssModObj.titHalHea }
-					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets Happy on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets Halloween on the second. */ }</h1>{ /* What: Title Halloween Heading Element. Why: The greeting leads the card. How: This wishes a Happy Halloween, its letters dropping in and shimmering. */ }
+					><span className={ cssModObj.titLinSpa }>Happy</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets "Happy" on the first. */ } <span className={ cssModObj.titLinSpa }>Halloween!</span>{ /* What: Title Line Span Element. Why: The greeting reads as two lines. How: This sets "Halloween!" on the second. */ }</h1>{ /* What: Title Halloween Heading Element. Why: The greeting leads the card. How: This wishes a Happy Halloween, its letters dropping in and shimmering. */ }
 
 
 				</div>
-
 
 				<p className={ cssModObj.wisMesPar }><span aria-hidden='true'>👻</span> Wishing you a frightfully fun night! <span aria-hidden='true'>🎃</span></p>{ /* What: Wish Message Paragraph Element. Why: The card adds a wish under the greeting. How: This shows it between a ghost and a jack-o'-lantern, which screen readers skip. */ }
 
@@ -1331,13 +1327,13 @@ function HalCarCom () : JSX.Element {
 
 
 
-			{ BAT_DEL_ARR.map( ( batDelNum, batIndNum ) => ( // What: Bat Map Call. Why: Bats cross the sky one after another. How: This renders one per delay, keyed by its index.
+			{ BAT_DEL_ARR.map( ( batDelNum, batIndNum ) => ( // What: Bat Map Call. Why: Bats take off one after another. How: This renders one per delay, keyed by its index.
 
 
 				<BatFlyCom
 					key={ batIndNum }
 
-					delNum={ batDelNum }
+					delSecNum={ batDelNum }
 				/> // What: Bat Fly Component. Why: Each bat flaps across the sky. How: This draws one that takes off after its delay.
 
 

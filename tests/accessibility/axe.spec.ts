@@ -3,13 +3,22 @@
 
 // #region Imports
 
-import AxeBuilder from '@axe-core/playwright'; // What: Axe Builder. Why: axe-core finds the mechanical accessibility failures, such as low contrast, missing names, and misused ARIA. How: This runs its scan against a Playwright page.
+import AxeBuiCla from '@axe-core/playwright'; // What: Axe Builder Class. Why: axe-core finds the mechanical accessibility failures, such as low contrast. How: This runs its scan against a Playwright page.
 
 
-import { expect      } from '@playwright/test';     // What: Expect. Why: A state passes only with no violations. How: This asserts the violation list is empty.
-import { opeStaFun   } from '../support/states.ts'; // What: Open State Function. Why: Each state has to be opened and settled before it's scanned. How: This loads it and waits for it.
-import { STA_REC_ARR } from '../support/states.ts'; // What: State Record Array. Why: Every page state is scanned. How: This lists them.
-import { test        } from '@playwright/test';     // What: Test. Why: Each state is its own test. How: This declares them.
+import { BAR_STA_ARR } from '../support/share.ts';   // What: Bar State Array. Why: The share dialog opened from a card page's floating bar sits over the card, a state a visitor reaches. How: This lists the Birthday card's page at the phone width with its dialog open.
+import { COP_STA_ARR } from '../support/share.ts';   // What: Copy State Array. Why: The share dialog after a copy, worked or refused, is a state a visitor reaches. How: This lists the dialog after each result at both widths.
+import { EMP_STA_ARR } from '../support/gallery.ts'; // What: Empty State Array. Why: A search no card matches swaps the Gallery's grid for its empty message, a state a visitor reaches. How: This lists the Gallery states after that search, one per width.
+import { expect      } from '@playwright/test';      // What: Expect. Why: A state passes only with no violations. How: This asserts the violation list is empty.
+import { FIL_STA_ARR } from '../support/gallery.ts'; // What: Filtered State Array. Why: A chosen occasion narrows the Gallery's grid and count, a state a visitor reaches. How: This lists the Gallery states with "Family" chosen, one per width.
+import { INV_STA_ARR } from '../support/contact.ts'; // What: Invalid State Array. Why: The Contact form after a refused empty send is a state a visitor reaches. How: This lists the Contact states after that send, one per width.
+import { opeStaFun   } from '../support/states.ts';  // What: Open State Function. Why: Each state has to be opened and settled before it's scanned. How: This loads it and waits for it.
+import { PAU_STA_ARR } from '../support/family.ts';  // What: Paused State Array. Why: A Family card paused on a scene while it plays with motion is a state a visitor reaches, with the controls over its photo. How: This lists the Mother's Day states paused on the second scene's photo, one per width.
+import { PHO_STA_ARR } from '../support/family.ts';  // What: Photo State Array. Why: A Family card's photo opened full size is a state a visitor reaches. How: This lists the Mother's Day states with its first photo open, one per width.
+import { RES_STA_ARR } from '../support/contact.ts'; // What: Result State Array. Why: The Contact form's thank-you and error are states a visitor reaches too. How: This lists the Contact states with the form sent, one per result and width.
+import { STA_REC_ARR } from '../support/states.ts';  // What: State Record Array. Why: Every page state is scanned. How: This lists them.
+import { STI_STA_ARR } from '../support/family.ts';  // What: Still State Array. Why: The Family scene controls step back through stills under reduced motion, looks a visitor can stay on. How: This lists the Mother's Day card's last photo and line stills, one per width.
+import { test        } from '@playwright/test';      // What: Test. Why: Each state is its own test. How: This declares them.
 
 
 import type { Page } from '@playwright/test'; // What: Page. Why: The scan helper drives a Playwright page. How: This types its page parameter.
@@ -43,7 +52,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The scan helpe
 
 // #region Types
 
-type AxeResTyp = Awaited< ReturnType< AxeBuilder[ 'analyze' ] > >; // What: Axe Results Type. Why: The scan's findings are summarized for the report, and axe-core itself is only a dependency of the Playwright integration. How: This reads the type from what AxeBuilder's analyze resolves to.
+type AxeResTyp = Awaited< ReturnType< AxeBuiCla[ 'analyze' ] > >; // What: Axe Results Type. Why: The scan's findings are summarized for the report, and axe-core itself is only a dependency of the Playwright integration. How: This reads the type from what the builder's analyze resolves to.
 
 // #endregion Types
 
@@ -66,19 +75,19 @@ const AXE_TAG_ARR = [ 'wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'b
  *
  * @summary
  * Runs axe-core on the page as it stands, limited to the WCAG and
- * best-practice rule sets, and returns its full results. The caller opens
- * and settles the state first, so the scan never sees a page mid-load or
+ * best-practice rule sets, and returns its full results. It expects the state
+ * already open and settled, so the scan never sees a page mid-load or
  * mid-animation.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param curPagObj - Current Page Object: The page to scan.
  *
- * @returns The scan's results.
+ * @returns A promise that resolves with the scan's results.
  *
  * @example
  * ```ts
- * scaStaFun(page) // => { violations, incomplete, passes, ... }
+ * await scaStaFun(page) // => { violations, incomplete, ... }
  * ```
  *
 */
@@ -86,7 +95,7 @@ const AXE_TAG_ARR = [ 'wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'b
 async function scaStaFun ( curPagObj : Page ) : Promise< AxeResTyp > {
 
 
-	return new AxeBuilder( { page : curPagObj } ).withTags( AXE_TAG_ARR ).analyze(); // What: Axe Scan Return. Why: The scan's results decide the test. How: This builds an axe run for the page, limits it to the chosen rule sets, and runs it.
+	return new AxeBuiCla( { page : curPagObj } ).withTags( AXE_TAG_ARR ).analyze(); // What: Axe Scan Return. Why: The scan's results decide the test. How: This builds an axe run for the page, limits it to the chosen rule sets, and runs it.
 
 
 }
@@ -102,7 +111,7 @@ async function scaStaFun ( curPagObj : Page ) : Promise< AxeResTyp > {
  *
  * @summary
  * Turns one list of axe results into one readable line per rule: the rule's
- * id, its impact where axe gives one, its help text, and the selectors of
+ * ID, its impact where axe gives one, its help text, and the selectors of
  * the elements it flagged. Used for both the violations, which fail the
  * test, and the incomplete results, which are only reported.
  *
@@ -123,7 +132,7 @@ async function scaStaFun ( curPagObj : Page ) : Promise< AxeResTyp > {
 function sumResFun ( resLisArr : AxeResTyp[ 'violations' ] ) : string[] {
 
 
-	return resLisArr.map( ( resCurObj ) => `${ resCurObj.id } (${ resCurObj.impact || 'no impact' }): ${ resCurObj.help } at ${ resCurObj.nodes.map( ( nodCurObj ) => nodCurObj.target.join( ' ' ) ).join( ', ' ) }` ); // What: Result Lines Return. Why: A failure should say what broke and where without opening the report. How: This joins each rule's id, impact, help, and flagged selectors into one line.
+	return resLisArr.map( ( resCurObj ) => `${ resCurObj.id } (${ resCurObj.impact || 'no impact' }): ${ resCurObj.help } at ${ resCurObj.nodes.map( ( nodCurObj ) => nodCurObj.target.join( ' ' ) ).join( ', ' ) }` ); // What: Result Lines Return. Why: A failure should say what broke and where without opening the report. How: This joins each rule's ID, impact, help, and flagged selectors into one line.
 
 
 }
@@ -136,7 +145,7 @@ function sumResFun ( resLisArr : AxeResTyp[ 'violations' ] ) : string[] {
 
 // #region Module Init
 
-for ( const staRecObj of STA_REC_ARR ) { // What: State Test Loop. Why: Every page state must pass the scan. How: This declares one axe test per state.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PAU_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state must pass the scan, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's paused scene, open photo, and scene stills, and the share dialog's copy results and card page opening included. How: This declares one axe test per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } has no axe violations`, async ( { page : curPagObj }, tesInfObj ) => { // What: Axe Test. Why: A state passes only with zero axe violations. How: This opens the state, scans it, reports anything needing review, and fails on any violation.

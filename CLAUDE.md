@@ -6,9 +6,53 @@ confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
-`techgeek-design` (`../techgeek-design`, installed from its `v0.4.0` tag,
+`techgeek-design` (`../techgeek-design`, installed from its `v0.7.2` tag,
 moved from `v0.1.0` on 2026-10-17 for the bar's clearance for scrolled-to
-links, top and bottom, and its menu up to 1,024px).
+links, top and bottom, and its menu up to 1,024px, then to `v0.7.1` on
+2026-11-10, in the audit, for the bar's skip link, the scroll hook restoring
+back, forward, and reload positions itself, the phone menu closing on any
+of its links' clicks, modified and middle clicks included, named easing on
+every transition, and the "(opens in a new tab)" note on its profile links,
+then to `v0.7.2` on 2026-11-14 for the brand link closing the phone menu on
+a modified or middle click too).
+
+## Main content and skip link
+Decided 2026-11-10, in the audit. Every page opens with a skip link, reading
+"Skip to main content", that focuses `<main id='main'>`, whose plain click
+leaves no hash in the address.
+- **Site pages**: the main content is everything between the bar and the
+  footer, the `<main>` in `app.tsx` holding whichever page shows. The skip
+  link comes from the shared bar in techgeek-design.
+- **Card pages**: the main content is the card. A card's page has no site
+  bar, so `pages/card/card.tsx` renders its own skip link, styled like the
+  bar's (an orange button above the screen that slides down when focused),
+  and its own `<main>` around the playing card, leaving the floating bar and
+  the share dialog outside it. The skip link sits at layer 1, above the
+  card's fixed root and level with the floating bar at the bottom edge.
+
+## Section links
+Decided 2026-11-13, in the audit. The site has one section link: Home's
+hero "How It Works" button, whose `href` is `/#how-it-works` and which leads
+to the steps section (`id='how-it-works'`). It goes through the shared
+helper in `ui/section-link.ts` (`modCliFun`, `useSecLinFun`, `useSecCliFun`,
+adapted from hair-designs'), whose `modCliFun` the card page's skip link
+shares. Home's hash arrival effect jumps to the element a hash names once
+the fonts load and the page's entrance animation has ended, since a jump
+made while the page was still rising landed about 25px short in Chromium.
+- **Where it differs from the user-level rule**: the hash is cleared with
+  `history.replaceState( history.state, '', path + query )` rather than the
+  router's `navigate( { hash : '' }, { replace : true } )`, since the design
+  package's scroll hook answers every router PUSH or REPLACE without a hash by
+  jumping to the top, which would undo the arrival. Keeping `history.state`
+  keeps React Router's key and index, and the router sees no navigation.
+  tonys-toppers' hook reads a `cleBoo` state flag for this case, which
+  techgeek-design could adopt in a later release, letting this site go back
+  to the router.
+- **The effect is keyed on the whole location**, not just its `hash` as the
+  user-level rule has it: after `history.replaceState` clears the address,
+  the router still holds the old hash, so a second arrival with the same hash
+  would otherwise be missed.
+- **A hash naming nothing on the page** is left in the address as it came.
 
 ## Origin and sibling sites
 Decided 2026-10-12, recorded 2026-10-14. TechGeek.support
@@ -77,10 +121,33 @@ field to the share dialog).
   unlisted card in `_headers`; the dev server serves the same per-card tags.
   The plain card data lives in `ui/card-data.ts`, which the build reads, and
   `ui/cards.ts` adds each card's component and tile preview. The site's
-  preview is `public/og-image.png`, from `design/og-image/card.html`; each
-  card's is `public/social/<address>.jpg`, its finished screen; both come
-  from `npm run og-images`. Every other page shares Home's preview. The tile
-  previews render at 1200x675, about twice their largest display size.
+  preview is `public/og-image-2.png`, from `design/og-image/card.html`; each
+  card's is its finished screen in `public/social/`, under the file name its
+  catalog row's `socStr` gives; both come from `npm run og-images`. Every
+  other page shares Home's preview. The tile previews render at 1200x675,
+  about twice their largest display size.
+- **Tile previews in view load at once** (decided by the user 2026-11-14, in
+  the audit): anything in view as a page opens is never lazy. Measured in all
+  three engines, the Gallery's first three rows of three can be in view (a
+  portrait 1080 by 1920 monitor shows its third row), and Home's featured row,
+  about 1,450px down, shows on that monitor too, so the Gallery's first nine
+  tiles and all of Home's load eagerly and later tiles stay lazy.
+  `tests/responsive/images.spec.ts` checks Home and the Gallery at five screen
+  sizes for any lazy image in view; raise the Gallery's cutoff in
+  `pages/gallery/gallery.tsx` if a layout change puts a later row in view.
+  **Rerun it whenever a card is added** (decided by the user 2026-11-14,
+  with more cards coming): with seven cards the check can't yet see a tenth
+  tile, so each new card is the first chance to find another row in view,
+  and the cutoff is raised to match before the card ships.
+- **Link preview images** (decided by the user 2026-11-14, in the audit):
+  every preview was rerendered and renamed with a `-2`, since apps cache
+  previews. A card's main line is shrunk in the capture to fit the center
+  630px square some apps crop to (the three Family greetings and
+  Thanksgiving's heading). A card ships as a PNG when that's under 300 KB
+  (Fourth of July and Halloween) and as a JPEG otherwise, at the lowest
+  quality that showed no difference at 3x zoom, recorded in the script's
+  `JPE_QUA_OBJ` (Birthday at 80, the rest at 70); the script fails when a
+  file name's format disagrees with the size.
 - **Ko-fi** (decided by the user 2026-11-01, following TechGeek.dev and
   TechGeek.support): the README ends with the shared Support section, and
   About closes with a white Support My Work band below the family section,
@@ -96,6 +163,11 @@ field to the share dialog).
   calls its code open source.
 - **Voice**: page copy speaks as z4nta0 in the first person ("I build..."),
   as TechGeek.dev does; search descriptions name z4nta0 in the third person.
+- **Page names and control case** (decided by the user 2026-11-13, in the
+  audit): page copy capitalizes the Gallery wherever it names the page ("a
+  card in the Gallery"), eyebrows included. Buttons, including those styled
+  as buttons, are written in Title Case ("Browse the Gallery", "Show All
+  Cards"), and text links in sentence case ("See all cards", "More cards").
 
 ## Hosting and DNS
 Set up with the user 2026-10-16, following TechGeek.dev's steps (see its
@@ -159,6 +231,9 @@ the family's fonts and colors.
   content cap, gutter, and hero gap), kept by the user 2026-10-14 after
   looking at the initial version; its responsiveness tested by hand by the
   user on 2026-10-16.
+- **Settled in the audit** (decided by the user 2026-11-12): the visually
+  hidden technique keeps its literal 1px width and height and its -1px
+  margin, since they're part of the technique rather than sizes or spacing.
 
 ## Card Grids exception
 Decided by the user 2026-10-14, as on TechGeek.dev's Work page. The Gallery's
@@ -188,6 +263,9 @@ src/
 ```
 `design/` holds the image and icon render scripts and the git-ignored image
 originals (about 89 MB, never committed, decided by the user 2026-10-14).
+The WebPs the image script writes keep the 456-byte color profile the
+encoder adds (decided by the user 2026-11-14): it's about 3% of a small
+preview, and dropping it can shift colors in browsers that read it.
 
 ## Converted cards
 Decided with the user 2026-10-15, converting the Christmas card first; the
@@ -230,7 +308,7 @@ rest follow the same pattern.
 - **The component is a named export**, and the catalog's lazy import maps it
   to the default React.lazy needs.
 - **GSAP timelines follow the scale**: durations through `durMilFun` (steps
-  below `m03` included, for glitches), distances through `rhyPxlFun`, angles
+  below `m03` included, for glitches), distances through `rhyPixFun`, angles
   through `cdnPowFun`, and curves from the easing tokens, registered with
   GSAP's CustomEase through `ui/gsap-ease.ts`'s `gsaEasFun`; GSAP takes
   seconds, so durations usually come through `durSecFun`. Under reduced motion
@@ -247,8 +325,11 @@ rest follow the same pattern.
 - **Shadows on split text** go on the whole heading or paragraph as a
   `filter: drop-shadow()`, never a `text-shadow` on every letter, which made
   WebKit's frames take up to 700ms and stalled the timeline.
-- **Tests**: each converted card joins every suite at 1,440px and 390px,
-  captured at its finished scene under reduced motion.
+- **Tests**: each converted card is a shared state at 1,440px and 390px,
+  opened at its finished scene under reduced motion, which the accessibility,
+  rendering, feedback, and security suites visit; the responsive suite
+  measures it across its 14 widths, and the SEO and skip link checks open its
+  page once.
 - **No z-index between a card and the bar**: every card's root is fixed, so
   its own layers stay inside it, and the floating bar sits one layer above
   the stage.
@@ -256,6 +337,18 @@ rest follow the same pattern.
   balloons, fireworks) returns a stop function the card's `useGSAP` cleanup
   calls, steps by elapsed time so 60Hz and 120Hz screens match, and never
   starts under reduced motion.
+- **Kept layer hints** (decided by the user 2026-11-12, in the audit):
+  Halloween's bats (`.batFlyDiv`) and Thanksgiving's falling leaves
+  (`.leaFalSvg`) keep `will-change : transform` in their CSS, since each moves
+  for most of the time it's shown; the hint is dropped under reduced motion,
+  where the bats never fly and no leaf is made. Decided by the user
+  2026-11-13: Halloween's twinkling stars (`.staTwiDiv`, `will-change :
+  opacity`) and Birthday's balloons (`.balFloSvg`, `will-change : transform`)
+  keep theirs on the same terms, since each twinkles or floats the whole time
+  it shows, and the Fourth of July headline's spring keeps GSAP's `force3D :
+  true`, holding its layer after the spring ends, since WebKit otherwise
+  repainted its wide glow whenever something under it changed, stalling frames
+  for up to 250ms.
 - **The Family cards** (Mother's Day, Father's Day, and the Father's Day prank)
   are one engine, `ui/family-card.tsx`, each card only a record of its lines,
   photos, grid order, and greeting plus a theme class setting `--fam-bac-col`,
@@ -266,11 +359,14 @@ rest follow the same pattern.
   2026-10-16, every photo keeping at least a third of its area to tap at 320 by
   568), and the greeting's growth is capped to fit the screen. Its halo is
   three plain glows: more layers made WebKit stall while each letter typed.
+  A mosaic photo's hover zooms the photo in place within its cell rather than
+  lifting the tile (decided by the user 2026-11-14, in the audit), which suits
+  a tight mosaic of photos better than a lift.
 - **The Family cards' scene controls** (decided by the user 2026-10-16): a
   steady, see-through bar above the floating bar, in the card's own colors,
   with a dot per scene over Previous, Pause or Play, Next, and Skip to end;
   the arrow keys step and the space bar pauses. Previous more than about a
-  second into a scene restarts it. The bar fades out as the greeting grows.
+  second into a scene restarts it. The bar fades out with the cursor once the greeting is typed, before it grows.
   Under reduced motion it stays on the finished card, in a strip of its own
   below the mosaic, with no Pause, and steps through each scene as two
   stills: its line written out, then its photo.
@@ -289,23 +385,120 @@ each check does). The user always has their own dev server running on the
 usual 5173 (decided 2026-10-14), so Claude never starts one to look at the
 site and uses theirs instead. Playwright suites live in `tests/`, one project
 per suite and engine in `tests/playwright.config.ts`, which starts its own dev
-server on port 5195 (never the user's 5173, nor the siblings' 5190 through
-5194) and stops it afterwards. Every suite runs in Chromium, Firefox, and WebKit. The states the
+server on port 5195 and a `vite preview` of a fresh build on 5205 (never the
+user's 5173, nor a port a sibling project uses) and stops both afterwards;
+the link preview script (`npm run og-images`) plays the cards on its own 5207.
+Every suite runs in Chromium, Firefox, and WebKit, Chromium as full headless
+Chrome (`channel : 'chromium'`). The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
 and 1,440px, each converted card, the phone menu, the share dialog open on
 the Gallery at both widths, and a signable card's share dialog at 390px.
+The states a control leads to and a visitor can stay on (added 2026-11-10, in
+the audit) live in their own support files, kept out of the rendering suite:
+the Gallery narrowed to Family and after a search nothing matches
+(`tests/support/gallery.ts`), the Contact form after a refused empty send and
+its sent and failed results (`tests/support/contact.ts`, which answers
+Netlify's POST with a 200 or a 500), the Mother's Day card's first photo
+open, its last scene's photo and line stills under reduced motion, and a
+scene paused on its photo while the card plays with motion, reached by
+replaying the finished card once its photos have decoded
+(`tests/support/family.ts`), and the share dialog after a copy that
+worked or was refused (`tests/support/share.ts`), each at both widths, plus
+the share dialog opened from the Birthday card's floating bar at 390px.
 - `npm run test:accessibility`: axe and the scripted checks, the pre-commit
-  accessibility scan.
+  accessibility scan, whose names check also fails a shown link that opens a
+  new tab without "in a new tab)" in its name (added 2026-11-10). Both run on
+  every state above, the reachable ones included. Added 2026-11-10, in the
+  audit, from TechGeek.dev's: the names check fails a tree with no link or
+  button, the Tab walk fails one that reaches no stop and lists every enabled,
+  drawn, non-inert element from its first stop on that Tab never reached (only
+  the open dialog's while a modal dialog is open), a start already showing the
+  keyboard's ring counting as the first stop, and the reduced motion check
+  records every lasting animation and transition from the start of the load,
+  skipping the paused scene, which a card reaches only while playing.
+  `tests/accessibility/announce.spec.ts` checks the Contact form's alert
+  region is in the form and empty on load and holds the error after a failed
+  send, which keeps focus on Send Message, that the thank-you takes focus as
+  it replaces the form, and that "Send Another" puts it on the name field.
+  It also checks the share dialog's status region announces a copy's result,
+  and that the Gallery's "Show All Cards" hands focus to the search field.
 - `npm run test:interaction`: navigation (including Send a Card and a card's
   round trip from its tile and back through More cards), interaction
-  feedback, the phone menu, and the contact form (its topic arriving as Not
-  specified when none is chosen).
+  feedback, the phone menu, the contact form (its topic arriving as Not
+  specified when none is chosen), the "How It Works" section link, the Family
+  photo's and the share dialog's closing fades (each way of closing, with
+  motion and under reduced motion), a Family card's "Skip to end" fading the
+  finished card in (at once under reduced motion), a tap on the Birthday card
+  drawing confetti once its own has settled (none under reduced motion), the
+  Ko-fi link, and the extended name fonts, with the checks below.
+  - **Feedback probe** (rebuilt 2026-11-10, in the audit, from TechGeek.dev's,
+    helpers in `tests/support/feedback.ts`): on every shared state, the
+    Contact results, the Gallery's empty search, the paused Family scene, the
+    open photo, and the
+    share dialog after a copy and opened from a card's bar, each
+    reachable link, button, and field is read at rest, hovered, pressed, and
+    focused through `focus( { focusVisible : true } )`, and every property
+    that changes on it or inside it, its `::before` and `::after` included,
+    has to ease, or switch at once under reduced motion. A control filling
+    the screen (the open photo) isn't held to a hover look, since it's always
+    under the pointer. The Family cards' Pause button, which shows only while
+    a card plays with motion, is reached as Play in the paused scene (added
+    2026-11-14). The
+    toggles in its `TOG_TAR_ARR` (the menu toggle, the
+    current bar and drawer links, the open drawer and scrim, the scrolled bar,
+    the chosen occasion, the sending button, and the Family scene dots) are
+    flipped off, on, and off; the card tiles, Home's envelope and steps, and
+    About's family cards have to show and ease their hover; and a state with
+    nothing opened fails without its skip link.
+  - **Scroll position** (added 2026-11-10, in the audit, from TechGeek.dev's):
+    a footer link from the bottom of each page opens the next at its top, the
+    current page's own bar link and a phone menu link do too, back, forward,
+    and back again return Home to its exact bottom from Contact, which can't
+    scroll that far, a reload returns to its position with
+    `history.scrollRestoration` read as `manual`, a fresh load opens at the
+    top, `#main` added to the address wins over a saved position, malformed
+    saved positions raise no error, and with smooth scrolling on a page
+    change still lands at the top before it's drawn. `Math.random` is fixed
+    at 0.5, so Home keeps its height between visits.
+  - **Skip link**: the first Tab on every page, the 404 page, and every card
+    page lands on the skip link fully in view, and its plain click focuses
+    `<main>` with no hashchange.
+  - **Menu closing**: a plain tap, a Ctrl or Cmd click, and a middle click on
+    the drawer's links each close it, the email link included, and a new tab
+    click on the brand does too.
 - `npm run test:rendering`: full-page screenshots against
   `tests/rendering/baselines/`, with the clock and `Math.random` fixed (Home
   picks its cards at random), the confetti circuit hidden in Chromium and
-  WebKit by its `conCirDiv` hook.
-- `npm run test:responsive`: 14 widths from 320 to 1,920px, and the text
-  measure.
+  WebKit by its `conCirDiv` hook. The three share dialog states capture the
+  screen alone (decided by the user 2026-11-10): in full headless Chrome, a
+  repeated full-page capture with the dialog open redraws its link field's
+  corners differently each time, while screen captures, Firefox, and WebKit
+  stay steady, and the Gallery behind it has full-page states of its own.
+- `npm run test:responsive`: 14 widths from 320 to 1,920px, the text
+  measure, the card grids' rows (even on Home and About, the Gallery's
+  last row centered), and no lazy image in view on Home or the Gallery at
+  five screen sizes.
+- `npm run test:security` (added 2026-11-10, in the audit, from
+  TechGeek.dev's): in Chromium only, since they read files, `public/_headers`'
+  policy (`default-src 'self'`, every directive only `'self'` or `'none'`, no
+  `'unsafe-inline'` or `'unsafe-eval'`) and hardening headers, the built
+  `dist/_redirects` ending in the catch-all with every card's rewrite ahead of
+  it, the built `dist/_headers` sending noindex with every
+  unlisted card's address and file name and no listed one's, no secrets in
+  `dist/`, and `npm audit` of the shipped dependencies (skipped with a message
+  offline). In every engine, from the preview with each path's built headers
+  applied: an injected inline script is refused and reported, every state, the
+  reachable ones above included, and the Contact form's sent and failed
+  results report no violation but WebKit's select report, every new tab link
+  carries `noopener` and `noreferrer`, and each card that takes `?name=` or
+  `?from=` shows script-like names as text, as do the share dialog's name
+  fields.
+  Each check was proven by breaking what it guards.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
-  indexed with their own `seaStr` description, the unlisted one noindex), the
+  indexed with their own `seaStr` description, the unlisted ones noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
+  Each card is also reached by a move inside the site and has to swap in its
+  own description, which the dev server can't fake. The raw page checks (Home's title and description, and the link preview
+  tags of Home and every card's own `<address>.html`) read the build from the
+  preview on 5205 (changed 2026-11-10, in the audit), since scrapers read what
+  ships.

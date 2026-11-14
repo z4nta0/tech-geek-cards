@@ -3,10 +3,10 @@
 
 // #region Imports
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The confetti's spin, slowing, and fading cutoffs sit on the scale as powers of the core design number. How: This returns that power.
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: How fast the confetti slows and fades are steps on the duration scale. How: This returns a step's length in milliseconds.
-import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's sizes, speeds, and pull are rhythm steps. How: This returns a step's size in pixels.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Some of the confetti's limits sit on the scale as powers of the core design number, such as its spin. How: This returns that power.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The confetti's timings are steps on the duration scale, such as how fast it fades. How: This returns a step's length in milliseconds.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each piece's values are random within set bounds, such as its size. How: This returns a random number between two bounds.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The confetti's lengths are vertical rhythm steps or run between them, such as each piece's size. How: This returns a step's size in pixels.
 
 // #endregion Imports
 
@@ -23,11 +23,13 @@ import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
  * the canvas. The loop runs on requestAnimationFrame only while pieces are in
  * the air, and each step is scaled by the time since the last frame, so the
  * confetti flies at the same pace on a 60Hz or a 120Hz screen. The canvas
- * matches its box and the screen's pixel density whenever either changes.
- * Every size, speed, and pull is a rhythm step, the slowing and fading
- * duration steps, and the spin and cutoffs powers of the core design number.
- * staConFun starts it and returns the burst function and the function that
- * stops it, so the card can end it cleanly when it replays or closes.
+ * remeasures at the screen's pixel density whenever its box changes. Every
+ * fixed size, speed, and pull is a rhythm step and each random size and speed
+ * runs between two, the slowing and fading are duration steps, the spin and
+ * the fading cutoff are powers of the core design number, and the falling
+ * cutoff is a rhythm step. staConFun starts it and returns the burst function
+ * and the function that stops it, so the card can end it cleanly when it
+ * replays or closes.
  *
  * Sections:
  *  - Constants
@@ -42,10 +44,10 @@ import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
 
 // #region Constants
 
-const FRA_MAX_NUM = 4;                                                                                                                                          // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
-const FRA_MIL_NUM = 1000 / 60;                                                                                                                                  // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
+const FRA_MAX_NUM = 4;                                     // What: Frame Maximum Number. Why: A tab left in the background resumes after a long gap, which would throw every piece at once. How: This caps one frame's step at four 60ths of a second.
+const FRA_MIL_NUM = 1000 / 60;                             // What: Frame Millisecond Number. Why: The confetti's speeds were tuned for one step every 60th of a second. How: Each frame's step is scaled by how many of these have passed since the last one.
 const PAR_TOK_ARR = [ '--bir-red-col', '--bir-yel-col', '--bir-gre-col', '--bir-blu-col', '--bir-pin-col', '--bir-ora-col', '--bir-pur-col', '--bir-eme-col' ]; // What: Party Token Array. Why: The confetti and the balloons share one bright palette, whose colors are the card's own tokens. How: The confetti reads each token's color once it starts and each piece picks one at random, while each balloon takes one in turn. // Birthday Red Color = #FF6B6B, Birthday Yellow Color = #FFD93D, Birthday Green Color = #6BCB77, Birthday Blue Color = #4D96FF, Birthday Pink Color = #FF6FCF, Birthday Orange Color = #FF9A3C, Birthday Purple Color = #A78BFA, Birthday Emerald Color = #34D399
-const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                                                                                                      // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random.
+const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const; // What: Shape Name Array. Why: Each piece takes one of three shapes. How: A piece picks one at random. // What: Type Assertion Note. Why: Without it the array widens to string[], so a piece's shape couldn't be typed as one of the three names. How: as const keeps each entry its literal type.
 
 // #endregion Constants
 
@@ -65,8 +67,8 @@ const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                      
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param canConObj - Canvas Context Object: The canvas's 2D drawing context, already
- *                    moved and turned to the piece.
+ * @param canCotObj - Canvas Context Object: The canvas's 2D drawing context,
+ *                    already moved and turned to the piece.
  * @param radValNum - Radius Value Number: The distance from the center to
  *                    each point, in pixels.
  *
@@ -74,15 +76,15 @@ const SHA_NAM_ARR = [ 'circle', 'rect', 'star' ] as const;                      
  *
  * @example
  * ```ts
- * draStaFun(canConObj, radValNum) // => void
+ * draStaFun(canCotObj, radValNum) // => void
  * ```
  *
 */
 
-const draStaFun = ( canConObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
+const draStaFun = ( canCotObj : CanvasRenderingContext2D, radValNum : number ) : void => { // What: Draw Star Function. Why: A third of the pieces are stars. How: This traces the star's ten corners and fills it.
 
 
-	canConObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
+	canCotObj.beginPath(); // What: Path Start Call. Why: The star is drawn as one closed path. How: This starts a new one.
 
 
 	for ( let poiIndNum = 0; poiIndNum < 5; poiIndNum++ ) { // What: Point Loop. Why: The star has five points, each with an inner corner after it. How: This adds both corners for each point.
@@ -92,16 +94,17 @@ const draStaFun = ( canConObj : CanvasRenderingContext2D, radValNum : number ) :
 		const innAngNum = outAngNum + Math.PI / 5;                   // What: Inner Angle Number. Why: Each inner corner sits halfway to the next point. How: This is a tenth of a turn past the point.
 
 
-		canConObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
-		canConObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
+		canCotObj.lineTo( Math.cos( outAngNum ) * radValNum, Math.sin( outAngNum ) * radValNum );               // What: Point Line Call. Why: The star reaches out to each point. How: This draws to the point, the first call starting the path there.
+		canCotObj.lineTo( Math.cos( innAngNum ) * radValNum * 0.45, Math.sin( innAngNum ) * radValNum * 0.45 ); // What: Corner Line Call. Why: The star dips in between its points. How: This draws to the inner corner, at 0.45 of the radius.
 
 
 	}
 
 
 
-	canConObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
-	canConObj.fill();      // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
+	canCotObj.closePath(); // What: Path Close Call. Why: The last corner joins the first point. How: This closes the path.
+
+	canCotObj.fill(); // What: Fill Call. Why: The star is solid. How: This fills it in the piece's color.
 
 
 };
@@ -176,7 +179,7 @@ type ConSysTyp = { // What: Confetti System Type. Why: The card throws bursts wh
 const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: Start Confetti Function. Why: The card throws confetti when it opens and whenever it's tapped. How: This readies the canvas and returns the functions that throw a burst and stop it all.
 
 
-	const canConObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
+	const canCotObj = conCanEle.getContext( '2d' )!; // What: Canvas Context Object. Why: The pieces are drawn with the canvas's 2D tools. How: This gets its drawing context. // What: Non-Null Note. Why: TypeScript can't see that a 2D context is always available. How: A canvas element that hasn't handed out another kind of context always returns one.
 
 	const pieRecArr : PieRecTyp[] = []; // What: Piece Record Array. Why: Every piece in the air keeps its own values between frames. How: Bursts add to it, and each frame drops the pieces that are done.
 
@@ -199,11 +202,14 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		const pixRatNum = window.devicePixelRatio || 1; // What: Pixel Ratio Number. Why: A dense screen has more device pixels than CSS pixels. How: This reads the ratio, 1 if the browser doesn't say.
 
 
-		canHeiNum = conCanEle.clientHeight;                         // What: Height Remeasure. Why: The canvas's box may have changed. How: This reads its height.
-		canWidNum = conCanEle.clientWidth;                          // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
-		conCanEle.height = Math.round( canHeiNum * pixRatNum );     // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
-		conCanEle.width  = Math.round( canWidNum * pixRatNum );     // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
-		canConObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
+		canHeiNum = conCanEle.clientHeight; // What: Height Remeasure. Why: The canvas's box may have changed. How: This reads its height.
+		canWidNum = conCanEle.clientWidth;  // What: Width Remeasure. Why: The canvas's box may have changed. How: This reads its width.
+
+		conCanEle.height = Math.round( canHeiNum * pixRatNum ); // What: Surface Height Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's height at the ratio.
+		conCanEle.width  = Math.round( canWidNum * pixRatNum ); // What: Surface Width Assignment. Why: The drawing surface should have a device pixel for every one on screen. How: This sets it to the box's width at the ratio.
+
+
+		canCotObj.setTransform( pixRatNum, 0, 0, pixRatNum, 0, 0 ); // What: Scale Transform Call. Why: The pieces are placed in CSS pixels. How: This scales every drawing by the ratio, resizing having reset it.
 
 
 	};
@@ -213,7 +219,6 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 	resObsObj.observe( conCanEle ); // What: Canvas Observe Call. Why: Measuring only happens while the confetti is ready. How: This starts watching the canvas, which also measures it once.
-
 
 	meaCanFun(); // What: First Measure Call. Why: A burst can come before the observer's first report. How: This measures the canvas right away.
 
@@ -225,13 +230,13 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 	const draDecNum = durMilFun( 'p06' ); // What: Drag Decay Number. Why: A piece's drift slows smoothly over time. How: This is the duration scale's Base Plus 6 step, about 853ms, the time constant of the slowing. // Duration Animation Base Plus 6 ~= 853.0ms
 	const fadDurNum = durMilFun( 'p06' ); // What: Fade Duration Number. Why: A piece fades out over a moment once it's low. How: This is the duration scale's Base Plus 6 step, about 853ms, from full to gone. // Duration Animation Base Plus 6 ~= 853.0ms
-	const fadFraNum = cdnPowFun( -1 );    // What: Fade Fraction Number. Why: Pieces start fading in the lower part of the canvas. How: This is the core design number to the power of -1, about 0.755 of the height. // Core-Design-Number to the Power of -1 ~= 0.755
-	const graPxlNum = rhyPxlFun( 'm12' ); // What: Gravity Pixel Number. Why: Every piece is pulled down. How: This is the Vertical Rhythm Base Minus 12 step, about 0.499px, added to its downward speed per 60th of a second. // Vertical Rhythm Base Minus 12 ~= 0.499px
-	const minAlpNum = cdnPowFun( -11 );   // What: Minimum Alpha Number. Why: A piece too faint to see is dropped. How: This is the core design number to the power of -11, about 0.045. // Core-Design-Number to the Power of -11 ~= 0.045
-	const outPxlNum = rhyPxlFun( 'p01' ); // What: Out Pixel Number. Why: A piece is dropped once it has fallen past the bottom. How: This is the Vertical Rhythm Base Plus 1 step, about 19.3px, below the bottom edge. // Vertical Rhythm Base Plus 1 ~= 19.304px
-	const velMulNum = cdnPowFun( -2 );    // What: Velocity Multiplier Number. Why: The pieces were tuned to move at just over half their speed. How: This is the core design number to the power of -2, about 0.570. // Core-Design-Number to the Power of -2 ~= 0.570
+	const fadFraNum = cdnPowFun( -1 );    // What: Fade Fraction Number. Why: Pieces start fading in the lower part of the canvas. How: This is the core design number to the power of -1, about 0.755 of the height. // Core-Design-Number to the Power of 1 Reciprocal ~= 0.755
+	const graPixNum = rhyPixFun( 'm12' ); // What: Gravity Pixel Number. Why: Every piece is pulled down. How: This is the Vertical Rhythm Base Minus 12 step, about 0.499px, added to its downward speed per 60th of a second. // Vertical Rhythm Base Minus 12 ~= 0.499px
+	const minAlpNum = cdnPowFun( -11 );   // What: Minimum Alpha Number. Why: A piece too faint to see is dropped. How: This is the core design number to the power of -11, about 0.045. // Core-Design-Number to the Power of 11 Reciprocal ~= 0.045
+	const outPixNum = rhyPixFun( 'p01' ); // What: Out Pixel Number. Why: A piece is dropped once it has fallen past the bottom. How: This is the Vertical Rhythm Base Plus 1 step, about 19.3px, below the bottom edge. // Vertical Rhythm Base Plus 1 ~= 19.304px
+	const velMulNum = cdnPowFun( -2 );    // What: Velocity Multiplier Number. Why: The pieces were tuned to move at just over half their speed. How: This is the core design number to the power of -2, about 0.570. // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the confetti has to cancel the next frame, and a burst has to know whether the loop is running. How: This holds the pending frame's id, 0 while the loop is idle.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the confetti has to cancel the next frame, and a burst has to know whether the loop is running. How: This holds the pending frame's ID, 0 while the loop is idle.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
 
@@ -274,7 +279,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
-		canConObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
+		canCotObj.clearRect( 0, 0, canWidNum, canHeiNum ); // What: Canvas Clear Call. Why: Each frame draws the pieces afresh. How: This wipes the whole canvas.
 
 
 
@@ -284,7 +289,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 			const pieRecObj = pieRecArr[ pieIndNum ]; // What: Piece Record Object. Why: The checks read the piece's values. How: This takes the piece at the index.
 
 
-			if ( pieRecObj.alpNum <= minAlpNum || pieRecObj.ycoNum >= canHeiNum + outPxlNum ) pieRecArr.splice( pieIndNum, 1 ); // What: Piece Drop Check. Why: A piece too faint to see or past the bottom is done. How: This removes it from the array.
+			if ( pieRecObj.alpNum <= minAlpNum || pieRecObj.ycoNum >= canHeiNum + outPixNum ) pieRecArr.splice( pieIndNum, 1 ); // What: Piece Drop Check. Why: A piece too faint to see or past the bottom is done. How: This removes it from the array.
 
 
 		}
@@ -296,39 +301,49 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 			pieRecObj.xcoNum += pieRecObj.velXcoNum * velMulNum * fraValNum; // What: X-Coordinate Increase. Why: The piece drifts sideways. How: This adds its scaled sideways speed for the frame's length.
 			pieRecObj.ycoNum += pieRecObj.velYcoNum * velMulNum * fraValNum; // What: Y-Coordinate Increase. Why: The piece rises or falls. How: This adds its scaled downward speed for the frame's length.
-			pieRecObj.velYcoNum += graPxlNum * fraValNum;                    // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
-			pieRecObj.velXcoNum *= draFacNum;                                // What: Velocity X-Coordinate Decrease. Why: The sideways drift dies away. How: This keeps the frame's share of it.
-			pieRecObj.rotNum += pieRecObj.spiNum * fraValNum;                // What: Rotation Increase. Why: The piece tumbles. How: This adds its spin for the frame's length.
+
+			pieRecObj.velYcoNum += graPixNum * fraValNum; // What: Velocity Y-Coordinate Increase. Why: The pull bends every piece back down. How: This adds the pull for the frame's length.
+
+			pieRecObj.velXcoNum *= draFacNum; // What: Velocity X-Coordinate Decrease. Why: The sideways drift dies away. How: This keeps the frame's share of it.
+
+			pieRecObj.rotNum += pieRecObj.spiNum * fraValNum; // What: Rotation Increase. Why: The piece tumbles. How: This adds its spin for the frame's length.
 
 
 			if ( pieRecObj.ycoNum > canHeiNum * fadFraNum ) pieRecObj.alpNum -= fraValNum * FRA_MIL_NUM / fadDurNum; // What: Fade Check. Why: Pieces fade out as they near the bottom rather than vanish. How: Below the fade line, this takes off the frame's share of the fade.
 
 
 
-			canConObj.save();                                          // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
-			canConObj.globalAlpha = Math.max( 0, pieRecObj.alpNum );   // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
-			canConObj.fillStyle   = pieRecObj.colStr;                  // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
-			canConObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
-			canConObj.rotate( pieRecObj.rotNum * Math.PI / 180 );      // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
+			canCotObj.save(); // What: Context Save Call. Why: Each piece is moved and turned on its own. How: This saves the context before changing it.
 
 
-			if ( pieRecObj.shaStr === 'rect' ) canConObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
+			canCotObj.globalAlpha = Math.max( 0, pieRecObj.alpNum ); // What: Alpha Assignment. Why: The piece draws at its own fade. How: This sets the context's opacity, never below 0.
+			canCotObj.fillStyle   = pieRecObj.colStr;                // What: Fill Assignment. Why: The piece draws in its own color. How: This sets the fill.
+
+
+			canCotObj.translate( pieRecObj.xcoNum, pieRecObj.ycoNum ); // What: Translate Call. Why: The shape is drawn around its own center. How: This moves the origin to the piece.
+
+			canCotObj.rotate( pieRecObj.rotNum * Math.PI / 180 ); // What: Rotate Call. Why: The shape is drawn at its own angle. How: This turns the context by the piece's rotation, in radians.
+
+
+			if ( pieRecObj.shaStr === 'rect' ) canCotObj.fillRect( -pieRecObj.sizNum / 2, -pieRecObj.sizNum / 4, pieRecObj.sizNum, pieRecObj.sizNum / 2 ); // What: Rectangle Draw Check. Why: Some pieces are paper strips. How: This fills a rectangle half as tall as it is wide.
 
 			else if ( pieRecObj.shaStr === 'circle' ) { // What: Circle Draw Branch. Why: Some pieces are dots. How: This fills a circle as wide as the piece.
 
 
-				canConObj.beginPath();                                       // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
-				canConObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
-				canConObj.fill();                                            // What: Fill Call. Why: The dot is solid. How: This fills it.
+				canCotObj.beginPath(); // What: Path Start Call. Why: The dot is a path of its own. How: This starts a new one.
+
+				canCotObj.arc( 0, 0, pieRecObj.sizNum / 2, 0, Math.PI * 2 ); // What: Arc Call. Why: A dot is a full circle. How: This traces one at half the piece's size.
+
+				canCotObj.fill(); // What: Fill Call. Why: The dot is solid. How: This fills it.
 
 
 			}
 
-			else draStaFun( canConObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
+			else draStaFun( canCotObj, pieRecObj.sizNum / 2 ); // What: Star Draw Branch. Why: The rest are stars. How: This fills a star at half the piece's size.
 
 
 
-			canConObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
+			canCotObj.restore(); // What: Context Restore Call. Why: The next piece starts from the plain context. How: This undoes the move, turn, and opacity.
 
 
 		}
@@ -349,10 +364,10 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 
 
-	// #region burFun
+	// #region thrBurFun
 
 	/**
-	 * burFun = Burst Function
+	 * thrBurFun = Throw Burst Function
 	 *
 	 * @summary
 	 * Throws a number of pieces from a point on the canvas. Each is thrown at
@@ -375,21 +390,20 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 	 *
 	 * @example
 	 * ```ts
-	 * burFun(burXcoNum, burYcoNum, pieCouNum) // => void
+	 * thrBurFun(burXcoNum, burYcoNum, pieCouNum) // => void
 	 * ```
 	 *
 	*/
 
-	const burFun = ( burXcoNum : number, burYcoNum : number, pieCouNum : number ) : void => { // What: Burst Function. Why: The card throws confetti when it opens and wherever it's tapped. How: This adds pieces at the point and starts the loop if it's idle.
+	const thrBurFun = ( burXcoNum : number, burYcoNum : number, pieCouNum : number ) : void => { // What: Throw Burst Function. Why: The card throws confetti when it opens and wherever it's tapped. How: This adds pieces at the point and starts the loop if it's idle.
 
 
-		const kicPxlNum = rhyPxlFun( 'm03' ); // What: Kick Pixel Number. Why: A burst throws upward before it falls. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px, taken off every piece's downward speed. // Vertical Rhythm Base Minus 3 ~= 6.268px
-		const sizMaxNum = rhyPxlFun( 'bas' ); // What: Size Maximum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base step, about 14.6px. // Vertical Rhythm Base ~= 14.572px
-		const sizMinNum = rhyPxlFun( 'm03' ); // What: Size Minimum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px. // Vertical Rhythm Base Minus 3 ~= 6.268px
-		const speMaxNum = rhyPxlFun( 'm01' ); // What: Speed Maximum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 1 step, 11px per 60th of a second. // Vertical Rhythm Base Minus 1 = 11px
-		const speMinNum = rhyPxlFun( 'm06' ); // What: Speed Minimum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 6 step, about 2.70px per 60th of a second. // Vertical Rhythm Base Minus 6 ~= 2.696px
+		const kicPixNum = rhyPixFun( 'm03' ); // What: Kick Pixel Number. Why: A burst throws upward before it falls. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px, taken off every piece's downward speed. // Vertical Rhythm Base Minus 3 ~= 6.268px
+		const sizMaxNum = rhyPixFun( 'bas' ); // What: Size Maximum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base step, about 14.6px. // Vertical Rhythm Base ~= 14.572px
+		const sizMinNum = rhyPixFun( 'm03' ); // What: Size Minimum Number. Why: Piece sizes vary within a range. How: This is the Vertical Rhythm Base Minus 3 step, about 6.27px. // Vertical Rhythm Base Minus 3 ~= 6.268px
+		const speMaxNum = rhyPixFun( 'm01' ); // What: Speed Maximum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 1 step, 11px per 60th of a second. // Vertical Rhythm Base Minus 1 = 11px
+		const speMinNum = rhyPixFun( 'm06' ); // What: Speed Minimum Number. Why: Piece speeds vary within a range. How: This is the Vertical Rhythm Base Minus 6 step, about 2.70px per 60th of a second. // Vertical Rhythm Base Minus 6 ~= 2.696px
 		const spiMaxNum = cdnPowFun( 6 );     // What: Spin Maximum Number. Why: Pieces spin up to a limit either way. How: This is the core design number to the power of 6, about 5.40 degrees per 60th of a second. // Core-Design-Number to the Power of 6 ~= 5.404
-
 
 
 		for ( let pieIndNum = 0; pieIndNum < pieCouNum; pieIndNum++ ) { // What: Piece Creation Loop. Why: A burst throws many pieces at once. How: This adds one piece per count.
@@ -409,7 +423,7 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 				sizNum    : ranValFun( sizMinNum, sizMaxNum ),                               // What: Size Number. Why: Pieces come in different sizes. How: This picks one within the range.
 				spiNum    : ranValFun( -spiMaxNum, spiMaxNum ),                              // What: Spin Number. Why: Pieces spin either way at their own pace. How: This picks a spin from the limit one way to the limit the other.
 				velXcoNum : Math.cos( angValNum ) * speValNum,                               // What: Velocity X-Coordinate Number. Why: The piece flies along its angle. How: This is the speed's sideways share.
-				velYcoNum : Math.sin( angValNum ) * speValNum - kicPxlNum,                   // What: Velocity Y-Coordinate Number. Why: The piece flies along its angle, kicked upward. How: This is the speed's downward share less the kick.
+				velYcoNum : Math.sin( angValNum ) * speValNum - kicPixNum,                   // What: Velocity Y-Coordinate Number. Why: The piece flies along its angle, kicked upward. How: This is the speed's downward share less the kick.
 				xcoNum    : burXcoNum,                                                       // What: X-Coordinate Number. Why: Every piece starts at the burst's point. How: This takes its distance from the left edge.
 				ycoNum    : burYcoNum                                                        // What: Y-Coordinate Number. Why: Every piece starts at the burst's point. How: This takes its distance from the top edge.
 
@@ -426,21 +440,22 @@ const staConFun = ( conCanEle : HTMLCanvasElement ) : ConSysTyp => { // What: St
 
 	};
 
-	// #endregion burFun
+	// #endregion thrBurFun
 
 
 
 	return { // What: Confetti System Return. Why: The card throws bursts and stops the confetti later. How: This returns both functions.
 
 
-		burFun, // What: Burst Function. Why: The card throws bursts. How: This hands over the burst function.
+		burFun : thrBurFun, // What: Burst Function. Why: The card throws bursts. How: This hands over the throw burst function.
 
 		stoFun : () => { // What: Stop Function. Why: The confetti must stop when the card replays or closes. How: This cancels the next frame, stops measuring, and drops every piece.
 
 
 			cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
 
-			aniFraNum = 0; // What: Idle Assignment. Why: A stopped loop is idle. How: This clears the frame's id.
+
+			aniFraNum = 0; // What: Idle Assignment. Why: A stopped loop is idle. How: This clears the frame's ID.
 
 
 			resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The canvas no longer needs measuring. How: This stops watching it.

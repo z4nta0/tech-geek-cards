@@ -2,7 +2,7 @@
 
 Animated digital greeting cards by z4nta0, a full stack web developer. Every card is hand-coded and plays right in the browser: pick one from the Gallery, add a name to the cards that take one, and send the link.
 
-To be live at [techgeek.cards](https://techgeek.cards/).
+Live at [techgeek.cards](https://techgeek.cards/).
 
 It's one of three sister sites that share a design so they read as one family, and its footer links to the other two. The shared design (the tokens, fonts, base styles, bar, footer, and mark) lives in the [techgeek-design](https://github.com/z4nta0/techgeek-design) package, which each site installs:
 
@@ -42,15 +42,16 @@ npm run typecheck  # TypeScript across src/, the configs, tests/, and the design
 ```bash
 npm test                    # every suite
 npm run test:accessibility  # axe-core plus scripted keyboard, naming, reflow, and motion checks
-npm run test:interaction    # page navigation, a card's round trip, the phone menu, the contact form, the Ko-fi button, and every link and button's hover, press, and focus feedback
+npm run test:interaction    # how the site behaves when used, such as page navigation and scroll position, the skip link, the phone menu, the contact form, and every link and button's hover, press, and focus feedback
 npm run test:rendering      # full-page screenshots of each page state against approved baselines
-npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, and every paragraph within its measure
+npm run test:responsive     # every page and the phone menu from 320 to 1,920px: no sideways scroll, spill, or overlap, every card grid's rows, and every paragraph within its measure
+npm run test:security       # the security headers, the catch-all redirect, the unlisted cards' noindex, no secrets in the build, the dependency audit, and, in the browser, the content security policy, new tab links, and names shown as text
 npm run test:seo            # titles, descriptions, canonical links, robots, link previews, structured data, icons, robots.txt, and the sitemap, for every page and card
 ```
 
-Each suite runs in Chromium, Firefox, and WebKit against its own dev server on port 5195, so a dev server already running on 5173 is left alone. The states the suites visit are every page and the 404 page at phone and desktop widths, the open phone menu, and the share dialog open on the Gallery, for both the birthday card and a card that can be signed. Reports land in `tests/output/` (git-ignored); `npx playwright show-report tests/output/report` opens the HTML report. The rendering suite's approved screenshots live in `tests/rendering/baselines/` and match to the pixel, so after a change meant to alter how a page looks, review the diff in the report, then run `npm run test:rendering -- --update-snapshots` and commit the new baselines with the change. Chromium and WebKit capture with the faint confetti circuit pattern hidden, since they draw it slightly differently from run to run; Firefox still checks it. The baselines were captured on Linux, and font rendering differs between systems, so on macOS or Windows refresh them locally before relying on the comparison. If a browser is missing, `npx playwright install chromium firefox webkit` installs all three.
+Each suite runs in Chromium, Firefox, and WebKit against its own dev server on port 5195, and the checks that read what ships use a preview of a fresh build on port 5205, so a dev server already running on 5173 is left alone. The security checks that read files (the headers, the build output, and the audit) run in Chromium only, since they don't change with the browser. The states the suites visit are every page and the 404 page at phone and desktop widths, each card, the open phone menu, and the share dialog open on the Gallery, for both the birthday card and a card that can be signed, while the accessibility, interaction, and security suites also visit the states a control leads to, such as the Gallery's filtered and empty results and the contact form's results. Reports land in `tests/output/` (git-ignored); `npx playwright show-report tests/output/report` opens the HTML report. The rendering suite's approved screenshots live in `tests/rendering/baselines/` and match to the pixel, so after a change meant to alter how a page looks, review the diff in the report, then run `npm run test:rendering -- --update-snapshots` and commit the new baselines with the change. Chromium and WebKit capture with the faint confetti circuit pattern hidden, since they draw it slightly differently from run to run; Firefox still checks it. The baselines were captured on Linux, and font rendering differs between systems, so on macOS or Windows refresh them locally before relying on the comparison. If a browser is missing, `npx playwright install chromium firefox webkit` installs all three.
 
-Every card, the unlisted pranks included, joins every suite at both widths, checked at its finished scene under reduced motion.
+Every card, the unlisted pranks included, is among the shared states at phone and desktop widths, opened at its finished scene under reduced motion, so the accessibility, rendering, feedback, and security suites visit it; the responsive suite measures it across its 14 widths, and the SEO and skip link checks open each card's page once.
 
 ## Build
 
@@ -91,19 +92,20 @@ src/
 │   ├── contact/       Contact page and its .module.css
 │   ├── card/          The page every card plays in, with its floating bar
 │   └── not-found/     The 404 page every unknown path shows, with its .module.css
-├── ui/                What more than one page or card uses: the card catalog (cards.ts), the card tile, the share dialog, the confetti circuit pattern, page-links.ts (the pages the bar and footer link to), gsap-ease.ts, and family-card.tsx, the engine the three Family cards share
+├── ui/                What more than one page or card uses, such as family-card.tsx, the engine the three Family cards share
 ├── styles/            styles.css: this site's berry color, ease-in-out curve, and layout values, loaded after the design package's stylesheets
 ├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines, and a random value between two bounds
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
-public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image.png and each card's in social/
+public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image-2.png and each card's in social/
 tests/
 ├── accessibility/     axe-core scan and scripted checks
-├── interaction/       navigation, phone menu, contact form, Ko-fi button, and hover, press, and focus feedback checks
+├── interaction/       behavior checks, such as navigation, the phone menu, and hover, press, and focus feedback
 ├── rendering/         screenshot comparisons, their baselines/, and the stylesheet that hides the background pattern
 ├── responsive/        layout checks across screen widths
+├── security/          header, build, dependency, and content security policy checks
 ├── seo/               head tags, structured data, icon, and crawler file checks
-├── support/           the page states the suites visit
+├── support/           the page states the suites visit and the helpers they share
 └── playwright.config.ts
 
 design/                Source artwork and the scripts that render it, not served
@@ -133,7 +135,7 @@ These cards have their own pages but stay out of the Gallery, Home, and search r
 
 ## Search and the contact form
 
-Home, the Gallery, About, Contact, and every listed card are indexed, each with its own title, description, and canonical link, while the 404 page and any unlisted card carry `noindex`. The structured data describes the site as z4nta0's, the same person TechGeek.dev describes. `index.html` carries the home page's title and description, since link checkers and many crawlers read it without running the site's script, and every card gets its own copy of it at build time, so each card's link shows that card's own title, description, and preview image.
+Home, the Gallery, About, Contact, and every listed card are indexed, each with its own title, description, and canonical link, while the 404 page and any unlisted card carry `noindex`. The structured data describes the site as z4nta0's, the same person TechGeek.dev describes. `index.html` carries the Home page's title and description, since link checkers and many crawlers read it without running the site's script, and every card gets its own copy of it at build time, so each card's link shows that card's own title, description, and preview image.
 
 The contact form posts to Netlify Forms: a hidden copy of the form in `index.html` registers its fields, and Netlify emails each submission to the address set in its dashboard, with the visitor's email as the reply-to.
 

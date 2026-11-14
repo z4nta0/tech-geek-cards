@@ -3,12 +3,12 @@
 
 // #region Imports
 
-import { AboPagCom    } from './pages/about/about.tsx';          // What: About Page Component. Why: The About route says who makes the cards and introduces the sister sites. How: The about route renders it.
+import { AboPagCom    } from './pages/about/about.tsx';          // What: About Page Component. Why: The About route says who makes the cards and introduces the sister sites. How: The About route renders it.
 import { CAR_REC_ARR  } from './ui/cards.ts';                    // What: Card Record Array. Why: Every card opens at its own address. How: The root looks the current path up in the catalog.
 import { CarPagCom    } from './pages/card/card.tsx';            // What: Card Page Component. Why: A card's address plays the card full screen. How: The root renders it when the path names a card.
-import { ConPagCom    } from './pages/contact/contact.tsx';      // What: Contact Page Component. Why: The Contact route shows the form and the contact details. How: The contact route renders it.
-import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists every card. How: The gallery route renders it.
-import { HomPagCom    } from './pages/home/home.tsx';            // What: Home Page Component. Why: The site's root address is its home page. How: The home route renders it.
+import { ConPagCom    } from './pages/contact/contact.tsx';      // What: Contact Page Component. Why: The Contact route shows the form and the contact details. How: The Contact route renders it.
+import { GalPagCom    } from './pages/gallery/gallery.tsx';      // What: Gallery Page Component. Why: The Gallery route lists the listed cards. How: The Gallery route renders it.
+import { HomPagCom    } from './pages/home/home.tsx';            // What: Home Page Component. Why: The site's root address is its Home page. How: The Home route renders it.
 import { NavBarCom    } from 'techgeek-design/ui/nav.tsx';       // What: Navigation Bar Component. Why: Every site page starts with the TechGeek family's shared bar. How: This renders above the routes.
 import { NotFouCom    } from './pages/not-found/not-found.tsx';  // What: Not Found Component. Why: Every unknown address shows the 404 page. How: The catch-all route renders it.
 import { PAG_LIN_ARR  } from './ui/page-links.ts';               // What: Page Link Array. Why: The bar and the footer link to the site's pages. How: This is the list the root hands them.
@@ -56,10 +56,11 @@ import type { SisLinTyp } from 'techgeek-design/ui/link-types.ts'; // What: Sist
 // #region Constants
 
 const SIT_EMA_STR = 'contact@techgeek.cards';               // What: Site Email String. Why: The phone menu offers the site's contact address. How: The bar links it from the drawer.
-const SIT_TAG_STR = 'Hand-coded cards for every occasion.'; // What: Site Tagline String. Why: The phone menu and the footer end on the site's tagline. How: The bar and the footer both show it.
+const SIT_TAG_STR = 'Hand-coded cards for every occasion.'; // What: Site Tagline String. Why: The phone menu and the footer both show the site's tagline. How: The bar and the footer both show it.
 const WOR_END_STR = '.cards';                               // What: Wordmark Ending String. Why: The family's wordmark ends in each site's own domain. How: The bar's wordmark and the footer's copyright both show it after TechGeek.
 
 const CTA_LIN_OBJ : PagLinTyp = { labStr : 'Send a Card', patStr : '/gallery' }; // What: Call-To-Action Link Object. Why: The bar's one button asks a visitor to send a card, the site's main action. How: The bar and the drawer both route it to the Gallery.
+
 
 
 const SIS_LIN_ARR : SisLinTyp[] = [ // What: Sister Link Array. Why: TechGeek.cards is one of three sister sites, and a visitor here may want z4nta0's portfolio or tech support. How: The footer links to each row in the same tab.
@@ -85,21 +86,22 @@ const SIS_LIN_ARR : SisLinTyp[] = [ // What: Sister Link Array. Why: TechGeek.ca
  * @summary
  * The top of the component tree. It first looks the current path up in the
  * card catalog, ignoring a trailing slash: a card's path renders only that
- * card's page inside the main landmark, with no bar or footer. Any other
- * path renders the bar, the page the address matches inside the main
- * landmark, and the footer, so every site page shares the same frame. The
- * routes take the current location and use its path as their key, so moving
- * to another page replaces the old page's tree rather than updating it,
- * which restarts the new page's entrance animation. It calls useScrTopFun so
- * every link opens its page at the top, as a real page load would, while
- * back and forward keep the browser's restored position.
+ * card's page, which holds its own skip link and main landmark, with no bar
+ * or footer. Any other path renders the bar, the page the address matches
+ * inside the main landmark the bar's skip link jumps to, and the footer, so
+ * every site page shares the same frame. The routes take the current
+ * location and use its path as their key, so moving to another page replaces
+ * the old page's tree rather than updating it, which restarts the new page's
+ * entrance animation. It calls useScrTopFun so a link to another page opens
+ * it at the top, as a real page load would, while back, forward, and a
+ * reload return the visitor to where they were, as the hook restores it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param props - This component does not use any props.
  *
- * @returns The card's main landmark on a card's path, or a fragment holding
- *          the bar, the main landmark, and the footer.
+ * @returns The card's page on a card's path, or a fragment holding the bar,
+ *          the main landmark, and the footer.
  *
  * @example
  * ```tsx
@@ -117,7 +119,7 @@ function AppRooCom () : JSX.Element {
 
 
 
-	useScrTopFun(); // What: Scroll Top Call. Why: Every link to another page should open it at its top, and a link with a hash at its section. How: This runs the hook once from the root, which stays mounted across every route.
+	useScrTopFun(); // What: Scroll Top Call. Why: Every link to another page should open it at its top, a link with a hash at its section, and back, forward, and a reload where the visitor was. How: This runs the hook once from the root, which stays mounted across every route.
 
 
 
@@ -127,17 +129,11 @@ function AppRooCom () : JSX.Element {
 		return (
 
 
-			<main>{ /* What: Card Main Element. Why: The card is the page's main content. How: This holds the card's page as the main landmark. */ }
+			<CarPagCom
+				key={ curCarObj.sluStr } // What: Card Page Key. Why: Moving from one card straight to another should start the new card fresh. How: Each card's slug is its own key.
 
-
-				<CarPagCom
-					key={ curCarObj.sluStr } // What: Card Page Key. Why: Moving from one card straight to another should start the new card fresh. How: Each card's slug is its own key.
-
-					carRecObj={ curCarObj }
-				/>{ /* What: Card Page Component. Why: The card's address plays the card. How: This renders the card's page for the matched card. */ }
-
-
-			</main>
+				carRecObj={ curCarObj }
+			/> // What: Card Page Component. Why: The card's address plays the card. How: This renders the card's page for the matched card, which holds its own skip link and main landmark around the card.
 
 
 		);
@@ -159,11 +155,15 @@ function AppRooCom () : JSX.Element {
 				pagLinArr={ PAG_LIN_ARR }
 				tagLinStr={ SIT_TAG_STR }
 				worEndStr={ WOR_END_STR }
-			/>{ /* What: Navigation Bar Component. Why: Every site page starts with the family's shared bar. How: This renders it above the page with this site's details, leaving out the availability line, which only TechGeek.dev shows. */ }
+			/>{ /* What: Navigation Bar Component. Why: Every site page starts with the family's shared bar. How: This renders it above the page with this site's details, leaving out the optional availability label. */ }
 
 
 
-			<main>{ /* What: App Main Element. Why: Each page's content is the main landmark. How: This holds whichever page the address matches. */ }
+			<main
+				id='main'
+
+				tabIndex={ -1 } // What: Main Focus Target. Why: The bar's skip link moves focus here, and a main element can't take focus on its own. How: This makes it focusable without adding it to the Tab order.
+			>{ /* What: App Main Element. Why: Each page's content is the main landmark, and the skip link jumps here. How: This holds whichever page the address matches; its ID stays the plain word `main`, since the skip link's #main address names it as a navigation target. */ }
 
 
 				<Routes
@@ -176,14 +176,14 @@ function AppRooCom () : JSX.Element {
 					<Route
 						element={ <HomPagCom /> }
 						path='/'
-					/>{ /* What: Home Route. Why: The site's root address is its home page. How: This renders HomPagCom at the root path. */ }
+					/>{ /* What: Home Route. Why: The site's root address is its Home page. How: This renders HomPagCom at the root path. */ }
 
 
 
 					<Route
 						element={ <GalPagCom /> }
 						path='/gallery'
-					/>{ /* What: Gallery Route. Why: Every card is listed on its own page. How: This renders GalPagCom at /gallery. */ }
+					/>{ /* What: Gallery Route. Why: The listed cards are gathered on one page. How: This renders GalPagCom at /gallery. */ }
 
 
 
@@ -238,7 +238,7 @@ function AppRooCom () : JSX.Element {
 
 // #region Exports
 
-export { AppRooCom }; // What: Named Exports. Why: main.tsx is the sole consumer, mounting this as the site's root. How: This exports AppRooCom.
+export { AppRooCom }; // What: Named Export. Why: main.tsx is the sole consumer, mounting this as the site's root. How: This exports AppRooCom.
 
 // #endregion Exports
 

@@ -8,16 +8,16 @@ import snoManUrl from './snowman.webp';              // What: Snowman URL. Why: 
 
 
 import { cdnPowFun          } from '../../utils/rhythm.ts';   // What: Core-Design-Number Power Function. Why: The glitch's skew sits on the scale as a power of the core design number. How: This returns that power.
-import { durSecFun          } from '../../utils/rhythm.ts';   // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { durSecFun          } from '../../utils/rhythm.ts';   // What: Duration Second Function. Why: Every duration in the timeline but its one-second pauses is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun          } from '../../ui/gsap-ease.ts';   // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap               } from 'gsap';                    // What: GSAP. Why: The card plays as one long timeline of wipes, text effects, and glitches. How: This is the animation library that builds and plays it.
-import { redMotFun          } from '../../utils/motion.ts';   // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the final scene at once. How: This reports whether reduced motion is on.
-import { rhyPxlFun          } from '../../utils/rhythm.ts';   // What: Rhythm Pixel Function. Why: The lettering's slides and the glitch's shift are spacing steps. How: This returns a step's size in pixels.
+import { redMotFun          } from '../../utils/motion.ts';   // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the final scene at once. How: This reports whether reduced motion is on.
+import { rhyPixFun          } from '../../utils/rhythm.ts';   // What: Rhythm Pixel Function. Why: The card's distances are vertical rhythm steps, such as the glitch's shift. How: This returns a step's size in pixels.
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'; // What: Scramble Text Plugin. Why: The hacked heading types itself out through random characters. How: This GSAP plugin animates text that way.
 import { SplitText          } from 'gsap/SplitText';          // What: Split Text. Why: The messages fade in one letter at a time. How: This GSAP plugin wraps each letter so it can animate on its own.
 import { staSnoFun          } from './snowfall.ts';           // What: Start Snowfall Function. Why: Snow falls over the last scene. How: This starts it and returns the function that stops it.
 import { useGSAP            } from '@gsap/react';             // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef             } from 'react';                   // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useRef             } from 'react';                   // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
 import { useSearchParams    } from 'react-router';            // What: Use Search Parameters. Why: The greeting can name its recipient. How: This reads the address's ?name= parameter.
 import { useState           } from 'react';                   // What: Use State. Why: The wipe's grid is measured once, when the card opens. How: This keeps the measured columns and rows.
 
@@ -38,13 +38,14 @@ import type { SnoSetTyp } from './snowfall.ts'; // What: Snowfall Settings Type.
  * ?name=, and the sign-off, signed by its sender through ?from= or by Tech
  * Geek, fade in letter by letter. The unlisted prank turns into that greeting:
  * a grid of dark squares wipes away to a fake hacked screen, a pirate flag
- * with a heading that scrambles into You've Just Been Hacked, a glitch, and a
- * message fading in letter by letter that admits it's a joke, before the
+ * with a heading that scrambles into "You've Just Been Hacked!!", a glitch,
+ * and a message fading in letter by letter that admits it's a joke, before the
  * squares wipe back over it and away again to the snowy scene, signed by Mr.
- * Awesome unless the link says otherwise. Every duration, distance, and angle
- * is a step on the design scale, and the curves are the stylesheet's easing
- * tokens. Under reduced motion either version opens straight on the finished
- * snowy scene, without snow. Converted from TechGeek.support's original.
+ * Awesome unless the link says otherwise. Every distance and angle in the
+ * timeline, and every duration but its one-second pauses, is a step on the
+ * design scale, and the curves are the stylesheet's easing tokens. Under
+ * reduced motion either version opens straight on the finished snowy scene,
+ * without snow. Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
@@ -82,10 +83,10 @@ const SQU_COU_NUM = 450;                         // What: Square Count Number. W
  * @summary
  * Adds the glitch to the timeline: the elements skew hard to the right and
  * snap back, flicker out and in, jump left and back, and stretch tall for an
- * instant, all within about a third of a second. Several elements glitch
- * together, in step. Every duration is a step on the duration scale below the
- * named interface steps, the skew a power of the core design number, and the
- * shift a spacing step; only the stretch's 1.1 stays literal, since no step
+ * instant, all within about 0.37 seconds. Several elements glitch together, in
+ * step. Every duration is a step on the duration scale below the named
+ * interface steps, the skew a power of the core design number, and the shift a
+ * vertical rhythm step; only the stretch's 1.1 stays literal, since no step
  * lands within 10% of it. The skew and stretch use the in-out curve and the
  * flicker and jump the decelerate curve.
  *
@@ -112,17 +113,17 @@ const gliTimFun = ( timLinObj : gsap.core.Timeline, tarEleArr : HTMLElement[], d
 	const fliDurNum = durSecFun( 'm05' );      // What: Flicker Duration Number. Why: Each flicker and jump is barely a frame or two. How: This is the duration scale's Base Minus 5 step, about 38.7ms, in seconds. // Duration Animation Base Minus 5 ~= 38.7ms
 	const skeAngNum = cdnPowFun( 15 );         // What: Skew Angle Number. Why: The skew tears the letters sideways. How: This is the core design number to the power of 15, about 67.9 degrees. // Core-Design-Number to the Power of 15 ~= 67.897
 	const skeDurNum = durSecFun( 'm01' );      // What: Skew Duration Number. Why: The skew is the glitch's longest step. How: This is the duration scale's Base Minus 1 step, about 119.2ms, in seconds. // Duration Animation Base Minus 1 ~= 119.2ms
-	const shiPxlNum = rhyPxlFun( 'p01' ) * -1; // What: Shift Pixel Number. Why: The jump throws the letters left. How: This is the Spacing Horizontal Base Plus 1 step, about 19.3px, negated. // Vertical Rhythm Base Plus 1 ~= -19.304px
-	const strDurNum = durSecFun( 'm07' );      // What: Stretch Duration Number. Why: The stretch is the glitch's quickest step. How: This is the duration scale's Base Minus 7 step, about 22.0ms, in seconds. // Duration Animation Base Minus 7 ~= 22.0ms
+	const shiPixNum = rhyPixFun( 'p01' ) * -1; // What: Shift Pixel Number. Why: The jump throws the letters left. How: This is the vertical rhythm's Base Plus 1 step, about 19.3px, negated. // Vertical Rhythm Base Plus 1 ~= -19.304px
+	const sttDurNum = durSecFun( 'm07' );      // What: Stretch Duration Number. Why: The stretch is the glitch's quickest step. How: This is the duration scale's Base Minus 7 step, about 22.0ms, in seconds. // Duration Animation Base Minus 7 ~= 22.0ms
 
 
 	timLinObj.to( tarEleArr, { duration : skeDurNum, ease : inoEasStr, skewX   : skeAngNum } ); // What: Skew Step. Why: The glitch starts by tearing the letters sideways. How: This skews them to the right.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : inoEasStr, skewX   : 0         } ); // What: Unskew Step. Why: The tear snaps back. How: This returns the skew to 0.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, opacity : 0         } ); // What: Flicker Out Step. Why: The letters cut out for an instant. How: This fades them to transparent.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, opacity : 1         } ); // What: Flicker In Step. Why: The letters come back. How: This fades them in again.
-	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, x       : shiPxlNum } ); // What: Jump Step. Why: The letters jolt sideways. How: This shifts them left.
+	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, x       : shiPixNum } ); // What: Jump Step. Why: The letters jolt sideways. How: This shifts them left.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : decEasStr, x       : 0         } ); // What: Return Step. Why: The jolt snaps back. How: This returns them to their place.
-	timLinObj.to( tarEleArr, { duration : strDurNum, ease : inoEasStr, scaleY  : 1.1       } ); // What: Stretch Step. Why: The letters stretch tall for an instant. How: This scales them 10% taller, a literal since no step lands within 10%.
+	timLinObj.to( tarEleArr, { duration : sttDurNum, ease : inoEasStr, scaleY  : 1.1       } ); // What: Stretch Step. Why: The letters stretch tall for an instant. How: This scales them 10% taller, a literal since no step lands within 10%.
 	timLinObj.to( tarEleArr, { duration : fliDurNum, ease : inoEasStr, scaleY  : 1         } ); // What: Unstretch Step. Why: The glitch ends with the letters back to normal. How: This returns their height.
 
 
@@ -227,7 +228,7 @@ const snoSetFun = () : SnoSetTyp => ( { // What: Snowfall Settings Function. Why
 
 // #region Components
 
-type CacProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
+type CacProTyp = { isaPraBoo? : boolean }; // What: Christmas-Card-Component Props Type. Why: The card plays as the full prank or as the snowy scene alone. How: This names the optional prank flag.
 
 // #region ChrCarCom
 
@@ -248,19 +249,20 @@ type CacProTyp = { prkBoo? : boolean }; // What: Christmas-Card-Component Props 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param props.prkBoo - Prank Boolean: Whether the card opens on the hacked
- *                       prank, false by default for the snowy scene alone.
+ * @param props.isaPraBoo - Is-A Prank Boolean: Whether the card opens on the
+ *                          hacked prank, false by default for the snowy scene
+ *                          alone.
  *
  * @returns The card's scenes and the wipe's grid.
  *
  * @example
  * ```tsx
- * ChrCarCom({ prkBoo }) // => <ChrCarCom />
+ * ChrCarCom({ isaPraBoo }) // => <ChrCarCom />
  * ```
  *
 */
 
-function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
+function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 
 
 	const carDivRef = useRef< HTMLDivElement >( null );       // What: Card Div Reference. Why: The timeline's selectors and cleanup are scoped to the card. How: This holds the card's root.
@@ -272,12 +274,16 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 	const snoTitRef = useRef< HTMLHeadingElement >( null );   // What: Snowy Title Reference. Why: The greeting fades in by letter. How: This holds the heading.
 	const snoVisRef = useRef< HTMLSpanElement >( null );      // What: Snowy Visible Reference. Why: The sign-off's visible copy fades in by letter. How: This holds the span SplitText splits.
 
-	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column And Row Numbers. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This runs griSizFun on the first render and keeps both counts.
+	const [ { squColNum, squRowNum } ] = useState( griSizFun ); // What: Square Column Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the column count griSizFun measures on the first render. // What: Square Row Number. Why: The grid is measured once, when the card opens, so the wipe's squares never change mid-play. How: This is the row count griSizFun measures on the first render.
 	const [ seaParObj ]                = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
-	const froParStr = seaParObj.get( 'from' );                               // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
-	const namParStr = seaParObj.get( 'name' );                               // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
-	const sigNamStr = froParStr || ( prkBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
+	const froParStr = seaParObj.get( 'from' );                                  // What: From Parameter String. Why: A shared link can carry the sender's name. How: This reads ?from=, or null without one.
+	const namParStr = seaParObj.get( 'name' );                                  // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
+	const sigNamStr = froParStr || ( isaPraBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
+
+
+
+	const SnoTitTag = isaPraBoo ? 'h2' : 'h1'; // What: Snowy Title Tag. Why: The page's first heading should be its h1, and the prank opens on the hacked scene, whose heading comes first. How: This makes the greeting an h2 in the prank, under the hacked h1, and the h1 when the card opens on the snowy scene.
 
 
 
@@ -310,26 +316,26 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 		const fadDurNum = durSecFun( 'p11' );                                                              // What: Fade Duration Number. Why: The scramble and each letter's fade are long, expressive motion. How: This is the duration scale's Base Plus 11 step, about 3.48s, in seconds. // Duration Animation Base Plus 11 ~= 3,480.0ms
 		const sigSplObj = SplitText.create( snoVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Signature Split Object. Why: The sign-off fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
 		const snoSplObj = SplitText.create( snoTitRef.current, { type : 'words, chars' } );                // What: Snowy Split Object. Why: The greeting fades in one letter at a time. How: This wraps its words and letters, labeling the heading with its full text.
-		const splShiNum = rhyPxlFun( 'm01' );                                                              // What: Split Shift Number. Why: Each letter slides in from just right of its place. How: This is the Spacing Horizontal Base Minus 1 step, 11px. // Vertical Rhythm Base Minus 1 = 11px
+		const splShiNum = rhyPixFun( 'm01' );                                                              // What: Split Shift Number. Why: Each letter slides in from just right of its place. How: This is the vertical rhythm's Base Minus 1 step, 11px. // Vertical Rhythm Base Minus 1 = 11px
 		const splStaNum = durSecFun( 'm04' );                                                              // What: Split Stagger Number. Why: The letters arrive one after another. How: This is the duration scale's Base Minus 4 step, about 51.3ms, in seconds, between each letter's start. // Duration Animation Base Minus 4 ~= 51.3ms
 		const splFroObj = { autoAlpha : 0, duration : fadDurNum, stagger : splStaNum, x : splShiNum };     // What: Split From Object. Why: Both messages fade in the same way. How: Each letter starts hidden and shifted right, fading in over the long fade.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                            // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
 
-		let stoSnoFun = () => {}; // What: Stop Snowfall Function. Why: The cleanup has to stop the snow if it started. How: This holds the stop function staSnoFun returns, a no-op until then.
 
 
+		let stoSnoFun   = () => {};                                                                                                     // What: Stop Snowfall Function. Why: The cleanup has to stop the snow if it started. How: This holds the stop function staSnoFun returns, a no-op until then.
 		const begSnoFun = () => { if ( !redMotFun() ) stoSnoFun = staSnoFun( snoSceRef.current!, cssModObj.snoFlaDiv, snoSetFun() ); }; // What: Begin Snowfall Function. Why: Both versions start the snow, but never under reduced motion. How: This starts it in the snowy scene and keeps its stop function. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The timeline only runs after the render that attaches it.
 
 
-		if ( prkBoo ) { // What: Prank Opening Check. Why: Only the prank version opens on the fake hack. How: This adds the wipes, the hacked scene, and its glitches before the snowy scene.
+		if ( isaPraBoo ) { // What: Prank Opening Check. Why: Only the prank version opens on the fake hack. How: This adds the wipes, the hacked scene, and its glitches before the snowy scene.
 
 
 			const hacSplObj = SplitText.create( hacVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Hacked Split Object. Why: The message fades in one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
 			const inoEasStr = gsaEasFun( 'ino' );                                                              // What: In-Out Easing String. Why: The glitch's skew and stretch start and end slowly. How: This registers the in-out token and keeps its GSAP name.
-			const squDurNum = durSecFun( 'm14' );                                                              // What: Square Duration Number. Why: Each square fades in a blink, one after another. How: This is the duration scale's Base Minus 14 step, about 3.08ms, in seconds. // Duration Animation Base Minus 14 ~= 3.080ms
+			const squDurNum = durSecFun( 'm14' );                                                              // What: Square Duration Number. Why: Each square changes opacity in a blink, one after another. How: This is the duration scale's Base Minus 14 step, about 3.08ms, in seconds. // Duration Animation Base Minus 14 ~= 3.1ms
 			const squEleArr = Array.from( pixConRef.current!.children );                                       // What: Square Element Array. Why: The wipe animates every square. How: This lists the grid's children. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-			const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades in a Base Minus 14 step, starting one such step after the last, in random order.
+			const squWipObj : gsap.TweenVars = { duration : squDurNum, stagger : { each : squDurNum, ease : decEasStr, from : 'random' } }; // What: Square Wipe Object. Why: All three wipes play the same way. How: Each square fades over a Base Minus 14 step, starting one such step after the last, in random order.
 
 
 			timLinObj.to( squEleArr,         { ...squWipObj,         opacity : 0                } );              // What: Opening Wipe. Why: The card opens on the hacked scene. How: This fades the squares out.
@@ -359,7 +365,6 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 		timLinObj.from( [ ...snoSplObj.chars, ...sigSplObj.chars ], splFroObj, PAU_POS_STR ); // What: Greeting Fade. Why: The greeting and sign-off arrive last. How: After a pause, this fades them in by letter.
 
 
-
 		if ( redMotFun() ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
 
@@ -380,10 +385,10 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			ref={ carDivRef }
 
 			className={ cssModObj.chrCarDiv }
-		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the wipe's grid and both scenes. */ }
+		>{ /* What: Christmas Card Div Element. Why: The card fills the screen, its scenes stacked in it. How: This holds the snowy scene and, in the prank, the wipe's grid and the hacked scene before it. */ }
 
 
-			{ prkBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
+			{ isaPraBoo && ( // What: Prank Grid Check. Why: Only the prank wipes between scenes. How: This renders the wipe's grid for the prank alone.
 
 
 				<div
@@ -419,19 +424,19 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			) }
 
 
-			{ prkBoo && ( // What: Prank Scene Check. Why: Only the prank opens on the fake hack. How: This renders the hacked scene for the prank alone.
+			{ isaPraBoo && ( // What: Prank Scene Check. Why: Only the prank opens on the fake hack. How: This renders the hacked scene for the prank alone.
 
 
 				<section className={ cssModObj.hacSceSec }>{ /* What: Hacked Scene Section Element. Why: The card opens as a fake hacked screen. How: This holds the scrambled heading and the message over the pirate flag. */ }
 
 
-					<h2
+					<h1
 						ref={ hacTitRef }
 
 						className={ cssModObj.hacTitHea }
 
 						aria-label={ HAC_TIT_STR }
-					></h2>{ /* What: Hacked Title Heading Element. Why: The hack announces itself. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
+					></h1>{ /* What: Hacked Title Heading Element. Why: The hack announces itself, and as the prank's first heading it's the page's h1. How: This starts empty and scrambles into the heading, its label reading the finished words while the letters are still random. */ }
 
 					<p
 						ref={ hacMesRef }
@@ -461,15 +466,15 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 			<section
 				ref={ snoSceRef }
 
-				className={` ${ cssModObj.snoSceSec }   ${ prkBoo ? '' : cssModObj.snoSceSecOpen } `}
+				className={` ${ cssModObj.snoSceSec }   ${ isaPraBoo ? '' : cssModObj.snoSceSecOpen } `}
 			>{ /* What: Snowy Scene Section Element. Why: The real greeting is a snowy cabin with snow falling. How: This holds the greeting, the snowman, and the sign-off, and the snow falls inside it. */ }
 
 
-				<h1
+				<SnoTitTag
 					ref={ snoTitRef }
 
 					className={ cssModObj.snoTitHea }
-				>Merry Christmas{ namParStr ? `, ${ namParStr }` : '' }!</h1>{ /* What: Snowy Title Heading Element. Why: The greeting leads the scene. How: This wishes a Merry Christmas, adding the recipient's name when the link carries one. */ }
+				>Merry Christmas{ namParStr ? `, ${ namParStr }` : '' }!</SnoTitTag>{ /* What: Snowy Title Heading Element. Why: The greeting leads the scene. How: This wishes a Merry Christmas, adding the recipient's name when the link carries one, as the page's h1 on the listed card and an h2 under the hacked heading in the prank. */ }
 
 				<img
 					className={ cssModObj.snoManIma }
@@ -481,7 +486,7 @@ function ChrCarCom ( { prkBoo = false } : CacProTyp ) : JSX.Element {
 					alt='A cartoon snowman with his stick arms raised'
 				/>{ /* What: Snowman Image Element. Why: A snowman waves from the corner. How: This shows the snowman, tilted, in the lower left. */ }
 
-				<p className={ cssModObj.snoSigPar }>{ /* What: Snowy Signature Paragraph Element. Why: The card is signed like a real one. How: This signs it in the lower right, its From in the festive font, with a visible copy that fades in by letter and a hidden copy. */ }
+				<p className={ cssModObj.snoSigPar }>{ /* What: Snowy Signature Paragraph Element. Why: The card is signed like a real one. How: This signs it in the lower right, its "From," in the festive font, with a visible copy that fades in by letter and a hidden copy. */ }
 
 
 					<span

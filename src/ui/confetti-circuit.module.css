@@ -6,8 +6,8 @@
  *
  * @summary
  * Styles for ConCirCom: the wrapper pinned behind its section's content,
- * drawing its traces in the family's strong blue, and the fills of the
- * confetti pieces at the traces' ends, one per color role, so the motif
+ * drawing its traces in the family's strong blue, and the fill or stroke
+ * colors of the confetti pieces, orange, berry, and blue, so the motif
  * follows the theme's colors.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -18,14 +18,13 @@
 
 /* #region conCirDiv */
 
-.conCirDiv { /* What: Confetti Circuit Div. Why: The pattern fills its section behind the content without catching clicks. How: This pins it over the whole section at the bottom of the stack, in the strong blue the traces draw with. */
+.conCirDiv { /* What: Confetti Circuit Div. Why: The pattern fills its section behind the content without catching clicks. How: This pins it over the whole section in the strong blue the traces draw with, first in its section, so the positioned content after it paints over it. */
 
 
 	color          : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
 	inset          : 0;
 	pointer-events : none;
 	position       : absolute;
-	z-index        : 0;
 
 
 }

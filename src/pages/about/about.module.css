@@ -8,11 +8,12 @@
  * Styles for AboPagCom: a hero on the warm sunken ivory with the site's motif
  * and a scalloped bottom edge, as on Home; the story's paragraphs beside a
  * white card listing its main points, each led by a dot of confetti, two by
- * two once it drops under the story on a tablet; and the three sister sites as
- * equal cards, this site's own on a pale berry with a You Are Here label, the
- * others with a link whose arrow nudges on hover; then the closing buttons,
- * and a white band with the Ko-fi invitation and its button. The page fades
- * up as it opens, and every transition holds still under reduced motion.
+ * two once it drops under the story at 768px and below, and one by one at
+ * 640px and below; and the three sister sites as equal cards, three across
+ * above 1,024px and one under another below, this site's own on a pale berry
+ * with a "You are here" label, the others with a link whose arrow nudges on
+ * hover; then the closing buttons, and a white band with the Ko-fi invitation
+ * and its button. The page fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -63,7 +64,7 @@
 
 /* #region herInnDiv */
 
-.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, lifted over the motif. */
+.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, positioned so it paints over the motif, which comes before it. */
 
 
 	align-items    : flex-start;
@@ -74,7 +75,6 @@
 	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 	position       : relative;
-	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
 
 
 }
@@ -82,7 +82,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names each section above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -187,6 +187,7 @@
 /* #endregion stoTexDiv */
 
 
+
 /* #region facLisUno */
 
 .facLisUno { /* What: Fact List Unordered. Why: The main points sit in a white card beside the story. How: This draws the card with a quiet border and stacks the facts in one column. */
@@ -229,7 +230,7 @@
 
 }
 
-.facIteIte { /* What: Fact Item Item. Why: Each fact reads as one line led by a dot of confetti. How: This lines up the dot beside the text's first line in the main text color. */
+.facIteIte { /* What: Fact Item Item. Why: Each fact is one item led by a dot of confetti. How: This lines up the dot beside the text's first line in the main text color. */
 
 
 	align-items : start;
@@ -241,7 +242,7 @@
 
 
 }
-.facIteIte::before { /* What: Fact Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle centered on the first line, colored by the fact's position below. */
+.facIteIte::before { /* What: Fact Item Item Dot. Why: A dot of confetti leads each fact. How: This draws a small circle centered on the first line, colored by the fact's position below. */
 
 
 	background    : var( --acc-mai-col );                              /* Accent Main Color = #F26419 */
@@ -249,19 +250,19 @@
 	content       : '';
 	flex-shrink   : 0;
 	height        : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
-	margin-top    : calc( ( 1lh - var( --ver-rhy-m01 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 1 = 11px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact or tip that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
+	margin-top    : calc( ( 1lh - var( --ver-rhy-m01 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 1 = 11px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
 	width         : calc( var( --ver-rhy-m01 ) * 1rem );               /* Vertical Rhythm Base Minus 1 = 11px */
 
 
 }
-.facIteIte:nth-child( 2 )::before { /* What: Second Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
+.facIteIte:nth-child( 2 )::before { /* What: Fact Item Item Dot Second. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.facIteIte:nth-child( 3 )::before { /* What: Third Fact Item Dot. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
+.facIteIte:nth-child( 3 )::before { /* What: Fact Item Item Dot Third. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
@@ -300,6 +301,9 @@
 
 }
 
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Family section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `herInnDiv` and `stoTexDiv` regions above. */
+
+
 
 /* #region famLisUno */
 
@@ -333,18 +337,18 @@
 .famIteIte { /* What: Family Item Item. Why: Each site is a white card that answers the pointer. How: This draws the card with a quiet border, stacks its parts, and eases its lift and border. */
 
 
-	background     : var( --bac-sur-col );                                                                   /* Background Surface Color = #FFFFFF */
-	border         : var( --bor-wid-bas ) solid var( --bor-mai-col );                                        /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
-	border-radius  : var( --rad-bor-lar );                                                                   /* Radius Border Large ~= 14.572px */
+	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-lar );                            /* Radius Border Large ~= 14.572px */
 	display        : flex;
 	flex-direction : column;
-	gap            : var( --spa-ver-m01 );                                                                   /* Spacing Vertical Base Minus 1 = 11px */
-	padding        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                                              /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	transition     : border-color var( --dur-tra-bas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	gap            : var( --spa-ver-m01 );                            /* Spacing Vertical Base Minus 1 = 11px */
+	padding        : var( --spa-ver-p02 ) var( --spa-hor-p02 );       /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
-.famIteIte:hover { /* What: Hovered Family Item Item. Why: Cards answer the pointer like the rest of the family's cards. How: This turns the border the strong blue and lifts the card about 3px. */
+.famIteIte:hover { /* What: Hovered Family Item Item. Why: Cards answer the pointer like the rest of the sister sites' cards. How: This turns the border the strong blue and lifts the card about 3px. */
 
 
 	border-color : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
@@ -391,10 +395,10 @@
 
 }
 
-.famHerSpa { /* What: Family Here Span. Why: The You Are Here label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
+.famHerSpa { /* What: Family Here Span. Why: The "You are here" label reads as a small berry caption at the card's foot. How: This sets it in dark berry mono capitals, pushed to the bottom. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -418,7 +422,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	margin-top     : auto;
 	text-transform : uppercase;
-	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -489,7 +493,7 @@
 
 /* #region famActDiv */
 
-.famActDiv { /* What: Family Actions Div. Why: The two closing buttons sit side by side and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+.famActDiv { /* What: Family Actions Div. Why: The two closing buttons sit side by side and wrap when there's no room. How: This lines them up in a wrapping row, wrapping onto two lines at about 535px wide and below. */
 
 
 	display   : flex;
@@ -513,7 +517,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -561,7 +565,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -632,7 +636,7 @@
 
 }
 
-/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Support section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the herInnDiv and stoTexDiv regions above. */
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Support section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `herInnDiv` and `stoTexDiv` regions above. */
 
 .supTexPar { /* What: Support Text Paragraph. Why: The invitation reads a step larger than body text, with room before its button. How: This sets it at the base plus 2 size, capped at the paragraph measure, with a small step below. */
 
@@ -647,9 +651,9 @@
 
 /* #region butPriAnc */
 
-/* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the family section's orange button. How: Its rule sits in the famActDiv region above. */
+/* What: Button Primary Anchor Pointer. Why: The Ko-fi button shares the Family section's orange button. How: Its rule sits in the `famActDiv` region above. */
 
-.visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, which sighted visitors learn from the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
+.visHidSpa { /* What: Visually Hidden Span. Why: Screen reader users should hear that the button opens Ko-fi in a new tab, while sighted visitors see Ko-fi named in the text above it. How: This shrinks the note to a clipped 1px box out of the layout, the standard technique that keeps it in the accessibility tree. */
 
 
 	border      : 0;

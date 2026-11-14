@@ -5,17 +5,15 @@
  * happy-birthday-card.module.css = Happy Birthday Card Module
  *
  * @summary
- * Styles for BirCarCom, a full-screen night sky in deep purples, stacked in
- * painting order: a scatter of faint stars, the balloons balloons.ts floats
- * up, the greeting, wish, cake, and invitation centered above the floating
- * bar, and on top the canvas confetti.ts throws confetti on. The greeting
- * pops in Luckiest Guy, its Happy line glowing white and its Birthday and
- * name lines in a rainbow, and the wish is set in Mystery Quest, both
- * declared here so they load with the card; Mystery Quest's file is shared
- * with the Thanksgiving card. The candle flames flicker through CSS, and
- * stand still under reduced motion; everything else is played by the GSAP
- * timeline and the two loops, which skip their motion under reduced motion.
- * No layer needs a z-index, since each paints over the one before it.
+ * Styles for BirCarCom, a full-screen night sky in deep purples, its layers
+ * stacked in painting order, from a scatter of faint stars at the back to the
+ * canvas confetti.ts throws confetti on at the front, with the greeting and
+ * cake centered above the floating bar between them. The greeting pops in
+ * Luckiest Guy, glowing white or in a rainbow line by line, and the wish is
+ * set in Mystery Quest, both declared here so they load with the card from its
+ * own folder. The candle flames flicker through CSS; everything else is played
+ * by the GSAP timeline and the two loops. No layer needs a z-index, since each
+ * paints over the one before it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -35,7 +33,7 @@
 
 }
 
-@font-face { /* What: Luckiest Guy Extended Font Face. Why: A recipient's name can hold letters beyond basic Latin, such as Ł, Ő, or Ș, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
+@font-face { /* What: Luckiest Guy Extended Font Face. Why: A recipient's name can hold letters beyond basic Latin, such as Ł, which the Latin file lacks. How: This declares the font's extended Latin file for those characters only, so the browser downloads it only when a name on the card uses one. */
 
 
 	font-display  : swap;
@@ -47,13 +45,13 @@
 
 }
 
-@font-face { /* What: Mystery Quest Font Face. Why: The wish reads as playful handwriting. How: This loads the font's Latin regular weight from the shared fonts folder, where the Thanksgiving card reads it too. */
+@font-face { /* What: Mystery Quest Font Face. Why: The wish reads as playful handwriting. How: This loads the font's Latin regular weight from the card's folder. */
 
 
 	font-display : swap;
 	font-family  : 'Mystery Quest';
 	font-weight  : 400;
-	src          : url( '../../assets/fonts/mystery-quest-latin-400-normal.woff2' ) format( 'woff2' );
+	src          : url( './mystery-quest-latin-400-normal.woff2' ) format( 'woff2' );
 
 
 }
@@ -62,27 +60,27 @@
 
 /* #region birCarDiv */
 
-.birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
+.birCarDiv { /* What: Birthday Card Div. Why: The card fills the screen with a night sky, and while motion is allowed every tap on it throws confetti. How: This fixes it over the whole viewport in a purple-to-navy gradient, clips anything past its edges, shows a pointer, keeps taps from selecting text, and sets the fonts its lettering shares. */
 
 
-	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: The confetti, a balloon, a candle, a sprinkle, and the rainbow lettering share one bright blue. How: This is #4D96FF, read by the module, the cake, and confetti.ts. */
+	--bir-blu-col : #4D96FF;                               /* What: Birthday Blue Color. Why: A bright blue is one of the card's party colors, such as a balloon's. How: This is #4D96FF. */
 	--bir-boh-col : #FF9A9A;                               /* What: Birthday Bottom-Highlight Color. Why: The bottom tier's top catches the light. How: This is #FF9A9A, a pale coral the cake's bottom highlight band reads. */
-	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
-	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
-	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, the last party color confetti.ts reads. */
-	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The Happy line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
-	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: The confetti, a balloon, a candle, a sprinkle, and the rainbow lettering share one bright green. How: This is #6BCB77, read by the module, the cake, and confetti.ts. */
+	--bir-dec-fon : 'Mystery Quest', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Decorative Font. Why: The wish reads as playful handwriting. How: This names Mystery Quest, falling back to the main font. */
+	--bir-dis-fon : 'Luckiest Guy', var( --fon-fam-mai );  /* Font Family Main = 'Syne', sans-serif */ /* What: Birthday Display Font. Why: The greeting reads as a bold, bouncy cartoon. How: This names Luckiest Guy, falling back to the main font. */
+	--bir-eme-col : #34D399;                               /* What: Birthday Emerald Color. Why: The confetti mixes in an emerald the balloons never reach. How: This is #34D399, one of the card's party colors. */
+	--bir-glo-col : #FFB400;                               /* What: Birthday Glow Color. Why: The "Happy" line glows a warm gold. How: This is #FFB400, read by its text shadow at partial opacity. */
+	--bir-gre-col : #6BCB77;                               /* What: Birthday Green Color. Why: A bright green is one of the card's party colors, such as a candle's. How: This is #6BCB77. */
 	--bir-nav-col : #0A1A4A;                               /* What: Birthday Navy Color. Why: The night sky deepens to navy at its far corner. How: This is #0A1A4A, the sky gradient's last stop. */
-	--bir-ora-col : #FF9A3C;                               /* What: Birthday Orange Color. Why: The confetti, a balloon, and a sprinkle share one bright orange. How: This is #FF9A3C, read by the cake and confetti.ts. */
-	--bir-pin-col : #FF6FCF;                               /* What: Birthday Pink Color. Why: The confetti, a balloon, a candle, and a sprinkle share one bright pink. How: This is #FF6FCF, read by the cake and confetti.ts. */
+	--bir-ora-col : #FF9A3C;                               /* What: Birthday Orange Color. Why: A bright orange is one of the card's party colors, such as a sprinkle's. How: This is #FF9A3C. */
+	--bir-pin-col : #FF6FCF;                               /* What: Birthday Pink Color. Why: A bright pink is one of the card's party colors, such as a candle's. How: This is #FF6FCF. */
 	--bir-plu-col : #1A0533;                               /* What: Birthday Plum Color. Why: The night sky starts in a deep plum. How: This is #1A0533, the sky gradient's first stop. */
-	--bir-pur-col : #A78BFA;                               /* What: Birthday Purple Color. Why: The confetti, a balloon, a sprinkle, and the rainbow lettering share one soft purple. How: This is #A78BFA, read by the module, the cake, and confetti.ts. */
-	--bir-red-col : #FF6B6B;                               /* What: Birthday Red Color. Why: The confetti, a balloon, the bottom tier, a flame's heart, a sprinkle, and the rainbow lettering share one coral red. How: This is #FF6B6B, read by the module, the cake, and confetti.ts. */
+	--bir-pur-col : #A78BFA;                               /* What: Birthday Purple Color. Why: A soft purple is one of the card's party colors, such as a sprinkle's. How: This is #A78BFA. */
+	--bir-red-col : #FF6B6B;                               /* What: Birthday Red Color. Why: A coral red is one of the card's party colors, such as the bottom tier's. How: This is #FF6B6B. */
 	--bir-sha-col : #3A1A6E;                               /* What: Birthday Shadow Color. Why: The cake sits on a dark shadow. How: This is #3A1A6E, the deep purple the cake's shadow oval reads. */
 	--bir-toh-col : #FFE97D;                               /* What: Birthday Top-Highlight Color. Why: The top tier's top catches the light. How: This is #FFE97D, a pale yellow the cake's top highlight band reads. */
 	--bir-vio-col : #2D0A5E;                               /* What: Birthday Violet Color. Why: The night sky glows violet toward its middle. How: This is #2D0A5E, the sky gradient's middle stop. */
-	--bir-whi-col : #FFFFFF;                               /* What: Birthday White Color. Why: The lettering, stars, balloon shine, icing, and flame cores share one white. How: This is #FFFFFF, read by the module and the cake. */
-	--bir-yel-col : #FFD93D;                               /* What: Birthday Yellow Color. Why: The confetti, a balloon, the top tier, the flames, a sprinkle, and the rainbow lettering share one sunny yellow. How: This is #FFD93D, read by the module, the cake, and confetti.ts. */
+	--bir-whi-col : #FFFFFF;                               /* What: Birthday White Color. Why: White is the card's main light color, such as the lettering's. How: This is #FFFFFF. */
+	--bir-yel-col : #FFD93D;                               /* What: Birthday Yellow Color. Why: A sunny yellow is one of the card's party colors, such as the flames'. How: This is #FFD93D. */
 
 	-webkit-user-select : none;
 	background          : linear-gradient( calc( var( --cdn-pow-017 ) * 1deg ), var( --bir-plu-col ) 0%, var( --bir-vio-col ) calc( var( --cdn-pow-003-rec ) * 100% ), var( --bir-nav-col ) 100% ); /* Core-Design-Number to the Power of 17 ~= 119.151deg, Birthday Plum Color = #1A0533, Birthday Violet Color = #2D0A5E, Core-Design-Number to the Power of 3 Reciprocal ~= 43.0%, Birthday Navy Color = #0A1A4A */
@@ -133,7 +131,7 @@
 
 
 }
-.staDotSpa--big { /* What: Big Star Dot Span. Why: Every fifth star shines larger. How: This sizes it a couple of steps up. */
+.staDotSpa--big { /* What: Star Dot Span Big. Why: Every fifth star shines larger. How: This sizes it a couple of steps up. */
 
 
 	height : calc( var( --ver-rhy-m06 ) * 1rem ); /* Vertical Rhythm Base Minus 6 ~= 2.696px */
@@ -169,8 +167,8 @@
 	overflow    : visible;
 	position    : absolute;
 	top         : 0;
-	will-change : transform;
 	width       : auto;
+	will-change : transform;
 
 
 }
@@ -221,7 +219,7 @@
 	inset           : 0;
 	justify-content : center;
 	padding         : var( --spa-ver-p02 ) var( --spa-hor-p02 );  /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the top padding's step outside the card page. */
+	padding-bottom  : var( --car-bar-mar, var( --spa-ver-p02 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 2 ~= 25.572px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This keeps the column clear of it, falling back to the top padding's step outside the card page. */
 	position        : absolute;
 	text-align      : center;
 
@@ -244,17 +242,17 @@
 
 }
 
-.titTopSpa { /* What: Title Top Span. Why: Happy opens the greeting in white with a warm glow. How: This sets the line a step smaller than Birthday, growing with the screen, with a soft gold shadow. */
+.titTopSpa { /* What: Title Top Span. Why: "Happy" opens the greeting in white with a warm glow. How: This sets the line a step smaller than "Birthday", growing with the screen, with a soft gold shadow. */
 
 
 	display     : block;
-	font-size   : clamp( var( --fon-siz-p04 ), 10vw, var( --fon-siz-p06 ) );                                                                                     /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
-	text-shadow : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) rgb( from var( --bir-glo-col ) r g b / var( --cdn-pow-002-rec ) );   /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Plus 1 ~= 19.304px, Birthday Glow Color = #FFB400 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Line Glow. Why: The line glows gold. How: The shadow is cast by the whole line, which pops in as one piece rather than letter by letter. */
+	font-size   : clamp( var( --fon-siz-p04 ), 10vw, var( --fon-siz-p06 ) );                                                                                   /* Font Size Base Plus 4 ~= 33.876px, Font Size Base Plus 6 ~= 59.447px */ /* What: Fluid Line Size. Why: A full-size line crowds a phone. How: This grows it with the screen between the two steps. */
+	text-shadow : 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) rgb( from var( --bir-glo-col ) r g b / var( --cdn-pow-002-rec ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Plus 1 ~= 19.304px, Birthday Glow Color = #FFB400 @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Line Glow. Why: The line glows gold. How: The shadow is cast by the whole line, which pops in as one piece rather than letter by letter. */
 
 
 }
 
-.titMaiSpa { /* What: Title Main Span. Why: Birthday, and the name when there is one, are the greeting's biggest lines, in a rainbow. How: This sets each line growing with the screen, its letters cut out of a left-to-right rainbow, and lets a long name break anywhere rather than run off a phone. */
+.titMaiSpa { /* What: Title Main Span. Why: "Birthday", and the name when there is one, are the greeting's biggest lines, in a rainbow. How: This sets each line growing with the screen, its letters cut out of a left-to-right rainbow, and lets a long name break anywhere rather than run off a phone. */
 
 
 	-webkit-background-clip : text;
@@ -275,12 +273,12 @@
 .birSubPar { /* What: Birthday Subtitle Paragraph. Why: The wish follows the greeting in playful handwriting. How: This sets Mystery Quest in soft white, growing with the screen, within the small text measure. */
 
 
-	color         : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-001-rec ) );   /* Birthday White Color = #FFFFFF @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Soft White. Why: The base paragraph rule sets the secondary text color, but the wish sits on the night sky. How: This sets a slightly see-through white. */
-	font-family   : var( --bir-dec-fon );                                                /* Birthday Decorative Font = 'Mystery Quest', main font */
-	font-size     : clamp( var( --fon-siz-p01 ), 4vw, var( --fon-siz-p03 ) );            /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish should read comfortably on a big screen without crowding a phone. How: This grows it with the screen between the two steps. */
-	line-height   : var( --ver-rhy-p01 );                                                /* Vertical Rhythm Base Plus 1 ~= 1.755 */
-	margin-bottom : var( --spa-ver-p02 );                                                /* Spacing Vertical Base Plus 2 ~= 25.572px */
-	max-width     : var( --tex-wid-sma );                                                /* Text Width Small ~= 22.047em */
+	color         : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-001-rec ) ); /* Birthday White Color = #FFFFFF @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */ /* What: Soft White. Why: The base paragraph rule sets the secondary text color, but the wish sits on the night sky. How: This sets a slightly see-through white. */
+	font-family   : var( --bir-dec-fon );                                              /* Birthday Decorative Font = 'Mystery Quest', main font */
+	font-size     : clamp( var( --fon-siz-p01 ), 4vw, var( --fon-siz-p03 ) );          /* Font Size Base Plus 1 ~= 14.572px, Font Size Base Plus 3 ~= 25.572px */ /* What: Fluid Wish Size. Why: The wish should read comfortably on a big screen without crowding a phone. How: This grows it with the screen between the two steps. */
+	line-height   : var( --ver-rhy-p01 );                                              /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-bottom : var( --spa-ver-p02 );                                              /* Spacing Vertical Base Plus 2 ~= 25.572px */
+	max-width     : var( --tex-wid-sma );                                              /* Text Width Small ~= 22.047em */
 
 
 }
@@ -315,7 +313,7 @@
 
 
 }
-.cakHigRec--top { /* What: Top Cake Highlight Rect. Why: The top tier's highlight was drawn a little stronger. How: This raises its opacity a step. */
+.cakHigRec--top { /* What: Cake Highlight Rect Top. Why: The top tier's highlight was drawn a little stronger. How: This raises its opacity a step. */
 
 
 	opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
@@ -335,7 +333,7 @@
 
 
 }
-.cakFlaGro--second { /* What: Second Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the middle flame a step and starts it a moment later. */
+.cakFlaGro--second { /* What: Cake Flame Group Second. Why: The flames shouldn't flicker in step. How: This slows the middle flame a step and starts it a moment later. */
 
 
 	animation-delay    : var( --dur-ani-m02 ); /* Duration Animation Base Minus 2 ~= 89.9ms */
@@ -343,7 +341,7 @@
 
 
 }
-.cakFlaGro--third { /* What: Third Cake Flame Group. Why: The flames shouldn't flicker in step. How: This slows the last flame another step and starts it later still. */
+.cakFlaGro--third { /* What: Cake Flame Group Third. Why: The flames shouldn't flicker in step. How: This slows the last flame another step and starts it later still. */
 
 
 	animation-delay    : var( --dur-ani-bas ); /* Duration Animation Base ~= 157.8ms */
@@ -392,14 +390,14 @@
 
 
 
-.birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets small, slightly spaced main-font text in a quiet white, a little below the cake. */
+.birTapPar { /* What: Birthday Tap Paragraph. Why: The invitation to tap should be noticed without competing with the greeting. How: This sets slightly spaced main-font text in a quiet white, a little below the cake. */
 
 
-	color          : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-002-rec ) );   /* Birthday White Color = #FFFFFF @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */
-	font-size      : var( --fon-siz-p01 );                                                /* Font Size Base Plus 1 ~= 14.572px */
-	letter-spacing : calc( var( --cdn-pow-012-rec ) * 1em );                              /* Core-Design-Number to the Power of 12 Reciprocal ~= 0.034em */
-	line-height    : var( --ver-rhy-p01 );                                                /* Vertical Rhythm Base Plus 1 ~= 1.755 */
-	margin-top     : var( --spa-ver-m02 );                                                /* Spacing Vertical Base Minus 2 ~= 8.304px */
+	color          : rgb( from var( --bir-whi-col ) r g b / var( --cdn-pow-002-rec ) ); /* Birthday White Color = #FFFFFF @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */ /* What: Quiet White. Why: The base paragraph rule sets the secondary text color, but the invitation sits on the night sky. How: This sets a half see-through white. */
+	font-size      : var( --fon-siz-p01 );                                              /* Font Size Base Plus 1 ~= 14.572px */
+	letter-spacing : calc( var( --cdn-pow-012-rec ) * 1em );                            /* Core-Design-Number to the Power of 12 Reciprocal ~= 0.034em */
+	line-height    : var( --ver-rhy-p01 );                                              /* Vertical Rhythm Base Plus 1 ~= 1.755 */
+	margin-top     : var( --spa-ver-m02 );                                              /* Spacing Vertical Base Minus 2 ~= 8.304px */
 
 
 }

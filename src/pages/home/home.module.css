@@ -11,9 +11,8 @@
  * lined in berry, three cards rising out of it one after another and fanning
  * wider on hover, a perforated stamp on its front, and confetti popping in
  * around it. Below come the three numbered step cards, the featured cards
- * four, two, or one across, and a perforated postcard banner with a postmark.
- * The page fades up as it opens, and every animation and transition holds
- * still under reduced motion.
+ * four, two, or one across, and a perforated postcard banner, its postmark
+ * shown beside the text above 768px. The page fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -65,7 +64,7 @@
 
 /* #region herInnDiv */
 
-.herInnDiv { /* What: Hero Inner Div. Why: The text and the envelope sit side by side on wide screens, above the motif. How: This lays them out in two columns in the site's centered column, lifted over the motif. */
+.herInnDiv { /* What: Hero Inner Div. Why: The text and the envelope sit side by side on wide screens, above the motif. How: This lays them out in two columns in the site's centered column, positioned so they paint over the motif, which comes before them. */
 
 
 	align-items           : center;
@@ -76,7 +75,6 @@
 	max-width             : var( --con-max-wid );                      /* Container Maximum Width ~= 1,449.365px */
 	padding               : 0 var( --gut-sid-pad );                    /* Gutter Side Padding, about 19.304px - 44.876px */
 	position              : relative;
-	z-index               : 1;                                         /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
 
 
 }
@@ -115,7 +113,7 @@
 
 
 	align-items    : center;
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	display        : inline-flex;
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
@@ -141,6 +139,7 @@
 /* #endregion herEyePar */
 
 
+
 /* #region herTitHea */
 
 .herTitHea { /* What: Hero Title Heading. Why: The heading is the page's loudest line. How: This sets it in the main text color at the shared h1 size. */
@@ -154,7 +153,7 @@
 .herAccSpa { /* What: Hero Accent Span. Why: The words that say what's different are the playful part of the heading. How: This colors them dark berry under a bright berry squiggle. */
 
 
-	color                     : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color                     : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	text-decoration           : underline wavy var( --act-mai-col );    /* Accent-Tertiary Main Color = #E64E82 */
 	text-decoration-skip-ink  : none;
 	text-decoration-thickness : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
@@ -178,7 +177,7 @@
 
 /* #region herActDiv */
 
-.herActDiv { /* What: Hero Actions Div. Why: The two buttons sit side by side and wrap on a narrow phone. How: This lines them up in a wrapping row, a little apart from the lead. */
+.herActDiv { /* What: Hero Actions Div. Why: The two buttons sit side by side and wrap when there's no room. How: This lines them up in a wrapping row, a little apart from the lead, wrapping onto two lines from about 1,035px down to about 770px, where the hero's text column sits narrow beside the envelope, and again at about 490px wide and below. */
 
 
 	display     : flex;
@@ -203,7 +202,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -235,10 +234,10 @@
 
 
 }
-@media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, Request a Custom Card, wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
+@media ( max-width : 640px ) { /* What: Phone Button Primary Anchor. Why: The postcard's long label, "Request a Custom Card", wraps the button into a tall block on phones at the body size, from about 423px down. How: This applies at 640px and below, the nearest of the site's breakpoints at or above that width. */
 
 
-	.butPriAnc--postcard { /* What: Postcard Button Primary Anchor. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
+	.butPriAnc--postcard { /* What: Button Primary Anchor Postcard. Why: At the base size the label stays on one line down to about 373px and never needs more than two. How: This sets the postcard button's text at the base size, leaving the hero's buttons at their own size. */
 
 
 		font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
@@ -263,7 +262,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -334,7 +333,7 @@
 .envFlaDiv { /* What: Envelope Flap Div. Why: The open flap stands up behind the cards. How: This draws a strong blue triangle resting on the top of the envelope's back. */
 
 
-	background : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
+	background : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
 	bottom     : 56%;
 	clip-path  : polygon( 0 100%, 50% 0, 100% 100% );
 	height     : 30%;
@@ -366,7 +365,7 @@
 	border           : calc( var( --ver-rhy-m03 ) * 1rem ) solid var( --bac-sur-col );                                        /* Vertical Rhythm Base Minus 3 ~= 6.268px, Background Surface Color = #FFFFFF */
 	border-radius    : var( --rad-bor-xsm );                                                                                  /* Radius Border Extra Small ~= 3.572px */
 	bottom           : 30%;
-	box-shadow       : var( --ele-med-sha );                                                                                  /* Elevation Medium Shadow, about 0 4.7px 14.6px plus 0 1.5px 3.6px -1.2px */
+	box-shadow       : var( --ele-med-sha );                                                                                  /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
 	height           : auto;
 	left             : 22%;
 	position         : absolute;
@@ -376,7 +375,7 @@
 
 
 }
-.envCarIma:nth-of-type( 1 ) { /* What: Left Envelope Card Image. Why: The first card leans left in the fan and rises first. How: This turns it left and shifts it out, starting its rise after the page's own entrance. */
+.envCarIma:nth-of-type( 1 ) { /* What: Envelope Card Image Left. Why: The first card leans left in the fan and rises first. How: This turns it left and shifts it out, starting its rise after the page's own entrance. */
 
 
 	animation-delay : var( --dur-ani-p03 ); /* Duration Animation Base Plus 3 ~= 366.9ms */
@@ -385,7 +384,7 @@
 
 
 }
-.envCarIma:nth-of-type( 2 ) { /* What: Middle Envelope Card Image. Why: The middle card stands tallest in the fan and rises second. How: This lifts it and starts its rise one beat later. */
+.envCarIma:nth-of-type( 2 ) { /* What: Envelope Card Image Middle. Why: The middle card stands tallest in the fan and rises second. How: This lifts it and starts its rise one beat later. */
 
 
 	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
@@ -393,7 +392,7 @@
 
 
 }
-.envCarIma:nth-of-type( 3 ) { /* What: Right Envelope Card Image. Why: The last card leans right in the fan and rises last. How: This turns it right and shifts it out, starting its rise two beats later. */
+.envCarIma:nth-of-type( 3 ) { /* What: Envelope Card Image Right. Why: The last card leans right in the fan and rises last. How: This turns it right and shifts it out, starting its rise two beats later. */
 
 
 	animation-delay : calc( var( --dur-ani-p03 ) + var( --dur-ani-m01 ) * 2 ); /* Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Minus 1 ~= 119.2ms */
@@ -402,7 +401,7 @@
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 1 ) { /* What: Hovered Left Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the left card further out. */
+.envStaDiv:hover .envCarIma:nth-of-type( 1 ) { /* What: Hovered Envelope Card Image Left. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the left card further out. */
 
 
 	rotate    : -19deg;
@@ -410,14 +409,14 @@
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 2 ) { /* What: Hovered Middle Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This lifts the middle card higher. */
+.envStaDiv:hover .envCarIma:nth-of-type( 2 ) { /* What: Hovered Envelope Card Image Middle. Why: The fan opens wider under the pointer, the hero's flair. How: This lifts the middle card higher. */
 
 
 	translate : 0 -17%;
 
 
 }
-.envStaDiv:hover .envCarIma:nth-of-type( 3 ) { /* What: Hovered Right Envelope Card Image. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the right card further out. */
+.envStaDiv:hover .envCarIma:nth-of-type( 3 ) { /* What: Hovered Envelope Card Image Right. Why: The fan opens wider under the pointer, the hero's flair. How: This turns the right card further out. */
 
 
 	rotate    : 19deg;
@@ -470,7 +469,7 @@
 .envFroDiv { /* What: Envelope Front Div. Why: The front pocket covers the cards' lower edges, its top cut in a V. How: This draws the powder blue front with a V notch clipped from its top, holding the stamp. */
 
 
-	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
+	background : var( --acc-sec-col );                               /* Accent Secondary Color = #7DB9D8 */
 	bottom     : 4%;
 	clip-path  : polygon( 0 0, 50% 45%, 100% 0, 100% 100%, 0 100% );
 	height     : 40%;
@@ -488,7 +487,7 @@
 
 
 	bottom   : 14%;
-	filter   : drop-shadow( 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m05 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-007-rec ) ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 5 ~= 3.572px, Shadow Main Color = #1A1A2E @ 0.140 opacity */
+	filter   : drop-shadow( 0 calc( var( --ver-rhy-m07 ) * 1rem ) calc( var( --ver-rhy-m05 ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-007-rec ) ) ); /* Vertical Rhythm Base Minus 7 ~= 2.035px, Vertical Rhythm Base Minus 5 ~= 3.572px, Shadow Main Color = #1A1A2E @ 0.140 opacity, Core-Design-Number to the Power of 7 Reciprocal ~= 0.140 */
 	position : absolute;
 	right    : 8%;
 	rotate   : 8deg;
@@ -533,18 +532,18 @@
 
 
 
-.conPieSpa { /* What: Confetti Piece Span. Why: Confetti bursts around the envelope as the cards come out. How: This places a small shape, sized and colored by its position below, and pops it in after the cards have risen. */
+.conPieSpa { /* What: Confetti Piece Span. Why: Confetti bursts around the envelope as the cards come out. How: This places a small shape, sized and colored by its position below, and pops it in as the last card rises. */
 
 
 	animation     : conPieSpaEnterPopIn var( --dur-ani-p02 ) var( --mot-bou-eas ) calc( var( --dur-ani-p04 ) + var( --dur-ani-p03 ) ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Plus 3 ~= 366.9ms */
 	border-radius : 50%;
-	height        : calc( var( --ver-rhy-m02 ) * 1rem );                                                                                    /* Vertical Rhythm Base Minus 2 ~= 8.304px */
+	height        : calc( var( --ver-rhy-m02 ) * 1rem ); /* Vertical Rhythm Base Minus 2 ~= 8.304px */
 	position      : absolute;
-	width         : calc( var( --ver-rhy-m02 ) * 1rem );                                                                                    /* Vertical Rhythm Base Minus 2 ~= 8.304px */
+	width         : calc( var( --ver-rhy-m02 ) * 1rem ); /* Vertical Rhythm Base Minus 2 ~= 8.304px */
 
 
 }
-.conPieSpa:nth-of-type( 1 ) { /* What: First Confetti Piece Span. Why: An orange dot pops in at the upper left. How: This places and colors it. */
+.conPieSpa:nth-of-type( 1 ) { /* What: Confetti Piece Span First. Why: An orange dot pops in at the upper left. How: This places and colors it. */
 
 
 	background : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
@@ -553,7 +552,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 2 ) { /* What: Second Confetti Piece Span. Why: A tumbling berry square pops in near the top. How: This places it, squares and turns it, and colors it. */
+.conPieSpa:nth-of-type( 2 ) { /* What: Confetti Piece Span Second. Why: A tumbling berry square pops in near the top. How: This places it, squares and turns it, and colors it. */
 
 
 	background    : var( --act-mai-col );             /* Accent-Tertiary Main Color = #E64E82 */
@@ -564,7 +563,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 3 ) { /* What: Third Confetti Piece Span. Why: A blue dot pops in at the upper right. How: This places and colors it. */
+.conPieSpa:nth-of-type( 3 ) { /* What: Confetti Piece Span Third. Why: A blue dot pops in at the upper right. How: This places and colors it. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
@@ -573,7 +572,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 4 ) { /* What: Fourth Confetti Piece Span. Why: An orange streamer pops in at the right. How: This places it, stretches it into a tall rounded strip, turns it, and colors it. */
+.conPieSpa:nth-of-type( 4 ) { /* What: Confetti Piece Span Fourth. Why: An orange streamer pops in at the right. How: This places it, stretches it into a tall rounded strip, turns it, and colors it. */
 
 
 	background    : var( --acc-mai-col );                /* Accent Main Color = #F26419 */
@@ -586,7 +585,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 5 ) { /* What: Fifth Confetti Piece Span. Why: A tumbling blue square pops in at the left. How: This places it, squares and turns it, and colors it. */
+.conPieSpa:nth-of-type( 5 ) { /* What: Confetti Piece Span Fifth. Why: A tumbling blue square pops in at the left. How: This places it, squares and turns it, and colors it. */
 
 
 	background    : var( --acs-str-col ); /* Accent-Secondary Strong Color = #4A91B8 */
@@ -597,7 +596,7 @@
 
 
 }
-.conPieSpa:nth-of-type( 6 ) { /* What: Sixth Confetti Piece Span. Why: A berry dot pops in above the middle card. How: This places and colors it. */
+.conPieSpa:nth-of-type( 6 ) { /* What: Confetti Piece Span Sixth. Why: A berry dot pops in above the middle card. How: This places and colors it. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
@@ -664,7 +663,7 @@
 
 /* #region secInnDiv */
 
-.secInnDiv { /* What: Section Inner Div. Why: Every section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
+.secInnDiv { /* What: Section Inner Div. Why: A section's content sits in the site's centered column. How: This caps its width, centers it, and pads its sides with the gutter. */
 
 
 	margin    : 0 auto;
@@ -677,7 +676,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names each section above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -730,18 +729,18 @@
 .steIteIte { /* What: Step Item Item. Why: Each step is a white card that lifts on hover. How: This draws the card with a quiet border, stacks its parts, and eases its lift and border. */
 
 
-	background     : var( --bac-sur-col );                                                                   /* Background Surface Color = #FFFFFF */
-	border         : var( --bor-wid-bas ) solid var( --bor-mai-col );                                        /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
-	border-radius  : var( --rad-bor-lar );                                                                   /* Radius Border Large ~= 14.572px */
+	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */
+	border         : var( --bor-wid-bas ) solid var( --bor-mai-col ); /* Border Width Base ~= 1.160px, Border Main Color = #D8CFBE */
+	border-radius  : var( --rad-bor-lar );                            /* Radius Border Large ~= 14.572px */
 	display        : flex;
 	flex-direction : column;
-	gap            : var( --spa-ver-m01 );                                                                   /* Spacing Vertical Base Minus 1 = 11px */
-	padding        : var( --spa-ver-p02 ) var( --spa-hor-p02 );                                              /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
-	transition     : border-color var( --dur-tra-bas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	gap            : var( --spa-ver-m01 );                            /* Spacing Vertical Base Minus 1 = 11px */
+	padding        : var( --spa-ver-p02 ) var( --spa-hor-p02 );       /* Spacing Vertical Base Plus 2 ~= 25.572px, Spacing Horizontal Base Plus 2 ~= 25.572px */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
-.steIteIte:hover { /* What: Hovered Step Item Item. Why: Cards answer the pointer like the rest of the family's cards. How: This turns the border the strong blue and lifts the card about 3px. */
+.steIteIte:hover { /* What: Hovered Step Item Item. Why: Cards answer the pointer like the rest of the sister sites' cards. How: This turns the border the strong blue and lifts the card about 3px. */
 
 
 	border-color : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
@@ -779,21 +778,21 @@
 
 
 }
-.steIteIte:nth-child( 1 ) .steNumSpa { /* What: First Step Number Span. Why: The first step's dot is the family's orange. How: This fills it orange. */
+.steIteIte:nth-child( 1 ) .steNumSpa { /* What: Step Number Span First. Why: The first step's dot is the family's orange. How: This fills it orange. */
 
 
 	background : var( --acc-mai-col ); /* Accent Main Color = #F26419 */
 
 
 }
-.steIteIte:nth-child( 2 ) .steNumSpa { /* What: Second Step Number Span. Why: The second step's dot is this site's berry. How: This fills it berry. */
+.steIteIte:nth-child( 2 ) .steNumSpa { /* What: Step Number Span Second. Why: The second step's dot is this site's berry. How: This fills it berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.steIteIte:nth-child( 3 ) .steNumSpa { /* What: Third Step Number Span. Why: The third step's dot is the family's powder blue. How: This fills it blue. */
+.steIteIte:nth-child( 3 ) .steNumSpa { /* What: Step Number Span Third. Why: The third step's dot is the family's powder blue. How: This fills it blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */
@@ -840,12 +839,12 @@
 
 /* #region secInnDiv */
 
-/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
+/* What: Section Inner Div Pointer. Why: This section's content sits in `secInnDiv` too, whose rule is written once, where the class is first used. How: Its rule is in the `homHiwSec` region above. */
 
 
 /* #region feaHeaDiv */
 
-.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line on wide screens and wrap on phones. How: This spreads them apart along their baseline, wrapping when there's no room. */
+.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line and wrap when there's no room. How: This spreads them apart along their bottom edge, wrapping onto two lines at about 415px wide and below. */
 
 
 	align-items     : flex-end;
@@ -857,6 +856,8 @@
 
 
 }
+
+/* What: Section Eyebrow Paragraph And Section Title Heading Pointer. Why: The Featured section's eyebrow and heading share their rules with the other sections'. How: Their rules sit in the `homHiwSec` region above. */
 
 
 /* #region allCarAnc */
@@ -870,7 +871,7 @@
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	text-transform : uppercase;
-	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -992,7 +993,7 @@
 
 /* #region secInnDiv */
 
-/* What: Section Inner Div Pointer. Why: This section's content sits in secInnDiv too, whose rule is written once, where the class is first used. How: Its rule is in the homHiwSec region above. */
+/* What: Section Inner Div Pointer. Why: This section's content sits in `secInnDiv` too, whose rule is written once, where the class is first used. How: Its rule is in the `homHiwSec` region above. */
 
 
 /* #region posShaDiv */
@@ -1000,7 +1001,7 @@
 .posShaDiv { /* What: Postcard Shadow Div. Why: The postcard's shadow has to follow its perforated edge. How: This casts a drop shadow from the masked postcard inside it. */
 
 
-	filter : drop-shadow( 0 calc( var( --ver-rhy-m04 ) * 1rem ) calc( var( --ver-rhy-bas ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 4 ~= 4.732px, Vertical Rhythm Base ~= 14.572px, Shadow Main Color = #1A1A2E @ 0.105 opacity */
+	filter : drop-shadow( 0 calc( var( --ver-rhy-m04 ) * 1rem ) calc( var( --ver-rhy-bas ) * 1rem ) oklch( from var( --sha-mai-col ) l c h / var( --cdn-pow-008-rec ) ) ); /* Vertical Rhythm Base Minus 4 ~= 4.732px, Vertical Rhythm Base ~= 14.572px, Shadow Main Color = #1A1A2E @ 0.105 opacity, Core-Design-Number to the Power of 8 Reciprocal ~= 0.105 */
 
 
 }
@@ -1040,7 +1041,7 @@
 
 /* #region posTexDiv */
 
-.posTexDiv { /* What: Postcard Text Div. Why: The invitation reads as one column, padded well inside the perforated edge, above the motif. How: This stacks its parts and lifts them over the motif. */
+.posTexDiv { /* What: Postcard Text Div. Why: The invitation reads as one column, padded well inside the perforated edge, above the motif. How: This stacks its parts, positioned so they paint over the motif, which comes before them. */
 
 
 	align-items    : flex-start;
@@ -1049,12 +1050,13 @@
 	gap            : var( --spa-ver-p01 );                      /* Spacing Vertical Base Plus 1 ~= 19.304px */
 	padding        : var( --spa-ver-p04 ) var( --spa-hor-p04 ); /* Spacing Vertical Base Plus 4 ~= 44.876px, Spacing Horizontal Base Plus 4 ~= 44.876px */
 	position       : relative;
-	z-index        : 1;                                         /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the text. How: This lifts the text one layer above it. */
 
 
 }
 
-.posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color, a step below the section headings. How: This sets its color and the base plus 4 size. */
+/* What: Section Eyebrow Paragraph Pointer. Why: The Commission section's eyebrow shares its rule with the other sections'. How: Its rule sits in the `homHiwSec` region above. */
+
+.posTitHea { /* What: Postcard Title Heading. Why: The banner's heading reads in the main text color. How: This sets its color and the base plus 4 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
@@ -1071,10 +1073,12 @@
 
 }
 
+/* What: Button Primary Anchor Pointer. Why: The Commission section's button shares the hero's orange button, its postcard modifier included. How: Their rules sit in the `herActDiv` region above. */
+
 /* #endregion posTexDiv */
 
 
-.posMarSvg { /* What: Postcard Mark SVG. Why: A tipped blue postmark finishes the postcard. How: This sizes it, tilts it, colors it the strong blue through currentColor, and lifts it over the motif. */
+.posMarSvg { /* What: Postcard Mark SVG. Why: A tipped blue postmark finishes the postcard. How: This sizes it, tilts it, colors it the strong blue through currentColor, and positions it so it paints over the motif, which comes before it. */
 
 
 	color        : var( --acs-str-col );                /* Accent-Secondary Strong Color = #4A91B8 */
@@ -1082,7 +1086,6 @@
 	position     : relative;
 	rotate       : -8deg;
 	width        : calc( var( --ver-rhy-p09 ) * 1rem ); /* Vertical Rhythm Base Plus 9 ~= 183.074px */
-	z-index      : 1;                                   /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the postmark. How: This lifts the postmark one layer above it. */
 
 
 }

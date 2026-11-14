@@ -8,13 +8,12 @@
  * Styles for ShaDiaCom: a white rounded panel that pops in over a dimmed
  * backdrop with a gentle overshoot and fades out when closed, a round close
  * button in its corner that lifts on hover, a berry eyebrow over the card's
- * title, labeled fields whose focus ring eases in, an orange Copy Link button
- * whose label fades in afresh each time it changes, an outlined share sheet
- * button, a preview text link with a nudging arrow, and the copy status
- * line, whose message fades in the same way. Every animation and transition
- * holds still under reduced motion, except that the panel's closing
- * animation shrinks to a hundredth of a millisecond, since the dialog waits
- * on its end to close.
+ * title, labeled fields whose focus ring eases in, an orange "Copy Link"
+ * button whose label fades in afresh each time it changes, an outlined share
+ * sheet button, a preview text link with a nudging arrow, and the copy status
+ * line, whose message fades in the same way. Under reduced motion the panel's
+ * closing animation shrinks to a hundredth of a millisecond rather than
+ * stopping, since the dialog waits on its end to close.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -31,10 +30,10 @@
 	background    : var( --bac-sur-col );                                                           /* Background Surface Color = #FFFFFF */
 	border        : none;
 	border-radius : var( --rad-bor-xla );                                                           /* Radius Border Extra Large ~= 19.304px */
-	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow, about 0 19.3px 59.4px -11px plus 0 6.3px 14.6px -3.6px */
+	box-shadow    : var( --ele-xla-sha );                                                           /* Elevation Extra Large Shadow ~= 0 19.304px 59.447px -11px plus 0 6.268px 14.572px -3.572px */
 	color         : var( --tex-mai-col );                                                           /* Text Main Color = #1A1A2E */
 	margin        : auto;
-	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, about 493.3px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
+	max-width     : calc( var( --cdn-pow-012 ) * var( --fon-siz-p01 ) + var( --spa-hor-p03 ) * 2 ); /* Core-Design-Number to the Power of 12 ~= 29.207, Font Size Base Plus 1 ~= 14.572px, Spacing Horizontal Base Plus 3 ~= 33.876px, ~= 493.3px */ /* What: Reading Width Cap. Why: The panel holds paragraphs at the body size. How: This is the paragraph measure at that size plus the panel's padding on both sides. */
 	padding       : 0;
 	width         : calc( 100% - var( --gut-sid-pad ) * 2 );                                        /* Gutter Side Padding, about 19.304px - 44.876px */
 
@@ -44,7 +43,7 @@
 
 
 	animation  : shaDiaDiaShadeFadeIn var( --dur-ani-p01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
-	background : oklch( from var( --scr-mai-col ) l c h / var( --cdn-pow-002-rec ) ); /* Scrim Main Color = #1A1A2E @ 0.570 opacity */
+	background : oklch( from var( --scr-mai-col ) l c h / var( --cdn-pow-002-rec ) ); /* Scrim Main Color = #1A1A2E @ 0.570 opacity, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
 
 
 }
@@ -74,7 +73,6 @@
 
 
 	}
-
 	.shaDiaDia.shaDiaDia--closing { /* What: Instant Closing Share Dialog Dialog. Why: The dialog closes when the panel's closing animation ends, so it can't simply have none. How: This shrinks the panel's animation to a hundredth of a millisecond, so it ends at once. */
 
 
@@ -108,6 +106,7 @@
 
 
 }
+
 @keyframes shaDiaDiaCloseFadeOut { /* What: Share Dialog Dialog Close Fade Out. Why: The panel leaves quietly. How: This shrinks it to 96% while fading it out. */
 
 
@@ -131,6 +130,7 @@
 
 
 }
+
 @keyframes shaDiaDiaShadeFadeIn { /* What: Share Dialog Dialog Shade Fade In. Why: The dimming eases in. How: This fades the backdrop from transparent. */
 
 
@@ -144,6 +144,7 @@
 
 
 }
+
 @keyframes shaDiaDiaShadeFadeOut { /* What: Share Dialog Dialog Shade Fade Out. Why: The dimming eases out. How: This fades the backdrop to transparent. */
 
 
@@ -187,7 +188,7 @@
 	position      : absolute;
 	right         : var( --spa-hor-bas );                /* Spacing Horizontal Base ~= 14.572px */
 	top           : var( --spa-ver-bas );                /* Spacing Vertical Base ~= 14.572px */
-	transition    : background var( --dur-tra-bas ), color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition    : background var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 	width         : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
 
 
@@ -223,7 +224,7 @@
 
 }
 
-.shaCloSvg { /* What: Share Close SVG. Why: In WebKit a press that lands on the icon doesn't count as pressing the button, so the button never showed its pressed look. How: This lets the pointer pass through the icon to the button behind it. */
+.shaCloSvg { /* What: Share Close SVG. Why: A press on the icon should land on the close button itself. How: This lets the pointer pass through the icon to the button around it. */
 
 
 	pointer-events : none;
@@ -252,7 +253,7 @@
 
 	font-size     : var( --fon-siz-p04 );                /* Font Size Base Plus 4 ~= 33.876px */
 	margin-top    : calc( var( --spa-ver-m02 ) * -1 );   /* Spacing Vertical Base Minus 2 ~= -8.304px */ /* What: Eyebrow Snug. Why: The eyebrow belongs to the title, closer than the stack's gap. How: This pulls the title up one m02 step. */
-	padding-right : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+	padding-right : calc( var( --ver-rhy-p03 ) * 1rem ); /* Vertical Rhythm Base Plus 3 ~= 33.876px */ /* What: Close Button Clearance. Why: A long card name would run under the close button in the corner. How: This mirrors the button's own size, the same rhythm step as its width, so the title stops short of it. */
 
 
 }
@@ -295,7 +296,7 @@
 	outline        : 0 solid var( --foc-rin-col );                    /* Focus Ring Color ~= #bd3000 */
 	outline-offset : calc( var( --ver-rhy-m03 ) * 1rem );             /* Vertical Rhythm Base Minus 3 ~= 6.268px */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
-	transition     : border-color var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 	width          : 100%;
 
 
@@ -321,7 +322,7 @@
 
 
 }
-.fieTexInp.fieTexInp--link { /* What: Link Field Text Input. Why: The link reads as an address rather than prose, and a long one trails off rather than wrapping. How: This sets it in mono and ends overflowing text with an ellipsis. */
+.fieTexInp.fieTexInp--link { /* What: Field Text Input Link. Why: The link reads as an address rather than prose, and a long one trails off rather than wrapping. How: This sets it in mono and ends overflowing text with an ellipsis. */
 
 
 	font-family   : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
@@ -359,7 +360,7 @@
 
 /* #region shaActDiv */
 
-.shaActDiv { /* What: Share Actions Div. Why: The ways to send the card sit together and wrap on a narrow phone. How: This lines them up in a wrapping row. */
+.shaActDiv { /* What: Share Actions Div. Why: The ways to send the card sit together and wrap when there's no room. How: This lines them up in a row, wrapping onto two lines at about 365px wide and below. */
 
 
 	align-items : center;
@@ -386,7 +387,7 @@
 	min-width      : calc( var( --cdn-pow-008 ) * 1em );        /* Core-Design-Number to the Power of 8 ~= 9.484em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p02 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 2 ~= 25.572px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -420,7 +421,7 @@
 
 }
 
-.copLabSpa { /* What: Copy Label Span. Why: The label's change to Copied is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
+.copLabSpa { /* What: Copy Label Span. Why: The label's change to "Copied!" is the result of the press, so it should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
 
 
 	animation : copLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
@@ -471,7 +472,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p02 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 2 ~= 25.572px */
 	text-transform : uppercase;
-	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), scale var( --dur-tra-bas ) var( --mot-dec-eas ), translate var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -518,7 +519,7 @@
 	font-weight    : 500;
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em ); /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	text-transform : uppercase;
-	transition     : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -592,6 +593,13 @@
 
 	color     : var( --tex-sec-col ); /* Text Secondary Color = #3D3D5C */
 	font-size : var( --fon-siz-bas ); /* Font Size Base = 1rem */
+
+
+}
+.shaStaPar:empty { /* What: Empty Share Status Paragraph. Why: The status region stays in the dialog from the first render so a copy's result is announced, but as an empty item of the panel's column it would still add the column's gap below the buttons. How: This takes it out of the layout until its message arrives. */
+
+
+	position : absolute;
 
 
 }

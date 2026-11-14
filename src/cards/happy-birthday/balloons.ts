@@ -3,9 +3,9 @@
 
 // #region Imports
 
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise and sway take steps on the duration scale. How: This returns a step's length in milliseconds.
-import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Pieces are sized, paced, and placed at random within set bounds. How: This returns a random number between two bounds.
-import { rhyPxlFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway is a rhythm step. How: This returns a step's size in pixels.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: The balloons' rise times and sway periods run between steps on the duration scale. How: This returns a step's length in milliseconds.
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each balloon's rise, sway, and size are picked at random within set bounds. How: This returns a random number between two bounds.
+import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The balloons' sway runs between rhythm steps. How: This returns a step's size in pixels.
 
 // #endregion Imports
 
@@ -134,7 +134,7 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 		risDurNum : ranValFun( durMilFun( 'p15' ), durMilFun( 'p18' ) ), // What: Rise Duration Number. Why: Some balloons rise faster than others. How: This picks a crossing time from the Base Plus 15 to the Base Plus 18 step, about 10.7 to 24.9 seconds. // Duration Animation Base Plus 15 ~= 10,717.0ms, Duration Animation Base Plus 18 ~= 24,914.0ms
 		scaNum    : ranValFun( SCA_MIN_NUM, 1 ),                         // What: Scale Number. Why: Balloons come in different sizes. How: This picks a scale from about 0.61 to full.
 		svgEle    : balSvgEle,                                           // What: SVG Element. Why: The record moves its own balloon. How: This keeps the element.
-		swaAmpNum : ranValFun( rhyPxlFun( 'bas' ), rhyPxlFun( 'p03' ) ), // What: Sway Amplitude Number. Why: Some balloons sway wider than others. How: This picks a swing from the Vertical Rhythm Base to the Base Plus 3 step, about 14.6 to 33.9px. // Vertical Rhythm Base ~= 14.572px, Vertical Rhythm Base Plus 3 ~= 33.876px
+		swaAmpNum : ranValFun( rhyPixFun( 'bas' ), rhyPixFun( 'p03' ) ), // What: Sway Amplitude Number. Why: Some balloons sway wider than others. How: This picks a swing from the Vertical Rhythm Base to the Base Plus 3 step, about 14.6 to 33.9px. // Vertical Rhythm Base ~= 14.572px, Vertical Rhythm Base Plus 3 ~= 33.876px
 		swaPerNum : ranValFun( durMilFun( 'p10' ), durMilFun( 'p13' ) ), // What: Sway Period Number. Why: Some balloons sway faster than others. How: This picks one full swing's length from the Base Plus 10 to the Base Plus 13 step, about 2.6 to 6.1 seconds. // Duration Animation Base Plus 10 ~= 2,627.0ms, Duration Animation Base Plus 13 ~= 6,107.0ms
 
 		ycoNum : movValBoo ? conHeiNum + ( Math.random() - 0.5 ) * balSvgEle.clientHeight : Math.random() * ( conHeiNum - balSvgEle.clientHeight ) // What: Y-Coordinate Number. Why: Rising balloons start around the bottom edge, staggered, while resting ones fill the sky. How: This picks a height within half a balloon of the bottom, or anywhere from the top to a balloon above the bottom.
@@ -189,7 +189,6 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 	// #endregion draBalFun
 
 
-
 	balRecArr.forEach( ( balRecObj, balIndNum ) => draBalFun( balRecObj, balIndNum, 0 ) ); // What: First Placement Call. Why: The balloons should be in place before the card is first drawn. How: This draws each one at time 0.
 
 	// #endregion Balloon Placing
@@ -202,7 +201,7 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 	// #region Frame Loop
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the balloons has to cancel the next frame. How: This holds the pending frame's id.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the balloons has to cancel the next frame. How: This holds the pending frame's ID.
 	let elaTimNum = 0; // What: Elapsed Time Number. Why: The sway picks up from the first placement without a jump. How: This holds the time the balloons have been rising, in milliseconds, counted from 0.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
@@ -214,8 +213,8 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 		elaTimNum += fraMilNum; // What: Elapsed Time Increase. Why: The sway follows the time the balloons have been rising. How: This adds the frame's length.
-		preTimNum  = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
+		preTimNum = curTimNum; // What: Previous Time Assignment. Why: The next frame measures from this one. How: This keeps its timestamp.
 
 
 		balRecArr.forEach( ( balRecObj, balIndNum ) => { // What: Balloon Step Loop. Why: Every balloon moves each frame. How: This raises, restarts, and draws each one.
@@ -238,13 +237,13 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 
-		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The balloons keep rising. How: This asks for the next frame and keeps its id.
+		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The balloons keep rising. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The balloons start rising. How: This asks for the first frame and keeps its id.
+	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The balloons start rising. How: This asks for the first frame and keeps its ID.
 
 	// #endregion Frame Loop
 
@@ -254,7 +253,6 @@ const staBalFun = ( conDivEle : HTMLElement, movValBoo : boolean ) : () => void 
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

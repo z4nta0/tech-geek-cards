@@ -5,12 +5,11 @@
  * not-found.module.css = Not Found Module
  *
  * @summary
- * Styles for NotFouCom: a full-screen ivory panel that fades up into view
- * like every page, centering a huge quiet 404 with a tipped envelope laid
- * over it, a Return to Sender rubber stamp drawn on the envelope that
- * thunks down once, the heading and line, and two ways onward, an orange Go
- * Home button and an outlined Browse the Gallery button. Everything that
- * moves holds still under reduced motion.
+ * Styles for NotFouCom: a full-screen ivory panel that fades up into view like
+ * every page, centering a huge quiet 404 with a tipped envelope laid over it,
+ * a "RETURN TO SENDER" rubber stamp drawn on the envelope that thunks down
+ * once, the heading and line, and two ways onward, an orange "Go Home" button
+ * and an outlined "Browse the Gallery" button.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -83,10 +82,10 @@
 .envDraSvg { /* What: Envelope Drawing SVG. Why: The lost envelope lies tipped across the number. How: This sizes it, pulls it up over the number, tilts it, and lifts it above the number. */
 
 
-	margin-top : calc( var( --ver-rhy-p07 ) * -1rem ); /* Vertical Rhythm Base Plus 7 ~= -104.323px */
+	margin-top : calc( var( --spa-ver-p07 ) * -1 );   /* Spacing Vertical Base Plus 7 ~= -104.323px */
 	position   : relative;
 	rotate     : -6deg;
-	width      : calc( var( --ver-rhy-p09 ) * 1rem );  /* Vertical Rhythm Base Plus 9 ~= 183.074px */
+	width      : calc( var( --ver-rhy-p09 ) * 1rem ); /* Vertical Rhythm Base Plus 9 ~= 183.074px */
 
 
 }
@@ -123,7 +122,7 @@
 .retSenGro { /* What: Return Sender Group. Why: A rubber stamp across the envelope lands with a bit of force, the page's flair. How: This scales the stamp's box and words from their own center and thunks them down once after the page arrives. */
 
 
-	animation        : retSenGroEnterThunkIn var( --dur-ani-p02 ) var( --mot-bou-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms */
+	animation        : retSenGroEnterThunkIn var( --dur-ani-p02 ) var( --mot-ove-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms */
 	transform-box    : fill-box;
 	transform-origin : center;
 
@@ -142,14 +141,14 @@
 
 
 }
-@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from 160% and transparent to full size, the bounce easing giving it a small rebound. */
+@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from about 175.5% and transparent to full size, the gentle overshoot giving it a small rebound. */
 
 
 	from {
 
 
 		opacity   : 0;
-		transform : scale( 1.6 ); /* What: Stamp Start Scale. Why: The stamp starts as if held above the envelope. How: This begins it at 160%, a literal since no scale step lands within 10%. */
+		transform : scale( var( --cdn-pow-002 ) ); /* Core-Design-Number to the Power of 2 ~= 1.755 */ /* What: Stamp Start Scale. Why: The stamp starts as if held above the envelope. How: This begins it at the Power of 2 step, about 175.5%. */
 
 
 	}
@@ -178,7 +177,7 @@
 .retSenTex { /* What: Return Sender Text. Why: The stamp's words read like a rubber stamp's. How: This sets them in dark berry mono. */
 
 
-	fill        : var( --act-dar-col ); /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	fill        : var( --act-dar-col ); /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
 	font-weight : 500;
 
@@ -191,7 +190,7 @@
 
 
 
-.nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color, a step below a full page heading. How: This sets its color and the base plus 4 size. */
+.nofTitHea { /* What: Not-Found Title Heading. Why: The heading reads in the main text color. How: This sets its color and the base plus 4 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
@@ -211,7 +210,7 @@
 
 /* #region nofActDiv */
 
-.nofActDiv { /* What: Not-Found Actions Div. Why: The two ways onward sit side by side, one height, and wrap on a narrow phone. How: This lines up the buttons centered in a wrapping row with gaps. */
+.nofActDiv { /* What: Not-Found Actions Div. Why: The two ways onward sit side by side, one height, and wrap when there's no room. How: This lines up the buttons centered in a row with gaps, wrapping onto two lines at about 440px wide and below. */
 
 
 	display         : flex;
@@ -236,7 +235,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -283,7 +282,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }

@@ -7,17 +7,17 @@ import cssModObj from './family-card.module.css'; // What: CSS Module Object. Wh
 
 
 import { cdnPowFun      } from '../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The greeting grows by a power of the core design number. How: This returns that power.
-import { durSecFun      } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { durSecFun      } from '../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale or a letter count times one, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun      } from './gsap-ease.ts';     // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap           } from 'gsap';               // What: GSAP. Why: The card plays as one long timeline of typed lines, heart reveals, and the photo grid. How: This is the animation library that builds and plays it.
-import { redMotFun      } from '../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once, with stills to step back through. How: This reports whether reduced motion is on.
-import { rhyPxlFun      } from '../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The grown greeting keeps a margin from the screen's edges. How: This returns a step's size in pixels.
+import { redMotFun      } from '../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished photo grid at once, with stills to step back through. How: This reports whether reduced motion is on.
+import { rhyPixFun      } from '../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The grown greeting keeps a margin from the screen's edges. How: This returns a step's size in pixels.
 import { TextPlugin     } from 'gsap/TextPlugin';    // What: Text Plugin. Why: Each line types itself out a letter at a time. How: This GSAP plugin animates an element's text that way.
-import { useEffect      } from 'react';              // What: Use Effect. Why: The screen should stay awake while the card plays, and an open photo closes on Escape through its dialog. How: This holds the wake lock's request and release.
+import { useEffect      } from 'react';              // What: Use Effect. Why: The card runs side effects once it renders, such as keeping the screen awake while it plays. How: This runs each effect after the render and its cleanup when the card closes.
 import { useEffectEvent } from 'react';              // What: Use Effect Event. Why: The arrow and space keys drive the scene controls with the card's latest state, without re-adding the listener every render. How: This wraps the key handler so the effect always calls its newest version.
 import { useGSAP        } from '@gsap/react';        // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef         } from 'react';              // What: Use Ref. Why: The timeline animates specific elements. How: Each animated element gets a ref.
-import { useState       } from 'react';              // What: Use State. Why: A tapped photo opens full size, and the controls show the card's place and whether it's paused. How: This holds the open photo, the position, the paused state, and the reduced-motion preference.
+import { useRef         } from 'react';              // What: Use Reference. Why: The timeline animates specific elements. How: Each animated element gets a ref.
+import { useState       } from 'react';              // What: Use State. Why: The card keeps values that change what it shows. How: This holds the card's state, such as the open photo.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -30,20 +30,20 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * family-card.tsx = Family Card
  *
  * @summary
- * The engine behind the three Family cards (Mother's Day, Father's Day, and
- * the Father's Day prank), which differ only in their words, photos,
- * colors, and font. Each card hands it a record of ten scenes, twelve photos,
- * the order the photo grid shows them in, the closing lines, and how far the
- * greeting grows, plus a class from its own module that sets its colors and
- * font. In each scene a line types itself out with its key words underlined,
- * shrinks away, and a heart opens over that scene's photo and closes again.
- * Then the closing line types and erases itself, the greeting types and grows,
- * and the photo grid wipes in, each photo opening full size when tapped. The
- * heart is a CSS mask scaled over the photo, so it works the same on a
- * phone held upright or sideways. Every duration is a step on the duration
- * scale, and the curves are the stylesheet's easing tokens. Under reduced
- * motion the card opens straight on the finished greeting and photo grid.
- * Built from TechGeek.support's three hand-written copies of one card.
+ * The engine behind the Family cards, such as Mother's Day, which differ in
+ * their content and theme. Each card hands it a record of ten scenes, twelve
+ * photos, the order the photo grid shows them in, the closing lines, and how
+ * far the greeting grows, plus a class from its own module that sets its
+ * colors and font. In each scene a line types itself out with its key words
+ * underlined, shrinks away, and a heart opens over that scene's photo and
+ * closes again. Then the closing line types and erases itself, the greeting
+ * types and grows, and the photo grid wipes in, each photo opening full size
+ * when tapped. The heart is a CSS mask scaled over the photo, so it works the
+ * same on a phone held upright or sideways. Every duration is a step on the
+ * duration scale or a letter count times one, and the curves are the
+ * stylesheet's easing tokens. Under reduced motion the card opens straight on
+ * the finished greeting and photo grid. Built from TechGeek.support's three
+ * hand-written copies of one card.
  *
  * Sections:
  *  - Types
@@ -82,9 +82,7 @@ type SceRecTyp = { // What: Scene Record Type. Why: Each scene types one line an
 
 };
 
-
-
-type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share every step and differ only in their content. How: This holds everything one card supplies.
+type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share every step and differ in their content. How: This holds everything one card supplies.
 
 
 	behStr    : string,      // What: Behalf String. Why: The card closes with a line on everyone's behalf. How: This is typed and erased before the greeting.
@@ -113,9 +111,9 @@ const BRE_WID_ARR = [ 1024, 768, 640 ]; // What: Breakpoint Width Array. Why: Th
  * @summary
  * The scene controls' icons, drawn in a 24 by 24 box and filled with the
  * text color. Every row is one icon's SVG path data, keyed by its control:
- * nex (next scene, a triangle and bar), pau (pause, two bars), pla (play, a
- * triangle), pre (previous scene, a bar and triangle), and ski (skip to the
- * end, two triangles and a bar).
+ * nexStr (next scene, a triangle and bar), pauStr (pause, two bars), plaStr
+ * (play, a triangle), preStr (previous scene, a bar and triangle), and
+ * skiStr (skip to the end, two triangles and a bar).
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -124,11 +122,11 @@ const BRE_WID_ARR = [ 1024, 768, 640 ]; // What: Breakpoint Width Array. Why: Th
 const ICO_PAT_OBJ = { // What: Icon Path Object. Why: The controls draw their own small icons, so no icon set has to load. How: Each key holds one icon's path data.
 
 
-	nex : 'M5 5v14l10-7zM16 5h2v14h-2z',
-	pau : 'M7 5h4v14H7zM13 5h4v14h-4z',
-	pla : 'M8 5v14l11-7z',
-	pre : 'M6 5h2v14H6zM19 5v14L9 12z',
-	ski : 'M3 5v14l7.5-7zM10.5 5v14l7.5-7zM18.5 5h2v14h-2z'
+	nexStr : 'M5 5v14l10-7zM16 5h2v14h-2z',
+	pauStr : 'M7 5h4v14H7zM13 5h4v14h-4z',
+	plaStr : 'M8 5v14l11-7z',
+	preStr : 'M6 5h2v14H6zM19 5v14L9 12z',
+	skiStr : 'M3 5v14l7.5-7zM10.5 5v14l7.5-7zM18.5 5h2v14h-2z'
 
 
 };
@@ -184,10 +182,11 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const aftSpaRef = useRef< HTMLSpanElement >( null );           // What: After Span Reference. Why: The line's last part types itself out. How: This holds its span.
 	const befSpaRef = useRef< HTMLSpanElement >( null );           // What: Before Span Reference. Why: The line's first part types itself out. How: This holds its span.
 	const behTimRef = useRef< number >( 0 );                       // What: Behalf Time Reference. Why: The controls jump to the closing line and count it as past every scene. How: This holds the time, in seconds, its lettering starts.
-	const conDivRef = useRef< HTMLDivElement >( null );            // What: Controls Div Reference. Why: The scene controls fade away as the greeting grows. How: This holds the controls' bar.
+	const conDivRef = useRef< HTMLDivElement >( null );            // What: Controls Div Reference. Why: The scene controls fade away with the cursor, once the greeting is typed. How: This holds the controls' bar.
 	const curSpaRef = useRef< HTMLSpanElement >( null );           // What: Cursor Span Reference. Why: The cursor fades once the greeting is typed. How: This holds its span.
 	const expDiaRef = useRef< HTMLDialogElement >( null );         // What: Expanded Dialog Reference. Why: A tapped photo opens in a modal dialog. How: This holds the dialog.
 	const famDivRef = useRef< HTMLDivElement >( null );            // What: Family Div Reference. Why: The timeline is scoped to the card. How: This holds the card's root.
+	const finTweRef = useRef< gsap.core.Tween | null >( null );    // What: Finish Tween Reference. Why: Skip to end fades the finished card in, and a jump during that fade has to end it first. How: This holds the fade while it plays.
 	const greSpaRef = useRef< HTMLSpanElement >( null );           // What: Greeting Span Reference. Why: The greeting types itself out and grows. How: This holds its span.
 	const griDivRef = useRef< HTMLDivElement >( null );            // What: Grid Div Reference. Why: The photo grid wipes in at the end. How: This holds the grid.
 	const higSpaRef = useRef< HTMLSpanElement >( null );           // What: Highlight Span Reference. Why: The line's key words type out and get underlined. How: This holds their span.
@@ -202,6 +201,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const [ expIndNum, setExpIndNum ] = useState< number | null >( null ); // What: Expanded Index Number And Setter. Why: Only one photo opens full size at a time. How: This holds the open photo's index, or null.
 	const [ carPauBoo, setCarPauBoo ] = useState( false );                 // What: Card Paused Boolean And Setter. Why: The pause button shows play while the card is paused. How: This mirrors the timeline's paused state.
 	const [ posIndNum, setPosIndNum ] = useState( 0 );                     // What: Position Index Number And Setter. Why: The dots fill in as the card plays. How: This holds the current scene's place, or the scene count once the closing line begins.
+	const [ phoCloBoo, setPhoCloBoo ] = useState( false );                 // What: Photo Closing Boolean And Setter. Why: The open photo plays a fade out before its dialog closes. How: This turns the dialog's closing class on until the fade ends.
 	const [ redMotBoo ]               = useState( redMotFun );             // What: Reduced Motion Boolean. Why: Under reduced motion the card opens finished, the controls step through stills, and there's nothing to pause. How: This reads the preference once, as the card opens.
 
 
@@ -240,10 +240,10 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const posUpdFun = () => { // What: Position Update Function. Why: The dots follow the timeline wherever it plays or jumps. How: This counts the scenes started by the timeline's time, or every scene once the closing line has begun.
 
 
-		const timNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
+		const curTimNum = ( timLinRef.current?.time() ?? 0 ) + 0.001; // What: Current Time Number. Why: A jump lands exactly on a scene's start, which should count as reached. How: This reads the timeline's time a millisecond ahead.
 
 
-		setPosIndNum( timNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= timNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
+		setPosIndNum( curTimNum >= behTimRef.current ? famCarObj.sceRecArr.length : Math.max( staTimRef.current.filter( ( staTimNum ) => staTimNum <= curTimNum ).length - 1, 0 ) ); // What: Position Index Update. Why: The dots show how far the card has come. How: This stores the closing position, or the last scene started.
 
 
 	};
@@ -264,13 +264,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			wakLocRef.current?.release(); // What: Lock Release Call. Why: The browser holds the screen on until the lock is released. How: This releases it if one was granted.
 
+
 			wakLocRef.current = null; // What: Lock Forget Assignment. Why: A released lock shouldn't be released twice. How: This clears the reference.
 
 
 		};
 
 
-	}, [] ); // What: Effect Dependency Array. Why: The lock is held once per showing of the card. How: The card page remounts the card for a replay.
+	}, [] ); // What: Effect Dependency Array. Why: The lock is held once per showing of the card. How: The empty array runs the effect once, as the card mounts, and its cleanup once, as it unmounts.
 
 
 
@@ -297,8 +298,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 * under the heart, which opens to cover the screen, holds, and closes.
 	 * Then the closing line types and erases itself, the greeting types, the
 	 * cursor fades, and the greeting grows by its final step as the photo
-	 * grid wipes in, each photo uncovering left to right in random order.
-	 * Once the grid is in, the wake lock is released. Under reduced motion
+	 * grid and the tap hint fade in behind it; once it has grown, the photos
+	 * uncover left to right in random order. Once the grid is in, the wake
+	 * lock is released. Under reduced motion
 	 * the timeline jumps to its end.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
@@ -308,14 +310,17 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	useGSAP( () => { // What: Family Timeline Hook. Why: The timeline has to run after the card renders and be undone when it leaves. How: This builds and plays it in a GSAP context.
 
 
+		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPixFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPixFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, the bar's room, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it. // Vertical Rhythm Base Plus 1 ~= 19.304px, Vertical Rhythm Base Plus 6 ~= 78.751px
+
+
+
 		const accEasStr = gsaEasFun( 'acc' );                                          // What: Accelerate Easing String. Why: Most of the card's motion speeds up as it goes, as the original's did. How: This registers the accelerate token and keeps its GSAP name.
 		const chaDurNum = durSecFun( 'm03' );                                          // What: Character Duration Number. Why: The lines type at a steady pace. How: This is one letter's time, the duration scale's Base Minus 3 step, in seconds. // Duration Animation Base Minus 3 ~= 67.9ms
 		const decEasStr = gsaEasFun( 'dec' );                                          // What: Decelerate Easing String. Why: The photos settle as they uncover. How: This registers the decelerate token and keeps its GSAP name.
-		const fadDurNum = durSecFun( 'p07' );                                          // What: Fade Duration Number. Why: The lettering, the heart, and the cursor move at one unhurried pace. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const finScaFun = () : number => Math.min( cdnPowFun( finPowFun( famCarObj.finPowArr ) ), ( innerWidth - 2 * rhyPxlFun( 'p01' ) ) / greSpaRef.current!.offsetWidth, ( innerHeight - 2 * rhyPxlFun( 'p06' ) ) / greSpaRef.current!.offsetHeight ); // What: Final Scale Function. Why: The greeting grows less on a smaller screen, and never past the screen's edges or under the floating bar. How: This raises the core design number to the screen's final power, capped at what fits between Base Plus 1 side margins and Base Plus 6 margins top and bottom, about the bar's height, measured when the growth starts, once the greeting is typed. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
+		const fadDurNum = durSecFun( 'p07' );                                          // What: Fade Duration Number. Why: The card's fades and growths move at one unhurried pace, such as the heart opening. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
 		const griImaArr = Array.from( griDivRef.current!.querySelectorAll( 'img' ) );  // What: Grid Image Array. Why: Each photo in the grid uncovers on its own. How: This lists the grid's photos. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const holDurNum = durSecFun( 'p08' );                                          // What: Hold Duration Number. Why: Each line and each photo stays up long enough to take in. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in an even spread. How: This registers the in-out token and keeps its GSAP name.
+		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in a spread eased in and out. How: This registers the in-out token and keeps its GSAP name.
 		const oveEasStr = gsaEasFun( 'ove' );                                          // What: Overshoot Easing String. Why: The greeting grows with a little flourish. How: This registers the overshoot token and keeps its GSAP name.
 		const phoImaArr = Array.from( phoDivRef.current!.children );                   // What: Photo Image Array. Why: Each scene shows one photo under the heart. How: This lists the stage's photos, one per scene. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const shoDurNum = durSecFun( 'm02' );                                          // What: Show Duration Number. Why: The grid appears almost at once, and its photos start just apart. How: This is the duration scale's Base Minus 2 step, in seconds. // Duration Animation Base Minus 2 ~= 89.9ms
@@ -346,13 +351,13 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			timLinObj.to( texDivRef.current, { autoAlpha : 1, duration : fadDurNum } ); // What: Lettering Fade In. Why: Each line arrives softly. How: This fades the lettering in.
 
 
-			parStrArr.forEach( ( parStr, parIndNum ) => { // What: Part Typing Loop. Why: The line types one part after another. How: This adds a typing step per part.
+			parStrArr.forEach( ( parValStr, parIndNum ) => { // What: Part Typing Loop. Why: The line types one part after another. How: This adds a typing step per part.
 
 
-				const typDurNum = parStr.length * chaDurNum; // What: Typing Duration Number. Why: Each part types at the same steady pace. How: This is a letter's time per letter.
+				const typDurNum = parValStr.length * chaDurNum; // What: Typing Duration Number. Why: Each part types at the same steady pace. How: This is a letter's time per letter.
 
 
-				timLinObj.to( typSpaArr[ parIndNum ], { duration : typDurNum, ease : 'none', text : parStr } ); // What: Part Typing Step. Why: The part appears letter by letter. How: This types it evenly over its duration.
+				timLinObj.to( typSpaArr[ parIndNum ], { duration : typDurNum, ease : 'none', text : parValStr } ); // What: Part Typing Step. Why: The part appears letter by letter. How: This types it evenly over its duration.
 
 
 			} );
@@ -378,7 +383,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		}
 
 
+
 		behTimRef.current = timLinObj.duration(); // What: Behalf Time Record. Why: Next jumps from the last scene to the closing line. How: This stores the time the closing line begins.
+
 
 		timLinObj.set( typSpaArr,         { text : '' } ); // What: Closing Clear. Why: The closing line starts empty. How: This clears all three parts.
 		timLinObj.set( texDivRef.current, { scale : 1 } ); // What: Closing Lettering Reset. Why: The last line shrank away. How: This restores its size.
@@ -414,7 +421,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		timLinObj.to( curSpaRef.current, { autoAlpha : 0, duration : fadDurNum } ); // What: Cursor Fade. Why: Nothing more is typed. How: This fades the cursor out.
 
 
-
 		if ( !redMotBoo ) { // What: Controls Exit Check. Why: Once the greeting grows there's nothing left to step through, but under reduced motion the controls are the way back into the scenes. How: This adds the controls' exit only when the card plays its motion.
 
 
@@ -437,7 +443,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		timLinObj.to( griImaArr, { // What: Grid Wipe. Why: The photos fill in one after another. How: This uncovers each from left to right, in random order.
 
 
-			clipPath : 'inset( 0 0% 0 0 )',                                    // What: Clip Path. Why: The photo ends fully uncovered. How: This clears the clip from the right.
+			clipPath : 'inset( 0 0% 0 0 )',                                    // What: Clip Path. Why: The photo ends fully uncovered. How: This clears the clip from the right. // What: Compositor Exception Note. Why: An animated clip path repaints each frame, which the animation performance rule allows only where a transform can't do the job. How: The photo has to uncover from one edge while staying in place, and a transform would slide it instead.
 			duration : holDurNum,                                              // What: Duration. Why: Each photo uncovers at an easy pace. How: This uses the hold step.
 			ease     : decEasStr,                                              // What: Ease. Why: The photo settles as it uncovers. How: This decelerates.
 			stagger  : { each : shoDurNum, ease : inoEasStr, from : 'random' } // What: Stagger. Why: The photos start one after another, in no set order. How: Each starts a Base Minus 2 step after the last, in random order, spread in-out.
@@ -450,6 +456,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			wakLocRef.current?.release(); // What: Lock Release Call. Why: The browser holds the screen on until the lock is released. How: This releases it if one was granted.
 
+
 			wakLocRef.current = null; // What: Lock Forget Assignment. Why: A released lock shouldn't be released twice. How: This clears the reference.
 
 
@@ -459,7 +466,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		timLinObj.pause(); // What: Font Wait Pause. Why: The lines shouldn't type in a fallback font, and the greeting's fit is measured in the real one. How: This holds the timeline until the card's font has loaded.
 
+
 		timLinRef.current = timLinObj; // What: Timeline Store. Why: The controls move this timeline. How: This keeps it for their handlers.
+
 
 		timLinObj.eventCallback( 'onUpdate', posUpdFun ); // What: Position Update Callback. Why: The dots fill in as the card plays. How: This updates the position on every frame the timeline renders.
 
@@ -486,13 +495,13 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 * that scene instead, as a music player does. Under reduced motion the
 	 * stops are stills, each scene's line written out and then its photo, and
 	 * the timeline stays paused on each. A jump keeps the card playing or
-	 * paused as it was, takes the wake lock again when it leaves the end, and
-	 * updates the dots at once.
+	 * paused as it was, ends any fade Skip to end started, takes the wake lock
+	 * again when it leaves the end, and updates the dots at once.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
-	 * @param dirNum - Direction Number: -1 for the previous stop, 1 for the
-	 *                 next.
+	 * @param dirValNum - Direction Value Number: -1 for the previous stop, 1
+	 *                    for the next.
 	 *
 	 * @returns This function does not return anything.
 	 *
@@ -503,7 +512,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 *
 	*/
 
-	const navSceFun = ( dirNum : number ) : void => { // What: Navigate Scene Function. Why: Previous and Next, and the arrow keys, move between scenes. How: This seeks the timeline to the next stop in the chosen direction.
+	const navSceFun = ( dirValNum : number ) : void => { // What: Navigate Scene Function. Why: Previous and Next, and the arrow keys, move between scenes. How: This seeks the timeline to the next stop in the chosen direction.
 
 
 		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The jump moves the card's timeline. How: This reads it from its reference.
@@ -515,19 +524,20 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 		const endTimNum = timLinObj.duration();                                                                                     // What: End Time Number. Why: The last stop is the finished card. How: This is the timeline's length.
 		const stoTimArr = redMotBoo ? [ ...stiTimRef.current, endTimNum ] : [ ...staTimRef.current, behTimRef.current, endTimNum ]; // What: Stop Time Array. Why: Reduced motion steps through stills, and motion through scene starts. How: This lists the stops for the visitor's preference, ending at the end.
-		const timNum    = timLinObj.time() + 0.001;                                                                                 // What: Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
+		const curTimNum = timLinObj.time() + 0.001;                                                                                 // What: Current Time Number. Why: A card resting exactly on a stop is at that stop. How: This reads the time a millisecond ahead.
+		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= curTimNum ).length - 1;                                   // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
 
-		const curIndNum = stoTimArr.filter( ( stoTimNum ) => stoTimNum <= timNum ).length - 1; // What: Current Index Number. Why: The jump is counted from the stop the card last passed. How: This counts the stops reached, less one.
-
-		const bacDirBoo = dirNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
-		const farPasBoo = timNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
-		const motPlaBoo = !redMotBoo;                                                          // What: Motion Playing Boolean. Why: Under reduced motion every stop is a still, so nothing restarts. How: This checks the card plays its motion.
+		const bacDirBoo = dirValNum < 0;                                                          // What: Back Direction Boolean. Why: Only Previous can restart a scene. How: This checks the jump goes back.
+		const farPasBoo = curTimNum - stoTimArr[ Math.max( curIndNum, 0 ) ] > durSecFun( 'p07' ); // What: Far Past Boolean. Why: Only a press well into a scene restarts it. How: This checks the card is more than a Base Plus 7 step past its stop. // Duration Animation Base Plus 7 ~= 1,130.0ms
+		const motPlaBoo = !redMotBoo;                                                             // What: Motion Playing Boolean. Why: Under reduced motion every stop is a still, so nothing restarts. How: This checks the card plays its motion.
 
 		const resSceBoo = bacDirBoo && farPasBoo && motPlaBoo; // What: Restart Scene Boolean. Why: Previous well into a scene restarts it, and only a quick second press goes back further. How: This combines the three checks.
 
 
-		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirNum, 0 ), stoTimArr.length - 1 );    // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
+		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirValNum, 0 ), stoTimArr.length - 1 ); // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
 
+
+		finTweRef.current?.progress( 1 ).kill(); // What: Finish Fade End Call. Why: A fade still running from Skip to end would keep writing over the stop the card jumps to. How: This finishes the fade at once and drops it.
 
 		timLinObj.seek( stoTimArr[ tarIndNum ] ); // What: Stop Seek Call. Why: The card has to show the stop exactly. How: This moves the timeline there, keeping it playing or paused.
 
@@ -546,12 +556,38 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 
-	const skiEndFun = () => { // What: Skip End Function. Why: A visitor may want the greeting and photos without the whole story. How: This jumps the timeline to its end and updates the dots.
+	const skiEndFun = () => { // What: Skip End Function. Why: A visitor may want the greeting and photos without the whole story. How: This jumps the timeline to its end, updates the dots, and fades the finished card in.
 
 
-		timLinRef.current?.progress( 1 ); // What: End Jump Call. Why: The finished card is the timeline's last frame. How: This moves the timeline to its end.
+		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The skip moves the card's timeline. How: This reads it from its reference.
+
+
+		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to move. How: This returns early.
+
+
+
+		const finBefBoo = timLinObj.progress() === 1; // What: Finished Before Boolean. Why: A card already on its finished look has nothing new to arrive. How: This checks the timeline already sits at its end.
+
+
+		timLinObj.progress( 1 ); // What: End Jump Call. Why: The finished card is the timeline's last frame. How: This moves the timeline to its end.
 
 		posUpdFun(); // What: Position Update Call. Why: The dots show the card has finished. How: This updates them at once.
+
+
+
+		if ( redMotBoo || finBefBoo ) return; // What: Finish Fade Guard. Why: Under reduced motion the finished card simply shows, and a card already finished has nothing to fade in. How: This returns before the fade.
+
+
+
+		finTweRef.current = gsap.from( [ griDivRef.current!, tapParRef.current!, texDivRef.current! ], { // What: Finish Fade Tween. Why: The press should show its result arriving rather than the finished card snapping in. How: This fades the grid, the tap hint, and the greeting in from transparent to the looks the timeline's end gave them. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: The button renders only with the card, which attaches them.
+
+
+			duration : durSecFun( 'p01' ), // What: Duration. Why: The arrival is a short result of a press. How: This is the duration scale's Base Plus 1 step, in seconds. // Duration Animation Base Plus 1 ~= 209.1ms
+			ease     : gsaEasFun( 'dec' ), // What: Ease. Why: Something arriving settles in. How: This registers the decelerate token and uses its GSAP name.
+			opacity  : 0                   // What: Opacity. Why: The finished card fades in from nothing. How: This is the starting opacity GSAP fades from.
+
+
+		} );
 
 
 	};
@@ -587,14 +623,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const modKeyBoo = altPreBoo || conPreBoo || metPreBoo; // What: Modifier Key Boolean. Why: A key held with a modifier belongs to the browser. How: This combines the three flags.
 
 
-		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar already presses a focused button or link. How: This checks the key went to one.
+		const conFocBoo = keyEveObj.target instanceof HTMLButtonElement || keyEveObj.target instanceof HTMLAnchorElement; // What: Control Focused Boolean. Why: The space bar presses a focused button, so the card leaves the key to a focused button or link. How: This checks the key went to one.
 		const phoOpeBoo = !!expDiaRef.current?.open;                                                                      // What: Photo Open Boolean. Why: An open photo keeps the keys for itself. How: This checks whether the dialog is open.
 
-		const conFreBoo = !conFocBoo;            // What: Control Free Boolean. Why: The space bar already presses a focused button or link. How: This checks focus isn't on one.
+		const conFreBoo = !conFocBoo;            // What: Control Free Boolean. Why: The space bar is the card's only while focus isn't on a button or link. How: This checks focus isn't on one.
 		const motPlaBoo = !redMotBoo;            // What: Motion Playing Boolean. Why: Under reduced motion nothing plays, so there's nothing to pause. How: This checks the card plays its motion.
 		const spaKeyBoo = keyEveObj.key === ' '; // What: Space Key Boolean. Why: The space bar pauses and plays. How: This checks the key pressed was the space bar.
 
-		const spaPauBoo = conFreBoo && motPlaBoo && spaKeyBoo; // What: Space Pause Boolean. Why: The space bar toggles the pause only when it isn't pressing a control and the card plays its motion. How: This combines the three checks.
+		const spaPauBoo = conFreBoo && motPlaBoo && spaKeyBoo; // What: Space Pause Boolean. Why: The space bar toggles the pause only while focus isn't on a button or link and the card plays its motion. How: This combines the three checks.
 
 
 
@@ -627,7 +663,6 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const winKeyFun = ( keyEveObj : KeyboardEvent ) => keyDowFun( keyEveObj ); // What: Window Key Function. Why: The listener hands each press to the newest key handler. How: This calls it with the event.
 
 
-
 		addEventListener( 'keydown', winKeyFun ); // What: Key Listener Add. Why: The card hears every key press. How: This listens on the window.
 
 
@@ -650,14 +685,14 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			className={` ${ cssModObj.famCarDiv }   ${ theClaStr } `}
 
 			data-family-stills-mode={ redMotBoo || undefined } // What: Stills Mode Attribute. Why: Under reduced motion the controls stay on the finished card, where they'd cover the mosaic's bottom photos. How: This marks the card so its stylesheet gives the controls a strip of their own below the mosaic.
-		>{ /* What: Family Card Div Element. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This holds the photo grid, the heart stage, the lettering, the screen-reader copy, and the photo dialog. */ }
+		>{ /* What: Family Card Div Element. Why: The card fills the screen in its own colors, its layers stacked in one cell. How: This holds the photo grid, the heart stage, the lettering, the tap hint and scene controls, the screen-reader copy, and the photo dialog. */ }
 
 
 			<div
 				ref={ griDivRef }
 
 				className={ cssModObj.famGriDiv }
-			>{ /* What: Family Grid Div Element. Why: The card ends on all its photos at once. How: This lays them out in a mosaic, hidden until the timeline shows it. */ }
+			>{ /* What: Family Grid Div Element. Why: The card ends on all its photos at once. How: This lays them out in a mosaic four columns wide, three at 640px and below, hidden until the timeline shows it. */ }
 
 
 				{ famCarObj.griIndArr.map( ( phoIndNum, celIndNum ) => ( // What: Grid Cell Map Call. Why: Every cell of the mosaic shows one photo. How: This renders a button per cell, keyed by its place.
@@ -679,10 +714,10 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 						<img
 							className={ cssModObj.famCelIma }
 
-							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 							loading='lazy'
 							src={ famCarObj.phoRecArr[ phoIndNum ].imaStr }
-							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+							width='1671' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 							alt=''
 						/>{ /* What: Family Cell Image Element. Why: The photo fills its cell. How: This shows it with an empty alt, since its button names it. */ }
@@ -696,6 +731,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			</div>
 
+
 			<div
 				ref={ phoDivRef }
 
@@ -705,7 +741,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 			>{ /* What: Family Photo Div Element. Why: Each scene's photo is revealed through a growing heart. How: This stacks every scene's photo under the heart-shaped mask, each hidden until its scene. */ }
 
 
-				{ famCarObj.phoRecArr.slice( 0, famCarObj.sceRecArr.length ).map( ( phoRecObj, sceIndNum ) => ( // What: Scene Photo Map Call. Why: Each scene has its own photo ready under the heart. How: This renders the first photo of the list for each scene, keyed by its place.
+				{ famCarObj.phoRecArr.slice( 0, famCarObj.sceRecArr.length ).map( ( phoRecObj, sceIndNum ) => ( // What: Scene Photo Map Call. Why: Each scene has its own photo ready under the heart. How: This renders the list's first photos, one per scene, keyed by place.
 
 
 					<img
@@ -713,9 +749,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 						className={ cssModObj.famSceIma }
 
-						height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+						height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 						src={ phoRecObj.imaStr }
-						width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+						width='1671' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 						alt=''
 					/> // What: Family Scene Image Element. Why: The heart opens over the scene's photo. How: This fills the screen with it, hidden from screen readers since the copy below speaks for the card.
@@ -795,7 +831,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 					<div
 						className={ cssModObj.famDotDiv }
 
-						aria-label={ posIndNum < famCarObj.sceRecArr.length ? `Scene ${ posIndNum + 1 } of ${ famCarObj.sceRecArr.length }` : 'Closing' } // What: Dots Label. Why: Screen readers hear where the card is, which the dots only show. How: This names the current scene and the count, or the closing.
+						aria-label={ posIndNum < famCarObj.sceRecArr.length ? `Scene ${ posIndNum + 1 } of ${ famCarObj.sceRecArr.length }` : 'Closing' } // What: Dots Label. Why: Screen readers hear where the card is, which the dots only show. How: This names the current scene and the count, or reads "Closing".
 						role='img'
 					>{ /* What: Family Dots Div Element. Why: The dots show how far along the card is, more so once a visitor can jump around. How: This lays out one dot per scene, read as a single image with its label. */ }
 
@@ -842,7 +878,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.pre } />{ /* What: Previous Icon Path Element. Why: A bar and a left triangle read as previous. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.preStr } />{ /* What: Previous Icon Path Element. Why: A bar and a left triangle read as previous. How: This draws them. */ }
 
 
 							</svg>
@@ -859,7 +895,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 								type='button'
 
-								aria-label={ carPauBoo ? 'Play' : 'Pause' } // What: Pause Label. Why: The button says what it will do. How: This reads Play while paused and Pause while playing.
+								aria-label={ carPauBoo ? 'Play' : 'Pause' } // What: Pause Label. Why: The button says what it will do. How: This reads "Play" while paused and "Pause" while playing.
 
 								onClick={ togPauFun }
 							>{ /* What: Family Control Button Element. Why: Anything that moves on its own for long has to be pausable. How: This pauses or plays the card. */ }
@@ -874,7 +910,13 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 								>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-									<path d={ carPauBoo ? ICO_PAT_OBJ.pla : ICO_PAT_OBJ.pau } />{ /* What: Pause Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars while playing. */ }
+									<path
+										key={ carPauBoo ? 'play' : 'pause' } // What: Icon Key. Why: The new icon should fade in each time the button changes. How: A new key remounts the path, replaying its entrance.
+
+										className={ cssModObj.famIcoPat }
+
+										d={ carPauBoo ? ICO_PAT_OBJ.plaStr : ICO_PAT_OBJ.pauStr }
+									/>{ /* What: Family Icon Path Element. Why: The icon shows what the button will do. How: This draws a play triangle while paused and two pause bars, fading each new icon in, while playing. */ }
 
 
 								</svg>
@@ -906,7 +948,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.nex } />{ /* What: Next Icon Path Element. Why: A right triangle and a bar read as next. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.nexStr } />{ /* What: Next Icon Path Element. Why: A right triangle and a bar read as next. How: This draws them. */ }
 
 
 							</svg>
@@ -935,7 +977,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 							>{ /* What: Family Control SVG Element. Why: The button shows its icon. How: This draws it in a 24 by 24 box, hidden from screen readers since the button is named. */ }
 
 
-								<path d={ ICO_PAT_OBJ.ski } />{ /* What: Skip Icon Path Element. Why: Two triangles and a bar read as skipping to the end. How: This draws them. */ }
+								<path d={ ICO_PAT_OBJ.skiStr } />{ /* What: Skip Icon Path Element. Why: Two triangles and a bar read as skipping to the end. How: This draws them. */ }
 
 
 							</svg>
@@ -972,14 +1014,37 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 			</div>
 
+
 			<dialog
 				ref={ expDiaRef }
 
-				className={ cssModObj.famExpDia }
+				className={` ${ cssModObj.famExpDia }   ${ phoCloBoo ? cssModObj.famExpDiaClosing : '' } `}
 
 				aria-label='Photo'
 
-				onClose={ () => setExpIndNum( null ) } // What: Dialog Close Handler. Why: Escape or a tap closes the photo, and the card should forget it. How: This clears the open photo.
+				onAnimationEnd={ ( aniEveObj ) => { // What: Closing Animation End Handler. Why: The dialog should only close once its fade out has played. How: When the dialog's own closing keyframe ends, this closes it and turns the closing class off; any other animation's end is ignored.
+
+
+					if ( aniEveObj.animationName !== cssModObj.famExpDiaCloseFadeOut ) return; // What: Closing Keyframe Guard. Why: The opening fade's end event reaches this handler too. How: This acts only when the closing keyframe has ended.
+
+
+
+					expDiaRef.current?.close(); // What: Dialog Close Call. Why: The fade out has played. How: This closes the native dialog, whose close event forgets the photo.
+
+					setPhoCloBoo( false ); // What: Closing Reset Call. Why: The next photo should open without the closing class. How: This turns it off.
+
+
+				} }
+				onCancel={ ( canEveObj ) => { // What: Cancel Handler. Why: Escape would close the dialog at once, skipping its fade out. How: This stops the browser's own close and starts the fade.
+
+
+					canEveObj.preventDefault(); // What: Native Close Prevention Call. Why: The browser would close the dialog before its fade plays. How: This stops the browser's own close.
+
+					setPhoCloBoo( true ); // What: Animated Close Call. Why: Escape should still close the photo. How: This starts the fade out, whose end closes the dialog.
+
+
+				} }
+				onClose={ () => setExpIndNum( null ) } // What: Dialog Close Handler. Why: The card should forget the photo once its dialog has closed. How: This clears the open photo.
 			>{ /* What: Family Expanded Dialog Element. Why: A tapped photo should fill the screen. How: This shows the chosen photo as a modal, which Escape closes. */ }
 
 
@@ -993,16 +1058,16 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 						aria-label='Close photo'
 
-						onClick={ () => expDiaRef.current?.close() }
-					>{ /* What: Family Expanded Button Element. Why: Tapping the full-size photo closes it. How: This holds the photo and closes the dialog when pressed. */ }
+						onClick={ () => setPhoCloBoo( true ) } // What: Photo Click Handler. Why: Tapping the photo closes it, after its fade out. How: This starts the fade, whose end closes the dialog.
+					>{ /* What: Family Expanded Button Element. Why: Tapping the full-size photo closes it. How: This holds the photo and fades the dialog out when pressed. */ }
 
 
 						<img
 							className={ cssModObj.famExpIma }
 
-							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is every Family photo's height in pixels.
+							height='941' // What: Intrinsic Height. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared height in pixels, which the browser reserves.
 							src={ famCarObj.phoRecArr[ expIndNum ].imaStr }
-							width='1672' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is every Family photo's width in pixels.
+							width='1671' // What: Intrinsic Width. Why: The photo shouldn't shift while it loads. How: This is the Family photos' shared width in pixels, which the browser reserves.
 
 							alt={ famCarObj.phoRecArr[ expIndNum ].altStr }
 						/>{ /* What: Family Expanded Image Element. Why: The photo should be seen whole. How: This fits it to the screen, described for screen readers. */ }

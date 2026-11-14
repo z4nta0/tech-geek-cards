@@ -20,11 +20,11 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
  * card-tile.tsx = Card Tile
  *
  * @summary
- * One card as Home and the Gallery show it: a still of the card in a
+ * One card as a page listing cards shows it: a still of the card in a
  * postage-stamp frame, tipped slightly as if dropped on a table, then its
  * occasion, title, and description, a reminder that it opens on a tap, and a
- * Share button. The title is the tile's link, stretched over the whole tile,
- * so the tile opens the card anywhere it's clicked, while Share sits above
+ * "Share" button. The title is the tile's link, stretched over the whole tile,
+ * so the tile opens the card anywhere it's clicked, while "Share" sits above
  * that link and asks the page to open its share dialog for this card.
  *
  * Sections:
@@ -39,7 +39,7 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
 
 // #region Components
 
-type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card and hands Share presses back to its page. How: This types CarTilCom's props.
+type CtcProTyp = { carRecObj : CarRecTyp, eagLoaBoo : boolean, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card, loads its preview when its page says, and hands "Share" presses back to its page. How: This types CarTilCom's props.
 
 // #region CarTilCom
 
@@ -49,30 +49,33 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  * @summary
  * Renders one card's tile as an article: the preview in its stamp frame, the
  * occasion tag (with a Personalize tag beside it for a card that takes a
- * name), the title linking to the card's page, the description, an Open
- * Card cue whose arrow nudges on hover, and the Share button. The title's
+ * name), the title linking to the card's page, the description, an "Open
+ * card" cue whose arrow nudges on hover, and the "Share" button. The title's
  * link covers the whole tile through its ::after, so the tile is one large
- * target without nesting links, and the Share button is lifted above it.
- * The preview is decoration beside the title, so it carries alt text for
- * the card's look but isn't a link of its own.
+ * target without nesting links, and the "Share" button is lifted above it.
+ * The preview sits above the title, carrying alt text for the card's look,
+ * but isn't a link of its own.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
+ * @param props.eagLoaBoo   - Eager Loading Boolean: True when the tile can be
+ *                            in view as its page opens, so its preview loads
+ *                            at once rather than waiting to near the screen.
  * @param props.onShaCarFun - On Share Card Function: Called with the card
- *                            when its Share button is pressed, so the page
+ *                            when its "Share" button is pressed, so the page
  *                            can open its share dialog.
  *
  * @returns The tile's article element.
  *
  * @example
  * ```tsx
- * CarTilCom({ carRecObj, onShaCarFun }) // => <CarTilCom />
+ * CarTilCom({ carRecObj, eagLoaBoo, onShaCarFun }) // => <CarTilCom />
  * ```
  *
 */
 
-function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
+function CarTilCom ( { carRecObj, eagLoaBoo, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 
 	return (
@@ -95,18 +98,19 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 						className={ cssModObj.staPreIma }
 
 						height='675' // What: Intrinsic Height. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real height in pixels.
-						loading='lazy'
+						loading={ eagLoaBoo ? 'eager' : 'lazy' } // What: Loading Choice. Why: A preview in view as the page opens shouldn't wait, while one further down can. How: This loads the preview at once when the page marks the tile as possibly in view, and lazily otherwise.
 						src={ carRecObj.imaStr }
 						width='1200' // What: Intrinsic Width. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real width in pixels.
 
 						alt={ carRecObj.altStr }
-					/>{ /* What: Stamp Preview Image Element. Why: A still of the card shows what it looks like. How: This shows the card's preview, loading it once it nears the screen. */ }
+					/>{ /* What: Stamp Preview Image Element. Why: A still of the card shows what it looks like. How: This shows the card's preview, at once or once it nears the screen, as its page decides. */ }
 
 
 				</div>
 
 
 			</div>
+
 
 
 			<div className={ cssModObj.carBodDiv }>{ /* What: Card Body Div Element. Why: The card's details sit under its stamp. How: This stacks the tags, title, description, and actions. */ }
@@ -128,6 +132,8 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 				</div>
 
+
+
 				<h3 className={ cssModObj.carTitHea }>{ /* What: Card Title Heading Element. Why: The card's name heads its details. How: This holds the link to the card. */ }
 
 
@@ -135,14 +141,16 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 						className={ cssModObj.carTitAnc }
 
 						to={ `/${ carRecObj.sluStr }` }
-					>{ carRecObj.titStr }</Link>{ /* What: Card Title Link. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
+					>{ carRecObj.titStr }</Link>{ /* What: Card Title Anchor Link. Why: The title opens the card, and the whole tile should too. How: This routes to the card's page, its ::after stretched over the tile. */ }
 
 
 				</h3>
 
+
+
 				<p className={ cssModObj.carDesPar }>{ carRecObj.desStr }</p>{ /* What: Card Description Paragraph Element. Why: A short line says what the card is like. How: This shows the card's description. */ }
 
-				<div className={ cssModObj.carActDiv }>{ /* What: Card Actions Div Element. Why: Opening and sharing sit together at the tile's foot. How: This sets the cue and the Share button in a row. */ }
+				<div className={ cssModObj.carActDiv }>{ /* What: Card Actions Div Element. Why: Opening and sharing sit together at the tile's foot. How: This sets the cue and the "Share" button in a row. */ }
 
 
 					<span
@@ -184,7 +192,7 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { CarTilCom }; // What: Named Exports. Why: Home and the Gallery both show card tiles. How: This exports CarTilCom.
+export { CarTilCom }; // What: Named Export. Why: The pages that list cards show card tiles, such as the Gallery. How: This exports CarTilCom.
 
 // #endregion Exports
 

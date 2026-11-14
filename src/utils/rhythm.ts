@@ -85,8 +85,7 @@ const steOffFun = ( steNamStr : string ) : number => steNamStr === 'bas' ? 0 : (
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param durSteStr - Duration Step String: The step's name, e.g. 'bas', 'p04',
- *                    or 'm01'.
+ * @param durSteStr - Duration Step String: The step's name, e.g. 'p04'.
  *
  * @returns The step's length in milliseconds.
  *
@@ -115,8 +114,7 @@ const durMilFun = ( durSteStr : string ) : number => cdnPowFun( 18 + steOffFun( 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param durSteStr - Duration Step String: The step's name, e.g. 'bas', 'p04',
- *                    or 'm01'.
+ * @param durSteStr - Duration Step String: The step's name, e.g. 'p04'.
  *
  * @returns The step's length in seconds.
  *
@@ -133,10 +131,10 @@ const durSecFun = ( durSteStr : string ) : number => durMilFun( durSteStr ) / 10
 
 
 
-// #region rhyPxlFun
+// #region rhyPixFun
 
 /**
- * rhyPxlFun = Rhythm Pixel Function
+ * rhyPixFun = Rhythm Pixel Function
  *
  * @summary
  * The pixel size of one vertical rhythm step, named the way the stylesheet
@@ -149,31 +147,30 @@ const durSecFun = ( durSteStr : string ) : number => durMilFun( durSteStr ) / 10
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param rhySteStr - Rhythm Step String: The step's name, e.g. 'bas', 'p03',
- *                    or 'm02'.
+ * @param rhySteStr - Rhythm Step String: The step's name, e.g. 'p03'.
  *
  * @returns The step's size in pixels at the current root font size.
  *
  * @example
  * ```ts
- * rhyPxlFun('bas') // => about 14.57 at an 11px root font size
+ * rhyPixFun('bas') // => about 14.57 at an 11px root font size
  * ```
  *
 */
 
-const rhyPxlFun = ( rhySteStr : string ) : number => { // What: Rhythm Pixel Function. Why: JavaScript motion that moves in pixels needs the same step sizes the stylesheet uses. How: This turns the step's name into a power of the core design number and multiplies the root font size by it.
+const rhyPixFun = ( rhySteStr : string ) : number => { // What: Rhythm Pixel Function. Why: JavaScript motion that moves in pixels needs the same step sizes the stylesheet uses. How: This turns the step's name into a power of the core design number and multiplies the root font size by it.
 
 
-	const rooPxlNum = parseFloat( getComputedStyle( document.documentElement ).fontSize ) || 11; // What: Root Pixel Number. Why: Every step scales with the root font size, which follows the browser's own font size setting. How: This reads the root element's computed font size, falling back to the 11px default.
+	const rooPixNum = parseFloat( getComputedStyle( document.documentElement ).fontSize ) || 11; // What: Root Pixel Number. Why: Every step scales with the root font size, which follows the browser's own font size setting. How: This reads the root element's computed font size, falling back to the 11px default.
 
 
 
-	return rooPxlNum * cdnPowFun( 1 + steOffFun( rhySteStr ) ); // What: Step Pixel Return. Why: The caller needs the step's size in pixels. How: This scales the root pixel size by the core design number raised to the base step's first power plus the step's offset.
+	return rooPixNum * cdnPowFun( 1 + steOffFun( rhySteStr ) ); // What: Step Pixel Return. Why: The caller needs the step's size in pixels. How: This scales the root pixel size by the core design number raised to the base step's first power plus the step's offset.
 
 
 };
 
-// #endregion rhyPxlFun
+// #endregion rhyPixFun
 
 // #endregion Helpers
 
@@ -181,7 +178,7 @@ const rhyPxlFun = ( rhySteStr : string ) : number => { // What: Rhythm Pixel Fun
 
 // #region Exports
 
-export { cdnPowFun, durMilFun, durSecFun, rhyPxlFun }; // What: Named Exports. Why: Every animated card reads the stylesheet's scales through the same helpers. How: This exports cdnPowFun, durMilFun, durSecFun, and rhyPxlFun by name.
+export { cdnPowFun, durMilFun, durSecFun, rhyPixFun }; // What: Named Exports. Why: Every animated card reads the stylesheet's scales through the same helpers. How: This exports cdnPowFun, durMilFun, durSecFun, and rhyPixFun by name.
 
 // #endregion Exports
 

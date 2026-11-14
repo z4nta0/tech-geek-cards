@@ -6,7 +6,7 @@
 import cssModObj from './not-found.module.css'; // What: CSS Module Object. Why: The 404 page's own layout, drawing, and button styles live in its own module. How: This maps each class name in not-found.module.css to its hashed module class.
 
 
-import { Link } from 'react-router'; // What: Link. Why: The page's buttons move to the home page and the Gallery without a full page load. How: This renders them as router links.
+import { Link } from 'react-router'; // What: Link. Why: The page's buttons move to the Home page and the Gallery without a full page load. How: This renders them as router links.
 
 
 import type { JSX } from 'react'; // What: JSX. Why: The component declares the element it returns. How: This types its return as a JSX element.
@@ -20,7 +20,7 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  *
  * @summary
  * The page every unknown address shows, themed as a card lost in the mail: a
- * tipped envelope stamped Return to Sender, a large quiet 404 behind it, a
+ * tipped envelope stamped "RETURN TO SENDER", a large quiet 404 behind it, a
  * heading and a line saying the page doesn't exist, and two ways onward,
  * back home and to the Gallery. Its own title and a noindex robots tag keep
  * search engines from indexing it under every mistyped address. The
@@ -47,8 +47,8 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * Renders the 404 page's title and its noindex robots tag, which React moves
  * into the document head, and the page itself. The large 404 and the
  * envelope drawing are hidden from screen readers as decoration, since the
- * heading already says the page wasn't found. Go Home routes to the root
- * path, and Browse the Gallery to the Gallery, the site's main action.
+ * heading already says the page wasn't found. "Go Home" routes to the root
+ * path, and "Browse the Gallery" to the Gallery, the site's main action.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -103,7 +103,7 @@ function NotFouCom () : JSX.Element {
 						viewBox='0 0 200 140'
 
 						aria-hidden='true'
-					>{ /* What: Envelope Drawing SVG Element. Why: A lost envelope stamped Return to Sender gives the missing page the site's mail theme. How: This draws the envelope, its flap, a stamp, and a Return to Sender rubber stamp over the number, hidden from screen readers as decoration. */ }
+					>{ /* What: Envelope Drawing SVG Element. Why: A lost envelope stamped "RETURN TO SENDER" gives the missing page the site's mail theme. How: This draws the envelope, its flap, a stamp, and a "RETURN TO SENDER" rubber stamp over the number, hidden from screen readers as decoration. */ }
 
 
 						<rect
@@ -135,7 +135,6 @@ function NotFouCom () : JSX.Element {
 							x='144'
 							y='40'
 						/>{ /* What: Envelope Stamp Rect Element. Why: A stamp sits in the corner, its dashed edge standing for perforations. How: This draws a berry stamp in the upper right. */ }
-
 
 
 						<g transform='rotate( -8 92 108 )'>{ /* What: Stamp Tilt Group Element. Why: A rubber stamp lands at an angle. How: This tips the stamp eight degrees around its own center, inside the envelope's lower half. */ }
@@ -183,14 +182,16 @@ function NotFouCom () : JSX.Element {
 						The page you're looking for doesn't exist or has moved.
 					</p>
 
-					<div className={ cssModObj.nofActDiv }>{ /* What: Not-Found Actions Div Element. Why: A visitor who lands here gets two ways onward side by side. How: This sets the buttons in a row that wraps. */ }
+
+
+					<div className={ cssModObj.nofActDiv }>{ /* What: Not-Found Actions Div Element. Why: A visitor who lands here gets two ways onward side by side. How: This sets the buttons in a row, wrapping onto two lines at about 440px wide and below. */ }
 
 
 						<Link
 							className={ cssModObj.butPriAnc }
 
 							to='/'
-						>Go Home</Link>{ /* What: Go Home Link. Why: Home is the natural place to start over. How: This routes to the home page as a button. */ }
+						>Go Home</Link>{ /* What: Button Primary Anchor Link. Why: Home is the natural place to start over. How: This routes to the Home page as a button. */ }
 
 
 
@@ -198,7 +199,7 @@ function NotFouCom () : JSX.Element {
 							className={ cssModObj.butSecAnc }
 
 							to='/gallery'
-						>Browse the Gallery</Link>{ /* What: Browse Gallery Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an outlined button. */ }
+						>Browse the Gallery</Link>{ /* What: Button Secondary Anchor Link. Why: Browsing cards is the site's main action. How: This routes to the Gallery as an outlined button. */ }
 
 
 					</div>
@@ -226,7 +227,7 @@ function NotFouCom () : JSX.Element {
 
 // #region Exports
 
-export { NotFouCom }; // What: Named Exports. Why: The router's catch-all route renders the 404 page. How: This exports NotFouCom.
+export { NotFouCom }; // What: Named Export. Why: The router's catch-all route renders the 404 page. How: This exports NotFouCom.
 
 // #endregion Exports
 

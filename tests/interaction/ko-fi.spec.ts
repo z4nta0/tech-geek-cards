@@ -20,15 +20,25 @@ import { test   } from '@playwright/test'; // What: Test. Why: The Ko-fi link's 
  * itself isn't loaded, since a test shouldn't depend on an outside site, so
  * its address is answered here instead.
  *
+ * Sections:
+ *  - Constants
+ *  - Module Init
+ *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
 
 
 
+// #region Constants
+
 const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The button has to lead to z4nta0's Ko-fi page. How: This is the address the test expects.
 
+// #endregion Constants
 
+
+
+// #region Module Init
 
 test( 'the Ko-fi button opens the tip page in a new tab', async ( { page : curPagObj } ) => { // What: Ko-fi Link Test. Why: The tip page has to open without the visitor leaving the site. How: This checks the link's attributes, clicks it, and checks the new tab and the page left behind.
 
@@ -63,5 +73,7 @@ test( 'the Ko-fi button opens the tip page in a new tab', async ( { page : curPa
 
 
 } );
+
+// #endregion Module Init
 
 

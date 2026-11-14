@@ -3,15 +3,16 @@
 
 // #region Imports
 
-import cssModObj from './card.module.css';                         // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.
-import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the family's hexagon mark, which stands in for the wordmark on a phone. How: This is the design package's mark, fingerprinted by Vite.
+import cssModObj from './card.module.css';                        // What: CSS Module Object. Why: The card page's floating bar and loading message are styled in its own module. How: This maps each class name in card.module.css to its hashed module class.
+import marSvgUrl from 'techgeek-design/assets/brand/favicon.svg'; // What: Mark SVG URL. Why: The floating bar shows the design package's hexagon mark, which stands in for the wordmark at 640px and below. How: This is the design package's mark, fingerprinted by Vite.
 
 
-import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the home page and the Gallery without a full page load. How: This renders those two links.
-import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when Share is pressed.
+import { Link            } from 'react-router';                           // What: Link. Why: The floating bar moves to the Home page and the Gallery without a full page load. How: This renders those two links.
+import { modCliFun       } from '../../ui/section-link.ts';               // What: Modified Click Function. Why: The skip link leaves a Ctrl, Cmd, Shift, Alt, or middle click to the browser. How: Its click handler returns early when this reports such a click.
+import { ShaDiaCom       } from '../../ui/share-dialog.tsx';              // What: Share Dialog Component. Why: Someone viewing a card can send it on. How: The page mounts it when "Share" is pressed.
 import { Suspense        } from 'react';                                  // What: Suspense. Why: A card's code loads the first time its page opens. How: This shows the loading message until it arrives.
 import { useLocation     } from 'react-router';                           // What: Use Location. Why: The share dialog's preview link can open the card's own page again. How: The page reads the location's key, which changes on every navigation.
-import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the home page's. How: The page calls it to swap the one description tag's text while it shows.
+import { usePagDesFun    } from 'techgeek-design/ui/page-description.ts'; // What: Use Page Description Function. Why: Each card's search description differs from the Home page's. How: The page calls it to swap the one description tag's text while it shows.
 import { useSearchParams } from 'react-router';                           // What: Use Search Parameters. Why: The share dialog should start with the names the card is showing. How: The page reads them from its address.
 import { useState        } from 'react';                                  // What: Use State. Why: The page remembers whether its share dialog is open and how many times the card has been replayed. How: This holds both.
 
@@ -27,13 +28,15 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * card.tsx = Card
  *
  * @summary
- * The page at each card's own address: the card itself, playing full screen,
- * and a small floating bar over it with the TechGeek mark and TechGeek.cards
- * name, the mark alone on a phone (back to the home page), a link to more
- * cards, a Replay button that plays the card again from the start, and a Share
- * button that opens the share dialog for this card. The page sets its own
- * title, description, and canonical address. The card's code arrives on
- * demand, so a short loading message shows until it has.
+ * The page at each card's own address: a skip link to the card, the card
+ * itself, playing full screen as the page's main content, and a small floating
+ * bar over it with the TechGeek mark and TechGeek.cards name, the mark alone
+ * at 640px and below (back to the Home page), a link to more cards, a "Replay"
+ * button that plays the card again from the start, and a "Share" button that
+ * opens the share dialog for this card. The page sets its own title and
+ * description, and either its canonical address (a listed card) or a noindex
+ * tag (an unlisted one). The card's code arrives on demand, so a short loading
+ * message shows until it has.
  *
  * Sections:
  *  - Components
@@ -57,22 +60,25 @@ type CpcProTyp = { carRecObj : CarRecTyp }; // What: Card-Page-Component Props T
  * @summary
  * Renders one card's page: its title and either its canonical link (a listed
  * card) or a noindex tag (an unlisted one), which React moves into the
- * document head, the card's component inside Suspense with a loading message
- * as the fallback, and the floating bar. The card is keyed by the location's
- * key and a replay count, so Replay, and the share dialog's preview link
+ * document head, a skip link, the card's component inside Suspense with a
+ * loading message as the fallback, held in the page's main element, and the
+ * floating bar. The skip link comes first, waiting above the screen until
+ * it's focused, and its plain click focuses the main element without putting
+ * #main in the address. The card is keyed by the location's
+ * key and a replay count, so "Replay", and the share dialog's preview link
  * opening this same page, remount it, and every card replays the same way,
  * without reaching into its own code. The canonical address leaves out any
  * ?name= or ?from=, so every personalized copy of a card counts as the card's
- * one page. Share mounts the share dialog, keyed by the card, with its name
- * fields starting at the names the address carries, and the dialog's close
- * callback unmounts it.
+ * one page. "Share" mounts the share dialog fresh each time it's pressed, with
+ * its name fields starting at the names the address carries, and the dialog's
+ * close callback unmounts it.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param props.carRecObj - Card Record Object: {@link CarRecTyp}
  *
- * @returns The page's head tags, the card, the floating bar, and the share
- *          dialog when it's open.
+ * @returns The page's head tags, the skip link, the card in its main
+ *          element, the floating bar, and the share dialog when it's open.
  *
  * @example
  * ```tsx
@@ -89,13 +95,13 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: Replay starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
-	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after Share is pressed. How: This starts closed.
+	const [ repCouNum, setRepCouNum ] = useState( 0 );     // What: Replay Count Number And Setter. Why: "Replay" starts the card over from its first frame. How: Each press counts up, and the card is keyed by the count, so React mounts it fresh.
+	const [ shaOpeBoo, setShaOpeBoo ] = useState( false ); // What: Share Open Boolean And Setter. Why: The share dialog shows only after "Share" is pressed. How: This starts closed.
 	const [ seaParObj ]               = useSearchParams(); // What: Search Parameters Object. Why: The share dialog should start with the names the card is showing. How: This reads the card's own address, whose ?name= and ?from= the card shows.
 
 
 
-	usePagDesFun( carRecObj.seaStr ); // What: Page Description Call. Why: Search listings should describe this card, not repeat the home page. How: This swaps the one description tag's text for the card's own search description while it shows.
+	usePagDesFun( carRecObj.seaStr ); // What: Page Description Call. Why: Search listings should describe this card, not repeat the Home page. How: This swaps the one description tag's text for the card's own search description while it shows.
 
 
 
@@ -132,21 +138,25 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 			) }
 
+			<a
+				className={ cssModObj.carSkiAnc }
+
+				href='#main'
+
+				onClick={ ( cliEveObj ) => { // What: Skip Click Handler. Why: The jump should land on the card without leaving a hash in the address. How: This leaves a modified click to the browser, and otherwise cancels the default and focuses the main element.
 
 
-			<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
+					if ( modCliFun( cliEveObj ) ) return; // What: Modified Click Guard. Why: A Ctrl, Cmd, Shift, or Alt click asks the browser to open the link its own way. How: This returns before the default is cancelled.
 
 
-				<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+
+					cliEveObj.preventDefault(); // What: Default Prevent Call. Why: The browser's own jump would put #main in the address. How: This cancels it.
+
+					document.getElementById( 'main' )?.focus(); // What: Main Focus Call. Why: Focus has to land on the card, so the next Tab continues into it. How: This focuses the page's main element.
 
 
-					<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or Replay mounts it fresh and it plays again from the start. */ }
-
-
-				</Suspense>
-
-
-			</div>
+				} }
+			>Skip to main content</a>{ /* What: Card Skip Anchor Element. Why: Every page opens with a skip link, so a keyboard user can jump straight to its main content, here the card. How: This is the page's first stop, waiting above the screen until it's focused, when it slides down over the card's corner, and its click moves focus to the main element holding the card. */ }
 
 
 
@@ -161,7 +171,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barHomAnc }
 
 					to='/'
-				>{ /* What: Home Link. Why: The site's mark and name lead back to its home page. How: This routes home, showing the mark beside the wordmark, or the mark alone on a phone, where the wordmark is hidden but still names the link. */ }
+				>{ /* What: Bar Home Anchor Link. Why: The site's mark and name lead back to its Home page. How: This routes home, showing the mark beside the wordmark, or the mark alone at 640px and below, where the wordmark is hidden but still names the link. */ }
 
 
 					<img
@@ -174,7 +184,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 						alt=''
 					/>{ /* What: Bar Mark Image Element. Why: The hexagon mark leads the bar like the site's own bar, and it's decoration the wordmark already names. How: This shows the mark with an empty alt. */ }
 
-					<span className={ cssModObj.barWorSpa }>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></span>{ /* What: Bar Wordmark Span Element. Why: The site's name reads beside the mark and names the link. How: This shows the wordmark with its ending in orange, hidden from view on a phone. */ }
+					<span className={ cssModObj.barWorSpa }>TechGeek<span className={ cssModObj.barEndSpa }>.cards</span></span>{ /* What: Bar Wordmark Span Element. Why: The site's name reads beside the mark and names the link. How: This shows the wordmark with its ending in orange, hidden from view at 640px and below. */ }
 
 
 				</Link>
@@ -185,7 +195,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 					className={ cssModObj.barGalAnc }
 
 					to='/gallery'
-				>More cards</Link>{ /* What: More Cards Link. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
+				>More cards</Link>{ /* What: Bar Gallery Anchor Link. Why: A recipient may want to send a card of their own. How: This routes to the Gallery. */ }
 
 
 
@@ -210,7 +220,33 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 
 
-			{ shaOpeBoo && ( // What: Share Dialog Check. Why: The dialog only exists while it's open. How: This mounts it after Share is pressed.
+			<main
+				id='main'
+
+				tabIndex={ -1 } // What: Main Focus Target. Why: The skip link moves focus here, and a main element can't take focus on its own. How: This makes it focusable without adding it to the Tab order.
+			>{ /* What: Card Main Element. Why: The card is the page's main content, and the skip link jumps here. How: This holds the card, apart from the floating bar and the share dialog; its ID stays the plain word `main`, since the skip link's #main address names it as a navigation target. */ }
+
+
+				<div className={ cssModObj.carStaDiv }>{ /* What: Card Stage Div Element. Why: Every card's lettering has to clear the floating bar. How: This holds the card, handing it the margin that clears the bar. */ }
+
+
+					<Suspense fallback={ carLoaEle }>{ /* What: Card Suspense. Why: The card's code arrives on demand. How: This shows the loading message until the card's component has loaded. */ }
+
+
+						<CarComCom key={ `${ locKeyStr }-${ repCouNum }` } />{ /* What: Card Component Component. Why: The card is the page. How: This plays the card full screen, keyed by the visit and the replay count so a link back to this page or "Replay" mounts it fresh and it plays again from the start. */ }
+
+
+					</Suspense>
+
+
+				</div>
+
+
+			</main>
+
+
+
+			{ shaOpeBoo && ( // What: Share Dialog Check. Why: The dialog only exists while it's open. How: This mounts it after "Share" is pressed.
 
 
 				<ShaDiaCom
@@ -241,7 +277,7 @@ function CarPagCom ( { carRecObj } : CpcProTyp ) : JSX.Element {
 
 // #region Exports
 
-export { CarPagCom }; // What: Named Exports. Why: The app root renders a card's page when the address names a card. How: This exports CarPagCom.
+export { CarPagCom }; // What: Named Export. Why: The app root renders a card's page when the address names a card. How: This exports CarPagCom.
 
 // #endregion Exports
 

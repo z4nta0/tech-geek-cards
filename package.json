@@ -1,6 +1,6 @@
 {
 	"name": "tech-geek-cards",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -8,14 +8,15 @@
 		"dev": "vite",
 		"icons": "node design/icons/render.mts",
 		"images": "node design/images/render.mts",
-		"og-images": "node design/og-image/render.mts",
 		"lint": "eslint .",
+		"og-images": "node design/og-image/render.mts",
 		"preview": "vite preview",
 		"test": "playwright test --config tests/playwright.config.ts",
 		"test:accessibility": "playwright test --config tests/playwright.config.ts --project \"accessibility-*\"",
 		"test:interaction": "playwright test --config tests/playwright.config.ts --project \"interaction-*\"",
 		"test:rendering": "playwright test --config tests/playwright.config.ts --project \"rendering-*\"",
 		"test:responsive": "playwright test --config tests/playwright.config.ts --project \"responsive-*\"",
+		"test:security": "playwright test --config tests/playwright.config.ts --project \"security-*\"",
 		"test:seo": "playwright test --config tests/playwright.config.ts --project \"seo-*\"",
 		"typecheck": "tsc -b"
 	},
@@ -25,7 +26,7 @@
 		"react": "^19.3.0",
 		"react-dom": "^19.3.0",
 		"react-router": "^8.4.0",
-		"techgeek-design": "github:z4nta0/techgeek-design#v0.4.0"
+		"techgeek-design": "github:z4nta0/techgeek-design#v0.7.2"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",

@@ -1,6 +1,14 @@
 
 
 
+// #region Imports
+
+import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: Each leaf's size, pace, spot, and spin are picked at random within set bounds. How: This returns a random number between two bounds.
+
+// #endregion Imports
+
+
+
 /**
  * leaf-fall.ts = Leaf Fall
  *
@@ -81,10 +89,6 @@ const FUL_TUR_NUM = 360;       // What: Full Turn Number. Why: A leaf starts at 
 
 // #region Helpers
 
-const ranNumFun = ( minValNum : number, maxValNum : number ) : number => minValNum + Math.random() * ( maxValNum - minValNum ); // What: Random Number Function. Why: Every leaf's size, pace, spot, and wait are picked at random within a range. How: This returns a number from the minimum up to the maximum.
-
-
-
 // #region resLeaFun
 
 /**
@@ -121,22 +125,23 @@ const resLeaFun = ( leaRecObj : LeaRecTyp, leaSetObj : LeaSetTyp, conWidNum : nu
 
 
 	const colIndNum = Math.floor( Math.random() * leaSetObj.colStrArr.length ); // What: Color Index Number. Why: Each fall gets a new color. How: This picks a position in the color list.
-	const durValNum = ranNumFun( leaSetObj.durMinNum, leaSetObj.durMaxNum );    // What: Duration Value Number. Why: The fall, drift, and spin are spread over one fall time. How: This picks it within the settings' range, in milliseconds.
-	const sizValNum = ranNumFun( leaSetObj.sizMinNum, leaSetObj.sizMaxNum );    // What: Size Value Number. Why: Each fall gets a new size. How: This picks it within the settings' range, in pixels.
+	const durValNum = ranValFun( leaSetObj.durMinNum, leaSetObj.durMaxNum );    // What: Duration Value Number. Why: The fall, drift, and spin are spread over one fall time. How: This picks it within the settings' range, in milliseconds.
+	const sizValNum = ranValFun( leaSetObj.sizMinNum, leaSetObj.sizMaxNum );    // What: Size Value Number. Why: Each fall gets a new size. How: This picks it within the settings' range, in pixels.
 
 
-	leaRecObj.rotNum    = ranNumFun( 0, FUL_TUR_NUM );                                            // What: Rotation Assignment. Why: The leaf starts at any angle. How: This picks one within a whole turn.
-	leaRecObj.rotSpeNum = ranNumFun( leaSetObj.spiMaxNum * -1, leaSetObj.spiMaxNum ) / durValNum; // What: Rotation Speed Assignment. Why: The leaf spins either way over its fall. How: This picks a turn within the spin range and spreads it over the fall time.
+	leaRecObj.rotNum    = ranValFun( 0, FUL_TUR_NUM );                                            // What: Rotation Assignment. Why: The leaf starts at any angle. How: This picks one within a whole turn.
+	leaRecObj.rotSpeNum = ranValFun( leaSetObj.spiMaxNum * -1, leaSetObj.spiMaxNum ) / durValNum; // What: Rotation Speed Assignment. Why: The leaf spins either way over its fall. How: This picks a turn within the spin range and spreads it over the fall time.
 	leaRecObj.sizNum    = sizValNum;                                                              // What: Size Assignment. Why: The frame loop reads the size. How: This keeps it.
-	leaRecObj.waiNum    = ranNumFun( 0, leaSetObj.waiMaxNum );                                    // What: Wait Assignment. Why: The leaf waits a moment before it falls. How: This picks a wait within the settings' range.
-	leaRecObj.xcoNum    = ranNumFun( 0, Math.max( 0, conWidNum - sizValNum ) );                   // What: X-Coordinate Assignment. Why: The leaf starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
-	leaRecObj.xcoSpeNum = ranNumFun( leaSetObj.driMaxNum * -1, leaSetObj.driMaxNum ) / durValNum; // What: X-Coordinate Speed Assignment. Why: The leaf drifts either way over its fall. How: This picks a drift within the range and spreads it over the fall time.
+	leaRecObj.waiNum    = ranValFun( 0, leaSetObj.waiMaxNum );                                    // What: Wait Assignment. Why: The leaf waits a moment before it falls. How: This picks a wait within the settings' range.
+	leaRecObj.xcoNum    = ranValFun( 0, Math.max( 0, conWidNum - sizValNum ) );                   // What: X-Coordinate Assignment. Why: The leaf starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
+	leaRecObj.xcoSpeNum = ranValFun( leaSetObj.driMaxNum * -1, leaSetObj.driMaxNum ) / durValNum; // What: X-Coordinate Speed Assignment. Why: The leaf drifts either way over its fall. How: This picks a drift within the range and spreads it over the fall time.
 	leaRecObj.ycoNum    = sizValNum * -1;                                                         // What: Y-Coordinate Assignment. Why: The leaf starts just out of sight. How: This puts it its own size above the top edge.
 	leaRecObj.ycoSpeNum = ( conHeiNum + sizValNum * 2 ) / durValNum;                              // What: Y-Coordinate Speed Assignment. Why: The leaf falls from above the top to below the bottom in its fall time. How: This spreads the container's height plus twice its size over the fall time.
 
 
 	leaRecObj.svgEle.setAttribute( 'height', String( sizValNum ) ); // What: Height Attribute Call. Why: The element has to match the new size. How: This sets its height.
 	leaRecObj.svgEle.setAttribute( 'width', String( sizValNum ) );  // What: Width Attribute Call. Why: The element has to match the new size. How: This sets its width.
+
 
 	leaRecObj.svgEle.style.color   = leaSetObj.colStrArr[ colIndNum ]; // What: Color Assignment. Why: The leaf's shapes fill with the current color. How: This tints it the picked color.
 	leaRecObj.svgEle.style.opacity = '0';                              // What: Opacity Assignment. Why: The leaf stays hidden while it waits. How: This hides it until the frame loop fades it in.
@@ -232,15 +237,13 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 		leaRecObj.svgEle.setAttribute( 'class', leaClaStr ); // What: Leaf Class Assignment. Why: The copy keeps the template's hiding class, which the leaf mustn't. How: This replaces it with the falling leaf's class.
 
-
 		resLeaFun( leaRecObj, leaSetObj, conWidNum, conHeiNum ); // What: Leaf Reset Call. Why: A new leaf needs a size, color, spot, pace, and wait. How: This picks them the same way a fallen leaf's restart does.
-
 
 		conDivEle.appendChild( leaRecObj.svgEle ); // What: Leaf Append Call. Why: The leaf has to be in the page to be seen. How: This adds it to the container.
 
 
 
-		return leaRecObj;
+		return leaRecObj; // What: Leaf Record Return. Why: The array keeps every leaf's values between frames. How: This hands the new leaf to Array.from as its entry.
 
 
 	} );
@@ -251,7 +254,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 	// #region Frame Loop
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the leaves has to cancel the next frame. How: This holds the pending frame's id.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the leaves has to cancel the next frame. How: This holds the pending frame's ID.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
 
@@ -271,7 +274,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 
-			if ( leaRecObj.waiNum > 0 ) continue; // What: Waiting Leaf Check. Why: A leaf still waiting stays hidden above the top. How: This skips it until its wait runs out.
+			if ( leaRecObj.waiNum > 0 ) continue; // What: Waiting Leaf Check. Why: A leaf still waiting stays hidden, at zero opacity. How: This skips it until its wait runs out.
 
 
 
@@ -288,19 +291,20 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 			leaRecObj.svgEle.style.opacity   = String( Math.min( 1, Math.max( 0, falFraNum ) ) );                                                       // What: Opacity Assignment. Why: The leaf fades in as it falls. How: This sets its opacity to its fall fraction, kept between 0 and 1.
-			leaRecObj.svgEle.style.transform = `translate3d( ${ leaRecObj.xcoNum }px, ${ leaRecObj.ycoNum }px, 0 ) rotate( ${ leaRecObj.rotNum }deg )`; // What: Transform Assignment. Why: Moving by transform skips layout, so thirty leaves stay smooth. How: This places and turns the leaf.
+			leaRecObj.svgEle.style.transform = `translate3d( ${ leaRecObj.xcoNum }px, ${ leaRecObj.ycoNum }px, 0 ) rotate( ${ leaRecObj.rotNum }deg )`; // What: Transform Assignment. Why: Moving by transform skips layout, so the leaves stay smooth. How: This places and turns the leaf.
 
 
 		}
 
 
-		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The leaves keep falling. How: This asks for the next frame and keeps its id.
+
+		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The leaves keep falling. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The leaves start falling. How: This asks for the first frame and keeps its id.
+	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The leaves start falling. How: This asks for the first frame and keeps its ID.
 
 	// #endregion Frame Loop
 
@@ -310,7 +314,6 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

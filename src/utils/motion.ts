@@ -5,8 +5,8 @@
  * motion.ts = Motion
  *
  * @summary
- * The reduced-motion check every animation JavaScript plays itself consults
- * first: whether the visitor's system asks for reduced motion. It reads the
+ * The reduced-motion check for motion JavaScript plays itself: whether the
+ * visitor's system asks for reduced motion. It reads the
  * live media query on every call, so a change to the setting takes effect
  * without a reload. It also reads the stylesheet's easing curves, for motion
  * that can't read a custom property through var(), such as a GSAP timeline.
@@ -51,7 +51,7 @@
  *
 */
 
-const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.documentElement ).getPropertyValue( `--mot-${ easFamStr }-eas` ).trim() || 'ease'; // What: Motion Easing Function. Why: JavaScript motion can't read a custom property, yet its curves should match the stylesheet's. How: This reads the family's token from the root element's computed style, falling back to ease.
+const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.documentElement ).getPropertyValue( `--mot-${ easFamStr }-eas` ).trim() || 'ease'; // What: Motion Easing Function. Why: JavaScript motion can't use a var() reference as its easing, yet its curves should match the stylesheet's. How: This reads the family's token from the root element's computed style, falling back to ease.
 
 // #endregion motEasFun
 
@@ -60,13 +60,13 @@ const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.
 // #region redMotFun
 
 /**
- * redMotFun = Reduce Motion Function
+ * redMotFun = Reduced Motion Function
  *
  * @summary
  * Whether the visitor asked their system for reduced motion. Animations
- * JavaScript plays itself (a GSAP timeline, a requestAnimationFrame loop)
- * check this, since the CSS media query alone can't stop them. It reads the
- * live setting on every call, so a change takes effect immediately.
+ * JavaScript plays itself (a GSAP timeline) check this, since the CSS media
+ * query alone can't stop them. It reads the live setting on every call, so a
+ * change takes effect immediately.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -81,7 +81,7 @@ const motEasFun = ( easFamStr : string ) : string => getComputedStyle( document.
  *
 */
 
-const redMotFun = () : boolean => window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches; // What: Reduce Motion Function. Why: JavaScript animations must check this, since the CSS media query never reaches them. How: This reports whether the system's prefers-reduced-motion query currently matches reduce.
+const redMotFun = () : boolean => window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches; // What: Reduced Motion Function. Why: JavaScript animations must check this, since the CSS media query never reaches them. How: This reports whether the system's prefers-reduced-motion query currently matches reduce.
 
 // #endregion redMotFun
 
@@ -91,7 +91,7 @@ const redMotFun = () : boolean => window.matchMedia( '(prefers-reduced-motion: r
 
 // #region Exports
 
-export { motEasFun, redMotFun }; // What: Named Exports. Why: Every animated card checks the same reduced-motion preference, and its JavaScript motion reads the same curves as the stylesheet. How: This exports motEasFun and redMotFun by name.
+export { motEasFun, redMotFun }; // What: Named Exports. Why: JavaScript motion checks the reduced-motion preference and reads the same curves as the stylesheet. How: This exports motEasFun and redMotFun by name.
 
 // #endregion Exports
 

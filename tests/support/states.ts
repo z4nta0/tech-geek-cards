@@ -13,17 +13,17 @@ import type { Page } from '@playwright/test'; // What: Page. Why: Opening a stat
  * states.ts = States
  *
  * @summary
- * The page states the accessibility, interaction, and rendering suites visit,
- * and the helper that opens one; the responsive suite opens its own widths
- * through the same helper. A state is a page at a width, sometimes with
- * something opened on it: every route, every card, and the 404 page at phone
- * and desktop widths, the mobile menu open on a phone, the share dialog open
- * on the Gallery at both widths, and a signable card's share dialog on a
- * phone. opeStaFun sizes the viewport, loads the page, under reduced motion
- * for a card so it opens on its finished scene, waits for the fonts, scrolls
- * through the page so any lazily loaded image loads, runs the state's own
- * action, such as opening the menu, and then waits for the page to stay still
- * so nothing is measured mid-fade.
+ * The shared page states the accessibility, interaction, rendering, and
+ * security suites visit, and the helper that opens one; the responsive suite
+ * opens its own widths through the same helper. A state is a page at a width,
+ * sometimes with something opened on it: every route, every card, and the 404
+ * page at phone and desktop widths, the mobile menu open on a phone, the share
+ * dialog open on the Gallery at both widths, and a signable card's share
+ * dialog on a phone. opeStaFun sizes the viewport, loads the page, under
+ * reduced motion for a card so it opens on its finished scene, waits for the
+ * fonts, scrolls through the page so any lazily loaded image loads, runs the
+ * state's own action, such as opening the menu, and then waits for the page to
+ * stay still so nothing is measured mid-fade.
  *
  * Sections:
  *  - Types
@@ -45,7 +45,7 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
 	actFun? : ( curPagObj : Page ) => Promise< void >, // What: Action Function. Why: Some states need something opened after the page loads. How: This runs against the loaded page, e.g. clicking the menu toggle.
 	heiNum  : number,                                  // What: Height Number. Why: The viewport's height decides what's on screen. How: This is the viewport height in CSS pixels.
 	ideStr  : string,                                  // What: Identifier String. Why: Each test names the state it checks. How: This becomes part of the test title.
-	patStr  : string,                                  // What: Path String. Why: Each state opens one route. How: This is the path loaded from the dev server.
+	patStr  : string,                                  // What: Path String. Why: Each state opens one route. How: This is the path loaded from the suite's server.
 	redBoo? : boolean,                                 // What: Reduced Boolean. Why: A card plays for up to two minutes, so it never sits still long enough to check. How: When true, the page loads under reduced motion, opening on the card's finished scene, and the preference is switched back off once it's open.
 	widNum  : number                                   // What: Width Number. Why: Layouts and menus change with width. How: This is the viewport width in CSS pixels.
 
@@ -64,36 +64,43 @@ type StaRecTyp = { // What: State Record Type. Why: Every check reads the same d
  * STA_REC_ARR = State Record Array
  *
  * @summary
- * Every state the checks visit: each route (Home, Gallery, About, Contact, and
- * every card's page) and the 404 page at a phone width (390px) and a desktop
- * width (1,440px), the mobile menu open at the phone width, since the menu is
- * only reachable there, and the share dialog open on the Gallery at both
- * widths, plus a signable card's at the phone width. Every row shares the
- * {@link StaRecTyp} shape, so its fields carry no comments of their own:
+ * The shared states the checks visit: each route (Home, Gallery, About,
+ * Contact, and every card's page) and the 404 page at a phone width (390px)
+ * and a desktop width (1,440px), the mobile menu open at the phone width,
+ * where the menu replaces the bar's links, and the share dialog open on the
+ * Gallery at both widths, plus a signable card's at the phone width. Every row
+ * shares the {@link StaRecTyp} shape, so its fields carry no comments of their
+ * own:
+ *
  *  - `actFun` (Function): Action Function, run after the page loads to open
  *    something on it, such as the menu. Only the menu and dialog rows have
  *    one.
+ *
  *  - `heiNum` (Number): Height Number, the viewport height in CSS pixels.
+ *
  *  - `ideStr` (String): Identifier String, the state's name in test titles.
- *  - `patStr` (String): Path String, the route loaded from the dev server.
+ *
+ *  - `patStr` (String): Path String, the route loaded from the suite's server.
+ *
  *  - `redBoo` (Boolean): Reduced Boolean, true on a card's rows, which load
  *    under reduced motion so the card opens finished, then switch it off.
+ *
  *  - `widNum` (Number): Width Number, the viewport width in CSS pixels.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
 
-const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every check walks the same list of states, so a new state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
+const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: The suites share one list of states, so a shared state is added in one place. How: Each row names a state, its path, and its viewport, and the menu and dialog rows add the action that opens each.
 
 
-	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: Most visitors land here. How: This loads the home page at 1,440px.
-	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the home page at 390px.
-	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds the search, the filters, and every card tile. How: This loads the Gallery at 1,440px.
+	{ heiNum : 900, ideStr : 'home-desktop',              patStr : '/',                      redBoo : false, widNum : 1440 }, // What: Home Desktop State. Why: The Home page opens the site at a desktop width. How: This loads the Home page at 1,440px.
+	{ heiNum : 844, ideStr : 'home-phone',                patStr : '/',                      redBoo : false, widNum : 390  }, // What: Home Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Home page at 390px.
+	{ heiNum : 900, ideStr : 'gallery-desktop',           patStr : '/gallery',               redBoo : false, widNum : 1440 }, // What: Gallery Desktop State. Why: The Gallery holds its sections, such as the listed cards' tiles. How: This loads the Gallery at 1,440px.
 	{ heiNum : 844, ideStr : 'gallery-phone',             patStr : '/gallery',               redBoo : false, widNum : 390  }, // What: Gallery Phone State. Why: The phone layout stacks the tiles into one column and hides the bar's links behind the menu. How: This loads the Gallery at 390px.
-	{ heiNum : 900, ideStr : 'about-desktop',             patStr : '/about',                 redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds the story, the facts, and the sister sites. How: This loads the About page at 1,440px.
+	{ heiNum : 900, ideStr : 'about-desktop',             patStr : '/about',                 redBoo : false, widNum : 1440 }, // What: About Desktop State. Why: The About page holds its sections, such as the story. How: This loads the About page at 1,440px.
 	{ heiNum : 844, ideStr : 'about-phone',               patStr : '/about',                 redBoo : false, widNum : 390  }, // What: About Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the About page at 390px.
-	{ heiNum : 900, ideStr : 'contact-desktop',           patStr : '/contact',               redBoo : false, widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds the form and the sidebar. How: This loads the Contact page at 1,440px.
+	{ heiNum : 900, ideStr : 'contact-desktop',           patStr : '/contact',               redBoo : false, widNum : 1440 }, // What: Contact Desktop State. Why: The Contact page holds its sections, such as the form. How: This loads the Contact page at 1,440px.
 	{ heiNum : 844, ideStr : 'contact-phone',             patStr : '/contact',               redBoo : false, widNum : 390  }, // What: Contact Phone State. Why: The phone layout stacks the page into one column and hides the bar's links behind the menu. How: This loads the Contact page at 390px.
 	{ heiNum : 900, ideStr : 'not-found-desktop',         patStr : '/missing',               redBoo : false, widNum : 1440 }, // What: Not Found Desktop State. Why: Every unknown address lands on the 404 page. How: This loads an address the site doesn't have at 1,440px.
 	{ heiNum : 844, ideStr : 'not-found-phone',           patStr : '/missing',               redBoo : false, widNum : 390  }, // What: Not Found Phone State. Why: The phone bar hides its links behind the menu on the 404 page too. How: This loads an address the site doesn't have at 390px.
@@ -116,7 +123,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 	{ heiNum : 900, ideStr : 'fathers-day-prank-desktop', patStr : '/fathers-day-prank',     redBoo : true,  widNum : 1440 }, // What: Father's Day Prank Desktop State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 1,440px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 	{ heiNum : 844, ideStr : 'fathers-day-prank-phone',   patStr : '/fathers-day-prank',     redBoo : true,  widNum : 390  }, // What: Father's Day Prank Phone State. Why: The Father's Day prank shares the Family engine with its own photos and lines. How: This loads it at 390px, where it shows its finished greeting and mosaic, which reduced motion shows at once.
 
-	{ // What: Menu Phone State. Why: The open menu holds the phone's only copy of the page links. How: This loads the home page at 390px and opens the menu through its toggle button.
+	{ // What: Menu Phone State. Why: The open menu holds the bar's links, which the phone layout hides until it opens. How: This loads the Home page at 390px and opens the menu through its toggle button.
 
 
 		heiNum : 844,
@@ -137,7 +144,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 
 	},
 
-	{ // What: Share Desktop State. Why: The share dialog is how every card is sent, so it gets the same checks as a page. How: This loads the Gallery at 1,440px and opens the share dialog for the birthday card.
+	{ // What: Share Desktop State. Why: The share dialog is how every card is sent, so it gets the same checks as a page. How: This loads the Gallery at 1,440px and opens the share dialog for the Birthday card.
 
 
 		heiNum : 900,
@@ -145,10 +152,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 		patStr : '/gallery',
 		widNum : 1440,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Birthday tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Birthday card's, which has a name field.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -158,7 +165,7 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 
 	},
 
-	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen and its buttons wrap. How: This loads the Gallery at 390px and opens the share dialog for the birthday card.
+	{ // What: Share Phone State. Why: On a phone the dialog fills most of the screen. How: This loads the Gallery at 390px and opens the share dialog for the Birthday card.
 
 
 		heiNum : 844,
@@ -166,10 +173,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 		patStr : '/gallery',
 		widNum : 390,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the birthday tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Birthday tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the birthday card's, which has a name field.
+			await curPagObj.getByRole( 'button', { name : 'Share Happy Birthday' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Birthday card's, which has a name field.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -187,10 +194,10 @@ const STA_REC_ARR : StaRecTyp[] = [ // What: State Record Array. Why: Every chec
 		patStr : '/gallery',
 		widNum : 390,
 
-		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Merry Christmas tile's Share button, then moves the pointer off it.
+		actFun : async ( curPagObj ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the Merry Christmas tile's "Share" button, then moves the pointer off it.
 
 
-			await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The dialog opens only from a Share button. How: This presses the Merry Christmas card's, which has both name fields.
+			await curPagObj.getByRole( 'button', { name : 'Share Merry Christmas' } ).click(); // What: Share Click Call. Why: The dialog opens only from a "Share" button. How: This presses the Merry Christmas card's, which has both name fields.
 
 			await curPagObj.mouse.move( 0, 0 ); // What: Pointer Move Call. Why: The pointer would otherwise rest on whatever lands under it and hold its hover look in every check of this state. How: This parks the pointer in the corner.
 
@@ -314,7 +321,9 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
 
 		const stiPagBoo = await curPagObj.evaluate( () => document.getAnimations().every( ( aniCurObj ) => aniCurObj.playState !== 'running' || aniCurObj.effect?.getComputedTiming().iterations === Infinity ) ); // What: Still Page Boolean. Why: Each check asks whether anything that ends is still moving. How: This is true when every running animation or transition is one that repeats forever.
 
+
 		quiCouNum = stiPagBoo ? quiCouNum + 1 : 0; // What: Quiet Count Update. Why: Any movement restarts the count, so the page has to stay still the whole half second. How: This adds one for a still check and resets to zero otherwise.
+
 
 		await curPagObj.waitForTimeout( 100 ); // What: Check Pause Wait. Why: The checks have to span time to prove the page stays still. How: This waits 100ms before the next one.
 
@@ -335,12 +344,13 @@ async function waiSetFun ( curPagObj : Page ) : Promise< void > {
  *
  * @summary
  * Opens one state on a page and waits until it's settled: sizes the viewport,
- * loads the path, under reduced motion for a card's row until it's open, waits
- * for the web fonts, scrolls through the page so every lazily loaded image
- * starts loading ({@link revPagFun}), waits for every image to decode, runs
- * the state's action if it has one, then waits until the page stays still
- * ({@link waiSetFun}), so a check never measures a heading halfway through its
- * entrance fade or a menu halfway open.
+ * loads the path, under reduced motion for a card's row, waits for a card to
+ * mount, waits for the web fonts, scrolls through the page so every lazily
+ * loaded image starts loading ({@link revPagFun}), waits for every image to
+ * decode, switches reduced motion back off for a card's row unless the test
+ * asked for it, runs the state's action if it has one, then waits until the
+ * page stays still ({@link waiSetFun}), so a check never measures a heading
+ * halfway through its entrance fade or a menu halfway open.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -362,15 +372,21 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 	await curPagObj.setViewportSize( { height : staRecObj.heiNum, width : staRecObj.widNum } ); // What: Viewport Size Call. Why: The state's layout depends on its width. How: This sizes the page before it loads, so breakpoints apply from the first paint.
 
+
 	const redPreBoo = await curPagObj.evaluate( () => matchMedia( '(prefers-reduced-motion: reduce)' ).matches ); // What: Reduced Preset Boolean. Why: A test that asked for reduced motion itself has to keep it. How: This reads the preference before the state touches it.
 
 
 
-	if ( staRecObj.redBoo ) await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Card Finish Emulation. Why: A card would otherwise still be playing when it's checked. How: This loads the card under reduced motion, which opens it on its finished scene.
+	if ( staRecObj.redBoo ) await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Card Finish Emulation. Why: A card would otherwise still be playing when it's checked. How: This turns reduced motion on before the card loads, so it opens on its finished scene.
 
 
 
-	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's dev server.
+	await curPagObj.goto( staRecObj.patStr ); // What: Page Load Call. Why: Each state starts from a fresh load of its route. How: This opens the path on the suite's server.
+
+
+	if ( staRecObj.redBoo ) await curPagObj.waitForFunction( () => !!document.querySelector( 'main [class*="carStaDiv"] > :not([class*="carLoaPar"])' ) ); // What: Card Mount Wait. Why: The card's code arrives on demand, and a card that mounts after reduced motion is lifted below would read the preference as off and play instead of opening finished. How: On a card's row, this waits until the stage holds something other than the loading message, found by the class names Vite keeps inside the hashed classes.
+
+
 
 	await curPagObj.evaluate( () => document.fonts.ready ); // What: Fonts Ready Wait. Why: Text measured before its web font loads would have the wrong size and wrapping. How: This waits until every font face has loaded.
 
@@ -401,7 +417,7 @@ async function opeStaFun ( curPagObj : Page, staRecObj : StaRecTyp ) : Promise< 
 
 // #region Exports
 
-export { opeStaFun, STA_REC_ARR }; // What: Named Exports. Why: The accessibility, interaction, rendering, and responsive specs share these states and their opener. How: This exports the state list and the helper that opens one.
+export { opeStaFun, STA_REC_ARR, type StaRecTyp }; // What: Named Exports. Why: The page suites share these states, their shape, and their opener. How: This exports the state list, its row type, and the helper that opens one.
 
 // #endregion Exports
 

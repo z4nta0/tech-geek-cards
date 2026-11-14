@@ -6,15 +6,14 @@
  *
  * @summary
  * Styles for ThaCarCom, a full-screen autumn card: a warm brown-to-amber
- * gradient with a soft amber glow, and centered on it the Happy Thanksgiving
- * heading, a cornucopia and a turkey side by side, and a short script
- * message with its wish below. The illustrations grow with the screen, the
- * turkey a step taller than the cornucopia, so both stay side by side even
- * on a 320px phone. Over everything, the falling leaves leaf-fall.ts adds
- * drift down a layer of their own. The card brings its own two fonts,
- * declared here so they load with the card. Nothing here animates through
- * CSS: the GSAP timeline and the leaf fall play everything, and both skip
- * their motion under reduced motion.
+ * gradient with a soft amber glow, and centered on it the card's lettering and
+ * illustrations, such as the cornucopia and turkey side by side. The
+ * illustrations grow with the screen, the turkey a step taller than the
+ * cornucopia, so both stay side by side even on a 320px phone. Over
+ * everything, the falling leaves leaf-fall.ts adds drift down a layer of their
+ * own. The card brings its own fonts, declared here so they load with the
+ * card. Nothing here animates through CSS: the GSAP timeline and the leaf fall
+ * play everything.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -52,8 +51,8 @@
 
 
 	--tha-amb-col : #E8A040; /* What: Thanksgiving Amber Color. Why: The sky glows amber at its bright end. How: This is #E8A040, the sky gradient's last stop. */
-	--tha-bro-col : #8B4513; /* What: Thanksgiving Brown Color. Why: A saddle brown paints the turkey and some leaves and edges the heading. How: This is #8B4513, read by the heading's edge, the turkey's body and neck, and the falling leaves. */
-	--tha-cin-col : #D2691E; /* What: Thanksgiving Cinnamon Color. Why: A cinnamon orange colors the turkey's middle feather and some leaves. How: This is #D2691E, read by the feather rows and the falling leaves. */
+	--tha-bro-col : #8B4513; /* What: Thanksgiving Brown Color. Why: A saddle brown is one of the card's autumn browns, such as the turkey's body. How: This is #8B4513. */
+	--tha-cin-col : #D2691E; /* What: Thanksgiving Cinnamon Color. Why: A cinnamon orange is one of the card's autumn colors, such as the turkey's middle feather. How: This is #D2691E. */
 	--tha-cof-col : #3B1F0A; /* What: Thanksgiving Coffee Color. Why: The sky starts in a deep coffee brown. How: This is #3B1F0A, the sky gradient's first stop. */
 	--tha-cop-col : #C4621D; /* What: Thanksgiving Copper Color. Why: The sky warms through copper. How: This is #C4621D, the sky gradient's third stop. */
 	--tha-eye-col : #1a1a1a; /* What: Thanksgiving Eye Color. Why: The turkey's eye is near black. How: This is #1a1a1a, read by the eye. */
@@ -61,23 +60,23 @@
 	--tha-fol-col : #5A7A2A; /* What: Thanksgiving Foliage Color. Why: Green leaves tuck around the cornucopia's produce. How: This is #5A7A2A, read by both cornucopia leaves. */
 	--tha-gli-col : white;   /* What: Thanksgiving Glint Color. Why: A glint brings the turkey's eye to life. How: This is white, read by the eye glint. */
 	--tha-glo-col : #FFA028; /* What: Thanksgiving Glow Color. Why: A soft amber glow lights the middle of the sky. How: This is #FFA028, read at an opacity by the sky's radial glow. */
-	--tha-gol-col : #DAA520; /* What: Thanksgiving Gold Color. Why: A goldenrod paints the horn's highlight, the corn, the gold feathers, the beak, the feet, and some leaves. How: This is #DAA520, read by each of those. */
+	--tha-gol-col : #DAA520; /* What: Thanksgiving Gold Color. Why: A goldenrod is the card's bright gold, such as the corn's. How: This is #DAA520. */
 	--tha-gra-col : #6B2FA0; /* What: Thanksgiving Grape Color. Why: The grapes are purple. How: This is #6B2FA0, read by every grape. */
 	--tha-hor-col : #C8882A; /* What: Thanksgiving Horn Color. Why: The cornucopia's horn is wicker gold. How: This is #C8882A, read by the horn's body. */
 	--tha-meg-col : #501E00; /* What: Thanksgiving Message-Glow Color. Why: The message has a soft brown glow. How: This is #501E00, read at an opacity by the message block's text shadow. */
 	--tha-mes-col : #FDECC8; /* What: Thanksgiving Message Color. Why: The message is set in a soft cream. How: This is #FDECC8, read by the message block. */
-	--tha-och-col : #B8860B; /* What: Thanksgiving Ochre Color. Why: A darker gold marks the corn's husk line and some leaves. How: This is #B8860B, read by the husk line and the falling leaves. */
+	--tha-och-col : #B8860B; /* What: Thanksgiving Ochre Color. Why: A darker gold is one of the card's autumn colors, such as the corn's husk line. How: This is #B8860B. */
 	--tha-ora-col : #FF8C00; /* What: Thanksgiving Orange Color. Why: A bright orange adds a vivid leaf to the fall. How: This is #FF8C00, read by the falling leaves. */
 	--tha-out-col : #8B5E1A; /* What: Thanksgiving Outline Color. Why: The horn has a brown outline. How: This is #8B5E1A, read by the horn's stroke. */
 	--tha-pum-col : #D2601A; /* What: Thanksgiving Pumpkin Color. Why: A darker orange gives the pumpkin its ribs. How: This is #D2601A, read by the pumpkin's shading. */
-	--tha-red-col : #CC2200; /* What: Thanksgiving Red Color. Why: A bright red paints the apple and the turkey's wattle. How: This is #CC2200, read by both. */
+	--tha-red-col : #CC2200; /* What: Thanksgiving Red Color. Why: A bright red is the card's vivid accent, such as the apple's. How: This is #CC2200. */
 	--tha-rus-col : #7B3A10; /* What: Thanksgiving Rust Color. Why: The sky deepens through rust. How: This is #7B3A10, the sky gradient's second stop. */
-	--tha-sie-col : #A0522D; /* What: Thanksgiving Sienna Color. Why: A sienna brown paints the turkey's wing and some leaves. How: This is #A0522D, read by the wing and the falling leaves. */
-	--tha-tan-col : #CD853F; /* What: Thanksgiving Tan Color. Why: A tan paints the turkey's head and some leaves. How: This is #CD853F, read by the head and the falling leaves. */
-	--tha-ter-col : #E2703A; /* What: Thanksgiving Terracotta Color. Why: A terracotta orange paints the pumpkin and some leaves. How: This is #E2703A, read by the pumpkin's body and the falling leaves. */
+	--tha-sie-col : #A0522D; /* What: Thanksgiving Sienna Color. Why: A sienna brown is one of the card's autumn browns, such as the turkey's wing. How: This is #A0522D. */
+	--tha-tan-col : #CD853F; /* What: Thanksgiving Tan Color. Why: A tan is one of the card's autumn colors, such as the turkey's head. How: This is #CD853F. */
+	--tha-ter-col : #E2703A; /* What: Thanksgiving Terracotta Color. Why: A terracotta orange is one of the card's autumn colors, such as the pumpkin's body. How: This is #E2703A. */
 	--tha-tig-col : #783200; /* What: Thanksgiving Title-Glow Color. Why: The heading has a warm brown glow. How: This is #783200, read at an opacity by the heading's text shadow. */
 	--tha-tit-col : #FFF3CC; /* What: Thanksgiving Title Color. Why: The heading is set in big cream lettering. How: This is #FFF3CC, read by the heading. */
-	--tha-umb-col : #5C3317; /* What: Thanksgiving Umber Color. Why: A dark umber paints the stems, the pumpkin's curl, and the leaf veins. How: This is #5C3317, read by the pumpkin and apple stems, the curl, and the falling leaves' veins. */
+	--tha-umb-col : #5C3317; /* What: Thanksgiving Umber Color. Why: A dark umber draws the card's darkest details, such as the stems. How: This is #5C3317. */
 
 	background     : radial-gradient( ellipse at 50% 60% in srgb, rgb( from var( --tha-glo-col ) r g b / var( --cdn-pow-006-rec ) ) 0%, transparent 70% ), linear-gradient( calc( var( --cdn-pow-018 ) * 1deg ), var( --tha-cof-col ) 0%, var( --tha-rus-col ) 35%, var( --tha-cop-col ) 70%, var( --tha-amb-col ) 100% ); /* Thanksgiving Glow Color = #FFA028 @ 0.185 opacity, Core-Design-Number to the Power of 6 Reciprocal ~= 0.185, Core-Design-Number to the Power of 18 ~= 157.842deg, Thanksgiving Coffee Color = #3B1F0A, Thanksgiving Rust Color = #7B3A10, Thanksgiving Copper Color = #C4621D, Thanksgiving Amber Color = #E8A040 */ /* What: Glow Blending. Why: A gradient holding a relative color blends in Oklab unless told otherwise, which shifted the glow's falloff. How: in srgb keeps it blending as the original did. */
 	display        : flex;
@@ -100,9 +99,9 @@
 	flex-direction : column;
 	gap            : var( --spa-ver-p03 );                       /* Spacing Vertical Base Plus 3 ~= 33.876px */
 	margin         : auto;                                       /* What: Safe Centering Margin. Why: Centering with justify-content cuts off the top of content taller than the screen. How: Auto margins center it in the card's column and let it scroll from the top when it doesn't fit. */
-	max-width      : calc( var( --ver-rhy-p14 ) * 1rem );        /* Vertical Rhythm Base Plus 14 ~= 746.874px */
+	max-width      : calc( var( --ver-rhy-p14 ) * 1rem );        /* Vertical Rhythm Base Plus 14 ~= 746.868px */
 	padding        : var( --spa-ver-p03 ) var( --gut-sid-pad );  /* Spacing Vertical Base Plus 3 ~= 33.876px, Gutter Side Padding, about 19.304px - 44.876px */ /* What: Gutter Side Padding. Why: The original's 32px sides left too little room for the heading on a 320px phone. How: This takes the site's gutter, which narrows on a phone. */
-	padding-bottom : var( --car-bar-mar, var( --spa-ver-p03 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the content clear of it, falling back to the top padding's step outside the card page. */
+	padding-bottom : var( --car-bar-mar, var( --spa-ver-p03 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Spacing Vertical Base Plus 3 ~= 33.876px */ /* What: Bar Clearing Padding. Why: The card page's floating bar covers the bottom of the screen. How: This lifts the content clear of it, falling back to the top padding's step outside the card page. */
 	width          : 100%;
 
 
@@ -137,7 +136,7 @@
 
 
 }
-@media ( max-width : 640px ) { /* What: Phone Illustration Row Div. Why: On a phone the illustrations need every pixel of the width. How: This applies at the phone breakpoint and below. */
+@media ( max-width : 640px ) { /* What: Phone Illustration Row Div. Why: On a phone the illustrations need more of the width. How: This applies at the phone breakpoint and below. */
 
 
 	.illRowDiv { /* What: Tight Illustration Row Div. Why: The full gap would push the turkey off a 320px screen. How: This narrows the gap a few steps. */
@@ -174,9 +173,10 @@
 /* #endregion illRowDiv */
 
 
+
 /* #region mesBloDiv */
 
-.mesBloDiv { /* What: Message Block Div. Why: The message and its wish read as one handwritten note. How: This sets both in Cookie, slanted, in cream with a soft brown glow, a line apart and within the text measure. */
+.mesBloDiv { /* What: Message Block Div. Why: The message and its wish read as one handwritten note. How: This sets both in Cookie, the message slanted and the wish upright, in cream with a soft brown glow, a line apart and within the text measure. */
 
 
 	color          : var( --tha-mes-col );                                     /* Thanksgiving Message Color = #FDECC8 */
@@ -245,13 +245,13 @@
 
 }
 
-.leaFalSvg { /* What: Leaf Fall SVG. Why: Each leaf is a copy of the drawing that leaf-fall.ts moves every frame. How: This places it at the layer's top left and keeps it on its own layer, since it moves the whole time it exists. */
+.leaFalSvg { /* What: Leaf Fall SVG. Why: Each leaf is a copy of the drawing that leaf-fall.ts moves every frame. How: This places it at the layer's top left and keeps it on its own layer, since it moves every frame it is falling and waits hidden between falls. */
 
 
 	left        : 0;
 	position    : absolute;
 	top         : 0;
-	will-change : transform;
+	will-change : transform; /* What: Kept Transform Hint. Why: A leaf is falling for most of the time it's shown, so its layer is worth holding rather than promoting it at each fall. How: The hint stays on while the leaf is in the card, and under reduced motion no leaf is made, so nothing holds it. */
 
 
 }

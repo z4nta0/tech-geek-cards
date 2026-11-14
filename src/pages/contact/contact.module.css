@@ -5,14 +5,13 @@
  * contact.module.css = Contact Module
  *
  * @summary
- * Styles for ConPagCom: a hero on the warm sunken ivory with the site's
- * motif and a scalloped bottom edge, as on Home; the form in a white card,
- * its name and email side by side on wide screens, fields whose border
- * answers the pointer and whose focus ring eases in, the error in a pale red
- * panel, and an orange send button; the thank-you that replaces it; and the
- * sidebar card with the email and the custom card tips, each led by a dot of
- * confetti. The page fades up as it opens, and every animation and
- * transition holds still under reduced motion.
+ * Styles for ConPagCom: a hero on the warm sunken ivory with the site's motif
+ * and a scalloped bottom edge, as on Home; the form in a white card, its name
+ * and email side by side above 640px, fields whose border answers the pointer
+ * and whose focus ring eases in, the error in a pale red panel, and an orange
+ * send button; the thank-you that replaces it; and the sidebar card with the
+ * email and the custom card tips, each tip led by a dot of confetti. The page
+ * fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -63,7 +62,7 @@
 
 /* #region herInnDiv */
 
-.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, lifted over the motif. */
+.herInnDiv { /* What: Hero Inner Div. Why: The hero's text sits in the site's centered column, above the motif. How: This caps, centers, and stacks it, positioned so it paints over the motif, which comes before it. */
 
 
 	align-items    : flex-start;
@@ -74,7 +73,6 @@
 	max-width      : var( --con-max-wid );   /* Container Maximum Width ~= 1,449.365px */
 	padding        : 0 var( --gut-sid-pad ); /* Gutter Side Padding, about 19.304px - 44.876px */
 	position       : relative;
-	z-index        : 1;                      /* What: Motif Clearing Layer. Why: The motif is positioned, so it would paint over the hero's content. How: This lifts the content one layer above it. */
 
 
 }
@@ -82,7 +80,7 @@
 .secEyePar { /* What: Section Eyebrow Paragraph. Why: A small berry label names the page above its heading. How: This sets it in berry mono capitals at the base size. */
 
 
-	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color, the berry darkened by 0.15 */
+	color          : var( --act-dar-col );                   /* Accent-Tertiary Dark Color ~= #b11157 */
 	font-family    : var( --fon-fam-sec );                   /* Font Family Secondary = 'DM Mono', monospace */
 	font-size      : var( --fon-siz-bas );                   /* Font Size Base = 1rem */
 	font-weight    : 500;
@@ -173,6 +171,13 @@
 
 
 }
+.thaYouDiv:focus { /* What: Focused Thank You Div. Why: The thank-you takes focus by script so screen readers announce it, which is where the result lands rather than a control, so a focus ring around the whole card would only confuse. How: This removes its outline. */
+
+
+	outline : none;
+
+
+}
 @media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Thank You Div. Why: Someone who asked for less motion shouldn't see the thank-you rise. How: This applies only when the reduced-motion preference is set. */
 
 
@@ -216,7 +221,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );          /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : border-color var( --dur-tra-bas ), color var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), color var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -267,6 +272,26 @@
 	gap            : var( --spa-ver-p01 );                            /* Spacing Vertical Base Plus 1 ~= 19.304px */
 	padding        : var( --spa-ver-p03 ) var( --spa-hor-p03 );       /* Spacing Vertical Base Plus 3 ~= 33.876px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	position       : relative;
+
+
+}
+.conForFor--returning { /* What: Contact Form Form Returning. Why: The form takes the thank-you's place again after "Send Another", and the swap should be seen, while a first visit arrives with the page's own entrance. How: This fades it up into view with the shared entrance, the same as the thank-you. */
+
+
+	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Contact Form Form Returning. Why: Someone who asked for less motion shouldn't see the form slide back in. How: This applies only when the reduced-motion preference is set. */
+
+
+	.conForFor--returning { /* What: Motionless Contact Form Form Returning. Why: The returning form should simply appear. How: This turns the entrance off. */
+
+
+		animation : none;
+
+
+	}
 
 
 }
@@ -347,7 +372,7 @@
 	outline        : 0 solid var( --foc-rin-col );                    /* Focus Ring Color ~= #bd3000 */
 	outline-offset : calc( var( --ver-rhy-m03 ) * 1rem );             /* Vertical Rhythm Base Minus 3 ~= 6.268px */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-bas );       /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base ~= 14.572px */
-	transition     : border-color var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : border-color var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 	width          : 100%;
 
 
@@ -394,6 +419,20 @@
 
 }
 
+/* #endregion fieGroDiv */
+
+/* #endregion fieRowDiv */
+
+
+
+/* #region fieGroDiv */
+
+/* What: Field Group Div Pointer. Why: The topic field's label and control read as one unit like the name and email fields. How: Its rule sits in the `fieRowDiv` region above, the first parent that uses it. */
+
+/* What: Field Label Label Pointer. Why: The topic field's label reads like the other fields' labels. How: Its rule sits in the `fieRowDiv` region above, the first parent that uses it. */
+
+/* What: Field Controls Pointer. Why: The topic select shares the other fields' box, border, and focus look. How: Its rules sit in the `fieRowDiv` region above, the first parent that uses it. */
+
 .fieTopSel { /* What: Field Topic Select. Why: The menu opens on a click, so it shows the pointer. How: This sets the pointer cursor. */
 
 
@@ -401,6 +440,18 @@
 
 
 }
+
+/* #endregion fieGroDiv */
+
+
+
+/* #region fieGroDiv */
+
+/* What: Field Group Div Pointer. Why: The message field's label and control read as one unit like the name and email fields. How: Its rule sits in the `fieRowDiv` region above, the first parent that uses it. */
+
+/* What: Field Label Label Pointer. Why: The message field's label reads like the other fields' labels. How: Its rule sits in the `fieRowDiv` region above, the first parent that uses it. */
+
+/* What: Field Controls Pointer. Why: The message textarea shares the other fields' box, border, and focus look. How: Its rules sit in the `fieRowDiv` region above, the first parent that uses it. */
 
 .fieMesTex { /* What: Field Message Textarea. Why: A long message may need more room, but only downward. How: This lets the visitor resize it vertically. */
 
@@ -412,9 +463,17 @@
 
 /* #endregion fieGroDiv */
 
-/* #endregion fieRowDiv */
 
 
+/* #region errAleDiv */
+
+.errAleDiv:empty { /* What: Empty Error Alert Div. Why: The alert region stays in the form from the first render so a failed send is announced, but as an empty flex item it would still add the form's gap above the button. How: This takes it out of the form's flow while it holds no message, so it takes no space and adds no gap. */
+
+
+	position : absolute;
+
+
+}
 
 .errMesPar { /* What: Error Message Paragraph. Why: A failed send has to stand out, and its arrival should be seen. How: This fades it up into view with the shared entrance, as dark red text on a pale red panel with a red edge. */
 
@@ -442,7 +501,13 @@
 
 }
 
-.subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's start, easing its color, lift, press, and focus, dimmed while sending. */
+/* #endregion errAleDiv */
+
+
+
+/* #region subForBut */
+
+.subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's left edge, easing its color, lift, press, and focus, dimmed while sending. */
 
 
 	align-self     : flex-start;
@@ -455,7 +520,7 @@
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );    /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
 	padding        : var( --spa-ver-m01 ) var( --spa-hor-p03 ); /* Spacing Vertical Base Minus 1 = 11px, Spacing Horizontal Base Plus 3 ~= 33.876px */
 	text-transform : uppercase;
-	transition     : background var( --dur-tra-bas ), opacity var( --dur-tra-bas ), transform var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition     : background var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), transform var( --dur-tra-bas ) var( --mot-dec-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ), Duration Transition Base Plus 1 ~= 209.1ms */
 
 
 }
@@ -496,6 +561,44 @@
 
 }
 
+.subLabSpa { /* What: Submit Label Span. Why: The button's change to "Sending…" and back is the result of the press, so the new words should fade in rather than snap. How: This plays a short rise and fade each time the label remounts. */
+
+
+	animation : subLabSpaSwapFadeIn var( --dur-ani-m01 ) var( --mot-dec-eas ) both; /* Duration Animation Base Minus 1 ~= 119.2ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	display   : inline-block;
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Submit Label Span. Why: Someone who asked for less motion should see the label simply change. How: This applies only when the reduced-motion preference is set. */
+
+
+	.subLabSpa { /* What: Motionless Submit Label Span. Why: The label should switch at once. How: This turns the animation off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes subLabSpaSwapFadeIn { /* What: Submit Label Span Swap Fade In. Why: A new label should arrive softly. How: This fades it in from about 3.6px low. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m05 ) ); /* Spacing Vertical Base Minus 5 ~= 3.572px */
+
+
+	}
+
+
+}
+
+/* #endregion subForBut */
+
 /* #endregion conForFor */
 
 
@@ -516,7 +619,7 @@
 
 }
 
-.sidTitHea { /* What: Sidebar Title Heading. Why: The sidebar's heading sits a step below the page's sections. How: This sets it in the main text color at the base plus 3 size. */
+.sidTitHea { /* What: Sidebar Title Heading. Why: The sidebar's heading introduces the other ways to reach me. How: This sets it in the main text color at the base plus 3 size. */
 
 
 	color     : var( --tex-mai-col ); /* Text Main Color = #1A1A2E */
@@ -531,7 +634,7 @@
 	color       : var( --acc-dar-col ); /* Accent Dark Color ~= #bd3000 */
 	font-family : var( --fon-fam-sec ); /* Font Family Secondary = 'DM Mono', monospace */
 	font-size   : var( --fon-siz-p01 ); /* Font Size Base Plus 1 ~= 14.572px */
-	transition  : color var( --dur-tra-bas ), opacity var( --dur-tra-bas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	transition  : color var( --dur-tra-bas ) var( --mot-sta-eas ), opacity var( --dur-tra-bas ) var( --mot-sta-eas ), outline-offset var( --dur-tra-p01 ) var( --mot-dec-eas ), outline-width var( --dur-tra-p01 ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Standard Easing = ease, Duration Transition Base Plus 1 ~= 209.1ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 	word-break  : break-all;
 
 
@@ -587,7 +690,7 @@
 
 }
 
-.sidTipIte { /* What: Sidebar Tip Item. Why: Each tip reads as one line led by a dot of confetti. How: This lines up the dot beside the text's first line. */
+.sidTipIte { /* What: Sidebar Tip Item. Why: Each tip is one item led by a dot of confetti. How: This lines up the dot beside the text's first line. */
 
 
 	align-items : start;
@@ -597,7 +700,7 @@
 
 
 }
-.sidTipIte::before { /* What: Sidebar Tip Dot. Why: A dot of confetti leads each tip. How: This draws a small circle centered on the first line, colored by the tip's position below. */
+.sidTipIte::before { /* What: Sidebar Tip Item Dot. Why: A dot of confetti leads each tip. How: This draws a small circle centered on the first line, colored by the tip's position below. */
 
 
 	background    : var( --acc-mai-col );                              /* Accent Main Color = #F26419 */
@@ -605,19 +708,19 @@
 	content       : '';
 	flex-shrink   : 0;
 	height        : calc( var( --ver-rhy-m02 ) * 1rem );               /* Vertical Rhythm Base Minus 2 ~= 8.304px */
-	margin-top    : calc( ( 1lh - var( --ver-rhy-m02 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 2 ~= 8.304px, taken from one line height and halved */ /* What: First Line Centering. Why: A fact or tip that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
+	margin-top    : calc( ( 1lh - var( --ver-rhy-m02 ) * 1rem ) / 2 ); /* Vertical Rhythm Base Minus 2 ~= 8.304px, taken from one line height and halved */ /* What: First Line Centering. Why: A tip that wraps should keep its dot beside its first line, not between its lines. How: This drops the dot by half the difference between one line's height and its own. */
 	width         : calc( var( --ver-rhy-m02 ) * 1rem );               /* Vertical Rhythm Base Minus 2 ~= 8.304px */
 
 
 }
-.sidTipIte:nth-child( 2 )::before { /* What: Second Sidebar Tip Dot. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
+.sidTipIte:nth-child( 2 )::before { /* What: Sidebar Tip Item Dot Second. Why: The dots take turns through the confetti colors. How: This fills the second dot berry. */
 
 
 	background : var( --act-mai-col ); /* Accent-Tertiary Main Color = #E64E82 */
 
 
 }
-.sidTipIte:nth-child( 3 )::before { /* What: Third Sidebar Tip Dot. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
+.sidTipIte:nth-child( 3 )::before { /* What: Sidebar Tip Item Dot Third. Why: The dots take turns through the confetti colors. How: This fills the third dot blue. */
 
 
 	background : var( --acc-sec-col ); /* Accent Secondary Color = #7DB9D8 */

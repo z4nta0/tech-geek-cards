@@ -16,7 +16,7 @@
  *
  * The animation began as a Codecademy holiday card tutorial
  * (https://s3.amazonaws.com/codecademy-content/courses/holiday-cards/
- * snowfall.min.js), no longer online, and has been rewritten since.
+ * snowfall.min.js), and has been rewritten since.
  *
  * Sections:
  *  - Types
@@ -87,7 +87,7 @@ const ranIntFun = ( minValNum : number, maxValNum : number ) : number => Math.ro
  * @summary
  * Starts a flake again at the top of the snow once it has fallen past the
  * bottom or drifted past either side, with a new size, speed, and sway, so
- * the snow never repeats the same pattern. It places the flake at random
+ * the snow doesn't fall in a fixed pattern. It places the flake at random
  * across the snow's current width, less its own size so it starts fully
  * inside, and resizes its element to match.
  *
@@ -109,12 +109,12 @@ const ranIntFun = ( minValNum : number, maxValNum : number ) : number => Math.ro
 const resFlaFun = ( flaRecObj : FlaRecTyp, snoSetObj : SnoSetTyp, widValNum : number ) : void => { // What: Reset Flake Function. Why: A flake that leaves the snow should fall again from the top. How: This picks a new size, speed, sway, and spot, and resizes the flake's element.
 
 
-	flaRecObj.oscSteNum = ranIntFun( 1, 10 ) / 100;                                    // What: Oscillation Step Assignment. Why: Each flake sways at its own pace. How: This picks 0.01 to 0.1 radians per 60th of a second.
-	flaRecObj.sizNum    = ranIntFun( snoSetObj.sizMinNum, snoSetObj.sizMaxNum );       // What: Size Assignment. Why: Each fall gets a new size. How: This picks one within the settings' range.
-	flaRecObj.speNum    = ranIntFun( snoSetObj.speMinNum, snoSetObj.speMaxNum );       // What: Speed Assignment. Why: Each fall gets a new speed. How: This picks one within the settings' range.
-	flaRecObj.xcoNum    = ranIntFun( 0, Math.max( 0, widValNum - flaRecObj.sizNum ) ); // What: X-Coordinate Assignment. Why: The flake starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
-	flaRecObj.ycoNum    = 0;                                                           // What: Y-Coordinate Assignment. Why: The flake starts again at the top. How: This puts it at the top edge.
+	flaRecObj.oscSteNum = ranIntFun( 1, 10 ) / 100;                              // What: Oscillation Step Assignment. Why: Each flake sways at its own pace. How: This picks 0.01 to 0.1 radians per 60th of a second.
+	flaRecObj.sizNum    = ranIntFun( snoSetObj.sizMinNum, snoSetObj.sizMaxNum ); // What: Size Assignment. Why: Each fall gets a new size. How: This picks one within the settings' range.
+	flaRecObj.speNum    = ranIntFun( snoSetObj.speMinNum, snoSetObj.speMaxNum ); // What: Speed Assignment. Why: Each fall gets a new speed. How: This picks one within the settings' range.
 
+	flaRecObj.xcoNum = ranIntFun( 0, Math.max( 0, widValNum - flaRecObj.sizNum ) ); // What: X-Coordinate Assignment. Why: The flake starts anywhere across the top, fully inside. How: This picks a spot from the left edge to the width less its size.
+	flaRecObj.ycoNum = 0;                                                           // What: Y-Coordinate Assignment. Why: The flake starts again at the top. How: This puts it at the top edge.
 
 	flaRecObj.divEle.style.height = `${ flaRecObj.sizNum }px`; // What: Height Assignment. Why: The element has to match the new size. How: This sets its height.
 	flaRecObj.divEle.style.width  = `${ flaRecObj.sizNum }px`; // What: Width Assignment. Why: The element has to match the new size. How: This sets its width.
@@ -188,7 +188,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 	const flaRecArr : FlaRecTyp[] = Array.from( Array( snoSetObj.couNum ).keys(), () => { // What: Flake Record Array. Why: Every flake keeps its own values between frames. How: This creates one flake per count, already scattered across the container so the snow doesn't start as one row at the top.
 
 
-		const flaRecObj : FlaRecTyp = { // What: Flake Record Object. Why: A new flake needs an element and starting values. How: This creates the element, picks its values, then scatters it from top to bottom.
+		const flaRecObj : FlaRecTyp = { // What: Flake Record Object. Why: A new flake needs an element and starting values. How: This creates the element with placeholder values, which the reset and scatter below replace.
 
 
 			divEle    : document.createElement( 'div' ), // What: Div Element. Why: The flake is drawn as a div. How: This creates it.
@@ -228,7 +228,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 	// #region Frame Loop
 
-	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the snow has to cancel the next frame. How: This holds the pending frame's id.
+	let aniFraNum = 0; // What: Animation Frame Number. Why: Stopping the snow has to cancel the next frame. How: This holds the pending frame's ID.
 	let preTimNum = 0; // What: Previous Time Number. Why: Each step is scaled by the time since the last frame. How: This holds the last frame's timestamp, 0 before the first.
 
 
@@ -244,7 +244,8 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 		for ( const flaRecObj of flaRecArr ) { // What: Flake Step Loop. Why: Every flake moves each frame. How: This sways, drops, and draws each one, restarting any that left.
 
 
-			flaRecObj.oscNum += flaRecObj.oscSteNum * fraValNum;          // What: Oscillation Increase. Why: The sway angle grows with time. How: This adds the flake's pace for the frame's length.
+			flaRecObj.oscNum += flaRecObj.oscSteNum * fraValNum; // What: Oscillation Increase. Why: The sway angle grows with time. How: This adds the flake's pace for the frame's length.
+
 			flaRecObj.xcoNum += Math.cos( flaRecObj.oscNum ) * fraValNum; // What: X-Coordinate Increase. Why: The flake sways side to side. How: This adds the cosine of its angle, which swings between -1 and 1, for the frame's length.
 			flaRecObj.ycoNum += flaRecObj.speNum * fraValNum;             // What: Y-Coordinate Increase. Why: The flake falls. How: This adds its speed for the frame's length.
 
@@ -257,20 +258,20 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 
-			flaRecObj.divEle.style.transform = `translate3d( ${ flaRecObj.xcoNum }px, ${ flaRecObj.ycoNum }px, 0 )`; // What: Transform Assignment. Why: Moving by transform skips layout, so a hundred flakes stay smooth. How: This places the flake at its new position.
+			flaRecObj.divEle.style.transform = `translate3d( ${ flaRecObj.xcoNum }px, ${ flaRecObj.ycoNum }px, 0 )`; // What: Transform Assignment. Why: Moving by transform skips layout, so the flakes stay smooth. How: This places the flake at its new position.
 
 
 		}
 
 
 
-		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The snow keeps falling. How: This asks for the next frame and keeps its id.
+		aniFraNum = requestAnimationFrame( steFraFun ); // What: Next Frame Request. Why: The snow keeps falling. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The snow starts falling. How: This asks for the first frame and keeps its id.
+	aniFraNum = requestAnimationFrame( steFraFun ); // What: First Frame Request. Why: The snow starts falling. How: This asks for the first frame and keeps its ID.
 
 	// #endregion Frame Loop
 
@@ -280,7 +281,6 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 
 
 		cancelAnimationFrame( aniFraNum ); // What: Frame Cancel Call. Why: The loop must not run after the card is gone. How: This cancels the pending frame.
-
 
 		resObsObj.disconnect(); // What: Observer Disconnect Call. Why: The container no longer needs measuring. How: This stops watching it.
 

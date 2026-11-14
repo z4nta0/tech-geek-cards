@@ -11,12 +11,12 @@ import { durSecFun       } from '../../utils/rhythm.ts'; // What: Duration Secon
 import { gsaEasFun       } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap            } from 'gsap';                  // What: GSAP. Why: The greeting and cake pop in as one timeline. How: This is the animation library that builds and plays it.
 import { PAR_TOK_ARR     } from './confetti.ts';         // What: Party Token Array. Why: The balloons share the confetti's palette. How: Each balloon takes one of its color tokens in turn.
-import { redMotFun       } from '../../utils/motion.ts'; // What: Reduce Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
-import { rhyPxlFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are spacing steps. How: This returns a step's size in pixels.
+import { redMotFun       } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
+import { rhyPixFun       } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Function. Why: The lettering's and cake's rises are vertical rhythm steps. How: This returns a step's size in pixels.
 import { staBalFun       } from './balloons.ts';         // What: Start Balloons Function. Why: Balloons float up behind the greeting. How: This starts them and returns the function that stops them.
 import { staConFun       } from './confetti.ts';         // What: Start Confetti Function. Why: Confetti bursts when the card opens and wherever it's tapped. How: This readies the canvas and returns its burst and stop functions.
 import { useGSAP         } from '@gsap/react';           // What: Use GSAP. Why: The timeline has to be built after the card renders and undone when it leaves. How: This GSAP hook runs it in a context it reverts on unmount.
-import { useRef          } from 'react';                 // What: Use Ref. Why: The timeline, balloons, and confetti work on specific elements. How: Each of those elements gets a ref.
+import { useRef          } from 'react';                 // What: Use Reference. Why: The timeline, balloons, and confetti work on specific elements. How: Each of those elements gets a ref.
 import { useSearchParams } from 'react-router';          // What: Use Search Parameters. Why: The greeting can name its recipient. How: This reads the address's ?name= parameter.
 import { useState        } from 'react';                 // What: Use State. Why: Whether motion is reduced is read once, when the card opens. How: This keeps that answer for the card's life.
 
@@ -38,11 +38,12 @@ import type { MouseEvent } from 'react';         // What: Mouse Event. Why: A ta
  * cake with three flickering candles. When it opens, confetti bursts from the
  * greeting as its lines pop in one after another, the wish fades in, the cake
  * bounces up, and a second shower falls from the top as an invitation to tap
- * appears; every tap throws more confetti where it lands. Every duration and
- * distance is a step on the design scale, and the curves are the
- * stylesheet's easing tokens. Under reduced motion it opens on the finished
- * card, with the balloons at rest, the candles still, and no confetti or
- * invitation. Converted from TechGeek.support's original.
+ * appears; every tap throws more confetti where it lands. Every fixed
+ * duration, distance, and scale is a step on the design scale, each random one
+ * runs up to or between steps, and the curves are the stylesheet's easing
+ * tokens. Under reduced motion it opens on the finished card, with the
+ * balloons at rest, the candles still, and no confetti or invitation.
+ * Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
@@ -75,9 +76,9 @@ import type { MouseEvent } from 'react';         // What: Mouse Event. Why: A ta
 const CAD_ROW_ARR = [ // What: Candle Row Array. Why: The cake carries three candles, each with its own flame. How: The cake renders one candle and flame per row.
 
 
-	{ colStr : 'var( --bir-pin-col )', modStr : '',                        xcoNum : 41 }, // Birthday Pink Color = #FF6FCF
-	{ colStr : 'var( --bir-blu-col )', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 }, // Birthday Blue Color = #4D96FF
-	{ colStr : 'var( --bir-gre-col )', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }  // Birthday Green Color = #6BCB77
+	{ colStr : 'var( --bir-pin-col )', modStr : '',                        xcoNum : 41 }, // What: Left Candle Row. Why: The pink candle stands on the left. How: Its flame keeps the base flicker timing. // Birthday Pink Color = #FF6FCF
+	{ colStr : 'var( --bir-blu-col )', modStr : cssModObj.cakFlaGroSecond, xcoNum : 66 }, // What: Middle Candle Row. Why: The blue candle stands in the middle. How: Its flame takes the second flicker class. // Birthday Blue Color = #4D96FF
+	{ colStr : 'var( --bir-gre-col )', modStr : cssModObj.cakFlaGroThird,  xcoNum : 91 }  // What: Right Candle Row. Why: The green candle stands on the right. How: Its flame takes the third flicker class. // Birthday Green Color = #6BCB77
 
 
 ];
@@ -105,13 +106,13 @@ const OPE_COU_NUM = 60;                      // What: Opening Count Number. Why:
 const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot the cake. How: The cake renders one tilted strip per row.
 
 
-	{ angNum : 0,  colStr : 'var( --bir-pur-col )', xcoNum : 40, ycoNum : 80 }, // Birthday Purple Color = #A78BFA
-	{ angNum : 30, colStr : 'var( --bir-red-col )', xcoNum : 60, ycoNum : 74 }, // Birthday Red Color = #FF6B6B
-	{ angNum : 60, colStr : 'var( --bir-blu-col )', xcoNum : 80, ycoNum : 82 }, // Birthday Blue Color = #4D96FF
-	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // Birthday Yellow Color = #FFD93D
-	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // Birthday Green Color = #6BCB77
-	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // Birthday Pink Color = #FF6FCF
-	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // Birthday Orange Color = #FF9A3C
+	{ angNum : 0,  colStr : 'var( --bir-pur-col )', xcoNum : 40, ycoNum : 80 }, // What: Sprinkle One Row. Why: A purple sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Purple Color = #A78BFA
+	{ angNum : 30, colStr : 'var( --bir-red-col )', xcoNum : 60, ycoNum : 74 }, // What: Sprinkle Two Row. Why: A red sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Red Color = #FF6B6B
+	{ angNum : 60, colStr : 'var( --bir-blu-col )', xcoNum : 80, ycoNum : 82 }, // What: Sprinkle Three Row. Why: A blue sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Blue Color = #4D96FF
+	{ angNum : 90, colStr : 'var( --bir-yel-col )', xcoNum : 50, ycoNum : 90 }, // What: Sprinkle Four Row. Why: A yellow sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Yellow Color = #FFD93D
+	{ angNum : 45, colStr : 'var( --bir-gre-col )', xcoNum : 90, ycoNum : 76 }, // What: Sprinkle Five Row. Why: A green sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Green Color = #6BCB77
+	{ angNum : 20, colStr : 'var( --bir-pin-col )', xcoNum : 35, ycoNum : 88 }, // What: Sprinkle Six Row. Why: A pink sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Pink Color = #FF6FCF
+	{ angNum : 70, colStr : 'var( --bir-ora-col )', xcoNum : 75, ycoNum : 68 }  // What: Sprinkle Seven Row. Why: An orange sprinkle dots the bottom tier. How: The cake tilts its strip and sets it at its corner. // Birthday Orange Color = #FF9A3C
 
 
 ];
@@ -122,15 +123,16 @@ const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot th
  * STA_OPA_ARR = Star Opacity Array
  *
  * @summary
- * The stars' five brightness levels, every fifth star taking the same one.
- * Every row is a reciprocal power of the core design number, the nearest to
- * the original's 0.15, 0.22, 0.29, 0.36, and 0.43.
+ * The stars' brightness by position, in five rows, every fifth star taking
+ * the same one. Every row is a reciprocal power of the core design number,
+ * the nearest to the original's 0.15, 0.22, 0.29, 0.36, and 0.43, so two
+ * rows share the same level.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
 */
 
-const STA_OPA_ARR = [ // What: Star Opacity Array. Why: The stars twinkle at different brightnesses. How: Each star takes the level at its index's remainder by five.
+const STA_OPA_ARR = [ // What: Star Opacity Array. Why: The stars shine at different brightnesses. How: Each star takes the level at its index's remainder by five.
 
 
 	'var( --cdn-pow-007-rec )', // Core-Design-Number to the Power of 7 Reciprocal ~= 0.140
@@ -193,8 +195,8 @@ const TOP_COU_NUM = 30; // What: Top Count Number. Why: A last shower falls from
  * both loops. The greeting adds the recipient's name from ?name= on a line of
  * its own. Whether motion is reduced is read once, when the card opens: under
  * reduced motion the timeline is never built, the balloons rest, and no
- * confetti or tap invitation appears. Every tap on the card throws a burst of
- * confetti where it lands.
+ * confetti or tap invitation appears. Otherwise every tap on the card throws
+ * a burst of confetti where it lands.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -220,11 +222,11 @@ function BirCarCom () : JSX.Element {
 	const subParRef = useRef< HTMLParagraphElement >( null ); // What: Subtitle Paragraph Reference. Why: The wish fades in. How: This holds the paragraph.
 	const tapParRef = useRef< HTMLParagraphElement >( null ); // What: Tap Paragraph Reference. Why: The invitation to tap fades in last. How: This holds the paragraph.
 	const titHeaRef = useRef< HTMLHeadingElement >( null );   // What: Title Heading Reference. Why: The opening burst starts from the greeting's middle. How: This holds the heading.
-	const titMaiRef = useRef< HTMLSpanElement >( null );      // What: Title Main Reference. Why: The greeting's Birthday line pops in. How: This holds its span.
-	const titNamRef = useRef< HTMLSpanElement >( null );      // What: Title Name Reference. Why: The recipient's name pops in with the Birthday line. How: This holds its span, null without a name.
-	const titTopRef = useRef< HTMLSpanElement >( null );      // What: Title Top Reference. Why: The greeting's Happy line pops in first. How: This holds its span.
+	const titMaiRef = useRef< HTMLSpanElement >( null );      // What: Title Main Reference. Why: The greeting's "Birthday" line pops in. How: This holds its span.
+	const titNamRef = useRef< HTMLSpanElement >( null );      // What: Title Name Reference. Why: The recipient's name pops in with the "Birthday" line. How: This holds its span, null without a name.
+	const titTopRef = useRef< HTMLSpanElement >( null );      // What: Title Top Reference. Why: The greeting's "Happy" line pops in first. How: This holds its span.
 
-	const [ redMotBoo ] = useState( redMotFun ); // What: Reduce Motion Boolean. Why: The card plays or rests for its whole life, even if the setting changes while it's open. How: This reads the setting once, on the first render.
+	const [ redMotBoo ] = useState( redMotFun ); // What: Reduced Motion Boolean. Why: The card plays or rests for its whole life, even if the setting changes while it's open. How: This reads the setting once, on the first render.
 	const [ seaParObj ] = useSearchParams();     // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
 	const namParStr = seaParObj.get( 'name' ); // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
@@ -239,14 +241,14 @@ function BirCarCom () : JSX.Element {
 	 * @summary
 	 * Starts the balloons, then, unless motion is reduced, the confetti and
 	 * the card's one timeline, in order: a burst from the greeting's middle;
-	 * the Happy line pops up from a Base Plus 3 step below; the Birthday and
-	 * name lines pop in, overlapping it by a Base Plus 1 step; the wish fades
-	 * in; the cake bounces up from a Base Plus 4 step below at about 0.57 of
-	 * its size; and after a pause the invitation fades in as a shower falls
-	 * from the top. The pops and the cake use the bounce curve, the fades
-	 * the decelerate curve. Under reduced motion the balloons rest and the
-	 * elements simply stay in place. The cleanup stops the balloons and the
-	 * confetti.
+	 * the "Happy" line pops up from a Base Plus 3 step below; the "Birthday"
+	 * and name lines pop in, overlapping it by a Base Plus 1 step; the wish
+	 * fades in; the cake bounces up from a Base Plus 4 step below at about
+	 * 0.57 of its size; and after a pause the invitation fades in as a shower
+	 * falls from the top. The pops and the cake use the bounce curve, the
+	 * fades the decelerate curve. Under reduced motion the balloons rest and
+	 * the elements simply stay in place. The cleanup stops the balloons and
+	 * the confetti.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -266,14 +268,13 @@ function BirCarCom () : JSX.Element {
 		const bouEasStr = gsaEasFun( 'bou' );                                                                     // What: Bounce Easing String. Why: The greeting and cake pop in with a springy overshoot, a celebration's flourish. How: This registers the bounce token and keeps its GSAP name.
 		const conSysObj = staConFun( conCanRef.current! );                                                        // What: Confetti System Object. Why: The timeline and taps throw bursts. How: This readies the confetti on its canvas. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and useGSAP runs after that render.
 		const decEasStr = gsaEasFun( 'dec' );                                                                     // What: Decelerate Easing String. Why: The fades slow as they land. How: This registers the decelerate token and keeps its GSAP name.
-		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The Birthday line starts as the Happy line lands. How: This GSAP position starts a step one Base Plus 1 step, about 209ms, before the last ends. // Duration Animation Base Plus 1 ~= 209.1ms
-		const sliPosStr = `-=${ durSecFun( 'm02' ) }`;                                                            // What: Slight Position String. Why: The wish and cake follow close on the step before. How: This GSAP position starts a step one Base Minus 2 step, about 90ms, before the last ends. // Duration Animation Base Minus 2 ~= 89.9ms
+		const ovePosStr = `-=${ durSecFun( 'p01' ) }`;                                                            // What: Overlap Position String. Why: The "Birthday" line starts as the "Happy" line lands. How: This GSAP position starts the step a Base Plus 1 step, about 209ms, before the one before it ends. // Duration Animation Base Plus 1 ~= 209.1ms
+		const sliPosStr = `-=${ durSecFun( 'm02' ) }`;                                                            // What: Slight Position String. Why: The wish and cake follow close on the step before. How: This GSAP position starts the step a Base Minus 2 step, about 90ms, before the one before it ends. // Duration Animation Base Minus 2 ~= 89.9ms
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } );                                   // What: Timeline Object. Why: The greeting plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
-		const titLinArr = [ titMaiRef.current, titNamRef.current ].filter( ( titSpaEle ) => titSpaEle !== null ); // What: Title Line Array. Why: The Birthday line and the name, when there is one, pop in together. How: This lists both spans, leaving out the name's when it isn't rendered.
+		const titLinArr = [ titMaiRef.current, titNamRef.current ].filter( ( titSpaEle ) => titSpaEle !== null ); // What: Title Line Array. Why: The "Birthday" line and the name, when there is one, pop in together. How: This lists both spans, leaving out the name's when it isn't rendered.
 
 
 		conSysRef.current = conSysObj; // What: Confetti System Assignment. Why: Taps throw bursts through the same confetti. How: This keeps its functions for the tap handler.
-
 
 
 		timLinObj.call( () => { // What: Opening Burst Call. Why: The card opens with a burst from the greeting. How: This throws a big burst from the heading's middle, measured against the card.
@@ -288,13 +289,13 @@ function BirCarCom () : JSX.Element {
 
 		} );
 
-		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0,               y : rhyPxlFun( 'p03' ) } );                              // What: Happy Line Pop. Why: The greeting starts with Happy. How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
-		timLinObj.from( titLinArr,         { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0                                       }, ovePosStr );                   // What: Birthday Line Pop. Why: Birthday and the name follow close behind. How: This grows them from nothing, overlapping the Happy line. // Duration Animation Base Plus 4 ~= 486.1ms
-		timLinObj.from( subParRef.current, { autoAlpha : 0, duration : durSecFun( 'p04' )                                                                    }, sliPosStr );                   // What: Wish Fade. Why: The wish arrives once the greeting has. How: This fades it in. // Duration Animation Base Plus 4 ~= 486.1ms
-		timLinObj.from( cakSvgRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : cdnPowFun( -2 ), y : rhyPxlFun( 'p04' ) }, sliPosStr );                   // What: Cake Bounce. Why: The cake bounces up last. How: This grows it from about 0.57 of its size as it rises from a Base Plus 4 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Core-Design-Number to the Power of -2 ~= 0.570, Vertical Rhythm Base Plus 4 ~= 44.876px
+		timLinObj.from( titTopRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : 0,               y : rhyPixFun( 'p03' ) } );                              // What: Happy Line Pop. Why: The greeting starts with "Happy". How: This grows the line from nothing as it rises from a Base Plus 3 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Vertical Rhythm Base Plus 3 ~= 33.876px
+		timLinObj.from( titLinArr,         { autoAlpha : 0, duration : durSecFun( 'p04' ), ease : bouEasStr, scale : 0                                       }, ovePosStr );                   // What: Birthday Line Pop. Why: "Birthday" and the name follow close behind. How: This grows them from nothing, overlapping the "Happy" line. // Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( subParRef.current, { autoAlpha : 0, duration : durSecFun( 'p04' )                                                                    }, sliPosStr );                   // What: Wish Fade. Why: The wish follows close on the greeting, starting a Base Minus 2 step before the "Birthday" line lands. How: This fades it in. // Duration Animation Base Plus 4 ~= 486.1ms
+		timLinObj.from( cakSvgRef.current, { autoAlpha : 0, duration : durSecFun( 'p05' ), ease : bouEasStr, scale : cdnPowFun( -2 ), y : rhyPixFun( 'p04' ) }, sliPosStr );                   // What: Cake Bounce. Why: The cake follows close on the wish, starting a Base Minus 2 step before it finishes fading in. How: This grows it from about 0.57 of its size as it rises from a Base Plus 4 step below. // Duration Animation Base Plus 5 ~= 643.9ms, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570, Vertical Rhythm Base Plus 4 ~= 44.876px
 		timLinObj.from( tapParRef.current, { autoAlpha : 0, duration : durSecFun( 'p03' )                                                                    }, `+=${ durSecFun( 'p04' ) }` ); // What: Invitation Fade. Why: Once the card has settled, it invites a tap. How: After a Base Plus 4 step's pause, this fades the invitation in. // Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Plus 4 ~= 486.1ms
 
-		timLinObj.call( () => conSysObj.burFun( Math.random() * conCanRef.current!.clientWidth, rhyPxlFun( 'm01' ) * -1, TOP_COU_NUM ), [], '<' ); // What: Top Shower Call. Why: A last shower falls as the invitation appears. How: This throws the top count from a random spot just above the top edge, a Base Minus 1 step up, as the invitation starts. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and the timeline only runs after that render. // Vertical Rhythm Base Minus 1 = -11px
+		timLinObj.call( () => conSysObj.burFun( Math.random() * conCanRef.current!.clientWidth, rhyPixFun( 'm01' ) * -1, TOP_COU_NUM ), [], '<' ); // What: Top Shower Call. Why: A last shower falls as the invitation appears. How: This throws the top count from a random spot just above the top edge, a Base Minus 1 step up, as the invitation starts. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: The canvas renders whenever motion isn't reduced, and the timeline only runs after that render. // Vertical Rhythm Base Minus 1 = -11px
 
 
 
@@ -303,8 +304,8 @@ function BirCarCom () : JSX.Element {
 
 			stoBalFun(); // What: Balloons Stop Call. Why: The balloons' loop must not outlive the card. How: This stops it.
 
-
 			conSysObj.stoFun(); // What: Confetti Stop Call. Why: The confetti's loop must not outlive the card. How: This stops it.
+
 
 			conSysRef.current = null; // What: Confetti System Clear. Why: A tap after the cleanup shouldn't reach stopped confetti. How: This forgets its functions.
 
@@ -441,14 +442,14 @@ function BirCarCom () : JSX.Element {
 					ref={ titHeaRef }
 
 					className={ cssModObj.birTitHea }
-				>{ /* What: Birthday Title Heading Element. Why: The greeting leads the card. How: This wishes a Happy Birthday over two or three lines, adding the recipient's name on its own line when the link carries one. */ }
+				>{ /* What: Birthday Title Heading Element. Why: The greeting leads the card. How: This sets "Happy" and "Birthday" on lines of their own, adding the recipient's name on a line of its own when the link carries one. */ }
 
 
 					<span
 						ref={ titTopRef }
 
 						className={ cssModObj.titTopSpa }
-					><span aria-hidden='true'>🎉</span> Happy</span>{ /* What: Title Top Span Element. Why: The greeting starts with Happy, after a party popper. How: This sets the line in white with a warm glow, the popper hidden from screen readers. */ }
+					><span aria-hidden='true'>🎉</span> Happy</span>{ /* What: Title Top Span Element. Why: The greeting starts with "Happy", after a party popper. How: This sets the line in white with a warm glow, the popper hidden from screen readers. */ }
 
 					{ ' ' }
 
@@ -456,7 +457,7 @@ function BirCarCom () : JSX.Element {
 						ref={ titMaiRef }
 
 						className={ cssModObj.titMaiSpa }
-					>Birthday{ namParStr ? ',' : '!' }</span>{ /* What: Title Main Span Element. Why: Birthday is the greeting's biggest line. How: This sets it in a rainbow, ending in a comma before a name or an exclamation mark without one. */ }
+					>Birthday{ namParStr ? ',' : '!' }</span>{ /* What: Title Main Span Element. Why: "Birthday" is the greeting's biggest line. How: This sets it in a rainbow, ending in a comma before a name or an exclamation mark without one. */ }
 
 					{ namParStr && ( // What: Name Line Check. Why: A shared link can name the recipient. How: This renders the name on its own line only when the link carries one.
 
@@ -470,7 +471,7 @@ function BirCarCom () : JSX.Element {
 								ref={ titNamRef }
 
 								className={ cssModObj.titMaiSpa }
-							>{ namParStr }!</span>{ /* What: Title Main Span Element. Why: The recipient's name is as big as Birthday. How: This sets the name and an exclamation mark in the same rainbow. */ }
+							>{ namParStr }!</span>{ /* What: Title Main Span Element. Why: The recipient's name is as big as "Birthday". How: This sets the name and an exclamation mark in the same rainbow. */ }
 
 
 						</>
@@ -485,7 +486,7 @@ function BirCarCom () : JSX.Element {
 					ref={ subParRef }
 
 					className={ cssModObj.birSubPar }
-				>Hope your day is filled with joy, laughter,<br />and everything you love! <span aria-hidden='true'>🎁✨</span></p>{ /* What: Birthday Subtitle Paragraph Element. Why: A wish follows the greeting. How: This sets it in the decorative font over two lines, its gift and sparkles hidden from screen readers. */ }
+				>Hope your day is filled with joy, laughter,<br />and everything you love! <span aria-hidden='true'>🎁✨</span></p>{ /* What: Birthday Subtitle Paragraph Element. Why: A wish follows the greeting. How: This sets it in the decorative font with a line break after "laughter,", its gift and sparkles hidden from screen readers. */ }
 
 
 
@@ -497,7 +498,7 @@ function BirCarCom () : JSX.Element {
 					viewBox='0 0 140 110'
 
 					aria-hidden='true'
-				>{ /* What: Birthday Cake SVG Element. Why: A two-tier cake with candles is the card's centerpiece, decoration a screen reader should skip. How: This draws its shadow, tiers, icing, candles, flames, and sprinkles. */ }
+				>{ /* What: Birthday Cake SVG Element. Why: A two-tier cake with candles is the card's centerpiece, decoration a screen reader should skip. How: This draws its shadow, tiers, highlight bands, icing, candles, flames, and sprinkles. */ }
 
 
 					<ellipse
@@ -568,7 +569,7 @@ function BirCarCom () : JSX.Element {
 						width='80'
 						x='30'
 						y='44'
-					/>{ /* What: Cake Highlight Rect Element. Why: The top tier's top catches the light. How: This draws a pale band along it, a little stronger than the bottom tier's. */ }
+					/>{ /* What: Cake Highlight Rect Top Element. Why: The top tier's top catches the light. How: This draws a pale band along it, a little stronger than the bottom tier's. */ }
 
 					{ ICI_TOP_ARR.map( ( iciXcoNum ) => ( // What: Top Icing Map Call. Why: The top tier's edge is trimmed with icing. How: This renders a dollop at each point, keyed by its position.
 

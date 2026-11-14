@@ -6,12 +6,15 @@
 import cssModObj from './home.module.css'; // What: CSS Module Object. Why: Home's hero, steps, featured cards, and banner are styled in its own module. How: This maps each class name in home.module.css to its hashed module class.
 
 
-import { CAR_REC_ARR } from '../../ui/cards.ts';             // What: Card Record Array. Why: The hero and the featured cards show cards from the catalog. How: The page picks from it.
-import { CarTilCom   } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
-import { ConCirCom   } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The hero and the banner carry the site's motif. How: The page sets it behind them.
-import { Link        } from 'react-router';                  // What: Link. Why: The hero, the featured section, and the banner move to other pages without a full page load. How: This renders those links.
-import { ShaDiaCom   } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's Share is pressed.
-import { useState    } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
+import { CAR_REC_ARR  } from '../../ui/cards.ts';             // What: Card Record Array. Why: The page's sections show cards from the catalog, such as the hero's. How: The page picks from it.
+import { CarTilCom    } from '../../ui/card-tile.tsx';        // What: Card Tile Component. Why: The featured cards show as tiles. How: The page renders one per featured card.
+import { ConCirCom    } from '../../ui/confetti-circuit.tsx'; // What: Confetti Circuit Component. Why: The page's sections carry the site's motif, such as the hero. How: The page sets it behind them.
+import { Link         } from 'react-router';                  // What: Link. Why: The page's links move to other pages without a full page load, such as the banner's. How: This renders those links.
+import { ShaDiaCom    } from '../../ui/share-dialog.tsx';     // What: Share Dialog Component. Why: A featured card can be shared straight from Home. How: The page mounts it when a tile's "Share" is pressed.
+import { useEffect    } from 'react';                         // What: Use Effect. Why: The page handles a section's hash once it has rendered. How: This runs the hash arrival effect.
+import { useLocation  } from 'react-router';                  // What: Use Location. Why: The page needs the hash a shared address or another page's section link arrived with. How: This reads the current location.
+import { useSecCliFun } from '../../ui/section-link.ts';      // What: Use Section Click Function. Why: The hero's "How It Works" button reaches the steps without leaving a hash in the address. How: This returns secCliFun, the shared section link click handler.
+import { useState     } from 'react';                         // What: Use State. Why: The featured pick stays put while the page is open, and the page remembers which card is being shared. How: This holds both.
 
 
 import type { CarRecTyp } from '../../ui/cards.ts'; // What: Card Record Type. Why: The page holds the card being shared. How: This types that state.
@@ -25,11 +28,13 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * home.tsx = Home
  *
  * @summary
- * The home page: a hero whose cards fan out of an open envelope beside the
+ * The Home page: a hero whose cards fan out of an open envelope beside the
  * site's pitch (above it at 768px and below), the three steps of sending a
  * card, four cards from the Gallery picked at random on each visit, and a
  * postcard banner inviting a custom card. Any featured card can be shared from
- * its tile through the share dialog.
+ * its tile through the share dialog. A visitor arriving with a section's ID as
+ * the hash, such as /#how-it-works, lands on that section, and the hash is
+ * cleared from the address once used.
  *
  * Sections:
  *  - Constants
@@ -49,15 +54,61 @@ const HER_CAR_ARR = [ 'happy-halloween', 'happy-birthday', 'mothers-day' ].map( 
 
 
 
+// #region STE_REC_ARR
+
+/**
+ * STE_REC_ARR = Step Record Array
+ *
+ * @summary
+ * The three steps How It Works walks through, in order. Every row shares one
+ * shape, so its fields carry no comments of their own:
+ *
+ * - `desStr` (String): Description String, the line explaining the step.
+ *
+ * - `titStr` (String): Title String, the step's short name, also its React
+ *   key.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
 const STE_REC_ARR = [ // What: Step Record Array. Why: How It Works walks through the same three steps every visit. How: Each row holds a step's title and description.
 
 
-	{ titStr : 'Pick a card',    desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.' }, // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
-	{ titStr : 'Make it theirs', desStr : "Add their name to the cards that take one, and it's part of the card as it opens." }, // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
-	{ titStr : 'Send the link',  desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.' } // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
+	{ // What: Pick Step Row. Why: Sending starts with choosing. How: This points to the Gallery.
+
+
+		titStr : 'Pick a card',
+
+		desStr : 'Browse the Gallery for a birthday, a holiday, or a day for the family.'
+
+
+	},
+
+	{ // What: Personalize Step Row. Why: A name makes a card feel made for them. How: This explains the name field.
+
+
+		titStr : 'Make it theirs',
+
+		desStr : "Add their name to the cards that take one, and it's part of the card as it opens."
+
+
+	},
+
+	{ // What: Send Step Row. Why: The last step is getting it to them. How: This explains the link and the share sheet.
+
+
+		titStr : 'Send the link',
+
+		desStr : 'Copy the link or share it from your phone. It plays right in their browser, with nothing to install.'
+
+
+	}
 
 
 ];
+
+// #endregion STE_REC_ARR
 
 // #endregion Constants
 
@@ -131,13 +182,16 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
  * HomPagCom = Home Page Component
  *
  * @summary
- * Renders the home page and its canonical link. The page's title and
+ * Renders the Home page and its canonical link. The page's title and
  * description are index.html's own, so crawlers that never run the script
  * read them too. Four listed cards are picked at random once, when the page
  * mounts, and stay put while it's open, four so the featured grid's rows
- * always stay even. A featured tile's Share mounts the share dialog for its
+ * always stay even. A featured tile's "Share" mounts the share dialog for its
  * card, keyed by the card, and the dialog's close callback unmounts it. The
- * envelope drawing is decoration, hidden from screen readers.
+ * envelope drawing is decoration, hidden from screen readers. When the address
+ * arrives with a hash naming an element on the page, the page jumps to it once
+ * the fonts have loaded and its entrance has ended, and then drops the hash
+ * from the address through the history API, so the router sees no navigation.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -156,8 +210,52 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
 function HomPagCom () : JSX.Element {
 
 
-	const [ feaCarArr                ] = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
-	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                       // What: Share Card Object And Setter. Why: The share dialog shows the card whose Share was pressed. How: This starts with no card, so no dialog.
+	const [ feaCarArr ]               = useState( () => ranPicFun( CAR_REC_ARR.filter( ( carRecObj ) => carRecObj.lisBoo ), 4 ) ); // What: Featured Card Array. Why: Home shows a taste of the Gallery that changes from visit to visit, four cards so the grid's rows always stay even. How: This picks four listed cards at random once, when the page mounts, and keeps them while it stays open.
+	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );                                                      // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.
+
+	const locCurObj = useLocation();  // What: Location Current Object. Why: A visitor can arrive with a section's ID as the hash. How: This holds the current address, a new object on every navigation, whose hash is e.g. #how-it-works or an empty string.
+	const secCliFun = useSecCliFun(); // What: Section Click Function. Why: The hero's "How It Works" button reaches the steps the shared way. How: This leaves a modified click to the browser and otherwise scrolls to the section without a hash.
+
+
+
+	useEffect( () => { // What: Hash Arrival Effect. Why: A visitor arriving from a shared address or another page's section link should land on that section, with no hash left in the address. How: Once the fonts have loaded and the page's entrance has settled, this jumps to the element the hash names, then replaces the address with one without the hash.
+
+
+		const ancIdeStr = locCurObj.hash.slice( 1 ); // What: Anchor Identifier String. Why: The hash names the element to land on. How: This holds the hash without its #, or an empty string when there's none.
+
+
+		if ( !ancIdeStr ) return; // What: No Hash Guard. Why: Most visits arrive without a hash. How: This does nothing when the hash is empty.
+
+
+
+		void document.fonts.ready.then( async () => { // What: Fonts Ready Callback. Why: The jump should land where the section sits once the fonts have reflowed the page above it. How: This waits for the fonts the page uses to load, then for the target's entrance, then jumps and clears the hash; void marks the returned promise as deliberately not awaited.
+
+
+			const ancTarEle = document.getElementById( ancIdeStr ); // What: Anchor Target Element. Why: Only a hash naming an element on the page is a section to land on. How: This finds the element the hash names, or holds null.
+
+
+			if ( !ancTarEle ) return; // What: No Target Guard. Why: A hash naming nothing on the page isn't this page's to handle, so it's left in the address as it came. How: This stops when no element matches.
+
+
+
+			const movAniArr : Animation[] = []; // What: Moving Animations Array. Why: The page fades up into view as it opens, and a jump made while it's still rising lands short by what it has left to rise, about 25px in Chromium. How: This collects the animations running on the target and every element around it.
+
+
+			for ( let curAncEle : Element | null = ancTarEle; curAncEle; curAncEle = curAncEle.parentElement ) movAniArr.push( ...curAncEle.getAnimations() ); // What: Ancestor Animation Loop. Why: An animation on an element holding the target, such as the page's rise, can move the target with it. How: This walks up from the target to the root, adding each element's running animations.
+
+
+
+			await Promise.allSettled( movAniArr.filter( ( aniCurObj ) => aniCurObj.effect?.getComputedTiming().iterations !== Infinity ).map( ( aniCurObj ) => aniCurObj.finished ) ); // What: Entrance Settle Wait. Why: The jump should land where the section rests once the entrance ends. How: This waits for every animation that ends, skipping any that loops forever, settling whether each finishes or is cancelled.
+
+			ancTarEle.scrollIntoView( { behavior : 'instant' } ); // What: Arrival Scroll Call. Why: The visitor should land on the section, as a normal link arrival would. How: This jumps to the element, without the html element's smooth scrolling, since gliding down from the top of a freshly loaded page would be slow.
+
+			history.replaceState( history.state, '', location.pathname + location.search ); // What: Hash Clear Call. Why: The address should stay as clean as it does for an in-page link, and clearing it through the router would count as a navigation, which the design package's scroll hook answers by jumping to the top. How: This replaces the current history entry's address with the same path and query and no hash, keeping the router's state, its key and index, and firing no navigation.
+
+
+		} );
+
+
+	}, [ locCurObj ] ); // What: Effect Dependency Array. Why: Each arrival with a hash has to be handled once, even one repeating the last hash. How: locCurObj is a new object on every navigation.
 
 
 
@@ -205,22 +303,26 @@ function HomPagCom () : JSX.Element {
 								Animated, interactive greeting cards for birthdays, holidays, and the people who matter. Pick one, add their name (if applicable), and send the link.
 							</p>
 
-							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row that wraps. */ }
+
+
+							<div className={ cssModObj.herActDiv }>{ /* What: Hero Actions Div Element. Why: The two ways onward sit side by side. How: This sets the buttons in a row, wrapping onto two lines from about 1,035px down to about 770px, where the hero's text column sits narrow beside the envelope, and again at about 490px wide and below. */ }
 
 
 								<Link
 									className={ cssModObj.butPriAnc }
 
 									to='/gallery'
-								>Browse the Gallery</Link>{ /* What: Browse Gallery Link. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
+								>Browse the Gallery</Link>{ /* What: Button Primary Anchor Link. Why: Browsing is the site's main action. How: This routes to the Gallery as an orange button. */ }
 
 
 
 								<a
 									className={ cssModObj.butSecAnc }
 
-									href='#how-it-works'
-								>How It Works</a>{ /* What: Button Secondary Anchor Element. Why: A first-time visitor may want to know how sending works. How: This jumps to the steps below as an outlined button. */ }
+									href='/#how-it-works'
+
+									onClick={ ( cliEveObj ) => secCliFun( cliEveObj, 'how-it-works' ) }
+								>How It Works</a>{ /* What: Button Secondary Anchor Element. Why: A first-time visitor may want to know how sending works. How: This scrolls to the steps below as an outlined button, leaving no hash in the address, while a modified click opens them in a new tab. */ }
 
 
 							</div>
@@ -317,7 +419,7 @@ function HomPagCom () : JSX.Element {
 
 
 				<section
-					id='how-it-works' // What: How It Works Identifier. Why: The hero's How It Works button jumps here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's id appears in the address.
+					id='how-it-works' // What: How It Works Identifier. Why: The hero's "How It Works" button leads here, and the address can be shared as /#how-it-works. How: It keeps its plain, readable name, since a navigation target's ID appears in the address.
 
 					className={ cssModObj.homHiwSec }
 				>{ /* What: Home How-It-Works Section Element. Why: A first-time visitor learns how sending a card works. How: This holds the heading and the three steps. */ }
@@ -331,7 +433,7 @@ function HomPagCom () : JSX.Element {
 						<h2 className={ cssModObj.secTitHea }>Pick it. Personalize it. Send it.</h2>{ /* What: Section Title Heading Element. Why: The heading sums up the three steps. How: This shows the section's h2. */ }
 
 
-						<ol className={ cssModObj.steLisOrd }>{ /* What: Step List Ordered Element. Why: The steps happen in order. How: This lays the three steps out in a row, stacking on phones. */ }
+						<ol className={ cssModObj.steLisOrd }>{ /* What: Step List Ordered Element. Why: The steps happen in order. How: This lays the three steps out in a row, stacking at 768px and below. */ }
 
 
 							{ STE_REC_ARR.map( ( steRecObj, steIndNum ) => ( // What: Step Map Call. Why: Every step gets a card. How: This renders one list item per step.
@@ -377,13 +479,13 @@ function HomPagCom () : JSX.Element {
 					<div className={ cssModObj.secInnDiv }>{ /* What: Section Inner Div Element. Why: The section's content sits in the site's centered column. How: This caps and centers it with the side gutter. */ }
 
 
-						<div className={ cssModObj.feaHeaDiv }>{ /* What: Featured Header Div Element. Why: The heading and the link to every card sit on one line on wide screens. How: This spreads them apart, wrapping on phones. */ }
+						<div className={ cssModObj.feaHeaDiv }>{ /* What: Featured Header Div Element. Why: The heading and the link to every card share a line. How: This spreads them apart, wrapping onto two lines at about 415px wide and below. */ }
 
 
 							<div>{ /* What: Featured Heading Div Element. Why: The eyebrow and heading read as one block beside the link. How: This stacks them. */ }
 
 
-								<p className={ cssModObj.secEyePar }>From the gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
+								<p className={ cssModObj.secEyePar }>From the Gallery</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the section. How: This shows it in berry mono capitals. */ }
 
 								<h2 className={ cssModObj.secTitHea }>A few favorites</h2>{ /* What: Section Title Heading Element. Why: The heading introduces the featured cards. How: This shows the section's h2. */ }
 
@@ -396,13 +498,14 @@ function HomPagCom () : JSX.Element {
 								className={ cssModObj.allCarAnc }
 
 								to='/gallery'
-							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: See All Cards Link. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
+							>See all cards <span className={ cssModObj.allArrSpa } aria-hidden='true'>→</span></Link>{ /* What: All Cards Anchor Link. Why: Four cards are only a taste. How: This routes to the Gallery, its arrow nudging on hover and hidden from screen readers, which would otherwise read it out. */ }
 
 
 						</div>
 
 
-						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four, two, or one across. */ }
+
+						<div className={ cssModObj.feaGriDiv }>{ /* What: Featured Grid Div Element. Why: The featured cards sit in an even grid. How: This lays them out four across, two at 1,024px and below, and one at 640px and below. */ }
 
 
 							{ feaCarArr.map( ( carRecObj ) => ( // What: Featured Card Map Call. Why: Every featured card gets a tile. How: This renders one per picked card.
@@ -412,9 +515,10 @@ function HomPagCom () : JSX.Element {
 									key={ carRecObj.sluStr }
 
 									carRecObj={ carRecObj }
+									eagLoaBoo={ true } // What: Eager Loading Choice. Why: The featured row starts about 1,450px down, which is in view as the page opens on a tall screen, such as a portrait monitor. How: This loads every featured tile's preview at once.
 
 									onShaCarFun={ setShaCarObj }
-								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its Share opening the dialog for it.
+								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its "Share" opening the dialog for it.
 
 
 							))}
@@ -446,7 +550,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-								<div className={ cssModObj.posTexDiv }>{ /* What: Postcard Text Div Element. Why: The invitation reads as one column beside the postmark. How: This stacks the eyebrow, heading, paragraph, and button. */ }
+								<div className={ cssModObj.posTexDiv }>{ /* What: Postcard Text Div Element. Why: The invitation reads as one column, beside the postmark above 768px and alone at 768px and below, where the postmark is hidden. How: This stacks the eyebrow, heading, paragraph, and button. */ }
 
 
 									<p className={ cssModObj.secEyePar }>Made to order</p>{ /* What: Section Eyebrow Paragraph Element. Why: A small label names the banner. How: This shows it in berry mono capitals. */ }
@@ -463,10 +567,12 @@ function HomPagCom () : JSX.Element {
 										className={` ${ cssModObj.butPriAnc }   ${ cssModObj.butPriAncPostcard } `}
 
 										to='/contact'
-									>Request a Custom Card</Link>{ /* What: Request Custom Card Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, its text a step smaller on phones so the long label doesn't wrap the button tall. */ }
+									>Request a Custom Card</Link>{ /* What: Button Primary Anchor Postcard Link. Why: Asking for a custom card starts with a message. How: This routes to the Contact page as an orange button, whose postcard modifier sets its text a step smaller at 640px and below so the long label doesn't wrap the button tall. */ }
 
 
 								</div>
+
+
 
 								<svg
 									className={ cssModObj.posMarSvg }
@@ -521,7 +627,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's Share is pressed.
+			{ shaCarObj && ( // What: Share Dialog Check. Why: The dialog only exists while a card is being shared. How: This mounts it once a tile's "Share" is pressed.
 
 
 				<ShaDiaCom
@@ -552,7 +658,7 @@ function HomPagCom () : JSX.Element {
 
 // #region Exports
 
-export { HomPagCom }; // What: Named Exports. Why: The router's root route renders the home page. How: This exports HomPagCom.
+export { HomPagCom }; // What: Named Export. Why: The router's root route renders the Home page. How: This exports HomPagCom.
 
 // #endregion Exports
 
