@@ -544,8 +544,8 @@ function CanFlaCom ( { claModStr, delSecNum } : ArtRowTyp ) : JSX.Element {
  *
  * @summary
  * One ghost over the hills. After its delay it rises into view, fading in,
- * then bobs up and down forever, while it rocks gently side to side on its
- * own slower beat. Under reduced motion it's simply there, still.
+ * then bobs up and down forever, while it tilts a little to one side and back
+ * on its own slower beat. Under reduced motion it's simply there, still.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
