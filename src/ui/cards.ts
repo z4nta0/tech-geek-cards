@@ -32,9 +32,8 @@ import type { LazyExoticComponent } from 'react';          // What: Lazy Exotic 
  * The card catalog: each card's plain data from card-data.ts, in the same
  * order, joined with its component and its tile preview by its address. The
  * pages and parts that show or send cards read it, such as the Gallery,
- * which lists and filters it. A new card is a row in card-data.ts
- * plus an entry in each lookup here, with its component in src/cards/ and
- * its preview in src/assets/.
+ * which lists and filters it. A new card needs an entry in each lookup
+ * here, beside its row in card-data.ts.
  *
  * Sections:
  *  - Constants
