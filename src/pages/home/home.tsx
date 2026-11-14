@@ -241,7 +241,7 @@ function HomPagCom () : JSX.Element {
 			const movAniArr : Animation[] = []; // What: Moving Animations Array. Why: The page fades up into view as it opens, and a jump made while it's still rising lands short by what it has left to rise, about 25px in Chromium. How: This collects the animations running on the target and every element around it.
 
 
-			for ( let curAncEle : Element | null = ancTarEle; curAncEle; curAncEle = curAncEle.parentElement ) movAniArr.push( ...curAncEle.getAnimations() ); // What: Ancestor Animation Loop. Why: An animation on any element holding the target moves the target with it. How: This walks up from the target to the root, adding each element's running animations.
+			for ( let curAncEle : Element | null = ancTarEle; curAncEle; curAncEle = curAncEle.parentElement ) movAniArr.push( ...curAncEle.getAnimations() ); // What: Ancestor Animation Loop. Why: An animation on an element holding the target, such as the page's rise, can move the target with it. How: This walks up from the target to the root, adding each element's running animations.
 
 
 
