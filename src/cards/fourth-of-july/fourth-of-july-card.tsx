@@ -30,7 +30,7 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  *
  * @summary
  * The Happy 4th of July card: a night sky fading from navy to a dark red glow,
- * scattered with twinkling stars and fireworks bursting at random, over an
+ * scattered with twinkling stars and fireworks bursting at random, above an
  * American flag that slides in, the "Happy 4th of July!" headline springing
  * down into place, and a short wish that rises in below it, between a row of
  * gold stars and a row of red sparkles. Every fixed duration, distance, size,
