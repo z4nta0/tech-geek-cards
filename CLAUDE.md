@@ -346,6 +346,9 @@ rest follow the same pattern.
   2026-10-16, every photo keeping at least a third of its area to tap at 320 by
   568), and the greeting's growth is capped to fit the screen. Its halo is
   three plain glows: more layers made WebKit stall while each letter typed.
+  A mosaic photo's hover zooms the photo in place within its cell rather than
+  lifting the tile (decided by the user 2026-11-14, in the audit), which suits
+  a tight mosaic of photos better than a lift.
 - **The Family cards' scene controls** (decided by the user 2026-10-16): a
   steady, see-through bar above the floating bar, in the card's own colors,
   with a dot per scene over Previous, Pause or Play, Next, and Skip to end;
