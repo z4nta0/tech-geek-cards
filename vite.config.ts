@@ -74,7 +74,7 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
  * its address, or its image. Each tag is found by its name or property,
  * whichever quotes it uses and whether or not the page has been compacted,
  * and replaced whole, so the result is the same in the dev server's page
- * and the built one. A card's link preview image is its own JPEG in
+ * and the built one. A card's link preview image is its own PNG or JPEG in
  * public/social/, named after its address. The canonical link and an
  * unlisted card's noindex stay with the card's page in React, and Netlify
  * keeps unlisted cards out of search with a header.
