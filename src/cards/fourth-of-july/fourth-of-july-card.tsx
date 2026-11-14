@@ -366,11 +366,11 @@ const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: 
  * Base Plus 7 step of the duration scale, about 1.13s; after the Base Plus 3
  * step the headline springs down into place from a smaller scale; after the
  * Base Plus 6 step the flag slides in from the left; and once the card has
- * faded in, the wish rises in. The stars twinkle and the fireworks start at
- * once, and both stop when the card replays or closes, since the context
- * reverts the twinkles and the hook's cleanup stops the fireworks. Under
- * reduced motion the timeline jumps to its end, and neither the twinkle nor
- * the fireworks start.
+ * faded in, the wish rises in. The fireworks start at once and each star
+ * starts twinkling after its own random delay, and both stop when the card
+ * replays or closes, since the context reverts the twinkles and the hook's
+ * cleanup stops the fireworks. Under reduced motion the timeline jumps to its
+ * end, and neither the twinkle nor the fireworks start.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
