@@ -116,6 +116,7 @@ function GalPagCom () : JSX.Element {
 
 	} );
 
+
 	const resKeyStr = shoCarArr.map( ( carRecObj ) => carRecObj.sluStr ).join( ' ' ); // What: Result Key String. Why: After the first choice, the results should fade in only when the cards shown change, not on every keystroke that leaves them the same. How: This joins the shown cards' addresses, which the count and the grid are keyed by.
 
 
