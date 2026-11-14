@@ -498,11 +498,17 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 				>{ /* What: Share Status Paragraph Element. Why: The result of a copy should be announced and seen. How: This live region holds the message saying the link was copied, or how to copy it by hand. */ }
 
 
-					<span
-						key={ copStaStr } // What: Status Message Key. Why: The message should fade in afresh each time it changes. How: A new key remounts the span, replaying its entrance.
+					{ copStaStr !== 'idle' && ( // What: Status Message Check. Why: The region stays empty until a copy is tried, so it can sit out of the layout until then. How: This renders the message only once a copy has a result.
 
-						className={ cssModObj.shaStaSpa }
-					>{ copStaStr === 'copied' ? 'Link copied. Paste it into a text, an email, or a message.' : copStaStr === 'failed' ? 'Your browser blocked copying. Select the link above and copy it.' : '' }</span>{ /* What: Share Status Span Element. Why: The message is the result of the press, so it should arrive visibly. How: This shows the copy result, fading in each time it changes. */ }
+
+						<span
+							key={ copStaStr } // What: Status Message Key. Why: The message should fade in afresh each time it changes. How: A new key remounts the span, replaying its entrance.
+
+							className={ cssModObj.shaStaSpa }
+						>{ copStaStr === 'copied' ? 'Link copied. Paste it into a text, an email, or a message.' : 'Your browser blocked copying. Select the link above and copy it.' }</span> // What: Share Status Span Element. Why: The message is the result of the press, so it should arrive visibly. How: This shows the copy result, fading in each time it changes.
+
+
+					) }
 
 
 				</p>
