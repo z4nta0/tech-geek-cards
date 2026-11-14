@@ -484,7 +484,7 @@ function BirCarCom () : JSX.Element {
 					ref={ subParRef }
 
 					className={ cssModObj.birSubPar }
-				>Hope your day is filled with joy, laughter,<br />and everything you love! <span aria-hidden='true'>🎁✨</span></p>{ /* What: Birthday Subtitle Paragraph Element. Why: A wish follows the greeting. How: This sets it in the decorative font over two lines, its gift and sparkles hidden from screen readers. */ }
+				>Hope your day is filled with joy, laughter,<br />and everything you love! <span aria-hidden='true'>🎁✨</span></p>{ /* What: Birthday Subtitle Paragraph Element. Why: A wish follows the greeting. How: This sets it in the decorative font with a line break after "laughter,", its gift and sparkles hidden from screen readers. */ }
 
 
 

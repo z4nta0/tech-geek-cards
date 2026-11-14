@@ -844,7 +844,7 @@
 
 /* #region feaHeaDiv */
 
-.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line and wrap when there's no room. How: This spreads them apart along their baseline, wrapping onto two lines at about 415px wide and below. */
+.feaHeaDiv { /* What: Featured Header Div. Why: The heading and the link to every card share a line and wrap when there's no room. How: This spreads them apart along their bottom edge, wrapping onto two lines at about 415px wide and below. */
 
 
 	align-items     : flex-end;

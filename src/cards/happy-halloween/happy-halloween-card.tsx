@@ -56,7 +56,7 @@ import type { JSX } from 'react'; // What: JSX. Why: Each component declares the
 
 // #region Types
 
-type ArtRowTyp = { claModStr : string, delSecNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places and sizes it, and its delay in seconds.
+type ArtRowTyp = { claModStr : string, delSecNum : number }; // What: Art Row Type. Why: Each ghost, jack-o'-lantern, and candle has its own place and its own start. How: This holds the figure's class, which places it, and sizes a ghost or jack-o'-lantern too, and its delay in seconds.
 
 // #endregion Types
 

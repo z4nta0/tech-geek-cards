@@ -507,7 +507,7 @@
 
 /* #region subForBut */
 
-.subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's start, easing its color, lift, press, and focus, dimmed while sending. */
+.subForBut { /* What: Submit Form Button. Why: Sending is the form's main action. How: This sets an orange button in mono capitals at the form's left edge, easing its color, lift, press, and focus, dimmed while sending. */
 
 
 	align-self     : flex-start;
