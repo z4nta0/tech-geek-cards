@@ -284,7 +284,6 @@ function ThaCarCom () : JSX.Element {
 		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : mesRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, mesStaNum ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
-
 		if ( redMotBoo ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
 		else timLinObj.call( () => { wobTweObj.play(); }, [], mesStaNum ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms

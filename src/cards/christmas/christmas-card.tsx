@@ -365,7 +365,6 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 		timLinObj.from( [ ...snoSplObj.chars, ...sigSplObj.chars ], splFroObj, PAU_POS_STR ); // What: Greeting Fade. Why: The greeting and sign-off arrive last. How: After a pause, this fades them in by letter.
 
 
-
 		if ( redMotFun() ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
 
