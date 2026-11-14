@@ -232,7 +232,7 @@ type BfcProTyp = { delSecNum : number }; // What: Bat-Fly-Component Props Type. 
  * in just past the left edge and flies straight across to just past the
  * right, rising or falling a little on the way, bobbing as it goes, and fades
  * out at the far side; after a pause it flies again at a new height. Its
- * wings flap the whole time, one a beat behind the other. The flight's
+ * wings flap the whole time, one a moment behind the other. The flight's
  * length and the pause between flights are picked once, at random, so each
  * bat keeps its own pace, while each flight's height is picked anew. Under
  * reduced motion the bat never flies and stays hidden.
@@ -299,7 +299,7 @@ function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 
 		gsap.fromTo( batSvgRef.current, { y : bobTopNum }, { duration : bobDurNum, ease : inoEasStr, repeat : -1, y : bobAmpNum, yoyo : true } ); // What: Bob Tween. Why: A bat's flight dips and rises. How: This swings the drawing up and down forever, independent of the flight.
 
-		gsap.to( [ lefWinRef.current, rigWinRef.current ], { duration : winDurNum, ease : inoEasStr, scaleY : winScaNum, stagger : { each : winEacNum, repeat : -1, yoyo : true }, transformOrigin : 'center bottom' } ); // What: Flap Tween. Why: The wings beat. How: This folds each wing down toward its base and back forever, the right a beat behind the left.
+		gsap.to( [ lefWinRef.current, rigWinRef.current ], { duration : winDurNum, ease : inoEasStr, scaleY : winScaNum, stagger : { each : winEacNum, repeat : -1, yoyo : true }, transformOrigin : 'center bottom' } ); // What: Flap Tween. Why: The wings beat. How: This folds each wing down toward its base and back forever, the right a moment behind the left.
 
 
 	} );
@@ -341,7 +341,7 @@ function BatFlyCom ( { delSecNum } : BfcProTyp ) : JSX.Element {
 					style={{ fill : 'var( --hal-pur-col )' }} // Halloween Purple Color = #1A0533
 
 					d='M42,20 Q60,0 80,10 Q65,20 42,24 Z'
-				/>{ /* What: Right Wing Path Element. Why: The bat flaps. How: This draws the right wing, which folds a beat after the left. */ }
+				/>{ /* What: Right Wing Path Element. Why: The bat flaps. How: This draws the right wing, which folds a moment after the left. */ }
 
 				<ellipse
 					style={{ fill : 'var( --hal-vio-col )' }} // Halloween Violet Color = #2D0D52
