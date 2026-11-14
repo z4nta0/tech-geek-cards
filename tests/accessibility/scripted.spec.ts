@@ -78,7 +78,7 @@ type StoInfTyp = { // What: Stop Information Type. Why: The keyboard walk judges
 
 const GLY_DEC_REG = /[←↑→↓·•]|\p{Extended_Pictographic}/u; // What: Glyph Decorative Regular Expression. Why: A decorative glyph inside a name is read aloud as noise, such as right arrow. How: This matches the arrows and dots a decorative glyph would add to a name, plus any emoji or pictograph.
 const REF_WID_NUM = 320;                                   // What: Reflow Width Number. Why: WCAG's reflow criterion asks for no sideways scrolling at 320 CSS pixels, the width of 1,280px at 400% zoom. How: This is the viewport width the reflow check opens each state at.
-const TAB_HIN_REG = /in a new tab\)/;                      // What: Tab Hint Regular Expression. Why: A link that opens a new tab has to say so in its announced name. How: This matches the note's closing words, such as "(opens in a new tab)".
+const TAB_HIN_REG = /in a new tab\)"/;                     // What: Tab Hint Regular Expression. Why: A link that opens a new tab has to say so at the end of its announced name. How: This matches the note's closing words, such as "(opens in a new tab)", followed by the closing quote of the name in the link's tree line.
 const TAB_MAX_NUM = 80;                                    // What: Tab Maximum Number. Why: A keyboard trap would otherwise keep the walk going forever. How: This caps the walk at far more Tab presses than the site has stops.
 const WAT_MIL_NUM = 1000;                                  // What: Watch Milliseconds Number. Why: A loop driving motion frame by frame writes to the page many times a second. How: This is how long, in milliseconds, the reduced-motion check watches for script writes once a state has opened.
 
@@ -289,7 +289,7 @@ async function namProFun ( curPagObj : Page ) : Promise< string[] > {
 		const tabSnaStr = ( await tabLinObj.ariaSnapshot() ).split( '\n' )[ 0 ]; // What: Tab Snapshot String. Why: The link's own tree line holds its role and announced name. How: This reads the link's tree and keeps its first line.
 
 
-		if ( tabSnaStr.startsWith( '- link' ) && !TAB_HIN_REG.test( tabSnaStr ) ) proLisArr.push( `${ tabSnaStr } opens a new tab without saying so` ); // What: Tab Hint Check. Why: A screen reader user should know before a new tab opens. How: This records a link whose tree line names it without the note.
+		if ( tabSnaStr.startsWith( '- link' ) && !TAB_HIN_REG.test( tabSnaStr ) ) proLisArr.push( `${ tabSnaStr } opens a new tab without saying so` ); // What: Tab Hint Check. Why: A screen reader user should know before a new tab opens. How: This records a link whose tree line names it without ending in the note.
 
 
 	}
