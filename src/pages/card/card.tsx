@@ -33,9 +33,10 @@ import type { JSX       } from 'react';             // What: JSX. Why: The compo
  * bar over it with the TechGeek mark and TechGeek.cards name, the mark alone
  * at 640px and below (back to the Home page), a link to more cards, a "Replay"
  * button that plays the card again from the start, and a "Share" button that
- * opens the share dialog for this card. The page sets its own title,
- * description, and canonical address. The card's code arrives on demand, so a
- * short loading message shows until it has.
+ * opens the share dialog for this card. The page sets its own title and
+ * description, and either its canonical address (a listed card) or a noindex
+ * tag (an unlisted one). The card's code arrives on demand, so a short loading
+ * message shows until it has.
  *
  * Sections:
  *  - Components
