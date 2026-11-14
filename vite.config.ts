@@ -304,7 +304,8 @@ const VIT_CON_OBJ = defineConfig({ // What: Vite Config Object. Why: Vite reads 
 
 	build   : { assetsInlineLimit : 0 },                            // What: Build. Why: Vite inlines any asset under 4 KB as a data: URI, which the Content-Security-Policy blocks as an image from another origin, hiding the bar's mark and the Family cards' heart mask. How: This turns inlining off, so every asset ships as its own file on the site's own origin.
 	css     : { modules : { localsConvention : 'camelCaseOnly' } }, // What: CSS. Why: CSS modules expose each class name as a camelCase key only, so every module reads the same way, per the CSS modules rules. How: This sets the locals convention.
-	plugins : [ reaPluFun(), minHtmFun(), carPagFun() ]             // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React, the page minifier, and the card pages.
+	plugins : [ reaPluFun(), minHtmFun(), carPagFun() ],            // What: Plugins. Why: Vite builds the site through these plugins, in this order. How: This lists React, the page minifier, and the card pages.
+	server  : { watch : { ignored : [ '**/*.log', '**/design/images/originals/**', '**/dist/**', '**/tests/output/**' ] } } // What: Server. Why: A test run writes thousands of trace frames into the test output, which kept every dev server watching the project busy for hours (measured 2026-11-13), and none of these folders hold app code. How: This keeps the file watcher off logs, the image originals, the build, and the test output.
 
 
 });
