@@ -20,8 +20,9 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The pixel help
  * Checks that the Happy Birthday card throws confetti where it's tapped, in
  * whichever engine the project runs. With motion allowed, the card plays until
  * its invitation to tap shows and its own confetti has settled, leaving the
- * canvas empty, then a tap has to draw pieces near the point tapped. Under reduced motion no confetti flies, so the
- * card renders no canvas and a tap draws nothing.
+ * canvas empty, then a tap has to draw pieces near the point tapped. Under
+ * reduced motion no confetti flies, so the card renders no canvas and a tap
+ * draws nothing.
  *
  * Sections:
  *  - Constants
