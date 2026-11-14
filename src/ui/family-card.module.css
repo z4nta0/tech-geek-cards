@@ -139,15 +139,16 @@
 
 }
 
-.famCelIma { /* What: Family Cell Image. Why: The photo fills its cell and answers the pointer. How: This covers the cell, easing its zoom and press. */
+.famCelIma { /* What: Family Cell Image. Why: The photo fills its cell and answers its button's hover and press, and a press on it should land on the button. How: This covers the cell, easing its zoom and press, and lets the pointer pass through it to the button. */
 
 
-	display    : block;
-	height     : 100%;
-	max-width  : none;
-	object-fit : cover;
-	transition : scale var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
-	width      : 100%;
+	display        : block;
+	height         : 100%;
+	max-width      : none;
+	object-fit     : cover;
+	pointer-events : none;
+	transition     : scale var( --dur-tra-bas ) var( --mot-dec-eas ); /* Duration Transition Base ~= 157.8ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	width          : 100%;
 
 
 }
@@ -720,14 +721,15 @@
 
 }
 
-.famExpIma { /* What: Family Expanded Image. Why: The whole photo should show, uncropped. How: This fits it inside the screen. */
+.famExpIma { /* What: Family Expanded Image. Why: The whole photo should show, uncropped, and a press on it should land on its button. How: This fits it inside the screen and lets the pointer pass through it to the button. */
 
 
-	display    : block;
-	height     : 100%;
-	max-width  : none;
-	object-fit : contain;
-	width      : 100%;
+	display        : block;
+	height         : 100%;
+	max-width      : none;
+	object-fit     : contain;
+	pointer-events : none;
+	width          : 100%;
 
 
 }
