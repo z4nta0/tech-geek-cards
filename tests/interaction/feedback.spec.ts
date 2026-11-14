@@ -14,7 +14,6 @@ import { movProFun   } from '../support/feedback.ts'; // What: Moving Problems F
 import { opeStaFun   } from '../support/states.ts';   // What: Open State Function. Why: Each check opens and settles its state first. How: This loads it and waits for it.
 import { PHO_STA_ARR } from '../support/family.ts';   // What: Photo State Array. Why: A Family card's open photo holds a control the plain states don't, its full-size photo that closes it. How: This lists the Mother's Day states with its first photo open, one per width.
 import { RES_STA_ARR } from '../support/contact.ts';  // What: Result State Array. Why: The Contact form's result states hold controls the plain states don't, such as the thank-you's "Send Another" button. How: This lists the Contact states with the form sent, one per result and width.
-import { SET_WAI_NUM } from '../support/feedback.ts'; // What: Settle Wait Number. Why: Each look is read once its transition has finished. How: This is the pause before each read.
 import { snaEleFun   } from '../support/feedback.ts'; // What: Snapshot Element Function. Why: Each look is recorded with whether each part of it would ease. How: This runs inside the page to read it.
 import { snaProFun   } from '../support/feedback.ts'; // What: Snap Problems Function. Why: A change has to ease rather than snap. How: This turns two snapshots into a problem for each snapped change.
 import { STA_REC_ARR } from '../support/states.ts';   // What: State Record Array. Why: The shared page states are each checked. How: This lists them.
@@ -250,13 +249,17 @@ const TOG_TAR_ARR : TogTarTyp[] = [ // What: Toggle Target Array. Why: A switche
  * aniFinFun = Animation Finish Function
  *
  * @summary
- * Runs inside the page and waits until every animation and transition on an
- * element and everything inside it has finished, leaving out any that repeat
- * forever, so a look read afterwards is the settled one even when a staggered
- * entrance, such as the phone menu's rows arriving one after another, runs
- * past the usual settle wait, or WebKit runs a transition behind the clock
- * on a heavy page. One cancelled midway counts as ended. Passed to
- * Playwright's evaluate, so it can't read anything from this file.
+ * Runs inside the page and waits until a look just changed has settled: two
+ * animation frames first, so the hover, press, focus, or attribute change has
+ * been styled and its transitions have started, then every animation and
+ * transition on the element, everything inside it, and each of its ancestors
+ * has finished, leaving out any that repeat forever. An ancestor counts since
+ * a color fading on it reaches the element through inheritance. A look with
+ * nothing easing, such as every look under reduced motion, is read after the
+ * two frames alone, and one easing longer than usual, such as a staggered
+ * entrance or a transition WebKit runs behind the clock on a heavy page, is
+ * waited out. One cancelled midway counts as ended. Passed to Playwright's
+ * evaluate, so it can't read anything from this file.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -275,7 +278,18 @@ const TOG_TAR_ARR : TogTarTyp[] = [ // What: Toggle Target Array. Why: A switche
 async function aniFinFun ( eleCurEle : Element ) : Promise< void > {
 
 
-	const finAniArr = eleCurEle.getAnimations( { subtree : true } ).filter( ( aniCurObj ) => aniCurObj.effect?.getTiming().iterations !== Infinity ); // What: Finite Animation Array. Why: A loop never finishes, so waiting on one would hang. How: This lists the element's and its descendants' animations and transitions that end.
+	for ( let fraIndNum = 0; fraIndNum < 2; fraIndNum++ ) await new Promise( ( resCurFun ) => requestAnimationFrame( resCurFun ) ); // What: Frame Wait Loop. Why: A change applied from outside the page, such as the pointer moving onto the element, may not be styled until the next frame, so its transitions wouldn't be listed yet. How: This waits two animation frames.
+
+
+
+	const ancEleArr : Element[] = []; // What: Ancestor Element Array. Why: An ancestor's fading color reaches the element through inheritance. How: This collects every element above it.
+
+
+	for ( let ancCurEle = eleCurEle.parentElement; ancCurEle; ancCurEle = ancCurEle.parentElement ) ancEleArr.push( ancCurEle ); // What: Ancestor Walk Loop. Why: Each level up can pass a color down. How: This climbs from the parent to the root, recording each element.
+
+
+
+	const finAniArr = [ ...eleCurEle.getAnimations( { subtree : true } ), ...ancEleArr.flatMap( ( ancCurEle ) => ancCurEle.getAnimations() ) ].filter( ( aniCurObj ) => aniCurObj.effect?.getTiming().iterations !== Infinity ); // What: Finite Animation Array. Why: A loop never finishes, so waiting on one would hang. How: This lists the animations and transitions of the element, its descendants, and its ancestors' own that end.
 
 
 	await Promise.all( finAniArr.map( ( aniCurObj ) => aniCurObj.finished.catch( () => undefined ) ) ); // What: Animation Finish Wait. Why: The look is read only once every entrance and transition has ended. How: This waits on each one's finished promise, treating one cancelled midway, such as a transition a new one replaced, as ended too, since its promise rejects rather than resolves.
@@ -500,9 +514,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await curPagObj.mouse.move( 0, 0 ); // What: Pointer Away Call. Why: The resting look is read with nothing hovered. How: This moves the pointer to the corner of the bar.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Rest Settle Wait. Why: Any earlier hover has to finish fading. How: This pauses for the settle time.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await conCurObj.evaluate( aniFinFun ); // What: Rest Settle Call. Why: Any earlier hover has to finish fading before the resting look is read. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const resSnaArr = await conCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Rest Snapshot Array. Why: The resting look is what hover is compared with. How: This records the control and everything inside it.
@@ -510,9 +522,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await conCurObj.hover(); // What: Control Hover Call. Why: Hover feedback is the first thing checked. How: This moves the pointer onto the control.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Hover Settle Wait. Why: The hover look is read once it has eased in. How: This pauses for the settle time.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await conCurObj.evaluate( aniFinFun ); // What: Hover Settle Call. Why: The hover look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const hovSnaArr = await conCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Hover Snapshot Array. Why: The hovered look is compared with rest and with pressed. How: This records it.
@@ -522,9 +532,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Press Settle Wait. Why: The pressed look is read once it has eased in. How: This pauses for the settle time.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await conCurObj.evaluate( aniFinFun ); // What: Press Settle Call. Why: The pressed look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const preSnaArr = await conCurObj.evaluate( snaEleFun, CON_PRO_ARR );                                            // What: Press Snapshot Array. Why: The pressed look is compared with hovered. How: This records it.
@@ -539,9 +547,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await conCurObj.evaluate( ( conCurEle ) => { if ( conCurEle instanceof HTMLElement ) conCurEle.blur(); } ); // What: Control Blur Call. Why: The focus look is compared with the control unfocused, and a press or the hidden control's focus may have focused it. How: This blurs it, so the skip link slides back out.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Blur Settle Wait. Why: The unfocused look is read once the hover and focus have faded. How: This pauses for the settle time.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await conCurObj.evaluate( aniFinFun ); // What: Blur Settle Call. Why: The unfocused look is read once the hover and focus have faded. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const bluSnaArr = await conCurObj.evaluate( snaEleFun, FOC_PRO_ARR ); // What: Blur Snapshot Array. Why: The unfocused look is what focus is compared with. How: This records the control and everything inside it, outline included.
@@ -549,9 +555,7 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await conCurObj.evaluate( ( conCurEle ) => { if ( conCurEle instanceof HTMLElement ) conCurEle.focus( { focusVisible : true } ); } ); // What: Keyboard Focus Call. Why: The focus ring shows only for keyboard focus, and a script's focus draws it in every engine only when it asks to show the ring. How: This focuses the control with focusVisible set.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Focus Settle Wait. Why: The focused look is read once it has eased in. How: This pauses for the settle time.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await conCurObj.evaluate( aniFinFun ); // What: Focus Settle Call. Why: The focused look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const focSnaArr = await conCurObj.evaluate( snaEleFun, FOC_PRO_ARR ); // What: Focus Snapshot Array. Why: The focused look is compared with unfocused. How: This records it.
@@ -659,9 +663,7 @@ async function hovProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await curPagObj.mouse.move( 0, 0 ); // What: Pointer Away Call. Why: The resting look is read with nothing hovered. How: This moves the pointer to the corner of the bar.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Rest Settle Wait. Why: Any earlier hover has to finish fading. How: This pauses for the settle time.
-
-		await tarCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await tarCurObj.evaluate( aniFinFun ); // What: Rest Settle Call. Why: Any earlier hover has to finish fading before the resting look is read. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const resSnaArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Rest Snapshot Array. Why: The resting look is what hover is compared with. How: This records the card and everything inside it.
@@ -669,9 +671,7 @@ async function hovProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await tarCurObj.hover(); // What: Target Hover Call. Why: Hover is the one interaction a card has. How: This moves the pointer onto it.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Hover Settle Wait. Why: The hover look is read once it has eased in. How: This pauses for the settle time.
-
-		await tarCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: WebKit can run a transition behind the clock on a heavy page, such as a card tile's tilt beside the confetti circuit, leaving it partway at the settle wait. How: This waits for every finite animation on the element and inside it to end.
+		await tarCurObj.evaluate( aniFinFun ); // What: Hover Settle Call. Why: The hover look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const hovSnaArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR );                                            // What: Hover Snapshot Array. Why: The hovered look is compared with rest. How: This records it.
@@ -769,9 +769,7 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await attSetFun( togCurObj, togTarObj.attStr, togTarObj.inaStr ); // What: Off Set Call. Why: The state is read switching on from off. How: This marks it off.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Off Settle Wait. Why: Any earlier look has to finish fading. How: This pauses for the settle time.
-
-		await togCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: A staggered entrance inside the element can outlast the settle wait. How: This waits for every finite animation in it to end.
+		await togCurObj.evaluate( aniFinFun ); // What: Off Settle Call. Why: Any earlier look has to finish fading, a staggered entrance inside the element included. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const inaSnaArr = await togCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Inactive Snapshot Array. Why: The off look is what the on look is compared with. How: This records the element and everything inside it.
@@ -779,9 +777,7 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await attSetFun( togCurObj, togTarObj.attStr, togTarObj.actStr ); // What: On Set Call. Why: Switching the state on is the change checked first. How: This marks it on.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: On Settle Wait. Why: The on look is read once it has eased in. How: This pauses for the settle time.
-
-		await togCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: A staggered entrance inside the element can outlast the settle wait. How: This waits for every finite animation in it to end.
+		await togCurObj.evaluate( aniFinFun ); // What: On Settle Call. Why: The on look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const actSnaArr = await togCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Active Snapshot Array. Why: The on look is compared with off both ways. How: This records it.
@@ -789,9 +785,7 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 		await attSetFun( togCurObj, togTarObj.attStr, togTarObj.inaStr ); // What: Off Again Set Call. Why: Switching the state off has to ease too. How: This marks it off again.
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Off Again Settle Wait. Why: The off look is read once it has eased out. How: This pauses for the settle time.
-
-		await togCurObj.evaluate( aniFinFun ); // What: Animation Finish Call. Why: A staggered entrance inside the element can outlast the settle wait. How: This waits for every finite animation in it to end.
+		await togCurObj.evaluate( aniFinFun ); // What: Off Again Settle Call. Why: The off look is read once it has eased out. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const retSnaArr = await togCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Return Snapshot Array. Why: The look switched back off is compared with on. How: This records it.
@@ -831,13 +825,17 @@ async function togProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 
 // #region Module Init
 
+test.describe.configure( { mode : 'parallel' } ); // What: Parallel Mode Call. Why: Each test opens its own state in its own page, so none depends on another, and run in sequence this file alone set the pace of the whole suite. How: This lets the file's tests spread across the workers.
+
+
+
 for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
 
 
 	test( `${ staRecObj.ideStr } gives every reachable link and button hover, press, and focus feedback, every form field its focus, and every toggle its switch`, async ( { page : curPagObj } ) => { // What: Feedback Test. Why: Every interaction should visibly register. How: This opens the state, blocks clicks, probes every reachable link, button, and form field and each reachable element of the toggle kinds listed for the state, and on the Home, Gallery, and About states every hover surface, and checks it finds no problems.
 
 
-		test.setTimeout( 600000 ); // What: Test Timeout Call. Why: Probing every control's hover, press, focus, and toggles takes about two seconds per control, and the Gallery's tiles, each with a link and a "Share" button, add up across a slow engine. How: This gives the test ten minutes.
+		test.setTimeout( 600000 ); // What: Test Timeout Call. Why: Probing every control's hover, press, focus, and toggles waits out each look's transitions, and the Gallery's tiles, each with a link and a "Share" button, add up across a slow engine. How: This gives the test ten minutes.
 
 		await opeStaFun( curPagObj, staRecObj ); // What: State Open Call. Why: The controls are probed with the state settled. How: This loads and settles it.
 
@@ -861,7 +859,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 	test( `${ staRecObj.ideStr } draws its first keyboard stop's focus ring at full width`, async ( { browserName : engNamStr, page : curPagObj } ) => { // What: Focus Ring Test. Why: A keyboard user has to see where focus lands. How: This tabs to the first stop and reads its ring once it has had time to settle, while the feedback probe checks that the ring eases.
 
 
-		test.setTimeout( 120000 ); // What: Test Timeout Call. Why: Under three workers' load, a state can take past the default 30 seconds to load and settle before its first Tab. How: This gives the test two minutes.
+		test.setTimeout( 120000 ); // What: Test Timeout Call. Why: Under the workers' load, a state can take past the default 30 seconds to load and settle before its first Tab. How: This gives the test two minutes.
 
 		await opeStaFun( curPagObj, staRecObj ); // What: State Open Call. Why: The walk starts from the state settled. How: This loads and settles it.
 
@@ -873,9 +871,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 
 
 
-		await curPagObj.waitForTimeout( SET_WAI_NUM ); // What: Ring Settle Wait. Why: The ring is read once it has had time to grow in. How: This pauses for the settle time.
-
-		await curPagObj.evaluateHandle( () => document.activeElement as Element ).then( ( actHanObj ) => actHanObj.evaluate( aniFinFun ) ); // What: Ring Finish Wait. Why: WebKit's clock can lag on a heavy page, leaving the ring partway grown after the settle time. How: This waits for the focused stop's transitions to finish. // What: Type Assertion Note. Why: activeElement types as possibly null. How: The Tab press just put focus on a stop.
+		await curPagObj.evaluateHandle( () => document.activeElement as Element ).then( ( actHanObj ) => actHanObj.evaluate( aniFinFun ) ); // What: Ring Settle Wait. Why: The ring is read once it has grown in, and WebKit's clock can lag on a heavy page. How: This waits for the focused stop's transitions to finish. // What: Type Assertion Note. Why: activeElement types as possibly null. How: The Tab press just put focus on a stop.
 
 
 		if ( !staRecObj.actFun ) expect( await curPagObj.evaluate( () => document.activeElement?.textContent?.trim() ) ).toBe( 'Skip to main content' ); // What: First Stop Check. Why: The ring checked should be the skip link's, the page's first stop. How: On a state with nothing opened, where focus starts at the top of the page, this reads the focused element's text, while a state whose action moves focus, such as the open menu, starts the walk from there.
@@ -892,7 +888,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PH
 	test( `${ staRecObj.ideStr } keeps feedback without motion under reduced motion`, async ( { page : curPagObj } ) => { // What: Reduced Motion Feedback Test. Why: Visitors who ask for less motion still need to see their actions register. How: This probes every reachable link, button, and form field, each reachable element of the toggle kinds listed for the state, and on the Home, Gallery, and About states every hover surface, with reduced motion on, and checks it finds no problems.
 
 
-		test.setTimeout( 600000 ); // What: Test Timeout Call. Why: Probing every control's hover, press, focus, and toggles takes about two seconds per control, and the Gallery's tiles, each with a link and a "Share" button, add up across a slow engine. How: This gives the test ten minutes.
+		test.setTimeout( 600000 ); // What: Test Timeout Call. Why: Probing every control's hover, press, focus, and toggles waits out each look's transitions, and the Gallery's tiles, each with a link and a "Share" button, add up across a slow engine. How: This gives the test ten minutes.
 
 		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: The preference has to be set before the page loads. How: This makes the page match prefers-reduced-motion: reduce.
 

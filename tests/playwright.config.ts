@@ -74,11 +74,11 @@ const SUI_NAM_ARR = [ // What: Suite Name Array. Why: Each suite lives in its ow
 const PLA_CON_OBJ = defineConfig({ // What: Playwright Config Object. Why: Playwright reads its whole setup from this file's default export. How: This holds the shared page settings, one project per suite and engine, the reporters, and the two servers.
 
 
-	fullyParallel        : false,                                              // What: Fully Parallel. Why: Each spec file walks its states in order. How: This keeps a file's tests running in sequence, while separate files may still run in parallel.
+	fullyParallel        : false,                                              // What: Fully Parallel. Why: Each spec file walks its states in order. How: This keeps a file's tests running in sequence unless the file asks to run in parallel, while separate files may still run in parallel.
 	outputDir            : 'output/results',                                   // What: Output Directory. Why: Failure screenshots and traces need a home git ignores. How: This writes them under tests/output/results.
 	snapshotPathTemplate : '{testFileDir}/baselines/{arg}-{projectName}{ext}', // What: Snapshot Path Template. Why: The rendering suite's approved screenshots belong in the repo beside their spec, one per state and engine. How: This writes each to tests/rendering/baselines, named after its state and project.
 	testDir              : '.',                                                // What: Test Directory. Why: Each project picks its own folder below. How: This roots test discovery at tests/.
-	workers              : 3,                                                  // What: Workers. Why: The engines are independent, but each worker drives a full browser. How: This runs up to three spec files at once.
+	workers              : 6,                                                  // What: Workers. Why: The engines are independent, but each worker drives a full browser. How: This runs up to six spec files, or tests of a parallel file, at once.
 
 	projects : SUI_NAM_ARR.flatMap( ( suiNamStr ) => ENG_NAM_ARR.map( ( engNamStr ) => ({ // What: Projects. Why: Each suite runs on its own in each engine. How: This crosses every suite with every engine into a project named after both, runnable alone with --project.
 

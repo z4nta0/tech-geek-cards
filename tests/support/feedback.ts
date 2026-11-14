@@ -6,10 +6,10 @@
  *
  * @summary
  * The shared pieces of the interaction feedback probe, for a spec that
- * checks a control's hover, press, and focus: the property lists and settle
- * wait a look is read with, the helpers that snapshot an element's look and
- * turn two snapshots into problems, and the click block that keeps a press
- * from acting mid-check. A spec collects and drives its own elements.
+ * checks a control's hover, press, and focus: the property lists a look is
+ * read with, the helpers that snapshot an element's look and turn two
+ * snapshots into problems, and the click block that keeps a press from acting
+ * mid-check. A spec collects and drives its own elements.
  * Adapted from TechGeek.dev's own.
  *
  * Sections:
@@ -43,7 +43,6 @@ type SnaRecTyp = { // What: Snapshot Record Type. Why: An element's look, and wh
 
 const CON_PRO_ARR = [ 'color', 'background-color', 'border-color', 'box-shadow', 'filter', 'transform', 'scale', 'translate', 'rotate', 'opacity' ]; // What: Control Property Array. Why: Hover, press, and toggle feedback changes these, on a control and on what's inside it, such as a bar link's underline. How: Each is compared between moments, and each that changes has to be transitioned, the separate scale, translate, and rotate properties included, since this site's buttons and tiles move through them.
 const FOC_PRO_ARR = [ ...CON_PRO_ARR, 'outline-color', 'outline-offset', 'outline-width' ];                                                          // What: Focus Property Array. Why: A control's focus can change its look as well as draw its ring. How: Each is compared between unfocused and focused, and each that changes has to be transitioned.
-const SET_WAI_NUM = 400; // What: Settle Wait Number. Why: Each look is read once its transition has finished, and the longest interface transition, the scrim's fade, runs about 367ms. How: This is the pause, in milliseconds, before each look is read.
 
 // #endregion Constants
 
@@ -408,7 +407,7 @@ const valSigFun = ( snaRecArr : SnaRecTyp[] ) : string => JSON.stringify( snaRec
 
 // #region Exports
 
-export { cliBloFun, CON_PRO_ARR, FOC_PRO_ARR, movProFun, SET_WAI_NUM, snaEleFun, snaProFun, valSigFun }; // What: Named Exports. Why: The probe's shared pieces live apart from the spec that reads them. How: This exports the property lists, the settle wait, the snapshot and comparison helpers, and the click block.
+export { cliBloFun, CON_PRO_ARR, FOC_PRO_ARR, movProFun, snaEleFun, snaProFun, valSigFun }; // What: Named Exports. Why: The probe's shared pieces live apart from the spec that reads them. How: This exports the property lists, the snapshot and comparison helpers, and the click block.
 
 // #endregion Exports
 
