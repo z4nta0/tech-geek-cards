@@ -46,10 +46,10 @@ import { test          } from '@playwright/test';          // What: Test. Why: E
 
 // #region Constants
 
-const BIN_EXT_REG = /\.(ico|jpg|png|webp|woff2)$/;                                          // What: Binary Extension Regular Expression. Why: Raster images and fonts hold no text to search, and their bytes could match a pattern by chance. How: This matches the built file types the secret search skips.
-const DIS_DIR_STR = fileURLToPath( new URL( '../../dist/', import.meta.url ) );             // What: Distribution Directory String. Why: The secret search reads what visitors download. How: This resolves the build folder, dist/.
-const RED_FIL_STR = fileURLToPath( new URL( '../../dist/_redirects', import.meta.url ) );   // What: Redirects File String. Why: The 404 page is reached on the live site only through the host's fallback rule, and the build adds each card's rule ahead of it, so the built copy is what Netlify reads. How: This resolves the built dist/_redirects from this file's own address.
-const ROO_DIR_STR = fileURLToPath( new URL( '../..', import.meta.url ) );                   // What: Root Directory String. Why: npm audit reads the repo's lockfile. How: This resolves the repo root.
+const BIN_EXT_REG = /\.(ico|jpg|png|webp|woff2)$/;                                        // What: Binary Extension Regular Expression. Why: Raster images and fonts hold no text to search, and their bytes could match a pattern by chance. How: This matches the built file types the secret search skips.
+const DIS_DIR_STR = fileURLToPath( new URL( '../../dist/', import.meta.url ) );           // What: Distribution Directory String. Why: The secret search reads what visitors download. How: This resolves the build folder, dist/.
+const RED_FIL_STR = fileURLToPath( new URL( '../../dist/_redirects', import.meta.url ) ); // What: Redirects File String. Why: The 404 page is reached on the live site only through the host's fallback rule, and the build adds each card's rule ahead of it, so the built copy is what Netlify reads. How: This resolves the built dist/_redirects from this file's own address.
+const ROO_DIR_STR = fileURLToPath( new URL( '../..', import.meta.url ) );                 // What: Root Directory String. Why: npm audit reads the repo's lockfile. How: This resolves the repo root.
 
 const SEC_PAT_ARR = [ // What: Secret Pattern Array. Why: A key pasted into the source would ship to every visitor. How: Each entry matches one well-known kind of private key or provider token.
 

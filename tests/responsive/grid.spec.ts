@@ -114,7 +114,6 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 	const rowMapObj = new Map< number, DOMRect[] >(); // What: Row Map Object. Why: Children sharing a top edge form one row. How: This maps each rounded top to its children's boxes.
 
 
-
 	for ( const chiCurEle of griCurEle.children ) { // What: Child Loop. Why: Every shown child belongs to one row. How: This files each child's box under its rounded top.
 
 
@@ -134,7 +133,6 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 
 	const rowLisArr = [ ...rowMapObj.entries() ].sort( ( rowOneArr, rowTwoArr ) => rowOneArr[ 0 ] - rowTwoArr[ 0 ] ).map( ( rowCurArr ) => rowCurArr[ 1 ] ); // What: Row List Array. Why: The rows are judged top to bottom. How: This sorts them by their top and keeps their boxes.
 	const rowLenArr = rowLisArr.map( ( rowRecArr ) => rowRecArr.length );                                                                                    // What: Row Length Array. Why: The rows' lengths show whether they're even. How: This counts each row's children.
-
 
 
 	if ( !griCasObj.cenBoo && new Set( rowLenArr ).size > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has rows of ${ rowLenArr.join( ', ' ) }` ); // What: Uneven Rows Check. Why: An even grid holds the same number of cards in every row. How: This reports the row lengths when they differ.
@@ -196,12 +194,10 @@ for ( const pagGriObj of PAG_GRI_ARR ) { // What: Page Loop. Why: Each page with
 		const proLisArr : string[] = []; // What: Problem List Array. Why: Every width's problems are reported together. How: Each finding is pushed here with its width.
 
 
-
 		for ( const widCurNum of WID_LIS_ARR ) { // What: Width Loop. Why: A grid's columns change at the breakpoints. How: This opens the page at each width and collects its problems.
 
 
 			await opeStaFun( curPagObj, { heiNum : 900, ideStr : `grid-${ widCurNum }`, patStr : pagGriObj.patStr, widNum : widCurNum } ); // What: Page Open Call. Why: The rows are measured settled. How: This opens the page at the width.
-
 
 
 			for ( const griCasObj of pagGriObj.griArr ) proLisArr.push( ...( await curPagObj.evaluate( griProFun, griCasObj ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum.toLocaleString( 'en-US' ) }px` ) ); // What: Grid Problems Loop. Why: Each grid on the page is judged at this width. How: This runs the check in the page and tags each finding with the width.
@@ -228,7 +224,6 @@ for ( const occNamStr of OCC_NAM_ARR ) { // What: Occasion Loop. Why: A chosen o
 
 
 		const proLisArr : string[] = []; // What: Problem List Array. Why: Every width's problems are reported together. How: Each finding is pushed here with its width.
-
 
 
 		for ( const widCurNum of FIL_WID_ARR ) { // What: Width Loop. Why: The narrowed grid is checked at each column count. How: This opens the Gallery at each width, chooses the occasion, and collects its problems.
