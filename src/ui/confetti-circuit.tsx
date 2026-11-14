@@ -47,11 +47,11 @@ type CccProTyp = { patOpaStr : string }; // What: Confetti-Circuit-Component Pro
  *
  * @summary
  * Renders the confetti circuit pattern across its positioned parent: an SVG
- * filled with a pattern tile of traces, pads, confetti pieces, and a
- * sparkle. The traces and pads draw in the wrapper's strong blue through
- * currentColor, and each confetti piece fills with its own color role. The
- * pattern's ID comes from useId, so two patterns on one page never clash.
- * The wrapper is hidden from screen readers and lets every click through.
+ * filled with a pattern tile of traces, pads, confetti pieces, and a sparkle.
+ * The traces and pads draw in the wrapper's strong blue through currentColor,
+ * and each confetti piece takes its own color role, filled or stroked. The
+ * pattern's ID comes from useId, so two patterns on one page never clash. The
+ * wrapper is hidden from screen readers and lets every click through.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
