@@ -26,7 +26,7 @@
 # hold its recipient's name. Permissions-Policy turns off a set of powerful
 # browser features the site never uses; the clipboard and the share sheet the
 # share dialog uses stay allowed, and so does the screen wake lock, which the
-# longer cards hold so a phone's screen doesn't dim partway through.
+# Family cards hold so a phone's screen doesn't dim partway through.
 #
 # @author z4nta0 <https://github.com/z4nta0>
 
