@@ -655,7 +655,7 @@ test( 'a card tile opens its card, and the card leads back to the Gallery', asyn
 
 	await curPagObj.getByRole( 'link', { exact : true, name : 'Happy Birthday' } ).click(); // What: Tile Click. Why: A tile's title is its link. How: This clicks the Birthday card's tile.
 
-	await expect( curPagObj ).toHaveURL( '/happy-birthday' );                                                                                                                         // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
+	await expect( curPagObj ).toHaveURL( '/happy-birthday' ); // What: Card Address Assertion. Why: The tile has to open its own card. How: This waits for the card's address.
 	await expect( curPagObj.getByRole( 'navigation', { name : 'Card' } ) ).toBeVisible();                                                                                             // What: Card Bar Assertion. Why: Every card page floats its own small bar instead of the site's. How: This checks the bar is there.
 	await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveAttribute( 'content', CAR_DAT_ARR.find( ( carDatObj ) => carDatObj.sluStr === 'happy-birthday' )!.seaStr ); // What: Card Description Assertion. Why: A card opened inside the site has to swap in its own search description, which only its page's hook sets after a router move. How: This waits for the one description to read the Birthday card's. // What: Non-Null Note. Why: TypeScript can't see the catalog holds the Birthday card. How: The test opened that card's tile by its title just above.
 

@@ -70,7 +70,7 @@ const BAR_STA_ARR : StaRecTyp[] = [ // What: Bar State Array. Why: The floating 
 const COP_RES_ARR = [ // What: Copy Result Array. Why: The dialog shows a different message when the clipboard takes the link and when it refuses it. How: Each row names a result and the message that shows for it.
 
 
-	{ mesStr : 'Link copied. Paste it into a text, an email, or a message.',      resStr : 'copied' }, // What: Copied Result Row. Why: A copy that worked swaps the button's label and shows its message. How: This names it and its message.
+	{ mesStr : 'Link copied. Paste it into a text, an email, or a message.',       resStr : 'copied' }, // What: Copied Result Row. Why: A copy that worked swaps the button's label and shows its message. How: This names it and its message.
 	{ mesStr : 'Your browser blocked copying. Select the link above and copy it.', resStr : 'failed' }  // What: Failed Result Row. Why: A refused copy asks the visitor to copy the link by hand. How: This names it and its message.
 
 
@@ -79,7 +79,6 @@ const COP_RES_ARR = [ // What: Copy Result Array. Why: The dialog shows a differ
 
 
 const SHA_OPE_ARR = STA_REC_ARR.filter( ( staRecObj ) => staRecObj.ideStr === 'share-desktop' || staRecObj.ideStr === 'share-phone' ); // What: Share Open Array. Why: Each copy state starts from the Birthday card's open dialog at both widths. How: This picks those two rows from the shared state list.
-
 
 
 const COP_STA_ARR : StaRecTyp[] = SHA_OPE_ARR.flatMap( ( staRecObj ) => COP_RES_ARR.map( ( copResObj ) => ( { // What: Copy State Array. Why: Each copy result is a look a visitor reaches and stays on. How: For each open dialog state and each result, this copies the state, adds the copy to its action, and names it after both.

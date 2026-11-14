@@ -546,16 +546,14 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 		await curPagObj.mouse.move( 0, 0 ); // What: Pointer Away Call. Why: The focus look is compared with no hover on it. How: This moves the pointer to the corner of the bar.
 
 		await conCurObj.evaluate( ( conCurEle ) => { if ( conCurEle instanceof HTMLElement ) conCurEle.blur(); } ); // What: Control Blur Call. Why: The focus look is compared with the control unfocused, and a press or the hidden control's focus may have focused it. How: This blurs it, so the skip link slides back out.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Blur Settle Call. Why: The unfocused look is read once the hover and focus have faded. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
+		await conCurObj.evaluate( aniFinFun );                                                                      // What: Blur Settle Call. Why: The unfocused look is read once the hover and focus have faded. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const bluSnaArr = await conCurObj.evaluate( snaEleFun, FOC_PRO_ARR ); // What: Blur Snapshot Array. Why: The unfocused look is what focus is compared with. How: This records the control and everything inside it, outline included.
 
 
 		await conCurObj.evaluate( ( conCurEle ) => { if ( conCurEle instanceof HTMLElement ) conCurEle.focus( { focusVisible : true } ); } ); // What: Keyboard Focus Call. Why: The focus ring shows only for keyboard focus, and a script's focus draws it in every engine only when it asks to show the ring. How: This focuses the control with focusVisible set.
-
-		await conCurObj.evaluate( aniFinFun ); // What: Focus Settle Call. Why: The focused look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
+		await conCurObj.evaluate( aniFinFun );                                                                                                // What: Focus Settle Call. Why: The focused look is read once it has eased in. How: This waits two frames, then for every finite animation on the element, inside it, and above it to end.
 
 
 		const focSnaArr = await conCurObj.evaluate( snaEleFun, FOC_PRO_ARR ); // What: Focus Snapshot Array. Why: The focused look is compared with unfocused. How: This records it.

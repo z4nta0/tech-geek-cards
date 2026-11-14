@@ -61,7 +61,7 @@ const PAG_GRI_ARR : { griArr : GriCasTyp[], patStr : string }[] = [ // What: Pag
 
 	{ griArr : [ { cenBoo : false, claStr : 'steLisOrd' }, { cenBoo : false, claStr : 'feaGriDiv' } ], patStr : '/'        }, // What: Home Row. Why: Home's steps and featured cards each keep even rows. How: This checks both grids.
 	{ griArr : [ { cenBoo : false, claStr : 'facLisUno' }, { cenBoo : false, claStr : 'famLisUno' } ], patStr : '/about'   }, // What: About Row. Why: About's facts and sister sites each keep even rows. How: This checks both grids.
-	{ griArr : [ { cenBoo : true,  claStr : 'galGriDiv' }                                            ], patStr : '/gallery' }  // What: Gallery Row. Why: The Gallery's rows wrap with a centered last row. How: This checks its one grid.
+	{ griArr : [ { cenBoo : true,  claStr : 'galGriDiv' }                                           ], patStr : '/gallery' }  // What: Gallery Row. Why: The Gallery's rows wrap with a centered last row. How: This checks its one grid.
 
 
 ];
@@ -107,7 +107,6 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 	const griCurEle = document.querySelector( `[class*="${ griCasObj.claStr }"]` ); // What: Grid Current Element. Why: The rows are read from the grid's children. How: This finds the grid by the class its hashed class contains.
 
 
-
 	if ( !griCurEle ) return [ `grid "${ griCasObj.claStr }" is missing` ]; // What: Missing Grid Guard. Why: A grid that isn't there can't be measured, and a renamed class shouldn't pass quietly. How: This reports it and stops.
 
 
@@ -122,7 +121,6 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 		const chiRecObj = chiCurEle.getBoundingClientRect(); // What: Child Rect Object. Why: The child's place decides its row. How: This reads its box.
 
 
-
 		if ( chiRecObj.width === 0 ) continue; // What: Hidden Child Guard. Why: A child that isn't drawn sits in no row. How: This skips it.
 
 
@@ -135,11 +133,13 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 
 
 	const rowLisArr = [ ...rowMapObj.entries() ].sort( ( rowOneArr, rowTwoArr ) => rowOneArr[ 0 ] - rowTwoArr[ 0 ] ).map( ( rowCurArr ) => rowCurArr[ 1 ] ); // What: Row List Array. Why: The rows are judged top to bottom. How: This sorts them by their top and keeps their boxes.
-	const rowLenArr = rowLisArr.map( ( rowRecArr ) => rowRecArr.length );                                                                                     // What: Row Length Array. Why: The rows' lengths show whether they're even. How: This counts each row's children.
+	const rowLenArr = rowLisArr.map( ( rowRecArr ) => rowRecArr.length );                                                                                    // What: Row Length Array. Why: The rows' lengths show whether they're even. How: This counts each row's children.
 
 
 
 	if ( !griCasObj.cenBoo && new Set( rowLenArr ).size > 1 ) proLisArr.push( `grid "${ griCasObj.claStr }" has rows of ${ rowLenArr.join( ', ' ) }` ); // What: Uneven Rows Check. Why: An even grid holds the same number of cards in every row. How: This reports the row lengths when they differ.
+
+
 
 	if ( griCasObj.cenBoo && rowLenArr.slice( 0, -1 ).some( ( rowLenNum ) => rowLenNum !== rowLenArr[ 0 ] ) ) proLisArr.push( `grid "${ griCasObj.claStr }" has a short row before its last, ${ rowLenArr.join( ', ' ) }` ); // What: Short Row Check. Why: Only the Gallery's last row may be short. How: This reports a row before the last that differs from the first.
 
@@ -148,9 +148,9 @@ function griProFun ( griCasObj : GriCasTyp ) : string[] {
 	if ( griCasObj.cenBoo && rowLisArr.length > 0 ) { // What: Centered Last Row Check. Why: The Gallery's last row sits centered under the rows above it. How: This compares the space left and right of the last row inside the grid, and its cards' width with the first row's.
 
 
-		const firWidNum = rowLisArr[ 0 ][ 0 ].width;                                                         // What: First Width Number. Why: A leftover card keeps the others' width rather than stretching across its row. How: This is the first row's first card's width.
-		const griRecObj = griCurEle.getBoundingClientRect();                                                 // What: Grid Rect Object. Why: The last row is centered within the grid. How: This reads the grid's box.
-		const lasRowArr = rowLisArr[ rowLisArr.length - 1 ];                                                 // What: Last Row Array. Why: Only the last row may be short. How: This is its boxes.
+		const firWidNum = rowLisArr[ 0 ][ 0 ].width;                                                          // What: First Width Number. Why: A leftover card keeps the others' width rather than stretching across its row. How: This is the first row's first card's width.
+		const griRecObj = griCurEle.getBoundingClientRect();                                                  // What: Grid Rect Object. Why: The last row is centered within the grid. How: This reads the grid's box.
+		const lasRowArr = rowLisArr[ rowLisArr.length - 1 ];                                                  // What: Last Row Array. Why: Only the last row may be short. How: This is its boxes.
 		const lefGapNum = Math.min( ...lasRowArr.map( ( recCurObj ) => recCurObj.left ) ) - griRecObj.left;   // What: Left Gap Number. Why: A centered row leaves the same room on both sides. How: This is the room before its first child.
 		const rigGapNum = griRecObj.right - Math.max( ...lasRowArr.map( ( recCurObj ) => recCurObj.right ) ); // What: Right Gap Number. Why: A centered row leaves the same room on both sides. How: This is the room after its last child.
 

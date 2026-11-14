@@ -57,7 +57,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The policy set
 
 // #region Constants
 
-const INJ_FIE_STR = '<img src=x onerror=a() id=z>';                          // What: Injected Field String. Why: A name typed into the share dialog that became markup would run code on the sender's own page. How: This is an image tag with an inline handler and an id, short enough for a 30-character field, which a page keeping it as text never turns into an element.
+const INJ_FIE_STR = '<img src=x onerror=a() id=z>';                           // What: Injected Field String. Why: A name typed into the share dialog that became markup would run code on the sender's own page. How: This is an image tag with an inline handler and an id, short enough for a 30-character field, which a page keeping it as text never turns into an element.
 const INJ_MAR_STR = '<img src=x onerror=alert(1) data-test-injected-markup>'; // What: Injected Markup String. Why: A name that became markup would let a shared link run code in a visitor's browser. How: This is an image tag with an inline handler and a marker attribute, which a page showing it as text never turns into an element.
 
 // #endregion Constants
@@ -350,7 +350,7 @@ test( 'the share dialog keeps script-like names as text', async ( { browserName 
 	await expect( curPagObj.getByLabel( 'Your name (optional)' ) ).toHaveValue( INJ_FIE_STR );  // What: Sender Value Assertion. Why: The field has to hold the characters typed. How: This checks its value is the text whole.
 
 	expect( await curPagObj.getByLabel( 'Card link' ).inputValue() ).toContain( `?${ new URLSearchParams( [ [ 'name', INJ_FIE_STR ], [ 'from', INJ_FIE_STR ] ] ) }` ); // What: Encoded Link Assertion. Why: The link has to carry both names as encoded text, not markup. How: This checks the link field holds the name as ?name= and the sender as &from=, encoded the way the dialog's URL builder writes them, in its order.
-	expect( await curPagObj.locator( '#z' ).count() ).toBe( 0 );                                                                                                       // What: No Markup Assertion. Why: A name rendered as HTML would turn into an image element with the id z. How: This checks no such element exists.
+	expect( await curPagObj.locator( '#z' ).count() ).toBe( 0 ); // What: No Markup Assertion. Why: A name rendered as HTML would turn into an image element with the id z. How: This checks no such element exists.
 	expect( await polVioFun( curPagObj, broNamStr ) ).toEqual( [] );                                                                                                   // What: No Violation Assertion. Why: An inline handler the name added would be refused and reported. How: This checks nothing was refused.
 
 

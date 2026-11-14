@@ -135,6 +135,7 @@ test( 'every unknown path falls back to the app, which shows the 404 page', () =
 
 	expect( rulLisArr.at( -1 )?.split( /\s+/ ) ).toEqual( [ '/*', '/index.html', '200' ] ); // What: Fallback Rule Assertion. Why: The catch-all has to come last, so the rules above it still match first, and has to rewrite with a 200 rather than redirect, so the address stays and the app's router shows the 404 page. How: This checks the last rule's three fields.
 
+
 	for ( const carDatObj of CAR_DAT_ARR ) expect( rulLisArr.slice( 0, -1 ).map( ( rulCurStr ) => rulCurStr.split( /\s+/ ).join( ' ' ) ), carDatObj.sluStr ).toContain( `/${ carDatObj.sluStr } /${ carDatObj.sluStr }.html 200` ); // What: Card Rules Loop. Why: Each card's address has to serve its own page, with its link preview, before the catch-all hands it to the app. How: This checks every catalog card's rewrite is among the rules above the catch-all.
 
 

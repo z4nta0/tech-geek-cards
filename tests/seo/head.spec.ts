@@ -574,12 +574,12 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                      // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
 
 
-		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] ); // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
-		expect( [ socTagObj[ 'og:url' ], socTagObj[ 'og:image' ], socTagObj[ 'twitter:image' ] ] ).toEqual( [ expUrlStr, expImaStr, expImaStr ] );                                                                                               // What: Address Assertion. Why: Scrapers need absolute addresses for the page and its image. How: This checks each against the page's own.
+		expect( SOC_KEY_ARR.filter( ( socKeyStr ) => !socTagObj[ socKeyStr ] ) ).toEqual( [] );                                                    // What: Complete Tags Assertion. Why: An app shows a bare link when a tag it needs is missing. How: This lists any required tag the page lacks.
+		expect( [ socTagObj[ 'og:url' ], socTagObj[ 'og:image' ], socTagObj[ 'twitter:image' ] ] ).toEqual( [ expUrlStr, expImaStr, expImaStr ] ); // What: Address Assertion. Why: Scrapers need absolute addresses for the page and its image. How: This checks each against the page's own.
 		expect( [ socTagObj[ 'og:title' ], socTagObj[ 'twitter:title' ], socTagObj[ 'description' ], socTagObj[ 'og:description' ], socTagObj[ 'twitter:description' ] ] ).toEqual( [ expTitStr, expTitStr, expDesStr, expDesStr, expDesStr ] ); // What: Text Assertion. Why: The preview names and describes the page as the page itself does. How: This checks the titles and descriptions.
-		expect( expDesStr.length ).toBeGreaterThanOrEqual( 120 ); // What: Description Minimum Assertion. Why: Link preview checkers flag a summary under 120 characters, and the unlisted cards' own descriptions are checked only here. How: This checks the page's description runs at least 120 characters.
-		expect( expDesStr.length ).toBeLessThanOrEqual( 125 ); // What: Description Maximum Assertion. Why: Mobile cards cut a summary off around 125 characters. How: This checks the page's description stays within that.
-		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] );      // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
+		expect( expDesStr.length ).toBeGreaterThanOrEqual( 120 );                                                                                  // What: Description Minimum Assertion. Why: Link preview checkers flag a summary under 120 characters, and the unlisted cards' own descriptions are checked only here. How: This checks the page's description runs at least 120 characters.
+		expect( expDesStr.length ).toBeLessThanOrEqual( 125 );                                                                                     // What: Description Maximum Assertion. Why: Mobile cards cut a summary off around 125 characters. How: This checks the page's description stays within that.
+		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
 
 
 	} );
@@ -634,7 +634,6 @@ test( 'every card in the catalog has a head row that matches whether it is liste
 		const heaRowObj = PAG_HEA_ARR.find( ( heaCurObj ) => heaCurObj.patStr === `/${ carDatObj.sluStr }` ); // What: Head Row Object. Why: Each card should have its own row. How: This finds the row at the card's address.
 
 
-
 		if ( !heaRowObj ) return [ `card "${ carDatObj.sluStr }" has no head row` ]; // What: Missing Row Guard. Why: A card with no row is checked by neither the head test nor the sitemap test. How: This reports it and moves on.
 
 
@@ -642,7 +641,7 @@ test( 'every card in the catalog has a head row that matches whether it is liste
 		return [ // What: Row Problems Return. Why: A row can be wrong in its title or its canonical address. How: This lists each mismatch found.
 
 
-			...( heaRowObj.titStr === `${ carDatObj.titStr } Card | TechGeek.cards` ? [] : [ `card "${ carDatObj.sluStr }" has the title "${ heaRowObj.titStr }"` ] ),                                                       // What: Title Problem Spread. Why: The row's title should be the card's own. How: This reports a title that isn't.
+			...( heaRowObj.titStr === `${ carDatObj.titStr } Card | TechGeek.cards` ? [] : [ `card "${ carDatObj.sluStr }" has the title "${ heaRowObj.titStr }"` ] ),                                            // What: Title Problem Spread. Why: The row's title should be the card's own. How: This reports a title that isn't.
 			...( heaRowObj.canStr === ( carDatObj.lisBoo ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : null ) ? [] : [ `card "${ carDatObj.sluStr }" has the canonical address ${ String( heaRowObj.canStr ) }` ] ) // What: Canonical Problem Spread. Why: A listed card is indexed at its own address, and an unlisted one carries noindex with no canonical link. How: This reports a row whose canonical address doesn't follow the card's listing.
 
 
