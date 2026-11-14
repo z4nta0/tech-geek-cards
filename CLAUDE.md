@@ -355,7 +355,7 @@ usual 5173 (decided 2026-10-14), so Claude never starts one to look at the
 site and uses theirs instead. Playwright suites live in `tests/`, one project
 per suite and engine in `tests/playwright.config.ts`, which starts its own dev
 server on port 5195 and a `vite preview` of a fresh build on 5205 (never the
-user's 5173, nor the siblings' 5190 through 5204) and stops both afterwards;
+user's 5173, nor a port a sibling project uses) and stops both afterwards;
 the link preview script (`npm run og-images`) plays the cards on its own 5207.
 Every suite runs in Chromium, Firefox, and WebKit, Chromium as full headless
 Chrome (`channel : 'chromium'`). The states the

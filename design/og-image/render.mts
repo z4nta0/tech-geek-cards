@@ -72,7 +72,7 @@ if ( statSync( OUT_PAT_STR ).size >= MAX_BYT_NUM ) throw new Error( `og-image.pn
 
 
 
-const vitSerObj = await createServer( { server : { port : 5207, strictPort : true } } ); // What: Vite Server Object. Why: The cards are captured as the site plays them, on a port of the script's own. How: This starts the dev server on 5196, failing rather than taking another.
+const vitSerObj = await createServer( { server : { port : 5207, strictPort : true } } ); // What: Vite Server Object. Why: The cards are captured as the site plays them, on a port of the script's own. How: This starts the dev server on 5207, failing rather than taking another.
 
 
 await vitSerObj.listen(); // What: Server Listen Call. Why: The cards load from the server. How: This starts it.
