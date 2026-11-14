@@ -6,7 +6,7 @@
 import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Object. Why: The card's sky, fireworks, flag, and lettering are styled in its own module. How: This maps each class name in fourth-of-july-card.module.css to its scoped name.
 
 
-import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as a star's size. How: This returns that power.
+import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as the bounds of a star's size. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs up to or between steps. How: This returns a step's length in milliseconds.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every fixed duration is a step on the duration scale, each random one runs between two, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
