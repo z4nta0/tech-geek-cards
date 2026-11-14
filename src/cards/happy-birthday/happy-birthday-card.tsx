@@ -130,7 +130,7 @@ const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot th
  *
 */
 
-const STA_OPA_ARR = [ // What: Star Opacity Array. Why: The stars twinkle at different brightnesses. How: Each star takes the level at its index's remainder by five.
+const STA_OPA_ARR = [ // What: Star Opacity Array. Why: The stars shine at different brightnesses. How: Each star takes the level at its index's remainder by five.
 
 
 	'var( --cdn-pow-007-rec )', // Core-Design-Number to the Power of 7 Reciprocal ~= 0.140
