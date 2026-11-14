@@ -4,8 +4,8 @@
 // #region Imports
 
 import birPreUrl from '../assets/happy-birthday-card-preview-image.webp';     // What: Birthday Preview URL. Why: The Happy Birthday card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
-import chrPreUrl from '../assets/christmas-card-preview-image.webp';          // What: Christmas Preview URL. Why: The Christmas cards' tiles show a still of them. How: Vite fingerprints the file and hands back its address.
-import fatPreUrl from '../assets/fathers-day-card-preview-image.webp';        // What: Father's Preview URL. Why: The Father's Day cards' tiles show a still of them. How: Vite fingerprints the file and hands back its address.
+import chrPreUrl from '../assets/christmas-card-preview-image.webp';          // What: Christmas Preview URL. Why: The Christmas card's tile shows a still of it, a file its unlisted prank shares. How: Vite fingerprints the file and hands back its address.
+import fatPreUrl from '../assets/fathers-day-card-preview-image.webp';        // What: Father's Preview URL. Why: The Father's Day card's tile shows a still of it, a file its unlisted prank shares. How: Vite fingerprints the file and hands back its address.
 import fouPreUrl from '../assets/fourth-of-july-card-preview-image.webp';     // What: Fourth Preview URL. Why: The Fourth of July card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import halPreUrl from '../assets/happy-halloween-card-preview-image.webp';    // What: Halloween Preview URL. Why: The Halloween card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import motPreUrl from '../assets/mothers-day-card-preview-image.webp';        // What: Mother's Preview URL. Why: The Mother's Day card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
