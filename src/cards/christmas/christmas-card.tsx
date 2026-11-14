@@ -281,6 +281,8 @@ function ChrCarCom ( { isaPraBoo = false } : CacProTyp ) : JSX.Element {
 	const namParStr = seaParObj.get( 'name' );                                  // What: Name Parameter String. Why: A shared link can carry the recipient's name. How: This reads ?name=, or null without one.
 	const sigNamStr = froParStr || ( isaPraBoo ? 'Mr. Awesome' : 'Tech Geek' ); // What: Signature Name String. Why: The card is signed by its sender. How: This takes the link's sender, or the version's own default.
 
+
+
 	const SnoTitTag = isaPraBoo ? 'h2' : 'h1'; // What: Snowy Title Tag. Why: The page's first heading should be its h1, and the prank opens on the hacked scene, whose heading comes first. How: This makes the greeting an h2 in the prank, under the hacked h1, and the h1 when the card opens on the snowy scene.
 
 
