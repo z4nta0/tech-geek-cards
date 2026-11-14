@@ -296,13 +296,14 @@ function GalPagCom () : JSX.Element {
 							>{ /* What: Gallery Grid Div Element. Why: The cards line up in columns, with a short last row centered. How: This wraps the tiles in centered rows, three across, two at 1,024px and below, and one at 640px and below. */ }
 
 
-								{ shoCarArr.map( ( carRecObj ) => ( // What: Card Map Call. Why: Every matching card gets a tile. How: This renders one per card.
+								{ shoCarArr.map( ( carRecObj, carIndNum ) => ( // What: Card Map Call. Why: Every matching card gets a tile. How: This renders one per card, with its place in the list.
 
 
 									<CarTilCom
 										key={ carRecObj.sluStr }
 
 										carRecObj={ carRecObj }
+										eagLoaBoo={ carIndNum < 9 } // What: Eager Loading Choice. Why: The grid's first three rows of three can be in view as the page opens, as on a monitor turned upright, while later tiles start further down. How: This loads the first nine tiles' previews at once and the rest lazily.
 
 										onShaCarFun={ setShaCarObj }
 									/> // What: Card Tile Component. Why: Each card shows as a tile. How: This renders the card's tile, its "Share" opening the dialog for it.

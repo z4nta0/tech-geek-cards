@@ -126,6 +126,19 @@ field to the share dialog).
   catalog row's `socStr` gives; both come from `npm run og-images`. Every
   other page shares Home's preview. The tile previews render at 1200x675,
   about twice their largest display size.
+- **Tile previews in view load at once** (decided by the user 2026-11-14, in
+  the audit): anything in view as a page opens is never lazy. Measured in all
+  three engines, the Gallery's first three rows of three can be in view (a
+  portrait 1080 by 1920 monitor shows its third row), and Home's featured row,
+  about 1,450px down, shows on that monitor too, so the Gallery's first nine
+  tiles and all of Home's load eagerly and later tiles stay lazy.
+  `tests/responsive/images.spec.ts` checks Home and the Gallery at five screen
+  sizes for any lazy image in view; raise the Gallery's cutoff in
+  `pages/gallery/gallery.tsx` if a layout change puts a later row in view.
+  **Rerun it whenever a card is added** (decided by the user 2026-11-14,
+  with more cards coming): with seven cards the check can't yet see a tenth
+  tile, so each new card is the first chance to find another row in view,
+  and the cutoff is raised to match before the card ships.
 - **Link preview images** (decided by the user 2026-11-14, in the audit):
   every preview was rerendered and renamed with a `-2`, since apps cache
   previews. A card's main line is shrunk in the capture to fit the center
@@ -462,8 +475,9 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   corners differently each time, while screen captures, Firefox, and WebKit
   stay steady, and the Gallery behind it has full-page states of its own.
 - `npm run test:responsive`: 14 widths from 320 to 1,920px, the text
-  measure, and the card grids' rows (even on Home and About, the Gallery's
-  last row centered).
+  measure, the card grids' rows (even on Home and About, the Gallery's
+  last row centered), and no lazy image in view on Home or the Gallery at
+  five screen sizes.
 - `npm run test:security` (added 2026-11-10, in the audit, from
   TechGeek.dev's): in Chromium only, since they read files, `public/_headers`'
   policy (`default-src 'self'`, every directive only `'self'` or `'none'`, no

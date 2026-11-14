@@ -515,6 +515,7 @@ function HomPagCom () : JSX.Element {
 									key={ carRecObj.sluStr }
 
 									carRecObj={ carRecObj }
+									eagLoaBoo={ true } // What: Eager Loading Choice. Why: The featured row starts about 1,450px down, which is in view as the page opens on a tall screen, such as a portrait monitor. How: This loads every featured tile's preview at once.
 
 									onShaCarFun={ setShaCarObj }
 								/> // What: Card Tile Component. Why: Each featured card shows as a tile. How: This renders the card's tile, its "Share" opening the dialog for it.

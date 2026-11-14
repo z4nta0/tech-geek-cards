@@ -39,7 +39,7 @@ import type { JSX       } from 'react';      // What: JSX. Why: The component de
 
 // #region Components
 
-type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card and hands "Share" presses back to its page. How: This types CarTilCom's props.
+type CtcProTyp = { carRecObj : CarRecTyp, eagLoaBoo : boolean, onShaCarFun : ( carRecObj : CarRecTyp ) => void }; // What: Card-Tile-Component Props Type. Why: A tile shows one card, loads its preview when its page says, and hands "Share" presses back to its page. How: This types CarTilCom's props.
 
 // #region CarTilCom
 
@@ -59,6 +59,9 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param props.carRecObj   - Card Record Object: {@link CarRecTyp}
+ * @param props.eagLoaBoo   - Eager Loading Boolean: True when the tile can be
+ *                            in view as its page opens, so its preview loads
+ *                            at once rather than waiting to near the screen.
  * @param props.onShaCarFun - On Share Card Function: Called with the card
  *                            when its "Share" button is pressed, so the page
  *                            can open its share dialog.
@@ -67,12 +70,12 @@ type CtcProTyp = { carRecObj : CarRecTyp, onShaCarFun : ( carRecObj : CarRecTyp 
  *
  * @example
  * ```tsx
- * CarTilCom({ carRecObj, onShaCarFun }) // => <CarTilCom />
+ * CarTilCom({ carRecObj, eagLoaBoo, onShaCarFun }) // => <CarTilCom />
  * ```
  *
 */
 
-function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
+function CarTilCom ( { carRecObj, eagLoaBoo, onShaCarFun } : CtcProTyp ) : JSX.Element {
 
 
 	return (
@@ -95,12 +98,12 @@ function CarTilCom ( { carRecObj, onShaCarFun } : CtcProTyp ) : JSX.Element {
 						className={ cssModObj.staPreIma }
 
 						height='675' // What: Intrinsic Height. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real height in pixels.
-						loading='lazy'
+						loading={ eagLoaBoo ? 'eager' : 'lazy' } // What: Loading Choice. Why: A preview in view as the page opens shouldn't wait, while one further down can. How: This loads the preview at once when the page marks the tile as possibly in view, and lazily otherwise.
 						src={ carRecObj.imaStr }
 						width='1200' // What: Intrinsic Width. Why: The page shouldn't shift while the preview loads. How: This is the preview file's real width in pixels.
 
 						alt={ carRecObj.altStr }
-					/>{ /* What: Stamp Preview Image Element. Why: A still of the card shows what it looks like. How: This shows the card's preview, loading it once it nears the screen. */ }
+					/>{ /* What: Stamp Preview Image Element. Why: A still of the card shows what it looks like. How: This shows the card's preview, at once or once it nears the screen, as its page decides. */ }
 
 
 				</div>
