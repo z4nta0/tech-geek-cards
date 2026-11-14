@@ -410,12 +410,13 @@ function FojCarCom () : JSX.Element {
 	 * grows from the Power of 1 Reciprocal scale on the bounce curve, the flag
 	 * slides in from a Base Plus 4 step to the left, and the wish rises from a
 	 * Base Plus 3 step below, each over the Base Plus 7 duration step and
-	 * every other one decelerating. Then every star twinkles between its own
-	 * brightness and a random one from the Power of 8 Reciprocal to fully
-	 * opaque, forever, after a random delay up to the Base Plus 9 duration
-	 * step, each swing taking from the Base Plus 6 to the Plus 10 step on the
-	 * in-out curve, and the fireworks start. Under reduced motion the timeline
-	 * jumps to its end, before the twinkle and fireworks begin.
+	 * every other one decelerating. The fireworks start with it, and every
+	 * star twinkles between its own brightness and a random one from the
+	 * Power of 8 Reciprocal to fully opaque, forever, each after its own
+	 * random delay up to the Base Plus 9 duration step, each swing taking from
+	 * the Base Plus 6 to the Plus 10 step on the in-out curve. Under reduced
+	 * motion the timeline jumps to its end, and neither the twinkle nor the
+	 * fireworks start.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
