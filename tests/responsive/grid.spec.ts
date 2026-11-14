@@ -81,7 +81,7 @@ const PAG_GRI_ARR : { griArr : GriCasTyp[], patStr : string }[] = [ // What: Pag
  * Runs in the page and lists what's wrong with one grid's rows. It groups the
  * grid's shown children by the top of their boxes, then reports a missing
  * grid, rows of different lengths, or, for a centered grid, a row before the
- * last that's shorter than the first, a last row sitting more than a pixel
+ * last that differs from the first, a last row sitting more than a pixel
  * off center, or a last-row card more than a pixel off the first row's
  * width.
  *

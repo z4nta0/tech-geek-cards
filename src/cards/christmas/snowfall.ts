@@ -188,7 +188,7 @@ const staSnoFun = ( conDivEle : HTMLElement, flaClaStr : string, snoSetObj : Sno
 	const flaRecArr : FlaRecTyp[] = Array.from( Array( snoSetObj.couNum ).keys(), () => { // What: Flake Record Array. Why: Every flake keeps its own values between frames. How: This creates one flake per count, already scattered across the container so the snow doesn't start as one row at the top.
 
 
-		const flaRecObj : FlaRecTyp = { // What: Flake Record Object. Why: A new flake needs an element and starting values. How: This creates the element, picks its values, then scatters it from top to bottom.
+		const flaRecObj : FlaRecTyp = { // What: Flake Record Object. Why: A new flake needs an element and starting values. How: This creates the element with placeholder values, which the reset and scatter below replace.
 
 
 			divEle    : document.createElement( 'div' ), // What: Div Element. Why: The flake is drawn as a div. How: This creates it.

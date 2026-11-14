@@ -380,7 +380,7 @@
 	background-color : var( --fam-bac-col );                      /* Family Background Color, set by the card's theme class */
 	border-radius    : 999px;
 	color            : inherit;                                   /* What: Inherited Color. Why: The base paragraph rule sets the secondary text color. How: This inherits the card's. */
-	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by contrast checkers as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */
+	display          : none;                                      /* What: Absent Hint. Why: Hidden but still in the page, the faded hint was measured by WAVE as invisible text, and it took up room in the reduced-motion strip. How: The timeline adds it to the layout just before it fades in. */
 	font-family      : var( --fon-fam-sec );                      /* Font Family Secondary = 'DM Mono', monospace */
 	font-size        : var( --fon-siz-p01 );                      /* Font Size Base Plus 1 ~= 14.572px */
 	margin           : 0;

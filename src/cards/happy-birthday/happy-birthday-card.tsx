@@ -440,7 +440,7 @@ function BirCarCom () : JSX.Element {
 					ref={ titHeaRef }
 
 					className={ cssModObj.birTitHea }
-				>{ /* What: Birthday Title Heading Element. Why: The greeting leads the card. How: This wishes a Happy Birthday over two or three lines, adding the recipient's name on its own line when the link carries one. */ }
+				>{ /* What: Birthday Title Heading Element. Why: The greeting leads the card. How: This sets "Happy" and "Birthday" on lines of their own, adding the recipient's name on a line of its own when the link carries one. */ }
 
 
 					<span
