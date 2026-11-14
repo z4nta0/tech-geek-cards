@@ -391,8 +391,9 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   round trip from its tile and back through More cards), interaction
   feedback, the phone menu, the contact form (its topic arriving as Not
   specified when none is chosen), the "How It Works" section link, the Family
-  photo's closing fade, the Ko-fi link, and the extended name fonts, with the
-  checks below.
+  photo's and the share dialog's closing fades (each way of closing, with
+  motion and under reduced motion), the Ko-fi link, and the extended name
+  fonts, with the checks below.
   - **Feedback probe** (rebuilt 2026-11-10, in the audit, from TechGeek.dev's,
     helpers in `tests/support/feedback.ts`): on every shared state, the
     Contact results, the Gallery's empty search, the open photo, and the
