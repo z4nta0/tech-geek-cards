@@ -299,8 +299,9 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 * under the heart, which opens to cover the screen, holds, and closes.
 	 * Then the closing line types and erases itself, the greeting types, the
 	 * cursor fades, and the greeting grows by its final step as the photo
-	 * grid wipes in, each photo uncovering left to right in random order.
-	 * Once the grid is in, the wake lock is released. Under reduced motion
+	 * grid and the tap hint fade in behind it; once it has grown, the photos
+	 * uncover left to right in random order. Once the grid is in, the wake
+	 * lock is released. Under reduced motion
 	 * the timeline jumps to its end.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>

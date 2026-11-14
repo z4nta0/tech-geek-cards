@@ -69,7 +69,7 @@ type ArtRowTyp = { claModStr : string, delSecNum : number }; // What: Art Row Ty
  *
  * @summary
  * The delay, in seconds, before each of the four bats first flies, so they
- * cross the sky one after another rather than as a flock. Every row is a
+ * take off one after another rather than as a flock. Every row is a
  * step on the duration scale.
  *
  * @author z4nta0 <https://github.com/z4nta0>
@@ -895,15 +895,16 @@ function HalCarCom () : JSX.Element {
 	 * happy-halloween-card.tsx = Halloween Timeline
 	 *
 	 * @summary
-	 * The scene's own motion, started together when the card opens. The
-	 * greeting's letters drop in one after another from above, tilted either
-	 * way, and spring upright into place, and once the last has landed the
-	 * greeting's glow and shadow fade in under them; from about a second and
-	 * a half in, the letters shimmer to candle yellow and back in a wave that
-	 * never stops. The moon floats up and down, each star twinkles at its own
-	 * pace, and the sky flashes with a double strike of lightning after a few
-	 * seconds and then every few seconds more, at random. Under reduced motion
-	 * none of it starts: the greeting stands whole, and the sky stays dark.
+	 * The scene's own motion, all built when the card opens, each piece on its
+	 * own timing. The greeting's letters drop in one after another from above,
+	 * tilted either way, and spring upright into place, and once the last has
+	 * landed the greeting's glow and shadow fade in under them; from about a
+	 * second and a half in, the letters shimmer to candle yellow and back in a
+	 * wave that never stops. The moon floats up and down, each star twinkles
+	 * at its own pace, and the sky flashes with a double strike of lightning
+	 * after a few seconds and then every few seconds more, at random. Under
+	 * reduced motion none of it starts: the greeting stands whole, and the sky
+	 * stays dark.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -1325,7 +1326,7 @@ function HalCarCom () : JSX.Element {
 
 
 
-			{ BAT_DEL_ARR.map( ( batDelNum, batIndNum ) => ( // What: Bat Map Call. Why: Bats cross the sky one after another. How: This renders one per delay, keyed by its index.
+			{ BAT_DEL_ARR.map( ( batDelNum, batIndNum ) => ( // What: Bat Map Call. Why: Bats take off one after another. How: This renders one per delay, keyed by its index.
 
 
 				<BatFlyCom

@@ -265,7 +265,7 @@ function ThaCarCom () : JSX.Element {
 		const redMotBoo = redMotFun();                                          // What: Reduced Motion Boolean. Why: Under reduced motion the card opens finished and nothing loops. How: This reads the preference once, as the card opens.
 		const timLinObj = gsap.timeline( { defaults : { ease : decEasStr } } ); // What: Timeline Object. Why: The whole card plays as one sequence. How: This creates the timeline, its tweens decelerating unless told otherwise.
 		const titRisNum = rhyPixFun( 'p03' );                                   // What: Title Rise Number. Why: The heading rises into place. How: This is the Base Plus 3 rhythm step, in pixels. // Vertical Rhythm Base Plus 3 ~= 33.876px
-		const titStaNum = durSecFun( 'p08' );                                   // What: Title Start Number. Why: The heading arrives once the scene is in place. How: This is the Base Plus 8 step, in seconds from the start. // Duration Animation Base Plus 8 ~= 1,497.0ms
+		const titStaNum = durSecFun( 'p08' );                                   // What: Title Start Number. Why: The heading arrives as the turkey finishes rising, while its last feathers are still fanning. How: This is the Base Plus 8 step, in seconds from the start. // Duration Animation Base Plus 8 ~= 1,497.0ms
 		const turDurNum = durSecFun( 'p05' );                                   // What: Turkey Duration Number. Why: The turkey rises a little quicker than the other entrances. How: This is the Base Plus 5 step, in seconds. // Duration Animation Base Plus 5 ~= 643.9ms
 		const turRisNum = rhyPixFun( 'p04' );                                   // What: Turkey Rise Number. Why: The turkey rises into place. How: This is the Base Plus 4 rhythm step, in pixels. // Vertical Rhythm Base Plus 4 ~= 44.876px
 		const turStaNum = durSecFun( 'p06' );                                   // What: Turkey Start Number. Why: The turkey joins once the cornucopia has arrived. How: This is the Base Plus 6 step, in seconds from the start. // Duration Animation Base Plus 6 ~= 853.0ms
@@ -282,13 +282,13 @@ function ThaCarCom () : JSX.Element {
 
 		timLinObj.from( feaGroRef.current!.querySelectorAll( 'ellipse' ), { duration : feaDurNum, ease : oveEasStr, scaleY : 0, stagger : feaGapNum, transformOrigin : '50% 100%' }, turStaNum ); // What: Feather Fan. Why: The turkey fans out its tail. How: This grows each feather up from its base, one after another, overshooting a little. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Minus 2 ~= 89.9ms, Duration Animation Base Plus 6 ~= 853.0ms // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 
-		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : titRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, titStaNum ); // What: Heading Entrance. Why: The greeting arrives once the scene is set. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
+		timLinObj.fromTo( titHeaRef.current, { autoAlpha : 0, y : titRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, titStaNum ); // What: Heading Entrance. Why: The greeting arrives as the turkey finishes rising, while its last feathers are still fanning. How: This fades it in as it rises. // Vertical Rhythm Base Plus 3 ~= 33.876px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 8 ~= 1,497.0ms
 		timLinObj.fromTo( mesDivRef.current, { autoAlpha : 0, y : mesRisNum }, { autoAlpha : 1, duration : entDurNum, y : 0 }, mesStaNum ); // What: Message Entrance. Why: The message closes the card. How: This fades it in as it rises. // Vertical Rhythm Base Plus 1 ~= 19.304px, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 		if ( redMotBoo ) timLinObj.progress( 1 ); // What: Reduced Motion Jump. Why: A visitor who asked for less motion should see the finished card at once. How: This jumps the timeline to its end.
 
-		else timLinObj.call( () => { wobTweObj.play(); }, [], mesStaNum ); // What: Wobble Start Call. Why: The turkey starts rocking once the scene is in place, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		else timLinObj.call( () => { wobTweObj.play(); }, [], mesStaNum ); // What: Wobble Start Call. Why: The turkey starts rocking once it and its tail are in place, as the message starts to arrive, but never under reduced motion. How: This plays the paused wobble at the Base Plus 9 step. // Duration Animation Base Plus 9 ~= 1,983.0ms
 
 
 
