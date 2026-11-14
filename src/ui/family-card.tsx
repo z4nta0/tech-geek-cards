@@ -30,21 +30,20 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * family-card.tsx = Family Card
  *
  * @summary
- * The engine behind the Family cards, such as Mother's Day, which differ only
- * in their words, photos, colors, and font. Each card hands it a record of ten
- * scenes, twelve photos, the order the photo grid shows them in, the closing
- * lines, and how far the greeting grows, plus a class from its own module that
- * sets its colors and font. In each scene a line types itself out with its key
- * words underlined, shrinks away, and a heart opens over that scene's photo
- * and closes again. Then the closing line types and erases itself, the
- * greeting types and grows, and the photo grid wipes in, each photo opening
- * full size when tapped. The heart is a CSS mask scaled over the photo, so it
- * works the same on a phone held upright or sideways. Every duration is a step
- * on the duration scale or a letter count times one, and the curves are the
- * stylesheet's easing tokens.
- * Under reduced motion the card opens straight on the finished greeting and
- * photo grid. Built from TechGeek.support's three hand-written copies of one
- * card.
+ * The engine behind the Family cards, such as Mother's Day, which differ in
+ * their content and theme. Each card hands it a record of ten scenes, twelve
+ * photos, the order the photo grid shows them in, the closing lines, and how
+ * far the greeting grows, plus a class from its own module that sets its
+ * colors and font. In each scene a line types itself out with its key words
+ * underlined, shrinks away, and a heart opens over that scene's photo and
+ * closes again. Then the closing line types and erases itself, the greeting
+ * types and grows, and the photo grid wipes in, each photo opening full size
+ * when tapped. The heart is a CSS mask scaled over the photo, so it works the
+ * same on a phone held upright or sideways. Every duration is a step on the
+ * duration scale or a letter count times one, and the curves are the
+ * stylesheet's easing tokens. Under reduced motion the card opens straight on
+ * the finished greeting and photo grid. Built from TechGeek.support's three
+ * hand-written copies of one card.
  *
  * Sections:
  *  - Types
