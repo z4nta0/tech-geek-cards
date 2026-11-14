@@ -311,7 +311,7 @@ for ( const [ froIndNum, froLinObj ] of PAG_LIN_ARR.entries() ) { // What: Start
 	test( `the footer's "${ nexLinObj.labStr }" link from the bottom of ${ froLinObj.labStr } opens at the top`, async ( { page : curPagObj } ) => { // What: Footer Link Test. Why: A link clicked at the end of a page should open the next page at its top. How: This scrolls to the bottom, clicks the footer link, and checks the offset.
 
 
-		await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The footer shows every page link side by side at desktop width. How: This sizes the page before it loads.
+		await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: At desktop width the footer sets its brand, page links, and copyright in three columns, rather than stacking them as it does at 768px and below. How: This sizes the page before it loads.
 
 		await curPagObj.goto( froLinObj.patStr ); // What: Start Page Navigation. Why: The check starts on its page. How: This loads it.
 
@@ -383,7 +383,7 @@ test( 'a phone menu link opens its page at the top', async ( { page : curPagObj 
 test( 'back and forward return to the exact position, from a page scrolled further than the page between can scroll', async ( { page : curPagObj } ) => { // What: History Position Test. Why: The scroll hook restores positions itself, and Firefox would otherwise cut one short while a shorter page is still drawn. How: This scrolls Home to the bottom, follows the footer's "Contact" link to a page that can't scroll that far, and checks back, forward, and back again each return a page to the position it was left at.
 
 
-	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The footer shows every page link side by side at desktop width. How: This sizes the page before it loads.
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: At desktop width the footer sets its brand, page links, and copyright in three columns, rather than stacking them as it does at 768px and below. How: This sizes the page before it loads.
 
 	await curPagObj.goto( '/' ); // What: Home Page Navigation. Why: Home is long enough to scroll well down. How: This loads it.
 
@@ -745,7 +745,7 @@ test.describe( 'with smooth scrolling on', () => { // What: Smooth Scroll Group.
 	test( 'a footer link opens the next page at its top before the new page is drawn', async ( { page : curPagObj } ) => { // What: Instant Top Test. Why: A smooth glide or a late jump would show the old position on the new page first. How: This scrolls Home to the bottom, records the offset the moment the Gallery's heading appears and again in the frame after, follows the footer's "Gallery" link, and checks both readings are 0.
 
 
-		await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The footer shows every page link side by side at desktop width. How: This sizes the page before it loads.
+		await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: At desktop width the footer sets its brand, page links, and copyright in three columns, rather than stacking them as it does at 768px and below. How: This sizes the page before it loads.
 
 		await curPagObj.goto( '/' ); // What: Home Page Navigation. Why: Home is long enough to scroll well down. How: This loads it.
 
