@@ -7,7 +7,7 @@ import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Ob
 
 
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as a star's size. How: This returns that power.
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every duration and delay in the card is a step on the duration scale. How: This returns a step's length in milliseconds.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs between two steps. How: This returns a step's length in milliseconds.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
@@ -29,17 +29,17 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * fourth-of-july-card.tsx = Fourth Of July Card
  *
  * @summary
- * The Happy 4th of July card: a night sky fading from navy to a dark red
- * glow, scattered with twinkling stars and fireworks bursting at random, over
- * an American flag that slides in, the "Happy 4th of July!" headline springing
+ * The Happy 4th of July card: a night sky fading from navy to a dark red glow,
+ * scattered with twinkling stars and fireworks bursting at random, over an
+ * American flag that slides in, the "Happy 4th of July!" headline springing
  * down into place, and a short wish that rises in below it, between a row of
- * gold stars and a row of red sparkles. Every duration, distance, size, and
- * scale is a step on the design scale, and the curves are the stylesheet's
- * easing tokens. The fireworks are a small pool of elements the card
- * renders once and launches in turn, each burst its own GSAP timeline, and
- * they stop when the card replays or closes. Under reduced motion the card
- * opens finished, with still stars and no fireworks. Converted from
- * TechGeek.support's original.
+ * gold stars and a row of red sparkles. Every fixed duration, distance, size,
+ * and scale is a step on the design scale, each random range runs between two
+ * steps, and the curves are the stylesheet's easing tokens. The fireworks are
+ * a small pool of elements the card renders once and launches in turn, each
+ * burst its own GSAP timeline, and they stop when the card replays or closes.
+ * Under reduced motion the card opens finished, with still stars and no
+ * fireworks. Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
@@ -361,16 +361,16 @@ const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: 
  * FojCarCom = Fourth-Of-July Card Component
  *
  * @summary
- * The Fourth of July card. Its stars are scattered once, when the card
- * opens. One GSAP timeline, built in useGSAP, fades the card in over the
- * Base Plus 7 step of the duration scale, about 1.13s; after the Base Plus 3
- * step the headline springs down into place from a smaller scale; after the
- * Base Plus 6 step the flag slides in from the left; and once the card has
- * faded in, the wish rises in. The fireworks start at once and each star
- * starts twinkling after its own random delay, and both stop when the card
- * replays or closes, since the context reverts the twinkles and the hook's
- * cleanup stops the fireworks. Under reduced motion the timeline jumps to its
- * end, and neither the twinkle nor the fireworks start.
+ * The Fourth of July card. Its stars are scattered once, when the card opens.
+ * One GSAP timeline, built in useGSAP, fades the card in over the Base Plus 7
+ * step of the duration scale, about 1.13s; after the Base Plus 3 step the
+ * headline springs down into place from a smaller scale; after the Base Plus 6
+ * step the flag slides in from the left; and once the card has faded in, the
+ * wish rises in. The fireworks start at once and each star starts twinkling
+ * after its own random delay, and both stop when the card replays or closes,
+ * since the context reverts the twinkles and the hook's cleanup stops the
+ * fireworks. Under reduced motion the timeline jumps to its end, and neither
+ * the twinkle nor the fireworks start.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

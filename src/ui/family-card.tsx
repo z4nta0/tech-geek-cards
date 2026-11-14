@@ -82,7 +82,7 @@ type SceRecTyp = { // What: Scene Record Type. Why: Each scene types one line an
 
 };
 
-type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share every step and differ only in their content. How: This holds everything one card supplies.
+type FamCarTyp = { // What: Family Card Type. Why: The three Family cards share every step and differ in their content. How: This holds everything one card supplies.
 
 
 	behStr    : string,      // What: Behalf String. Why: The card closes with a line on everyone's behalf. How: This is typed and erased before the greeting.
@@ -320,7 +320,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const fadDurNum = durSecFun( 'p07' );                                          // What: Fade Duration Number. Why: The card's fades and growths move at one unhurried pace, such as the heart opening. How: This is the duration scale's Base Plus 7 step, in seconds. // Duration Animation Base Plus 7 ~= 1,130.0ms
 		const griImaArr = Array.from( griDivRef.current!.querySelectorAll( 'img' ) );  // What: Grid Image Array. Why: Each photo in the grid uncovers on its own. How: This lists the grid's photos. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const holDurNum = durSecFun( 'p08' );                                          // What: Hold Duration Number. Why: Each line and each photo stays up long enough to take in. How: This is the duration scale's Base Plus 8 step, in seconds. // Duration Animation Base Plus 8 ~= 1,497.0ms
-		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in an even spread. How: This registers the in-out token and keeps its GSAP name.
+		const inoEasStr = gsaEasFun( 'ino' );                                          // What: In-Out Easing String. Why: The underline draws in smoothly, and the grid's photos start in a spread eased in and out. How: This registers the in-out token and keeps its GSAP name.
 		const oveEasStr = gsaEasFun( 'ove' );                                          // What: Overshoot Easing String. Why: The greeting grows with a little flourish. How: This registers the overshoot token and keeps its GSAP name.
 		const phoImaArr = Array.from( phoDivRef.current!.children );                   // What: Photo Image Array. Why: Each scene shows one photo under the heart. How: This lists the stage's photos, one per scene. // What: Non-Null Note. Why: TypeScript can't see that the ref is set. How: useGSAP runs after the render that attaches it.
 		const shoDurNum = durSecFun( 'm02' );                                          // What: Show Duration Number. Why: The grid appears almost at once, and its photos start just apart. How: This is the duration scale's Base Minus 2 step, in seconds. // Duration Animation Base Minus 2 ~= 89.9ms
