@@ -238,6 +238,9 @@ src/
 ```
 `design/` holds the image and icon render scripts and the git-ignored image
 originals (about 89 MB, never committed, decided by the user 2026-10-14).
+The WebPs the image script writes keep the 456-byte color profile the
+encoder adds (decided by the user 2026-11-14): it's about 3% of a small
+preview, and dropping it can shift colors in browsers that read it.
 
 ## Converted cards
 Decided with the user 2026-10-15, converting the Christmas card first; the
