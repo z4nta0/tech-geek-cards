@@ -335,10 +335,10 @@
 
 
 }
-.resCouSpa--arriving { /* What: Result Count Span Arriving. Why: The count changes with each result a visitor chooses, and the change should be seen. How: This plays the shared fade up on the decelerating curve each time the count remounts. */
+.resCouSpa--arriving { /* What: Result Count Span Arriving. Why: The count changes with each result a visitor chooses, and the change should be seen. How: This plays the results' short fade up on the decelerating curve each time the count remounts. */
 
 
-	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	animation : resultSwapFadeUp var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -349,6 +349,20 @@
 
 
 		animation : none;
+
+
+	}
+
+
+}
+@keyframes resultSwapFadeUp { /* What: Result Swap Fade Up. Why: A result swapped in place on each search should arrive softly rather than rise like a whole page. How: This fades the count, the grid, or the empty message in from about 3.6px low. */
+
+
+	from {
+
+
+		opacity   : 0;
+		transform : translateY( var( --spa-ver-m05 ) ); /* Spacing Vertical Base Minus 5 ~= 3.572px */
 
 
 	}
@@ -413,10 +427,10 @@
 
 
 }
-.galGriDiv--arriving { /* What: Gallery Grid Div Arriving. Why: Choosing an occasion or searching should show its result arriving rather than the cards just swapping. How: This plays the shared fade up on the decelerating curve each time the grid remounts. */
+.galGriDiv--arriving { /* What: Gallery Grid Div Arriving. Why: Choosing an occasion or searching should show its result arriving rather than the cards just swapping. How: This plays the results' short fade up on the decelerating curve each time the grid remounts. */
 
 
-	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	animation : resultSwapFadeUp var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
@@ -449,10 +463,10 @@
 
 
 }
-.empResDiv--arriving { /* What: Empty Results Div Arriving. Why: The empty message is the result of a search, and it should be seen arriving. How: This plays the shared fade up on the decelerating curve as it appears. */
+.empResDiv--arriving { /* What: Empty Results Div Arriving. Why: The empty message is the result of a search, and it should be seen arriving. How: This plays the results' short fade up on the decelerating curve as it appears. */
 
 
-	animation : global( contentEnterFadeUp ) var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
+	animation : resultSwapFadeUp var( --dur-ani-p02 ) var( --mot-dec-eas ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Decelerate Easing = cubic-bezier( .2, .7, .3, 1 ) */
 
 
 }
