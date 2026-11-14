@@ -119,10 +119,20 @@ field to the share dialog).
   unlisted card in `_headers`; the dev server serves the same per-card tags.
   The plain card data lives in `ui/card-data.ts`, which the build reads, and
   `ui/cards.ts` adds each card's component and tile preview. The site's
-  preview is `public/og-image.png`, from `design/og-image/card.html`; each
-  card's is `public/social/<address>.jpg`, its finished screen; both come
-  from `npm run og-images`. Every other page shares Home's preview. The tile
-  previews render at 1200x675, about twice their largest display size.
+  preview is `public/og-image-2.png`, from `design/og-image/card.html`; each
+  card's is its finished screen in `public/social/`, under the file name its
+  catalog row's `socStr` gives; both come from `npm run og-images`. Every
+  other page shares Home's preview. The tile previews render at 1200x675,
+  about twice their largest display size.
+- **Link preview images** (decided by the user 2026-11-14, in the audit):
+  every preview was rerendered and renamed with a `-2`, since apps cache
+  previews. A card's main line is shrunk in the capture to fit the center
+  630px square some apps crop to (the three Family greetings and
+  Thanksgiving's heading). A card ships as a PNG when that's under 300 KB
+  (Fourth of July and Halloween) and as a JPEG otherwise, at the lowest
+  quality that showed no difference at 3x zoom, recorded in the script's
+  `JPE_QUA_OBJ` (Birthday at 80, the rest at 70); the script fails when a
+  file name's format disagrees with the size.
 - **Ko-fi** (decided by the user 2026-11-01, following TechGeek.dev and
   TechGeek.support): the README ends with the shared Support section, and
   About closes with a white Support My Work band below the family section,

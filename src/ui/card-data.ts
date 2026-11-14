@@ -43,7 +43,8 @@ type CarDatTyp = { // What: Card Data Type. Why: Every card is described the sam
 	lisBoo : boolean,   // What: Listed Boolean. Why: A card can live at its own address without being shown in the Gallery or on Home. How: Only cards with this true are listed.
 	occStr : OccNamTyp, // What: Occasion String. Why: The Gallery groups cards by occasion. How: This names the card's occasion.
 	seaStr : string,    // What: Search String. Why: A card's own page needs a search and link preview description of 120 to 125 characters, which the tile's shorter description doesn't fill. How: The card's built page carries it, and the card's page swaps it into the description tag while it shows.
-	sluStr : string,    // What: Slug String. Why: Every card has its own address. How: The card opens at this path, such as /happy-birthday, and its link preview image is named after it.
+	sluStr : string,    // What: Slug String. Why: Every card has its own address. How: The card opens at this path, such as /happy-birthday.
+	socStr : string,    // What: Social String. Why: A card's link preview image needs a fixed address, and a changed image needs a new name, since apps cache previews. How: This is the image's file name in public/social/, named after the card's address, its extension saying whether it's a PNG or a JPEG.
 	titStr : string     // What: Title String. Why: Every card has a name. How: Tiles, the share dialog, the card's page title, and its link preview show it.
 
 
@@ -58,10 +59,10 @@ type CarDatTyp = { // What: Card Data Type. Why: Every card is described the sam
  * Every card the site offers, one row per card in the order the Gallery
  * lists them. Each row has the same fields, described one by one on
  * CarDatTyp above: altStr, cusBoo, desStr, froBoo, lisBoo, occStr, seaStr,
- * sluStr, and titStr. The Father's Day prank stays unlisted, reachable only
- * by its own address. Both Christmas cards play one component: the listed
- * one is the snowy scene alone, and the unlisted prank, made for the maker's
- * own family, plays the fake hack first.
+ * sluStr, socStr, and titStr. The Father's Day prank stays unlisted,
+ * reachable only by its own address. Both Christmas cards play one
+ * component: the listed one is the snowy scene alone, and the unlisted
+ * prank, made for the maker's own family, plays the fake hack first.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -78,6 +79,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Birthday',
 		sluStr : 'happy-birthday',
+		socStr : 'happy-birthday-2.jpg',
 		titStr : 'Happy Birthday',
 
 		altStr : 'The Happy Birthday card, with its greeting over a festive scene.',
@@ -95,6 +97,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Family',
 		sluStr : 'mothers-day',
+		socStr : 'mothers-day-2.jpg',
 		titStr : "Mother's Day",
 
 		altStr : "The Mother's Day card's closing mosaic of family photos under its greeting.",
@@ -112,6 +115,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Family',
 		sluStr : 'fathers-day',
+		socStr : 'fathers-day-2.jpg',
 		titStr : "Father's Day",
 
 		altStr : "The Father's Day card's closing mosaic of family photos under its greeting.",
@@ -129,6 +133,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'fourth-of-july',
+		socStr : 'fourth-of-july-2.png',
 		titStr : 'Fourth of July',
 
 		altStr : 'The Fourth of July card, with its greeting under a sky of fireworks.',
@@ -146,6 +151,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'happy-halloween',
+		socStr : 'happy-halloween-2.png',
 		titStr : 'Happy Halloween',
 
 		altStr : 'The Happy Halloween card, with its greeting in a spooky night scene.',
@@ -163,6 +169,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'happy-thanksgiving',
+		socStr : 'happy-thanksgiving-2.jpg',
 		titStr : 'Happy Thanksgiving',
 
 		altStr : 'The Happy Thanksgiving card, with its greeting in an autumn scene.',
@@ -180,6 +187,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'merry-christmas',
+		socStr : 'merry-christmas-2.jpg',
 		titStr : 'Merry Christmas',
 
 		altStr : 'The Merry Christmas card, with its greeting over a snowy cabin.',
@@ -197,6 +205,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : false,
 		occStr : 'Family',
 		sluStr : 'fathers-day-prank',
+		socStr : 'fathers-day-prank-2.jpg',
 		titStr : "Father's Day Special",
 
 		altStr : "The special Father's Day card, with its playful thank-you to fathers.",
@@ -214,6 +223,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : false,
 		occStr : 'Holiday',
 		sluStr : 'merry-christmas-prank',
+		socStr : 'merry-christmas-prank-2.jpg',
 		titStr : 'Christmas Prank',
 
 		altStr : 'The Christmas Prank card, with its greeting over a snowy cabin.',

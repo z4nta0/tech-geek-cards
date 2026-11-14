@@ -589,7 +589,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 
 		const socTagObj = socTagFun( await ( await reqCotObj.get( `${ PRE_URL_STR }${ pagPatStr }?name=Sam` ) ).text() );  // What: Social Tag Object. Why: A shared card's link may carry a name, which mustn't change its preview. How: This reads the tags of the built page, fetched with a name.
 		const expUrlStr = carDatObj ? `${ LIV_URL_STR }${ carDatObj.sluStr }` : LIV_URL_STR;                               // What: Expected URL String. Why: The preview has to point at the page's own address. How: This is the card's absolute address, or the root.
-		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg` : `${ LIV_URL_STR }og-image.png`; // What: Expected Image String. Why: Each page shows its own image. How: This is the card's JPEG, or the site's card.
+		const expImaStr = carDatObj ? `${ LIV_URL_STR }social/${ carDatObj.socStr }` : `${ LIV_URL_STR }og-image-2.png`;   // What: Expected Image String. Why: Each page shows its own image. How: This is the card's image, or the site's card.
 		const expTitStr = carDatObj ? `${ carDatObj.titStr } Card | TechGeek.cards` : PAG_HEA_ARR[ 0 ].titStr;             // What: Expected Title String. Why: The preview's title matches the page's own. How: This is the card's title, or Home's.
 		const expDesStr = carDatObj ? carDatObj.seaStr : HOM_DES_STR;                                                      // What: Expected Description String. Why: The preview's summary matches the page's description. How: This is the card's search description, or Home's.
 
@@ -599,7 +599,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 		expect( [ socTagObj[ 'og:title' ], socTagObj[ 'twitter:title' ], socTagObj[ 'description' ], socTagObj[ 'og:description' ], socTagObj[ 'twitter:description' ] ] ).toEqual( [ expTitStr, expTitStr, expDesStr, expDesStr, expDesStr ] ); // What: Text Assertion. Why: The preview names and describes the page as the page itself does. How: This checks the titles and descriptions.
 		expect( expDesStr.length ).toBeGreaterThanOrEqual( 120 );                                                                                  // What: Description Minimum Assertion. Why: Link preview checkers flag a summary under 120 characters, and the unlisted cards' own descriptions are checked only here. How: This checks the page's description runs at least 120 characters.
 		expect( expDesStr.length ).toBeLessThanOrEqual( 125 );                                                                                     // What: Description Maximum Assertion. Why: Mobile cards cut a summary off around 125 characters. How: This checks the page's description stays within that.
-		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
+		expect( [ socTagObj[ 'og:image:type' ], socTagObj[ 'og:image:width' ], socTagObj[ 'og:image:height' ], socTagObj[ 'twitter:card' ] ] ).toEqual( [ carDatObj?.socStr.endsWith( '.jpg' ) ? 'image/jpeg' : 'image/png', '1200', '630', 'summary_large_image' ] ); // What: Image Details Assertion. Why: Apps lay out a large preview from the image's stated type and size. How: This checks them and the card type.
 
 
 	} );
@@ -612,7 +612,7 @@ for ( const carDatObj of [ null, ...CAR_DAT_ARR ] ) { // What: Raw Preview Loop.
 test( 'every link preview image is 1,200x630 and under 300 KB', async ( { request : reqCotObj } ) => { // What: Preview Images Test. Why: The tags promise each image's size, and the social preview rule caps each at 300 KB as a safe margin for WhatsApp. How: This fetches every preview image and checks its type, dimensions, and size.
 
 
-	for ( const imaPatStr of [ '/og-image.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.sluStr }.jpg` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
+	for ( const imaPatStr of [ '/og-image-2.png', ...CAR_DAT_ARR.map( ( carDatObj ) => `/social/${ carDatObj.socStr }` ) ] ) { // What: Image Check Loop. Why: Every page's image has to be real. How: This checks the site's card, then each card's.
 
 
 		const imaResObj = await reqCotObj.get( imaPatStr ); // What: Image Response Object. Why: The image has to exist where the tags point. How: This fetches it.

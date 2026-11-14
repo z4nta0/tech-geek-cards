@@ -97,7 +97,7 @@ src/
 ├── utils/             Helpers any card can use: the reduced-motion check, the easing tokens, and the design scale's steps for GSAP timelines, and a random value between two bounds
 ├── app.tsx            Root component and the route table
 └── main.tsx           Entry point
-public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image.png and each card's in social/
+public/                Files served at fixed addresses: the icons, robots.txt, sitemap.xml, Netlify's _headers and _redirects, and the link preview images: the site's own og-image-2.png and each card's in social/
 tests/
 ├── accessibility/     axe-core scan and scripted checks
 ├── interaction/       behavior checks, such as navigation, the phone menu, and hover, press, and focus feedback

@@ -96,11 +96,12 @@ const htmEscFun = ( rawTexStr : string ) : string => rawTexStr.replace( /&/g, '&
 const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { // What: Card Tag Function. Why: Each card's page has to name the card to link scrapers. How: This swaps each of the Home page's tags for the card's.
 
 
-	const carDesStr = htmEscFun( carDatObj.seaStr );                              // What: Card Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
-	const carImaStr = `${ LIV_URL_STR }social/${ carDatObj.sluStr }.jpg`;         // What: Card Image String. Why: Each card's preview shows its own image. How: This is its JPEG's absolute address.
-	const carAltStr = htmEscFun( carDatObj.altStr );                              // What: Card Alternative String. Why: The preview image needs a description. How: This escapes the card's alt text.
-	const carTitStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` ); // What: Card Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
-	const carUrlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                    // What: Card URL String. Why: The preview links to the card's own address. How: This is its absolute address.
+	const carDesStr = htmEscFun( carDatObj.seaStr );                                    // What: Card Description String. Why: The card's search description is its preview's summary too. How: This escapes it for an attribute.
+	const carImaStr = `${ LIV_URL_STR }social/${ carDatObj.socStr }`;                   // What: Card Image String. Why: Each card's preview shows its own image. How: This is its image's absolute address.
+	const carAltStr = htmEscFun( carDatObj.altStr );                                    // What: Card Alternative String. Why: The preview image needs a description. How: This escapes the card's alt text.
+	const carTitStr = htmEscFun( `${ carDatObj.titStr } Card | TechGeek.cards` );       // What: Card Title String. Why: The page's title and preview title match the card page's own title. How: This builds and escapes it.
+	const carTypStr = carDatObj.socStr.endsWith( '.png' ) ? 'image/png' : 'image/jpeg'; // What: Card Type String. Why: A flat-art card's image is a PNG and a photo-heavy one a JPEG, whichever stays under the size cap. How: This names the type its file name's extension gives.
+	const carUrlStr = `${ LIV_URL_STR }${ carDatObj.sluStr }`;                          // What: Card URL String. Why: The preview links to the card's own address. How: This is its absolute address.
 
 	const tagRowArr : [ string, string ][] = [ // What: Tag Row Array. Why: Every tag the card changes is found and replaced the same way. How: Each row pairs a tag's name or property with its card value.
 
@@ -109,7 +110,7 @@ const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { //
 		[ 'og:description', carDesStr ],      // What: Open Graph Description Row. Why: Most previews show this summary. How: This sets the card's.
 		[ 'og:image', carImaStr ],            // What: Open Graph Image Row. Why: Most previews show this picture. How: This points at the card's own image.
 		[ 'og:image:alt', carAltStr ],        // What: Open Graph Image Alt Row. Why: The picture needs a description. How: This sets the card's alt text.
-		[ 'og:image:type', 'image/jpeg' ],    // What: Open Graph Image Type Row. Why: A card's image is a JPEG, where the site's card is a PNG. How: This names its type.
+		[ 'og:image:type', carTypStr ],       // What: Open Graph Image Type Row. Why: A card's image may be a PNG or a JPEG. How: This names its type.
 		[ 'og:title', carTitStr ],            // What: Open Graph Title Row. Why: Most previews lead with this title. How: This sets the card's.
 		[ 'og:url', carUrlStr ],              // What: Open Graph URL Row. Why: The preview points at the card's address. How: This sets it.
 		[ 'twitter:description', carDesStr ], // What: Twitter Description Row. Why: X shows this summary. How: This sets the card's.
