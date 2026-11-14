@@ -122,7 +122,7 @@
 .retSenGro { /* What: Return Sender Group. Why: A rubber stamp across the envelope lands with a bit of force, the page's flair. How: This scales the stamp's box and words from their own center and thunks them down once after the page arrives. */
 
 
-	animation        : retSenGroEnterThunkIn var( --dur-ani-p02 ) var( --mot-bou-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Bounce Easing = cubic-bezier( .34, 1.56, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms */
+	animation        : retSenGroEnterThunkIn var( --dur-ani-p02 ) var( --mot-ove-eas ) var( --dur-ani-p04 ) both; /* Duration Animation Base Plus 2 ~= 277.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ), Duration Animation Base Plus 4 ~= 486.1ms */
 	transform-box    : fill-box;
 	transform-origin : center;
 
@@ -141,7 +141,7 @@
 
 
 }
-@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from about 175.5% and transparent to full size, the bounce easing giving it a small rebound. */
+@keyframes retSenGroEnterThunkIn { /* What: Return Sender Group Enter Thunk In. Why: A rubber stamp lands with a bit of force. How: This shrinks it from about 175.5% and transparent to full size, the gentle overshoot giving it a small rebound. */
 
 
 	from {
