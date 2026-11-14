@@ -368,7 +368,9 @@ the Gallery narrowed to Family and after a search nothing matches
 (`tests/support/gallery.ts`), the Contact form after a refused empty send and
 its sent and failed results (`tests/support/contact.ts`, which answers
 Netlify's POST with a 200 or a 500), the Mother's Day card's first photo
-open and its last scene's photo and line stills under reduced motion
+open, its last scene's photo and line stills under reduced motion, and a
+scene paused on its photo while the card plays with motion, reached by
+replaying the finished card once its photos have decoded
 (`tests/support/family.ts`), and the share dialog after a copy that
 worked or was refused (`tests/support/share.ts`), each at both widths, plus
 the share dialog opened from the Birthday card's floating bar at 390px.
@@ -381,7 +383,8 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   drawn, non-inert element from its first stop on that Tab never reached (only
   the open dialog's while a modal dialog is open), a start already showing the
   keyboard's ring counting as the first stop, and the reduced motion check
-  records every lasting animation and transition from the start of the load.
+  records every lasting animation and transition from the start of the load,
+  skipping the paused scene, which a card reaches only while playing.
   `tests/accessibility/announce.spec.ts` checks the Contact form's alert
   region is in the form and empty on load and holds the error after a failed
   send, which keeps focus on Send Message, that the thank-you takes focus as
@@ -393,11 +396,14 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   feedback, the phone menu, the contact form (its topic arriving as Not
   specified when none is chosen), the "How It Works" section link, the Family
   photo's and the share dialog's closing fades (each way of closing, with
-  motion and under reduced motion), the Ko-fi link, and the extended name
-  fonts, with the checks below.
+  motion and under reduced motion), a Family card's "Skip to end" fading the
+  finished card in (at once under reduced motion), a tap on the Birthday card
+  drawing confetti once its own has settled (none under reduced motion), the
+  Ko-fi link, and the extended name fonts, with the checks below.
   - **Feedback probe** (rebuilt 2026-11-10, in the audit, from TechGeek.dev's,
     helpers in `tests/support/feedback.ts`): on every shared state, the
-    Contact results, the Gallery's empty search, the open photo, and the
+    Contact results, the Gallery's empty search, the paused Family scene, the
+    open photo, and the
     share dialog after a copy and opened from a card's bar, each
     reachable link, button, and field is read at rest, hovered, pressed, and
     focused through `focus( { focusVisible : true } )`, and every property
@@ -405,9 +411,8 @@ the share dialog opened from the Birthday card's floating bar at 390px.
     has to ease, or switch at once under reduced motion. A control filling
     the screen (the open photo) isn't held to a hover look, since it's always
     under the pointer. The Family cards' Pause button, which shows only while
-    a card plays with motion, isn't reached, since every card state opens
-    finished under reduced motion; it shares its class with the probed
-    Previous, Next, and Skip buttons (decided by the user 2026-11-13). The
+    a card plays with motion, is reached as Play in the paused scene (added
+    2026-11-14). The
     toggles in its `TOG_TAR_ARR` (the menu toggle, the
     current bar and drawer links, the open drawer and scrim, the scrolled bar,
     the chosen occasion, the sending button, and the Family scene dots) are

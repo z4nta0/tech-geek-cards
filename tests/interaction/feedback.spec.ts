@@ -12,6 +12,7 @@ import { expect      } from '@playwright/test';       // What: Expect. Why: Each
 import { FOC_PRO_ARR } from '../support/feedback.ts'; // What: Focus Property Array. Why: A focus look is compared over the control properties and the ring's outline. How: This lists them.
 import { movProFun   } from '../support/feedback.ts'; // What: Moving Problems Function. Why: Under reduced motion a change has to switch rather than ease. How: This turns two snapshots into a problem for each eased change.
 import { opeStaFun   } from '../support/states.ts';   // What: Open State Function. Why: Each check opens and settles its state first. How: This loads it and waits for it.
+import { PAU_STA_ARR } from '../support/family.ts';   // What: Paused State Array. Why: A Family card paused on a scene while it plays with motion is a state a visitor reaches, with the controls over its photo. How: This lists the Mother's Day states paused on the second scene's photo, one per width.
 import { PHO_STA_ARR } from '../support/family.ts';   // What: Photo State Array. Why: A Family card's open photo holds a control the plain states don't, its full-size photo that closes it. How: This lists the Mother's Day states with its first photo open, one per width.
 import { RES_STA_ARR } from '../support/contact.ts';  // What: Result State Array. Why: The Contact form's result states hold controls the plain states don't, such as the thank-you's "Send Another" button. How: This lists the Contact states with the form sent, one per result and width.
 import { snaEleFun   } from '../support/feedback.ts'; // What: Snapshot Element Function. Why: Each look is recorded with whether each part of it would ease. How: This runs inside the page to read it.
@@ -892,7 +893,7 @@ test.describe.configure( { mode : 'parallel' } ); // What: Parallel Mode Call. W
 
 
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...EMP_STA_ARR, ...PAU_STA_ARR, ...PHO_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every page state is checked, plus the reachable states that hold controls the plain ones don't, such as a Family card's open photo. How: This declares each check once per state, the shared states first, then the reachable ones.
 
 
 	test( `${ staRecObj.ideStr } gives every reachable link and button hover, press, and focus feedback, every form field its focus, and every toggle its switch`, async ( { page : curPagObj } ) => { // What: Feedback Test. Why: Every interaction should visibly register. How: This opens the state, blocks clicks, probes every reachable link, button, and form field and each reachable element of the toggle kinds listed for the state, and on the Home, Gallery, and About states every hover surface, and checks it finds no problems.

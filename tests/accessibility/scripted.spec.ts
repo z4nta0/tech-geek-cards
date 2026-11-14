@@ -10,6 +10,7 @@ import { expect      } from '@playwright/test';      // What: Expect. Why: Each 
 import { FIL_STA_ARR } from '../support/gallery.ts'; // What: Filtered State Array. Why: A chosen occasion narrows the Gallery's grid and count, a state a visitor reaches. How: This lists the Gallery states with "Family" chosen, one per width.
 import { INV_STA_ARR } from '../support/contact.ts'; // What: Invalid State Array. Why: The Contact form after a refused empty send is a state a visitor reaches. How: This lists the Contact states after that send, one per width.
 import { opeStaFun   } from '../support/states.ts';  // What: Open State Function. Why: Each check opens and settles its state first. How: This loads it and waits for it.
+import { PAU_STA_ARR } from '../support/family.ts';  // What: Paused State Array. Why: A Family card paused on a scene while it plays with motion is a state a visitor reaches, with the controls over its photo. How: This lists the Mother's Day states paused on the second scene's photo, one per width.
 import { PHO_STA_ARR } from '../support/family.ts';  // What: Photo State Array. Why: A Family card's photo opened full size is a state a visitor reaches. How: This lists the Mother's Day states with its first photo open, one per width.
 import { RES_STA_ARR } from '../support/contact.ts'; // What: Result State Array. Why: The Contact form's thank-you and error are states a visitor reaches too. How: This lists the Contact states with the form sent, one per result and width.
 import { STA_REC_ARR } from '../support/states.ts';  // What: State Record Array. Why: Every page state is checked. How: This lists them.
@@ -745,7 +746,7 @@ async function keyProFun ( curPagObj : Page, engNamStr : string ) : Promise< str
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's open photo and scene stills, and the share dialog's copy results and card page opening included. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PAU_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's paused scene, open photo, and scene stills, and the share dialog's copy results and card page opening included. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } names every link and button cleanly`, async ( { page : curPagObj } ) => { // What: Names Test. Why: Every link and button must be announced by a clean name. How: This opens the state and checks its accessibility tree.
@@ -789,6 +790,10 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FI
 
 
 	test( `${ staRecObj.ideStr } plays no motion under reduced motion`, async ( { page : curPagObj } ) => { // What: Reduced Motion Test. Why: Visitors who ask for less motion shouldn't see the page animate. How: This requests reduced motion, records every lasting animation and transition from the start of the load, opens the state, and lists anything that played, is still waiting to, or has a script write to it just after.
+
+
+		test.skip( PAU_STA_ARR.includes( staRecObj ), 'a paused scene is reached only while the card plays with motion' ); // What: Paused Scene Skip. Why: Under reduced motion the card never plays and has no Pause button, so the paused scene has no reduced-motion look, and reaching it plays the card's motion on purpose. How: This skips the check for the paused states.
+
 
 
 		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: The preference has to be set before the page loads. How: This makes the page match prefers-reduced-motion: reduce.
