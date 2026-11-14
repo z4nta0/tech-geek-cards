@@ -143,7 +143,7 @@ const carTagFun = ( htmTexStr : string, carDatObj : CarDatTyp ) : string => { //
  * After a production build it writes one copy of the built index.html per
  * card, as <address>.html, through carTagFun, and puts a rewrite rule for each
  * card's address ahead of the site's catch-all in _redirects, so Netlify
- * serves the card's own page, query and all, while every other path still
+ * serves the card's own page at its address, while every other path still
  * loads index.html. It also adds a noindex header rule for each unlisted card
  * to _headers, for crawlers that never run the page's script.
  *
