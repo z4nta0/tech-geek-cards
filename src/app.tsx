@@ -56,7 +56,7 @@ import type { SisLinTyp } from 'techgeek-design/ui/link-types.ts'; // What: Sist
 // #region Constants
 
 const SIT_EMA_STR = 'contact@techgeek.cards';               // What: Site Email String. Why: The phone menu offers the site's contact address. How: The bar links it from the drawer.
-const SIT_TAG_STR = 'Hand-coded cards for every occasion.'; // What: Site Tagline String. Why: The phone menu and the footer end on the site's tagline. How: The bar and the footer both show it.
+const SIT_TAG_STR = 'Hand-coded cards for every occasion.'; // What: Site Tagline String. Why: The phone menu and the footer both show the site's tagline. How: The bar and the footer both show it.
 const WOR_END_STR = '.cards';                               // What: Wordmark Ending String. Why: The family's wordmark ends in each site's own domain. How: The bar's wordmark and the footer's copyright both show it after TechGeek.
 
 const CTA_LIN_OBJ : PagLinTyp = { labStr : 'Send a Card', patStr : '/gallery' }; // What: Call-To-Action Link Object. Why: The bar's one button asks a visitor to send a card, the site's main action. How: The bar and the drawer both route it to the Gallery.
