@@ -607,10 +607,14 @@ async function feeProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
  * sister-site cards, the surfaces that respond to hover without being
  * controls, and returns a problem for each one that gives no hover feedback, a
  * single problem when it finds none, and one for each kind {@link HOV_KIN_OBJ}
- * names for the page that it doesn't find. Only hover is checked: each card is
- * scrolled into view, read at rest with the pointer away and again while
- * hovered, every look read once its transition has settled, and one that looks
- * the same both ways is a problem. Normally every probed property that
+ * names for the page that it doesn't find. Each card is scrolled into view,
+ * read at rest with the pointer away and again while hovered, every look read
+ * once its transition has settled, and one that looks the same both ways is a
+ * problem. A card tile, whose title link stretches over it, is also read
+ * hovered and pressed on that link, and unfocused and focused the way a
+ * keyboard focuses it, since the tile presses in and its stamp straightens
+ * with the link, and a tile that looks the same pressed or focused is a
+ * problem too. Normally every probed property that
  * changes, on the card or anything inside it, its shadow layers included, has
  * to be eased by a transition ({@link snaProFun}); under reduced motion none
  * of them may ease ({@link movProFun}), and every one of the card's own
@@ -687,6 +691,67 @@ async function hovProFun ( curPagObj : Page, staIdeStr : string, redMotBoo : boo
 		if ( redMotBoo ) proLisArr.push( ...movProFun( resSnaArr, hovSnaArr, CON_PRO_ARR, tarDesStr, 'when hovered' ) ); // What: Reduced Motion Change Check. Why: Under reduced motion a card's hover changes, such as its lift, should switch at once. How: This records each property that changes while a transition still eases it.
 
 		else proLisArr.push( ...snaProFun( resSnaArr, hovSnaArr, CON_PRO_ARR, tarDesStr, 'when hovered' ) ); // What: Snapped Change Check. Why: A hover change, the shadow layers included, should ease rather than snap. How: This records each property that changes without a transition, on the card or anything inside it.
+
+
+
+		const titHanObj = await tarCurObj.$( '[class*="carTitAnc"]' ); // What: Title Handle Object. Why: A card tile presses in and straightens its stamp through its stretched title link, so those looks are read through the link. How: This finds the tile's title link, or null for a card that has none.
+
+
+		if ( !titHanObj ) continue; // What: No Title Guard. Why: Only a card tile has a title link to press and focus. How: This moves on to the next card for any other kind.
+
+
+
+		await titHanObj.hover(); // What: Title Hover Call. Why: The press look is compared with the tile hovered through its link. How: This moves the pointer onto the link.
+
+		await tarCurObj.evaluate( aniFinFun ); // What: Title Hover Settle Call. Why: The hovered look is read once it has eased in. How: This waits two frames, then for every finite animation on the tile, inside it, and above it to end.
+
+
+		const linHovArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Link Hover Array. Why: The pressed look is compared with hovered. How: This records the tile and everything inside it.
+
+
+		await curPagObj.mouse.down(); // What: Title Press Call. Why: A press shows while the button is held. How: This holds the mouse button down on the link.
+
+		await tarCurObj.evaluate( aniFinFun ); // What: Title Press Settle Call. Why: The pressed look is read once it has eased in. How: This waits two frames, then for every finite animation on the tile, inside it, and above it to end.
+
+
+		const linPreArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Link Press Array. Why: The pressed look is compared with hovered. How: This records the tile and everything inside it.
+
+
+		await curPagObj.mouse.up(); // What: Title Release Call. Why: The press has to end before the focus is read. How: This releases the button, which does nothing further since clicks are blocked.
+
+		await curPagObj.mouse.move( 0, 0 ); // What: Pointer Away Call. Why: The focus look is compared with no hover on the tile. How: This moves the pointer to the corner of the bar.
+
+		await titHanObj.evaluate( ( titCurEle ) => { if ( titCurEle instanceof HTMLElement ) titCurEle.blur(); } ); // What: Title Blur Call. Why: The press may have focused the link. How: This blurs it.
+
+		await tarCurObj.evaluate( aniFinFun ); // What: Title Blur Settle Call. Why: The unfocused look is read once the hover and press have faded. How: This waits two frames, then for every finite animation on the tile, inside it, and above it to end.
+
+
+		const linBluArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Link Blur Array. Why: The focused look is compared with unfocused. How: This records the tile and everything inside it.
+
+
+		await titHanObj.evaluate( ( titCurEle ) => { if ( titCurEle instanceof HTMLElement ) titCurEle.focus( { focusVisible : true } ); } ); // What: Title Focus Call. Why: The stamp straightens only for keyboard focus. How: This focuses the link with focusVisible set.
+
+		await tarCurObj.evaluate( aniFinFun ); // What: Title Focus Settle Call. Why: The focused look is read once it has eased in. How: This waits two frames, then for every finite animation on the tile, inside it, and above it to end.
+
+
+		const linFocArr = await tarCurObj.evaluate( snaEleFun, CON_PRO_ARR ); // What: Link Focus Array. Why: The focused look is compared with unfocused. How: This records the tile and everything inside it.
+
+
+		await titHanObj.evaluate( ( titCurEle ) => { if ( titCurEle instanceof HTMLElement ) titCurEle.blur(); } ); // What: Title Blur Call. Why: Left focused, the stamp would stay straight for the next card's reading. How: This blurs it.
+
+
+
+		if ( valSigFun( linHovArr ) === valSigFun( linPreArr ) ) proLisArr.push( `${ tarDesStr } looks the same pressed` ); // What: Tile Press Check. Why: A press on the tile has to register. How: This records a tile that doesn't change.
+
+
+
+		if ( valSigFun( linBluArr ) === valSigFun( linFocArr ) ) proLisArr.push( `${ tarDesStr } looks the same with its link focused` ); // What: Tile Focus Check. Why: A keyboard user focusing the tile's link should see the tile respond. How: This records a tile that doesn't change.
+
+
+
+		if ( redMotBoo ) proLisArr.push( ...movProFun( linHovArr, linPreArr, CON_PRO_ARR, tarDesStr, 'when pressed' ), ...movProFun( linBluArr, linFocArr, CON_PRO_ARR, tarDesStr, 'when its link is focused' ) ); // What: Reduced Motion Tile Check. Why: Under reduced motion the press and the stamp should switch at once. How: This records each property that changes while a transition still eases it.
+
+		else proLisArr.push( ...snaProFun( linHovArr, linPreArr, CON_PRO_ARR, tarDesStr, 'when pressed' ), ...snaProFun( linBluArr, linFocArr, CON_PRO_ARR, tarDesStr, 'when its link is focused' ) ); // What: Snapped Tile Check. Why: The press and the stamp's turn should ease rather than snap. How: This records each property that changes without a transition, on the tile or anything inside it.
 
 
 	}
