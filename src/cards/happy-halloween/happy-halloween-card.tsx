@@ -36,7 +36,7 @@ import type { JSX } from 'react'; // What: JSX. Why: Each component declares the
  * flashes now and then. Every figure runs its own GSAP motion, built in
  * useGSAP so leaving the card or replaying it stops it all; every fixed
  * duration, distance, angle, scale, and opacity is a step on the design scale,
- * each random range runs between two steps, and the curves are the
+ * each random one runs up to or between steps, and the curves are the
  * stylesheet's easing tokens. Under reduced motion the card opens on the still
  * scene, with no bats and no lightning. Converted from TechGeek.support's
  * original.

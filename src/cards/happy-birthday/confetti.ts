@@ -24,12 +24,12 @@ import { rhyPixFun } from '../../utils/rhythm.ts'; // What: Rhythm Pixel Functio
  * the air, and each step is scaled by the time since the last frame, so the
  * confetti flies at the same pace on a 60Hz or a 120Hz screen. The canvas
  * remeasures at the screen's pixel density whenever its box changes. Every
- * fixed size, speed, and pull is a rhythm step and each random range runs
- * between two, the slowing and fading are duration steps, the spin and the
- * fading cutoff are powers of the core design number, and the falling cutoff
- * is a rhythm step. staConFun starts it and returns the burst function and the
- * function that stops it, so the card can end it cleanly when it replays or
- * closes.
+ * fixed size, speed, and pull is a rhythm step and each random size and speed
+ * runs between two, the slowing and fading are duration steps, the spin and
+ * the fading cutoff are powers of the core design number, and the falling
+ * cutoff is a rhythm step. staConFun starts it and returns the burst function
+ * and the function that stops it, so the card can end it cleanly when it
+ * replays or closes.
  *
  * Sections:
  *  - Constants

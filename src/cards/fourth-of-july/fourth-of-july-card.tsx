@@ -7,7 +7,7 @@ import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Ob
 
 
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as a star's size. How: This returns that power.
-import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs between two steps. How: This returns a step's length in milliseconds.
+import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs up to or between steps. How: This returns a step's length in milliseconds.
 import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
@@ -34,12 +34,12 @@ import type { JSX } from 'react'; // What: JSX. Why: The component declares the 
  * American flag that slides in, the "Happy 4th of July!" headline springing
  * down into place, and a short wish that rises in below it, between a row of
  * gold stars and a row of red sparkles. Every fixed duration, distance, size,
- * and scale is a step on the design scale, each random range runs between two
- * steps, and the curves are the stylesheet's easing tokens. The fireworks are
- * a small pool of elements the card renders once and launches in turn, each
- * burst its own GSAP timeline, and they stop when the card replays or closes.
- * Under reduced motion the card opens finished, with still stars and no
- * fireworks. Converted from TechGeek.support's original.
+ * and scale is a step on the design scale, each random one runs up to or
+ * between steps, and the curves are the stylesheet's easing tokens. The
+ * fireworks are a small pool of elements the card renders once and launches in
+ * turn, each burst its own GSAP timeline, and they stop when the card replays
+ * or closes. Under reduced motion the card opens finished, with still stars
+ * and no fireworks. Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
