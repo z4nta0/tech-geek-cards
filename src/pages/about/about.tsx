@@ -122,7 +122,7 @@ const FAM_SIT_ARR = [ // What: Family Site Array. Why: The Family section introd
 
 
 
-const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The Support section's button opens z4nta0's Ko-fi page, the same address every README links. How: This is the page's public address, written here since it never changes between builds.
+const TIP_URL_STR = 'https://ko-fi.com/techgeekdev'; // What: Tip URL String. Why: The Support section's button opens z4nta0's Ko-fi page, the same address this project's README links. How: This is the page's public address, written here since it never changes between builds.
 
 // #endregion Constants
 
