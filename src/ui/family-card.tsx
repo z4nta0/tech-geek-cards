@@ -187,6 +187,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	const curSpaRef = useRef< HTMLSpanElement >( null );           // What: Cursor Span Reference. Why: The cursor fades once the greeting is typed. How: This holds its span.
 	const expDiaRef = useRef< HTMLDialogElement >( null );         // What: Expanded Dialog Reference. Why: A tapped photo opens in a modal dialog. How: This holds the dialog.
 	const famDivRef = useRef< HTMLDivElement >( null );            // What: Family Div Reference. Why: The timeline is scoped to the card. How: This holds the card's root.
+	const finTweRef = useRef< gsap.core.Tween | null >( null );    // What: Finish Tween Reference. Why: Skip to end fades the finished card in, and a jump during that fade has to end it first. How: This holds the fade while it plays.
 	const greSpaRef = useRef< HTMLSpanElement >( null );           // What: Greeting Span Reference. Why: The greeting types itself out and grows. How: This holds its span.
 	const griDivRef = useRef< HTMLDivElement >( null );            // What: Grid Div Reference. Why: The photo grid wipes in at the end. How: This holds the grid.
 	const higSpaRef = useRef< HTMLSpanElement >( null );           // What: Highlight Span Reference. Why: The line's key words type out and get underlined. How: This holds their span.
@@ -494,8 +495,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 	 * that scene instead, as a music player does. Under reduced motion the
 	 * stops are stills, each scene's line written out and then its photo, and
 	 * the timeline stays paused on each. A jump keeps the card playing or
-	 * paused as it was, takes the wake lock again when it leaves the end, and
-	 * updates the dots at once.
+	 * paused as it was, ends any fade Skip to end started, takes the wake lock
+	 * again when it leaves the end, and updates the dots at once.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -536,6 +537,8 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 		const tarIndNum = resSceBoo ? curIndNum : Math.min( Math.max( curIndNum + dirValNum, 0 ), stoTimArr.length - 1 ); // What: Target Index Number. Why: The jump lands on a real stop. How: This stays on the current stop for a restart, or moves one stop, held to the first and last.
 
 
+		finTweRef.current?.progress( 1 ).kill(); // What: Finish Fade End Call. Why: A fade still running from Skip to end would keep writing over the stop the card jumps to. How: This finishes the fade at once and drops it.
+
 		timLinObj.seek( stoTimArr[ tarIndNum ] ); // What: Stop Seek Call. Why: The card has to show the stop exactly. How: This moves the timeline there, keeping it playing or paused.
 
 
@@ -553,12 +556,38 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 
 
 
-	const skiEndFun = () => { // What: Skip End Function. Why: A visitor may want the greeting and photos without the whole story. How: This jumps the timeline to its end and updates the dots.
+	const skiEndFun = () => { // What: Skip End Function. Why: A visitor may want the greeting and photos without the whole story. How: This jumps the timeline to its end, updates the dots, and fades the finished card in.
 
 
-		timLinRef.current?.progress( 1 ); // What: End Jump Call. Why: The finished card is the timeline's last frame. How: This moves the timeline to its end.
+		const timLinObj = timLinRef.current; // What: Timeline Object. Why: The skip moves the card's timeline. How: This reads it from its reference.
+
+
+		if ( !timLinObj ) return; // What: Timeline Guard. Why: A press before the timeline is built has nothing to move. How: This returns early.
+
+
+
+		const finBefBoo = timLinObj.progress() === 1; // What: Finished Before Boolean. Why: A card already on its finished look has nothing new to arrive. How: This checks the timeline already sits at its end.
+
+
+		timLinObj.progress( 1 ); // What: End Jump Call. Why: The finished card is the timeline's last frame. How: This moves the timeline to its end.
 
 		posUpdFun(); // What: Position Update Call. Why: The dots show the card has finished. How: This updates them at once.
+
+
+
+		if ( redMotBoo || finBefBoo ) return; // What: Finish Fade Guard. Why: Under reduced motion the finished card simply shows, and a card already finished has nothing to fade in. How: This returns before the fade.
+
+
+
+		finTweRef.current = gsap.from( [ griDivRef.current!, tapParRef.current!, texDivRef.current! ], { // What: Finish Fade Tween. Why: The press should show its result arriving rather than the finished card snapping in. How: This fades the grid, the tap hint, and the greeting in from transparent to the looks the timeline's end gave them. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: The button renders only with the card, which attaches them.
+
+
+			duration : durSecFun( 'p01' ), // What: Duration. Why: The arrival is a short result of a press. How: This is the duration scale's Base Plus 1 step, in seconds. // Duration Animation Base Plus 1 ~= 209.1ms
+			ease     : gsaEasFun( 'dec' ), // What: Ease. Why: Something arriving settles in. How: This registers the decelerate token and uses its GSAP name.
+			opacity  : 0                   // What: Opacity. Why: The finished card fades in from nothing. How: This is the starting opacity GSAP fades from.
+
+
+		} );
 
 
 	};
