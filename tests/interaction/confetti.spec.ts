@@ -38,7 +38,7 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The pixel help
 // #region Constants
 
 const CAN_SEL_STR = 'canvas';                       // What: Canvas Selector String. Why: The card draws its confetti on its only canvas. How: This finds it.
-const TAP_XCO_NUM = 720;                            // What: Tap X-Coordinate Number. Why: The tap lands in the card's middle, clear of the floating bar. How: This is half the 1,440px desktop width.
+const TAP_XCO_NUM = 720;                            // What: Tap X-Coordinate Number. Why: The tap lands halfway across the card, clear of the floating bar. How: This is half the 1,440px desktop width.
 const TAP_YCO_NUM = 300;                            // What: Tap Y-Coordinate Number. Why: The tap lands well above the floating bar. How: This is 300px down the screen.
 const VIE_SIZ_OBJ = { height : 900, width : 1440 }; // What: Viewport Size Object. Why: The tap's point is measured on a known screen. How: This opens the card at the desktop size.
 
@@ -122,7 +122,7 @@ test( 'a tap on the Happy Birthday card throws confetti where it lands', async (
 	await expect.poll( () => curPagObj.getByText( 'Tap anywhere for more confetti!' ).evaluate( ( tapParEle ) => getComputedStyle( tapParEle ).opacity ), { intervals : [ 250 ], timeout : 60000 } ).toBe( '1' ); // What: Invitation Shown Poll. Why: The card's last shower falls as its invitation to tap appears, so the canvas only stays empty after that. How: This reads the invitation's opacity until it has fully faded in.
 	await expect.poll( () => pixCouFun( curPagObj, 100000 ), { intervals : [ 500 ], timeout : 25000 } ).toBe( 0 ); // What: Settled Canvas Poll. Why: Confetti still falling from the opening would pass the check without a tap. How: This reads the whole canvas every half second until it's empty.
 
-	await curPagObj.mouse.click( TAP_XCO_NUM, TAP_YCO_NUM ); // What: Card Tap Call. Why: The tap is what should throw confetti. How: This clicks the card's middle.
+	await curPagObj.mouse.click( TAP_XCO_NUM, TAP_YCO_NUM ); // What: Card Tap Call. Why: The tap is what should throw confetti. How: This clicks the card centered across and 300px down.
 
 	await expect.poll( () => pixCouFun( curPagObj, 200 ), { intervals : [ 50 ], timeout : 2000 } ).toBeGreaterThan( 0 ); // What: Tap Burst Poll. Why: The burst should draw pieces near the tap at once. How: This reads a 400px square around the tap until it holds drawn pixels.
 
@@ -142,7 +142,7 @@ test( 'a tap on the Happy Birthday card under reduced motion throws no confetti'
 
 	await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toBeVisible(); // What: Card Shown Assertion. Why: The tap should land on the rendered card. How: This waits until the greeting shows.
 
-	await curPagObj.mouse.click( TAP_XCO_NUM, TAP_YCO_NUM ); // What: Card Tap Call. Why: The tap is what would throw confetti. How: This clicks the card's middle.
+	await curPagObj.mouse.click( TAP_XCO_NUM, TAP_YCO_NUM ); // What: Card Tap Call. Why: The tap is what would throw confetti. How: This clicks the card centered across and 300px down.
 
 	await expect( curPagObj.locator( CAN_SEL_STR ) ).toHaveCount( 0 ); // What: No Canvas Assertion. Why: With no canvas there's nothing a tap can draw on. How: This checks the card rendered none.
 
