@@ -8,7 +8,7 @@ import cssModObj from './fourth-of-july-card.module.css'; // What: CSS Module Ob
 
 import { cdnPowFun } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: Many of the card's values sit on the scale as powers of the core design number, such as a star's size. How: This returns that power.
 import { durMilFun } from '../../utils/rhythm.ts'; // What: Duration Millisecond Function. Why: Every fixed duration and delay in the card is a step on the duration scale, and each random one runs up to or between steps. How: This returns a step's length in milliseconds.
-import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every duration in the timeline is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { durSecFun } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every fixed duration is a step on the duration scale, each random one runs between two, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap      } from 'gsap';                  // What: GSAP. Why: The card's entrance, the stars' twinkle, and every firework are GSAP tweens. How: This is the animation library that builds and plays them.
 import { ranValFun } from '../../utils/random.ts'; // What: Random Value Function. Why: The card's random values stay within set bounds, such as a star's size. How: This returns a random number between two bounds.

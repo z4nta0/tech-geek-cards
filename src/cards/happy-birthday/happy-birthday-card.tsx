@@ -38,11 +38,12 @@ import type { MouseEvent } from 'react';         // What: Mouse Event. Why: A ta
  * cake with three flickering candles. When it opens, confetti bursts from the
  * greeting as its lines pop in one after another, the wish fades in, the cake
  * bounces up, and a second shower falls from the top as an invitation to tap
- * appears; every tap throws more confetti where it lands. Every duration and
- * distance is a step on the design scale, and the curves are the
- * stylesheet's easing tokens. Under reduced motion it opens on the finished
- * card, with the balloons at rest, the candles still, and no confetti or
- * invitation. Converted from TechGeek.support's original.
+ * appears; every tap throws more confetti where it lands. Every fixed
+ * duration, distance, and scale is a step on the design scale, each random one
+ * runs up to or between steps, and the curves are the stylesheet's easing
+ * tokens. Under reduced motion it opens on the finished card, with the
+ * balloons at rest, the candles still, and no confetti or invitation.
+ * Converted from TechGeek.support's original.
  *
  * Sections:
  *  - Constants
@@ -122,9 +123,10 @@ const SPR_ROW_ARR = [ // What: Sprinkle Row Array. Why: Colored sprinkles dot th
  * STA_OPA_ARR = Star Opacity Array
  *
  * @summary
- * The stars' five brightness levels, every fifth star taking the same one.
- * Every row is a reciprocal power of the core design number, the nearest to
- * the original's 0.15, 0.22, 0.29, 0.36, and 0.43.
+ * The stars' brightness by position, in five rows, every fifth star taking
+ * the same one. Every row is a reciprocal power of the core design number,
+ * the nearest to the original's 0.15, 0.22, 0.29, 0.36, and 0.43, so two
+ * rows share the same level.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
