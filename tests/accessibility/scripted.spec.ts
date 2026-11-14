@@ -37,8 +37,9 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers th
  * that are on screen, not covered by anything else, and visibly changed by
  * focus. Reflow: at 320px wide, WCAG's narrowest reflow width, nothing scrolls
  * sideways. Motion: with reduced motion requested, nothing animates or
- * transitions for longer than 1ms from the moment the page starts loading, and
- * nothing is left running or waiting once the state has opened. A failing
+ * transitions for longer than 1ms from the moment the page starts loading,
+ * nothing is left running or waiting once the state has opened, and no script
+ * rewrites an element's style in the second after. A failing
  * names, keyboard, or motion check lists the problems it found, most of them
  * by element.
  *
@@ -76,6 +77,7 @@ type StoInfTyp = { // What: Stop Information Type. Why: The keyboard walk judges
 
 const GLY_DEC_REG = /[←↑→↓·•]|\p{Extended_Pictographic}/u; // What: Glyph Decorative Regular Expression. Why: A decorative glyph inside a name is read aloud as noise, such as right arrow. How: This matches the arrows and dots a decorative glyph would add to a name, plus any emoji or pictograph.
 const REF_WID_NUM = 320;                                   // What: Reflow Width Number. Why: WCAG's reflow criterion asks for no sideways scrolling at 320 CSS pixels, the width of 1,280px at 400% zoom. How: This is the viewport width the reflow check opens each state at.
+const STY_WAT_NUM = 1000;                                  // What: Style Watch Number. Why: A loop driving motion frame by frame rewrites styles many times a second. How: This is how long, in milliseconds, the reduced-motion check watches for style writes once a state has opened.
 const TAB_HIN_REG = /in a new tab\)/;                      // What: Tab Hint Regular Expression. Why: A link that opens a new tab has to say so in its announced name. How: This matches the note's closing words, such as "(opens in a new tab)".
 const TAB_MAX_NUM = 80;                                    // What: Tab Maximum Number. Why: A keyboard trap would otherwise keep the walk going forever. How: This caps the walk at far more Tab presses than the site has stops.
 
@@ -485,6 +487,77 @@ function stoInfFun () : StoInfTyp | null {
 
 
 
+// #region styWriFun
+
+/**
+ * styWriFun = Style Writes Function
+ *
+ * @summary
+ * Runs inside the page and watches it for a while once a state has opened,
+ * listing every element whose inline style a script rewrites in that time.
+ * Motion a script drives frame by frame, a GSAP tween or a loop of animation
+ * frames moving snow, leaves, or balloons, rewrites the moving element's
+ * style on every frame without starting a CSS or Web Animation, so this is
+ * how such motion is caught. Each element is listed once, by its tag and
+ * first class. Passed to Playwright's evaluate, so it can't read anything
+ * from this file.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param watMilNum - Watch Milliseconds Number: How long to watch, in
+ *                    milliseconds.
+ *
+ * @returns A promise that resolves with the elements whose style was
+ *          rewritten.
+ *
+ * @example
+ * ```ts
+ * page.evaluate(styWriFun, 1000) // => [ 'div.snoFlaDiv', ... ]
+ * ```
+ *
+*/
+
+function styWriFun ( watMilNum : number ) : Promise< string[] > {
+
+
+	return new Promise( ( resCurFun ) => { // What: Watch Promise Return. Why: The caller waits out the watch. How: This resolves with the rewritten elements once the time is up.
+
+
+		const wriEleSet = new Set< string >(); // What: Written Element Set. Why: An element rewritten every frame is one problem. How: This collects each element's description once.
+
+
+		const mutObsObj = new MutationObserver( ( mutRecArr ) => { // What: Mutation Observer Object. Why: A script writing an element's style changes its style attribute. How: This records the element behind each such change.
+
+
+			for ( const mutRecObj of mutRecArr ) wriEleSet.add( `${ ( mutRecObj.target as Element ).tagName.toLowerCase() }${ ( mutRecObj.target as Element ).classList.length ? `.${ ( mutRecObj.target as Element ).classList[ 0 ] }` : '' }` ); // What: Written Element Loop. Why: Each change names the element that moved. How: This adds its tag and first class. // What: Type Assertion Note. Why: TypeScript types a mutation's target as a node. How: The observer watches only the style attribute, which only elements carry.
+
+
+		} );
+
+
+		mutObsObj.observe( document.documentElement, { attributeFilter : [ 'style' ], attributes : true, subtree : true } ); // What: Style Watch Call. Why: Motion anywhere on the page counts. How: This watches the style attribute of every element.
+
+
+		setTimeout( () => { // What: Watch End Timer. Why: The watch spans long enough for a running loop to write many frames. How: This stops watching after the given time and hands back what it saw.
+
+
+			mutObsObj.disconnect(); // What: Observer Disconnect Call. Why: Nothing after the watch counts. How: This stops the observer.
+
+			resCurFun( [ ...wriEleSet ] ); // What: Watch Resolve Call. Why: The test reads what was written. How: This resolves with the collected elements.
+
+
+		}, watMilNum );
+
+
+	} );
+
+
+}
+
+// #endregion styWriFun
+
+
+
 // #region tabStoFun
 
 /**
@@ -695,7 +768,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FI
 
 
 
-	test( `${ staRecObj.ideStr } plays no motion under reduced motion`, async ( { page : curPagObj } ) => { // What: Reduced Motion Test. Why: Visitors who ask for less motion shouldn't see the page animate. How: This requests reduced motion, records every lasting animation and transition from the start of the load, opens the state, and lists anything that played or is still waiting to.
+	test( `${ staRecObj.ideStr } plays no motion under reduced motion`, async ( { page : curPagObj } ) => { // What: Reduced Motion Test. Why: Visitors who ask for less motion shouldn't see the page animate. How: This requests reduced motion, records every lasting animation and transition from the start of the load, opens the state, and lists anything that played, is still waiting to, or has its style rewritten by a script just after.
 
 
 		await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Emulation. Why: The preference has to be set before the page loads. How: This makes the page match prefers-reduced-motion: reduce.
@@ -706,6 +779,7 @@ for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FI
 
 		expect( await curPagObj.evaluate( () => ( window as unknown as { __motRecArr : string[] } ).__motRecArr ) ).toEqual( [] ); // What: No Motion Played Assertion. Why: The state passes only when nothing animated or transitioned for longer than 1ms while it opened. How: This compares the recorded motion with an empty list, so a failure prints each one. // What: Type Assertion Note. Why: The window has no such field in its type. How: motRecFun's script set it.
 		expect( await curPagObj.evaluate( () => document.getAnimations().filter( ( aniCurObj ) => ( Number( aniCurObj.effect?.getTiming().duration ) || 0 ) > 1 ).map( ( aniCurObj ) => ( aniCurObj as CSSAnimation ).animationName || ( aniCurObj as CSSTransition ).transitionProperty || 'script animation' ) ) ).toEqual( [] ); // What: No Motion Left Assertion. Why: A CSS animation whose delay hasn't run out fires no start event yet, so the recorder can't see it. How: This lists every animation or transition the page still holds that lasts longer than 1ms, which should be none. // What: Type Assertion Note. Why: getAnimations returns plain Animation objects, which don't type their CSS names. How: Each one is read as a CSS animation, then a CSS transition, falling back to a generic label when neither name exists.
+		expect( await curPagObj.evaluate( styWriFun, STY_WAT_NUM ) ).toEqual( [] );                                                // What: No Script Motion Assertion. Why: Motion a script drives frame by frame, such as a card's falling snow, starts no CSS or Web Animation, so the checks above can't see it. How: This watches the page for a second once the state has opened and compares the elements whose style was rewritten with an empty list, so a failure names each one.
 
 
 	} );
