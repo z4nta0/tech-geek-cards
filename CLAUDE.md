@@ -6,13 +6,15 @@ confirmed working by the user. Every rule in the user-level CLAUDE.md
 applies here; this file records only what's specific to this project.
 TechGeek.dev (`../tech-geek-dev`) is the closest worked example and the source
 of this project's configs, and the shared design comes from
-`techgeek-design` (`../techgeek-design`, installed from its `v0.7.1` tag,
+`techgeek-design` (`../techgeek-design`, installed from its `v0.7.2` tag,
 moved from `v0.1.0` on 2026-10-17 for the bar's clearance for scrolled-to
 links, top and bottom, and its menu up to 1,024px, then to `v0.7.1` on
 2026-11-10, in the audit, for the bar's skip link, the scroll hook restoring
 back, forward, and reload positions itself, the phone menu closing on any
 of its links' clicks, modified and middle clicks included, named easing on
-every transition, and the "(opens in a new tab)" note on its profile links).
+every transition, and the "(opens in a new tab)" note on its profile links,
+then to `v0.7.2` on 2026-11-14 for the brand link closing the phone menu on
+a modified or middle click too).
 
 ## Main content and skip link
 Decided 2026-11-10, in the audit. Every page opens with a skip link, reading
@@ -446,7 +448,8 @@ the share dialog opened from the Birthday card's floating bar at 390px.
     page lands on the skip link fully in view, and its plain click focuses
     `<main>` with no hashchange.
   - **Menu closing**: a plain tap, a Ctrl or Cmd click, and a middle click on
-    the drawer's links each close it, the email link included.
+    the drawer's links each close it, the email link included, and a new tab
+    click on the brand does too.
 - `npm run test:rendering`: full-page screenshots against
   `tests/rendering/baselines/`, with the clock and `Math.random` fixed (Home
   picks its cards at random), the confetti circuit hidden in Chromium and

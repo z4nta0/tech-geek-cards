@@ -274,10 +274,6 @@ for ( const [ cliKinStr, cliOptObj ] of CLI_KIN_ARR ) { // What: Brand Click Kin
 	test( `a ${ cliKinStr } click on the brand opens a new tab and closes the menu`, async ( { page : curPagObj } ) => { // What: Brand New Tab Test. Why: A menu left open after the brand opened Home in a new tab would keep the page inert. How: This clicks the brand the loop's way and checks a new tab opened, the menu closed, and the page stayed put.
 
 
-		test.fixme( true, 'turned on once the site installs the techgeek-design release whose brand closes the menu' ); // What: Pending Release Fixme. Why: The installed design package's brand has no close handlers yet, so the check fails until the release that adds them is installed. How: This marks the test as known to fail, to be deleted once the site moves to that release.
-
-
-
 		await newTabFun( curPagObj, 'TechGeek.cards', cliOptObj ); // What: New Tab Check Call. Why: The brand shares the menu links' steps. How: This clicks the brand and checks the result.
 
 
