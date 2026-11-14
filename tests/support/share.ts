@@ -43,11 +43,11 @@ const BAR_STA_ARR : StaRecTyp[] = [ // What: Bar State Array. Why: The floating 
 	{ // What: Share Card Phone State. Why: On a phone the dialog sits over the card and its floating bar. How: This loads the Birthday card at 390px and opens the share dialog from its bar.
 
 
-		heiNum : 844,
-		ideStr : 'share-card-phone',
-		patStr : '/happy-birthday',
-		redBoo : true,
-		widNum : 390,
+		heiNum : 844,                // What: Height Number. Why: The state is a phone's screen. How: This sets the viewport 844px tall.
+		ideStr : 'share-card-phone', // What: Identifier String. Why: Each test names the state. How: This names the card page's dialog at the phone width.
+		patStr : '/happy-birthday',  // What: Path String. Why: The dialog opens over a card's own page. How: This loads the Birthday card.
+		redBoo : true,               // What: Reduced Boolean. Why: The card should sit on its finished scene while the dialog is read. How: This opens it under reduced motion.
+		widNum : 390,                // What: Width Number. Why: The state is a phone's screen. How: This sets the viewport 390px wide.
 
 		actFun : async ( curPagObj : Page ) => { // What: Share Open Action. Why: The state shows the dialog as a visitor sees it once it's open. How: This presses the floating bar's "Share" button, then moves the pointer off it.
 

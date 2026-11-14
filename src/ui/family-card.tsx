@@ -997,7 +997,7 @@ function FamCarCom ( { famCarObj, theClaStr } : FccProTyp ) : JSX.Element {
 				onAnimationEnd={ ( aniEveObj ) => { // What: Closing Animation End Handler. Why: The dialog should only close once its fade out has played. How: When the dialog's own closing keyframe ends, this closes it and turns the closing class off; any other animation's end is ignored.
 
 
-					if ( aniEveObj.animationName !== cssModObj.famExpDiaCloseFadeOut ) return; // What: Closing Keyframe Guard. Why: Animation end events bubble up from the photo and the opening fade too. How: This acts only when the closing keyframe has ended.
+					if ( aniEveObj.animationName !== cssModObj.famExpDiaCloseFadeOut ) return; // What: Closing Keyframe Guard. Why: The opening fade's end event reaches this handler too. How: This acts only when the closing keyframe has ended.
 
 
 

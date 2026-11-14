@@ -338,7 +338,7 @@ const staPatFun = ( cenXcoNum : number, cenYcoNum : number ) : string => { // Wh
 const FLA_STA_STR = Array.from( Array( 50 ).keys(), ( staIndNum ) => { // What: Flag Stars String. Why: The canton holds fifty stars in nine rows, six and five in turn. How: This finds each star's row and column and joins their subpaths into a single path, built once when the card's code loads.
 
 
-	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Every pair of rows holds eleven stars, six then five. How: This is the star's place within its pair.
+	const paiIndNum = staIndNum % 11;                                               // What: Pair Index Number. Why: Each full pair of rows holds eleven stars, six then five, and the ninth row's six stand alone. How: This is the star's place within its pair.
 	const colIndNum = paiIndNum < 6 ? paiIndNum * 2 : ( paiIndNum - 6 ) * 2 + 1;    // What: Column Index Number. Why: The six-star rows sit on even columns and the five-star rows between them. How: This picks the star's place among the canton's eleven columns.
 	const rowIndNum = Math.floor( staIndNum / 11 ) * 2 + ( paiIndNum < 6 ? 0 : 1 ); // What: Row Index Number. Why: The rows alternate six and five. How: This counts the pairs before the star and adds one when it falls in its pair's second row.
 

@@ -227,10 +227,10 @@ async function scrDowFun ( curPagObj : Page ) : Promise< number > {
  *
  * @summary
  * Loads a page at a desktop width with hash changes counted, waits for the
- * given locator to show that the page has drawn, presses Tab once, and checks
- * the skip link holds focus and has slid fully into view. It then clicks the
- * link and checks focus lands on the main element, the address keeps the
- * page's own path, and no hashchange fired along the way.
+ * element the given selector names to show that the page has drawn, presses
+ * Tab once, and checks the skip link holds focus and has slid fully into view.
+ * It then clicks the link and checks focus lands on the main element, the
+ * address keeps the page's own path, and no hashchange fired along the way.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -259,7 +259,7 @@ async function skiCheFun ( curPagObj : Page, broNamStr : string, rouPatStr : str
 
 	await hasCouFun( curPagObj ); // What: Hash Counter Call. Why: A jump to #main would fire hashchange even if the address were cleared afterwards. How: This counts hash changes from before the page loads.
 
-	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: The bar shows all its links at desktop width, the most a keyboard user would Tab past. How: This sizes the page before it loads.
+	await curPagObj.setViewportSize( { height : 900, width : 1440 } ); // What: Desktop Viewport Call. Why: At desktop width a site page's bar shows all its links, the most a keyboard user would Tab past. How: This sizes the page before it loads.
 
 	await curPagObj.goto( rouPatStr ); // What: Page Navigation. Why: The skip link is checked on each page. How: This loads the page.
 
