@@ -747,7 +747,7 @@ async function keyProFun ( curPagObj : Page, engNamStr : string ) : Promise< str
 
 // #region Module Init
 
-for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PAU_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, but for the reduced motion check on the paused Family scenes, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's paused scene, open photo, and scene stills, and the share dialog's copy results and card page opening included. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
+for ( const staRecObj of [ ...STA_REC_ARR, ...RES_STA_ARR, ...INV_STA_ARR, ...FIL_STA_ARR, ...EMP_STA_ARR, ...PAU_STA_ARR, ...PHO_STA_ARR, ...STI_STA_ARR, ...COP_STA_ARR, ...BAR_STA_ARR ] ) { // What: State Test Loop. Why: Every check runs on every page state, the Contact form's results and refused send, the Gallery's narrowed grids, a Family card's paused scene, open photo, and scene stills, and the share dialog's copy results and card page opening included, except the reduced motion check on the paused scenes. How: This declares each check once per state, the shared states first, then the reachable ones each control leads to.
 
 
 	test( `${ staRecObj.ideStr } names every link and button cleanly`, async ( { page : curPagObj } ) => { // What: Names Test. Why: Every link and button must be announced by a clean name. How: This opens the state and checks its accessibility tree.
