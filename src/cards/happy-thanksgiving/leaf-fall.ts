@@ -274,7 +274,7 @@ const staLeaFun = ( conDivEle : HTMLElement, temSvgEle : SVGSVGElement, leaClaSt
 
 
 
-			if ( leaRecObj.waiNum > 0 ) continue; // What: Waiting Leaf Check. Why: A leaf still waiting stays hidden above the top. How: This skips it until its wait runs out.
+			if ( leaRecObj.waiNum > 0 ) continue; // What: Waiting Leaf Check. Why: A leaf still waiting stays hidden, at zero opacity. How: This skips it until its wait runs out.
 
 
 
