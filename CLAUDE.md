@@ -355,7 +355,8 @@ usual 5173 (decided 2026-10-14), so Claude never starts one to look at the
 site and uses theirs instead. Playwright suites live in `tests/`, one project
 per suite and engine in `tests/playwright.config.ts`, which starts its own dev
 server on port 5195 and a `vite preview` of a fresh build on 5205 (never the
-user's 5173, nor the siblings' 5190 through 5204) and stops both afterwards.
+user's 5173, nor the siblings' 5190 through 5204) and stops both afterwards;
+the link preview script (`npm run og-images`) plays the cards on its own 5207.
 Every suite runs in Chromium, Firefox, and WebKit, Chromium as full headless
 Chrome (`channel : 'chromium'`). The states the
 suites visit (`tests/support/states.ts`) are every page and the 404 at 390px
@@ -458,7 +459,8 @@ the share dialog opened from the Birthday card's floating bar at 390px.
 - `npm run test:seo`: every page's head, every card page's too (listed cards
   indexed with their own `seaStr` description, the unlisted ones noindex), the
   structured data, the raw page, `robots.txt`, the sitemap, and the icons.
-  The raw page checks (Home's title and description, and the link preview
+  Each card is also reached by a move inside the site and has to swap in its
+  own description, which the dev server can't fake. The raw page checks (Home's title and description, and the link preview
   tags of Home and every card's own `<address>.html`) read the build from the
   preview on 5205 (changed 2026-11-10, in the audit), since scrapers read what
   ships.

@@ -516,6 +516,26 @@ test( 'moving between pages swaps their head tags', async ( { page : curPagObj }
 
 
 
+for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Move Loop. Why: The dev server already writes a card's own description into the page it serves, so only a move inside the site shows whether the card swaps its description itself. How: This declares one test per card.
+
+
+	test( `the ${ carDatObj.sluStr } card swaps in its own description after a move inside the site`, async ( { page : curPagObj } ) => { // What: Card Description Swap Test. Why: A visitor reaching a card from inside the site gets the description the card sets, not the page it came from. How: This opens the Gallery, moves to the card through the router without a reload, and checks the description is the card's own.
+
+
+		await curPagObj.goto( '/gallery' ); // What: Gallery Open Call. Why: The move starts from a page with a different description. How: This loads the Gallery.
+
+		await curPagObj.evaluate( ( sluValStr ) => { window.history.pushState( {}, '', `/${ sluValStr }` ); window.dispatchEvent( new PopStateEvent( 'popstate' ) ); }, carDatObj.sluStr ); // What: Router Move Call. Why: An unlisted card has no tile to click, so every card is reached the same way. How: This pushes the card's address and tells the router the location changed, which moves it without a reload.
+
+		await expect( curPagObj.locator( 'meta[name="description"]' ) ).toHaveAttribute( 'content', carDatObj.seaStr ); // What: Card Description Assertion. Why: The card's head has to describe the card. How: This waits for the one description to hold the card's search description.
+
+
+	} );
+
+
+}
+
+
+
 test( 'the structured data describes z4nta0 and matches the pages', async ( { page : curPagObj } ) => { // What: Structured Data Test. Why: Search engines may show z4nta0's details from the JSON-LD, so every claim has to match what the pages show. How: This reads the data and checks the person, the site, and the profiles against the pages.
 
 
