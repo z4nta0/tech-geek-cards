@@ -262,7 +262,16 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 
 
-	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+
+
+		canCotObj.fillStyle = colGetFun( tokNamStr ); // What: Fill Style Assignment. Why: Each rectangle takes its token's color. How: This sets the context's fill to the color.
+
+
+		canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); // What: Rectangle Fill Call. Why: The backdrop is drawn as rectangles. How: This fills one at the given place and size.
+
+
+	};
 
 
 
@@ -409,7 +418,16 @@ function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 
 
-	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+
+
+		canCotObj.fillStyle = colGetFun( tokNamStr ); // What: Fill Style Assignment. Why: Each rectangle takes its token's color. How: This sets the context's fill to the color.
+
+
+		canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); // What: Rectangle Fill Call. Why: The backdrop is drawn as rectangles. How: This fills one at the given place and size.
+
+
+	};
 
 
 	for ( let plaLefNum = 0; plaLefNum < layRecObj.widNum; plaLefNum += 8 ) { // What: Plank Loop. Why: The studio is wood paneled. How: This draws each eight-pixel plank and its groove.
