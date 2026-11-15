@@ -521,17 +521,14 @@ the share dialog opened from the Birthday card's floating bar at 390px.
     saved positions raise no error, and with smooth scrolling on a page
     change still lands at the top before it's drawn. `Math.random` is fixed
     at 0.5, so Home keeps its height between visits.
-    - **To do, the hash check's Firefox gap** (found 2026-11-15, in
-      TechGeek.support's audit): the hash test's last assertion,
-      `.not.toContain( savTopNum )`, can pass with a wrong restore in
-      Firefox, which jumps to the hash target and records that as the
-      entry's saved position before the hook runs, so a restore aims at the
-      target rather than at `savTopNum`. The fix is to expect no
-      `window.scrollTo` call at all after the hash change, `.toEqual( [] )`,
-      since only a restore or a jump to the top makes one, as
-      TechGeek.support's `tests/interaction/navigation.spec.ts` does
-      (796be23). Prove it by breaking the hook's hash guard and watching it
-      fail in Firefox.
+    - **The hash check refuses any scroll call** (fixed 2026-11-15, from
+      TechGeek.support's audit): after the hash change it expects no
+      `window.scrollTo` call at all, since Firefox records its own jump to
+      the target as the entry's saved position before the hook runs, so the
+      older check for a call aimed at the saved position could pass a wrong
+      restore. Breaking the hook's hash guard fails it in all three engines.
+      The hook comes from Vite's dependency cache, so a test of an edit to
+      `node_modules/techgeek-design` clears `node_modules/.vite` first.
   - **Skip link**: the first Tab on every page, the 404 page, and every card
     page lands on the skip link fully in view, and its plain click focuses
     `<main>` with no hashchange.
@@ -575,14 +572,12 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   preview on 5205 (changed 2026-11-10, in the audit), since scrapers read what
   ships.
 
-## To do: dropdown arrow
-Found 2026-11-15, in TechGeek.support's audit. The Contact topic select
-(`.fieTopSel`) keeps the browser's own arrow, which looks different in each
-engine. Draw the site's own chevron from an SVG file instead (inlining is
-already off here).
-Follow the user-level rule "## Dropdown Arrows: An SVG File" (decided
-2026-11-15): the select keeps `appearance : none` and reads a chevron from
-its own SVG file (`url( './select-arrow.svg' )`) beside its module, Vite's
-`build : { assetsInlineLimit : 0 }` keeps it from being inlined, and the
-security suite's headers check fails a `data:` image source. TechGeek.support
-made this change first, on its `audit-2026-11-15` branch; copy it from there.
+## Dropdown arrow
+Done 2026-11-15, from TechGeek.support's audit, per the user-level rule "##
+Dropdown Arrows: An SVG File". The Contact topic select (`.fieTopSel`) takes
+`appearance : none` and draws the site's chevron from
+`pages/contact/select-arrow.svg`, in the muted text color written out as
+`#646482`, which also brings the select to the other fields' height. Vite
+never inlines an asset (`assetsInlineLimit : 0`), and the security suite's
+policy check, which allows only `'self'` and `'none'` in any directive, fails
+a `data:` image source, proven by adding one.
