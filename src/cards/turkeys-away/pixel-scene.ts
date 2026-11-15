@@ -855,7 +855,7 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 
 
 				turCurObj.angNum    = 0;                    // What: Upright Assignment. Why: The turkey lands on its feet. How: This clears its angle.
-				turCurObj.bouBoo    = true;                 // What: Bounced Assignment. Why: A turkey bounces only once. How: This marks it.
+				turCurObj.bouBoo    = true;                 // What: Bounced Assignment. Why: The turkey's record shows it has bounced. How: This marks it as it lands.
 				turCurObj.staStr    = 'bounce';             // What: Bounce State Assignment. Why: The turkey hops up from the impact. How: This switches it to bouncing.
 				turCurObj.velYcoNum = -38;                  // What: Bounce Speed Assignment. Why: The hop rises a little before it falls. How: This throws it up.
 				turCurObj.ycoNum    = turCurObj.lanNum - 8; // What: Landing Place Assignment. Why: The turkey's feet sit on its line. How: This places its center eight pixels above.
@@ -995,7 +995,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 			ageNum    : 9,                        // What: Age Number. Why: The dazed turkey landed long before the studio opens. How: This starts it well past its first flaps.
 			angNum    : 0,                        // What: Angle Number. Why: The dazed turkey sits upright. How: This is no tumble.
-			bouBoo    : true,                     // What: Bounced Boolean. Why: It has already landed. How: This keeps it from bouncing.
+			bouBoo    : true,                     // What: Bounced Boolean. Why: It has already landed. How: This marks it as bounced, as a landed turkey is.
 			flaNum    : 0,                        // What: Flap Number. Why: Its wing beat starts fresh. How: This starts at zero.
 			lanNum    : layRecObj.manArr[ 1 ],    // What: Landing Number. Why: It sits at the station manager's feet. How: This is his line.
 			spiNum    : 0,                        // What: Spin Number. Why: A sitting turkey doesn't tumble. How: This is no spin.
