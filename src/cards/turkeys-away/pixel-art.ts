@@ -331,9 +331,9 @@ function griCanFun ( souGriArr : PixGriTyp, palColObj : PalColTyp ) : HTMLCanvas
  * head with a gray fringe, worried brows and a sheepish mouth, a three-piece
  * suit with a red tie, a vest, buttons, and a watch chain, his other arm at
  * his side, trousers, shoes, and a stray turkey feather on his head. His keys
- * are P, his skin; p, its shade; H, his hair; W, his shirt; r, his tie; N,
- * his suit; n, its shade; V, his vest; y, his watch chain; and K, his dark
- * details, with O and T for the feather.
+ * are P, his skin; p, its shade; H, his hair; W, his shirt and the whites of
+ * his eyes; r, his tie; N, his suit; n, its shade; V, his vest; y, his watch
+ * chain; and K, his dark details, with O and T for the feather.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
