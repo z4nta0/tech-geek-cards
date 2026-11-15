@@ -940,13 +940,15 @@ type SceSysTyp = { stoFun : () => void, tapFun : ( xcoFraNum : number ) => void 
 function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : SceSysTyp {
 
 
-	const canCotObj = canEleObj.getContext( '2d' )!;           // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: A canvas in the page always offers a 2D context.
+	const canCotObj = canEleObj.getContext( '2d' )!; // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: A canvas in the page always offers a 2D context.
+	const schRecObj = sceOptObj.schRecObj;           // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
+
+
+
+	// #region Color And Sprite Painting
+
 	const colCacMap = new Map< string, string >();             // What: Color Cache Map. Why: Each token is read once, not every frame. How: This keeps each token's color by name.
 	const rooStyObj = getComputedStyle( sceOptObj.rooEleObj ); // What: Root Style Object. Why: The colors are tokens on the card's root. How: This reads its computed styles.
-	const schRecObj = sceOptObj.schRecObj;                     // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
-
-	const tapEveArr : TapEveTyp[] = []; // What: Tap Event Array. Why: Taps are replayed when a moment is rebuilt. How: This lists each tap in order.
-
 
 
 	const colGetFun = ( tokNamStr : string ) : string => colCacMap.get( tokNamStr ) ?? colCacMap.set( tokNamStr, rooStyObj.getPropertyValue( tokNamStr ).trim() ).get( tokNamStr )!; // What: Color Get Function. Why: The canvas can't read a token, so each color is looked up by its token's name. How: This returns the cached color, reading and caching it the first time. // What: Non-Null Note. Why: TypeScript can't see the value was just set. How: The map holds the key it was given on the same line.
@@ -970,6 +972,14 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 	};
 
+	// #endregion Color And Sprite Painting
+
+
+
+	// #region Replay State
+
+	const tapEveArr : TapEveTyp[] = []; // What: Tap Event Array. Why: Taps are replayed when a moment is rebuilt. How: This lists each tap in order.
+
 
 
 	const simNewFun = () : SimStaTyp => ( { feaArr : [], malArr : [], parArr : [], ranFun : ranGenFun( RAN_SEE_NUM ), simNum : 0, stuArr : [], tapNum : 0 } ); // What: Simulation New Function. Why: A moment is rebuilt from the start. How: This returns a fresh state with the seeded sequence restarted.
@@ -979,6 +989,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	let lopIdeNum = 0;                                 // What: Loop Identifier Number. Why: The frame loop is cancelled when the scene stops. How: This holds the pending frame's ID.
 	let simStaObj = simNewFun();                       // What: Simulation State Object. Why: The motion is stepped from a known start. How: This holds the current state.
 	let staImaObj = canCotObj.createImageData( 1, 1 ); // What: Static Image Object. Why: The static is drawn from a buffer the canvas's size. How: This holds the buffer, remade when the canvas resizes.
+
+	// #endregion Replay State
 
 
 
@@ -1101,6 +1113,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 
+	// #region Canvas Sizing
+
 	// #region sizCanFun
 
 	/**
@@ -1163,7 +1177,11 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 	resObsObj.observe( canEleObj ); // What: Resize Observe Call. Why: The canvas's box is the one watched. How: This starts watching it, which also sizes it once.
 
+	// #endregion Canvas Sizing
 
+
+
+	// #region Frame Loop
 
 	const lopFraFun = () : void => { // What: Loop Frame Function. Why: The scene animates every frame. How: This draws the card's moment and asks for the next frame.
 
@@ -1177,6 +1195,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 	if ( !sceOptObj.redMotBoo ) lopIdeNum = requestAnimationFrame( lopFraFun ); // What: Loop Start Branch. Why: The scene animates only while motion is allowed. How: This starts the frame loop.
+
+	// #endregion Frame Loop
 
 
 
