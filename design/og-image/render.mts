@@ -157,6 +157,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 		if ( texWidNum > squWidNum ) maiLinEle.style.scale = String( squWidNum / texWidNum ); // What: Line Shrink Assignment. Why: The line has to fit the square without changing the card's layout. How: This scales the line about its own center by the square's share of its width, on top of any transform the card gave it.
 
 
+
 		const texCenNum = ( texRanObj.getBoundingClientRect().left + texRanObj.getBoundingClientRect().right ) / 2; // What: Text Center Number. Why: A line set to one side would fall outside the square even once it fits. How: This reads the shrunk text's middle across.
 
 

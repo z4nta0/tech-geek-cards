@@ -225,6 +225,7 @@ function TurCarCom () : JSX.Element {
 		let finTimNum = 0; // What: Finish Time Number. Why: The scene's clock runs on past the timeline's end. How: This holds the moment the timeline finished, 0 until then.
 
 
+
 		timLinObj.fromTo( logDivRef.current, hidStaObj,                                 { duration : durSecFun( 'p04' ), autoAlpha : 1 },                              0 );                                        // What: Logo Fade. Why: The station's call letters open the broadcast. How: This fades them in at once. // Duration Animation Base Plus 4 ~= 486.1ms
 		timLinObj.fromTo( livDivRef.current, hidStaObj,                                 { duration : durSecFun( 'p04' ), autoAlpha : 1 },                              durSecFun( 'p03' ) );                       // What: Live Fade. Why: The tag says this is live from the mall. How: This fades it in a Base Plus 3 step in. // Duration Animation Base Plus 4 ~= 486.1ms, Duration Animation Base Plus 3 ~= 366.9ms
 		timLinObj.fromTo( humParRef.current, { ...hidStaObj, scale : cdnPowFun( -2 ) }, { duration : durSecFun( 'p03' ), autoAlpha : 1, ease : oveEasStr, scale : 1 }, humStaNum );                                // What: Humanity Pop. Why: The cry bursts out as the turkeys fall. How: This grows it from about 0.57 of its size as it fades in, overshooting a little. // Core-Design-Number to the Power of 2 Reciprocal ~= 0.570, Duration Animation Base Plus 3 ~= 366.9ms
@@ -287,7 +288,6 @@ function TurCarCom () : JSX.Element {
 				<div className={ cssModObj.cabBodDiv }>{ /* What: Cabinet Body Div Element. Why: The cabinet holds the screen and the controls. How: This lays them side by side on a large screen. */ }
 
 
-
 					<div className={ cssModObj.bezFraDiv }>{ /* What: Bezel Frame Div Element. Why: The screen sits deep in a dark frame. How: This frames it on a large screen. */ }
 
 
@@ -315,7 +315,6 @@ function TurCarCom () : JSX.Element {
 								aria-hidden='true'
 							/>{ /* What: Scene Pixel Canvas Element. Why: The pixel scenes are drawn on it. How: This holds the drawing, hidden from screen readers, since the lettering carries the card's words. */ }
 
-
 							<div
 								ref={ logDivRef }
 
@@ -330,7 +329,6 @@ function TurCarCom () : JSX.Element {
 
 							</div>
 
-
 							<div
 								ref={ livDivRef }
 
@@ -344,7 +342,6 @@ function TurCarCom () : JSX.Element {
 
 
 							</div>
-
 
 							<p
 								ref={ humParRef }
@@ -361,7 +358,6 @@ function TurCarCom () : JSX.Element {
 
 
 								<span className={ cssModObj.newLabSpa }>NEWS BULLETIN</span>{ /* What: News Label Span Element. Why: A tab names the bulletin. How: This shows it above the line. */ }
-
 
 								<p className={ cssModObj.newTexPar }>{ /* What: News Text Paragraph Element. Why: The bulletin types out on its bar. How: This holds the line's visible copy and its hidden copy. */ }
 
@@ -386,7 +382,6 @@ function TurCarCom () : JSX.Element {
 
 								className={ cssModObj.titGreHea }
 							>{ namParStr ? `Merry Thanksgiving, ${ namParStr }!` : 'Merry Thanksgiving!' }</h1>{ /* What: Title Greeting Heading Element. Why: The greeting leads the studio scene. How: This shows "Merry Thanksgiving", naming the recipient when the link carries a name. */ }
-
 
 							<p
 								ref={ quoParRef }

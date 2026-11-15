@@ -238,8 +238,6 @@
 
 
 	}
-
-
 	.rabEarDiv::before,
 	.rabEarDiv::after { /* What: Rabbit Ear Div Rods. Why: Two telescoping rods spread up from the base. How: This draws each as a thin silver-to-pewter bar standing from the base's middle, turned by its own rule. */
 
@@ -256,7 +254,6 @@
 
 
 	}
-
 	.rabEarDiv::before { /* What: Rabbit Ear Div Left Rod. Why: One rod leans left. How: This turns it left. */
 
 
@@ -264,7 +261,6 @@
 
 
 	}
-
 	.rabEarDiv::after { /* What: Rabbit Ear Div Right Rod. Why: The other rod leans right, a little less. How: This turns it right. */
 
 
@@ -369,7 +365,6 @@
 
 
 }
-
 @media ( orientation : landscape ) and ( max-width : 1023.98px ) and ( max-height : 639.98px ) { /* What: Short Landscape Screen Box Div. Why: On a phone held sideways the floating bar would cover the lot and crowd the bulletin. How: This applies on a landscape screen below 1,024px wide and 640px tall, where the set never shows. */
 
 
@@ -810,7 +805,6 @@
 
 
 }
-
 .knoDiaDiv::after { /* What: Knob Dial Div Pointer. Why: A dial shows where it's turned. How: This draws a short dark line from the knob's top toward its middle. */
 
 

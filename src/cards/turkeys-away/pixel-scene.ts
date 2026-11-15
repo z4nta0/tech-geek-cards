@@ -766,7 +766,29 @@ function ranGenFun ( seeValNum : number ) : () => number {
  *
 */
 
-const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ] ) : void => { lisTurArr.push( { ageNum : 0, angNum : 0, bouBoo : false, flaNum : 0, lanNum : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ], spiNum : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), staStr : 'fall', velXcoNum, velYcoNum : 0, xcoNum : spaXcoNum, ycoNum : spaYcoNum } ); }; // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
+const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ] ) : void => { // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
+
+
+	lisTurArr.push({ // What: Turkey Push Call. Why: The new turkey joins the list it falls in. How: This adds it with its starting state.
+
+
+		ageNum    : 0,                                                                      // What: Age Number. Why: A new turkey has just appeared. How: Its age starts at zero.
+		angNum    : 0,                                                                      // What: Angle Number. Why: A falling turkey starts upright. How: Its tumble starts at zero.
+		bouBoo    : false,                                                                  // What: Bounced Boolean. Why: A new turkey hasn't bounced yet. How: This starts false.
+		flaNum    : 0,                                                                      // What: Flap Number. Why: Its wing beat starts fresh. How: This starts at zero.
+		lanNum    : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ],                   // What: Landing Number. Why: Turkeys land at different depths. How: This draws a line inside the landing band from the seeded sequence.
+		spiNum    : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), // What: Spin Number. Why: Each turkey tumbles its own way. How: This draws a direction and a speed from the seeded sequence.
+		staStr    : 'fall',                                                                 // What: State String. Why: A new turkey is falling. How: This starts its fall.
+		velXcoNum,                                                                          // What: Velocity X-Coordinate Number. Why: A dropped turkey drifts with the helicopter. How: This is the sideways speed passed in.
+		velYcoNum : 0,                                                                      // What: Velocity Y-Coordinate Number. Why: A turkey starts its fall at rest. How: Its falling speed starts at zero.
+		xcoNum    : spaXcoNum,                                                              // What: X-Coordinate Number. Why: The turkey starts at the spawn point. How: This is its place across.
+		ycoNum    : spaYcoNum                                                               // What: Y-Coordinate Number. Why: The turkey starts at the spawn point. How: This is its place down.
+
+
+	});
+
+
+};
 
 // #endregion spaTurFun
 
@@ -831,7 +853,6 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 			turCurObj.ycoNum += turCurObj.velYcoNum * delTimNum; // What: Fall Assignment. Why: The turkey falls. How: This moves it by its downward speed.
 
 
-
 			if ( turCurObj.ycoNum + 8 >= turCurObj.lanNum ) { // What: Landing Branch. Why: A turkey stops at its landing line, bouncing once. How: This sets it upright on the line, throws a puff, and starts its bounce.
 
 
@@ -842,7 +863,24 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 				turCurObj.ycoNum = turCurObj.lanNum - 8; // What: Landing Place Assignment. Why: The turkey's feet sit on its line. How: This places its center eight pixels above.
 
 
-				for ( let parIndNum = 0; parIndNum < 9; parIndNum++ ) simStaObj.parArr.push( { colStr : pufColArr[ parIndNum % pufColArr.length ], lifNum : 0.7 + simStaObj.ranFun() * 0.4, velXcoNum : ( simStaObj.ranFun() - 0.5 ) * 70, velYcoNum : -20 - simStaObj.ranFun() * 35, xcoNum : turCurObj.xcoNum, ycoNum : turCurObj.lanNum } ); // What: Feather Puff Loop. Why: Feathers fly from the impact. How: This throws nine pixels up and out, alternating the puff's colors.
+				for ( let parIndNum = 0; parIndNum < 9; parIndNum++ ) { // What: Feather Puff Loop. Why: Feathers fly from the impact. How: This throws nine pixels up and out, alternating the puff's colors.
+
+
+					simStaObj.parArr.push({ // What: Puff Pixel Push Call. Why: Each pixel joins the puff. How: This adds it with its color, life, speed, and place.
+
+
+						colStr    : pufColArr[ parIndNum % pufColArr.length ], // What: Color String. Why: The puff mixes its colors. How: This cycles through them.
+						lifNum    : 0.7 + simStaObj.ranFun() * 0.4,            // What: Life Number. Why: The pixels fade at different times. How: Each lasts 0.7 to 1.1 seconds.
+						velXcoNum : ( simStaObj.ranFun() - 0.5 ) * 70,         // What: Velocity X-Coordinate Number. Why: The pixels fly out both ways. How: This draws a sideways speed.
+						velYcoNum : -20 - simStaObj.ranFun() * 35,             // What: Velocity Y-Coordinate Number. Why: The pixels fly up first. How: This draws an upward speed.
+						xcoNum    : turCurObj.xcoNum,                          // What: X-Coordinate Number. Why: The puff starts at the turkey. How: This is its place across.
+						ycoNum    : turCurObj.lanNum                           // What: Y-Coordinate Number. Why: The puff starts on the ground. How: This is the turkey's landing line.
+
+
+					});
+
+
+				}
 
 
 			}
@@ -857,7 +895,21 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 			turCurObj.ycoNum += turCurObj.velYcoNum * delTimNum; // What: Hop Move Assignment. Why: The turkey rises and falls. How: This moves it by its speed.
 
 
-			if ( turCurObj.ycoNum + 8 >= turCurObj.lanNum ) Object.assign( turCurObj, { ageNum : 0, staStr : 'sit', ycoNum : turCurObj.lanNum - 8 } ); // What: Sit Assignment. Why: The turkey settles on landing again. How: This sits it on its line and restarts its age.
+			if ( turCurObj.ycoNum + 8 >= turCurObj.lanNum ) { // What: Sit Branch. Why: The turkey settles on landing again. How: This sits it once its feet reach its line.
+
+
+				Object.assign( turCurObj, { // What: Sit Assignment. Why: The turkey settles on landing again. How: This sits it on its line and restarts its age.
+
+
+					ageNum : 0,                   // What: Age Number. Why: Its sitting starts now. How: This restarts its age.
+					staStr : 'sit',               // What: State String. Why: The turkey stops bouncing. How: This sits it.
+					ycoNum : turCurObj.lanNum - 8 // What: Y-Coordinate Number. Why: Its feet rest on its line. How: This sets its middle 8 pixels above the line.
+
+
+				} );
+
+
+			}
 
 
 		}
@@ -940,9 +992,33 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 	if ( preTimNum < schRecObj.sceNum && nexTimNum >= schRecObj.sceNum ) { // What: Studio Start Branch. Why: The studio opens with a dazed turkey and drifting feathers. How: This sets them up as the studio starts.
 
 
-		simStaObj.stuArr.push( { ageNum : 9, angNum : 0, bouBoo : true, flaNum : 0, lanNum : layRecObj.manArr[ 1 ], spiNum : 0, staStr : 'sit', velXcoNum : 0, velYcoNum : 0, xcoNum : layRecObj.turNum, ycoNum : layRecObj.manArr[ 1 ] - 8 } ); // What: Dazed Turkey Push Call. Why: A turkey sits dazed at the manager's feet. How: This seats it beside him.
+		simStaObj.stuArr.push({ // What: Dazed Turkey Push Call. Why: A turkey sits dazed at the manager's feet. How: This seats it beside him.
 
-		simStaObj.feaArr = Array.from( Array( 6 ).keys(), ( feaIndNum ) => ( { phaNum : feaIndNum, xcoNum : layRecObj.feaArr[ 0 ] + feaIndNum * layRecObj.feaArr[ 1 ], ycoNum : -10 - feaIndNum * 24 } ) ); // What: Feather Setup Assignment. Why: Six feathers drift down the studio at staggered heights. How: This spaces them across and above the top.
+
+			ageNum    : 9,                        // What: Age Number. Why: The dazed turkey landed long before the studio opens. How: This starts it well past its first flaps.
+			angNum    : 0,                        // What: Angle Number. Why: The dazed turkey sits upright. How: This is no tumble.
+			bouBoo    : true,                     // What: Bounced Boolean. Why: It has already landed. How: This keeps it from bouncing.
+			flaNum    : 0,                        // What: Flap Number. Why: Its wing beat starts fresh. How: This starts at zero.
+			lanNum    : layRecObj.manArr[ 1 ],    // What: Landing Number. Why: It sits at the station manager's feet. How: This is his line.
+			spiNum    : 0,                        // What: Spin Number. Why: A sitting turkey doesn't tumble. How: This is no spin.
+			staStr    : 'sit',                    // What: State String. Why: The turkey is dazed on the carpet. How: This sits it.
+			velXcoNum : 0,                        // What: Velocity X-Coordinate Number. Why: A sitting turkey stays put. How: This is no sideways speed.
+			velYcoNum : 0,                        // What: Velocity Y-Coordinate Number. Why: A sitting turkey stays put. How: This is no falling speed.
+			xcoNum    : layRecObj.turNum,         // What: X-Coordinate Number. Why: The turkey sits beside the manager. How: This is its drawn place across.
+			ycoNum    : layRecObj.manArr[ 1 ] - 8 // What: Y-Coordinate Number. Why: Its feet rest on his line. How: This sets its middle 8 pixels above the line.
+
+
+		});
+
+		simStaObj.feaArr = Array.from( Array( 6 ).keys(), ( feaIndNum ) => ( { // What: Feather Setup Assignment. Why: Six feathers drift down the studio at staggered heights. How: This spaces them across and above the top.
+
+
+			phaNum : feaIndNum,                                                 // What: Phase Number. Why: Each feather sways out of step. How: This offsets its sway by its place.
+			xcoNum : layRecObj.feaArr[ 0 ] + feaIndNum * layRecObj.feaArr[ 1 ], // What: X-Coordinate Number. Why: The feathers spread across the studio. How: This steps each from the first by the spacing.
+			ycoNum : -10 - feaIndNum * 24                                       // What: Y-Coordinate Number. Why: The feathers enter one after another. How: This starts each higher above the top.
+
+
+		} ) );
 
 
 	}
@@ -950,6 +1026,8 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 	if ( nexTimNum < schRecObj.staNum ) steTurFun( simStaObj, simStaObj.malArr, pufColArr, DEL_TIM_NUM ); // What: Lot Turkey Step Call. Why: The lot's turkeys move while the mall shows. How: This steps them.
+
+
 
 	if ( nexTimNum >= schRecObj.sceNum ) steTurFun( simStaObj, simStaObj.stuArr, pufColArr, DEL_TIM_NUM ); // What: Studio Turkey Step Call. Why: The studio's turkeys move once it shows. How: This steps them.
 
@@ -959,7 +1037,22 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 
-	for ( const parCurObj of simStaObj.parArr ) Object.assign( parCurObj, { lifNum : parCurObj.lifNum - DEL_TIM_NUM, velYcoNum : parCurObj.velYcoNum + 90 * DEL_TIM_NUM, xcoNum : parCurObj.xcoNum + parCurObj.velXcoNum * DEL_TIM_NUM, ycoNum : parCurObj.ycoNum + parCurObj.velYcoNum * DEL_TIM_NUM } ); // What: Puff Move Loop. Why: The puff's pixels fly and fall. How: This moves each by its speed, adds gravity, and ages it.
+	for ( const parCurObj of simStaObj.parArr ) { // What: Puff Move Loop. Why: The puff's pixels fly and fall. How: This moves each by its speed, adds gravity, and ages it.
+
+
+		Object.assign( parCurObj, { // What: Puff Move Assignment. Why: Every value steps from the same moment. How: This sets them together, each worked out from the old values.
+
+
+			lifNum    : parCurObj.lifNum - DEL_TIM_NUM,                       // What: Life Number. Why: The pixels fade out. How: This ages each by the slice.
+			velYcoNum : parCurObj.velYcoNum + 90 * DEL_TIM_NUM,               // What: Velocity Y-Coordinate Number. Why: Gravity pulls the pixels down. How: This adds to the falling speed.
+			xcoNum    : parCurObj.xcoNum + parCurObj.velXcoNum * DEL_TIM_NUM, // What: X-Coordinate Number. Why: The pixels fly sideways. How: This moves each by its sideways speed.
+			ycoNum    : parCurObj.ycoNum + parCurObj.velYcoNum * DEL_TIM_NUM  // What: Y-Coordinate Number. Why: The pixels rise and fall. How: This moves each by its falling speed before gravity adds to it.
+
+
+		} );
+
+
+	}
 
 
 
@@ -982,6 +1075,8 @@ type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene it
 
 
 };
+
+
 
 type SceSysTyp = { stoFun : () => void, tapFun : ( fraXcoNum : number ) => void }; // What: Scene System Type. Why: The card stops the scene when it leaves and hands it taps. How: This names the stop and tap functions.
 
@@ -1060,7 +1155,19 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 
-	const simNewFun = () : SimStaTyp => ( { feaArr : [], malArr : [], parArr : [], ranFun : ranGenFun( RAN_SEE_NUM ), simNum : 0, stuArr : [], tapNum : 0 } ); // What: Simulation New Function. Why: A moment is rebuilt from the start. How: This returns a fresh state with the seeded sequence restarted.
+	const simNewFun = () : SimStaTyp => ( { // What: Simulation New Function. Why: A moment is rebuilt from the start. How: This returns a fresh state with the seeded sequence restarted.
+
+
+		feaArr : [],                       // What: Feather Array. Why: The feathers appear with the studio. How: This starts empty.
+		malArr : [],                       // What: Mall Array. Why: The mall's turkeys drop with the helicopter. How: This starts empty.
+		parArr : [],                       // What: Particle Array. Why: Puffs come with landings. How: This starts empty.
+		ranFun : ranGenFun( RAN_SEE_NUM ), // What: Random Function. Why: The same moment always rebuilds the same way. How: This restarts the seeded sequence.
+		simNum : 0,                        // What: Simulation Number. Why: The motion starts at the card's start. How: This is the stepped time, in seconds.
+		stuArr : [],                       // What: Studio Array. Why: The studio's turkeys appear when it opens. How: This starts empty.
+		tapNum : 0                         // What: Tap Number. Why: No tap has been replayed yet. How: This is the next tap to replay.
+
+
+	} );
 
 
 	let layRecObj = layRecFun( 16 / 9 );               // What: Layout Record Object. Why: The positions depend on the canvas's shape. How: This starts on the wide composition until the box is measured.
@@ -1236,8 +1343,10 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 		canEleObj.width  = layRecObj.widNum; // What: Canvas Width Assignment. Why: One canvas pixel stands for one scene pixel. How: This sets the layout's width.
 
 
-		canCotObj.imageSmoothingEnabled = false;                                     // What: Smoothing Off Assignment. Why: A resize resets the context, and a turned turkey would blur. How: This keeps pixels sharp.
-		simStaObj = simNewFun();                                                     // What: Simulation Reset Assignment. Why: The motion is rebuilt in the new layout. How: This starts it over, replaying to the moment on the next draw.
+		canCotObj.imageSmoothingEnabled = false; // What: Smoothing Off Assignment. Why: A resize resets the context, and a turned turkey would blur. How: This keeps pixels sharp.
+
+		simStaObj = simNewFun(); // What: Simulation Reset Assignment. Why: The motion is rebuilt in the new layout. How: This starts it over, replaying to the moment on the next draw.
+
 		staImaObj = canCotObj.createImageData( layRecObj.widNum, layRecObj.heiNum ); // What: Static Buffer Assignment. Why: The static fills the whole canvas. How: This makes a buffer its new size.
 
 
@@ -1247,7 +1356,6 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	};
 
 	// #endregion sizCanFun
-
 
 
 	const resObsObj = new ResizeObserver( sizCanFun ); // What: Resize Observer Object. Why: The box changes size when the screen does, as when a phone turns. How: This sizes the canvas again each time.
@@ -1265,6 +1373,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 		draFraFun( sceOptObj.timFun() ); // What: Frame Draw Call. Why: Each frame shows the card's moment. How: This draws it.
+
 
 		looIdeNum = requestAnimationFrame( looFraFun ); // What: Next Frame Assignment. Why: The loop runs until the scene stops. How: This asks for the next frame and keeps its ID.
 
@@ -1291,7 +1400,24 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 		},
 
-		tapFun : ( fraXcoNum : number ) => { if ( !sceOptObj.redMotBoo ) tapEveArr.push( { fraXcoNum, timNum : sceOptObj.timFun() } ); } // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
+		tapFun : ( fraXcoNum : number ) => { // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
+
+
+			if ( sceOptObj.redMotBoo ) return; // What: Reduced Motion Guard. Why: Under reduced motion a tap drops nothing. How: This leaves before recording it.
+
+
+
+			tapEveArr.push({ // What: Tap Push Call. Why: The tap is replayed on the next frame. How: This records it.
+
+
+				fraXcoNum,                  // What: Fraction X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This is the tap's share across.
+				timNum : sceOptObj.timFun() // What: Time Number. Why: The tap replays at its moment. How: This is the card's time, in seconds.
+
+
+			});
+
+
+		}
 
 
 	};
