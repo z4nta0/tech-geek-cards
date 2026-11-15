@@ -1123,7 +1123,34 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	const rooStyObj = getComputedStyle( sceOptObj.rooEle ); // What: Root Style Object. Why: The colors are tokens on the card's root. How: This reads its computed styles.
 
 
+
+	// #region colGetFun
+
+	/**
+	 * colGetFun = Color Get Function
+	 *
+	 * @summary
+	 * Returns a color token's value as the card's root computes it, trimmed,
+	 * so the canvas can paint with the card's own colors. The first read of
+	 * each token is kept in the color cache, and later calls answer from it,
+	 * so a token is read once rather than every frame.
+	 *
+	 * @author z4nta0 <https://github.com/z4nta0>
+	 *
+	 * @param tokNamStr - Token Name String: The custom property's name.
+	 *
+	 * @returns The token's color.
+	 *
+	 * @example
+	 * ```ts
+	 * colGetFun('--tur-ink-col') // => '#2a1d17'
+	 * ```
+	 *
+	*/
+
 	const colGetFun = ( tokNamStr : string ) : string => colCacMap.get( tokNamStr ) ?? colCacMap.set( tokNamStr, rooStyObj.getPropertyValue( tokNamStr ).trim() ).get( tokNamStr )!; // What: Color Get Function. Why: The canvas can't read a token, so each color is looked up by its token's name. How: This returns the cached color, reading and caching it the first time. // What: Non-Null Note. Why: TypeScript can't see the value was just set. How: The map holds the key it was given on the same line.
+
+	// #endregion colGetFun
 
 
 	const palColObj = Object.fromEntries( Object.entries( SPR_TOK_OBJ ).map( ( [ keyCurStr, tokNamStr ] ) => [ keyCurStr, colGetFun( tokNamStr ) ] ) ); // What: Palette Color Object. Why: The sprites paint with the card's colors. How: This reads each sprite key's token.
