@@ -70,7 +70,7 @@ type LayRecTyp = { // What: Layout Record Type. Why: The parts of both scenes th
 	linArr : [ number, number ][],         // What: Line Array. Why: Painted stall lines mark the lot. How: Each entry is a row of lines' top and height.
 	malArr : [ number, number, number ],   // What: Mall Array. Why: The mall stands centered at the back of the lot. How: This is its left, its roof's top, and its width.
 	manArr : [ number, number ],           // What: Manager Array. Why: The station manager stands on the studio's carpet. How: This is his left, then the line his feet stand on.
-	onaArr : [ number, number ],           // What: On Air Array. Why: The ON AIR light hangs on the studio's wall. How: This is its left, then its top.
+	onaArr : [ number, number ],           // What: On Air Array. Why: The "ON AIR" light hangs on the studio's wall. How: This is its left, then its top.
 	polArr : number[],                     // What: Pole Array. Why: Lamp posts light the lot. How: Each entry is a post's left.
 	skyNum : number,                       // What: Sky Number. Why: The sky lightens toward the horizon. How: This is where its upper band ends.
 	tapArr : [ number, number ],           // What: Tap Array. Why: A turkey dropped in the studio lands on its carpet. How: This is the highest landing line, then how far below it.
@@ -231,7 +231,7 @@ const WID_BAS_ARR = [ 240, 135 ]; // What: Wide Base Array. Why: The wide compos
  * @summary
  * Draws the first scene's backdrop: the sky in two bands dithered where they
  * meet, three clouds drifting right and wrapping around, the brick mall with
- * its mortar lines, shop windows, glass doors, and its PINEDALE MALL sign on
+ * its mortar lines, shop windows, glass doors, and its "PINEDALE MALL" sign on
  * posts, the curb, the asphalt with its stall lines and divider, the parked
  * cars, and two lamp posts.
  *
@@ -389,7 +389,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
  *
  * @summary
  * Draws the second scene's backdrop: wood paneling in alternating planks
- * with grooves between them, a baseboard, a dithered 70s carpet, the ON AIR
+ * with grooves between them, a baseboard, a dithered 70s carpet, the "ON AIR"
  * light blinking between lit and unlit, and the station manager standing on
  * the carpet.
  *
@@ -415,7 +415,7 @@ function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 	const [ onaLefNum, onaTopNum ] = layRecObj.onaArr; // What: On Air Left Number. Why: The light is placed from its left. How: This reads it. // What: On Air Top Number. Why: The light is placed from its top. How: This reads it.
 
-	const onaLitBoo = Math.floor( curTimNum * 1.2 ) % 2 === 0; // What: On Air Lit Boolean. Why: The ON AIR light blinks. How: This is true on every other beat, a little under a second each.
+	const onaLitBoo = Math.floor( curTimNum * 1.2 ) % 2 === 0; // What: On Air Lit Boolean. Why: The "ON AIR" light blinks. How: This is true on every other beat, a little under a second each.
 
 
 
@@ -622,7 +622,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 			linArr : [ [ offYcoNum + 90, 9 ], [ offYcoNum + 116, 10 ] ],                   // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
 			malArr : [ offXcoNum + 28, offYcoNum + 56, 184 ],                              // What: Mall Array. Why: The mall stands centered at the back of the lot. How: This is its drawn place, moved, and its width.
 			manArr : [ manLefNum, offYcoNum + 129 ],                                       // What: Manager Array. Why: The station manager stands on the carpet. How: This is his left, then his drawn footing, moved down.
-			onaArr : [ 10, 10 ],                                                           // What: On Air Array. Why: The ON AIR light hangs at the wall's top left. How: This is its drawn place.
+			onaArr : [ 10, 10 ],                                                           // What: On Air Array. Why: The "ON AIR" light hangs at the wall's top left. How: This is its drawn place.
 			polArr : [ offXcoNum + 92, offXcoNum + 184 ],                                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
 			skyNum : offYcoNum + 40,                                                       // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
 			tapArr : [ offYcoNum + 122, 8 ],                                               // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
@@ -659,7 +659,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 		linArr : [ [ offYcoNum + 130, 9 ], [ offYcoNum + 156, 10 ] ],                 // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
 		malArr : [ offXcoNum + 6, offYcoNum + 96, 123 ],                              // What: Mall Array. Why: The tall composition's mall is narrower. How: This is its drawn place, moved, and its width.
 		manArr : [ offXcoNum + 14, offYcoNum + 186 ],                                 // What: Manager Array. Why: The station manager stands at the studio's left, below the greeting. How: This is his drawn place, moved with the extra size.
-		onaArr : [ offXcoNum + 92, offYcoNum + 112 ],                                 // What: On Air Array. Why: The ON AIR light hangs on the wall to the manager's right. How: This is its drawn place, moved with the extra size.
+		onaArr : [ offXcoNum + 92, offYcoNum + 112 ],                                 // What: On Air Array. Why: The "ON AIR" light hangs on the wall to the manager's right. How: This is its drawn place, moved with the extra size.
 		polArr : [ offXcoNum + 46, offXcoNum + 92 ],                                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
 		skyNum : offYcoNum + 70,                                                      // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
 		tapArr : [ offYcoNum + 176, 10 ],                                             // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.

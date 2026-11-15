@@ -200,7 +200,7 @@ test( 'the TV set shows only on a screen at least 1,024px wide and 640px tall', 
 
 		await curPagObj.setViewportSize( { height : casHeiNum, width : casWidNum } ); // What: Viewport Size Call. Why: Each case has its own size. How: This sets it.
 
-		expect( await curPagObj.locator( PAN_SEL_STR ).evaluate( ( panDivEle ) => getComputedStyle( panDivEle ).display !== 'none' ), `${ casWidNum } by ${ casHeiNum }` ).toBe( casShoBoo ); // What: Set Shown Assertion. Why: The set shows only on a large enough screen. How: This checks the panel shows exactly when the case expects it, naming the size if it doesn't.
+		expect( await curPagObj.locator( PAN_SEL_STR ).evaluate( ( panDivEle ) => getComputedStyle( panDivEle ).display !== 'none' ), `${ casWidNum.toLocaleString( 'en-US' ) } by ${ casHeiNum.toLocaleString( 'en-US' ) }` ).toBe( casShoBoo ); // What: Set Shown Assertion. Why: The set shows only on a large enough screen. How: This checks the panel shows exactly when the case expects it, naming the size if it doesn't.
 
 
 	}

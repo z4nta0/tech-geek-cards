@@ -7,7 +7,7 @@
  * @summary
  * Styles for TurCarCom, a WKRP Thanksgiving newscast in pixel art. The pixel
  * scenes fill a screen box drawn on a canvas, and the lettering sits over
- * them: the station's WKRP logo, the flashing LIVE tag, "Oh, the humanity!",
+ * them: the station's WKRP logo, the flashing "LIVE" tag, "Oh, the humanity!",
  * the news bulletin on a see-through bar, the "Merry Thanksgiving" heading,
  * and the boxed quote. On a screen at least 1,024px wide and 640px tall the
  * box sits in a 70s wood-grain TV set with rabbit ears, knobs, and a speaker
@@ -128,7 +128,7 @@
 	--tur-pap-col : #fff3dc;                   /* What: Turkeys Paper Color. Why: The lettering's lightest color, such as the bulletin's text, reads like paper. How: This is #fff3dc. */
 	--tur-pew-col : #8b8378;                   /* What: Turkeys Pewter Color. Why: The knobs and the ears' lower ends are pewter gray. How: This is #8b8378. */
 	--tur-pil-col : #b5571f;                   /* What: Turkeys Pile Color. Why: The carpet's pile is a darker orange. How: This is #b5571f, read by the scene. */
-	--tur-red-col : #b8402c;                   /* What: Turkeys Red Color. Why: A brick red marks what's live, such as the LIVE tag. How: This is #b8402c. */
+	--tur-red-col : #b8402c;                   /* What: Turkeys Red Color. Why: A brick red marks what's live, such as the "LIVE" tag. How: This is #b8402c. */
 	--tur-rim-col : #2c2724;                   /* What: Turkeys Rim Color. Why: A dark rim lines the screen's bezel. How: This is #2c2724. */
 	--tur-roo-col : #241c17;                   /* What: Turkeys Room Color. Why: The set stands in a dark room. How: This is #241c17. */
 	--tur-rus-col : #a8402c;                   /* What: Turkeys Rust Color. Why: One car is rust red. How: This is #a8402c, read by the scene. */
@@ -143,7 +143,7 @@
 	--tur-tar-col : #3d3633;                   /* What: Turkeys Tar Color. Why: The curb's shadow is darker tar. How: This is #3d3633, read by the scene. */
 	--tur-tea-col : #6b3f22;                   /* What: Turkeys Teak Color. Why: The cabinet's grain has a darker wood. How: This is #6b3f22. */
 	--tur-tie-col : #9c3b2a;                   /* What: Turkeys Tie Color. Why: The station manager's tie is red. How: This is #9c3b2a, read by the scene. */
-	--tur-unl-col : #4a1d14;                   /* What: Turkeys Unlit Color. Why: The ON AIR light dims between blinks. How: This is #4a1d14, read by the scene. */
+	--tur-unl-col : #4a1d14;                   /* What: Turkeys Unlit Color. Why: The "ON AIR" light dims between blinks. How: This is #4a1d14, read by the scene. */
 	--tur-ves-col : #9b7a55;                   /* What: Turkeys Vest Color. Why: The station manager's vest is a lighter brown. How: This is #9b7a55, read by the scene. */
 	--tur-wal-col : #6b4024;                   /* What: Turkeys Walnut Color. Why: The studio's paneling alternates two woods, the darker walnut. How: This is #6b4024, read by the scene. */
 	--tur-win-col : #7d5132;                   /* What: Turkeys Wing Color. Why: A turkey's wing is a darker brown than its body. How: This is #7d5132, read by the scene. */
@@ -440,7 +440,7 @@
 
 /* #region livBarDiv */
 
-.livBarDiv { /* What: Live Bar Div. Why: The broadcast is live from the mall. How: This lines the LIVE tag and the mall's name up at the screen's top left, letting taps through, hidden until the timeline shows it. */
+.livBarDiv { /* What: Live Bar Div. Why: The broadcast is live from the mall. How: This lines the "LIVE" tag and the mall's name up at the screen's top left, letting taps through, hidden until the timeline shows it. */
 
 
 	align-items    : center;
@@ -474,7 +474,7 @@
 
 }
 
-.livTagSpa { /* What: Live Tag Span. Why: The tag flashes like a live broadcast's. How: This sets LIVE in paper on a red tag, blinking in two steps. */
+.livTagSpa { /* What: Live Tag Span. Why: The tag flashes like a live broadcast's. How: This sets "LIVE" in paper on a red tag, blinking in two steps. */
 
 
 	animation      : livTagSpaFlashBlink var( --dur-ani-p07 ) steps( 2 ) infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */
@@ -585,7 +585,7 @@
 
 }
 
-.newLabSpa { /* What: News Label Span. Why: A tab names the bulletin. How: This sets NEWS BULLETIN in paper on an orange tab, rounded on top. */
+.newLabSpa { /* What: News Label Span. Why: A tab names the bulletin. How: This sets "NEWS BULLETIN" in paper on an orange tab, rounded on top. */
 
 
 	background     : var( --tur-ora-col );                                                                    /* Turkeys Orange Color = #d9792b */

@@ -9,10 +9,10 @@
  * them into images. Each sprite is written as rows of characters, one
  * character a pixel and each letter a color key the card's palette resolves:
  * the turkey with its wing up or down, the news helicopter with a turkey
- * peeking out of its open door, a parked car, a stray feather, and the
- * station manager, built from rectangles since he's too big to write out by
- * row. A tiny pixel font spells the mall's sign and the studio's ON AIR light.
- * A grid becomes a small canvas the scene draws from.
+ * peeking out of its open door, a parked car, a stray feather, and the station
+ * manager, built from rectangles since he's too big to write out by row. A
+ * tiny pixel font spells the mall's sign and the studio's "ON AIR" light. A
+ * grid becomes a small canvas the scene draws from.
  *
  * Sections:
  *  - Types
@@ -166,7 +166,7 @@ const WIN_RAI_ARR = [ // What: Wing Raised Array. Why: A flapping turkey alterna
  *
 */
 
-const GLY_ROW_OBJ : Record< string, string[] > = { // What: Glyph Row Object. Why: The mall's sign and the ON AIR light are spelled in pixels. How: Each key is a letter, holding its five rows.
+const GLY_ROW_OBJ : Record< string, string[] > = { // What: Glyph Row Object. Why: The mall's sign and the "ON AIR" light are spelled in pixels. How: Each key is a letter, holding its five rows.
 
 
 	' ' : [ '00',    '00',    '00',    '00',    '00'    ],

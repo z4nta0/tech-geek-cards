@@ -247,7 +247,7 @@ Planned and decided with the user 2026-11-14, built on the `thanksgiving-card`
 branch. A second Thanksgiving card at `/turkeys-away`, listed under Holiday and
 Thanksgiving, themed on WKRP in Cincinnati's "Turkeys Away" episode: a 70s
 newscast in pixel art (the user's direction D, B's 70s print look with C's
-LIVE tag, see-through bulletin, and boxed quote). It takes a recipient's name
+"LIVE" tag, see-through bulletin, and boxed quote). It takes a recipient's name
 and no sender.
 - **A fan's tribute, not the show's art** (decided by the user): the WKRP
   lettering is our own, set in Fraunces in the show's chunky 70s style, never

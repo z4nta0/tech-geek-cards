@@ -32,10 +32,10 @@ import type { SceSchTyp  } from './pixel-scene.ts'; // What: Scene Schedule Type
  *
  * @summary
  * The Turkeys Away card, a WKRP Thanksgiving newscast in pixel art. Over the
- * Pinedale Shopping Mall, the station's call letters and a flashing LIVE tag
+ * Pinedale Shopping Mall, the station's call letters and a flashing "LIVE" tag
  * appear, the station's helicopter crosses and drops live turkeys into the
  * parking lot, "Oh, the humanity!" pops up, and a news bulletin types out that
- * the mall has just been BOMBED with live turkeys. A burst of static changes
+ * the mall has just been "BOMBED" with live turkeys. A burst of static changes
  * the channel to the studio, where the station manager stands with a hand
  * raised beside a dazed turkey, and "Merry Thanksgiving" appears, named for
  * the recipient when the link carries one, before the station manager's line,
@@ -170,7 +170,7 @@ function TurCarCom () : JSX.Element {
 
 	const canEleRef = useRef< HTMLCanvasElement >( null );                  // What: Canvas Element Reference. Why: The pixel scene draws on the canvas. How: This holds it.
 	const humParRef = useRef< HTMLParagraphElement >( null );               // What: Humanity Cry Paragraph Reference. Why: The cry pops in and out. How: This holds it.
-	const livDivRef = useRef< HTMLDivElement >( null );                     // What: Live Bar Div Reference. Why: The LIVE tag fades in and leaves with the mall. How: This holds it.
+	const livDivRef = useRef< HTMLDivElement >( null );                     // What: Live Bar Div Reference. Why: The "LIVE" tag fades in and leaves with the mall. How: This holds it.
 	const logDivRef = useRef< HTMLDivElement >( null );                     // What: Logo Station Div Reference. Why: The logo shows in both scenes, hidden during the static. How: This holds it.
 	const newDivRef = useRef< HTMLDivElement >( null );                     // What: News Bulletin Div Reference. Why: The bulletin's bar fades in and leaves with the mall. How: This holds it.
 	const newVisRef = useRef< HTMLSpanElement >( null );                    // What: News Visible Reference. Why: The bulletin's visible copy types out. How: This holds the span SplitText splits.
@@ -193,7 +193,7 @@ function TurCarCom () : JSX.Element {
 	 *
 	 * @summary
 	 * Builds the card's one timeline and starts the pixel scene on its
-	 * clock. The logo fades in at once and the LIVE tag a Base Plus 3 step
+	 * clock. The logo fades in at once and the "LIVE" tag a Base Plus 3 step
 	 * in; "Oh, the humanity!" pops up a Base Plus 6 step after the first
 	 * drop and fades a Base Plus 9 step later; the bulletin's bar fades in
 	 * and its line types out letter by letter; at the static, the mall's
@@ -346,7 +346,7 @@ function TurCarCom () : JSX.Element {
 							>{ /* What: Live Bar Div Element. Why: The broadcast is live from the mall. How: This holds the tag and the mall's name. */ }
 
 
-								<span className={ cssModObj.livTagSpa }>LIVE</span>{ /* What: Live Tag Span Element. Why: The tag flashes like a live broadcast's. How: This shows LIVE on red. */ }
+								<span className={ cssModObj.livTagSpa }>LIVE</span>{ /* What: Live Tag Span Element. Why: The tag flashes like a live broadcast's. How: This shows "LIVE" on red. */ }
 
 								<span>Pinedale Shopping Mall</span>{ /* What: Live Place Span Element. Why: The tag says where the broadcast is from. How: This shows the mall's name beside it. */ }
 
