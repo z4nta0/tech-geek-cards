@@ -357,6 +357,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 	recFilFun( '--tur-pai-col', 0, layRecObj.divNum, layRecObj.widNum, 1 ); // What: Divider Fill Call. Why: A painted line divides the rows. How: This draws it across. // Turkeys Paint Color = #f3e3c3
 
 
+
 	for ( const [ paiIndNum, carLefNum, carTopNum ] of layRecObj.carArr ) canCotObj.drawImage( sprSetObj.carArr[ paiIndNum ], carLefNum, carTopNum ); // What: Car Draw Loop. Why: Parked cars fill the lot. How: This draws each in its paint.
 
 
@@ -1069,10 +1070,10 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene its clock, schedule, and colors. How: This names each option.
 
 
-	redMotBoo : boolean,  // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
-	rooEle : HTMLElement, // What: Root Element. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
-	schObj : SceSchTyp,   // What: Schedule Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
-	timFun : () => number // What: Time Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
+	redMotBoo : boolean,     // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
+	rooEle    : HTMLElement, // What: Root Element. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
+	schObj    : SceSchTyp,   // What: Schedule Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
+	timFun    : () => number // What: Time Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
 
 
 };
@@ -1339,10 +1340,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 		layRecObj = layRecFun( boxRecObj.width / boxRecObj.height ); // What: Layout Assignment. Why: The positions follow the new shape. How: This works out the layout.
 
-
 		canEleObj.height = layRecObj.heiNum; // What: Canvas Height Assignment. Why: One canvas pixel stands for one scene pixel. How: This sets the layout's height.
 		canEleObj.width  = layRecObj.widNum; // What: Canvas Width Assignment. Why: One canvas pixel stands for one scene pixel. How: This sets the layout's width.
-
 
 		canCotObj.imageSmoothingEnabled = false; // What: Smoothing Off Assignment. Why: A resize resets the context, and a turned turkey would blur. How: This keeps pixels sharp.
 

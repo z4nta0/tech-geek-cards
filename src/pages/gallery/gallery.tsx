@@ -105,9 +105,9 @@ function GalPagCom () : JSX.Element {
 
 		const carTexStr = `${ carRecObj.titStr } ${ carRecObj.occStr } ${ carRecObj.holStr ?? '' } ${ carRecObj.desStr }`.toLowerCase(); // What: Card Text String. Why: A search word may appear in the title, the occasion, the holiday, or the description. How: This joins and lowercases all four, a card with no holiday adding an empty word.
 
-		const lisCarBoo = carRecObj.lisBoo;                                                         // What: Listed Card Boolean. Why: An unlisted card is reached only by its own link. How: This is true when the card is listed.
-		const occMatBoo = [ 'All', carRecObj.occStr, carRecObj.holStr ].includes( actOccStr );      // What: Occasion Match Boolean. Why: The filter narrows the cards to one occasion or holiday. How: This is true on "All", or when the card's occasion or holiday is the chosen one.
-		const seaMatBoo = seaWorArr.every( ( seaWorStr ) => carTexStr.includes( seaWorStr ) );      // What: Search Match Boolean. Why: Every word typed should narrow the cards. How: This is true when the card's text holds each word.
+		const lisCarBoo = carRecObj.lisBoo;                                                    // What: Listed Card Boolean. Why: An unlisted card is reached only by its own link. How: This is true when the card is listed.
+		const occMatBoo = [ 'All', carRecObj.occStr, carRecObj.holStr ].includes( actOccStr ); // What: Occasion Match Boolean. Why: The filter narrows the cards to one occasion or holiday. How: This is true on "All", or when the card's occasion or holiday is the chosen one.
+		const seaMatBoo = seaWorArr.every( ( seaWorStr ) => carTexStr.includes( seaWorStr ) ); // What: Search Match Boolean. Why: Every word typed should narrow the cards. How: This is true when the card's text holds each word.
 
 		const carMatBoo = lisCarBoo && occMatBoo && seaMatBoo; // What: Card Match Boolean. Why: A card shows only when it's listed and matches both the filter and the search. How: This combines the three checks.
 
