@@ -223,6 +223,13 @@ the family's fonts and colors.
 - **Occasions**: Birthday (orange), Family (berry: Mother's and Father's
   Day), and Holiday (blue: Fourth of July, Halloween, Thanksgiving, and
   Christmas).
+- **Holiday filters** (decided by the user 2026-11-14): besides the three
+  occasions, the Gallery's filter offers each holiday on its own, in the order
+  they fall in the year: Fourth of July, Halloween, Thanksgiving, and
+  Christmas. A Holiday card names its holiday in its catalog row's `holStr`, so
+  it shows under both Holiday and its holiday, and the search matches the
+  holiday's name. Valentine's Day joins the list, ahead of the others, once
+  there's a Valentine's card.
 - **Motion token**: `--mot-ino-eas` (in-out, the quint curve matching GSAP's
   `power4.inOut`), decided by the user 2026-10-15 for this site only, since
   it's far more animated than its siblings. It sits in `styles.css`'s Motion

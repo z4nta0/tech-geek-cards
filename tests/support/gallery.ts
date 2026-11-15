@@ -50,7 +50,7 @@ const EMP_STA_ARR : StaRecTyp[] = GAL_STA_ARR.map( ( staRecObj ) => ( { // What:
 	actFun : async ( curPagObj : Page ) => { // What: Action Function. Why: The state shows the Gallery with nothing matching. How: This types a search no card holds and waits for the empty message.
 
 
-		await curPagObj.getByLabel( 'Search cards' ).fill( 'zzzz' ); // What: Search Fill Call. Why: No card's title, occasion, or description holds this word. How: This types it into the search field.
+		await curPagObj.getByLabel( 'Search cards' ).fill( 'zzzz' ); // What: Search Fill Call. Why: No card's title, occasion, holiday, or description holds this word. How: This types it into the search field.
 
 		await expect( curPagObj.getByText( 'No cards match that search yet.' ) ).toBeVisible(); // What: Empty Message Assertion. Why: The checks read the page only once the grid has given way. How: This waits until the empty message shows.
 

@@ -6,11 +6,11 @@
  *
  * @summary
  * The catalog of every greeting card the site offers, in the order the
- * Gallery shows them, as plain data, and the occasions they're grouped by.
- * It holds no components or images, so the build can read it too: it writes
- * each card's own page from it, carrying the card's title, description, and
- * link preview. ui/cards.ts adds each card's component and tile preview to
- * make the catalog the pages read.
+ * Gallery shows them, as plain data, and the occasions and holidays they're
+ * grouped by. It holds no components or images, so the build can read it
+ * too: it writes each card's own page from it, carrying the card's title,
+ * description, and link preview. ui/cards.ts adds each card's component and
+ * tile preview to make the catalog the pages read.
  *
  * Sections:
  *  - Types
@@ -25,7 +25,8 @@
 
 // #region Types
 
-type OccNamTyp = 'Birthday' | 'Family' | 'Holiday'; // What: Occasion Name Type. Why: Every card belongs to one occasion the Gallery can filter by. How: This lists the three occasion names.
+type HolNamTyp = 'Christmas' | 'Fourth of July' | 'Halloween' | 'Thanksgiving'; // What: Holiday Name Type. Why: A Holiday card also belongs to one holiday the Gallery can filter by. How: This lists the holiday names.
+type OccNamTyp = 'Birthday' | 'Family' | 'Holiday';                             // What: Occasion Name Type. Why: Every card belongs to one occasion the Gallery can filter by. How: This lists the three occasion names.
 
 // #endregion Types
 
@@ -36,16 +37,17 @@ type OccNamTyp = 'Birthday' | 'Family' | 'Holiday'; // What: Occasion Name Type.
 type CarDatTyp = { // What: Card Data Type. Why: Every card is described the same way wherever it's shown or built. How: This names each field a card's data holds.
 
 
-	altStr : string,    // What: Alternative String. Why: The card's images need a description for screen readers. How: Each tile's preview and the card's link preview read it as their alt text.
-	cusBoo : boolean,   // What: Customizable Boolean. Why: Only some cards can show a recipient's name. How: The share dialog offers its name field when this is true, and adds the name to the card's link as ?name=.
-	desStr : string,    // What: Description String. Why: A tile says what the card is like. How: The tile shows it under the title.
-	froBoo : boolean,   // What: From Boolean. Why: Only some cards can be signed with the sender's name. How: The share dialog offers its sender field when this is true, and adds the name to the card's link as ?from=.
-	lisBoo : boolean,   // What: Listed Boolean. Why: A card can live at its own address without being shown in the Gallery or on Home. How: Only cards with this true are listed.
-	occStr : OccNamTyp, // What: Occasion String. Why: The Gallery groups cards by occasion. How: This names the card's occasion.
-	seaStr : string,    // What: Search String. Why: A card's own page needs a search and link preview description of 120 to 125 characters, which the tile's shorter description doesn't fill. How: The card's built page carries it, and the card's page swaps it into the description tag while it shows.
-	sluStr : string,    // What: Slug String. Why: Every card has its own address. How: The card opens at this path, such as /happy-birthday.
-	socStr : string,    // What: Social String. Why: A card's link preview image needs a fixed address, and a changed image needs a new name, since apps cache previews. How: This is the image's file name in public/social/, named after the card's address, its extension saying whether it's a PNG or a JPEG.
-	titStr : string     // What: Title String. Why: Every card has a name. How: Tiles, the share dialog, the card's page title, and its link preview show it.
+	altStr : string,           // What: Alternative String. Why: The card's images need a description for screen readers. How: Each tile's preview and the card's link preview read it as their alt text.
+	cusBoo : boolean,          // What: Customizable Boolean. Why: Only some cards can show a recipient's name. How: The share dialog offers its name field when this is true, and adds the name to the card's link as ?name=.
+	desStr : string,           // What: Description String. Why: A tile says what the card is like. How: The tile shows it under the title.
+	froBoo : boolean,          // What: From Boolean. Why: Only some cards can be signed with the sender's name. How: The share dialog offers its sender field when this is true, and adds the name to the card's link as ?from=.
+	holStr : HolNamTyp | null, // What: Holiday String. Why: A Holiday card also belongs to one holiday, which the Gallery can filter by on its own. How: This names the card's holiday, or is null for a card that isn't a Holiday card.
+	lisBoo : boolean,          // What: Listed Boolean. Why: A card can live at its own address without being shown in the Gallery or on Home. How: Only cards with this true are listed.
+	occStr : OccNamTyp,        // What: Occasion String. Why: The Gallery groups cards by occasion. How: This names the card's occasion.
+	seaStr : string,           // What: Search String. Why: A card's own page needs a search and link preview description of 120 to 125 characters, which the tile's shorter description doesn't fill. How: The card's built page carries it, and the card's page swaps it into the description tag while it shows.
+	sluStr : string,           // What: Slug String. Why: Every card has its own address. How: The card opens at this path, such as /happy-birthday.
+	socStr : string,           // What: Social String. Why: A card's link preview image needs a fixed address, and a changed image needs a new name, since apps cache previews. How: This is the image's file name in public/social/, named after the card's address, its extension saying whether it's a PNG or a JPEG.
+	titStr : string            // What: Title String. Why: Every card has a name. How: Tiles, the share dialog, the card's page title, and its link preview show it.
 
 
 };
@@ -58,8 +60,8 @@ type CarDatTyp = { // What: Card Data Type. Why: Every card is described the sam
  * @summary
  * Every card the site offers, one row per card in the order the Gallery
  * lists them. Each row has the same fields, described one by one on
- * CarDatTyp above: altStr, cusBoo, desStr, froBoo, lisBoo, occStr, seaStr,
- * sluStr, socStr, and titStr. The Father's Day prank stays unlisted,
+ * CarDatTyp above: altStr, cusBoo, desStr, froBoo, holStr, lisBoo, occStr,
+ * seaStr, sluStr, socStr, and titStr. The Father's Day prank stays unlisted,
  * reachable only by its own address. Both Christmas cards play one
  * component: the listed one is the snowy scene alone, and the unlisted
  * prank, made for the maker's own family, plays the fake hack first.
@@ -76,6 +78,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : true,
 		froBoo : false,
+		holStr : null,
 		lisBoo : true,
 		occStr : 'Birthday',
 		sluStr : 'happy-birthday',
@@ -94,6 +97,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : null,
 		lisBoo : true,
 		occStr : 'Family',
 		sluStr : 'mothers-day',
@@ -112,6 +116,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : null,
 		lisBoo : true,
 		occStr : 'Family',
 		sluStr : 'fathers-day',
@@ -130,6 +135,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : 'Fourth of July',
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'fourth-of-july',
@@ -148,6 +154,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : 'Halloween',
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'happy-halloween',
@@ -166,6 +173,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : 'Thanksgiving',
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'happy-thanksgiving',
@@ -184,6 +192,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : true,
 		froBoo : true,
+		holStr : 'Christmas',
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'merry-christmas',
@@ -202,6 +211,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : false,
 		froBoo : false,
+		holStr : null,
 		lisBoo : false,
 		occStr : 'Family',
 		sluStr : 'fathers-day-prank',
@@ -220,6 +230,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 		cusBoo : true,
 		froBoo : true,
+		holStr : 'Christmas',
 		lisBoo : false,
 		occStr : 'Holiday',
 		sluStr : 'merry-christmas-prank',
@@ -240,7 +251,8 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 
 
-const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after "All".
+const HOL_NAM_ARR : HolNamTyp[] = [ 'Fourth of July', 'Halloween', 'Thanksgiving', 'Christmas' ]; // What: Holiday Name Array. Why: The Gallery's filter offers every holiday too, in the order they fall in the year. How: The filter renders a button for each, after the occasions.
+const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ];                            // What: Occasion Name Array. Why: The Gallery's filter offers every occasion in a fixed order. How: The filter renders a button for each, after "All".
 
 // #endregion Constants
 
@@ -248,7 +260,7 @@ const OCC_NAM_ARR : OccNamTyp[] = [ 'Birthday', 'Family', 'Holiday' ]; // What: 
 
 // #region Exports
 
-export { CAR_DAT_ARR, OCC_NAM_ARR, type CarDatTyp, type OccNamTyp }; // What: Named Exports. Why: The site's code and its build read the card data and its types, such as the card catalog. How: This exports the data, the occasion list, and both types.
+export { CAR_DAT_ARR, HOL_NAM_ARR, OCC_NAM_ARR, type CarDatTyp, type HolNamTyp, type OccNamTyp }; // What: Named Exports. Why: The site's code and its build read the card data and its types, such as the card catalog. How: This exports the data, the holiday and occasion lists, and their types.
 
 // #endregion Exports
 
