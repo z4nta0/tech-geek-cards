@@ -28,8 +28,7 @@
 
 // #region Types
 
-type PalColTyp = Record< string, string >; // What: Palette Color Type. Why: Every grid key resolves to one color. How: This maps a key to a CSS color.
-type PixGriTyp = string[][];               // What: Pixel Grid Type. Why: A sprite is edited pixel by pixel before it's drawn. How: This holds its rows of keys, a dot for a clear pixel.
+type PixGriTyp = string[][]; // What: Pixel Grid Type. Why: A sprite is edited pixel by pixel before it's drawn. How: This holds its rows of keys, a dot for a clear pixel.
 
 // #endregion Types
 
@@ -254,6 +253,8 @@ function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, l
 const empGriFun = ( widNum : number, heiNum : number ) : PixGriTyp => Array.from( { length : heiNum }, () => Array< string >( widNum ).fill( '.' ) );                                               // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
 
 
+
+type PalColTyp = Record< string, string >; // What: Palette Color Type. Why: Every grid key resolves to one color. How: This maps a key to a CSS color.
 
 // #region griCanFun
 
@@ -513,7 +514,7 @@ function turGriFun ( winUppBoo : boolean ) : PixGriTyp {
 
 // #region Exports
 
-export { CAR_ROW_ARR, draTexFun, FEA_ROW_ARR, griCanFun, HEL_ROW_ARR, manGriFun, rowGriFun, texWidFun, turGriFun, type PalColTyp, type PixGriTyp }; // What: Named Exports. Why: The scene draws the card's sprites and signs. How: This exports the sprite rows, the grid builders and painters, the pixel font's helpers, and their types.
+export { CAR_ROW_ARR, draTexFun, FEA_ROW_ARR, griCanFun, HEL_ROW_ARR, manGriFun, rowGriFun, texWidFun, turGriFun }; // What: Named Exports. Why: The scene draws the card's sprites and signs. How: This exports the sprite rows, the grid builders and painters, and the pixel font's helpers.
 
 // #endregion Exports
 

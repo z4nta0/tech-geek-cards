@@ -53,10 +53,6 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
 
 // #region Types
 
-type FeaStaTyp = { phaNum : number, xcoNum : number, ycoNum : number };                                                          // What: Feather State Type. Why: Each drifting feather sways on its own beat. How: This holds its sway's phase and its place.
-
-
-
 type LayRecTyp = { // What: Layout Record Type. Why: Every element of both scenes sits where the chosen composition puts it. How: This names each position, in canvas pixels.
 
 
@@ -83,10 +79,6 @@ type LayRecTyp = { // What: Layout Record Type. Why: Every element of both scene
 
 
 };
-
-
-
-type ParStaTyp = { colStr : string, lifNum : number, velXcoNum : number, velYcoNum : number, xcoNum : number, ycoNum : number }; // What: Particle State Type. Why: A landing turkey throws a puff of feathers. How: This holds one feather pixel's color, remaining life, velocity, and place.
 
 
 
@@ -141,6 +133,9 @@ type TurStaTyp = { // What: Turkey State Type. Why: Each turkey falls, bounces, 
 
 
 };
+
+type FeaStaTyp = { phaNum : number, xcoNum : number, ycoNum : number };                                                          // What: Feather State Type. Why: Each drifting feather sways on its own beat. How: This holds its sway's phase and its place.
+type ParStaTyp = { colStr : string, lifNum : number, velXcoNum : number, velYcoNum : number, xcoNum : number, ycoNum : number }; // What: Particle State Type. Why: A landing turkey throws a puff of feathers. How: This holds one feather pixel's color, remaining life, velocity, and place.
 
 type SimStaTyp = { // What: Simulation State Type. Why: The scene's motion is stepped forward from a known start. How: This holds everything that moves.
 
