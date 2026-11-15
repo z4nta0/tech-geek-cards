@@ -49,7 +49,7 @@ type PixGriTyp = string[][]; // What: Pixel Grid Type. Why: A sprite is edited p
  * head; T, its tan feather tips; Y, its yellow beak and legs; G and g, the
  * helicopter's paint and its shade; L, windows such as the helicopter's; Q,
  * its dark doorway; Z, its cream stripe; C, a car's paint, which each car
- * sets; and K, dark ink such as a car's tires and the helicopter's skids.
+ * sets; and K, dark ink such as a car's tires.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *

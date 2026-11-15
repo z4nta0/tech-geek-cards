@@ -38,13 +38,13 @@ import type { SceSchTyp  } from './pixel-scene.ts'; // What: Scene Schedule Type
  * the mall has just been BOMBED with live turkeys. A burst of static changes
  * the channel to the studio, where the station manager stands with a hand
  * raised beside a dazed turkey, and "Merry Thanksgiving" appears, named for
- * the recipient when the link carries one, before his line, "As God is my
- * witness, I thought turkeys could fly," types out. The card then rests on the
- * studio, where a tap drops another turkey. Every time in the schedule is
- * built from steps on the duration scale, and the pixel scene runs on the
- * timeline's clock. Under reduced motion the card opens on the finished
- * studio. Our own lettering and a station manager drawn as a type, not the
- * show's logo or an actor's likeness, keep it a fan's tribute.
+ * the recipient when the link carries one, before the station manager's line,
+ * "As God is my witness, I thought turkeys could fly," types out. The card
+ * then rests on the studio, where a tap drops another turkey. Every time in
+ * the schedule is built from steps on the duration scale, and the pixel scene
+ * runs on the timeline's clock. Under reduced motion the card opens on the
+ * finished studio. Our own lettering and a station manager drawn as a type,
+ * not the show's logo or an actor's likeness, keep it a fan's tribute.
  *
  * Sections:
  *  - Constants

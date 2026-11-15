@@ -478,7 +478,7 @@ function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp
 	const falFlaBoo = turCurObj.staStr === 'fall' && Math.floor( turCurObj.flaNum / FLA_TIM_NUM ) % 2 === 0; // What: Falling Flap Boolean. Why: A falling turkey flaps on a steady beat. How: This is true on every other beat.
 	const sitFlaBoo = turCurObj.staStr === 'sit' && Math.floor( curTimNum * 2 ) % 7 === 0;                   // What: Sitting Flap Boolean. Why: A dazed turkey flaps now and then. How: This is true for half a second in every three and a half.
 
-	const winRaiBoo = falFlaBoo || sitFlaBoo; // What: Wing Raised Boolean. Why: The wing is up when either turkey flaps. How: This combines the two.
+	const winRaiBoo = falFlaBoo || sitFlaBoo; // What: Wing Raised Boolean. Why: The wing is up whenever the turkey flaps, falling or sitting. How: This combines the falling and sitting flap booleans.
 
 
 	const sprCanEle = winRaiBoo ? sprSetObj.tuuEle : sprSetObj.tudEle; // What: Sprite Canvas Element. Why: Each frame has its own image. How: This picks the wing-up or wing-down frame.
@@ -600,7 +600,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 			dooNum : offXcoNum + 106,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
 			feaArr : [ Math.round( layWidNum * 0.46 ), Math.round( layWidNum * 0.09 ) ],   // What: Feather Array. Why: Feathers drift down the studio's right side, beside the greeting. How: This starts them near the middle, spaced by a share of the width.
 			floNum : offYcoNum + 98,                                                       // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
-			heiNum : layHeiNum,                                                            // What: Height Number. Why: The canvas takes the screen's shape. How: This is the stretched height.
+			heiNum : layHeiNum,                                                            // What: Height Number. Why: The canvas takes the screen's shape. How: This is the layout's height.
 			helNum : offYcoNum + 29,                                                       // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
 			lanArr : [ offYcoNum + 93, 14 ],                                               // What: Landing Array. Why: Turkeys land in the lot's upper row, above the divider. How: This is its drawn landing line, moved down, and its depth.
 			linArr : [ [ offYcoNum + 90, 9 ], [ offYcoNum + 116, 10 ] ],                   // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
@@ -611,7 +611,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 			skyNum : offYcoNum + 40,                                                       // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
 			tapArr : [ offYcoNum + 122, 8 ],                                               // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
 			turNum : manLefNum + 44,                                                       // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is his left plus a set distance that clears his width.
-			widNum : layWidNum,                                                            // What: Width Number. Why: The canvas takes the screen's shape. How: This is the stretched width.
+			widNum : layWidNum,                                                            // What: Width Number. Why: The canvas takes the screen's shape. How: This is the layout's width.
 			winArr : [ offXcoNum + 38, offXcoNum + 62, offXcoNum + 150, offXcoNum + 174 ], // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
 
 			carArr : [ [ 0, offXcoNum + 9, offYcoNum + 91 ], [ 1, offXcoNum + 57, offYcoNum + 91 ], [ 2, offXcoNum + 152, offYcoNum + 91 ], [ 1, offXcoNum + 25, offYcoNum + 118 ], [ 0, offXcoNum + 200, offYcoNum + 118 ] ], // What: Car Array. Why: Five cars park in both rows. How: Each sits at its drawn place, moved with the mall.
@@ -637,7 +637,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 		dooNum : offXcoNum + 54,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
 		feaArr : [ offXcoNum + 20, 20 ],                                              // What: Feather Array. Why: Feathers drift down the whole studio. How: This starts them near the left, spaced evenly.
 		floNum : offYcoNum + 150,                                                     // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
-		heiNum : layHeiNum,                                                           // What: Height Number. Why: The canvas takes the screen's shape. How: This is the stretched height.
+		heiNum : layHeiNum,                                                           // What: Height Number. Why: The canvas takes the screen's shape. How: This is the layout's height.
 		helNum : offYcoNum + 60,                                                      // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
 		lanArr : [ offYcoNum + 133, 34 ],                                             // What: Landing Array. Why: Turkeys land across the taller lot. How: This is its drawn landing line, moved down, and its depth.
 		linArr : [ [ offYcoNum + 130, 9 ], [ offYcoNum + 156, 10 ] ],                 // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
@@ -648,7 +648,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 		skyNum : offYcoNum + 70,                                                      // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
 		tapArr : [ offYcoNum + 176, 10 ],                                             // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
 		turNum : offXcoNum + 66,                                                      // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is its drawn place, moved with the extra width.
-		widNum : layWidNum,                                                           // What: Width Number. Why: The canvas takes the screen's shape. How: This is the stretched width.
+		widNum : layWidNum,                                                           // What: Width Number. Why: The canvas takes the screen's shape. How: This is the layout's width.
 		winArr : [ offXcoNum + 12, offXcoNum + 32, offXcoNum + 85, offXcoNum + 105 ], // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
 
 		carArr : [ [ 0, offXcoNum + 2, offYcoNum + 131 ], [ 2, offXcoNum + 104, offYcoNum + 131 ], [ 1, offXcoNum + 60, offYcoNum + 158 ] ],                                    // What: Car Array. Why: Three cars park in both rows. How: Each sits at its drawn place, moved with the extra size.
