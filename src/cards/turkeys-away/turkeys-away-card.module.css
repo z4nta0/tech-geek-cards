@@ -277,6 +277,7 @@
 }
 
 
+
 /* #region cabDiv */
 
 .cabDiv { /* What: Cabinet Div. Why: The cabinet frames the screen only when the set shows. How: This fills the set, as the screen fills it, when the screen fills the card. */
@@ -534,7 +535,6 @@
 /* #endregion livDiv */
 
 
-
 .humPar { /* What: Humanity Paragraph. Why: The reporter's cry, "Oh, the humanity!", pops up as the first turkeys fall. How: This sets it in the serif's heavy italic, ink on a cream pill with an orange edge, left of middle, letting taps through, hidden until the timeline shows it. */
 
 
@@ -618,6 +618,9 @@
 
 }
 
+
+/* #region newTexPar */
+
 .newTexPar { /* What: News Text Paragraph. Why: The bulletin types out on a dark, see-through bar, so the lot still shows behind it. How: This sets it in Pixelify Sans, paper on ink at about three quarters, with an orange edge on its left. */
 
 
@@ -673,6 +676,8 @@
 
 }
 
+/* #endregion newTexPar */
+
 /* #endregion newDiv */
 
 
@@ -713,6 +718,9 @@
 
 }
 
+
+/* #region quoPar */
+
 .quoPar { /* What: Quote Paragraph. Why: The station manager's line sits in a box low on the screen, beside him. How: This sets it in the serif's italic, paper on ink at about three quarters, centered in its box, right of him and clear of the floating bar, hidden until the timeline shows it. */
 
 
@@ -752,7 +760,9 @@
 
 }
 
-/* What: Screen Reader Span Pointer. Why: The quote's hidden copy shares the bulletin's visually hidden class, written once where the class is first used. How: Its rule is in the `newDiv` region above. */
+/* What: Screen Reader Span Pointer. Why: The quote's hidden copy shares the bulletin's visually hidden class, written once where the class is first used. How: Its rule is in the `newTexPar` region above. */
+
+/* #endregion quoPar */
 
 /* #endregion scrDiv */
 

@@ -70,9 +70,9 @@ their assets, and the image render script were copied from
 Decided by the user 2026-10-14. z4nta0's real site, indexed with normal SEO
 (never the demo treatment). It showcases the cards z4nta0 has made and lets
 anyone share one; some cards take a recipient's name (Happy Birthday, both
-Christmas cards, and Turkeys Away, through `?name=`), and some a sender's (the Christmas
-cards, through `?from=`, marked `froBoo` in the catalog, which adds a second
-field to the share dialog).
+Christmas cards, and Turkeys Away, through `?name=`), and some a sender's
+(the Christmas cards, through `?from=`, marked `froBoo` in the catalog, which
+adds a second field to the share dialog).
 - **Pages**: Home (an introduction and a few cards picked at random), Gallery
   (search and an occasion filter), About (who TechGeek is and the sister
   sites), Contact (contact@techgeek.cards, through Netlify Forms as on

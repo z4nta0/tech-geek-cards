@@ -41,6 +41,10 @@ import { writeFileSync } from 'node:fs';  // What: Write File Sync. Why: Each pi
 
 // #region Constants
 
+const AXI_PIN_OBJ = { opsz : 144, SOFT : 100, WONK : 0 }; // What: Axis Pin Object. Why: The card's lettering is the soft, display-sized cut with steady letters. How: Each axis is pinned to this value.
+
+
+
 type FonRecTyp = { // What: Font Record Type. Why: Every pinned file is described the same way. How: This names its subset, its style, and the weights it keeps.
 
 
@@ -64,7 +68,6 @@ const FON_REC_ARR : FonRecTyp[] = [ // What: Font Record Array. Why: The card's 
 
 
 
-const AXI_PIN_OBJ = { opsz : 144, SOFT : 100, WONK : 0 };                                                           // What: Axis Pin Object. Why: The card's lettering is the soft, display-sized cut with steady letters. How: Each axis is pinned to this value.
 const OUT_DIR_STR = fileURLToPath( new URL( '../../src/cards/turkeys-away/', import.meta.url ) );                     // What: Output Directory String. Why: A card's fonts sit in its own folder, so they load only with it. How: This resolves the card's folder from this script's folder.
 const SOU_DIR_STR = fileURLToPath( new URL( '../../node_modules/@fontsource-variable/fraunces/', import.meta.url ) ); // What: Source Directory String. Why: The full Fraunces files come from the installed Fontsource package. How: This resolves the package from this script's folder.
 

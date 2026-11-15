@@ -103,21 +103,6 @@ type SceSchTyp = { // What: Scene Schedule Type. Why: The scene's events line up
 
 };
 
-type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene its clock, schedule, and colors. How: This names each option.
-
-
-	redMotBoo : boolean,     // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
-	rooEleObj : HTMLElement, // What: Root Element Object. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
-	schRecObj : SceSchTyp,   // What: Schedule Record Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
-	timGetFun : () => number // What: Time Get Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
-
-
-};
-
-
-
-type SceSysTyp = { stoFun : () => void, tapFun : ( xcoFraNum : number ) => void }; // What: Scene System Type. Why: The card stops the scene when it leaves and hands it taps. How: This names the stop and tap functions.
-
 
 
 type SprSetTyp = { // What: Sprite Set Type. Why: Every sprite is painted once and drawn many times. How: This holds each painted canvas.
@@ -184,6 +169,8 @@ const RAN_SEE_NUM = 7;                                                     // Wh
 
 
 
+// #region SPR_TOK_OBJ
+
 /**
  * SPR_TOK_OBJ = Sprite Token Object
  *
@@ -226,6 +213,8 @@ const SPR_TOK_OBJ : Record< string, string > = { // What: Sprite Token Object. W
 
 
 };
+
+// #endregion SPR_TOK_OBJ
 
 
 
@@ -909,6 +898,19 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 // #endregion simSteFun
 
 
+
+type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene its clock, schedule, and colors. How: This names each option.
+
+
+	redMotBoo : boolean,     // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
+	rooEleObj : HTMLElement, // What: Root Element Object. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
+	schRecObj : SceSchTyp,   // What: Schedule Record Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
+	timGetFun : () => number // What: Time Get Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
+
+
+};
+
+type SceSysTyp = { stoFun : () => void, tapFun : ( xcoFraNum : number ) => void }; // What: Scene System Type. Why: The card stops the scene when it leaves and hands it taps. How: This names the stop and tap functions.
 
 // #region staSceFun
 

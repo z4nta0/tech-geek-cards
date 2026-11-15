@@ -58,6 +58,52 @@ type PixGriTyp = string[][];               // What: Pixel Grid Type. Why: A spri
 
 
 
+const CAR_ROW_ARR = [ // What: Car Row Array. Why: Parked cars set the scene as a mall's parking lot. How: Each row is one line of the sprite, its paint key filled per car.
+
+
+	'....CCCCCCCC.......',
+	'...CLLLCCLLLC......',
+	'.CCCCCCCCCCCCCCC...',
+	'CCCCCCCCCCCCCCCCC..',
+	'CKKCCCCCCCCCKKCCC..',
+	'.KK.........KK.....'
+
+
+];
+
+const FEA_ROW_ARR = [ // What: Feather Row Array. Why: Stray feathers drift down the studio after the drop. How: Each row is one line of the tiny sprite.
+
+
+	'.O',
+	'OT',
+	'T.'
+
+
+];
+
+const HEL_ROW_ARR = [ // What: Helicopter Row Array. Why: The station's helicopter carries the turkeys over the mall, one peeking out of its open door. How: Each row is one line of the sprite, its rotor drawn separately so it can spin.
+
+
+	'..................................KK................',
+	'..............................GGGGGGGGGGGG..........',
+	'...........................GGGGGGGGGGGGGGGGGG.......',
+	'KK.......................GGGGGGGGGGGGGGLLLLLLLLG....',
+	'KKK....................GGGGGGGGGGGGGGGLLLLLLLLLLGG..',
+	'.KKK..................GGGGgggggggGGGGGLLLLLLLLLLLGG.',
+	'..KGGGGGGGGGGGGGGGGGGGGGGGgQQQSSgGGGGGLLLLLLLLLLLGG.',
+	'..GGGGGGGGGGGGGGGGGGGGGGGGgQQSESYGGGGGGLLLLLLLLLLGG.',
+	'...ZZZZZZZZZZZZZZZZZZZZGGGgQQQRQgGGGGGGGGGGGGGGGGGG.',
+	'....gggggggggggggggggGGGGGgQQQQQgGGGGGZZZZZZZZZZZZ..',
+	'.....................GGGGGgggggggGGGGGGGGGGGGGGGGG..',
+	'......................GGGGGGGGGGGGGGGGGGGGGGGGGGG...',
+	'.......................ggggggggggggggggggggggggg....',
+	'..........................K...........K.............',
+	'..........................K...........K.............',
+	'.....................KKKKKKKKKKKKKKKKKKKKKKKKKK.....'
+
+
+];
+
 const TUR_ROW_ARR = [ // What: Turkey Row Array. Why: The turkey is the card's star, drawn side on with its tail fanned behind it. How: Each row is one line of the sprite, the wing added on top by turGriFun.
 
 
@@ -103,55 +149,11 @@ const WIN_UPP_ARR = [ // What: Wing Up Array. Why: A flapping turkey alternates 
 
 ];
 
-const HEL_ROW_ARR = [ // What: Helicopter Row Array. Why: The station's helicopter carries the turkeys over the mall, one peeking out of its open door. How: Each row is one line of the sprite, its rotor drawn separately so it can spin.
-
-
-	'..................................KK................',
-	'..............................GGGGGGGGGGGG..........',
-	'...........................GGGGGGGGGGGGGGGGGG.......',
-	'KK.......................GGGGGGGGGGGGGGLLLLLLLLG....',
-	'KKK....................GGGGGGGGGGGGGGGLLLLLLLLLLGG..',
-	'.KKK..................GGGGgggggggGGGGGLLLLLLLLLLLGG.',
-	'..KGGGGGGGGGGGGGGGGGGGGGGGgQQQSSgGGGGGLLLLLLLLLLLGG.',
-	'..GGGGGGGGGGGGGGGGGGGGGGGGgQQSESYGGGGGGLLLLLLLLLLGG.',
-	'...ZZZZZZZZZZZZZZZZZZZZGGGgQQQRQgGGGGGGGGGGGGGGGGGG.',
-	'....gggggggggggggggggGGGGGgQQQQQgGGGGGZZZZZZZZZZZZ..',
-	'.....................GGGGGgggggggGGGGGGGGGGGGGGGGG..',
-	'......................GGGGGGGGGGGGGGGGGGGGGGGGGGG...',
-	'.......................ggggggggggggggggggggggggg....',
-	'..........................K...........K.............',
-	'..........................K...........K.............',
-	'.....................KKKKKKKKKKKKKKKKKKKKKKKKKK.....'
-
-
-];
-
-const CAR_ROW_ARR = [ // What: Car Row Array. Why: Parked cars set the scene as a mall's parking lot. How: Each row is one line of the sprite, its paint key filled per car.
-
-
-	'....CCCCCCCC.......',
-	'...CLLLCCLLLC......',
-	'.CCCCCCCCCCCCCCC...',
-	'CCCCCCCCCCCCCCCCC..',
-	'CKKCCCCCCCCCKKCCC..',
-	'.KK.........KK.....'
-
-
-];
-
-const FEA_ROW_ARR = [ // What: Feather Row Array. Why: Stray feathers drift down the studio after the drop. How: Each row is one line of the tiny sprite.
-
-
-	'.O',
-	'OT',
-	'T.'
-
-
-];
-
 // #endregion Sprite Rows Subsystem
 
 
+
+// #region GLY_ROW_OBJ
 
 /**
  * GLY_ROW_OBJ = Glyph Row Object
@@ -183,14 +185,73 @@ const GLY_ROW_OBJ : Record< string, string[] > = { // What: Glyph Row Object. Wh
 
 };
 
+// #endregion GLY_ROW_OBJ
+
 // #endregion Constants
 
 
 
 // #region Helpers
 
+// #region draTexFun
+
+/**
+ * draTexFun = Draw Text Function
+ *
+ * @summary
+ * Spells a word in the pixel font on a canvas, one letter after another with
+ * a one-pixel gap, its top left corner at the point given. It spells only the
+ * letters GLY_ROW_OBJ holds.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param canCotObj - Canvas Context Object: The context to draw on.
+ * @param texCurStr - Text Current String: The word to spell.
+ * @param lefPixNum - Left Pixel Number: Where the text starts across.
+ * @param topPixNum - Top Pixel Number: Where the text starts down.
+ * @param texColStr - Text Color String: The color the letters are drawn in.
+ *
+ * @returns This function does not return anything.
+ *
+ * @example
+ * ```ts
+ * draTexFun(canCotObj, 'ON AIR', 14, 13, '#ffffff') // => void
+ * ```
+ *
+*/
+
+function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, lefPixNum : number, topPixNum : number, texColStr : string ) : void {
+
+
+	canCotObj.fillStyle = texColStr; // What: Fill Style Assignment. Why: Every letter shares the text's color. How: This sets it once.
+
+
+
+	let curXcoNum = lefPixNum; // What: Current X-Coordinate Number. Why: Each letter starts where the last one ended. How: This starts at the text's left edge.
+
+
+	for ( const chaCurStr of texCurStr ) { // What: Letter Loop. Why: The word is spelled one letter at a time. How: This walks its characters.
+
+
+		const gloRowArr = GLY_ROW_OBJ[ chaCurStr ]; // What: Glyph Row Array. Why: Each letter has its own rows. How: This looks them up.
+
+
+		gloRowArr.forEach( ( rowCurStr, rowIndNum ) => [ ...rowCurStr ].forEach( ( bitCurStr, colIndNum ) => { if ( bitCurStr === '1' ) canCotObj.fillRect( curXcoNum + colIndNum, topPixNum + rowIndNum, 1, 1 ); } ) ); // What: Glyph Fill Call. Why: The letter's ink pixels are drawn. How: This fills each 1 in its rows.
+
+
+		curXcoNum += gloRowArr[ 0 ].length + 1; // What: Next Letter Assignment. Why: The next letter follows after a gap. How: This moves past the letter's width and one pixel.
+
+
+	}
+
+
+}
+
+// #endregion draTexFun
+
+
+
 const empGriFun = ( widNum : number, heiNum : number ) : PixGriTyp => Array.from( { length : heiNum }, () => Array< string >( widNum ).fill( '.' ) );                                               // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
-const rowGriFun = ( rowStrArr : string[] ) : PixGriTyp => rowStrArr.map( ( rowCurStr ) => rowCurStr.padEnd( Math.max( ...rowStrArr.map( ( rowLenStr ) => rowLenStr.length ) ), '.' ).split( '' ) ); // What: Row Grid Function. Why: A sprite written as rows is edited as a grid. How: This splits each row into its keys, padding short rows with clear pixels.
 
 
 
@@ -255,54 +316,6 @@ function griCanFun ( souGriArr : PixGriTyp, palColObj : PalColTyp ) : HTMLCanvas
 }
 
 // #endregion griCanFun
-
-
-
-// #region turGriFun
-
-/**
- * turGriFun = Turkey Grid Function
- *
- * @summary
- * Returns the turkey's grid with its wing drawn on, raised or lowered, the two
- * frames a flapping turkey alternates between. The raised wing reaches past
- * the turkey's back.
- *
- * @author z4nta0 <https://github.com/z4nta0>
- *
- * @param winUppBoo - Wing Up Boolean: Whether the wing is raised.
- *
- * @returns The turkey's grid, wing drawn on.
- * @see {@link turGriArr}
- *
- * @example
- * ```ts
- * turGriFun(true) // => the turkey with its wing up
- * ```
- *
-*/
-
-function turGriFun ( winUppBoo : boolean ) : PixGriTyp {
-
-
-	const turGriArr = rowGriFun( TUR_ROW_ARR );                           // What: Turkey Grid Array. Why: The wing is drawn onto the turkey's body. How: This turns the turkey's rows into a grid.
-	const winGriArr = rowGriFun( winUppBoo ? WIN_UPP_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
-	const winTopNum = winUppBoo ? 1 : 7;                                  // What: Wing Top Number. Why: A raised wing sits high on the back, a lowered one on the side. How: This is the row the wing starts on.
-
-
-	winGriArr.forEach( ( rowCurArr, rowIndNum ) => rowCurArr.forEach( ( keyCurStr, colIndNum ) => { if ( keyCurStr !== '.' ) turGriArr[ winTopNum + rowIndNum ][ 5 + colIndNum ] = keyCurStr; } ) ); // What: Wing Draw Call. Why: The wing covers part of the body. How: This copies the wing's colored pixels onto the turkey, five columns in.
-
-
-	if ( winUppBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This adds two wing pixels to the top row.
-
-
-
-	return turGriArr; // What: Turkey Grid Return. Why: The caller paints this frame. How: This returns the grid.
-
-
-}
-
-// #endregion turGriFun
 
 
 
@@ -440,65 +453,59 @@ function manGriFun () : PixGriTyp {
 
 
 
+const rowGriFun = ( rowStrArr : string[] ) : PixGriTyp => rowStrArr.map( ( rowCurStr ) => rowCurStr.padEnd( Math.max( ...rowStrArr.map( ( rowLenStr ) => rowLenStr.length ) ), '.' ).split( '' ) ); // What: Row Grid Function. Why: A sprite written as rows is edited as a grid. How: This splits each row into its keys, padding short rows with clear pixels.
+
+
+
 const texWidFun = ( texCurStr : string ) : number => [ ...texCurStr ].reduce( ( widSumNum, chaCurStr ) => widSumNum + GLY_ROW_OBJ[ chaCurStr ][ 0 ].length + 1, 0 ) - 1; // What: Text Width Function. Why: A sign is sized to its words. How: This adds each letter's width and a one-pixel gap between letters.
 
 
 
-// #region draTexFun
+// #region turGriFun
 
 /**
- * draTexFun = Draw Text Function
+ * turGriFun = Turkey Grid Function
  *
  * @summary
- * Spells a word in the pixel font on a canvas, one letter after another with
- * a one-pixel gap, its top left corner at the point given. It spells only the
- * letters GLY_ROW_OBJ holds.
+ * Returns the turkey's grid with its wing drawn on, raised or lowered, the two
+ * frames a flapping turkey alternates between. The raised wing reaches past
+ * the turkey's back.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param canCotObj - Canvas Context Object: The context to draw on.
- * @param texCurStr - Text Current String: The word to spell.
- * @param lefPixNum - Left Pixel Number: Where the text starts across.
- * @param topPixNum - Top Pixel Number: Where the text starts down.
- * @param texColStr - Text Color String: The color the letters are drawn in.
+ * @param winUppBoo - Wing Up Boolean: Whether the wing is raised.
  *
- * @returns This function does not return anything.
+ * @returns The turkey's grid, wing drawn on.
+ * @see {@link turGriArr}
  *
  * @example
  * ```ts
- * draTexFun(canCotObj, 'ON AIR', 14, 13, '#ffffff') // => void
+ * turGriFun(true) // => the turkey with its wing up
  * ```
  *
 */
 
-function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, lefPixNum : number, topPixNum : number, texColStr : string ) : void {
+function turGriFun ( winUppBoo : boolean ) : PixGriTyp {
 
 
-	canCotObj.fillStyle = texColStr; // What: Fill Style Assignment. Why: Every letter shares the text's color. How: This sets it once.
+	const turGriArr = rowGriFun( TUR_ROW_ARR );                           // What: Turkey Grid Array. Why: The wing is drawn onto the turkey's body. How: This turns the turkey's rows into a grid.
+	const winGriArr = rowGriFun( winUppBoo ? WIN_UPP_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
+	const winTopNum = winUppBoo ? 1 : 7;                                  // What: Wing Top Number. Why: A raised wing sits high on the back, a lowered one on the side. How: This is the row the wing starts on.
+
+
+	winGriArr.forEach( ( rowCurArr, rowIndNum ) => rowCurArr.forEach( ( keyCurStr, colIndNum ) => { if ( keyCurStr !== '.' ) turGriArr[ winTopNum + rowIndNum ][ 5 + colIndNum ] = keyCurStr; } ) ); // What: Wing Draw Call. Why: The wing covers part of the body. How: This copies the wing's colored pixels onto the turkey, five columns in.
+
+
+	if ( winUppBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This adds two wing pixels to the top row.
 
 
 
-	let curXcoNum = lefPixNum; // What: Current X-Coordinate Number. Why: Each letter starts where the last one ended. How: This starts at the text's left edge.
-
-
-	for ( const chaCurStr of texCurStr ) { // What: Letter Loop. Why: The word is spelled one letter at a time. How: This walks its characters.
-
-
-		const gloRowArr = GLY_ROW_OBJ[ chaCurStr ]; // What: Glyph Row Array. Why: Each letter has its own rows. How: This looks them up.
-
-
-		gloRowArr.forEach( ( rowCurStr, rowIndNum ) => [ ...rowCurStr ].forEach( ( bitCurStr, colIndNum ) => { if ( bitCurStr === '1' ) canCotObj.fillRect( curXcoNum + colIndNum, topPixNum + rowIndNum, 1, 1 ); } ) ); // What: Glyph Fill Call. Why: The letter's ink pixels are drawn. How: This fills each 1 in its rows.
-
-
-		curXcoNum += gloRowArr[ 0 ].length + 1; // What: Next Letter Assignment. Why: The next letter follows after a gap. How: This moves past the letter's width and one pixel.
-
-
-	}
+	return turGriArr; // What: Turkey Grid Return. Why: The caller paints this frame. How: This returns the grid.
 
 
 }
 
-// #endregion draTexFun
+// #endregion turGriFun
 
 // #endregion Helpers
 
