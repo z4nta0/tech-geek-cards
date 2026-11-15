@@ -137,7 +137,7 @@ const WIN_DOW_ARR = [ // What: Wing Down Array. Why: A flapping turkey alternate
 
 ];
 
-const WIN_UPP_ARR = [ // What: Wing Up Array. Why: A flapping turkey alternates its wing between two frames. How: Each row is one line of the raised wing.
+const WIN_RAI_ARR = [ // What: Wing Raised Array. Why: A flapping turkey alternates its wing between two frames. How: Each row is one line of the raised wing.
 
 
 	'..DDDD..',
@@ -494,7 +494,7 @@ function turGriFun ( winRaiBoo : boolean ) : PixGriTyp {
 
 
 	const turGriArr = rowGriFun( TUR_ROW_ARR );                           // What: Turkey Grid Array. Why: The wing is drawn onto the turkey's body. How: This turns the turkey's rows into a grid.
-	const winGriArr = rowGriFun( winRaiBoo ? WIN_UPP_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
+	const winGriArr = rowGriFun( winRaiBoo ? WIN_RAI_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
 	const winTopNum = winRaiBoo ? 1 : 7;                                  // What: Wing Top Number. Why: A raised wing sits high on the back, a lowered one on the side. How: This is the row the wing starts on.
 
 
