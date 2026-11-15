@@ -340,7 +340,7 @@
 .scrBoxDiv { /* What: Screen Box Div. Why: The pixel scenes and the lettering share one box, whose shape picks the scene's composition and whose shorter side sizes the lettering. How: This fills the card, clips to its edges, and is a size container for the lettering's units. */
 
 
-	container-name : tur-scr;
+	container-name : scrBoxDiv;
 	container-type : size;
 	height         : 100%;
 	overflow       : hidden;
@@ -459,7 +459,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Live Bar Div. Why: An upright screen's logo fills its top, so the tag moves below it. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright Live Bar Div. Why: An upright screen's logo fills its top, so the tag moves below it. How: This applies when the screen box isn't wider than tall. */
 
 
 	.livBarDiv { /* What: Lowered Live Bar Div. Why: The tag sits under the logo on an upright screen, and the narrower box needs larger letters. How: This lowers it and sets it a step larger. */
@@ -487,7 +487,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Live Tag Span. Why: The tag grows with the line beside it. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright Live Tag Span. Why: The tag grows with the line beside it. How: This applies when the screen box isn't wider than tall. */
 
 
 	.livTagSpa { /* What: Larger Live Tag Span. Why: The narrower box needs a larger tag. How: This sets it a step larger. */
@@ -552,7 +552,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Humanity Cry Paragraph. Why: An upright screen's sky is higher and its box narrower. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright Humanity Cry Paragraph. Why: An upright screen's sky is higher and its box narrower. How: This applies when the screen box isn't wider than tall. */
 
 
 	.humCryPar { /* What: Raised Humanity Cry Paragraph. Why: The cry sits over the mall's sign, a step larger. How: This raises it and sets it larger. */
@@ -599,7 +599,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright News Label Span. Why: The narrower box needs a larger tab. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright News Label Span. Why: The narrower box needs a larger tab. How: This applies when the screen box isn't wider than tall. */
 
 
 	.newLabSpa { /* What: Larger News Label Span. Why: The tab stays readable on a phone. How: This sets it a step larger. */
@@ -620,7 +620,7 @@
 
 
 	background    : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) );                     /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
-	border-left   : calc( var( --cdn-pow-002-rec ) * 1cqmin ) solid var( --tur-ora-col );                  /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Orange Color = #d9792b */
+	border-left   : clamp( var( --bor-wid-bas ), calc( var( --cdn-pow-002-rec ) * 1cqmin ), var( --bor-wid-xla ) ) solid var( --tur-ora-col ); /* Border Width Base ~= 1.160px, Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Border Width Extra Large ~= 3.572px, Turkeys Orange Color = #d9792b */ /* What: Scaled Edge Note. Why: The edge belongs to the lettering, which scales with the screen box, but it shouldn't vanish on a small screen or grow heavy on a large one. How: This scales it with the box's shorter side between the base and extra large border widths. */
 	border-radius : 0 calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
 	color         : var( --tur-pap-col );                                                                  /* Turkeys Paper Color = #fff3dc */
 	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                 /* Font Family Secondary = 'DM Mono', monospace */
@@ -632,7 +632,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright News Text Paragraph. Why: The narrower box needs larger text. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright News Text Paragraph. Why: The narrower box needs larger text. How: This applies when the screen box isn't wider than tall. */
 
 
 	.newTexPar { /* What: Larger News Text Paragraph. Why: The bulletin stays readable on a phone. How: This sets it a step larger. */
@@ -696,7 +696,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Title Greeting Heading. Why: On an upright screen the greeting sits under the logo, above the station manager. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright Title Greeting Heading. Why: On an upright screen the greeting sits under the logo, above the station manager. How: This applies when the screen box isn't wider than tall. */
 
 
 	.titGreHea { /* What: Centered Title Greeting Heading. Why: The greeting spans the narrower box, centered. How: This centers it under the logo across most of the width. */
@@ -739,7 +739,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Quote Box Paragraph. Why: On an upright screen the quote runs below the station manager. How: This applies when the screen box isn't wider than tall. */
+@container scrBoxDiv ( orientation : portrait ) { /* What: Upright Quote Box Paragraph. Why: On an upright screen the quote runs below the station manager. How: This applies when the screen box isn't wider than tall. */
 
 
 	.quoBoxPar { /* What: Full Width Quote Box Paragraph. Why: The quote spans the narrower box, a step larger. How: This stretches it across most of the width and sets it larger. */
