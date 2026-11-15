@@ -322,7 +322,8 @@ src/
   styles/                styles.css: the berry role and the layout values
 ```
 `design/` holds the image, icon, and font render scripts and the git-ignored
-image originals (about 89 MB, never committed, decided by the user 2026-10-14).
+image originals (about 100 MB, never committed, decided by the user
+2026-10-14).
 The WebPs the image script writes keep the 456-byte color profile the
 encoder adds (decided by the user 2026-11-14): it's about 3% of a small
 preview, and dropping it can shift colors in browsers that read it.

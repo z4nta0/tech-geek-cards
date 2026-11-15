@@ -120,7 +120,7 @@ type TapEveTyp = { fraXcoNum : number, timNum : number }; // What: Tap Event Typ
 type TurStaTyp = { // What: Turkey State Type. Why: Each turkey falls, bounces, and sits on its own. How: This holds one turkey's motion.
 
 
-	ageNum    : number,                    // What: Age Number. Why: A turkey flaps for its first moments, then tumbles. How: This is the seconds since it last changed state.
+	ageNum    : number,                    // What: Age Number. Why: A turkey flaps for its first moments, then tumbles. How: This is the seconds since the turkey appeared, restarted when it sits.
 	angNum    : number,                    // What: Angle Number. Why: A tumbling turkey turns as it falls. How: This is its angle, in radians.
 	bouBoo    : boolean,                   // What: Bounced Boolean. Why: A turkey bounces once on landing. How: This is true once it has.
 	flaNum    : number,                    // What: Flap Number. Why: The wing alternates on a steady beat. How: This is the seconds since the turkey appeared.
@@ -512,7 +512,34 @@ function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp
 
 
 
-const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : number ) : number => -60 + ( curTimNum - schRecObj.hlaNum ) / schRecObj.hldNum * ( layRecObj.widNum + 65 ); // What: Helicopter X-Coordinate Function. Why: The helicopter crosses the whole width in its set time, and drops leave from wherever it is. How: This returns its left, moving from just off the left edge to just off the right.
+// #region helXcoFun
+
+/**
+ * helXcoFun = Helicopter X-Coordinate Function
+ *
+ * @summary
+ * Returns the helicopter's left edge at a moment, in canvas pixels. It starts
+ * 60 pixels off the left edge as it arrives and moves at a steady pace, ending
+ * 5 pixels past the right edge when its crossing time is up.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param layRecObj - Layout Record Object: {@link LayRecTyp}
+ * @param schRecObj - Schedule Record Object: {@link SceSchTyp}
+ * @param curTimNum - Current Time Number: The moment, in seconds.
+ *
+ * @returns The helicopter's left edge.
+ *
+ * @example
+ * ```ts
+ * helXcoFun(layRecObj, schRecObj, 3) // => its left edge 3 seconds in
+ * ```
+ *
+*/
+
+const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : number ) : number => -60 + ( curTimNum - schRecObj.hlaNum ) / schRecObj.hldNum * ( layRecObj.widNum + 65 ); // What: Helicopter X-Coordinate Function. Why: The helicopter crosses the whole width in its set time. How: This returns its left, moving from just off the left edge to just off the right.
+
+// #endregion helXcoFun
 
 
 
@@ -557,7 +584,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 	const offXcoNum = Math.round( ( layWidNum - basWidNum ) / 2 );                 // What: Offset X-Coordinate Number. Why: Centered elements move to the middle of a wider canvas. How: This is half the extra width.
 
 
-	if ( !talLayBoo ) { // What: Wide Layout Branch. Why: The wide composition puts all its extra height in the sky. How: This returns the wide positions, everything below the sky moved down by the extra height.
+	if ( !talLayBoo ) { // What: Wide Layout Branch. Why: The wide composition puts all its extra height in the sky. How: This returns the wide positions, the mall's and lot's parts and the studio's carpet moved down by the extra height.
 
 
 		const offYcoNum = layHeiNum - basHeiNum;          // What: Offset Y-Coordinate Number. Why: Extra height goes to the sky. How: This is the extra height.
@@ -575,7 +602,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 			floNum : offYcoNum + 98,                                                       // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
 			heiNum : layHeiNum,                                                            // What: Height Number. Why: The canvas takes the screen's shape. How: This is the stretched height.
 			helNum : offYcoNum + 29,                                                       // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
-			lanArr : [ offYcoNum + 93, 14 ],                                               // What: Landing Array. Why: Turkeys land in the lot's front row. How: This is its drawn landing line, moved down, and its depth.
+			lanArr : [ offYcoNum + 93, 14 ],                                               // What: Landing Array. Why: Turkeys land in the lot's upper row, above the divider. How: This is its drawn landing line, moved down, and its depth.
 			linArr : [ [ offYcoNum + 90, 9 ], [ offYcoNum + 116, 10 ] ],                   // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
 			malArr : [ offXcoNum + 28, offYcoNum + 56, 184 ],                              // What: Mall Array. Why: The mall stands centered at the back of the lot. How: This is its drawn place, moved, and its width.
 			manArr : [ manLefNum, offYcoNum + 129 ],                                       // What: Manager Array. Why: The station manager stands on the carpet. How: This is his left, then his drawn footing, moved down.
@@ -692,7 +719,38 @@ function ranGenFun ( seeValNum : number ) : () => number {
 
 
 
+// #region spaTurFun
+
+/**
+ * spaTurFun = Spawn Turkey Function
+ *
+ * @summary
+ * Adds a falling turkey to a list at a point, moving sideways at a given
+ * speed. Its landing line is drawn from a band given as its top line and its
+ * depth, and its spin from the seeded sequence, so it takes three numbers
+ * from the sequence.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param simStaObj - Simulation State Object: {@link SimStaTyp}
+ * @param lisTurArr - List Turkey Array: The turkeys to add to.
+ * @param spaXcoNum - Spawn X-Coordinate Number: Where it starts, across.
+ * @param spaYcoNum - Spawn Y-Coordinate Number: Where it starts, down.
+ * @param velXcoNum - Velocity X-Coordinate Number: Its sideways speed.
+ * @param spaLanArr - Spawn Landing Array: The landing band's top and depth.
+ *
+ * @returns This function does not return anything.
+ *
+ * @example
+ * ```ts
+ * spaTurFun(simStaObj, malTurArr, 120, -10, 0, [ 93, 14 ]) // => void
+ * ```
+ *
+*/
+
 const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ] ) : void => { lisTurArr.push( { ageNum : 0, angNum : 0, bouBoo : false, flaNum : 0, lanNum : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ], spiNum : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), staStr : 'fall', velXcoNum, velYcoNum : 0, xcoNum : spaXcoNum, ycoNum : spaYcoNum } ); }; // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
+
+// #endregion spaTurFun
 
 
 

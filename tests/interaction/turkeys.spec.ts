@@ -42,8 +42,8 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers re
 const CAN_SEL_STR = '[class*="scePixCan"]';         // What: Canvas Selector String. Why: The scenes are drawn on the card's canvas. How: This finds it by the class name Vite keeps inside the hashed class.
 const NEW_SEL_STR = '[class*="newBulDiv"]';            // What: News Selector String. Why: The rotation check waits for the bulletin. How: This finds its block by the class name Vite keeps inside the hashed class.
 const PAN_SEL_STR = '[class*="panSidDiv"]';            // What: Panel Selector String. Why: The set's control panel shows only with the set. How: This finds it by the class name Vite keeps inside the hashed class.
-const PHO_SIZ_OBJ = { height : 844, width : 390 };  // What: Phone Size Object. Why: The tap and rotation checks start on a phone held upright. How: This is a common phone's size.
-const SCR_SEL_STR = '[class*="scrBoxDiv"]';            // What: Screen Selector String. Why: The bar check measures the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
+const PHO_SIZ_OBJ = { height : 844, width : 390 };  // What: Phone Size Object. Why: The checks start on a phone held upright. How: This is a common phone's size.
+const SCR_SEL_STR = '[class*="scrBoxDiv"]';            // What: Screen Selector String. Why: The checks tap and measure the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
 
 // #endregion Constants
 
@@ -96,7 +96,7 @@ const broCouFun = ( curPagObj : Page, topHalBoo : boolean ) : Promise< number > 
 	return broCouNum; // What: Brown Count Return. Why: The caller compares counts. How: This hands back the count.
 
 
-}, topHalBoo );
+}, topHalBoo ); // What: Top Half Argument. Why: The page script can't read this file's variables. How: This hands it whether to count the top half.
 
 // #endregion broCouFun
 

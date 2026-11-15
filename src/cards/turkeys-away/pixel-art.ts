@@ -47,9 +47,9 @@ type PixGriTyp = string[][]; // What: Pixel Grid Type. Why: A sprite is edited p
  * key. The keys are B, the turkey's brown body; D, its darker wing; E, its
  * eye; O, its orange feathers; R, its red wattle; S, the pale skin of its
  * head; T, its tan feather tips; Y, its yellow beak and legs; G and g, the
- * helicopter's paint and its shade; L, its windows; Q, its dark doorway; Z,
- * its cream stripe; C, a car's paint, which each car sets; and K, the dark
- * ink of tires and skids.
+ * helicopter's paint and its shade; L, windows such as the helicopter's; Q,
+ * its dark doorway; Z, its cream stripe; C, a car's paint, which each car
+ * sets; and K, dark ink such as a car's tires and the helicopter's skids.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -415,7 +415,7 @@ function manGriFun () : PixGriTyp {
 	recFilFun( '.', 3, 22, 3, 22 );   // What: Left Shoulder Clear Call. Why: Shoulders slope rather than square off. How: This clears the jacket's top left pixel.
 	recFilFun( '.', 24, 22, 24, 22 ); // What: Right Shoulder Clear Call. Why: Shoulders slope rather than square off. How: This clears the jacket's top right pixel.
 	recFilFun( 'V', 9, 23, 18, 39 );  // What: Vest Fill Call. Why: The vest is the suit's third piece. How: This draws it inside the jacket's opening.
-	recFilFun( 'W', 11, 23, 16, 26 ); // What: Shirt Fill Call. Why: His shirt shows above the vest. How: This draws a white V of shirt.
+	recFilFun( 'W', 11, 23, 16, 26 ); // What: Shirt Fill Call. Why: His shirt shows above the vest. How: This draws a white block of shirt.
 	recFilFun( 'r', 13, 23, 14, 34 ); // What: Tie Fill Call. Why: The red tie runs down his front. How: This draws its narrow length.
 	recFilFun( 'r', 12, 28, 15, 32 ); // What: Tie Blade Fill Call. Why: A tie widens toward its end. How: This draws the wide blade.
 	recFilFun( 'n', 8, 23, 8, 39 );   // What: Left Lapel Fill Call. Why: The jacket's lapels frame the vest. How: This draws the left edge in the suit's shade.
@@ -458,11 +458,60 @@ function manGriFun () : PixGriTyp {
 
 
 
+// #region rowGriFun
+
+/**
+ * rowGriFun = Row Grid Function
+ *
+ * @summary
+ * Turns a sprite's rows of keys into a grid, one cell per character, padding
+ * each row shorter than the longest with clear pixels (dots).
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param rowStrArr - Row String Array: The sprite's rows.
+ *
+ * @returns The sprite's grid.
+ *
+ * @example
+ * ```ts
+ * rowGriFun(FEA_ROW_ARR) // => a 3 by 2 grid
+ * ```
+ *
+*/
+
 const rowGriFun = ( rowStrArr : string[] ) : PixGriTyp => rowStrArr.map( ( rowCurStr ) => rowCurStr.padEnd( Math.max( ...rowStrArr.map( ( rowLenStr ) => rowLenStr.length ) ), '.' ).split( '' ) ); // What: Row Grid Function. Why: A sprite written as rows is edited as a grid. How: This splits each row into its keys, padding short rows with clear pixels.
 
+// #endregion rowGriFun
 
+
+
+// #region texWidFun
+
+/**
+ * texWidFun = Text Width Function
+ *
+ * @summary
+ * Returns a word's width in the pixel font: each letter's width plus a
+ * one-pixel gap between letters, none after the last. It expects every
+ * letter to have a glyph.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param texCurStr - Text Current String: The word to measure.
+ *
+ * @returns The word's width, in pixels.
+ *
+ * @example
+ * ```ts
+ * texWidFun('ON AIR') // => the sign's width in pixels
+ * ```
+ *
+*/
 
 const texWidFun = ( texCurStr : string ) : number => [ ...texCurStr ].reduce( ( widSumNum, chaCurStr ) => widSumNum + GLY_ROW_OBJ[ chaCurStr ][ 0 ].length + 1, 0 ) - 1; // What: Text Width Function. Why: A sign is sized to its words. How: This adds each letter's width and a one-pixel gap between letters.
+
+// #endregion texWidFun
 
 
 

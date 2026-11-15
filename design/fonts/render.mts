@@ -41,7 +41,7 @@ import { writeFileSync } from 'node:fs';  // What: Write File Sync. Why: Each pi
 
 // #region Constants
 
-const AXI_PIN_OBJ = { opsz : 144, SOFT : 100, WONK : 0 }; // What: Axis Pin Object. Why: The card's lettering is the soft, display-sized cut with steady letters. How: Each axis is pinned to this value.
+const AXI_PIN_OBJ = { opsz : 144, SOFT : 100, WONK : 0 }; // What: Axis Pin Object. Why: The card's lettering is the soft, display-sized cut with steady letters. How: Each axis is pinned to this value. // What: Optical Size Number. Why: The card's lettering is set large. How: This pins the display-sized cut. // What: Softness Number. Why: The card's lettering is soft. How: This pins the fully soft cut. // What: Wonkiness Number. Why: The card's letters stand steady. How: This pins wonkiness off.
 
 
 

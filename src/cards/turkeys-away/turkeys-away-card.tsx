@@ -116,13 +116,13 @@ function schRecFun () : SceSchTyp & { newTypNum : number, quoTypNum : number } {
 
 
 		droArr : Array.from( Array( 6 ).keys(), ( droIndNum ) => durSecFun( 'p08' ) + droIndNum * durSecFun( 'p04' ) ), // What: Drop Array. Why: Six turkeys drop one after another. How: The first leaves at a Base Plus 8 step, each next a Base Plus 4 step later. // Duration Animation Base Plus 8 ~= 1,497.4ms, Duration Animation Base Plus 4 ~= 486.1ms
-		finNum : quoTypNum + durSecFun( 'p10' ),                                                                        // What: Finish Number. Why: The card rests once the quote has typed. How: This is a Base Plus 10 step of typing after it starts. // Duration Animation Base Plus 10 ~= 2,627.4ms
-		hlaNum : durSecFun( 'p02' ),                                                                                    // What: Helicopter Arrival Number. Why: The helicopter enters just after the card opens. How: This is a Base Plus 2 step. // Duration Animation Base Plus 2 ~= 277.0ms
-		hldNum : durSecFun( 'p12' ),                                                                                    // What: Helicopter Duration Number. Why: The helicopter crosses at an unhurried pace. How: This is a Base Plus 12 step. // Duration Animation Base Plus 12 ~= 4,610.4ms
-		newTypNum,
-		quoTypNum,
-		sceNum : sceTimNum, // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
-		staNum : staTimNum  // What: Static Number. Why: The static ends the mall scene. How: This is when the static starts.
+		finNum : quoTypNum + durSecFun( 'p10' ), // What: Finish Number. Why: The card rests once the quote has typed. How: This is a Base Plus 10 step of typing after it starts. // Duration Animation Base Plus 10 ~= 2,627.4ms
+		hlaNum : durSecFun( 'p02' ),             // What: Helicopter Arrival Number. Why: The helicopter enters just after the card opens. How: This is a Base Plus 2 step. // Duration Animation Base Plus 2 ~= 277.0ms
+		hldNum : durSecFun( 'p12' ),             // What: Helicopter Duration Number. Why: The helicopter crosses at an unhurried pace. How: This is a Base Plus 12 step. // Duration Animation Base Plus 12 ~= 4,610.4ms
+		newTypNum,                               // What: News Typing Number. Why: The timeline types the bulletin from this moment. How: This is when the bulletin starts typing.
+		quoTypNum,                               // What: Quote Typing Number. Why: The timeline types the quote from this moment. How: This is when the quote starts typing.
+		sceNum : sceTimNum,                      // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
+		staNum : staTimNum                       // What: Static Number. Why: The static ends the mall scene. How: This is when the static starts.
 
 
 	};

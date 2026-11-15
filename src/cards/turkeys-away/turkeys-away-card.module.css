@@ -103,7 +103,7 @@
 	--tur-cha-col : #2a2522;                   /* What: Turkeys Charcoal Color. Why: The ears' base and the grille's slots are near black. How: This is #2a2522. */
 	--tur-chr-col : #d6cfc4;                   /* What: Turkeys Chrome Color. Why: The knobs catch the light at their top. How: This is #d6cfc4. */
 	--tur-cop-col : #c86a24;                   /* What: Turkeys Copper Color. Why: The logo's stepped shadow passes through copper. How: This is #c86a24. */
-	--tur-cre-col : #f6dfb6;                   /* What: Turkeys Cream Color. Why: Cream is the shirt's light color, such as the lettering's and the mall's sign. How: This is #f6dfb6. */
+	--tur-cre-col : #f6dfb6;                   /* What: Turkeys Cream Color. Why: Cream is the card's light color, such as the lettering's and the mall's sign. How: This is #f6dfb6. */
 	--tur-cub-col : #8c7f73;                   /* What: Turkeys Curb Color. Why: A gray curb edges the lot. How: This is #8c7f73, read by the scene. */
 	--tur-ebo-col : #5e361c;                   /* What: Turkeys Ebony Color. Why: The cabinet's grain has dark lines. How: This is #5e361c. */
 	--tur-eye-col : #1d1a1a;                   /* What: Turkeys Eye Color. Why: The turkeys' eyes are near black. How: This is #1d1a1a, read by the scene. */
@@ -122,7 +122,7 @@
 	--tur-mor-col : #7a3c20;                   /* What: Turkeys Mortar Color. Why: Dark mortar lines and frames pick out the mall's brick. How: This is #7a3c20, read by the scene. */
 	--tur-mus-col : #d9a441;                   /* What: Turkeys Mustard Color. Why: One car is 70s mustard. How: This is #d9a441, read by the scene. */
 	--tur-oak-col : #7a4b2a;                   /* What: Turkeys Oak Color. Why: The studio's paneling alternates two woods, the lighter oak. How: This is #7a4b2a, read by the scene. */
-	--tur-ora-col : #d9792b;                   /* What: Turkeys Orange Color. Why: Burnt orange is the shirt's main color, such as the turkeys' feathers and the logo's shadow. How: This is #d9792b. */
+	--tur-ora-col : #d9792b;                   /* What: Turkeys Orange Color. Why: Burnt orange is the card's main color, such as the turkeys' feathers and the logo's shadow. How: This is #d9792b. */
 	--tur-pai-col : #f3e3c3;                   /* What: Turkeys Paint Color. Why: The lot's stall lines are painted. How: This is #f3e3c3, read by the scene. */
 	--tur-pan-col : #523926;                   /* What: Turkeys Pants Color. Why: The station manager's trousers and lapels are the suit's shade. How: This is #523926, read by the scene. */
 	--tur-pap-col : #fff3dc;                   /* What: Turkeys Paper Color. Why: The lettering's lightest color, such as the bulletin's text, reads like paper. How: This is #fff3dc. */
@@ -413,7 +413,7 @@
 
 }
 
-.logWorSpa { /* What: Logo Word Span. Why: The call letters are the station's big chunky 70s mark. How: This sets them in the soft serif's heaviest weight, cream, with a stepped orange shadow like the shirt's. */
+.logWorSpa { /* What: Logo Word Span. Why: The call letters are the station's big chunky 70s mark. How: This sets them in the soft serif's heaviest weight, cream, with a stepped orange shadow. */
 
 
 	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
@@ -464,7 +464,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Live Bar Div. Why: An upright screen's logo fills its top, so the tag moves below it. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright Live Bar Div. Why: An upright screen's logo fills its top, so the tag moves below it. How: This applies when the screen box isn't wider than tall. */
 
 
 	.livBarDiv { /* What: Lowered Live Bar Div. Why: The tag sits under the logo on an upright screen, and the narrower box needs larger letters. How: This lowers it and sets it a step larger. */
@@ -492,7 +492,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Live Tag Span. Why: The tag grows with the line beside it. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright Live Tag Span. Why: The tag grows with the line beside it. How: This applies when the screen box isn't wider than tall. */
 
 
 	.livTagSpa { /* What: Larger Live Tag Span. Why: The narrower box needs a larger tag. How: This sets it a step larger. */
@@ -557,7 +557,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Humanity Cry Paragraph. Why: An upright screen's sky is higher and its box narrower. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright Humanity Cry Paragraph. Why: An upright screen's sky is higher and its box narrower. How: This applies when the screen box isn't wider than tall. */
 
 
 	.humCryPar { /* What: Raised Humanity Cry Paragraph. Why: The cry sits over the mall's sign, a step larger. How: This raises it and sets it larger. */
@@ -604,7 +604,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright News Label Span. Why: The narrower box needs a larger tab. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright News Label Span. Why: The narrower box needs a larger tab. How: This applies when the screen box isn't wider than tall. */
 
 
 	.newLabSpa { /* What: Larger News Label Span. Why: The tab stays readable on a phone. How: This sets it a step larger. */
@@ -637,7 +637,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright News Text Paragraph. Why: The narrower box needs larger text. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright News Text Paragraph. Why: The narrower box needs larger text. How: This applies when the screen box isn't wider than tall. */
 
 
 	.newTexPar { /* What: Larger News Text Paragraph. Why: The bulletin stays readable on a phone. How: This sets it a step larger. */
@@ -701,7 +701,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Title Greeting Heading. Why: On an upright screen the greeting sits under the logo, above the station manager. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright Title Greeting Heading. Why: On an upright screen the greeting sits under the logo, above the station manager. How: This applies when the screen box isn't wider than tall. */
 
 
 	.titGreHea { /* What: Centered Title Greeting Heading. Why: The greeting spans the narrower box, centered. How: This centers it under the logo across most of the width. */
@@ -744,7 +744,7 @@
 
 
 }
-@container tur-scr ( orientation : portrait ) { /* What: Upright Quote Box Paragraph. Why: On an upright screen the quote runs below the station manager. How: This applies when the screen box is taller than wide. */
+@container tur-scr ( orientation : portrait ) { /* What: Upright Quote Box Paragraph. Why: On an upright screen the quote runs below the station manager. How: This applies when the screen box isn't wider than tall. */
 
 
 	.quoBoxPar { /* What: Full Width Quote Box Paragraph. Why: The quote spans the narrower box, a step larger. How: This stretches it across most of the width and sets it larger. */
@@ -826,7 +826,7 @@
 
 }
 
-.speGriDiv { /* What: Speaker Grille Div. Why: The speaker sits behind a slatted grille. How: This draws rounded horizontal slats in charcoal and slate. */
+.speGriDiv { /* What: Speaker Grille Div. Why: The speaker sits behind a slatted grille. How: This draws horizontal slats in charcoal and slate on a rounded box. */
 
 
 	aspect-ratio  : 1 / 1.6;
