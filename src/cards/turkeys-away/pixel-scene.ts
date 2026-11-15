@@ -27,9 +27,9 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
  * and sit dazed in the parking lot. A burst of static then changes the
  * channel to the second, the station's studio, where the station manager
  * stands with a hand raised beside a dazed turkey while feathers drift down.
- * A tap drops another turkey where it lands. The scene runs on the card's own
- * clock, so its drawings and the card's lettering never drift apart, and its
- * turkeys follow a fixed seed, so their motion can be replayed to the same
+ * A tap drops another turkey at the spot tapped. The scene runs on the card's
+ * own clock, so its drawings and the card's lettering never drift apart, and
+ * its turkeys follow a fixed seed, so their motion can be replayed to the same
  * state.
  *
  * The scene has a wide composition and a tall one, chosen by the canvas's

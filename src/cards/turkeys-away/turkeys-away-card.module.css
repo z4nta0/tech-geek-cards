@@ -103,12 +103,12 @@
 	--tur-cha-col : #2a2522;                   /* What: Turkeys Charcoal Color. Why: The ears' base and the grille's slots are near black. How: This is #2a2522. */
 	--tur-chr-col : #d6cfc4;                   /* What: Turkeys Chrome Color. Why: The knobs catch the light at their top. How: This is #d6cfc4. */
 	--tur-cop-col : #c86a24;                   /* What: Turkeys Copper Color. Why: The logo's stepped shadow passes through copper. How: This is #c86a24. */
-	--tur-cre-col : #f6dfb6;                   /* What: Turkeys Cream Color. Why: Cream is the card's light color, such as the lettering's and the mall's sign. How: This is #f6dfb6. */
+	--tur-cre-col : #f6dfb6;                   /* What: Turkeys Cream Color. Why: Cream is the card's light color, such as the lettering's. How: This is #f6dfb6. */
 	--tur-cub-col : #8c7f73;                   /* What: Turkeys Curb Color. Why: A gray curb edges the lot. How: This is #8c7f73, read by the scene. */
 	--tur-ebo-col : #5e361c;                   /* What: Turkeys Ebony Color. Why: The cabinet's grain has dark lines. How: This is #5e361c. */
 	--tur-eye-col : #1d1a1a;                   /* What: Turkeys Eye Color. Why: The turkeys' eyes are near black. How: This is #1d1a1a, read by the scene. */
 	--tur-gla-col : #a8cdd2;                   /* What: Turkeys Glass Color. Why: The mall's windows and doors, and the cars' windows, are glass. How: This is #a8cdd2, read by the scene. */
-	--tur-gol-col : #e9b94a;                   /* What: Turkeys Gold Color. Why: Gold picks out small details, such as the turkeys' beaks and the dazed stars. How: This is #e9b94a, read by the scene. */
+	--tur-gol-col : #e9b94a;                   /* What: Turkeys Gold Color. Why: Gold picks out small details, such as the turkeys' beaks. How: This is #e9b94a, read by the scene. */
 	--tur-gro-col : #4f2e19;                   /* What: Turkeys Groove Color. Why: Dark grooves part the studio's planks. How: This is #4f2e19, read by the scene. */
 	--tur-hai-col : #8f8170;                   /* What: Turkeys Hair Color. Why: The station manager's fringe is gray. How: This is #8f8170, read by the scene. */
 	--tur-haz-col : #c9dcd6;                   /* What: Turkeys Haze Color. Why: The sky pales toward the horizon. How: This is #c9dcd6, read by the scene. */
@@ -122,13 +122,13 @@
 	--tur-mor-col : #7a3c20;                   /* What: Turkeys Mortar Color. Why: Dark mortar lines and frames pick out the mall's brick. How: This is #7a3c20, read by the scene. */
 	--tur-mus-col : #d9a441;                   /* What: Turkeys Mustard Color. Why: One car is 70s mustard. How: This is #d9a441, read by the scene. */
 	--tur-oak-col : #7a4b2a;                   /* What: Turkeys Oak Color. Why: The studio's paneling alternates two woods, the lighter oak. How: This is #7a4b2a, read by the scene. */
-	--tur-ora-col : #d9792b;                   /* What: Turkeys Orange Color. Why: Burnt orange is the card's main color, such as the turkeys' feathers and the logo's shadow. How: This is #d9792b. */
+	--tur-ora-col : #d9792b;                   /* What: Turkeys Orange Color. Why: Burnt orange is the card's main color, such as the turkeys' feathers. How: This is #d9792b. */
 	--tur-pai-col : #f3e3c3;                   /* What: Turkeys Paint Color. Why: The lot's stall lines are painted. How: This is #f3e3c3, read by the scene. */
 	--tur-pan-col : #523926;                   /* What: Turkeys Pants Color. Why: The station manager's trousers and lapels are the suit's shade. How: This is #523926, read by the scene. */
 	--tur-pap-col : #fff3dc;                   /* What: Turkeys Paper Color. Why: The lettering's lightest color, such as the bulletin's text, reads like paper. How: This is #fff3dc. */
 	--tur-pew-col : #8b8378;                   /* What: Turkeys Pewter Color. Why: The knobs and the ears' lower ends are pewter gray. How: This is #8b8378. */
 	--tur-pil-col : #b5571f;                   /* What: Turkeys Pile Color. Why: The carpet's pile is a darker orange. How: This is #b5571f, read by the scene. */
-	--tur-red-col : #b8402c;                   /* What: Turkeys Red Color. Why: A brick red marks what's live, such as the LIVE tag and the ON AIR light. How: This is #b8402c. */
+	--tur-red-col : #b8402c;                   /* What: Turkeys Red Color. Why: A brick red marks what's live, such as the LIVE tag. How: This is #b8402c. */
 	--tur-rim-col : #2c2724;                   /* What: Turkeys Rim Color. Why: A dark rim lines the screen's bezel. How: This is #2c2724. */
 	--tur-roo-col : #241c17;                   /* What: Turkeys Room Color. Why: The set stands in a dark room. How: This is #241c17. */
 	--tur-rus-col : #a8402c;                   /* What: Turkeys Rust Color. Why: One car is rust red. How: This is #a8402c, read by the scene. */
@@ -157,7 +157,7 @@
 @media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Turkeys Card Div. Why: A large screen has room for the TV set around the scene. How: This applies at 1,024px wide and 640px tall and above. */
 
 
-	.turCarDiv { /* What: Set Turkeys Card Div. Why: The set stands centered, clear of the floating bar. How: This centers it in the space above the bar's margin, which its own bottom no longer needs. */
+	.turCarDiv { /* What: Set Turkeys Card Div. Why: The set stands centered, clear of the floating bar. How: This centers it in the space above the bar's margin, which its bottom padding keeps clear, and zeroes the lettering's own bottom margin. */
 
 
 		--tur-bot-mar : 0px; /* What: Set Turkeys Bottom Margin. Why: The set already clears the bar, so its screen's lettering needs no more room. How: This zeroes the lettering's extra margin. */

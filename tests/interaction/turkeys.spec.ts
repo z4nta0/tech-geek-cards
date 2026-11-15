@@ -7,7 +7,7 @@ import { expect } from '@playwright/test'; // What: Expect. Why: Each check pass
 import { test   } from '@playwright/test'; // What: Test. Why: Each behavior is its own test. How: This declares them.
 
 
-import type { Page } from '@playwright/test'; // What: Page. Why: The helpers read a page. How: This types their page parameter.
+import type { Page } from '@playwright/test'; // What: Page. Why: The helper reads a page. How: This types its page parameter.
 
 // #endregion Imports
 
