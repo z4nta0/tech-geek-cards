@@ -392,7 +392,7 @@ function TurCarCom () : JSX.Element {
 								ref={ quoParRef }
 
 								className={ cssModObj.quoBoxPar }
-							>{ /* What: Quote Box Paragraph Element. Why: The station manager's line sits boxed beside him. How: This holds the line's visible copy and its hidden copy. */ }
+							>{ /* What: Quote Box Paragraph Element. Why: The station manager's line sits boxed beside him when the screen box is wider than tall, and below him otherwise. How: This holds the line's visible copy and its hidden copy. */ }
 
 
 								<span
