@@ -250,7 +250,7 @@ function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, l
 
 
 
-const empGriFun = ( widPixNum : number, heiPixNum : number ) : PixGriTyp => Array.from( { length : heiPixNum }, () => Array< string >( widPixNum ).fill( '.' ) );                                               // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
+const empGriFun = ( widPixNum : number, heiPixNum : number ) : PixGriTyp => Array.from( { length : heiPixNum }, () => Array< string >( widPixNum ).fill( '.' ) ); // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
 
 
 
