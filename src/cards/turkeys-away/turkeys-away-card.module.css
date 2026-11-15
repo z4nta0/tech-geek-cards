@@ -530,7 +530,7 @@
 /* #endregion livBarDiv */
 
 
-.humCryPar { /* What: Humanity Cry Paragraph. Why: The reporter's cry, "Oh, the humanity!", pops up as the first turkeys fall. How: This sets it in the serif's heavy italic, ink on a cream pill with an orange edge, left of middle, letting taps through, hidden until the timeline shows it. */
+.humCryPar { /* What: Humanity Cry Paragraph. Why: The reporter's cry, "Oh, the humanity!", pops up as the first turkeys fall. How: This sets it in the serif's heavy italic, ink on a cream pill with a hard burnt orange shadow, left of middle, letting taps through, hidden until the timeline shows it. */
 
 
 	background     : var( --tur-cre-col );                                                        /* Turkeys Cream Color = #f6dfb6 */
