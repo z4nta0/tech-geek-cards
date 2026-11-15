@@ -957,10 +957,10 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene its clock, schedule, and colors. How: This names each option.
 
 
-	redMotBoo : boolean,     // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
-	rooEle : HTMLElement,    // What: Root Element. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
-	schObj : SceSchTyp,      // What: Schedule Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
-	timFun : () => number    // What: Time Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
+	redMotBoo : boolean,  // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
+	rooEle : HTMLElement, // What: Root Element. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
+	schObj : SceSchTyp,   // What: Schedule Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
+	timFun : () => number // What: Time Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
 
 
 };
@@ -1001,13 +1001,13 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 	const canCotObj = canEleObj.getContext( '2d' )!; // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: A canvas in the page always offers a 2D context.
-	const schRecObj = sceOptObj.schObj;           // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
+	const schRecObj = sceOptObj.schObj;              // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
 
 
 
 	// #region Color And Sprite Painting
 
-	const colCacMap = new Map< string, string >();             // What: Color Cache Map. Why: Each token is read once, not every frame. How: This keeps each token's color by name.
+	const colCacMap = new Map< string, string >();          // What: Color Cache Map. Why: Each token is read once, not every frame. How: This keeps each token's color by name.
 	const rooStyObj = getComputedStyle( sceOptObj.rooEle ); // What: Root Style Object. Why: The colors are tokens on the card's root. How: This reads its computed styles.
 
 

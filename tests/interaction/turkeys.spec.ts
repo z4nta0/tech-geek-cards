@@ -39,11 +39,11 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helper rea
 
 // #region Constants
 
-const CAN_SEL_STR = '[class*="scePixCan"]';         // What: Canvas Selector String. Why: The scenes are drawn on the card's canvas. How: This finds it by the class name Vite keeps inside the hashed class.
-const NEW_SEL_STR = '[class*="newBulDiv"]';            // What: News Selector String. Why: The rotation check waits for the bulletin. How: This finds its block by the class name Vite keeps inside the hashed class.
-const PAN_SEL_STR = '[class*="panSidDiv"]';            // What: Panel Selector String. Why: The set's control panel shows only with the set. How: This finds it by the class name Vite keeps inside the hashed class.
-const PHO_SIZ_OBJ = { height : 844, width : 390 };  // What: Phone Size Object. Why: Several checks use a phone held upright. How: This is a common phone's size.
-const SCR_SEL_STR = '[class*="scrBoxDiv"]';            // What: Screen Selector String. Why: The checks tap and measure the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
+const CAN_SEL_STR = '[class*="scePixCan"]';        // What: Canvas Selector String. Why: The scenes are drawn on the card's canvas. How: This finds it by the class name Vite keeps inside the hashed class.
+const NEW_SEL_STR = '[class*="newBulDiv"]';        // What: News Selector String. Why: The rotation check waits for the bulletin. How: This finds its block by the class name Vite keeps inside the hashed class.
+const PAN_SEL_STR = '[class*="panSidDiv"]';        // What: Panel Selector String. Why: The set's control panel shows only with the set. How: This finds it by the class name Vite keeps inside the hashed class.
+const PHO_SIZ_OBJ = { height : 844, width : 390 }; // What: Phone Size Object. Why: Several checks use a phone held upright. How: This is a common phone's size.
+const SCR_SEL_STR = '[class*="scrBoxDiv"]';        // What: Screen Selector String. Why: The checks tap and measure the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
 
 // #endregion Constants
 
@@ -80,11 +80,11 @@ const SCR_SEL_STR = '[class*="scrBoxDiv"]';            // What: Screen Selector 
 const broCouFun = ( curPagObj : Page, topHalBoo : boolean ) : Promise< number > => curPagObj.locator( CAN_SEL_STR ).evaluate( ( canCurEle, topValBoo ) => { // What: Brown Count Function. Why: The checks look for turkeys in a part of the scene. How: This reads the half's pixels in the page and counts the ones that match the brown.
 
 
-	const canEleObj = canCurEle as HTMLCanvasElement;                                                                                // What: Canvas Element Object. Why: The canvas's pixels are read through its drawing context. How: This names the element as a canvas. // What: Type Assertion Note. Why: The locator types its element generally. How: The selector matches only the canvas.
-	const hexColStr = getComputedStyle( canEleObj ).getPropertyValue( '--tur-bro-col' ).trim();                                     // What: Hex Color String. Why: The brown is the card's own token. How: This reads it from the canvas, which inherits it. // Turkeys Brown Color = #5a3a22
-	const halHeiNum = Math.floor( canEleObj.height / 2 );                                                                            // What: Half Height Number. Why: The check reads one half of the canvas. How: This is half its height in canvas pixels.
+	const canEleObj = canCurEle as HTMLCanvasElement;                                                                              // What: Canvas Element Object. Why: The canvas's pixels are read through its drawing context. How: This names the element as a canvas. // What: Type Assertion Note. Why: The locator types its element generally. How: The selector matches only the canvas.
+	const hexColStr = getComputedStyle( canEleObj ).getPropertyValue( '--tur-bro-col' ).trim();                                    // What: Hex Color String. Why: The brown is the card's own token. How: This reads it from the canvas, which inherits it. // Turkeys Brown Color = #5a3a22
+	const halHeiNum = Math.floor( canEleObj.height / 2 );                                                                          // What: Half Height Number. Why: The check reads one half of the canvas. How: This is half its height in canvas pixels.
 	const pixDatArr = canEleObj.getContext( '2d' )!.getImageData( 0, topValBoo ? 0 : halHeiNum, canEleObj.width, halHeiNum ).data; // What: Pixel Data Array. Why: Each pixel's color says whether a turkey is there. How: This reads the half's red, green, blue, and alpha values. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: The card draws its scenes through this same 2D context.
-	const rgbValArr = [ 1, 3, 5 ].map( ( hexIndNum ) => parseInt( hexColStr.slice( hexIndNum, hexIndNum + 2 ), 16 ) );               // What: RGB Value Array. Why: The pixels are compared by their channels. How: This reads the brown's red, green, and blue from its hex.
+	const rgbValArr = [ 1, 3, 5 ].map( ( hexIndNum ) => parseInt( hexColStr.slice( hexIndNum, hexIndNum + 2 ), 16 ) );             // What: RGB Value Array. Why: The pixels are compared by their channels. How: This reads the brown's red, green, and blue from its hex.
 
 	let broCouNum = 0; // What: Brown Count Number. Why: The check needs how many pixels are brown. How: This starts at none.
 
@@ -174,13 +174,13 @@ test( 'turning a phone partway through the bulletin switches the scene to its wi
 	await curPagObj.waitForTimeout( 300 ); // What: Settle Wait. Why: The scene rebuilds on the next resize and frame. How: This pauses briefly.
 
 
-	const canSizArr = await curPagObj.locator( CAN_SEL_STR ).evaluate( ( canCurEle ) => [ ( canCurEle as HTMLCanvasElement ).width, ( canCurEle as HTMLCanvasElement ).height ] ); // What: Canvas Size Array. Why: The scene's layout shows in its canvas's shape. How: This reads the canvas's width and height in pixels. // What: Type Assertion Note. Why: The locator types its element generally. How: The selector matches only the canvas.
+	const canSizArr = await curPagObj.locator( CAN_SEL_STR ).evaluate( ( canCurEle ) => [ ( canCurEle as HTMLCanvasElement ).width, ( canCurEle as HTMLCanvasElement ).height ] );                                                     // What: Canvas Size Array. Why: The scene's layout shows in its canvas's shape. How: This reads the canvas's width and height in pixels. // What: Type Assertion Note. Why: The locator types its element generally. How: The selector matches only the canvas.
 	const typAftNum = await curPagObj.locator( NEW_SEL_STR ).locator( '[aria-hidden="true"] div' ).evaluateAll( ( chaEleArr ) => chaEleArr.filter( ( chaCurEle ) => getComputedStyle( chaCurEle ).visibility === 'visible' ).length ); // What: Typed After Number. Why: A restarted card would hide the bulletin and start typing again. How: This counts the letters shown after the turn.
 
 
-	expect( canSizArr[ 0 ] ).toBeGreaterThan( canSizArr[ 1 ] );                               // What: Wide Canvas Assertion. Why: A phone on its side takes the wide composition. How: This checks the canvas is wider than tall.
-	expect( typAftNum ).toBeGreaterThanOrEqual( typBefNum );                                // What: Kept Place Assertion. Why: The card should carry on from where it was. How: This checks at least as many letters show as before the turn.
-	expect( await broCouFun( curPagObj, false ) ).toBeGreaterThan( 0 );                     // What: Landed Turkeys Assertion. Why: The rebuilt moment should hold the turkeys already dropped. How: This checks the lot, the canvas's bottom half, holds brown.
+	expect( canSizArr[ 0 ] ).toBeGreaterThan( canSizArr[ 1 ] );         // What: Wide Canvas Assertion. Why: A phone on its side takes the wide composition. How: This checks the canvas is wider than tall.
+	expect( typAftNum ).toBeGreaterThanOrEqual( typBefNum );            // What: Kept Place Assertion. Why: The card should carry on from where it was. How: This checks at least as many letters show as before the turn.
+	expect( await broCouFun( curPagObj, false ) ).toBeGreaterThan( 0 ); // What: Landed Turkeys Assertion. Why: The rebuilt moment should hold the turkeys already dropped. How: This checks the lot, the canvas's bottom half, holds brown.
 
 
 } );
@@ -220,7 +220,7 @@ test( 'on a phone held sideways the Turkeys Away screen ends above the floating 
 	await curPagObj.goto( '/turkeys-away' ); // What: Card Open Call. Why: The screen is checked on the card itself. How: This opens its page.
 
 
-	const scrBotFun = () => curPagObj.locator( SCR_SEL_STR ).evaluate( ( scrDivEle ) => scrDivEle.getBoundingClientRect().bottom ); // What: Screen Bottom Function. Why: Both sizes measure the screen's bottom. How: This reads it.
+	const scrBotFun = () => curPagObj.locator( SCR_SEL_STR ).evaluate( ( scrDivEle ) => scrDivEle.getBoundingClientRect().bottom );                    // What: Screen Bottom Function. Why: Both sizes measure the screen's bottom. How: This reads it.
 	const barTopFun = () => curPagObj.getByRole( 'navigation', { name : 'Card' } ).evaluate( ( barNavEle ) => barNavEle.getBoundingClientRect().top ); // What: Bar Top Function. Why: Both sizes measure the bar's top. How: This reads it.
 
 

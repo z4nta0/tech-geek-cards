@@ -227,14 +227,14 @@
 	.rabEarDiv { /* What: Shown Rabbit Ear Div. Why: A 70s set has rabbit ears on a dark base. How: This draws the base as a half dome on the cabinet's top, left of center, the two rods its pseudo-elements draw. */
 
 
-		background    : var( --tur-cha-col );                                                                  /* Turkeys Charcoal Color = #2a2522 */
-		border-radius : calc( var( --ver-rhy-p05 ) * 1rem ) calc( var( --ver-rhy-p05 ) * 1rem ) 0 0;             /* Vertical Rhythm Base Plus 5 ~= 59.447px */
-		bottom        : calc( 100% - var( --ver-rhy-p08 ) * 1rem );                                            /* Vertical Rhythm Base Plus 8 ~= 138.199px */
+		background    : var( --tur-cha-col );                                                        /* Turkeys Charcoal Color = #2a2522 */
+		border-radius : calc( var( --ver-rhy-p05 ) * 1rem ) calc( var( --ver-rhy-p05 ) * 1rem ) 0 0; /* Vertical Rhythm Base Plus 5 ~= 59.447px */
+		bottom        : calc( 100% - var( --ver-rhy-p08 ) * 1rem );                                  /* Vertical Rhythm Base Plus 8 ~= 138.199px */
 		display       : block;
-		height        : calc( var( --ver-rhy-p03 ) * 1rem );                                                   /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+		height        : calc( var( --ver-rhy-p03 ) * 1rem );                                         /* Vertical Rhythm Base Plus 3 ~= 33.876px */
 		left          : 38%;
 		position      : absolute;
-		width         : calc( var( --ver-rhy-p06 ) * 1rem );                                                   /* Vertical Rhythm Base Plus 6 ~= 78.751px */
+		width         : calc( var( --ver-rhy-p06 ) * 1rem );                                         /* Vertical Rhythm Base Plus 6 ~= 78.751px */
 
 
 	}
@@ -245,14 +245,14 @@
 
 
 		background       : linear-gradient( var( --tur-sil-col ), var( --tur-pew-col ) ); /* Turkeys Silver Color = #d8d2c8, Turkeys Pewter Color = #8b8378 */
-		border-radius    : calc( var( --ver-rhy-m07 ) * 1rem );                            /* Vertical Rhythm Base Minus 7 ~= 2.035px */
-		bottom           : calc( var( --ver-rhy-p01 ) * 1rem );                            /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+		border-radius    : calc( var( --ver-rhy-m07 ) * 1rem );                           /* Vertical Rhythm Base Minus 7 ~= 2.035px */
+		bottom           : calc( var( --ver-rhy-p01 ) * 1rem );                           /* Vertical Rhythm Base Plus 1 ~= 19.304px */
 		content          : '';
-		height           : calc( var( --ver-rhy-p07 ) * 1rem );                            /* Vertical Rhythm Base Plus 7 ~= 104.323px */
-		left             : calc( 50% - var( --ver-rhy-m05 ) * 1rem / 2 );                  /* Vertical Rhythm Base Minus 5 ~= 1.786px */
+		height           : calc( var( --ver-rhy-p07 ) * 1rem );                           /* Vertical Rhythm Base Plus 7 ~= 104.323px */
+		left             : calc( 50% - var( --ver-rhy-m05 ) * 1rem / 2 );                 /* Vertical Rhythm Base Minus 5 ~= 1.786px */
 		position         : absolute;
 		transform-origin : bottom center;
-		width            : calc( var( --ver-rhy-m05 ) * 1rem );                            /* Vertical Rhythm Base Minus 5 ~= 3.572px */
+		width            : calc( var( --ver-rhy-m05 ) * 1rem );                           /* Vertical Rhythm Base Minus 5 ~= 3.572px */
 
 
 	}
@@ -294,14 +294,14 @@
 
 
 		background            : linear-gradient( rgb( from var( --tur-pap-col ) r g b / var( --cdn-pow-009-rec ) ), rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-005-rec ) ) ), repeating-linear-gradient( 92deg, var( --tur-tea-col ) 0 4px, var( --tur-ced-col ) 4px 11px, var( --tur-ebo-col ) 11px 13px, var( --tur-ced-col ) 13px 21px ); /* Turkeys Paper Color = #fff3dc @ 0.080 opacity, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080, Turkeys Ink Color = #2a1d17 @ 0.245 opacity, Core-Design-Number to the Power of 5 Reciprocal ~= 0.245, Turkeys Teak Color = #6b3f22, Turkeys Cedar Color = #7a4a28, Turkeys Ebony Color = #5e361c */ /* What: Wood Grain Stripes. Why: The grain's stripes are a texture drawn in pixels, not spacing. How: Their stops stay literal. */
-		border-radius         : calc( var( --ver-rhy-p02 ) * 1rem );                                               /* Vertical Rhythm Base Plus 2 ~= 25.572px */
-		box-shadow            : var( --ele-xla-sha );                                                              /* Elevation Extra Large Shadow ~= 0 19.304px 59.447px -11px plus 0 6.268px 14.572px -3.572px */
+		border-radius         : calc( var( --ver-rhy-p02 ) * 1rem );                          /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+		box-shadow            : var( --ele-xla-sha );                                         /* Elevation Extra Large Shadow ~= 0 19.304px 59.447px -11px plus 0 6.268px 14.572px -3.572px */
 		display               : grid;
-		gap                   : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );                           /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
+		gap                   : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );      /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
 		grid-template-areas   : 'bezFraDiv panSidDiv';
-		grid-template-columns : auto calc( var( --tur-scr-hei ) * var( --cdn-pow-004-rec ) );                       /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
+		grid-template-columns : auto calc( var( --tur-scr-hei ) * var( --cdn-pow-004-rec ) ); /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
 		height                : auto;
-		padding               : calc( var( --tur-scr-hei ) * var( --cdn-pow-009-rec ) );                           /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080 */
+		padding               : calc( var( --tur-scr-hei ) * var( --cdn-pow-009-rec ) );      /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080 */
 
 
 	}
@@ -326,11 +326,11 @@
 	.bezFraDiv { /* What: Dark Bezel Frame Div. Why: A tube set's screen sits deep in a dark frame. How: This draws a rounded near-black frame with a rim and an inner shadow. */
 
 
-		background    : var( --tur-ink-col );                                                                                                                         /* Turkeys Ink Color = #2a1d17 */
-		border-radius : calc( var( --ver-rhy-p01 ) * 1rem );                                                                                                          /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+		background    : var( --tur-ink-col );                                    /* Turkeys Ink Color = #2a1d17 */
+		border-radius : calc( var( --ver-rhy-p01 ) * 1rem );                     /* Vertical Rhythm Base Plus 1 ~= 19.304px */
 		box-shadow    : inset 0 0 0 calc( var( --ver-rhy-m05 ) * 1rem ) var( --tur-rim-col ), inset 0 calc( var( --ver-rhy-m03 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) var( --tur-roo-col ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Turkeys Rim Color = #2c2724, Vertical Rhythm Base Minus 3 ~= 6.268px, Vertical Rhythm Base Plus 1 ~= 19.304px, Turkeys Room Color = #241c17 */
 		height        : auto;
-		padding       : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );                                                                                      /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
+		padding       : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) ); /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
 
 
 	}
@@ -416,11 +416,11 @@
 .logWorSpa { /* What: Logo Word Span. Why: The call letters are the station's big chunky 70s mark. How: This sets them in the soft serif's heaviest weight, cream, with a stepped orange shadow. */
 
 
-	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
-	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
-	font-size   : calc( var( --cdn-pow-010 ) * 1cqmin );                       /* Core-Design-Number to the Power of 10 ~= 16.643cqmin */ /* What: Screen-Sized Lettering. Why: The lettering scales with the screen box, not the page. How: This is a power of the core design number in the box's shorter side. */
+	color       : var( --tur-cre-col );                  /* Turkeys Cream Color = #f6dfb6 */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+	font-size   : calc( var( --cdn-pow-010 ) * 1cqmin ); /* Core-Design-Number to the Power of 10 ~= 16.643cqmin */ /* What: Screen-Sized Lettering. Why: The lettering scales with the screen box, not the page. How: This is a power of the core design number in the box's shorter side. */
 	font-weight : 900;
-	line-height : var( --ver-rhy-m01 );                                        /* Vertical Rhythm Base Minus 1 = 1 */
+	line-height : var( --ver-rhy-m01 );                  /* Vertical Rhythm Base Minus 1 = 1 */
 	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-cop-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 5cqmin ) calc( var( --cdn-pow-003-rec ) * 5cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin 0.430cqmin 0 plus 0.860cqmin 0.860cqmin 0 plus 1.290cqmin 1.290cqmin 0 plus 1.721cqmin 1.721cqmin 0 plus 2.151cqmin 2.151cqmin 0, Turkeys Orange Color = #d9792b, Turkeys Copper Color = #c86a24, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
 
 
@@ -429,11 +429,11 @@
 .logCinSpa { /* What: Logo Cincinnati Span. Why: "in Cincinnati" signs the call letters in a 70s script. How: This sets it in Yellowtail, paper colored with an ink shadow, tucked up under the letters. */
 
 
-	color       : var( --tur-pap-col );                                                             /* Turkeys Paper Color = #fff3dc */
-	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main = 'Syne', sans-serif */
-	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                             /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
-	line-height : var( --ver-rhy-m01 );                                                              /* Vertical Rhythm Base Minus 1 = 1 */
-	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= -0.755cqmin */
+	color       : var( --tur-pap-col );                                                                                       /* Turkeys Paper Color = #fff3dc */
+	font-family : 'Yellowtail', var( --fon-fam-mai );                                                                         /* Font Family Main = 'Syne', sans-serif */
+	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                                                      /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	line-height : var( --ver-rhy-m01 );                                                                                       /* Vertical Rhythm Base Minus 1 = 1 */
+	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                                                 /* Core-Design-Number to the Power of 1 Reciprocal ~= -0.755cqmin */
 	text-shadow : calc( var( --cdn-pow-004-rec ) * 1cqmin ) calc( var( --cdn-pow-004-rec ) * 1cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325cqmin, Turkeys Ink Color = #2a1d17 */
 
 
@@ -449,12 +449,12 @@
 
 
 	align-items    : center;
-	color          : var( --tur-pap-col );                                       /* Turkeys Paper Color = #fff3dc */
+	color          : var( --tur-pap-col );                  /* Turkeys Paper Color = #fff3dc */
 	display        : flex;
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
-	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                       /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin ); /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
 	font-weight    : 800;
-	gap            : calc( var( --cdn-pow-001 ) * 1cqmin );                       /* Core-Design-Number to the Power of 1 ~= 1.325cqmin */ /* What: Row Gap. Why: A flex row that doesn't wrap only gaps across, and flexbox keeps each item its own width. How: This sets the gap from the screen box. */
+	gap            : calc( var( --cdn-pow-001 ) * 1cqmin ); /* Core-Design-Number to the Power of 1 ~= 1.325cqmin */ /* What: Row Gap. Why: A flex row that doesn't wrap only gaps across, and flexbox keeps each item its own width. How: This sets the gap from the screen box. */
 	left           : 4%;
 	pointer-events : none;
 	position       : absolute;
@@ -483,7 +483,7 @@
 
 
 	animation      : livTagSpaFlashBlink var( --dur-ani-p07 ) steps( 2 ) infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */
-	background     : var( --tur-red-col );                                        /* Turkeys Red Color = #b8402c */
+	background     : var( --tur-red-col );                                         /* Turkeys Red Color = #b8402c */
 	border-radius  : calc( var( --cdn-pow-003-rec ) * 1cqmin );                    /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin */
 	font-size      : calc( var( --cdn-pow-003 ) * 1cqmin );                        /* Core-Design-Number to the Power of 3 ~= 2.325cqmin */
 	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );                       /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
@@ -538,18 +538,18 @@
 .humCryPar { /* What: Humanity Cry Paragraph. Why: The reporter's cry, "Oh, the humanity!", pops up as the first turkeys fall. How: This sets it in the serif's heavy italic, ink on a cream pill with an orange edge, left of middle, letting taps through, hidden until the timeline shows it. */
 
 
-	background     : var( --tur-cre-col );                                                                  /* Turkeys Cream Color = #f6dfb6 */
+	background     : var( --tur-cre-col );                                                        /* Turkeys Cream Color = #f6dfb6 */
 	border-radius  : 999px;
 	box-shadow     : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 var( --tur-bur-col ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Burnt Color = #b25a1c */
-	color          : var( --tur-ink-col );                                                                  /* Turkeys Ink Color = #2a1d17 */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                 /* Font Family Main = 'Syne', sans-serif */
-	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                                                  /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	color          : var( --tur-ink-col );                                                        /* Turkeys Ink Color = #2a1d17 */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                       /* Font Family Main = 'Syne', sans-serif */
+	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                                       /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-style     : italic;
 	font-weight    : 800;
 	left           : 4%;
-	line-height    : var( --ver-rhy-bas );                                                                  /* Vertical Rhythm Base ~= 1.325 */
+	line-height    : var( --ver-rhy-bas );                                                        /* Vertical Rhythm Base ~= 1.325 */
 	margin         : 0;
-	padding        : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-003 ) * 1cqmin );            /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 3 ~= 2.325cqmin */
+	padding        : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-003 ) * 1cqmin ); /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 3 ~= 2.325cqmin */
 	pointer-events : none;
 	position       : absolute;
 	top            : 50%;
@@ -593,14 +593,14 @@
 .newLabSpa { /* What: News Label Span. Why: A tab names the bulletin. How: This sets NEWS BULLETIN in paper on an orange tab, rounded on top. */
 
 
-	background     : var( --tur-ora-col );                                                                 /* Turkeys Orange Color = #d9792b */
+	background     : var( --tur-ora-col );                                                                    /* Turkeys Orange Color = #d9792b */
 	border-radius  : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 0; /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
-	color          : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                /* Font Family Main = 'Syne', sans-serif */
-	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
+	color          : var( --tur-pap-col );                                                                    /* Turkeys Paper Color = #fff3dc */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                   /* Font Family Main = 'Syne', sans-serif */
+	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                                                   /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
 	font-weight    : 800;
-	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                                /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
-	padding        : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-002 ) * 1cqmin );        /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Core-Design-Number to the Power of 2 ~= 1.755cqmin */
+	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                                  /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
+	padding        : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-002 ) * 1cqmin );         /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Core-Design-Number to the Power of 2 ~= 1.755cqmin */
 
 
 }
@@ -624,14 +624,14 @@
 .newTexPar { /* What: News Text Paragraph. Why: The bulletin types out on a dark, see-through bar, so the lot still shows behind it. How: This sets it in Pixelify Sans, paper on ink at about three quarters, with an orange edge on its left. */
 
 
-	background    : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) );                    /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
-	border-left   : calc( var( --cdn-pow-002-rec ) * 1cqmin ) solid var( --tur-ora-col );                 /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Orange Color = #d9792b */
+	background    : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) );                     /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	border-left   : calc( var( --cdn-pow-002-rec ) * 1cqmin ) solid var( --tur-ora-col );                  /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Orange Color = #d9792b */
 	border-radius : 0 calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
-	color         : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
-	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                /* Font Family Secondary = 'DM Mono', monospace */
+	color         : var( --tur-pap-col );                                                                  /* Turkeys Paper Color = #fff3dc */
+	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                 /* Font Family Secondary = 'DM Mono', monospace */
 	font-size     : calc( var( --cdn-pow-005 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-weight   : 500;
-	line-height   : var( --ver-rhy-bas );                                                                 /* Vertical Rhythm Base ~= 1.325 */
+	line-height   : var( --ver-rhy-bas );                                                                  /* Vertical Rhythm Base ~= 1.325 */
 	margin        : 0;
 	padding       : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-002 ) * 1cqmin );           /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 2 ~= 1.755cqmin */
 
@@ -685,11 +685,11 @@
 .titGreHea { /* What: Title Greeting Heading. Why: "Merry Thanksgiving" leads the studio scene. How: This sets it in the soft serif's heaviest weight, cream with a stepped orange shadow, right of the station manager, unseen until the timeline fades it in but in the page from the start, so it names the card. */
 
 
-	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
-	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
-	font-size   : calc( var( --cdn-pow-009 ) * 1cqmin );                       /* Core-Design-Number to the Power of 9 ~= 12.564cqmin */
+	color       : var( --tur-cre-col );                  /* Turkeys Cream Color = #f6dfb6 */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai ); /* Font Family Main = 'Syne', sans-serif */
+	font-size   : calc( var( --cdn-pow-009 ) * 1cqmin ); /* Core-Design-Number to the Power of 9 ~= 12.564cqmin */
 	font-weight : 900;
-	line-height : var( --ver-rhy-m01 );                                       /* Vertical Rhythm Base Minus 1 = 1 */
+	line-height : var( --ver-rhy-m01 );                  /* Vertical Rhythm Base Minus 1 = 1 */
 	margin      : 0;
 	opacity     : 0;
 	position    : absolute;
@@ -724,16 +724,16 @@
 .quoBoxPar { /* What: Quote Box Paragraph. Why: The station manager's line sits in a box low on the screen, beside him. How: This sets it in the serif's italic, paper on ink at about three quarters, centered in its box, right of him and clear of the floating bar, hidden until the timeline shows it. */
 
 
-	background     : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) ); /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
-	border-radius  : calc( var( --cdn-pow-001-rec ) * 1cqmin );                          /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
-	bottom         : calc( 6% + var( --tur-bot-mar ) );                                  /* Turkeys Bottom Margin, about 0px - 74.019px */
-	color          : var( --tur-pap-col );                                              /* Turkeys Paper Color = #fff3dc */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                             /* Font Family Main = 'Syne', sans-serif */
-	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                              /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	background     : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) );           /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	border-radius  : calc( var( --cdn-pow-001-rec ) * 1cqmin );                                   /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
+	bottom         : calc( 6% + var( --tur-bot-mar ) );                                           /* Turkeys Bottom Margin, about 0px - 74.019px */
+	color          : var( --tur-pap-col );                                                        /* Turkeys Paper Color = #fff3dc */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                       /* Font Family Main = 'Syne', sans-serif */
+	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                                       /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-style     : italic;
 	font-weight    : 600;
 	left           : 34%;
-	line-height    : var( --ver-rhy-bas );                                              /* Vertical Rhythm Base ~= 1.325 */
+	line-height    : var( --ver-rhy-bas );                                                        /* Vertical Rhythm Base ~= 1.325 */
 	margin         : 0;
 	padding        : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-003 ) * 1cqmin ); /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 3 ~= 2.325cqmin */
 	pointer-events : none;
@@ -804,7 +804,7 @@
 	aspect-ratio  : 1;
 	background    : radial-gradient( circle at 40% 35%, var( --tur-chr-col ), var( --tur-pew-col ) 55%, var( --tur-iro-col ) ); /* Turkeys Chrome Color = #d6cfc4, Turkeys Pewter Color = #8b8378, Turkeys Iron Color = #4a453f */
 	border-radius : 50%;
-	box-shadow    : var( --ele-med-sha );                                                                                       /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
+	box-shadow    : var( --ele-med-sha ); /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
 	position      : relative;
 	width         : 70%;
 
@@ -814,8 +814,8 @@
 .knoDiaDiv::after { /* What: Knob Dial Div Pointer. Why: A dial shows where it's turned. How: This draws a short dark line from the knob's top toward its middle. */
 
 
-	background    : var( --tur-cha-col );                   /* Turkeys Charcoal Color = #2a2522 */
-	border-radius : calc( var( --ver-rhy-m09 ) * 1rem );    /* Vertical Rhythm Base Minus 9 ~= 1.160px */
+	background    : var( --tur-cha-col );                /* Turkeys Charcoal Color = #2a2522 */
+	border-radius : calc( var( --ver-rhy-m09 ) * 1rem ); /* Vertical Rhythm Base Minus 9 ~= 1.160px */
 	content       : '';
 	height        : 30%;
 	left          : 47%;
