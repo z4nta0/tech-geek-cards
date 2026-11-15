@@ -24,7 +24,7 @@ declare module 'subset-font' { // What: Subset Font Module Declaration. Why: Typ
 
 	type SubOptTyp = { targetFormat? : 'sfnt' | 'woff' | 'woff2', variationAxes? : Record< string, number | AxiRanTyp > }; // What: Subset Options Type. Why: The call names its output format and its axes. How: This types the options object, each axis a pinned value or a range.
 
-	export default function subsetFont ( souBytObj : Buffer, chaLisStr : string, subOptObj? : SubOptTyp ) : Promise< Buffer >; // What: Subset Font Function Declaration. Why: The script awaits the new font's bytes. How: This types the default export's parameters and result.
+	export default function subFonFun ( souBytObj : Buffer, chaLisStr : string, subOptObj? : SubOptTyp ) : Promise< Buffer >; // What: Subset Font Function Declaration. Why: The script awaits the new font's bytes. How: This types the default export's parameters and result.
 
 
 }

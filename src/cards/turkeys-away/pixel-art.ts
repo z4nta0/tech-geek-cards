@@ -250,7 +250,7 @@ function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, l
 
 
 
-const empGriFun = ( widNum : number, heiNum : number ) : PixGriTyp => Array.from( { length : heiNum }, () => Array< string >( widNum ).fill( '.' ) );                                               // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
+const empGriFun = ( widPixNum : number, heiPixNum : number ) : PixGriTyp => Array.from( { length : heiPixNum }, () => Array< string >( widPixNum ).fill( '.' ) );                                               // What: Empty Grid Function. Why: Some sprites are built up from a blank grid. How: This returns a grid of clear pixels at the size given.
 
 
 
@@ -355,7 +355,7 @@ function manGriFun () : PixGriTyp {
 	const manGriArr = empGriFun( 28, 56 ); // What: Manager Grid Array. Why: The station manager is built up on a blank grid. How: This makes one his size.
 
 
-	const recFilFun = ( keyCurStr : string, lefNum : number, topNum : number, rigNum : number, botNum : number ) => { for ( let rowIndNum = topNum; rowIndNum <= botNum; rowIndNum++ ) for ( let colIndNum = lefNum; colIndNum <= rigNum; colIndNum++ ) manGriArr[ rowIndNum ][ colIndNum ] = keyCurStr; }; // What: Rectangle Fill Function. Why: The figure is drawn as rectangles. How: This fills every pixel from the left and top edges to the right and bottom ones, inclusive.
+	const recFilFun = ( keyCurStr : string, lefEdgNum : number, topEdgNum : number, rigEdgNum : number, botEdgNum : number ) => { for ( let rowIndNum = topEdgNum; rowIndNum <= botEdgNum; rowIndNum++ ) for ( let colIndNum = lefEdgNum; colIndNum <= rigEdgNum; colIndNum++ ) manGriArr[ rowIndNum ][ colIndNum ] = keyCurStr; }; // What: Rectangle Fill Function. Why: The figure is drawn as rectangles. How: This fills every pixel from the left and top edges to the right and bottom ones, inclusive.
 
 
 
@@ -478,7 +478,7 @@ const texWidFun = ( texCurStr : string ) : number => [ ...texCurStr ].reduce( ( 
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
- * @param winUppBoo - Wing Up Boolean: Whether the wing is raised.
+ * @param winRaiBoo - Wing Raised Boolean: Whether the wing is raised.
  *
  * @returns The turkey's grid, wing drawn on.
  * @see {@link turGriArr}
@@ -490,18 +490,18 @@ const texWidFun = ( texCurStr : string ) : number => [ ...texCurStr ].reduce( ( 
  *
 */
 
-function turGriFun ( winUppBoo : boolean ) : PixGriTyp {
+function turGriFun ( winRaiBoo : boolean ) : PixGriTyp {
 
 
 	const turGriArr = rowGriFun( TUR_ROW_ARR );                           // What: Turkey Grid Array. Why: The wing is drawn onto the turkey's body. How: This turns the turkey's rows into a grid.
-	const winGriArr = rowGriFun( winUppBoo ? WIN_UPP_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
-	const winTopNum = winUppBoo ? 1 : 7;                                  // What: Wing Top Number. Why: A raised wing sits high on the back, a lowered one on the side. How: This is the row the wing starts on.
+	const winGriArr = rowGriFun( winRaiBoo ? WIN_UPP_ARR : WIN_DOW_ARR ); // What: Wing Grid Array. Why: Each frame has its own wing. How: This turns the chosen wing's rows into a grid.
+	const winTopNum = winRaiBoo ? 1 : 7;                                  // What: Wing Top Number. Why: A raised wing sits high on the back, a lowered one on the side. How: This is the row the wing starts on.
 
 
 	winGriArr.forEach( ( rowCurArr, rowIndNum ) => rowCurArr.forEach( ( keyCurStr, colIndNum ) => { if ( keyCurStr !== '.' ) turGriArr[ winTopNum + rowIndNum ][ 5 + colIndNum ] = keyCurStr; } ) ); // What: Wing Draw Call. Why: The wing covers part of the body. How: This copies the wing's colored pixels onto the turkey, five columns in.
 
 
-	if ( winUppBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This adds two wing pixels to the top row.
+	if ( winRaiBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This adds two wing pixels to the top row.
 
 
 

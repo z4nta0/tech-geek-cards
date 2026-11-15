@@ -89,7 +89,7 @@ type SceSchTyp = { // What: Scene Schedule Type. Why: The scene's events line up
 	finNum : number,   // What: Finish Number. Why: Under reduced motion the scene shows its finished state. How: This is the moment it draws.
 	hlaNum : number,   // What: Helicopter Arrival Number. Why: The helicopter enters after the card opens. How: This is when it starts across.
 	hldNum : number,   // What: Helicopter Duration Number. Why: The helicopter takes a set time to cross. How: This is how long it takes.
-	scnNum : number,   // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
+	sceNum : number,   // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
 	staNum : number    // What: Static Number. Why: Static changes the channel between the scenes. How: This is when the static starts.
 
 
@@ -240,7 +240,7 @@ const WID_BAS_ARR = [ 240, 135 ]; // What: Wide Base Array. Why: The wide compos
  * @param layRecObj - Layout Record Object: {@link LayRecTyp}
  * @param sprSetObj - Sprite Set Object: {@link SprSetTyp}
  * @param colGetFun - Color Get Function: Returns a token's color.
- * @param timNum    - Time Number: The scene's time, in seconds.
+ * @param curTimNum - Current Time Number: The scene's time, in seconds.
  *
  * @returns This function does not return anything.
  *
@@ -251,7 +251,7 @@ const WID_BAS_ARR = [ 240, 135 ]; // What: Wide Base Array. Why: The wide compos
  *
 */
 
-function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp, sprSetObj : SprSetTyp, colGetFun : ( tokNamStr : string ) => string, timNum : number ) : void {
+function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp, sprSetObj : SprSetTyp, colGetFun : ( tokNamStr : string ) => string, curTimNum : number ) : void {
 
 
 	const [ malLefNum, malTopNum, malWidNum ] = layRecObj.malArr; // What: Mall Left Number. Why: The mall's parts are placed from its left. How: This reads it. // What: Mall Top Number. Why: The mall's parts are placed from its roof. How: This reads it. // What: Mall Width Number. Why: The mall's rows span its width. How: This reads it.
@@ -261,7 +261,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 
 
-	const recFilFun = ( tokNamStr : string, lefNum : number, topNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( lefNum, topNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
 
 
 
@@ -278,7 +278,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 	for ( const [ cloLefNum, cloTopNum ] of layRecObj.cloArr ) { // What: Cloud Loop. Why: Each cloud drifts and wraps around. How: This draws each at its drifted place.
 
 
-		const cloXcoNum = Math.round( ( cloLefNum + timNum * 3 ) % ( layRecObj.widNum + 30 ) ) - 30; // What: Cloud X-Coordinate Number. Why: The clouds drift right and come back from the left. How: This moves the cloud three pixels a second, wrapping past the right edge.
+		const cloXcoNum = Math.round( ( cloLefNum + curTimNum * 3 ) % ( layRecObj.widNum + 30 ) ) - 30; // What: Cloud X-Coordinate Number. Why: The clouds drift right and come back from the left. How: This moves the cloud three pixels a second, wrapping past the right edge.
 
 
 		recFilFun( '--tur-ivo-col', cloXcoNum, cloTopNum, 22, 4 );         // What: Cloud Base Fill Call. Why: A cloud has a flat base. How: This draws it. // Turkeys Ivory Color = #f6eedf
@@ -388,7 +388,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
  * @param layRecObj - Layout Record Object: {@link LayRecTyp}
  * @param sprSetObj - Sprite Set Object: {@link SprSetTyp}
  * @param colGetFun - Color Get Function: Returns a token's color.
- * @param timNum    - Time Number: The scene's time, in seconds.
+ * @param curTimNum - Current Time Number: The scene's time, in seconds.
  *
  * @returns This function does not return anything.
  *
@@ -399,16 +399,16 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
  *
 */
 
-function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp, sprSetObj : SprSetTyp, colGetFun : ( tokNamStr : string ) => string, timNum : number ) : void {
+function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp, sprSetObj : SprSetTyp, colGetFun : ( tokNamStr : string ) => string, curTimNum : number ) : void {
 
 
 	const [ onaLefNum, onaTopNum ] = layRecObj.onaArr; // What: On Air Left Number. Why: The light is placed from its left. How: This reads it. // What: On Air Top Number. Why: The light is placed from its top. How: This reads it.
 
-	const onaLitBoo = Math.floor( timNum * 1.2 ) % 2 === 0; // What: On Air Lit Boolean. Why: The ON AIR light blinks. How: This is true on every other beat, a little under a second each.
+	const onaLitBoo = Math.floor( curTimNum * 1.2 ) % 2 === 0; // What: On Air Lit Boolean. Why: The ON AIR light blinks. How: This is true on every other beat, a little under a second each.
 
 
 
-	const recFilFun = ( tokNamStr : string, lefNum : number, topNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( lefNum, topNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
+	const recFilFun = ( tokNamStr : string, recLefNum : number, recTopNum : number, recWidNum : number, recHeiNum : number ) : void => { canCotObj.fillStyle = colGetFun( tokNamStr ); canCotObj.fillRect( recLefNum, recTopNum, recWidNum, recHeiNum ); }; // What: Rectangle Fill Function. Why: The backdrop is drawn as rectangles. How: This fills one in a token's color.
 
 
 	for ( let plaLefNum = 0; plaLefNum < layRecObj.widNum; plaLefNum += 8 ) { // What: Plank Loop. Why: The studio is wood paneled. How: This draws each eight-pixel plank and its groove.
@@ -460,7 +460,7 @@ function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
  * @param turCurObj - Turkey Current Object: {@link TurStaTyp}
  * @param sprSetObj - Sprite Set Object: {@link SprSetTyp}
  * @param staColStr - Star Color String: The dazed stars' color.
- * @param timNum    - Time Number: The scene's time, in seconds.
+ * @param curTimNum - Current Time Number: The scene's time, in seconds.
  *
  * @returns This function does not return anything.
  *
@@ -471,16 +471,16 @@ function draStuFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
  *
 */
 
-function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp, sprSetObj : SprSetTyp, staColStr : string, timNum : number ) : void {
+function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp, sprSetObj : SprSetTyp, staColStr : string, curTimNum : number ) : void {
 
 
 	const falFlaBoo = turCurObj.staStr === 'fall' && Math.floor( turCurObj.flaNum / FLA_TIM_NUM ) % 2 === 0; // What: Falling Flap Boolean. Why: A falling turkey flaps on a steady beat. How: This is true on every other beat.
-	const sitFlaBoo = turCurObj.staStr === 'sit' && Math.floor( timNum * 2 ) % 7 === 0;                      // What: Sitting Flap Boolean. Why: A dazed turkey flaps now and then. How: This is true for half a second in every three and a half.
+	const sitFlaBoo = turCurObj.staStr === 'sit' && Math.floor( curTimNum * 2 ) % 7 === 0;                   // What: Sitting Flap Boolean. Why: A dazed turkey flaps now and then. How: This is true for half a second in every three and a half.
 
-	const winUppBoo = falFlaBoo || sitFlaBoo; // What: Wing Up Boolean. Why: The wing is up when either turkey flaps. How: This combines the two.
+	const winRaiBoo = falFlaBoo || sitFlaBoo; // What: Wing Raised Boolean. Why: The wing is up when either turkey flaps. How: This combines the two.
 
 
-	const sprCanEle = winUppBoo ? sprSetObj.tuuEle : sprSetObj.tudEle; // What: Sprite Canvas Element. Why: Each frame has its own image. How: This picks the wing-up or wing-down frame.
+	const sprCanEle = winRaiBoo ? sprSetObj.tuuEle : sprSetObj.tudEle; // What: Sprite Canvas Element. Why: Each frame has its own image. How: This picks the wing-up or wing-down frame.
 
 
 	canCotObj.save(); // What: Context Save Call. Why: The turkey's turn mustn't affect what's drawn after it. How: This saves the drawing state.
@@ -502,7 +502,7 @@ function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp
 	canCotObj.fillStyle = staColStr; // What: Star Fill Assignment. Why: The stars are gold. How: This sets their color.
 
 
-	for ( let staIndNum = 0; staIndNum < 3; staIndNum++ ) canCotObj.fillRect( Math.round( turCurObj.xcoNum + 2 + Math.cos( timNum * 4 + staIndNum * 2.09 ) * 6 ), Math.round( turCurObj.ycoNum - 12 + Math.sin( timNum * 4 + staIndNum * 2.09 ) * 2 ), 1, 1 ); // What: Dazed Star Loop. Why: Three stars circle the dazed turkey's head. How: This places each a third of a turn apart on a flat circle above it.
+	for ( let staIndNum = 0; staIndNum < 3; staIndNum++ ) canCotObj.fillRect( Math.round( turCurObj.xcoNum + 2 + Math.cos( curTimNum * 4 + staIndNum * 2.09 ) * 6 ), Math.round( turCurObj.ycoNum - 12 + Math.sin( curTimNum * 4 + staIndNum * 2.09 ) * 2 ), 1, 1 ); // What: Dazed Star Loop. Why: Three stars circle the dazed turkey's head. How: This places each a third of a turn apart on a flat circle above it.
 
 
 }
@@ -511,7 +511,7 @@ function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp
 
 
 
-const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, timNum : number ) : number => -60 + ( timNum - schRecObj.hlaNum ) / schRecObj.hldNum * ( layRecObj.widNum + 65 ); // What: Helicopter X-Coordinate Function. Why: The helicopter crosses the whole width in its set time, and drops leave from wherever it is. How: This returns its left, moving from just off the left edge to just off the right.
+const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : number ) : number => -60 + ( curTimNum - schRecObj.hlaNum ) / schRecObj.hldNum * ( layRecObj.widNum + 65 ); // What: Helicopter X-Coordinate Function. Why: The helicopter crosses the whole width in its set time, and drops leave from wherever it is. How: This returns its left, moving from just off the left edge to just off the right.
 
 
 
@@ -551,43 +551,43 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 	const [ basWidNum, basHeiNum ] = talLayBoo ? TAL_BAS_ARR : WID_BAS_ARR; // What: Base Width Number. Why: The composition is drawn at this width at least. How: This reads the chosen composition's width. // What: Base Height Number. Why: The composition is drawn at this height at least. How: This reads its height.
 
 	const widBigBoo = aspRatNum >= basWidNum / basHeiNum;                          // What: Width Bigger Boolean. Why: A wider screen stretches the width, a narrower one the height. How: This compares the screen's shape to the composition's.
-	const heiNum    = widBigBoo ? basHeiNum : Math.round( basWidNum / aspRatNum ); // What: Height Number. Why: The canvas matches the screen's shape. How: This stretches the height on a narrower screen, or keeps the drawn height.
-	const widNum    = widBigBoo ? Math.round( basHeiNum * aspRatNum ) : basWidNum; // What: Width Number. Why: The canvas matches the screen's shape. How: This stretches the width on a wider screen, or keeps the drawn width.
-	const offXcoNum = Math.round( ( widNum - basWidNum ) / 2 );                    // What: Offset X-Coordinate Number. Why: Centered elements move to the middle of a wider canvas. How: This is half the extra width.
+	const layHeiNum = widBigBoo ? basHeiNum : Math.round( basWidNum / aspRatNum ); // What: Layout Height Number. Why: The canvas matches the screen's shape. How: This stretches the height on a narrower screen, or keeps the drawn height.
+	const layWidNum = widBigBoo ? Math.round( basHeiNum * aspRatNum ) : basWidNum; // What: Layout Width Number. Why: The canvas matches the screen's shape. How: This stretches the width on a wider screen, or keeps the drawn width.
+	const offXcoNum = Math.round( ( layWidNum - basWidNum ) / 2 );                 // What: Offset X-Coordinate Number. Why: Centered elements move to the middle of a wider canvas. How: This is half the extra width.
 
 
 	if ( !talLayBoo ) { // What: Wide Layout Branch. Why: The wide composition puts all its extra height in the sky. How: This returns the wide positions, everything below the sky moved down by the extra height.
 
 
-		const offYcoNum = heiNum - basHeiNum;          // What: Offset Y-Coordinate Number. Why: Extra height goes to the sky. How: This is the extra height.
-		const manLefNum = Math.round( widNum * 0.11 ); // What: Manager Left Number. Why: The station manager stands at the studio's left, the greeting to his right. How: This is a share of the width.
+		const offYcoNum = layHeiNum - basHeiNum;          // What: Offset Y-Coordinate Number. Why: Extra height goes to the sky. How: This is the extra height.
+		const manLefNum = Math.round( layWidNum * 0.11 ); // What: Manager Left Number. Why: The station manager stands at the studio's left, the greeting to his right. How: This is a share of the width.
 
 
 
 		return { // What: Wide Layout Return. Why: The caller draws the wide composition. How: This returns its positions.
 
 
-			curNum : offYcoNum + 85,                                               // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
-			divNum : offYcoNum + 108,                                              // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
-			dooNum : offXcoNum + 106,                                              // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
-			feaArr : [ Math.round( widNum * 0.46 ), Math.round( widNum * 0.09 ) ], // What: Feather Array. Why: Feathers drift down the studio's right side, beside the greeting. How: This starts them near the middle, spaced by a share of the width.
-			floNum : offYcoNum + 98,                                               // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
-			heiNum,
-			helNum : offYcoNum + 29,                                     // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
-			lanArr : [ offYcoNum + 93, 14 ],                             // What: Landing Array. Why: Turkeys land in the lot's front row. How: This is its drawn landing line, moved down, and its depth.
-			linArr : [ [ offYcoNum + 90, 9 ], [ offYcoNum + 116, 10 ] ], // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
-			malArr : [ offXcoNum + 28, offYcoNum + 56, 184 ],            // What: Mall Array. Why: The mall stands centered at the back of the lot. How: This is its drawn place, moved, and its width.
-			manArr : [ manLefNum, offYcoNum + 129 ],                     // What: Manager Array. Why: The station manager stands on the carpet. How: This is his left, then his drawn footing, moved down.
-			onaArr : [ 10, 10 ],                                         // What: On Air Array. Why: The ON AIR light hangs at the wall's top left. How: This is its drawn place.
-			polArr : [ offXcoNum + 92, offXcoNum + 184 ],                // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
-			skyNum : offYcoNum + 40,                                     // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
-			tapArr : [ offYcoNum + 122, 8 ],                             // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
-			turNum : manLefNum + 44,                                     // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is his left plus a little more than his width.
-			widNum,
-			winArr : [ offXcoNum + 38, offXcoNum + 62, offXcoNum + 150, offXcoNum + 174 ],    // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
+			curNum : offYcoNum + 85,                                                       // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
+			divNum : offYcoNum + 108,                                                      // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
+			dooNum : offXcoNum + 106,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
+			feaArr : [ Math.round( layWidNum * 0.46 ), Math.round( layWidNum * 0.09 ) ],   // What: Feather Array. Why: Feathers drift down the studio's right side, beside the greeting. How: This starts them near the middle, spaced by a share of the width.
+			floNum : offYcoNum + 98,                                                       // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
+			heiNum : layHeiNum,                                                            // What: Height Number. Why: The canvas takes the screen's shape. How: This is the stretched height.
+			helNum : offYcoNum + 29,                                                       // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
+			lanArr : [ offYcoNum + 93, 14 ],                                               // What: Landing Array. Why: Turkeys land in the lot's front row. How: This is its drawn landing line, moved down, and its depth.
+			linArr : [ [ offYcoNum + 90, 9 ], [ offYcoNum + 116, 10 ] ],                   // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
+			malArr : [ offXcoNum + 28, offYcoNum + 56, 184 ],                              // What: Mall Array. Why: The mall stands centered at the back of the lot. How: This is its drawn place, moved, and its width.
+			manArr : [ manLefNum, offYcoNum + 129 ],                                       // What: Manager Array. Why: The station manager stands on the carpet. How: This is his left, then his drawn footing, moved down.
+			onaArr : [ 10, 10 ],                                                           // What: On Air Array. Why: The ON AIR light hangs at the wall's top left. How: This is its drawn place.
+			polArr : [ offXcoNum + 92, offXcoNum + 184 ],                                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
+			skyNum : offYcoNum + 40,                                                       // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
+			tapArr : [ offYcoNum + 122, 8 ],                                               // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
+			turNum : manLefNum + 44,                                                       // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is his left plus a little more than his width.
+			widNum : layWidNum,                                                            // What: Width Number. Why: The canvas takes the screen's shape. How: This is the stretched width.
+			winArr : [ offXcoNum + 38, offXcoNum + 62, offXcoNum + 150, offXcoNum + 174 ], // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
 
 			carArr : [ [ 0, offXcoNum + 9, offYcoNum + 91 ], [ 1, offXcoNum + 57, offYcoNum + 91 ], [ 2, offXcoNum + 152, offYcoNum + 91 ], [ 1, offXcoNum + 25, offYcoNum + 118 ], [ 0, offXcoNum + 200, offYcoNum + 118 ] ], // What: Car Array. Why: Five cars park in both rows. How: Each sits at its drawn place, moved with the mall.
-			cloArr : [ [ Math.round( widNum * 0.08 ), offYcoNum + 44 ], [ Math.round( widNum * 0.62 ), offYcoNum + 30 ], [ Math.round( widNum * 0.85 ), offYcoNum + 48 ] ]                                                     // What: Cloud Array. Why: Three clouds spread across the sky. How: Each starts at its share of the width, at its drawn height moved down.
+			cloArr : [ [ Math.round( layWidNum * 0.08 ), offYcoNum + 44 ], [ Math.round( layWidNum * 0.62 ), offYcoNum + 30 ], [ Math.round( layWidNum * 0.85 ), offYcoNum + 48 ] ]                                            // What: Cloud Array. Why: Three clouds spread across the sky. How: Each starts at its share of the width, at its drawn height moved down.
 
 
 		};
@@ -597,34 +597,34 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 
 
 
-	const offYcoNum = Math.round( ( heiNum - basHeiNum ) / 2 ); // What: Offset Y-Coordinate Number. Why: The tall composition shares its extra height between the sky and the lot. How: This is half the extra height.
+	const offYcoNum = Math.round( ( layHeiNum - basHeiNum ) / 2 ); // What: Offset Y-Coordinate Number. Why: The tall composition shares its extra height between the sky and the lot. How: This is half the extra height.
 
 
 
 	return { // What: Tall Layout Return. Why: The caller draws the tall composition. How: This returns its positions.
 
 
-		curNum : offYcoNum + 125,        // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
-		divNum : offYcoNum + 148,        // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
-		dooNum : offXcoNum + 54,         // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
-		feaArr : [ offXcoNum + 20, 20 ], // What: Feather Array. Why: Feathers drift down the whole studio. How: This starts them near the left, spaced evenly.
-		floNum : offYcoNum + 150,        // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
-		heiNum,
-		helNum : offYcoNum + 60,                                      // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
-		lanArr : [ offYcoNum + 133, 34 ],                             // What: Landing Array. Why: Turkeys land across the taller lot. How: This is its drawn landing line, moved down, and its depth.
-		linArr : [ [ offYcoNum + 130, 9 ], [ offYcoNum + 156, 10 ] ], // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
-		malArr : [ offXcoNum + 6, offYcoNum + 96, 123 ],              // What: Mall Array. Why: The tall composition's mall is narrower. How: This is its drawn place, moved, and its width.
-		manArr : [ offXcoNum + 14, offYcoNum + 186 ],                 // What: Manager Array. Why: The station manager stands at the studio's left, below the greeting. How: This is his drawn place, moved with the extra size.
-		onaArr : [ offXcoNum + 92, offYcoNum + 112 ],                 // What: On Air Array. Why: The ON AIR light hangs on the wall to the manager's right. How: This is its drawn place, moved with the extra size.
-		polArr : [ offXcoNum + 46, offXcoNum + 92 ],                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
-		skyNum : offYcoNum + 70,                                      // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
-		tapArr : [ offYcoNum + 176, 10 ],                             // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
-		turNum : offXcoNum + 66,                                      // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is its drawn place, moved with the extra width.
-		widNum,
-		winArr : [ offXcoNum + 12, offXcoNum + 32, offXcoNum + 85, offXcoNum + 105 ],  // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
+		curNum : offYcoNum + 125,                                                     // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
+		divNum : offYcoNum + 148,                                                     // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
+		dooNum : offXcoNum + 54,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
+		feaArr : [ offXcoNum + 20, 20 ],                                              // What: Feather Array. Why: Feathers drift down the whole studio. How: This starts them near the left, spaced evenly.
+		floNum : offYcoNum + 150,                                                     // What: Floor Number. Why: The carpet starts below the wall. How: This is its drawn place, moved down.
+		heiNum : layHeiNum,                                                           // What: Height Number. Why: The canvas takes the screen's shape. How: This is the stretched height.
+		helNum : offYcoNum + 60,                                                      // What: Helicopter Number. Why: The helicopter flies above the sign. How: This is its drawn place, moved down.
+		lanArr : [ offYcoNum + 133, 34 ],                                             // What: Landing Array. Why: Turkeys land across the taller lot. How: This is its drawn landing line, moved down, and its depth.
+		linArr : [ [ offYcoNum + 130, 9 ], [ offYcoNum + 156, 10 ] ],                 // What: Line Array. Why: Two rows of stall lines mark the lot. How: Each row is at its drawn place, moved down.
+		malArr : [ offXcoNum + 6, offYcoNum + 96, 123 ],                              // What: Mall Array. Why: The tall composition's mall is narrower. How: This is its drawn place, moved, and its width.
+		manArr : [ offXcoNum + 14, offYcoNum + 186 ],                                 // What: Manager Array. Why: The station manager stands at the studio's left, below the greeting. How: This is his drawn place, moved with the extra size.
+		onaArr : [ offXcoNum + 92, offYcoNum + 112 ],                                 // What: On Air Array. Why: The ON AIR light hangs on the wall to the manager's right. How: This is its drawn place, moved with the extra size.
+		polArr : [ offXcoNum + 46, offXcoNum + 92 ],                                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
+		skyNum : offYcoNum + 70,                                                      // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
+		tapArr : [ offYcoNum + 176, 10 ],                                             // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
+		turNum : offXcoNum + 66,                                                      // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is its drawn place, moved with the extra width.
+		widNum : layWidNum,                                                           // What: Width Number. Why: The canvas takes the screen's shape. How: This is the stretched width.
+		winArr : [ offXcoNum + 12, offXcoNum + 32, offXcoNum + 85, offXcoNum + 105 ], // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
 
-		carArr : [ [ 0, offXcoNum + 2, offYcoNum + 131 ], [ 2, offXcoNum + 104, offYcoNum + 131 ], [ 1, offXcoNum + 60, offYcoNum + 158 ] ],                           // What: Car Array. Why: Three cars park in both rows. How: Each sits at its drawn place, moved with the extra size.
-		cloArr : [ [ Math.round( widNum * 0.07 ), offYcoNum + 74 ], [ Math.round( widNum * 0.59 ), offYcoNum + 62 ], [ Math.round( widNum * 0.89 ), offYcoNum + 84 ] ] // What: Cloud Array. Why: Three clouds spread across the sky. How: Each starts at its share of the width, at its drawn height moved down.
+		carArr : [ [ 0, offXcoNum + 2, offYcoNum + 131 ], [ 2, offXcoNum + 104, offYcoNum + 131 ], [ 1, offXcoNum + 60, offYcoNum + 158 ] ],                                    // What: Car Array. Why: Three cars park in both rows. How: Each sits at its drawn place, moved with the extra size.
+		cloArr : [ [ Math.round( layWidNum * 0.07 ), offYcoNum + 74 ], [ Math.round( layWidNum * 0.59 ), offYcoNum + 62 ], [ Math.round( layWidNum * 0.89 ), offYcoNum + 84 ] ] // What: Cloud Array. Why: Three clouds spread across the sky. How: Each starts at its share of the width, at its drawn height moved down.
 
 
 	};
@@ -691,7 +691,7 @@ function ranGenFun ( seeValNum : number ) : () => number {
 
 
 
-const spaTurFun = ( simStaObj : SimStaTyp, turArr : TurStaTyp[], xcoNum : number, ycoNum : number, velXcoNum : number, lanArr : [ number, number ] ) : void => { turArr.push( { ageNum : 0, angNum : 0, bouBoo : false, flaNum : 0, lanNum : lanArr[ 0 ] + simStaObj.ranFun() * lanArr[ 1 ], spiNum : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), staStr : 'fall', velXcoNum, velYcoNum : 0, xcoNum, ycoNum } ); }; // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
+const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ] ) : void => { lisTurArr.push( { ageNum : 0, angNum : 0, bouBoo : false, flaNum : 0, lanNum : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ], spiNum : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), staStr : 'fall', velXcoNum, velYcoNum : 0, xcoNum : spaXcoNum, ycoNum : spaYcoNum } ); }; // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
 
 
 
@@ -709,7 +709,7 @@ const spaTurFun = ( simStaObj : SimStaTyp, turArr : TurStaTyp[], xcoNum : number
  * @author z4nta0 <https://github.com/z4nta0>
  *
  * @param simStaObj - Simulation State Object: {@link SimStaTyp}
- * @param turArr    - Turkey Array: The turkeys to move.
+ * @param lisTurArr - List Turkey Array: The turkeys to move.
  * @param pufColArr - Puff Color Array: The colors a puff's pixels take.
  * @param delTimNum - Delta Time Number: The slice of time, in seconds.
  *
@@ -722,10 +722,10 @@ const spaTurFun = ( simStaObj : SimStaTyp, turArr : TurStaTyp[], xcoNum : number
  *
 */
 
-function steTurFun ( simStaObj : SimStaTyp, turArr : TurStaTyp[], pufColArr : string[], delTimNum : number ) : void {
+function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr : string[], delTimNum : number ) : void {
 
 
-	for ( const turCurObj of turArr ) { // What: Turkey Loop. Why: Each turkey moves on its own. How: This walks the list.
+	for ( const turCurObj of lisTurArr ) { // What: Turkey Loop. Why: Each turkey moves on its own. How: This walks the list.
 
 
 		turCurObj.ageNum += delTimNum; // What: Age Advance Assignment. Why: The turkey's state changes with time. How: This adds the slice.
@@ -848,7 +848,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 		if ( tapCurObj.timNum < schRecObj.staNum ) spaTurFun( simStaObj, simStaObj.malArr, tapXcoNum, -10, 0, layRecObj.lanArr ); // What: Lot Tap Branch. Why: A tap over the mall drops a turkey into the lot. How: This spawns it above the screen.
 
-		else if ( tapCurObj.timNum >= schRecObj.scnNum ) spaTurFun( simStaObj, simStaObj.stuArr, tapXcoNum, -10, 0, layRecObj.tapArr ); // What: Studio Tap Branch. Why: A tap in the studio drops a turkey onto the carpet. How: This spawns it above the screen.
+		else if ( tapCurObj.timNum >= schRecObj.sceNum ) spaTurFun( simStaObj, simStaObj.stuArr, tapXcoNum, -10, 0, layRecObj.tapArr ); // What: Studio Tap Branch. Why: A tap in the studio drops a turkey onto the carpet. How: This spawns it above the screen.
 
 
 
@@ -859,12 +859,12 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 
-	if ( preTimNum < schRecObj.scnNum && nexTimNum >= schRecObj.scnNum ) { // What: Studio Start Branch. Why: The studio opens with a dazed turkey and drifting feathers. How: This sets them up as the studio starts.
+	if ( preTimNum < schRecObj.sceNum && nexTimNum >= schRecObj.sceNum ) { // What: Studio Start Branch. Why: The studio opens with a dazed turkey and drifting feathers. How: This sets them up as the studio starts.
 
 
 		simStaObj.stuArr.push( { ageNum : 9, angNum : 0, bouBoo : true, flaNum : 0, lanNum : layRecObj.manArr[ 1 ], spiNum : 0, staStr : 'sit', velXcoNum : 0, velYcoNum : 0, xcoNum : layRecObj.turNum, ycoNum : layRecObj.manArr[ 1 ] - 8 } ); // What: Dazed Turkey Push Call. Why: A turkey sits dazed at the manager's feet. How: This seats it beside him.
 
-		simStaObj.feaArr = Array.from( { length : 6 }, ( _, feaIndNum ) => ( { phaNum : feaIndNum, xcoNum : layRecObj.feaArr[ 0 ] + feaIndNum * layRecObj.feaArr[ 1 ], ycoNum : -10 - feaIndNum * 24 } ) ); // What: Feather Setup Assignment. Why: Six feathers drift down the studio at staggered heights. How: This spaces them across and above the top.
+		simStaObj.feaArr = Array.from( Array( 6 ).keys(), ( feaIndNum ) => ( { phaNum : feaIndNum, xcoNum : layRecObj.feaArr[ 0 ] + feaIndNum * layRecObj.feaArr[ 1 ], ycoNum : -10 - feaIndNum * 24 } ) ); // What: Feather Setup Assignment. Why: Six feathers drift down the studio at staggered heights. How: This spaces them across and above the top.
 
 
 	}
@@ -873,7 +873,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 	if ( nexTimNum < schRecObj.staNum ) steTurFun( simStaObj, simStaObj.malArr, pufColArr, DEL_TIM_NUM ); // What: Lot Turkey Step Call. Why: The lot's turkeys move while the mall shows. How: This steps them.
 
-	if ( nexTimNum >= schRecObj.scnNum ) steTurFun( simStaObj, simStaObj.stuArr, pufColArr, DEL_TIM_NUM ); // What: Studio Turkey Step Call. Why: The studio's turkeys move once it shows. How: This steps them.
+	if ( nexTimNum >= schRecObj.sceNum ) steTurFun( simStaObj, simStaObj.stuArr, pufColArr, DEL_TIM_NUM ); // What: Studio Turkey Step Call. Why: The studio's turkeys move once it shows. How: This steps them.
 
 
 
@@ -1009,7 +1009,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
-	 * @param timNum - Time Number: The moment to draw, in seconds.
+	 * @param curTimNum - Current Time Number: The moment to draw, in seconds.
 	 *
 	 * @returns This function does not return anything.
 	 *
@@ -1020,18 +1020,18 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	 *
 	*/
 
-	const draFraFun = ( timNum : number ) : void => { // What: Draw Frame Function. Why: Each frame shows the scene at the card's time. How: This steps the motion to the moment and draws it.
+	const draFraFun = ( curTimNum : number ) : void => { // What: Draw Frame Function. Why: Each frame shows the scene at the card's time. How: This steps the motion to the moment and draws it.
 
 
-		if ( timNum < simStaObj.simNum ) simStaObj = simNewFun(); // What: Rewind Branch. Why: The motion only steps forward. How: This starts over when the moment is earlier.
-
-
-
-		while ( simStaObj.simNum + DEL_TIM_NUM <= timNum ) simSteFun( simStaObj, layRecObj, schRecObj, tapEveArr, pufColArr ); // What: Simulation Catch-Up Loop. Why: The motion steps in fixed slices up to the moment. How: This steps until the next slice would pass it.
+		if ( curTimNum < simStaObj.simNum ) simStaObj = simNewFun(); // What: Rewind Branch. Why: The motion only steps forward. How: This starts over when the moment is earlier.
 
 
 
-		if ( timNum >= schRecObj.staNum && timNum < schRecObj.scnNum ) { // What: Static Branch. Why: Static changes the channel. How: This fills the canvas with random grays.
+		while ( simStaObj.simNum + DEL_TIM_NUM <= curTimNum ) simSteFun( simStaObj, layRecObj, schRecObj, tapEveArr, pufColArr ); // What: Simulation Catch-Up Loop. Why: The motion steps in fixed slices up to the moment. How: This steps until the next slice would pass it.
+
+
+
+		if ( curTimNum >= schRecObj.staNum && curTimNum < schRecObj.sceNum ) { // What: Static Branch. Why: Static changes the channel. How: This fills the canvas with random grays.
 
 
 			const staDatArr = staImaObj.data; // What: Static Data Array. Why: Each pixel's red, green, blue, and alpha are set directly. How: This reads the buffer's bytes.
@@ -1052,25 +1052,25 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 
-		const malShoBoo = timNum < schRecObj.staNum; // What: Mall Showing Boolean. Why: The mall shows before the static. How: This compares the moment to the static's start.
+		const malShoBoo = curTimNum < schRecObj.staNum; // What: Mall Showing Boolean. Why: The mall shows before the static. How: This compares the moment to the static's start.
 
 
-		if ( malShoBoo ) draMalFun( canCotObj, layRecObj, sprSetObj, colGetFun, timNum ); // What: Mall Draw Branch. Why: The first scene shows the mall. How: This draws its backdrop.
+		if ( malShoBoo ) draMalFun( canCotObj, layRecObj, sprSetObj, colGetFun, curTimNum ); // What: Mall Draw Branch. Why: The first scene shows the mall. How: This draws its backdrop.
 
-		else draStuFun( canCotObj, layRecObj, sprSetObj, colGetFun, timNum ); // What: Studio Draw Branch. Why: The second scene shows the studio. How: This draws its backdrop.
+		else draStuFun( canCotObj, layRecObj, sprSetObj, colGetFun, curTimNum ); // What: Studio Draw Branch. Why: The second scene shows the studio. How: This draws its backdrop.
 
 
 
-		[ ...( malShoBoo ? simStaObj.malArr : simStaObj.stuArr ) ].sort( ( turOneObj, turTwoObj ) => turOneObj.lanNum - turTwoObj.lanNum ).forEach( ( turCurObj ) => draTurFun( canCotObj, turCurObj, sprSetObj, staColStr, timNum ) ); // What: Turkey Draw Call. Why: Each scene shows its own turkeys, nearer ones overlapping farther ones. How: This draws the showing scene's turkeys from the farthest landing line to the nearest.
+		[ ...( malShoBoo ? simStaObj.malArr : simStaObj.stuArr ) ].sort( ( turOneObj, turTwoObj ) => turOneObj.lanNum - turTwoObj.lanNum ).forEach( ( turCurObj ) => draTurFun( canCotObj, turCurObj, sprSetObj, staColStr, curTimNum ) ); // What: Turkey Draw Call. Why: Each scene shows its own turkeys, nearer ones overlapping farther ones. How: This draws the showing scene's turkeys from the farthest landing line to the nearest.
 
 
 
 		if ( malShoBoo ) { // What: Helicopter Branch. Why: The helicopter crosses only the mall's sky. How: This draws it and its rotors while it's on screen.
 
 
-			const helLefNum = Math.round( helXcoFun( layRecObj, schRecObj, timNum ) ); // What: Helicopter Left Number. Why: The helicopter is drawn on whole pixels. How: This rounds its place.
-			const helTopNum = layRecObj.helNum + Math.round( Math.sin( timNum * 3 ) ); // What: Helicopter Top Number. Why: A hovering helicopter bobs. How: This rises and sinks a pixel on a slow wave.
-			const rotLonBoo = Math.floor( timNum * 20 ) % 2 === 0;                     // What: Rotor Long Boolean. Why: Spinning blades flicker between two lengths. How: This alternates twenty times a second.
+			const helLefNum = Math.round( helXcoFun( layRecObj, schRecObj, curTimNum ) ); // What: Helicopter Left Number. Why: The helicopter is drawn on whole pixels. How: This rounds its place.
+			const helTopNum = layRecObj.helNum + Math.round( Math.sin( curTimNum * 3 ) ); // What: Helicopter Top Number. Why: A hovering helicopter bobs. How: This rises and sinks a pixel on a slow wave.
+			const rotLonBoo = Math.floor( curTimNum * 20 ) % 2 === 0;                     // What: Rotor Long Boolean. Why: Spinning blades flicker between two lengths. How: This alternates twenty times a second.
 
 
 			if ( helLefNum > -60 && helLefNum < layRecObj.widNum + 5 ) { // What: On Screen Branch. Why: The helicopter is drawn only while it's on screen. How: This draws its body, main rotor, and tail rotor.
@@ -1091,7 +1091,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 		}
 
-		else for ( const feaCurObj of simStaObj.feaArr ) canCotObj.drawImage( sprSetObj.feaEle, Math.round( feaCurObj.xcoNum + Math.sin( timNum * 1.5 + feaCurObj.phaNum ) * 4 ), Math.round( feaCurObj.ycoNum ) ); // What: Feather Draw Loop. Why: Feathers drift down the studio, swaying. How: This draws each a few pixels either side of its line.
+		else for ( const feaCurObj of simStaObj.feaArr ) canCotObj.drawImage( sprSetObj.feaEle, Math.round( feaCurObj.xcoNum + Math.sin( curTimNum * 1.5 + feaCurObj.phaNum ) * 4 ), Math.round( feaCurObj.ycoNum ) ); // What: Feather Draw Loop. Why: Feathers drift down the studio, swaying. How: This draws each a few pixels either side of its line.
 
 
 

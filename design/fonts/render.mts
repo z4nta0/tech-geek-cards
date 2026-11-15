@@ -3,7 +3,7 @@
 
 // #region Imports
 
-import subsetFont from 'subset-font'; // What: Subset Font. Why: Fraunces ships every axis it has, while the card needs only a sliver of them. How: This HarfBuzz wrapper pins a variable font's axes and writes the result as WOFF2.
+import subFonFun from 'subset-font'; // What: Subset Font Function. Why: Fraunces ships every axis it has, while the card needs only a sliver of them. How: This HarfBuzz wrapper pins a variable font's axes and writes the result as WOFF2.
 
 
 import { fileURLToPath } from 'node:url'; // What: File URL To Path. Why: The source and output paths are resolved from this script's own location. How: This turns a file URL into a path.
@@ -116,11 +116,11 @@ function uniChaFun ( cssTexStr : string, filNamStr : string ) : string {
 	const chaLisArr = ranMatArr[ 1 ].split( ',' ).flatMap( ( ranParStr ) => { // What: Character List Array. Why: The range is a list of single code points and spans. How: This expands each part into its characters.
 
 
-		const [ staNum, endNum ] = ranParStr.trim().replace( 'U+', '' ).split( '-' ).map( ( hexValStr ) => parseInt( hexValStr, 16 ) ); // What: Start Number. Why: Each part begins at a code point. How: This reads its first hex value. // What: End Number. Why: A span ends at a second code point. How: This reads its second hex value, absent for a single code point.
+		const [ staCodNum, endCodNum ] = ranParStr.trim().replace( 'U+', '' ).split( '-' ).map( ( hexValStr ) => parseInt( hexValStr, 16 ) ); // What: Start Code Number. Why: Each part begins at a code point. How: This reads its first hex value. // What: End Code Number. Why: A span ends at a second code point. How: This reads its second hex value, absent for a single code point.
 
 
 
-		return Array.from( { length : ( endNum ?? staNum ) - staNum + 1 }, ( _, offNum ) => String.fromCodePoint( staNum + offNum ) ); // What: Part Characters Return. Why: The part's characters join the list. How: This builds one character per code point from the start to the end, or the start alone.
+		return Array.from( Array( ( endCodNum ?? staCodNum ) - staCodNum + 1 ).keys(), ( offCodNum ) => String.fromCodePoint( staCodNum + offCodNum ) ); // What: Part Characters Return. Why: The part's characters join the list. How: This builds one character per code point from the start to the end, or the start alone.
 
 
 	} );
@@ -144,9 +144,9 @@ for ( const fonRecObj of FON_REC_ARR ) { // What: Font Loop. Why: Each pinned fi
 
 
 	const cssTexStr = readFileSync( `${ SOU_DIR_STR }full${ fonRecObj.styStr === 'italic' ? '-italic' : '' }.css`, 'utf8' ); // What: CSS Text String. Why: The file's character range is declared in Fontsource's stylesheet. How: This reads the full stylesheet for the row's style.
-	const outFilStr = `fraunces-${ fonRecObj.subStr }-soft-${ fonRecObj.styStr }.woff2`;                                       // What: Output File String. Why: The pinned file is named for its subset, its soft cut, and its style. How: This builds the name the card's @font-face rules read.
-	const souFilStr = `fraunces-${ fonRecObj.subStr }-full-${ fonRecObj.styStr }.woff2`;                                       // What: Source File String. Why: Fontsource names each full file by subset and style. How: This builds the row's source file name.
-	const souBytObj = readFileSync( `${ SOU_DIR_STR }files/${ souFilStr }` );                                                  // What: Source Bytes Object. Why: The pinning works on the font's bytes. How: This reads the full file.
+	const outFilStr = `fraunces-${ fonRecObj.subStr }-soft-${ fonRecObj.styStr }.woff2`;                                     // What: Output File String. Why: The pinned file is named for its subset, its soft cut, and its style. How: This builds the name the card's @font-face rules read.
+	const souFilStr = `fraunces-${ fonRecObj.subStr }-full-${ fonRecObj.styStr }.woff2`;                                     // What: Source File String. Why: Fontsource names each full file by subset and style. How: This builds the row's source file name.
+	const souBytObj = readFileSync( `${ SOU_DIR_STR }files/${ souFilStr }` );                                                // What: Source Bytes Object. Why: The pinning works on the font's bytes. How: This reads the full file.
 
 	const varAxiObj = { // What: Variation Axes Object. Why: The pinned file keeps only the card's slice of each axis. How: This pins the fixed axes and narrows the weight to the row's range.
 
@@ -158,7 +158,7 @@ for ( const fonRecObj of FON_REC_ARR ) { // What: Font Loop. Why: Each pinned fi
 
 	};
 
-	const outBytObj = await subsetFont( souBytObj, uniChaFun( cssTexStr, souFilStr ), { targetFormat : 'woff2', variationAxes : varAxiObj } ); // What: Output Bytes Object. Why: The card needs only its own slice of the font. How: This keeps the file's characters and applies the axes as WOFF2.
+	const outBytObj = await subFonFun( souBytObj, uniChaFun( cssTexStr, souFilStr ), { targetFormat : 'woff2', variationAxes : varAxiObj } ); // What: Output Bytes Object. Why: The card needs only its own slice of the font. How: This keeps the file's characters and applies the axes as WOFF2.
 
 
 	writeFileSync( `${ OUT_DIR_STR }${ outFilStr }`, outBytObj ); // What: Font Write Call. Why: The card loads the pinned file from its folder. How: This saves it there.
