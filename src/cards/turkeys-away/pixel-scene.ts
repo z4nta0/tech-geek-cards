@@ -112,7 +112,7 @@ type SprSetTyp = { // What: Sprite Set Type. Why: Every sprite is painted once a
 
 
 
-type TapEveTyp = { timNum : number, xcoFraNum : number }; // What: Tap Event Type. Why: Taps are replayed when the scene rebuilds a moment. How: This holds a tap's time and its share of the width.
+type TapEveTyp = { fraXcoNum : number, timNum : number }; // What: Tap Event Type. Why: Taps are replayed when the scene rebuilds a moment. How: This holds a tap's time and its share of the width.
 
 
 
@@ -843,7 +843,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 		const tapCurObj = tapEveArr[ simStaObj.tapNum ];          // What: Tap Current Object. Why: The tap's time decides its scene, and its share its place. How: This reads the next tap.
-		const tapXcoNum = tapCurObj.xcoFraNum * layRecObj.widNum; // What: Tap X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This scales the share to the canvas.
+		const tapXcoNum = tapCurObj.fraXcoNum * layRecObj.widNum; // What: Tap X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This scales the share to the canvas.
 
 
 		if ( tapCurObj.timNum < schRecObj.staNum ) spaTurFun( simStaObj, simStaObj.malArr, tapXcoNum, -10, 0, layRecObj.lanArr ); // What: Lot Tap Branch. Why: A tap over the mall drops a turkey into the lot. How: This spawns it above the screen.
@@ -905,7 +905,7 @@ type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene it
 
 };
 
-type SceSysTyp = { stoFun : () => void, tapFun : ( xcoFraNum : number ) => void }; // What: Scene System Type. Why: The card stops the scene when it leaves and hands it taps. How: This names the stop and tap functions.
+type SceSysTyp = { stoFun : () => void, tapFun : ( fraXcoNum : number ) => void }; // What: Scene System Type. Why: The card stops the scene when it leaves and hands it taps. How: This names the stop and tap functions.
 
 // #region staSceFun
 
@@ -1213,7 +1213,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 		},
 
-		tapFun : ( xcoFraNum : number ) => { if ( !sceOptObj.redMotBoo ) tapEveArr.push( { timNum : sceOptObj.timGetFun(), xcoFraNum } ); } // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
+		tapFun : ( fraXcoNum : number ) => { if ( !sceOptObj.redMotBoo ) tapEveArr.push( { fraXcoNum, timNum : sceOptObj.timGetFun() } ); } // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
 
 
 	};

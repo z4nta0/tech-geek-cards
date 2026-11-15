@@ -195,12 +195,12 @@ test( 'the TV set shows only on a screen at least 1,024px wide and 640px tall', 
 	await curPagObj.goto( '/turkeys-away' ); // What: Card Open Call. Why: The set is checked on the card itself. How: This opens its page.
 
 
-	for ( const [ widNum, heiNum, shoBoo ] of [ [ 1440, 900, true ], [ 1024, 640, true ], [ 1023, 900, false ], [ 1440, 639, false ], [ 390, 844, false ] ] as const ) { // What: Size Loop. Why: The set's limits are checked from both sides. How: This sizes the page to each case and checks the panel. // What: Type Assertion Note. Why: Without it the cases widen to arrays of numbers and booleans. How: as const keeps each case's three values typed in order.
+	for ( const [ casWidNum, casHeiNum, casShoBoo ] of [ [ 1440, 900, true ], [ 1024, 640, true ], [ 1023, 900, false ], [ 1440, 639, false ], [ 390, 844, false ] ] as const ) { // What: Size Loop. Why: The set's limits are checked from both sides. How: This sizes the page to each case and checks the panel. // What: Type Assertion Note. Why: Without it the cases widen to arrays of numbers and booleans. How: as const keeps each case's three values typed in order.
 
 
-		await curPagObj.setViewportSize( { height : heiNum, width : widNum } ); // What: Viewport Size Call. Why: Each case has its own size. How: This sets it.
+		await curPagObj.setViewportSize( { height : casHeiNum, width : casWidNum } ); // What: Viewport Size Call. Why: Each case has its own size. How: This sets it.
 
-		expect( await curPagObj.locator( PAN_SEL_STR ).evaluate( ( panDivEle ) => getComputedStyle( panDivEle ).display !== 'none' ), `${ widNum } by ${ heiNum }` ).toBe( shoBoo ); // What: Set Shown Assertion. Why: The set shows only on a large enough screen. How: This checks the panel shows exactly when the case expects it, naming the size if it doesn't.
+		expect( await curPagObj.locator( PAN_SEL_STR ).evaluate( ( panDivEle ) => getComputedStyle( panDivEle ).display !== 'none' ), `${ casWidNum } by ${ casHeiNum }` ).toBe( casShoBoo ); // What: Set Shown Assertion. Why: The set shows only on a large enough screen. How: This checks the panel shows exactly when the case expects it, naming the size if it doesn't.
 
 
 	}

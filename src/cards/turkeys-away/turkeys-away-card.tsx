@@ -177,7 +177,7 @@ function TurCarCom () : JSX.Element {
 	const quoParRef = useRef< HTMLParagraphElement >( null );               // What: Quote Paragraph Reference. Why: The quote's box fades in. How: This holds it.
 	const quoVisRef = useRef< HTMLSpanElement >( null );                    // What: Quote Visible Reference. Why: The quote's visible copy types out. How: This holds the span SplitText splits.
 	const rooDivRef = useRef< HTMLDivElement >( null );                     // What: Root Div Reference. Why: The scene reads the card's color tokens from its root. How: This holds it.
-	const tapFunRef = useRef< ( xcoFraNum : number ) => void >( () => {} ); // What: Tap Function Reference. Why: A tap reaches the scene, which starts after the render. How: This holds the scene's tap function, a no-op until it starts.
+	const tapFunRef = useRef< ( fraXcoNum : number ) => void >( () => {} ); // What: Tap Function Reference. Why: A tap reaches the scene, which starts after the render. How: This holds the scene's tap function, a no-op until it starts.
 	const titHeaRef = useRef< HTMLHeadingElement >( null );                 // What: Title Heading Reference. Why: The greeting rises into the studio. How: This holds it.
 
 	const [ seaParObj ] = useSearchParams(); // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
