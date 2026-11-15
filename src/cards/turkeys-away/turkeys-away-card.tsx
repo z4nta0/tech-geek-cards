@@ -102,7 +102,7 @@ const QUO_TEX_STR = '"As God is my witness, I thought turkeys could fly."';     
 function schRecFun () : SceSchTyp & { newTypNum : number, quoTypNum : number } {
 
 
-	const newBarNum = durSecFun( 'p12' );                                                       // What: News Bar Number. Why: The bulletin's bar shows once the drops are done. How: This is a Base Plus 12 step, about 4.6 seconds. // Duration Animation Base Plus 12 ~= 4,610.0ms
+	const newBarNum = durSecFun( 'p12' );                                                       // What: News Bar Number. Why: The bulletin's bar shows once the last turkey has left the helicopter. How: This is a Base Plus 12 step, about 4.6 seconds. // Duration Animation Base Plus 12 ~= 4,610.0ms
 	const newTypNum = newBarNum + durSecFun( 'p04' );                                           // What: News Typing Number. Why: The bulletin types once its bar has faded in. How: This is a Base Plus 4 step after the bar. // Duration Animation Base Plus 4 ~= 486.1ms
 	const staTimNum = newTypNum + durSecFun( 'p11' ) + durSecFun( 'p09' );                      // What: Static Time Number. Why: The static comes after the bulletin has typed and been read. How: This adds the typing's Base Plus 11 step and a Base Plus 9 hold. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 	const sceTimNum = staTimNum + durSecFun( 'p05' );                                           // What: Scene Time Number. Why: The studio follows a short burst of static. How: This is a Base Plus 5 step after the static starts. // Duration Animation Base Plus 5 ~= 643.9ms
