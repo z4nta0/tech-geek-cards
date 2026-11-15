@@ -829,7 +829,6 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 		turCurObj.flaNum += delTimNum; // What: Flap Advance Assignment. Why: The wing beat runs on. How: This adds the slice.
 
 
-
 		if ( turCurObj.staStr === 'fall' ) { // What: Falling Branch. Why: A falling turkey flaps, then tumbles. How: This moves it, landing it at its line.
 
 
