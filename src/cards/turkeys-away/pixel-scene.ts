@@ -58,7 +58,7 @@ type LayRecTyp = { // What: Layout Record Type. Why: Every element of both scene
 
 	carArr : [ number, number, number ][], // What: Car Array. Why: The lot holds a few parked cars. How: Each entry is a paint's index, then a car's left and top.
 	cloArr : [ number, number ][],         // What: Cloud Array. Why: A few clouds drift across the sky. How: Each entry is a cloud's starting left and its top.
-	curNum : number,                       // What: Curb Number. Why: The lot begins at the curb. How: This is the curb's top.
+	cubNum : number,                       // What: Curb Number. Why: The lot begins at the curb. How: This is the curb's top.
 	divNum : number,                       // What: Divider Number. Why: A painted line divides the lot's two rows of stalls. How: This is its top.
 	dooNum : number,                       // What: Door Number. Why: The mall's glass doors sit in its middle. How: This is their left.
 	feaArr : [ number, number ],           // What: Feather Array. Why: Feathers drift down the studio in a spread. How: This is the first feather's left, then the gap to each next one.
@@ -268,7 +268,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 	// #region Sky
 
 	recFilFun( '--tur-sky-col', 0, 0, layRecObj.widNum, layRecObj.skyNum );                                   // What: Upper Sky Fill Call. Why: The sky is deeper overhead. How: This fills its upper band. // Turkeys Sky Color = #8fb3c4
-	recFilFun( '--tur-haz-col', 0, layRecObj.skyNum, layRecObj.widNum, layRecObj.curNum - layRecObj.skyNum ); // What: Lower Sky Fill Call. Why: The sky pales toward the horizon. How: This fills its lower band down to the curb. // Turkeys Haze Color = #c9dcd6
+	recFilFun( '--tur-haz-col', 0, layRecObj.skyNum, layRecObj.widNum, layRecObj.cubNum - layRecObj.skyNum ); // What: Lower Sky Fill Call. Why: The sky pales toward the horizon. How: This fills its lower band down to the curb. // Turkeys Haze Color = #c9dcd6
 
 
 	for ( let rowIndNum = layRecObj.skyNum - 4; rowIndNum < layRecObj.skyNum; rowIndNum++ ) for ( let colIndNum = rowIndNum & 1; colIndNum < layRecObj.widNum; colIndNum += 2 ) recFilFun( '--tur-haz-col', colIndNum, rowIndNum, 1, 1 ); // What: Sky Dither Loop. Why: Pixel art blends two colors with a checkerboard. How: This sets every other pixel of the four rows above the band's end to the haze. // Turkeys Haze Color = #c9dcd6
@@ -295,10 +295,10 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 	// #region Mall
 
 	recFilFun( '--tur-mor-col', malLefNum, malTopNum, malWidNum, 3 );                                    // What: Roof Fill Call. Why: A dark roof line tops the mall. How: This draws it. // Turkeys Mortar Color = #7a3c20
-	recFilFun( '--tur-bri-col', malLefNum, malTopNum + 3, malWidNum, layRecObj.curNum - malTopNum - 3 ); // What: Wall Fill Call. Why: The mall is brick. How: This fills its wall down to the curb. // Turkeys Brick Color = #b8673a
+	recFilFun( '--tur-bri-col', malLefNum, malTopNum + 3, malWidNum, layRecObj.cubNum - malTopNum - 3 ); // What: Wall Fill Call. Why: The mall is brick. How: This fills its wall down to the curb. // Turkeys Brick Color = #b8673a
 
 
-	for ( let rowTopNum = malTopNum + 6; rowTopNum < layRecObj.curNum - 1; rowTopNum += 4 ) recFilFun( '--tur-mor-col', malLefNum, rowTopNum, malWidNum, 1 ); // What: Mortar Line Loop. Why: Mortar lines read as brick courses. How: This draws one every four rows. // Turkeys Mortar Color = #7a3c20
+	for ( let rowTopNum = malTopNum + 6; rowTopNum < layRecObj.cubNum - 1; rowTopNum += 4 ) recFilFun( '--tur-mor-col', malLefNum, rowTopNum, malWidNum, 1 ); // What: Mortar Line Loop. Why: Mortar lines read as brick courses. How: This draws one every four rows. // Turkeys Mortar Color = #7a3c20
 
 
 
@@ -313,10 +313,10 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 
 
-	recFilFun( '--tur-gla-col', layRecObj.dooNum, malTopNum + 14, 28, layRecObj.curNum - malTopNum - 14 ); // What: Door Fill Call. Why: Glass doors open onto the lot. How: This draws them down to the curb. // Turkeys Glass Color = #a8cdd2
+	recFilFun( '--tur-gla-col', layRecObj.dooNum, malTopNum + 14, 28, layRecObj.cubNum - malTopNum - 14 ); // What: Door Fill Call. Why: Glass doors open onto the lot. How: This draws them down to the curb. // Turkeys Glass Color = #a8cdd2
 
 
-	for ( const fraOffNum of [ 7, 14, 21 ] ) recFilFun( '--tur-mor-col', layRecObj.dooNum + fraOffNum, malTopNum + 14, 1, layRecObj.curNum - malTopNum - 14 ); // What: Door Frame Loop. Why: Frames split the glass into four doors. How: This draws three dividers. // Turkeys Mortar Color = #7a3c20
+	for ( const fraOffNum of [ 7, 14, 21 ] ) recFilFun( '--tur-mor-col', layRecObj.dooNum + fraOffNum, malTopNum + 14, 1, layRecObj.cubNum - malTopNum - 14 ); // What: Door Frame Loop. Why: Frames split the glass into four doors. How: This draws three dividers. // Turkeys Mortar Color = #7a3c20
 
 
 
@@ -332,11 +332,11 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 	// #region Lot
 
-	recFilFun( '--tur-cur-col', 0, layRecObj.curNum, layRecObj.widNum, 2 );                                           // What: Curb Fill Call. Why: A curb edges the lot. How: This draws it. // Turkeys Curb Color = #8c7f73
-	recFilFun( '--tur-asp-col', 0, layRecObj.curNum + 2, layRecObj.widNum, layRecObj.heiNum - layRecObj.curNum - 2 ); // What: Asphalt Fill Call. Why: The lot is asphalt. How: This fills it to the bottom. // Turkeys Asphalt Color = #4a4340
+	recFilFun( '--tur-cur-col', 0, layRecObj.cubNum, layRecObj.widNum, 2 );                                           // What: Curb Fill Call. Why: A curb edges the lot. How: This draws it. // Turkeys Curb Color = #8c7f73
+	recFilFun( '--tur-asp-col', 0, layRecObj.cubNum + 2, layRecObj.widNum, layRecObj.heiNum - layRecObj.cubNum - 2 ); // What: Asphalt Fill Call. Why: The lot is asphalt. How: This fills it to the bottom. // Turkeys Asphalt Color = #4a4340
 
 
-	for ( let rowIndNum = layRecObj.curNum + 2; rowIndNum < layRecObj.curNum + 4; rowIndNum++ ) for ( let colIndNum = rowIndNum & 1; colIndNum < layRecObj.widNum; colIndNum += 2 ) recFilFun( '--tur-tar-col', colIndNum, rowIndNum, 1, 1 ); // What: Curb Shadow Loop. Why: The curb casts a soft shadow. How: This dithers the two rows below it with darker tar. // Turkeys Tar Color = #3d3633
+	for ( let rowIndNum = layRecObj.cubNum + 2; rowIndNum < layRecObj.cubNum + 4; rowIndNum++ ) for ( let colIndNum = rowIndNum & 1; colIndNum < layRecObj.widNum; colIndNum += 2 ) recFilFun( '--tur-tar-col', colIndNum, rowIndNum, 1, 1 ); // What: Curb Shadow Loop. Why: The curb casts a soft shadow. How: This dithers the two rows below it with darker tar. // Turkeys Tar Color = #3d3633
 
 
 
@@ -354,10 +354,10 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 	for ( const polLefNum of layRecObj.polArr ) { // What: Lamp Post Loop. Why: Lamp posts rise from the lot. How: This draws each post, arm, and lamps.
 
 
-		recFilFun( '--tur-ink-col', polLefNum, layRecObj.curNum - 19, 1, 30 );    // What: Post Fill Call. Why: A thin post rises past the mall's front. How: This draws it. // Turkeys Ink Color = #2a1d17
-		recFilFun( '--tur-ink-col', polLefNum - 3, layRecObj.curNum - 19, 7, 1 ); // What: Arm Fill Call. Why: An arm holds the lamps. How: This draws it across the top. // Turkeys Ink Color = #2a1d17
-		recFilFun( '--tur-lam-col', polLefNum - 3, layRecObj.curNum - 18, 2, 1 ); // What: Left Lamp Fill Call. Why: A lamp hangs from each end. How: This draws the left one. // Turkeys Lamp Color = #f3d27a
-		recFilFun( '--tur-lam-col', polLefNum + 2, layRecObj.curNum - 18, 2, 1 ); // What: Right Lamp Fill Call. Why: A lamp hangs from each end. How: This draws the right one. // Turkeys Lamp Color = #f3d27a
+		recFilFun( '--tur-ink-col', polLefNum, layRecObj.cubNum - 19, 1, 30 );    // What: Post Fill Call. Why: A thin post rises past the mall's front. How: This draws it. // Turkeys Ink Color = #2a1d17
+		recFilFun( '--tur-ink-col', polLefNum - 3, layRecObj.cubNum - 19, 7, 1 ); // What: Arm Fill Call. Why: An arm holds the lamps. How: This draws it across the top. // Turkeys Ink Color = #2a1d17
+		recFilFun( '--tur-lam-col', polLefNum - 3, layRecObj.cubNum - 18, 2, 1 ); // What: Left Lamp Fill Call. Why: A lamp hangs from each end. How: This draws the left one. // Turkeys Lamp Color = #f3d27a
+		recFilFun( '--tur-lam-col', polLefNum + 2, layRecObj.cubNum - 18, 2, 1 ); // What: Right Lamp Fill Call. Why: A lamp hangs from each end. How: This draws the right one. // Turkeys Lamp Color = #f3d27a
 
 
 	}
@@ -567,7 +567,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 		return { // What: Wide Layout Return. Why: The caller draws the wide composition. How: This returns its positions.
 
 
-			curNum : offYcoNum + 85,                                                       // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
+			cubNum : offYcoNum + 85,                                                       // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
 			divNum : offYcoNum + 108,                                                      // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
 			dooNum : offXcoNum + 106,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
 			feaArr : [ Math.round( layWidNum * 0.46 ), Math.round( layWidNum * 0.09 ) ],   // What: Feather Array. Why: Feathers drift down the studio's right side, beside the greeting. How: This starts them near the middle, spaced by a share of the width.
@@ -604,7 +604,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 	return { // What: Tall Layout Return. Why: The caller draws the tall composition. How: This returns its positions.
 
 
-		curNum : offYcoNum + 125,                                                     // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
+		cubNum : offYcoNum + 125,                                                     // What: Curb Number. Why: The curb sits under the mall. How: This is its drawn place, moved down.
 		divNum : offYcoNum + 148,                                                     // What: Divider Number. Why: The divider splits the lot's rows. How: This is its drawn place, moved down.
 		dooNum : offXcoNum + 54,                                                      // What: Door Number. Why: The doors sit in the mall's middle. How: This is their drawn place, moved with the mall.
 		feaArr : [ offXcoNum + 20, 20 ],                                              // What: Feather Array. Why: Feathers drift down the whole studio. How: This starts them near the left, spaced evenly.
@@ -898,9 +898,9 @@ type SceOptTyp = { // What: Scene Options Type. Why: The card hands the scene it
 
 
 	redMotBoo : boolean,     // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This is true when the visitor asked for less motion.
-	rooEleObj : HTMLElement, // What: Root Element Object. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
-	schRecObj : SceSchTyp,   // What: Schedule Record Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
-	timGetFun : () => number // What: Time Get Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
+	rooEle : HTMLElement,    // What: Root Element. Why: The card's colors are tokens on its root. How: The scene reads each token from this element.
+	schObj : SceSchTyp,      // What: Schedule Object. Why: The scene's events line up with the card's lettering. How: This holds their times.
+	timFun : () => number    // What: Time Function. Why: The scene runs on the card's clock. How: This returns the card's time, in seconds.
 
 
 };
@@ -941,14 +941,14 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 	const canCotObj = canEleObj.getContext( '2d' )!; // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: A canvas in the page always offers a 2D context.
-	const schRecObj = sceOptObj.schRecObj;           // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
+	const schRecObj = sceOptObj.schObj;           // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
 
 
 
 	// #region Color And Sprite Painting
 
 	const colCacMap = new Map< string, string >();             // What: Color Cache Map. Why: Each token is read once, not every frame. How: This keeps each token's color by name.
-	const rooStyObj = getComputedStyle( sceOptObj.rooEleObj ); // What: Root Style Object. Why: The colors are tokens on the card's root. How: This reads its computed styles.
+	const rooStyObj = getComputedStyle( sceOptObj.rooEle ); // What: Root Style Object. Why: The colors are tokens on the card's root. How: This reads its computed styles.
 
 
 	const colGetFun = ( tokNamStr : string ) : string => colCacMap.get( tokNamStr ) ?? colCacMap.set( tokNamStr, rooStyObj.getPropertyValue( tokNamStr ).trim() ).get( tokNamStr )!; // What: Color Get Function. Why: The canvas can't read a token, so each color is looked up by its token's name. How: This returns the cached color, reading and caching it the first time. // What: Non-Null Note. Why: TypeScript can't see the value was just set. How: The map holds the key it was given on the same line.
@@ -1163,7 +1163,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 		staImaObj = canCotObj.createImageData( layRecObj.widNum, layRecObj.heiNum ); // What: Static Buffer Assignment. Why: The static fills the whole canvas. How: This makes a buffer its new size.
 
 
-		draFraFun( sceOptObj.redMotBoo ? schRecObj.finNum : sceOptObj.timGetFun() ); // What: Resize Draw Call. Why: The canvas is blank after resizing. How: This draws the finished studio under reduced motion, or the current moment.
+		draFraFun( sceOptObj.redMotBoo ? schRecObj.finNum : sceOptObj.timFun() ); // What: Resize Draw Call. Why: The canvas is blank after resizing. How: This draws the finished studio under reduced motion, or the current moment.
 
 
 	};
@@ -1186,7 +1186,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	const looFraFun = () : void => { // What: Loop Frame Function. Why: The scene animates every frame. How: This draws the card's moment and asks for the next frame.
 
 
-		draFraFun( sceOptObj.timGetFun() ); // What: Frame Draw Call. Why: Each frame shows the card's moment. How: This draws it.
+		draFraFun( sceOptObj.timFun() ); // What: Frame Draw Call. Why: Each frame shows the card's moment. How: This draws it.
 
 		looIdeNum = requestAnimationFrame( looFraFun ); // What: Next Frame Assignment. Why: The loop runs until the scene stops. How: This asks for the next frame and keeps its ID.
 
@@ -1213,7 +1213,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 		},
 
-		tapFun : ( fraXcoNum : number ) => { if ( !sceOptObj.redMotBoo ) tapEveArr.push( { fraXcoNum, timNum : sceOptObj.timGetFun() } ); } // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
+		tapFun : ( fraXcoNum : number ) => { if ( !sceOptObj.redMotBoo ) tapEveArr.push( { fraXcoNum, timNum : sceOptObj.timFun() } ); } // What: Tap Function. Why: A tap drops a turkey, except under reduced motion. How: This records the tap's moment and share of the width, which the next frame replays.
 
 
 	};
