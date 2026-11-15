@@ -986,7 +986,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 	let layRecObj = layRecFun( 16 / 9 );               // What: Layout Record Object. Why: Every position depends on the canvas's shape. How: This starts on the wide composition until the box is measured.
-	let lopIdeNum = 0;                                 // What: Loop Identifier Number. Why: The frame loop is cancelled when the scene stops. How: This holds the pending frame's ID.
+	let looIdeNum = 0;                                 // What: Loop Identifier Number. Why: The frame loop is cancelled when the scene stops. How: This holds the pending frame's ID.
 	let simStaObj = simNewFun();                       // What: Simulation State Object. Why: The motion is stepped from a known start. How: This holds the current state.
 	let staImaObj = canCotObj.createImageData( 1, 1 ); // What: Static Image Object. Why: The static is drawn from a buffer the canvas's size. How: This holds the buffer, remade when the canvas resizes.
 
@@ -1183,18 +1183,18 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 	// #region Frame Loop
 
-	const lopFraFun = () : void => { // What: Loop Frame Function. Why: The scene animates every frame. How: This draws the card's moment and asks for the next frame.
+	const looFraFun = () : void => { // What: Loop Frame Function. Why: The scene animates every frame. How: This draws the card's moment and asks for the next frame.
 
 
 		draFraFun( sceOptObj.timGetFun() ); // What: Frame Draw Call. Why: Each frame shows the card's moment. How: This draws it.
 
-		lopIdeNum = requestAnimationFrame( lopFraFun ); // What: Next Frame Assignment. Why: The loop runs until the scene stops. How: This asks for the next frame and keeps its ID.
+		looIdeNum = requestAnimationFrame( looFraFun ); // What: Next Frame Assignment. Why: The loop runs until the scene stops. How: This asks for the next frame and keeps its ID.
 
 
 	};
 
 
-	if ( !sceOptObj.redMotBoo ) lopIdeNum = requestAnimationFrame( lopFraFun ); // What: Loop Start Branch. Why: The scene animates only while motion is allowed. How: This starts the frame loop.
+	if ( !sceOptObj.redMotBoo ) looIdeNum = requestAnimationFrame( looFraFun ); // What: Loop Start Branch. Why: The scene animates only while motion is allowed. How: This starts the frame loop.
 
 	// #endregion Frame Loop
 
@@ -1206,7 +1206,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 		stoFun : () => { // What: Stop Function. Why: The scene stops when the card leaves or replays. How: This cancels the frame loop and stops watching the box.
 
 
-			cancelAnimationFrame( lopIdeNum ); // What: Loop Cancel Call. Why: No more frames should be drawn. How: This cancels the pending one.
+			cancelAnimationFrame( looIdeNum ); // What: Loop Cancel Call. Why: No more frames should be drawn. How: This cancels the pending one.
 
 			resObsObj.disconnect(); // What: Observer Disconnect Call. Why: No more resizes should be handled. How: This stops watching the box.
 
