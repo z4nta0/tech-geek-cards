@@ -838,27 +838,27 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 			else { // What: Tumbling Fall Branch. Why: The flapping doesn't work. How: This speeds its fall and turns it.
 
 
-				turCurObj.velYcoNum += 150 * delTimNum;           // What: Tumble Speed Assignment. Why: The turkey drops fast once it gives up. How: This adds its gravity.
-				turCurObj.angNum += turCurObj.spiNum * delTimNum; // What: Tumble Angle Assignment. Why: The turkey turns as it drops. How: This adds its spin.
+				turCurObj.velYcoNum += 150 * delTimNum;              // What: Tumble Speed Assignment. Why: The turkey drops fast once it gives up. How: This adds its gravity.
+				turCurObj.angNum    += turCurObj.spiNum * delTimNum; // What: Tumble Angle Assignment. Why: The turkey turns as it drops. How: This adds its spin.
 
 
 			}
 
 
 
-			turCurObj.velXcoNum *= 1 - 0.8 * delTimNum;          // What: Drift Slow Assignment. Why: The helicopter's push fades. How: This damps the sideways speed.
-			turCurObj.xcoNum += turCurObj.velXcoNum * delTimNum; // What: Drift Assignment. Why: The turkey drifts sideways. How: This moves it by its sideways speed.
-			turCurObj.ycoNum += turCurObj.velYcoNum * delTimNum; // What: Fall Assignment. Why: The turkey falls. How: This moves it by its downward speed.
+			turCurObj.velXcoNum *= 1 - 0.8 * delTimNum;             // What: Drift Slow Assignment. Why: The helicopter's push fades. How: This damps the sideways speed.
+			turCurObj.xcoNum    += turCurObj.velXcoNum * delTimNum; // What: Drift Assignment. Why: The turkey drifts sideways. How: This moves it by its sideways speed.
+			turCurObj.ycoNum    += turCurObj.velYcoNum * delTimNum; // What: Fall Assignment. Why: The turkey falls. How: This moves it by its downward speed.
 
 
 			if ( turCurObj.ycoNum + 8 >= turCurObj.lanNum ) { // What: Landing Branch. Why: A turkey stops at its landing line, bouncing once. How: This sets it upright on the line, throws a puff, and starts its bounce.
 
 
-				turCurObj.angNum = 0;                    // What: Upright Assignment. Why: The turkey lands on its feet. How: This clears its angle.
-				turCurObj.bouBoo = true;                 // What: Bounced Assignment. Why: A turkey bounces only once. How: This marks it.
-				turCurObj.staStr = 'bounce';             // What: Bounce State Assignment. Why: The turkey hops up from the impact. How: This switches it to bouncing.
-				turCurObj.velYcoNum = -38;               // What: Bounce Speed Assignment. Why: The hop rises a little before it falls. How: This throws it up.
-				turCurObj.ycoNum = turCurObj.lanNum - 8; // What: Landing Place Assignment. Why: The turkey's feet sit on its line. How: This places its center eight pixels above.
+				turCurObj.angNum    = 0;                    // What: Upright Assignment. Why: The turkey lands on its feet. How: This clears its angle.
+				turCurObj.bouBoo    = true;                 // What: Bounced Assignment. Why: A turkey bounces only once. How: This marks it.
+				turCurObj.staStr    = 'bounce';             // What: Bounce State Assignment. Why: The turkey hops up from the impact. How: This switches it to bouncing.
+				turCurObj.velYcoNum = -38;                  // What: Bounce Speed Assignment. Why: The hop rises a little before it falls. How: This throws it up.
+				turCurObj.ycoNum    = turCurObj.lanNum - 8; // What: Landing Place Assignment. Why: The turkey's feet sit on its line. How: This places its center eight pixels above.
 
 
 				for ( let parIndNum = 0; parIndNum < 9; parIndNum++ ) { // What: Feather Puff Loop. Why: Feathers fly from the impact. How: This throws nine pixels up and out, alternating the puff's colors.
@@ -889,8 +889,8 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
 		else if ( turCurObj.staStr === 'bounce' ) { // What: Bouncing Branch. Why: The hop rises and falls back. How: This moves it under gravity, sitting it on landing.
 
 
-			turCurObj.velYcoNum += 220 * delTimNum;              // What: Hop Gravity Assignment. Why: The hop slows and falls back. How: This adds gravity.
-			turCurObj.ycoNum += turCurObj.velYcoNum * delTimNum; // What: Hop Move Assignment. Why: The turkey rises and falls. How: This moves it by its speed.
+			turCurObj.velYcoNum += 220 * delTimNum;                 // What: Hop Gravity Assignment. Why: The hop slows and falls back. How: This adds gravity.
+			turCurObj.ycoNum    += turCurObj.velYcoNum * delTimNum; // What: Hop Move Assignment. Why: The turkey rises and falls. How: This moves it by its speed.
 
 
 			if ( turCurObj.ycoNum + 8 >= turCurObj.lanNum ) { // What: Sit Branch. Why: The turkey settles on landing again. How: This sits it once its feet reach its line.
