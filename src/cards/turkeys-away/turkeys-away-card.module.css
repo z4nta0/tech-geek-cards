@@ -14,8 +14,8 @@
  * grille; on any smaller one it fills the card. The lettering is sized from
  * the box's shorter side, each size a power of the core design number, and
  * takes its own sizes and places when the box stands upright. The card brings
- * its own fonts, declared here so they load with the card, and every color it
- * uses is a token on its root.
+ * its own fonts, declared here so they load with the card, and every color of
+ * its own is a token on its root.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -199,7 +199,7 @@
 @media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Television Set Div. Why: The set stands as an object in the room. How: This applies at 1,024px wide and 640px tall and above. */
 
 
-	.telSetDiv { /* What: Standing Television Set Div. Why: The set sizes itself to its cabinet, with room above for the ears. How: This places it in the card's flow and sets the screen height every part of the set reads. */
+	.telSetDiv { /* What: Standing Television Set Div. Why: The set sizes itself to its cabinet, with room above for the ears. How: This places it in the card's flow and sets the screen height the cabinet, bezel, screen, and side panel read. */
 
 
 		--tur-scr-hei : min( calc( 100svh - var( --car-bar-mar, 0px ) - var( --ver-rhy-p10 ) * 1rem ), calc( 64vw * 9 / 16 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Vertical Rhythm Base Plus 10 ~= 242.517px */ /* What: Turkeys Screen Height. Why: The screen has to fit the room left above the bar, with the ears and cabinet around it, and leave the cabinet's side panel room on a wide screen. How: This is the smaller of the height left over and a 16:9 screen's height at 64% of the width. */

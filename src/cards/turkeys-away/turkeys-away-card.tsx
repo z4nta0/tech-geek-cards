@@ -7,7 +7,7 @@ import cssModObj from './turkeys-away-card.module.css'; // What: CSS Module Obje
 
 
 import { cdnPowFun       } from '../../utils/rhythm.ts'; // What: Core-Design-Number Power Function. Why: The cry's starting size sits on the scale as a power of the core design number. How: This returns that power.
-import { durSecFun       } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every time in the card's schedule is a step on the duration scale, and GSAP takes seconds. How: This returns a step's length in seconds.
+import { durSecFun       } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: Every time in the card's schedule is built from duration scale steps, and GSAP takes seconds. How: This returns a step's length in seconds.
 import { gsaEasFun       } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: GSAP can't read the stylesheet's cubic-bezier curves on its own. How: This registers an easing token as a named GSAP ease.
 import { gsap            } from 'gsap';                  // What: GSAP. Why: The lettering plays as one timeline, which the pixel scene also runs on. How: This is the animation library that builds and plays it.
 import { redMotFun       } from '../../utils/motion.ts'; // What: Reduced Motion Function. Why: A visitor who asked for less motion should get the finished card at once. How: This reports whether reduced motion is on.
@@ -34,17 +34,17 @@ import type { SceSchTyp  } from './pixel-scene.ts'; // What: Scene Schedule Type
  * The Turkeys Away card, a WKRP Thanksgiving newscast in pixel art. Over the
  * Pinedale Shopping Mall, the station's call letters and a flashing LIVE tag
  * appear, the station's helicopter crosses and drops live turkeys into the
- * parking lot, "Oh, the humanity!" pops up, and a news bulletin types out
- * that the mall has just been BOMBED with live turkeys. A burst of static
- * changes the channel to the studio, where the station manager stands with a
- * hand raised beside a dazed turkey, and "Merry Thanksgiving" appears, named
- * for the recipient when the link carries one, before his line, "As God is
- * my witness, I thought turkeys could fly," types out. The card then rests on
- * the studio, where a tap drops another turkey. Every time in the schedule is
- * a step on the duration scale, and the pixel scene runs on the timeline's
- * clock. Under reduced motion the card opens on the finished studio. Our own
- * lettering and a station manager drawn as a type, not the show's logo or an
- * actor's likeness, keep it a fan's tribute.
+ * parking lot, "Oh, the humanity!" pops up, and a news bulletin types out that
+ * the mall has just been BOMBED with live turkeys. A burst of static changes
+ * the channel to the studio, where the station manager stands with a hand
+ * raised beside a dazed turkey, and "Merry Thanksgiving" appears, named for
+ * the recipient when the link carries one, before his line, "As God is my
+ * witness, I thought turkeys could fly," types out. The card then rests on the
+ * studio, where a tap drops another turkey. Every time in the schedule is
+ * built from steps on the duration scale, and the pixel scene runs on the
+ * timeline's clock. Under reduced motion the card opens on the finished
+ * studio. Our own lettering and a station manager drawn as a type, not the
+ * show's logo or an actor's likeness, keep it a fan's tribute.
  *
  * Sections:
  *  - Constants
@@ -76,16 +76,17 @@ const QUO_TEX_STR = '"As God is my witness, I thought turkeys could fly."';     
  * schRecFun = Schedule Record Function
  *
  * @summary
- * The card's schedule, every time a step on the duration scale, in seconds
- * from the card's start: the helicopter starts across after a Base Plus 2
- * step and takes a Base Plus 12 step (about 4.6 seconds) to cross; six
+ * The card's schedule, every time built from steps on the duration scale, in
+ * seconds from the card's start: the helicopter starts across after a Base
+ * Plus 2 step and takes a Base Plus 12 step (about 4.6 seconds) to cross; six
  * turkeys drop from a Base Plus 8 step on, a Base Plus 4 step apart; the
- * bulletin starts typing a Base Plus 4 step after its bar shows at a Base
- * Plus 12 step, types for a Base Plus 11 step, and holds for a Base Plus 9
- * step before the static, which lasts a Base Plus 5 step; and the studio's
+ * bulletin starts typing a Base Plus 4 step after its bar shows at a Base Plus
+ * 12 step, types for a Base Plus 11 step, and holds for a Base Plus 9 step
+ * before the static, which lasts a Base Plus 5 step; and the studio's
  * lettering ends a Base Plus 10 step of typing after its greeting and quote
  * box arrive. The pixel scene reads the helicopter's, drops', static's, and
- * studio's times, and the timeline reads every one.
+ * studio's times, and the timeline reads the first drop's, the bulletin's, the
+ * static's, and the studio's.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -214,7 +215,7 @@ function TurCarCom () : JSX.Element {
 
 
 		const decEasStr = gsaEasFun( 'dec' );                                                              // What: Decelerate Easing String. Why: Things arriving slow as they land. How: This registers the decelerate token and keeps its GSAP name.
-		const hidStaObj = { autoAlpha : 0 };                                                               // What: Hidden State Object. Why: Each element arrives from hidden. How: This is the state every arrival starts from.
+		const hidStaObj = { autoAlpha : 0 };                                                               // What: Hidden State Object. Why: Each element arrives from hidden. How: This is the hidden state the fades start from, which the cry builds on.
 		const newSplObj = SplitText.create( newVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: News Split Object. Why: The bulletin types out one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.
 		const oveEasStr = gsaEasFun( 'ove' );                                                              // What: Overshoot Easing String. Why: The cry pops in with a little overshoot. How: This registers the gentle overshoot token and keeps its GSAP name.
 		const quoSplObj = SplitText.create( quoVisRef.current, { aria : 'none', type : 'words, chars' } ); // What: Quote Split Object. Why: The quote types out one letter at a time. How: This wraps the visible copy's words and letters, adding no labels, since a hidden copy speaks for it.

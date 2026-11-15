@@ -226,7 +226,7 @@ test( 'on a phone held sideways the Turkeys Away screen ends above the floating 
 
 	expect( await scrBotFun() ).toBeLessThanOrEqual( await barTopFun() ); // What: Sideways Clear Assertion. Why: Sideways, the bar shouldn't cover the scene. How: This checks the screen ends at or above the bar.
 
-	await curPagObj.setViewportSize( PHO_SIZ_OBJ ); // What: Upright Size Call. Why: Upright, the scene runs under the bar like every card's. How: This sets the phone upright.
+	await curPagObj.setViewportSize( PHO_SIZ_OBJ ); // What: Upright Size Call. Why: Upright, the scene runs under the bar. How: This sets the phone upright.
 
 	expect( await scrBotFun() ).toBeGreaterThan( await barTopFun() ); // What: Upright Under Assertion. Why: Upright, the scene fills the screen behind the bar. How: This checks the screen runs past the bar's top.
 

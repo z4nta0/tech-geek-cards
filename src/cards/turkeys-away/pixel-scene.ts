@@ -29,7 +29,8 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
  * stands with a hand raised beside a dazed turkey while feathers drift down.
  * A tap drops another turkey where it lands. The scene runs on the card's own
  * clock, so its drawings and the card's lettering never drift apart, and its
- * turkeys follow a fixed seed, so any moment can be rebuilt exactly.
+ * turkeys follow a fixed seed, so their motion can be replayed to the same
+ * state.
  *
  * The scene has a wide composition and a tall one, chosen by the canvas's
  * shape, and stretches the chosen one along a single side to match the
@@ -53,7 +54,7 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
 
 // #region Types
 
-type LayRecTyp = { // What: Layout Record Type. Why: Every element of both scenes sits where the chosen composition puts it. How: This names each position, in canvas pixels.
+type LayRecTyp = { // What: Layout Record Type. Why: The parts of both scenes that stand still sit where the chosen composition puts them. How: This names each position, in canvas pixels.
 
 
 	carArr : [ number, number, number ][], // What: Car Array. Why: The lot holds a few parked cars. How: Each entry is a paint's index, then a car's left and top.
@@ -160,7 +161,7 @@ type SimStaTyp = { // What: Simulation State Type. Why: The scene's motion is st
 const CAR_TOK_ARR = [ '--tur-rus-col', '--tur-sag-col', '--tur-mus-col' ]; // What: Car Token Array. Why: The parked cars come in three 70s paints. How: Each car takes one of these tokens by its index. // Turkeys Rust Color = #a8402c, Turkeys Sage Color = #5f7f6a, Turkeys Mustard Color = #d9a441
 const DEL_TIM_NUM = 1 / 120;                                               // What: Delta Time Number. Why: The motion steps by fixed slices, so a moment rebuilds the same on every screen. How: This is one slice, in seconds.
 const FLA_TIM_NUM = 0.12;                                                  // What: Flap Time Number. Why: A falling turkey flaps on a steady beat. How: This is each wing frame's length, in seconds.
-const RAN_SEE_NUM = 7;                                                     // What: Random Seed Number. Why: The same turkeys fall the same way on every play. How: This seeds the scene's random numbers.
+const RAN_SEE_NUM = 7;                                                     // What: Random Seed Number. Why: Without taps, the same turkeys fall the same way on every play. How: This seeds the scene's random numbers.
 
 
 
@@ -524,11 +525,11 @@ const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : nu
  * Works out the canvas's size and where everything sits for a canvas of a
  * given shape. A canvas wider than it is tall takes the wide composition, any
  * other the tall one. The composition keeps its drawn size along one side and
- * stretches along the other until it matches the shape exactly: wider than
- * its own shape, it widens, keeping the mall and the studio's light centered
- * or spread by share of the width; narrower, it grows taller, the wide one
- * adding the height to its sky and the tall one sharing it between its sky
- * and its lot.
+ * stretches along the other until it matches the shape, to whole pixels:
+ * wider than its own shape, it widens, keeping the mall and the studio's light
+ * centered or spread by share of the width; narrower, it grows taller, the
+ * wide one adding the height to its sky and the tall one sharing it between
+ * its sky and its lot.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -644,7 +645,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
  * @summary
  * Returns a seeded random number generator, Mulberry32, whose every call
  * gives the next number from 0 up to 1. The same seed always gives the same
- * numbers, so a moment of the scene can be rebuilt exactly.
+ * numbers, so the scene's motion can be replayed to the same state.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -802,10 +803,11 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
  *
  * @summary
  * Moves the whole scene forward by one slice of time: releases each turkey
- * whose drop time the slice crosses, replays any tap whose time it crosses,
- * sets up the studio's dazed turkey and feathers when the studio starts,
- * moves the turkeys of whichever scene is showing, drifts the feathers, and
- * moves and ages the puff pixels.
+ * whose drop time the slice crosses, replays each tap whose time it crosses,
+ * spawning a turkey for those in the mall or the studio, sets up the studio's
+ * dazed turkey and feathers when the studio starts, moves the turkeys of
+ * whichever scene is showing, drifts the feathers, and moves and ages the puff
+ * pixels.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -985,7 +987,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	const simNewFun = () : SimStaTyp => ( { feaArr : [], malArr : [], parArr : [], ranFun : ranGenFun( RAN_SEE_NUM ), simNum : 0, stuArr : [], tapNum : 0 } ); // What: Simulation New Function. Why: A moment is rebuilt from the start. How: This returns a fresh state with the seeded sequence restarted.
 
 
-	let layRecObj = layRecFun( 16 / 9 );               // What: Layout Record Object. Why: Every position depends on the canvas's shape. How: This starts on the wide composition until the box is measured.
+	let layRecObj = layRecFun( 16 / 9 );               // What: Layout Record Object. Why: The positions depend on the canvas's shape. How: This starts on the wide composition until the box is measured.
 	let looIdeNum = 0;                                 // What: Loop Identifier Number. Why: The frame loop is cancelled when the scene stops. How: This holds the pending frame's ID.
 	let simStaObj = simNewFun();                       // What: Simulation State Object. Why: The motion is stepped from a known start. How: This holds the current state.
 	let staImaObj = canCotObj.createImageData( 1, 1 ); // What: Static Image Object. Why: The static is drawn from a buffer the canvas's size. How: This holds the buffer, remade when the canvas resizes.
@@ -1073,7 +1075,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 			const rotLonBoo = Math.floor( curTimNum * 20 ) % 2 === 0;                     // What: Rotor Long Boolean. Why: Spinning blades flicker between two lengths. How: This alternates twenty times a second.
 
 
-			if ( helLefNum > -60 && helLefNum < layRecObj.widNum + 5 ) { // What: On Screen Branch. Why: The helicopter is drawn only while it's on screen. How: This draws its body, main rotor, and tail rotor.
+			if ( helLefNum > -60 && helLefNum < layRecObj.widNum + 5 ) { // What: On Screen Branch. Why: The helicopter is drawn only while it's near the canvas. How: This draws its body, main rotor, and tail rotor.
 
 
 				canCotObj.drawImage( sprSetObj.helEle, helLefNum, helTopNum ); // What: Helicopter Draw Call. Why: The helicopter crosses the sky. How: This draws its body.
@@ -1151,7 +1153,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 
-		layRecObj = layRecFun( boxRecObj.width / boxRecObj.height ); // What: Layout Assignment. Why: Every position follows the new shape. How: This works out the layout.
+		layRecObj = layRecFun( boxRecObj.width / boxRecObj.height ); // What: Layout Assignment. Why: The positions follow the new shape. How: This works out the layout.
 
 
 		canEleObj.height = layRecObj.heiNum; // What: Canvas Height Assignment. Why: One canvas pixel stands for one scene pixel. How: This sets the layout's height.
