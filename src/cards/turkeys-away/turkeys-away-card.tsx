@@ -169,16 +169,16 @@ function TurCarCom () : JSX.Element {
 
 
 	const canEleRef = useRef< HTMLCanvasElement >( null );                  // What: Canvas Element Reference. Why: The pixel scene draws on the canvas. How: This holds it.
-	const humParRef = useRef< HTMLParagraphElement >( null );               // What: Humanity Paragraph Reference. Why: The cry pops in and out. How: This holds it.
-	const livDivRef = useRef< HTMLDivElement >( null );                     // What: Live Div Reference. Why: The LIVE tag fades in and leaves with the mall. How: This holds it.
-	const logDivRef = useRef< HTMLDivElement >( null );                     // What: Logo Div Reference. Why: The logo shows in both scenes, hidden during the static. How: This holds it.
-	const newDivRef = useRef< HTMLDivElement >( null );                     // What: News Div Reference. Why: The bulletin's bar fades in and leaves with the mall. How: This holds it.
+	const humParRef = useRef< HTMLParagraphElement >( null );               // What: Humanity Cry Paragraph Reference. Why: The cry pops in and out. How: This holds it.
+	const livDivRef = useRef< HTMLDivElement >( null );                     // What: Live Bar Div Reference. Why: The LIVE tag fades in and leaves with the mall. How: This holds it.
+	const logDivRef = useRef< HTMLDivElement >( null );                     // What: Logo Station Div Reference. Why: The logo shows in both scenes, hidden during the static. How: This holds it.
+	const newDivRef = useRef< HTMLDivElement >( null );                     // What: News Bulletin Div Reference. Why: The bulletin's bar fades in and leaves with the mall. How: This holds it.
 	const newVisRef = useRef< HTMLSpanElement >( null );                    // What: News Visible Reference. Why: The bulletin's visible copy types out. How: This holds the span SplitText splits.
-	const quoParRef = useRef< HTMLParagraphElement >( null );               // What: Quote Paragraph Reference. Why: The quote's box fades in. How: This holds it.
+	const quoParRef = useRef< HTMLParagraphElement >( null );               // What: Quote Box Paragraph Reference. Why: The quote's box fades in. How: This holds it.
 	const quoVisRef = useRef< HTMLSpanElement >( null );                    // What: Quote Visible Reference. Why: The quote's visible copy types out. How: This holds the span SplitText splits.
 	const rooDivRef = useRef< HTMLDivElement >( null );                     // What: Root Div Reference. Why: The scene reads the card's color tokens from its root. How: This holds it.
 	const tapFunRef = useRef< ( fraXcoNum : number ) => void >( () => {} ); // What: Tap Function Reference. Why: A tap reaches the scene, which starts after the render. How: This holds the scene's tap function, a no-op until it starts.
-	const titHeaRef = useRef< HTMLHeadingElement >( null );                 // What: Title Heading Reference. Why: The greeting rises into the studio. How: This holds it.
+	const titHeaRef = useRef< HTMLHeadingElement >( null );                 // What: Title Greeting Heading Reference. Why: The greeting rises into the studio. How: This holds it.
 
 	const [ seaParObj ] = useSearchParams(); // What: Search Parameters Object. Why: The greeting can name its recipient. How: This reads the address's query.
 
@@ -274,26 +274,26 @@ function TurCarCom () : JSX.Element {
 		>{ /* What: Turkeys Card Div Element. Why: The card fills the screen as a 70s newscast. How: This holds the set and its screen, and the card's color tokens. */ }
 
 
-			<div className={ cssModObj.tvsSetDiv }>{ /* What: TV Set Div Element. Why: The screen sits in a 70s set on a large screen. How: This holds the ears and the cabinet. */ }
+			<div className={ cssModObj.telSetDiv }>{ /* What: Television Set Div Element. Why: The screen sits in a 70s set on a large screen. How: This holds the ears and the cabinet. */ }
 
 
 				<div
-					className={ cssModObj.earDiv }
+					className={ cssModObj.rabEarDiv }
 
 					aria-hidden='true'
-				/>{ /* What: Ear Div Element. Why: A 70s set has rabbit ears. How: This draws them on a large screen, hidden from screen readers as decoration. */ }
+				/>{ /* What: Rabbit Ear Div Element. Why: A 70s set has rabbit ears. How: This draws them on a large screen, hidden from screen readers as decoration. */ }
 
 
 
-				<div className={ cssModObj.cabDiv }>{ /* What: Cabinet Div Element. Why: The cabinet holds the screen and the controls. How: This lays them side by side on a large screen. */ }
+				<div className={ cssModObj.cabBodDiv }>{ /* What: Cabinet Body Div Element. Why: The cabinet holds the screen and the controls. How: This lays them side by side on a large screen. */ }
 
 
 
-					<div className={ cssModObj.bezDiv }>{ /* What: Bezel Div Element. Why: The screen sits deep in a dark frame. How: This frames it on a large screen. */ }
+					<div className={ cssModObj.bezFraDiv }>{ /* What: Bezel Frame Div Element. Why: The screen sits deep in a dark frame. How: This frames it on a large screen. */ }
 
 
 						<div
-							className={ cssModObj.scrDiv }
+							className={ cssModObj.scrBoxDiv }
 
 							onClick={ ( cliEveObj : MouseEvent< HTMLDivElement > ) => { // What: Screen Tap Handler. Why: A tap drops a turkey where it lands, at the same share of the width in any layout. How: This hands the scene the tap's share of the screen's width.
 
@@ -305,7 +305,7 @@ function TurCarCom () : JSX.Element {
 
 
 							} }
-						>{ /* What: Screen Div Element. Why: The scenes and lettering share one box. How: This holds the canvas and every line of lettering, and takes taps. */ }
+						>{ /* What: Screen Box Div Element. Why: The scenes and lettering share one box. How: This holds the canvas and every line of lettering, and takes taps. */ }
 
 
 							<canvas
@@ -320,8 +320,8 @@ function TurCarCom () : JSX.Element {
 							<div
 								ref={ logDivRef }
 
-								className={ cssModObj.logDiv }
-							>{ /* What: Logo Div Element. Why: The station's lettering tops both scenes. How: This holds the call letters and their script. */ }
+								className={ cssModObj.logStaDiv }
+							>{ /* What: Logo Station Div Element. Why: The station's lettering tops both scenes. How: This holds the call letters and their script. */ }
 
 
 								<span className={ cssModObj.logWorSpa }>WKRP</span>{ /* What: Logo Word Span Element. Why: The call letters are the station's mark. How: This shows them in the chunky serif. */ }
@@ -335,8 +335,8 @@ function TurCarCom () : JSX.Element {
 							<div
 								ref={ livDivRef }
 
-								className={ cssModObj.livDiv }
-							>{ /* What: Live Div Element. Why: The broadcast is live from the mall. How: This holds the tag and the mall's name. */ }
+								className={ cssModObj.livBarDiv }
+							>{ /* What: Live Bar Div Element. Why: The broadcast is live from the mall. How: This holds the tag and the mall's name. */ }
 
 
 								<span className={ cssModObj.livTagSpa }>LIVE</span>{ /* What: Live Tag Span Element. Why: The tag flashes like a live broadcast's. How: This shows LIVE on red. */ }
@@ -350,15 +350,15 @@ function TurCarCom () : JSX.Element {
 							<p
 								ref={ humParRef }
 
-								className={ cssModObj.humPar }
-							>Oh, the humanity!</p>{ /* What: Humanity Paragraph Element. Why: The reporter's cry is the episode's best-known line. How: This shows it as the turkeys fall. */ }
+								className={ cssModObj.humCryPar }
+							>Oh, the humanity!</p>{ /* What: Humanity Cry Paragraph Element. Why: The reporter's cry is the episode's best-known line. How: This shows it as the turkeys fall. */ }
 
 
 							<div
 								ref={ newDivRef }
 
-								className={ cssModObj.newDiv }
-							>{ /* What: News Div Element. Why: The bulletin runs across the screen's bottom. How: This holds its tab and its line. */ }
+								className={ cssModObj.newBulDiv }
+							>{ /* What: News Bulletin Div Element. Why: The bulletin runs across the screen's bottom. How: This holds its tab and its line. */ }
 
 
 								<span className={ cssModObj.newLabSpa }>NEWS BULLETIN</span>{ /* What: News Label Span Element. Why: A tab names the bulletin. How: This shows it above the line. */ }
@@ -371,7 +371,7 @@ function TurCarCom () : JSX.Element {
 										ref={ newVisRef }
 
 										aria-hidden='true'
-									>For those of you who just tuned in, the Pinedale Shopping Mall has just been <strong className={ cssModObj.bomStr }>BOMBED</strong> with live turkeys.</span>{ /* What: News Visible Span Element. Why: Split into letters, the line would be read out one letter at a time. How: This shows the copy the timeline types out, "BOMBED" picked out, hidden from screen readers. */ }
+									>For those of you who just tuned in, the Pinedale Shopping Mall has just been <strong className={ cssModObj.bomWorStr }>BOMBED</strong> with live turkeys.</span>{ /* What: News Visible Span Element. Why: Split into letters, the line would be read out one letter at a time. How: This shows the copy the timeline types out, "BOMBED" picked out, hidden from screen readers. */ }
 
 									<span className={ cssModObj.scrReaSpa }>{ NEW_TEX_STR }</span>{ /* What: Screen Reader Span Element. Why: Screen readers should hear the line whole. How: This holds the same line, hidden from view. */ }
 
@@ -385,15 +385,15 @@ function TurCarCom () : JSX.Element {
 							<h1
 								ref={ titHeaRef }
 
-								className={ cssModObj.titHea }
-							>{ namParStr ? `Merry Thanksgiving, ${ namParStr }!` : 'Merry Thanksgiving!' }</h1>{ /* What: Title Heading Element. Why: The greeting leads the studio scene. How: This shows "Merry Thanksgiving", naming the recipient when the link carries a name. */ }
+								className={ cssModObj.titGreHea }
+							>{ namParStr ? `Merry Thanksgiving, ${ namParStr }!` : 'Merry Thanksgiving!' }</h1>{ /* What: Title Greeting Heading Element. Why: The greeting leads the studio scene. How: This shows "Merry Thanksgiving", naming the recipient when the link carries a name. */ }
 
 
 							<p
 								ref={ quoParRef }
 
-								className={ cssModObj.quoPar }
-							>{ /* What: Quote Paragraph Element. Why: The station manager's line sits boxed beside him. How: This holds the line's visible copy and its hidden copy. */ }
+								className={ cssModObj.quoBoxPar }
+							>{ /* What: Quote Box Paragraph Element. Why: The station manager's line sits boxed beside him. How: This holds the line's visible copy and its hidden copy. */ }
 
 
 								<span
@@ -416,17 +416,17 @@ function TurCarCom () : JSX.Element {
 
 
 					<div
-						className={ cssModObj.panDiv }
+						className={ cssModObj.panSidDiv }
 
 						aria-hidden='true'
-					>{ /* What: Panel Div Element. Why: The set's knobs and speaker sit beside its screen. How: This holds them on a large screen, hidden from screen readers as decoration. */ }
+					>{ /* What: Panel Side Div Element. Why: The set's knobs and speaker sit beside its screen. How: This holds them on a large screen, hidden from screen readers as decoration. */ }
 
 
-						<div className={ cssModObj.knoDiv } />{ /* What: Knob Div Element. Why: One knob changes the channel. How: This draws it. */ }
+						<div className={ cssModObj.knoDiaDiv } />{ /* What: Knob Dial Div Element. Why: One knob changes the channel. How: This draws it. */ }
 
-						<div className={ cssModObj.knoDiv } />{ /* What: Knob Div Element. Why: The other knob sets the volume. How: This draws it. */ }
+						<div className={ cssModObj.knoDiaDiv } />{ /* What: Knob Dial Div Element. Why: The other knob sets the volume. How: This draws it. */ }
 
-						<div className={ cssModObj.griDiv } />{ /* What: Grille Div Element. Why: The speaker sits behind a grille. How: This draws it. */ }
+						<div className={ cssModObj.speGriDiv } />{ /* What: Speaker Grille Div Element. Why: The speaker sits behind a grille. How: This draws it. */ }
 
 
 					</div>

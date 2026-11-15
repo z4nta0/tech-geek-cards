@@ -40,10 +40,10 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helpers re
 // #region Constants
 
 const CAN_SEL_STR = '[class*="scePixCan"]';         // What: Canvas Selector String. Why: The scenes are drawn on the card's canvas. How: This finds it by the class name Vite keeps inside the hashed class.
-const NEW_SEL_STR = '[class*="newDiv"]';            // What: News Selector String. Why: The rotation check waits for the bulletin. How: This finds its block by the class name Vite keeps inside the hashed class.
-const PAN_SEL_STR = '[class*="panDiv"]';            // What: Panel Selector String. Why: The set's control panel shows only with the set. How: This finds it by the class name Vite keeps inside the hashed class.
+const NEW_SEL_STR = '[class*="newBulDiv"]';            // What: News Selector String. Why: The rotation check waits for the bulletin. How: This finds its block by the class name Vite keeps inside the hashed class.
+const PAN_SEL_STR = '[class*="panSidDiv"]';            // What: Panel Selector String. Why: The set's control panel shows only with the set. How: This finds it by the class name Vite keeps inside the hashed class.
 const PHO_SIZ_OBJ = { height : 844, width : 390 };  // What: Phone Size Object. Why: The tap and rotation checks start on a phone held upright. How: This is a common phone's size.
-const SCR_SEL_STR = '[class*="scrDiv"]';            // What: Screen Selector String. Why: The bar check measures the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
+const SCR_SEL_STR = '[class*="scrBoxDiv"]';            // What: Screen Selector String. Why: The bar check measures the screen box. How: This finds it by the class name Vite keeps inside the hashed class.
 
 // #endregion Constants
 

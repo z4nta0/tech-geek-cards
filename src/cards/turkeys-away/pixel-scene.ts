@@ -332,7 +332,7 @@ function draMalFun ( canCotObj : CanvasRenderingContext2D, layRecObj : LayRecTyp
 
 	// #region Lot
 
-	recFilFun( '--tur-cur-col', 0, layRecObj.cubNum, layRecObj.widNum, 2 );                                           // What: Curb Fill Call. Why: A curb edges the lot. How: This draws it. // Turkeys Curb Color = #8c7f73
+	recFilFun( '--tur-cub-col', 0, layRecObj.cubNum, layRecObj.widNum, 2 );                                           // What: Curb Fill Call. Why: A curb edges the lot. How: This draws it. // Turkeys Curb Color = #8c7f73
 	recFilFun( '--tur-asp-col', 0, layRecObj.cubNum + 2, layRecObj.widNum, layRecObj.heiNum - layRecObj.cubNum - 2 ); // What: Asphalt Fill Call. Why: The lot is asphalt. How: This fills it to the bottom. // Turkeys Asphalt Color = #4a4340
 
 
