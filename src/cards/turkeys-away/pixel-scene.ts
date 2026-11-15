@@ -24,13 +24,13 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
  * The Turkeys Away card's two pixel scenes on one canvas. In the first, the
  * station's helicopter crosses the sky over the Pinedale Shopping Mall and
  * drops live turkeys, which flap, tumble, bounce once in a puff of feathers,
- * and sit dazed in the parking lot. A burst of static then changes the
- * channel to the second, the station's studio, where the station manager
- * stands with a hand raised beside a dazed turkey while feathers drift down.
- * A tap drops another turkey at the spot tapped. The scene runs on the card's
- * own clock, so its drawings and the card's lettering never drift apart, and
- * its turkeys follow a fixed seed, so their motion can be replayed to the same
- * state.
+ * and sit dazed in the parking lot. A burst of static then changes the channel
+ * to the second, the station's studio, where the station manager stands with a
+ * hand raised beside a dazed turkey while feathers drift down. A tap drops
+ * another turkey from above the screen, in line with where it was tapped. The
+ * scene runs on the card's own clock, so its drawings and the card's lettering
+ * never drift apart, and its turkeys follow a fixed seed, so their motion can
+ * be replayed to the same state.
  *
  * The scene has a wide composition and a tall one, chosen by the canvas's
  * shape, and stretches the chosen one along a single side to match the

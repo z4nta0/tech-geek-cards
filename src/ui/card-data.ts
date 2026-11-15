@@ -5,12 +5,12 @@
  * card-data.ts = Card Data
  *
  * @summary
- * The catalog of every greeting card the site offers, in the order the
- * Gallery shows them, as plain data, and the occasions and holidays they're
- * grouped by. It holds no components or images, so the build can read it
- * too: it writes each card's own page from it, carrying the card's title,
- * description, and link preview. ui/cards.ts adds each card's component and
- * tile preview to make the catalog the pages read.
+ * The catalog of every greeting card the site offers, in the order the Gallery
+ * shows them, as plain data, and the occasions and holidays they're grouped
+ * by. It holds no components or images, so the build can read it too, writing
+ * each card's own page from it with the card's title, description, and link
+ * preview. ui/cards.ts adds each card's component and tile preview to make the
+ * catalog the pages read.
  *
  * Sections:
  *  - Types
