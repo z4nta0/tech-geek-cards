@@ -202,10 +202,10 @@
 	.telSetDiv { /* What: Standing Television Set Div. Why: The set sizes itself to its cabinet, with room above for the ears. How: This places it in the card's flow and sets the screen height the cabinet, bezel, screen, and side panel read. */
 
 
-		--tur-scr-hei : min( calc( 100svh - var( --car-bar-mar, 0px ) - var( --ver-rhy-p10 ) * 1rem ), calc( 64vw * 9 / 16 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Vertical Rhythm Base Plus 10 ~= 242.517px */ /* What: Turkeys Screen Height. Why: The screen has to fit the room left above the bar, with the ears and cabinet around it, and leave the cabinet's side panel room on a wide screen. How: This is the smaller of the height left over and a 16:9 screen's height at 64% of the width. */
+		--tur-scr-hei : min( calc( 100svh - var( --car-bar-mar, 0px ) - var( --ver-rhy-p10 ) * 1rem ), calc( 64vw * 9 / 16 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Vertical Rhythm Base Plus 10 ~= 242.522px */ /* What: Turkeys Screen Height. Why: The screen has to fit the room left above the bar, with the ears and cabinet around it, and leave the cabinet's side panel room on a wide screen. How: This is the smaller of the height left over and a 16:9 screen's height at 64% of the width. */
 
 		inset       : auto;
-		padding-top : calc( var( --ver-rhy-p08 ) * 1rem ); /* Vertical Rhythm Base Plus 8 ~= 138.198px */ /* What: Ear Room Padding. Why: The rabbit ears rise above the cabinet. How: This leaves their height above it. */
+		padding-top : calc( var( --ver-rhy-p08 ) * 1rem ); /* Vertical Rhythm Base Plus 8 ~= 138.199px */ /* What: Ear Room Padding. Why: The rabbit ears rise above the cabinet. How: This leaves their height above it. */
 		position    : relative;
 
 
@@ -229,7 +229,7 @@
 
 		background    : var( --tur-cha-col );                                                                  /* Turkeys Charcoal Color = #2a2522 */
 		border-radius : calc( var( --ver-rhy-p05 ) * 1rem ) calc( var( --ver-rhy-p05 ) * 1rem ) 0 0;             /* Vertical Rhythm Base Plus 5 ~= 59.447px */
-		bottom        : calc( 100% - var( --ver-rhy-p08 ) * 1rem );                                            /* Vertical Rhythm Base Plus 8 ~= 138.198px */
+		bottom        : calc( 100% - var( --ver-rhy-p08 ) * 1rem );                                            /* Vertical Rhythm Base Plus 8 ~= 138.199px */
 		display       : block;
 		height        : calc( var( --ver-rhy-p03 ) * 1rem );                                                   /* Vertical Rhythm Base Plus 3 ~= 33.876px */
 		left          : 38%;
@@ -249,7 +249,7 @@
 		bottom           : calc( var( --ver-rhy-p01 ) * 1rem );                            /* Vertical Rhythm Base Plus 1 ~= 19.304px */
 		content          : '';
 		height           : calc( var( --ver-rhy-p07 ) * 1rem );                            /* Vertical Rhythm Base Plus 7 ~= 104.323px */
-		left             : calc( 50% - var( --ver-rhy-m05 ) * 1rem / 2 );                  /* Vertical Rhythm Base Minus 5 ~= 3.572px */
+		left             : calc( 50% - var( --ver-rhy-m05 ) * 1rem / 2 );                  /* Vertical Rhythm Base Minus 5 ~= 1.786px */
 		position         : absolute;
 		transform-origin : bottom center;
 		width            : calc( var( --ver-rhy-m05 ) * 1rem );                            /* Vertical Rhythm Base Minus 5 ~= 3.572px */
@@ -260,7 +260,7 @@
 	.rabEarDiv::before { /* What: Rabbit Ear Div Left Rod. Why: One rod leans left. How: This turns it left. */
 
 
-		transform : rotate( calc( var( --cdn-pow-012 ) * -1deg ) ); /* Core-Design-Number to the Power of 12 ~= 29.2deg */
+		transform : rotate( calc( var( --cdn-pow-012 ) * -1deg ) ); /* Core-Design-Number to the Power of 12 ~= -29.2deg */
 
 
 	}
@@ -433,7 +433,7 @@
 	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main, as the design package defines it */
 	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                             /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	line-height : 1;
-	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
+	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= -0.755cqmin */
 	text-shadow : calc( var( --cdn-pow-004-rec ) * 1cqmin ) calc( var( --cdn-pow-004-rec ) * 1cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325cqmin, Turkeys Ink Color = #2a1d17 */
 
 
