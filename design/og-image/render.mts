@@ -160,7 +160,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 		const texCenNum = ( texRanObj.getBoundingClientRect().left + texRanObj.getBoundingClientRect().right ) / 2; // What: Text Center Number. Why: A line set to one side would fall outside the square even once it fits. How: This reads the shrunk text's middle across.
 
 
-		if ( Math.abs( texCenNum - innerWidth / 2 ) > ( squWidNum + 30 - Math.min( texWidNum, squWidNum ) ) / 2 ) maiLinEle.style.translate = `${ innerWidth / 2 - texCenNum }px 0`; // What: Line Center Assignment. Why: The line has to sit inside the square apps crop to, and a line set to one side, such as a greeting beside a figure, would fall outside it. How: When the text reaches past the square's edge, the line's widest run plus the 15px margin on each side, this moves it across until its middle meets the image's.
+		if ( Math.abs( texCenNum - innerWidth / 2 ) > ( squWidNum + 30 - Math.min( texWidNum, squWidNum ) ) / 2 ) maiLinEle.style.translate = `${ innerWidth / 2 - texCenNum }px 0`; // What: Line Center Assignment. Why: The line has to sit inside the square apps crop to, and a line set to one side, such as a greeting beside a figure, would fall outside it. How: When the text, shrunk to fit the square, sticks out more than 15px past either edge of the square, this moves the line across until its middle meets the image's.
 
 
 	}, SQU_WID_NUM ); // What: Square Width Argument. Why: The page script can't read this file's constants. How: This hands it the square's width.

@@ -84,9 +84,7 @@ const QUO_TEX_STR = '"As God is my witness, I thought turkeys could fly."';     
  * 12 step, types for a Base Plus 11 step, and holds for a Base Plus 9 step
  * before the static, which lasts a Base Plus 5 step; and the studio's
  * lettering ends a Base Plus 10 step of typing after its greeting and quote
- * box arrive. The pixel scene reads the helicopter's, drops', static's, and
- * studio's times, and the timeline reads the first drop's, the bulletin's, the
- * static's, and the studio's.
+ * box arrive.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -352,7 +350,7 @@ function TurCarCom () : JSX.Element {
 								ref={ humParRef }
 
 								className={ cssModObj.humCryPar }
-							>Oh, the humanity!</p>{ /* What: Humanity Cry Paragraph Element. Why: The reporter's cry is the episode's best-known line. How: This shows it as the turkeys fall. */ }
+							>Oh, the humanity!</p>{ /* What: Humanity Cry Paragraph Element. Why: The reporter's cry is one of the episode's lines. How: This shows it as the turkeys fall. */ }
 
 
 							<div

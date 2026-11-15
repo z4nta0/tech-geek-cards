@@ -610,7 +610,7 @@ function layRecFun ( aspRatNum : number ) : LayRecTyp {
 			polArr : [ offXcoNum + 92, offXcoNum + 184 ],                                  // What: Pole Array. Why: Two lamp posts light the lot. How: Each is at its drawn place, moved with the mall.
 			skyNum : offYcoNum + 40,                                                       // What: Sky Number. Why: The sky's upper band grows with extra height. How: This is its drawn end, moved down.
 			tapArr : [ offYcoNum + 122, 8 ],                                               // What: Tap Array. Why: A turkey tapped in the studio lands on the carpet. How: This is the carpet's landing line, moved down, and its depth.
-			turNum : manLefNum + 44,                                                       // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is his left plus a little more than his width.
+			turNum : manLefNum + 44,                                                       // What: Turkey Number. Why: The dazed turkey sits beside the manager. How: This is his left plus a set distance that clears his width.
 			widNum : layWidNum,                                                            // What: Width Number. Why: The canvas takes the screen's shape. How: This is the stretched width.
 			winArr : [ offXcoNum + 38, offXcoNum + 62, offXcoNum + 150, offXcoNum + 174 ], // What: Window Array. Why: Four shop windows line the mall. How: Each is at its drawn place, moved with the mall.
 

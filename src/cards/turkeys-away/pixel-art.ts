@@ -475,7 +475,7 @@ function manGriFun () : PixGriTyp {
  *
  * @example
  * ```ts
- * rowGriFun(FEA_ROW_ARR) // => a 3 by 2 grid
+ * rowGriFun(FEA_ROW_ARR) // => a 2 by 3 grid
  * ```
  *
 */
@@ -550,7 +550,7 @@ function turGriFun ( winRaiBoo : boolean ) : PixGriTyp {
 	winGriArr.forEach( ( rowCurArr, rowIndNum ) => rowCurArr.forEach( ( keyCurStr, colIndNum ) => { if ( keyCurStr !== '.' ) turGriArr[ winTopNum + rowIndNum ][ 5 + colIndNum ] = keyCurStr; } ) ); // What: Wing Draw Call. Why: The wing covers part of the body. How: This copies the wing's colored pixels onto the turkey, five columns in.
 
 
-	if ( winRaiBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This adds two wing pixels to the top row.
+	if ( winRaiBoo ) turGriArr[ 0 ].splice( 6, 2, 'D', 'D' ); // What: Wing Tip Call. Why: A raised wing pokes above the turkey's back. How: This overwrites two pixels of the top row with wing pixels.
 
 
 
