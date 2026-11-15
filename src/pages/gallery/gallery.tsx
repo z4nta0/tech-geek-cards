@@ -86,7 +86,7 @@ function GalPagCom () : JSX.Element {
 
 	const seaInpRef = useRef< HTMLInputElement >( null ); // What: Search Input Reference. Why: "Show All Cards" disappears as the grid comes back, so focus needs somewhere to go. How: This holds the search field, which takes it.
 
-	const [ actOccStr, setActOccStr ] = useState< HolNamTyp | OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion, one holiday, or every card. How: This starts on "All".
+	const [ actOccStr, setActOccStr ] = useState< HolNamTyp | OccNamTyp | 'All' >( 'All' ); // What: Active Occasion String And Setter. Why: The filter shows one occasion, one holiday, or every listed card. How: This starts on "All".
 	const [ resChoBoo, setResChoBoo ] = useState( false );                                  // What: Result Chosen Boolean And Setter. Why: The results fade in only after a visitor's first choice, not on the page's own arrival. How: This starts false and turns true at the first search, filter, or "Show All Cards", which fades the results in once even when they stay the same.
 	const [ seaTexStr, setSeaTexStr ] = useState( '' );                                     // What: Search Text String And Setter. Why: The search field narrows the cards as a visitor types. How: This holds the field's text.
 	const [ shaCarObj, setShaCarObj ] = useState< CarRecTyp | null >( null );               // What: Share Card Object And Setter. Why: The share dialog shows the card whose "Share" was pressed. How: This starts with no card, so no dialog.

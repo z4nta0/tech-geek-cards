@@ -1112,7 +1112,7 @@ type SceSysTyp = { stoFun : () => void, tapFun : ( fraXcoNum : number ) => void 
 function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : SceSysTyp {
 
 
-	const canCotObj = canEleObj.getContext( '2d' )!; // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: A canvas in the page always offers a 2D context.
+	const canCotObj = canEleObj.getContext( '2d' )!; // What: Canvas Context Object. Why: The scenes are painted through the canvas's drawing context. How: This gets it. // What: Non-Null Note. Why: TypeScript can't see the context exists. How: Nothing else asks this canvas for a context, and a canvas returns a 2D context unless another kind was asked for first.
 	const schRecObj = sceOptObj.schObj;              // What: Schedule Record Object. Why: The scene's events are read every frame. How: This keeps the schedule close at hand.
 
 
