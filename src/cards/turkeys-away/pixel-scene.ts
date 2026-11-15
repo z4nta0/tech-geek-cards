@@ -4,7 +4,7 @@
 // #region Imports
 
 import { CAR_ROW_ARR } from './pixel-art.ts'; // What: Car Row Array. Why: Parked cars fill the mall's lot. How: The scene paints the car's rows once per paint color.
-import { draTexFun   } from './pixel-art.ts'; // What: Draw Text Function. Why: The mall's sign and the ON AIR light are spelled in pixels. How: The scene spells them on the canvas.
+import { draTexFun   } from './pixel-art.ts'; // What: Draw Text Function. Why: Words on the backdrop are spelled in pixels. How: The scene spells them on the canvas.
 import { FEA_ROW_ARR } from './pixel-art.ts'; // What: Feather Row Array. Why: Stray feathers drift down the studio. How: The scene paints the feather's rows once.
 import { griCanFun   } from './pixel-art.ts'; // What: Grid Canvas Function. Why: Each sprite is drawn from a painted canvas. How: The scene paints every sprite when it starts.
 import { HEL_ROW_ARR } from './pixel-art.ts'; // What: Helicopter Row Array. Why: The station's helicopter crosses the sky. How: The scene paints its rows once.
