@@ -546,7 +546,7 @@ const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : nu
 function layRecFun ( aspRatNum : number ) : LayRecTyp {
 
 
-	const talLayBoo = aspRatNum < 1; // What: Tall Layout Boolean. Why: A screen taller than wide gets the tall composition. How: This compares the width to the height.
+	const talLayBoo = aspRatNum <= 1; // What: Tall Layout Boolean. Why: A screen that isn't wider than tall gets the tall composition, as the lettering's upright layout does. How: This compares the width to the height.
 
 	const [ basWidNum, basHeiNum ] = talLayBoo ? TAL_BAS_ARR : WID_BAS_ARR; // What: Base Width Number. Why: The composition is drawn at this width at least. How: This reads the chosen composition's width. // What: Base Height Number. Why: The composition is drawn at this height at least. How: This reads its height.
 
