@@ -4,6 +4,7 @@
 // #region Imports
 
 import { expect      } from '@playwright/test';          // What: Expect. Why: Each page passes only when its grids keep their rows. How: This asserts each problem list is empty.
+import { HOL_NAM_ARR } from '../../src/ui/card-data.ts'; // What: Holiday Name Array. Why: The Gallery's grid is checked under every holiday filter too. How: This lists the holidays its filter offers.
 import { OCC_NAM_ARR } from '../../src/ui/card-data.ts'; // What: Occasion Name Array. Why: The Gallery's grid is checked under every occasion filter. How: This lists the occasions its filter offers.
 import { opeStaFun   } from '../support/states.ts';      // What: Open State Function. Why: Each width is measured settled. How: This loads the page and waits for it.
 import { test        } from '@playwright/test';          // What: Test. Why: Each page is its own test. How: This declares them.
@@ -21,8 +22,8 @@ import { test        } from '@playwright/test';          // What: Test. Why: Eac
  * An even grid has the same number of cards in every row, and the Gallery,
  * exempt as its cards change with the search and the filter, keeps every row
  * but its last full and centers that last row at the others' card width,
- * unfiltered at every width and under each occasion filter at a few. Pages
- * open under reduced motion, so no card is measured mid-entrance.
+ * unfiltered at every width and under each occasion and holiday filter at a
+ * few. Pages open under reduced motion, so no card is measured mid-entrance.
  *
  * Sections:
  *  - Types
@@ -53,7 +54,7 @@ type GriCasTyp = { // What: Grid Case Type. Why: Each case names a grid and how 
 
 // #region Constants
 
-const FIL_WID_ARR = [ 390, 768, 1440 ];                                                            // What: Filter Width Array. Why: Each occasion filter changes the Gallery's count, and the Card Grids rule checks every filter at a few widths. How: This lists a phone, a tablet, and a desktop width, one per column count.
+const FIL_WID_ARR = [ 390, 768, 1440 ];                                                            // What: Filter Width Array. Why: Each occasion and holiday filter changes the Gallery's count, and the Card Grids rule checks every filter at a few widths. How: This lists a phone, a tablet, and a desktop width, one per column count.
 const WID_LIS_ARR = [ 320, 360, 390, 414, 480, 640, 641, 768, 769, 1024, 1025, 1280, 1440, 1920 ]; // What: Width List Array. Why: A grid changes its columns at the breakpoints. How: This lists the layout spec's widths, a pixel either side of each of the site's 640px, 768px, and 1,024px breakpoints included.
 
 const PAG_GRI_ARR : { griArr : GriCasTyp[], patStr : string }[] = [ // What: Page Grid Array. Why: Each page with a card grid is checked at every width. How: Each row names a page and its grids.
@@ -240,23 +241,23 @@ for ( const pagGriObj of PAG_GRI_ARR ) { // What: Page Loop. Why: Each page with
 
 
 
-for ( const occNamStr of OCC_NAM_ARR ) { // What: Occasion Loop. Why: A chosen occasion narrows the Gallery's grid to a count of its own, where a short last row is most likely. How: This declares one test per occasion.
+for ( const occNamStr of [ ...OCC_NAM_ARR, ...HOL_NAM_ARR ] ) { // What: Occasion Loop. Why: A chosen occasion or holiday narrows the Gallery's grid to a count of its own, where a short last row is most likely. How: This declares one test per occasion and per holiday.
 
 
-	test( `the Gallery keeps its rows with "${ occNamStr }" chosen`, async ( { page : curPagObj } ) => { // What: Filtered Grid Test. Why: The Gallery's centered last row has to hold for every count a filter leaves. How: This opens the Gallery at each filter width, chooses the occasion, and lists the grid's row problems.
+	test( `the Gallery keeps its rows with "${ occNamStr }" chosen`, async ( { page : curPagObj } ) => { // What: Filtered Grid Test. Why: The Gallery's centered last row has to hold for every count a filter leaves. How: This opens the Gallery at each filter width, chooses the occasion or holiday, and lists the grid's row problems.
 
 
 		const proLisArr : string[] = []; // What: Problem List Array. Why: Every width's problems are reported together. How: Each finding is pushed here with its width.
 
 
-		for ( const widCurNum of FIL_WID_ARR ) { // What: Width Loop. Why: The narrowed grid is checked at each column count. How: This opens the Gallery at each width, chooses the occasion, and collects its problems.
+		for ( const widCurNum of FIL_WID_ARR ) { // What: Width Loop. Why: The narrowed grid is checked at each column count. How: This opens the Gallery at each width, chooses the occasion or holiday, and collects its problems.
 
 
 			await opeStaFun( curPagObj, { heiNum : 900, ideStr : `grid-${ occNamStr }-${ widCurNum }`, patStr : '/gallery', widNum : widCurNum } ); // What: Gallery Open Call. Why: The rows are measured settled. How: This opens the Gallery at the width.
 
-			await curPagObj.getByRole( 'button', { exact : true, name : occNamStr } ).click(); // What: Occasion Click Call. Why: The filter narrows the grid. How: This presses the occasion's button.
+			await curPagObj.getByRole( 'button', { exact : true, name : occNamStr } ).click(); // What: Occasion Click Call. Why: The filter narrows the grid. How: This presses the occasion's or holiday's button.
 
-			await expect( curPagObj.getByRole( 'button', { exact : true, name : occNamStr } ) ).toHaveAttribute( 'aria-pressed', 'true' ); // What: Chosen Filter Assertion. Why: The grid is measured only once the filter has applied. How: This waits until the occasion's button reads as chosen.
+			await expect( curPagObj.getByRole( 'button', { exact : true, name : occNamStr } ) ).toHaveAttribute( 'aria-pressed', 'true' ); // What: Chosen Filter Assertion. Why: The grid is measured only once the filter has applied. How: This waits until the occasion's or holiday's button reads as chosen.
 
 			proLisArr.push( ...( await curPagObj.evaluate( griProFun, { cenBoo : true, claStr : 'galGriDiv' } ) ).map( ( proCurStr ) => `${ proCurStr } at ${ widCurNum.toLocaleString( 'en-US' ) }px` ) ); // What: Grid Problems Call. Why: The narrowed grid is judged at this width. How: This runs the check in the page and tags each finding with the width.
 

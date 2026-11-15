@@ -7,10 +7,10 @@
  * @summary
  * Styles for GalPagCom: a hero on the warm sunken ivory with the site's motif
  * and a scalloped bottom edge, as on Home; a search field and a row of
- * occasion pills whose chosen pill fills with ink; the result count; a grid of
- * tiles in centered rows, three, two, or one across, a short last row sitting
- * centered; the empty message; and the custom card note. The page fades up as
- * it opens.
+ * occasion and holiday pills whose chosen pill fills with ink; the result
+ * count; a grid of tiles in centered rows, three, two, or one across, a short
+ * last row sitting centered; the empty message; and the custom card note. The
+ * page fades up as it opens.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -138,7 +138,7 @@
 
 /* #region conBarDiv */
 
-.conBarDiv { /* What: Controls Bar Div. Why: The search and the occasion pills share a line and wrap when there's no room. How: This spreads them apart along their bottom edge, wrapping onto two lines at about 630px wide and below. */
+.conBarDiv { /* What: Controls Bar Div. Why: The search and the occasion and holiday pills share a line and wrap when there's no room. How: This spreads them apart along their bottom edge, wrapping onto two lines at about 1,140px wide and below. */
 
 
 	align-items     : flex-end;
@@ -236,7 +236,7 @@
 
 /* #region occFilDiv */
 
-.occFilDiv { /* What: Occasion Filter Div. Why: The occasion pills sit in a row, wrapping onto two lines at about 365px wide and below. How: This lines them up with small gaps. */
+.occFilDiv { /* What: Occasion Filter Div. Why: The occasion and holiday pills sit in a row, wrapping onto two lines at about 900px wide and below, three at about 520px, and four at about 370px. How: This lines them up with small gaps. */
 
 
 	display   : flex;
@@ -246,7 +246,7 @@
 
 }
 
-.occFilBut { /* What: Occasion Filter Button. Why: Each occasion is an outlined pill, and the chosen one fills with ink. How: This sets a white pill in mono capitals, easing its colors, press, and focus. */
+.occFilBut { /* What: Occasion Filter Button. Why: Each occasion and holiday is an outlined pill, and the chosen one fills with ink. How: This sets a white pill in mono capitals, easing its colors, press, and focus. */
 
 
 	background     : var( --bac-sur-col );                            /* Background Surface Color = #FFFFFF */

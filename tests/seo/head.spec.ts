@@ -204,6 +204,17 @@ const PAG_HEA_ARR = [ // What: Page Head Array. Why: Every page's head is checke
 
 	},
 
+	{ // What: Turkeys Away Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
+
+
+		canStr : `${ LIV_URL_STR }turkeys-away`,
+		heaBoo : true,
+		patStr : '/turkeys-away',
+		titStr : 'Turkeys Away Card | TechGeek.cards'
+
+
+	},
+
 	{ // What: Merry Christmas Page Head Row. Why: This page is indexed under its own canonical address. How: This names its path, its title, and its canonical address.
 
 

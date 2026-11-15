@@ -27,14 +27,14 @@ import { writeFileSync } from 'node:fs';                   // What: Write File S
  * gives, is captured from the card itself, played by the site's own dev
  * server on port 5207 under reduced motion so it opens on its finished
  * scene, with the floating bar and the Family cards' controls hidden, and its
- * main line shrunk to fit the center square some apps crop a preview to. A
- * card ships as a PNG when that fits under 300 KB, the cap the social preview
- * rule keeps as a safe margin for WhatsApp, and as a JPEG otherwise, at the
- * lowest quality that showed no difference at 3x zoom; the run fails when a
- * file name's format disagrees with the size. Run it with npm run og-images
- * whenever a card or the site's look changes, and give a changed image a new
- * file name, in the catalog for a card's and in index.html for the site's
- * own, since apps cache previews.
+ * main line shrunk, and moved across when it sits to one side, to fit the
+ * center square some apps crop a preview to. A card ships as a PNG when that
+ * fits under 300 KB, the cap the social preview rule keeps as a safe margin
+ * for WhatsApp, and as a JPEG otherwise, at the lowest quality that showed no
+ * difference at 3x zoom; the run fails when a file name's format disagrees
+ * with the size. Run it with npm run og-images whenever a card or the site's
+ * look changes, and give a changed image a new file name, in the catalog for a
+ * card's and in index.html for the site's own, since apps cache previews.
  *
  * Sections:
  *  - Constants
@@ -134,7 +134,7 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 
 	await capPagObj.evaluate( () => Promise.all( [ document.fonts.ready, ...Array.from( document.images, ( imaCurEle ) => imaCurEle.decode().catch( () => {} ) ) ] ) ); // What: Fonts And Images Wait. Why: A capture taken before the card's fonts and photos are ready would show fallbacks and gaps. How: This waits for every font face and every image to decode, ignoring one that never loads.
 
-	await capPagObj.evaluate( ( squWidNum ) => { // What: Main Line Fit Call. Why: A main line wider than the center square would be cut off where apps crop the preview to it. How: This measures the card's greeting or visible heading by its text and shrinks it to the square's width when it runs wider.
+	await capPagObj.evaluate( ( squWidNum ) => { // What: Main Line Fit Call. Why: A main line wider than the center square, or set to one side of it, would be cut off where apps crop the preview to it. How: This measures the card's greeting or visible heading by its text, shrinks it to the square's width when it runs wider, and centers it when it sticks out more than 15px past either edge of the square.
 
 
 		const maiLinEle = ( document.querySelector( '[class*="famGreSpa"]' ) ?? Array.from( document.querySelectorAll( 'main h1' ) ).find( ( heaCurEle ) => heaCurEle.checkVisibility( { opacityProperty : true, visibilityProperty : true } ) ) ) as HTMLElement | undefined; // What: Main Line Element. Why: A Family card's main line is its grown greeting, and every other card's is its heading, which a prank may follow a hidden one with. How: This finds the greeting by the class name Vite keeps inside the hashed class, or else the first heading shown. // What: Type Assertion Note. Why: The lookups type their match as a general element. How: Both find HTML elements.
@@ -154,6 +154,13 @@ for ( const carDatObj of CAR_DAT_ARR ) { // What: Card Capture Loop. Why: Every 
 
 
 		if ( texWidNum > squWidNum ) maiLinEle.style.scale = String( squWidNum / texWidNum ); // What: Line Shrink Assignment. Why: The line has to fit the square without changing the card's layout. How: This scales the line about its own center by the square's share of its width, on top of any transform the card gave it.
+
+
+
+		const texCenNum = ( texRanObj.getBoundingClientRect().left + texRanObj.getBoundingClientRect().right ) / 2; // What: Text Center Number. Why: A line set to one side would fall outside the square even once it fits. How: This reads the shrunk text's middle across.
+
+
+		if ( Math.abs( texCenNum - innerWidth / 2 ) > ( squWidNum + 30 - Math.min( texWidNum, squWidNum ) ) / 2 ) maiLinEle.style.translate = `${ innerWidth / 2 - texCenNum }px 0`; // What: Line Center Assignment. Why: The line has to sit inside the square apps crop to, and a line set to one side, such as a greeting beside a figure, would fall outside it. How: When the text, shrunk to fit the square, sticks out more than 15px past either edge of the square, this moves the line across until its middle meets the image's.
 
 
 	}, SQU_WID_NUM ); // What: Square Width Argument. Why: The page script can't read this file's constants. How: This hands it the square's width.
