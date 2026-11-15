@@ -6,6 +6,7 @@
 	"scripts": {
 		"build": "tsc -b && vite build",
 		"dev": "vite",
+		"fonts": "node design/fonts/render.mts",
 		"icons": "node design/icons/render.mts",
 		"images": "node design/images/render.mts",
 		"lint": "eslint .",
@@ -30,6 +31,7 @@
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",
+		"@fontsource-variable/fraunces": "^5.3.0",
 		"@playwright/test": "^1.64.0",
 		"@types/node": "^24.19.2",
 		"@types/react": "^19.3.0",
@@ -39,6 +41,7 @@
 		"eslint-plugin-react": "^7.37.5",
 		"eslint-plugin-react-hooks": "^7.1.1",
 		"jiti": "^2.7.0",
+		"subset-font": "^2.9.0",
 		"typescript": "~6.0.3",
 		"typescript-eslint": "^8.71.2",
 		"vite": "^8.3.4"
