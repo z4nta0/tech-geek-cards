@@ -160,7 +160,7 @@
 	.turCarDiv { /* What: Set Turkeys Card Div. Why: The set stands centered, clear of the floating bar. How: This centers it in the space above the bar's margin, which its own bottom no longer needs. */
 
 
-		--tur-bot-mar : 0px; /* What: Set Bottom Margin. Why: The set already clears the bar, so its screen's lettering needs no more room. How: This zeroes the lettering's extra margin. */
+		--tur-bot-mar : 0px; /* What: Set Turkeys Bottom Margin. Why: The set already clears the bar, so its screen's lettering needs no more room. How: This zeroes the lettering's extra margin. */
 
 		display        : grid;
 		padding-bottom : var( --car-bar-mar, 0px ); /* Card Bar Margin, set by its parent, ~= 74.019px */
@@ -177,7 +177,7 @@
 	.turCarDiv { /* What: Bar Cleared Turkeys Card Div. Why: The screen already clears the bar, so its lettering needs no more room. How: This zeroes the lettering's extra margin. */
 
 
-		--tur-bot-mar : 0px; /* What: Short Landscape Bottom Margin. Why: The screen ends above the bar. How: This zeroes the lettering's extra margin. */
+		--tur-bot-mar : 0px; /* What: Short Landscape Turkeys Bottom Margin. Why: The screen ends above the bar. How: This zeroes the lettering's extra margin. */
 
 
 	}
