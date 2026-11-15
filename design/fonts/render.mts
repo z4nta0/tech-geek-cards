@@ -20,7 +20,7 @@ import { writeFileSync } from 'node:fs';  // What: Write File Sync. Why: Each pi
  * @summary
  * Rebuilds the Turkeys Away card's Fraunces files from the Fontsource
  * package. Fontsource's full Fraunces files carry every axis the face has
- * (weight, optical size, softness, and wonkiness), around 120 to 150 KB each,
+ * (weight, optical size, softness, and wonkiness), about 105 to 150 KB each,
  * while the card sets its lettering at one softness, one optical size, and a
  * few weights. This script pins those axes to the card's values, keeps the
  * weight range the card uses, and keeps every character the Fontsource file
