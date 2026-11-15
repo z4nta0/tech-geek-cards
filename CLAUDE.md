@@ -276,7 +276,7 @@ and no sender.
   tall (a phone held sideways), the screen ends above the floating bar, which
   would otherwise cover the lot and crowd the bulletin.
 - **Fonts trimmed by script**: Fraunces's full Fontsource files carry every
-  axis, about 120 to 150 KB each, so `npm run fonts` (`design/fonts/
+  axis, about 105 to 150 KB each, so `npm run fonts` (`design/fonts/
   render.mts`, using `subset-font` and the `@fontsource-variable/fraunces`
   package) pins its softness, optical size, and wonkiness, narrows its
   weights, and keeps every character Fontsource covers, about 25 to 40 KB a
