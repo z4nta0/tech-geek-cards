@@ -113,11 +113,12 @@ function schRecFun () : SceSchTyp & { newTypNum : number, quoTypNum : number } {
 	return { // What: Schedule Return. Why: The scene and the timeline share one schedule. How: This returns every time.
 
 
+		newTypNum, // What: News Typing Number. Why: The timeline types the bulletin from this moment. How: This is when the bulletin starts typing.
+		quoTypNum, // What: Quote Typing Number. Why: The timeline types the quote from this moment. How: This is when the quote starts typing.
+
 		finNum : quoTypNum + durSecFun( 'p10' ), // What: Finish Number. Why: The card rests once the quote has typed. How: This is a Base Plus 10 step of typing after it starts. // Duration Animation Base Plus 10 ~= 2,627.0ms
 		hlaNum : durSecFun( 'p02' ),             // What: Helicopter Arrival Number. Why: The helicopter enters just after the card opens. How: This is a Base Plus 2 step. // Duration Animation Base Plus 2 ~= 277.0ms
 		hldNum : durSecFun( 'p12' ),             // What: Helicopter Duration Number. Why: The helicopter crosses at an unhurried pace. How: This is a Base Plus 12 step. // Duration Animation Base Plus 12 ~= 4,610.0ms
-		newTypNum,                               // What: News Typing Number. Why: The timeline types the bulletin from this moment. How: This is when the bulletin starts typing.
-		quoTypNum,                               // What: Quote Typing Number. Why: The timeline types the quote from this moment. How: This is when the quote starts typing.
 		sceNum : sceTimNum,                      // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
 		staNum : staTimNum,                      // What: Static Number. Why: The static ends the mall scene. How: This is when the static starts.
 
@@ -252,7 +253,8 @@ function TurCarCom () : JSX.Element {
 		const sceSysObj = staSceFun( canEleRef.current!, { // What: Scene System Object. Why: The pixel scenes play behind the lettering on the timeline's clock. How: This starts them on the canvas with the card's options. // What: Non-Null Note. Why: TypeScript can't see that the canvas ref is set. How: useGSAP runs after the render that attaches it.
 
 
-			redMotBoo,                                                                                                    // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This passes the card's reading.
+			redMotBoo, // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This passes the card's reading.
+
 			rooEle : rooDivRef.current!,                                                                                  // What: Root Element. Why: The scene reads the card's color tokens. How: This is the card's root. // What: Non-Null Note. Why: TypeScript can't see that the root ref is set. How: useGSAP runs after the render that attaches it.
 			schObj : schRecObj,                                                                                           // What: Schedule Object. Why: The scene's events line up with the lettering. How: This passes the card's schedule.
 			timFun : () => finTimNum ? timLinObj.duration() + ( performance.now() - finTimNum ) / 1000 : timLinObj.time() // What: Time Function. Why: The scene runs on the timeline's clock. How: This returns the timeline's time, or its end plus the time since once it has finished.

@@ -770,6 +770,8 @@ const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : 
 	lisTurArr.push({ // What: Turkey Push Call. Why: The new turkey joins the list it falls in. How: This adds it with its starting state.
 
 
+		velXcoNum, // What: Velocity X-Coordinate Number. Why: A dropped turkey drifts with the helicopter. How: This is the sideways speed passed in.
+
 		ageNum    : 0,                                                                      // What: Age Number. Why: A new turkey has just appeared. How: Its age starts at zero.
 		angNum    : 0,                                                                      // What: Angle Number. Why: A falling turkey starts upright. How: Its tumble starts at zero.
 		bouBoo    : false,                                                                  // What: Bounced Boolean. Why: A new turkey hasn't bounced yet. How: This starts false.
@@ -777,7 +779,6 @@ const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : 
 		lanNum    : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ],                   // What: Landing Number. Why: Turkeys land at different depths. How: This draws a line inside the landing band from the seeded sequence.
 		spiNum    : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), // What: Spin Number. Why: Each turkey tumbles its own way. How: This draws a direction and a speed from the seeded sequence.
 		staStr    : 'fall',                                                                 // What: State String. Why: A new turkey is falling. How: This starts its fall.
-		velXcoNum,                                                                          // What: Velocity X-Coordinate Number. Why: A dropped turkey drifts with the helicopter. How: This is the sideways speed passed in.
 		velYcoNum : 0,                                                                      // What: Velocity Y-Coordinate Number. Why: A turkey starts its fall at rest. How: Its falling speed starts at zero.
 		xcoNum    : spaXcoNum,                                                              // What: X-Coordinate Number. Why: The turkey starts at the spawn point. How: This is its place across.
 		ycoNum    : spaYcoNum                                                               // What: Y-Coordinate Number. Why: The turkey starts at the spawn point. How: This is its place down.
@@ -1415,7 +1416,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 			tapEveArr.push({ // What: Tap Push Call. Why: The tap is replayed on the next frame. How: This records it.
 
 
-				fraXcoNum,                  // What: Fraction X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This is the tap's share across.
+				fraXcoNum, // What: Fraction X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This is the tap's share across.
+
 				timNum : sceOptObj.timFun() // What: Time Number. Why: The tap replays at its moment. How: This is the card's time, in seconds.
 
 
