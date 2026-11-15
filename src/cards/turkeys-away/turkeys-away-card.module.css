@@ -420,8 +420,8 @@
 	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
 	font-size   : calc( var( --cdn-pow-010 ) * 1cqmin );                       /* Core-Design-Number to the Power of 10 ~= 16.643cqmin */ /* What: Screen-Sized Lettering. Why: The lettering scales with the screen box, not the page. How: This is a power of the core design number in the box's shorter side. */
 	font-weight : 900;
-	line-height : 1;
-	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-cop-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 5cqmin ) calc( var( --cdn-pow-003-rec ) * 5cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Turkeys Orange Color = #d9792b, Turkeys Copper Color = #c86a24, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
+	line-height : var( --ver-rhy-m01 );                                        /* Vertical Rhythm Base Minus 1 = 1 */
+	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-cop-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 5cqmin ) calc( var( --cdn-pow-003-rec ) * 5cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin 0.430cqmin 0 plus 0.860cqmin 0.860cqmin 0 plus 1.290cqmin 1.290cqmin 0 plus 1.721cqmin 1.721cqmin 0 plus 2.151cqmin 2.151cqmin 0, Turkeys Orange Color = #d9792b, Turkeys Copper Color = #c86a24, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
 
 
 }
@@ -432,7 +432,7 @@
 	color       : var( --tur-pap-col );                                                             /* Turkeys Paper Color = #fff3dc */
 	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main = 'Syne', sans-serif */
 	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                             /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
-	line-height : 1;
+	line-height : var( --ver-rhy-m01 );                                                              /* Vertical Rhythm Base Minus 1 = 1 */
 	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= -0.755cqmin */
 	text-shadow : calc( var( --cdn-pow-004-rec ) * 1cqmin ) calc( var( --cdn-pow-004-rec ) * 1cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325cqmin, Turkeys Ink Color = #2a1d17 */
 
@@ -695,7 +695,7 @@
 	position    : absolute;
 	right       : 4%;
 	text-align  : right;
-	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Turkeys Orange Color = #d9792b, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
+	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin 0.430cqmin 0 plus 0.860cqmin 0.860cqmin 0 plus 1.290cqmin 1.290cqmin 0 plus 1.721cqmin 1.721cqmin 0, Turkeys Orange Color = #d9792b, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
 	top         : 30%;
 	width       : 52%;
 
