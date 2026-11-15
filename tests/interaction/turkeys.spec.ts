@@ -137,7 +137,7 @@ test( 'a tap on the Turkeys Away card under reduced motion leaves the canvas as 
 
 	await curPagObj.goto( '/turkeys-away' ); // What: Card Open Call. Why: The tap is checked on the card itself. How: This opens its page.
 
-	await expect( curPagObj.getByRole( 'heading', { level : 1 } ) ).toBeVisible(); // What: Card Shown Assertion. Why: The tap should land on the finished studio. How: This waits until the greeting shows.
+	await expect.poll( () => curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( titHeaEle ) => getComputedStyle( titHeaEle ).opacity ), { intervals : [ 250 ], timeout : 30000 } ).toBe( '1' ); // What: Studio Shown Poll. Why: The tap should land on the finished studio. How: This reads the greeting's opacity until it has fully faded in.
 
 
 	const befDatStr = await curPagObj.locator( CAN_SEL_STR ).evaluate( ( canCurEle ) => ( canCurEle as HTMLCanvasElement ).toDataURL() ); // What: Before Data String. Why: The canvas is compared before and after the tap. How: This reads it as an image address. // What: Type Assertion Note. Why: The locator types its element generally. How: The selector matches only the canvas.
