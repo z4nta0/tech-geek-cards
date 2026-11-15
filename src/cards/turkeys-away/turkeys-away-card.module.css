@@ -295,7 +295,7 @@
 
 		background            : linear-gradient( rgb( from var( --tur-pap-col ) r g b / var( --cdn-pow-009-rec ) ), rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-005-rec ) ) ), repeating-linear-gradient( 92deg, var( --tur-tea-col ) 0 4px, var( --tur-ced-col ) 4px 11px, var( --tur-ebo-col ) 11px 13px, var( --tur-ced-col ) 13px 21px ); /* Turkeys Paper Color = #fff3dc @ 0.080 opacity, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080, Turkeys Ink Color = #2a1d17 @ 0.245 opacity, Core-Design-Number to the Power of 5 Reciprocal ~= 0.245, Turkeys Teak Color = #6b3f22, Turkeys Cedar Color = #7a4a28, Turkeys Ebony Color = #5e361c */ /* What: Wood Grain Stripes. Why: The grain's stripes are a texture drawn in pixels, not spacing. How: Their stops stay literal. */
 		border-radius         : calc( var( --ver-rhy-p02 ) * 1rem );                                               /* Vertical Rhythm Base Plus 2 ~= 25.572px */
-		box-shadow            : var( --ele-xla-sha );                                                              /* Elevation Extra Large Shadow, as the design package defines it */
+		box-shadow            : var( --ele-xla-sha );                                                              /* Elevation Extra Large Shadow ~= 0 19.304px 59.447px -11px plus 0 6.268px 14.572px -3.572px */
 		display               : grid;
 		gap                   : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );                           /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
 		grid-template-areas   : 'bezFraDiv panSidDiv';
@@ -417,7 +417,7 @@
 
 
 	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
-	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
 	font-size   : calc( var( --cdn-pow-010 ) * 1cqmin );                       /* Core-Design-Number to the Power of 10 ~= 16.643cqmin */ /* What: Screen-Sized Lettering. Why: The lettering scales with the screen box, not the page. How: This is a power of the core design number in the box's shorter side. */
 	font-weight : 900;
 	line-height : 1;
@@ -430,7 +430,7 @@
 
 
 	color       : var( --tur-pap-col );                                                             /* Turkeys Paper Color = #fff3dc */
-	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main, as the design package defines it */
+	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main = 'Syne', sans-serif */
 	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                             /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	line-height : 1;
 	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= -0.755cqmin */
@@ -451,7 +451,7 @@
 	align-items    : center;
 	color          : var( --tur-pap-col );                                       /* Turkeys Paper Color = #fff3dc */
 	display        : flex;
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
 	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                       /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
 	font-weight    : 800;
 	gap            : calc( var( --cdn-pow-001 ) * 1cqmin );                       /* Core-Design-Number to the Power of 1 ~= 1.325cqmin */ /* What: Row Gap. Why: A flex row that doesn't wrap only gaps across, and flexbox keeps each item its own width. How: This sets the gap from the screen box. */
@@ -542,7 +542,7 @@
 	border-radius  : 999px;
 	box-shadow     : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 var( --tur-bur-col ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Burnt Color = #b25a1c */
 	color          : var( --tur-ink-col );                                                                  /* Turkeys Ink Color = #2a1d17 */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                 /* Font Family Main, as the design package defines it */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                 /* Font Family Main = 'Syne', sans-serif */
 	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                                                  /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-style     : italic;
 	font-weight    : 800;
@@ -596,7 +596,7 @@
 	background     : var( --tur-ora-col );                                                                 /* Turkeys Orange Color = #d9792b */
 	border-radius  : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 0; /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
 	color          : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                /* Font Family Main, as the design package defines it */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                /* Font Family Main = 'Syne', sans-serif */
 	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
 	font-weight    : 800;
 	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                                /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
@@ -628,7 +628,7 @@
 	border-left   : calc( var( --cdn-pow-002-rec ) * 1cqmin ) solid var( --tur-ora-col );                 /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Orange Color = #d9792b */
 	border-radius : 0 calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
 	color         : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
-	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                /* Font Family Secondary, as the design package defines it */
+	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                /* Font Family Secondary = 'DM Mono', monospace */
 	font-size     : calc( var( --cdn-pow-005 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-weight   : 500;
 	line-height   : var( --ver-rhy-bas );                                                                 /* Vertical Rhythm Base ~= 1.325 */
@@ -686,7 +686,7 @@
 
 
 	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
-	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main = 'Syne', sans-serif */
 	font-size   : calc( var( --cdn-pow-009 ) * 1cqmin );                       /* Core-Design-Number to the Power of 9 ~= 12.564cqmin */
 	font-weight : 900;
 	line-height : var( --ver-rhy-m01 );                                       /* Vertical Rhythm Base Minus 1 = 1 */
@@ -728,7 +728,7 @@
 	border-radius  : calc( var( --cdn-pow-001-rec ) * 1cqmin );                          /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
 	bottom         : calc( 6% + var( --tur-bot-mar ) );                                  /* Turkeys Bottom Margin, about 0px - 74.019px */
 	color          : var( --tur-pap-col );                                              /* Turkeys Paper Color = #fff3dc */
-	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                             /* Font Family Main, as the design package defines it */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                             /* Font Family Main = 'Syne', sans-serif */
 	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                              /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
 	font-style     : italic;
 	font-weight    : 600;
@@ -804,7 +804,7 @@
 	aspect-ratio  : 1;
 	background    : radial-gradient( circle at 40% 35%, var( --tur-chr-col ), var( --tur-pew-col ) 55%, var( --tur-iro-col ) ); /* Turkeys Chrome Color = #d6cfc4, Turkeys Pewter Color = #8b8378, Turkeys Iron Color = #4a453f */
 	border-radius : 50%;
-	box-shadow    : var( --ele-med-sha );                                                                                       /* Elevation Medium Shadow, as the design package defines it */
+	box-shadow    : var( --ele-med-sha );                                                                                       /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
 	position      : relative;
 	width         : 70%;
 
