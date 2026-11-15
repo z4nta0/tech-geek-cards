@@ -232,13 +232,13 @@ function draTexFun ( canCotObj : CanvasRenderingContext2D, texCurStr : string, l
 	for ( const chaCurStr of texCurStr ) { // What: Letter Loop. Why: The word is spelled one letter at a time. How: This walks its characters.
 
 
-		const gloRowArr = GLY_ROW_OBJ[ chaCurStr ]; // What: Glyph Row Array. Why: Each letter has its own rows. How: This looks them up.
+		const glyRowArr = GLY_ROW_OBJ[ chaCurStr ]; // What: Glyph Row Array. Why: Each letter has its own rows. How: This looks them up.
 
 
-		gloRowArr.forEach( ( rowCurStr, rowIndNum ) => [ ...rowCurStr ].forEach( ( bitCurStr, colIndNum ) => { if ( bitCurStr === '1' ) canCotObj.fillRect( curXcoNum + colIndNum, topPixNum + rowIndNum, 1, 1 ); } ) ); // What: Glyph Fill Call. Why: The letter's ink pixels are drawn. How: This fills each 1 in its rows.
+		glyRowArr.forEach( ( rowCurStr, rowIndNum ) => [ ...rowCurStr ].forEach( ( bitCurStr, colIndNum ) => { if ( bitCurStr === '1' ) canCotObj.fillRect( curXcoNum + colIndNum, topPixNum + rowIndNum, 1, 1 ); } ) ); // What: Glyph Fill Call. Why: The letter's ink pixels are drawn. How: This fills each 1 in its rows.
 
 
-		curXcoNum += gloRowArr[ 0 ].length + 1; // What: Next Letter Assignment. Why: The next letter follows after a gap. How: This moves past the letter's width and one pixel.
+		curXcoNum += glyRowArr[ 0 ].length + 1; // What: Next Letter Assignment. Why: The next letter follows after a gap. How: This moves past the letter's width and one pixel.
 
 
 	}
