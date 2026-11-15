@@ -552,11 +552,11 @@ const helXcoFun = ( layRecObj : LayRecTyp, schRecObj : SceSchTyp, curTimNum : nu
  * Works out the canvas's size and where everything sits for a canvas of a
  * given shape. A canvas wider than it is tall takes the wide composition, any
  * other the tall one. The composition keeps its drawn size along one side and
- * stretches along the other until it matches the shape, to whole pixels:
- * wider than its own shape, it widens, keeping the mall and the studio's light
- * centered or spread by share of the width; narrower, it grows taller, the
- * wide one adding the height to its sky and the tall one sharing it between
- * its sky and its lot.
+ * stretches along the other until it matches the shape, to whole pixels: wider
+ * than its own shape, it widens, keeping the mall centered and placing the
+ * studio's parts across the width; narrower, it grows taller, the wide one
+ * adding the height to its sky and the tall one sharing it between its sky and
+ * its lot.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
