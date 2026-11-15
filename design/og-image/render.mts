@@ -32,10 +32,9 @@ import { writeFileSync } from 'node:fs';                   // What: Write File S
  * fits under 300 KB, the cap the social preview rule keeps as a safe margin
  * for WhatsApp, and as a JPEG otherwise, at the lowest quality that showed no
  * difference at 3x zoom; the run fails when a file name's format disagrees
- * with the size. Run it with npm run og-images
- * whenever a card or the site's look changes, and give a changed image a new
- * file name, in the catalog for a card's and in index.html for the site's
- * own, since apps cache previews.
+ * with the size. Run it with npm run og-images whenever a card or the site's
+ * look changes, and give a changed image a new file name, in the catalog for a
+ * card's and in index.html for the site's own, since apps cache previews.
  *
  * Sections:
  *  - Constants

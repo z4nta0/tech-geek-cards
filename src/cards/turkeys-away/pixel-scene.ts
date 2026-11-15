@@ -496,11 +496,8 @@ function draTurFun ( canCotObj : CanvasRenderingContext2D, turCurObj : TurStaTyp
 
 	const falFlaBoo = turCurObj.staStr === 'fall' && Math.floor( turCurObj.flaNum / FLA_TIM_NUM ) % 2 === 0; // What: Falling Flap Boolean. Why: A falling turkey flaps on a steady beat. How: This is true on every other beat.
 	const sitFlaBoo = turCurObj.staStr === 'sit' && Math.floor( curTimNum * 2 ) % 7 === 0;                   // What: Sitting Flap Boolean. Why: A dazed turkey flaps now and then. How: This is true for half a second in every three and a half.
-
-	const winRaiBoo = falFlaBoo || sitFlaBoo; // What: Wing Raised Boolean. Why: The wing is up whenever the turkey flaps, falling or sitting. How: This combines the falling and sitting flap booleans.
-
-
-	const sprCanEle = winRaiBoo ? sprSetObj.tuuEle : sprSetObj.tudEle; // What: Sprite Canvas Element. Why: Each frame has its own image. How: This picks the wing-up or wing-down frame.
+	const winRaiBoo = falFlaBoo || sitFlaBoo;                                                                // What: Wing Raised Boolean. Why: The wing is up whenever the turkey flaps, falling or sitting. How: This combines the falling and sitting flap booleans.
+	const sprCanEle = winRaiBoo ? sprSetObj.tuuEle : sprSetObj.tudEle;                                       // What: Sprite Canvas Element. Why: Each frame has its own image. How: This picks the wing-up or wing-down frame.
 
 
 	canCotObj.save(); // What: Context Save Call. Why: The turkey's turn mustn't affect what's drawn after it. How: This saves the drawing state.
@@ -1142,7 +1139,16 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 		tudEle : griCanFun( turGriFun( false ), palColObj ),       // What: Turkey-Down Element. Why: A turkey's wing is down in one frame. How: This paints that frame.
 		tuuEle : griCanFun( turGriFun( true ), palColObj ),        // What: Turkey-Up Element. Why: A turkey's wing is up in the other frame. How: This paints that frame.
 
-		carArr : CAR_TOK_ARR.map( ( tokNamStr ) => griCanFun( rowGriFun( CAR_ROW_ARR ), { ...palColObj, C : colGetFun( tokNamStr ), L : colGetFun( '--tur-gla-col' ) } ) ) // What: Car Array. Why: Each car is painted in its own color, its windows in the mall's glass. How: This paints the car once per paint. // Turkeys Glass Color = #a8cdd2
+		carArr : CAR_TOK_ARR.map( ( tokNamStr ) => griCanFun( rowGriFun( CAR_ROW_ARR ), { // What: Car Array. Why: Each car is painted in its own color, its windows in the mall's glass. How: This paints the car once per paint. // Turkeys Glass Color = #a8cdd2
+
+
+			...palColObj, // What: Palette Spread. Why: A car shares the scene's palette. How: This starts from every key's color.
+
+			C : colGetFun( tokNamStr ),      // What: Car Paint Color. Why: Each car takes its own paint. How: This reads the car's token.
+			L : colGetFun( '--tur-gla-col' ) // What: Window Color. Why: Every car's windows are glass. How: This reads the glass token. // Turkeys Glass Color = #a8cdd2
+
+
+		} ) )
 
 
 	};
