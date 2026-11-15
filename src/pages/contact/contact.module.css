@@ -433,10 +433,15 @@
 
 /* What: Field Controls Pointer. Why: The topic select shares the other fields' box, border, and focus look. How: Its rules sit in the `fieRowDiv` region above, the first parent that uses it. */
 
-.fieTopSel { /* What: Field Topic Select. Why: The menu opens on a click, so it shows the pointer. How: This sets the pointer cursor. */
+.fieTopSel { /* What: Field Topic Select. Why: The menu opens on a click and draws the site's own arrow, the same in every engine. How: This removes the browser's arrow, draws the chevron file at the right with room kept for it, and shows the pointer. */
 
 
-	cursor : pointer;
+	appearance          : none;
+	background-image    : url( './select-arrow.svg' );       /* What: Chevron Image. Why: The arrow is a file rather than a data: URI, so the security policy never allows data:. How: This reads the chevron, drawn in the Text Muted Color role's #646482, since an SVG file can't read a custom property. */
+	background-position : right var( --spa-hor-bas ) center; /* Spacing Horizontal Base ~= 14.572px */
+	background-repeat   : no-repeat;
+	cursor              : pointer;
+	padding-right       : var( --spa-hor-p04 );              /* Spacing Horizontal Base Plus 4 ~= 44.876px */
 
 
 }

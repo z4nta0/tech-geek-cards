@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' fill='none' height='14' stroke='#646482' stroke-width='2.5' viewBox='0 0 24 24' width='14'><!-- What: Select Arrow SVG Element. Why: The topic select draws the site's own arrow, the same in every engine, from a file rather than a data: URI the security policy would have to allow. How: This draws a 14px chevron in the muted text color, written out as #646482 for the Text Muted Color role, since an SVG file can't read a custom property. -->
+
+
+	<polyline points='6 9 12 15 18 9' /><!-- What: Chevron Line Element. Why: A downward chevron says the field opens a list. How: This joins three points into a V. -->
+
+
+</svg>

@@ -521,7 +521,7 @@ test( 'a hash added to the address wins over a saved position', async ( { page :
 
 	await expect.poll( () => curPagObj.evaluate( () => window.scrollY ) ).toBeLessThan( savTopNum / 2 ); // What: Target Arrival Assertion. Why: The main element starts just below the bar, far above the saved position. How: This polls until the page sits near the top, where the main element is.
 
-	expect( await curPagObj.evaluate( () => ( window as unknown as { __scrTopArr : unknown[] } ).__scrTopArr ) ).not.toContain( savTopNum ); // What: No Restore Assertion. Why: The hash should win over the saved position, not merely land last. How: This checks no scroll call after the hash change aimed at the saved position. // What: Type Assertion Note. Why: The window has no such field in its type. How: The init script set it.
+	expect( await curPagObj.evaluate( () => ( window as unknown as { __scrTopArr : unknown[] } ).__scrTopArr ) ).toEqual( [] ); // What: No Restore Assertion. Why: The hash should win over the saved position, not merely land last, and in Firefox the browser's own jump to the target is recorded as the saved position before the hook runs, so a wrong restore can aim at the target itself. How: This checks the page made no window.scrollTo call after the hash change, since only a restore or a jump to the top would make one. // What: Type Assertion Note. Why: The window has no such field in its type. How: The init script set it.
 
 
 } );
