@@ -163,6 +163,8 @@ for ( const fonRecObj of FON_REC_ARR ) { // What: Font Loop. Why: Each pinned fi
 
 	writeFileSync( `${ OUT_DIR_STR }${ outFilStr }`, outBytObj ); // What: Font Write Call. Why: The card loads the pinned file from its folder. How: This saves it there.
 
+
+
 	console.log( `${ outFilStr }: ${ souBytObj.length.toLocaleString( 'en-US' ) } bytes pinned to ${ outBytObj.length.toLocaleString( 'en-US' ) } bytes` ); // What: Result Log Call. Why: The run should show what it saved. How: This prints each file's size before and after.
 
 

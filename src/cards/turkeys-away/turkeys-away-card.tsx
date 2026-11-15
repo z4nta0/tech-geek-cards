@@ -248,7 +248,16 @@ function TurCarCom () : JSX.Element {
 
 
 
-		const sceSysObj = staSceFun( canEleRef.current!, { redMotBoo, rooEle : rooDivRef.current!, schObj : schRecObj, timFun : () => finTimNum ? timLinObj.duration() + ( performance.now() - finTimNum ) / 1000 : timLinObj.time() } ); // What: Scene System Object. Why: The pixel scenes play behind the lettering on the timeline's clock. How: This starts them, handing over the timeline's time, or its end plus the time since once it has finished. // What: Non-Null Note. Why: TypeScript can't see that the refs are set. How: useGSAP runs after the render that attaches them.
+		const sceSysObj = staSceFun( canEleRef.current!, { // What: Scene System Object. Why: The pixel scenes play behind the lettering on the timeline's clock. How: This starts them on the canvas with the card's options. // What: Non-Null Note. Why: TypeScript can't see that the canvas ref is set. How: useGSAP runs after the render that attaches it.
+
+
+			redMotBoo,                                                                                                    // What: Reduced Motion Boolean. Why: Under reduced motion the scene draws the finished studio still. How: This passes the card's reading.
+			rooEle : rooDivRef.current!,                                                                                  // What: Root Element. Why: The scene reads the card's color tokens. How: This is the card's root. // What: Non-Null Note. Why: TypeScript can't see that the root ref is set. How: useGSAP runs after the render that attaches it.
+			schObj : schRecObj,                                                                                           // What: Schedule Object. Why: The scene's events line up with the lettering. How: This passes the card's schedule.
+			timFun : () => finTimNum ? timLinObj.duration() + ( performance.now() - finTimNum ) / 1000 : timLinObj.time() // What: Time Function. Why: The scene runs on the timeline's clock. How: This returns the timeline's time, or its end plus the time since once it has finished.
+
+
+		} );
 
 
 		tapFunRef.current = sceSysObj.tapFun; // What: Tap Function Assignment. Why: Taps reach the scene once it has started. How: This keeps its tap function.

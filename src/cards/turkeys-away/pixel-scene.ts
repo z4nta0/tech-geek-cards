@@ -1010,6 +1010,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 		});
 
+
 		simStaObj.feaArr = Array.from( Array( 6 ).keys(), ( feaIndNum ) => ( { // What: Feather Setup Assignment. Why: Six feathers drift down the studio at staggered heights. How: This spaces them across and above the top.
 
 
