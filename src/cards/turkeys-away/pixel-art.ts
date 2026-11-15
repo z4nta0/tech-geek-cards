@@ -439,9 +439,13 @@ function manGriFun () : PixGriTyp {
 
 
 
+	// #region Feather
+
 	recFilFun( 'O', 17, 0, 17, 0 ); // What: Feather Tip Fill Call. Why: A stray turkey feather landed on his head. How: This draws the feather's tip.
 	recFilFun( 'O', 16, 1, 17, 2 ); // What: Feather Fill Call. Why: A stray turkey feather landed on his head. How: This draws the feather's body.
 	recFilFun( 'T', 16, 3, 16, 3 ); // What: Feather Quill Fill Call. Why: The feather's quill sticks into the dome. How: This draws it in the feathers' tan.
+
+	// #endregion Feather
 
 
 

@@ -112,7 +112,7 @@ type SprSetTyp = { // What: Sprite Set Type. Why: Every sprite is painted once a
 
 
 
-type TapEveTyp = { timNum : number, xcoFraNum : number };                          // What: Tap Event Type. Why: Taps are replayed when the scene rebuilds a moment. How: This holds a tap's time and its share of the width.
+type TapEveTyp = { timNum : number, xcoFraNum : number }; // What: Tap Event Type. Why: Taps are replayed when the scene rebuilds a moment. How: This holds a tap's time and its share of the width.
 
 
 
