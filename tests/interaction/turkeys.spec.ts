@@ -210,7 +210,7 @@ test( 'the TV set shows only on a screen at least 1,024px wide and 640px tall', 
 
 
 
-test( 'on a phone held sideways the Turkeys Away screen ends above the floating bar', async ( { page : curPagObj } ) => { // What: Bar Clearing Test. Why: A sideways phone is too short for the bar to cover the scene. How: This measures the screen's bottom against the bar's top and checks it ends above the bar sideways and runs under it upright.
+test( 'on a phone held sideways the Turkeys Away screen ends above the floating bar', async ( { page : curPagObj } ) => { // What: Bar Clearing Test. Why: A sideways phone is so short that the bar would cover much of the scene. How: This measures the screen's bottom against the bar's top and checks it ends above the bar sideways and runs under it upright.
 
 
 	await curPagObj.emulateMedia( { reducedMotion : 'reduce' } ); // What: Reduced Motion Call. Why: Only the layout is checked, so the card can open finished. How: This asks the page for reduced motion before it loads.
