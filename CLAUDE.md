@@ -69,8 +69,8 @@ their assets, and the image render script were copied from
 ## Kind of site
 Decided by the user 2026-10-14. z4nta0's real site, indexed with normal SEO
 (never the demo treatment). It showcases the cards z4nta0 has made and lets
-anyone share one; some cards take a recipient's name (Happy Birthday and
-both Christmas cards, through `?name=`), and some a sender's (the Christmas
+anyone share one; some cards take a recipient's name (Happy Birthday, both
+Christmas cards, and Turkeys Away, through `?name=`), and some a sender's (the Christmas
 cards, through `?from=`, marked `froBoo` in the catalog, which adds a second
 field to the share dialog).
 - **Pages**: Home (an introduction and a few cards picked at random), Gallery
@@ -242,6 +242,59 @@ the family's fonts and colors.
   hidden technique keeps its literal 1px width and height and its -1px
   margin, since they're part of the technique rather than sizes or spacing.
 
+## The Turkeys Away card
+Planned and decided with the user 2026-11-14, built on the `thanksgiving-card`
+branch. A second Thanksgiving card at `/turkeys-away`, listed under Holiday and
+Thanksgiving, themed on WKRP in Cincinnati's "Turkeys Away" episode: a 70s
+newscast in pixel art (the user's direction D, B's 70s print look with C's
+LIVE tag, see-through bulletin, and boxed quote). It takes a recipient's name
+and no sender.
+- **A fan's tribute, not the show's art** (decided by the user): the WKRP
+  lettering is our own, set in Fraunces in the show's chunky 70s style, never
+  the show's logo, and the station manager is drawn as a type (a balding man
+  in a three-piece suit, hand raised) rather than a likeness of the actor.
+  The episode's lines are quoted as said: "For those of you who just tuned in,
+  the Pinedale Shopping Mall has just been BOMBED with live turkeys." (Johnny
+  Fever's; "Mall", not the "Shopping Center" the show says once, and no "Film
+  at 11"), "Oh, the humanity!", and "As God is my witness, I thought turkeys
+  could fly."
+- **Pixel art in code**: `pixel-art.ts` writes each sprite as rows of color
+  keys (the station manager is built from rectangles), and `pixel-scene.ts`
+  draws both scenes on one canvas, a scene pixel per canvas pixel scaled up
+  without blur. The scene runs on the GSAP timeline's clock and steps a
+  seeded motion in fixed slices, keeping taps as events, so any moment can be
+  rebuilt exactly; its colors are the card's `--tur-*-col` tokens.
+- **Layouts by shape** (decided by the user): a box wider than tall takes the
+  wide composition, any other the tall one, each stretched along one side to
+  fill the screen exactly, and turning a phone rebuilds the current moment in
+  the new layout. The lettering is sized from the screen box's shorter side,
+  each size a core design number power times `1cqmin`, with its own sizes and
+  places when the box stands upright.
+- **The TV set** (decided by the user): the wood-grain set with rabbit ears
+  shows only at 1,024px wide and 640px tall and above; anywhere smaller the
+  scene fills the card. On a landscape screen below 1,024px wide and 640px
+  tall (a phone held sideways), the screen ends above the floating bar, which
+  would otherwise cover the lot and crowd the bulletin.
+- **Fonts trimmed by script**: Fraunces's full Fontsource files carry every
+  axis, about 120 to 150 KB each, so `npm run fonts` (`design/fonts/
+  render.mts`, using `subset-font` and the `@fontsource-variable/fraunces`
+  package) pins its softness, optical size, and wonkiness, narrows its
+  weights, and keeps every character Fontsource covers, about 25 to 40 KB a
+  file. Yellowtail and Pixelify Sans are copied from Fontsource as usual.
+- **The heading fades its opacity only**, so "Merry Thanksgiving" stays in the
+  page from the start as the card's `h1`; the rest of the lettering fades in
+  and out with GSAP's autoAlpha.
+- **Previews**: the tile preview is the finished studio captured full screen
+  at 1,920 by 1,080, and the link preview `public/social/turkeys-away.png`
+  ships as a PNG (about 74 KB). The link preview script now also moves a main
+  line set to one side into the center square, which only this card's
+  greeting needs.
+- **Tests**: the card's states are desktop (in the set), phone, and a phone
+  held sideways (844 by 390), and `tests/interaction/turkeys.spec.ts` checks
+  a tap drops a turkey (none under reduced motion), a turn mid-play switches
+  the layout without restarting, the set's size limits, and the sideways
+  screen clearing the bar.
+
 ## Card Grids exception
 Decided by the user 2026-10-14, as on TechGeek.dev's Work page. The Gallery's
 grid is exempt from the user-level Card Grids rule: its cards change with the
@@ -268,8 +321,8 @@ src/
   assets/                card previews, illustrations, and fonts
   styles/                styles.css: the berry role and the layout values
 ```
-`design/` holds the image and icon render scripts and the git-ignored image
-originals (about 89 MB, never committed, decided by the user 2026-10-14).
+`design/` holds the image, icon, and font render scripts and the git-ignored
+image originals (about 89 MB, never committed, decided by the user 2026-10-14).
 The WebPs the image script writes keep the 456-byte color profile the
 encoder adds (decided by the user 2026-11-14): it's about 3% of a small
 preview, and dropping it can shift colors in browsers that read it.

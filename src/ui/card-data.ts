@@ -187,6 +187,25 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 
 	},
 
+	{ // What: Turkeys Away Card Row. Why: A second Thanksgiving card plays a WKRP newscast, made out to the recipient by name. How: Its link takes the name as ?name=.
+
+
+		cusBoo : true,
+		froBoo : false,
+		holStr : 'Thanksgiving',
+		lisBoo : true,
+		occStr : 'Holiday',
+		sluStr : 'turkeys-away',
+		socStr : 'turkeys-away.png',
+		titStr : 'Turkeys Away',
+
+		altStr : 'The Turkeys Away card, its station manager and a dazed turkey under a Merry Thanksgiving greeting.',
+		desStr : 'A WKRP Thanksgiving newscast in pixel art: live turkeys dropped on the Pinedale mall, made out to them by name.',
+		seaStr : 'Send an animated WKRP Turkeys Away card: live turkeys dropped on the Pinedale mall, made out to them by name. Free to share.'
+
+
+	},
+
 	{ // What: Merry Christmas Card Row. Why: The Christmas card's snowy scene is listed on its own, made out to them by name and signed with the sender's. How: Its link takes the names as ?name= and ?from=.
 
 

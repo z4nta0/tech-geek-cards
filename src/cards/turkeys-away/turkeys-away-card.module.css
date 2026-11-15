@@ -1,0 +1,838 @@
+
+
+
+/**
+ * turkeys-away-card.module.css = Turkeys Away Card Module
+ *
+ * @summary
+ * Styles for TurCarCom, a WKRP Thanksgiving newscast in pixel art. The pixel
+ * scenes fill a screen box drawn on a canvas, and the lettering sits over
+ * them: the station's WKRP logo, the flashing LIVE tag, "Oh, the humanity!",
+ * the news bulletin on a see-through bar, the "Merry Thanksgiving" heading,
+ * and the boxed quote. On a screen at least 1,024px wide and 640px tall the
+ * box sits in a 70s wood-grain TV set with rabbit ears, knobs, and a speaker
+ * grille; on any smaller one it fills the card. The lettering is sized from
+ * the box's shorter side, each size a power of the core design number, and
+ * takes its own sizes and places when the box stands upright. The card brings
+ * its own fonts, declared here so they load with the card, and every color it
+ * uses is a token on its root.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+*/
+
+
+
+@font-face { /* What: Fraunces Soft Latin Font Face. Why: The station lettering and the greeting are set in a soft, chunky 70s serif. How: This loads the pinned Latin file, upright, at weights 800 to 900. */
+
+
+	font-display  : swap;
+	font-family   : 'Fraunces Soft';
+	font-style    : normal;
+	font-weight   : 800 900;
+	src           : url( './fraunces-latin-soft-normal.woff2' ) format( 'woff2' );
+	unicode-range : U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+
+}
+
+@font-face { /* What: Fraunces Soft Extended Latin Font Face. Why: The greeting may name someone with a letter beyond basic Latin, such as Ł. How: This loads the pinned extended file, upright, only when such a letter shows. */
+
+
+	font-display  : swap;
+	font-family   : 'Fraunces Soft';
+	font-style    : normal;
+	font-weight   : 800 900;
+	src           : url( './fraunces-latin-ext-soft-normal.woff2' ) format( 'woff2' );
+	unicode-range : U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+
+
+}
+
+@font-face { /* What: Fraunces Soft Italic Latin Font Face. Why: The quote and "Oh, the humanity!" are set in the serif's italic. How: This loads the pinned italic Latin file, at weights 600 to 800. */
+
+
+	font-display  : swap;
+	font-family   : 'Fraunces Soft';
+	font-style    : italic;
+	font-weight   : 600 800;
+	src           : url( './fraunces-latin-soft-italic.woff2' ) format( 'woff2' );
+	unicode-range : U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+
+}
+
+@font-face { /* What: Yellowtail Font Face. Why: "in Cincinnati" is set in a 70s script under the call letters. How: This loads the font's Latin regular weight from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Yellowtail';
+	font-weight  : 400;
+	src          : url( './yellowtail-latin-400-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+@font-face { /* What: Pixelify Sans Font Face. Why: The news bulletin types out in a rounded pixel font that matches the art. How: This loads the font's variable Latin file, weights 400 to 700, from the card's folder. */
+
+
+	font-display : swap;
+	font-family  : 'Pixelify Sans';
+	font-weight  : 400 700;
+	src          : url( './pixelify-sans-latin-wght-normal.woff2' ) format( 'woff2' );
+
+
+}
+
+
+
+/* #region turCarDiv */
+
+.turCarDiv { /* What: Turkeys Card Div. Why: The card fills the screen as a 70s newscast. How: This fixes it over the whole viewport on a dark room color, holding the colors every part reads and the margin its lettering keeps from the floating bar. */
+
+
+	--tur-apr-col : #f0a24a;                   /* What: Turkeys Apricot Color. Why: "BOMBED" stands out in the bulletin in a bright apricot. How: This is #f0a24a. */
+	--tur-asp-col : #4a4340;                   /* What: Turkeys Asphalt Color. Why: The parking lot is warm gray asphalt. How: This is #4a4340, read by the scene. */
+	--tur-bot-mar : var( --car-bar-mar, 0px ); /* Card Bar Margin, set by its parent, ~= 74.019px */ /* What: Turkeys Bottom Margin. Why: Lettering pinned to the screen's bottom has to clear the floating bar when the screen fills the card. How: This takes the card page's bar margin, or nothing outside the card page. */
+	--tur-bri-col : #b8673a;                   /* What: Turkeys Brick Color. Why: The mall is brick. How: This is #b8673a, read by the scene. */
+	--tur-bro-col : #5a3a22;                   /* What: Turkeys Brown Color. Why: The turkeys' bodies are dark brown. How: This is #5a3a22, read by the scene. */
+	--tur-bur-col : #b25a1c;                   /* What: Turkeys Burnt Color. Why: The lettering's stepped shadow deepens to burnt orange. How: This is #b25a1c. */
+	--tur-can-col : #cfe3e0;                   /* What: Turkeys Canopy Color. Why: The helicopter's windows are pale glass. How: This is #cfe3e0, read by the scene. */
+	--tur-cap-col : #c8622e;                   /* What: Turkeys Carpet Color. Why: The studio has 70s orange carpet. How: This is #c8622e, read by the scene. */
+	--tur-ced-col : #7a4a28;                   /* What: Turkeys Cedar Color. Why: The cabinet's grain is mostly a mid wood. How: This is #7a4a28. */
+	--tur-cha-col : #2a2522;                   /* What: Turkeys Charcoal Color. Why: The ears' base and the grille's slots are near black. How: This is #2a2522. */
+	--tur-chr-col : #d6cfc4;                   /* What: Turkeys Chrome Color. Why: The knobs catch the light at their top. How: This is #d6cfc4. */
+	--tur-cop-col : #c86a24;                   /* What: Turkeys Copper Color. Why: The logo's stepped shadow passes through copper. How: This is #c86a24. */
+	--tur-cre-col : #f6dfb6;                   /* What: Turkeys Cream Color. Why: Cream is the shirt's light color, such as the lettering's and the mall's sign. How: This is #f6dfb6. */
+	--tur-cur-col : #8c7f73;                   /* What: Turkeys Curb Color. Why: A gray curb edges the lot. How: This is #8c7f73, read by the scene. */
+	--tur-ebo-col : #5e361c;                   /* What: Turkeys Ebony Color. Why: The cabinet's grain has dark lines. How: This is #5e361c. */
+	--tur-eye-col : #1d1a1a;                   /* What: Turkeys Eye Color. Why: The turkeys' eyes are near black. How: This is #1d1a1a, read by the scene. */
+	--tur-gla-col : #a8cdd2;                   /* What: Turkeys Glass Color. Why: The mall's windows and doors, and the cars' windows, are glass. How: This is #a8cdd2, read by the scene. */
+	--tur-gol-col : #e9b94a;                   /* What: Turkeys Gold Color. Why: Gold picks out small details, such as the turkeys' beaks and the dazed stars. How: This is #e9b94a, read by the scene. */
+	--tur-gro-col : #4f2e19;                   /* What: Turkeys Groove Color. Why: Dark grooves part the studio's planks. How: This is #4f2e19, read by the scene. */
+	--tur-hai-col : #8f8170;                   /* What: Turkeys Hair Color. Why: The station manager's fringe is gray. How: This is #8f8170, read by the scene. */
+	--tur-haz-col : #c9dcd6;                   /* What: Turkeys Haze Color. Why: The sky pales toward the horizon. How: This is #c9dcd6, read by the scene. */
+	--tur-hea-col : #b9d0d6;                   /* What: Turkeys Head Color. Why: A turkey's bare head is pale blue. How: This is #b9d0d6, read by the scene. */
+	--tur-hel-col : #e08a3c;                   /* What: Turkeys Helicopter Color. Why: The station's helicopter is orange. How: This is #e08a3c, read by the scene. */
+	--tur-hes-col : #a85a24;                   /* What: Turkeys Helicopter Shade Color. Why: The helicopter's underside is in shade. How: This is #a85a24, read by the scene. */
+	--tur-ink-col : #2a1d17;                   /* What: Turkeys Ink Color. Why: A warm black draws the darkest details and backs the lettering's boxes, such as the bulletin. How: This is #2a1d17. */
+	--tur-iro-col : #4a453f;                   /* What: Turkeys Iron Color. Why: The knobs darken at their edge. How: This is #4a453f. */
+	--tur-ivo-col : #f6eedf;                   /* What: Turkeys Ivory Color. Why: Ivory is the clouds' and the station manager's shirt's white. How: This is #f6eedf, read by the scene. */
+	--tur-lam-col : #f3d27a;                   /* What: Turkeys Lamp Color. Why: The lot's lamps glow pale yellow. How: This is #f3d27a, read by the scene. */
+	--tur-mor-col : #7a3c20;                   /* What: Turkeys Mortar Color. Why: Dark mortar lines and frames pick out the mall's brick. How: This is #7a3c20, read by the scene. */
+	--tur-mus-col : #d9a441;                   /* What: Turkeys Mustard Color. Why: One car is 70s mustard. How: This is #d9a441, read by the scene. */
+	--tur-oak-col : #7a4b2a;                   /* What: Turkeys Oak Color. Why: The studio's paneling alternates two woods, the lighter oak. How: This is #7a4b2a, read by the scene. */
+	--tur-ora-col : #d9792b;                   /* What: Turkeys Orange Color. Why: Burnt orange is the shirt's main color, such as the turkeys' feathers and the logo's shadow. How: This is #d9792b. */
+	--tur-pai-col : #f3e3c3;                   /* What: Turkeys Paint Color. Why: The lot's stall lines are painted. How: This is #f3e3c3, read by the scene. */
+	--tur-pan-col : #523926;                   /* What: Turkeys Pants Color. Why: The station manager's trousers and lapels are the suit's shade. How: This is #523926, read by the scene. */
+	--tur-pap-col : #fff3dc;                   /* What: Turkeys Paper Color. Why: The lettering's lightest color, such as the bulletin's text, reads like paper. How: This is #fff3dc. */
+	--tur-pew-col : #8b8378;                   /* What: Turkeys Pewter Color. Why: The knobs and the ears' lower ends are pewter gray. How: This is #8b8378. */
+	--tur-pil-col : #b5571f;                   /* What: Turkeys Pile Color. Why: The carpet's pile is a darker orange. How: This is #b5571f, read by the scene. */
+	--tur-red-col : #b8402c;                   /* What: Turkeys Red Color. Why: A brick red marks what's live, such as the LIVE tag and the ON AIR light. How: This is #b8402c. */
+	--tur-rim-col : #2c2724;                   /* What: Turkeys Rim Color. Why: A dark rim lines the screen's bezel. How: This is #2c2724. */
+	--tur-roo-col : #241c17;                   /* What: Turkeys Room Color. Why: The set stands in a dark room. How: This is #241c17. */
+	--tur-rus-col : #a8402c;                   /* What: Turkeys Rust Color. Why: One car is rust red. How: This is #a8402c, read by the scene. */
+	--tur-sag-col : #5f7f6a;                   /* What: Turkeys Sage Color. Why: One car is sage green. How: This is #5f7f6a, read by the scene. */
+	--tur-sha-col : #cf9f78;                   /* What: Turkeys Shade Color. Why: The station manager's skin has a shade. How: This is #cf9f78, read by the scene. */
+	--tur-sil-col : #d8d2c8;                   /* What: Turkeys Silver Color. Why: The rabbit ears are silver at their tips. How: This is #d8d2c8. */
+	--tur-ski-col : #eec39c;                   /* What: Turkeys Skin Color. Why: The station manager's skin. How: This is #eec39c, read by the scene. */
+	--tur-sky-col : #8fb3c4;                   /* What: Turkeys Sky Color. Why: The sky is a dusty blue overhead. How: This is #8fb3c4, read by the scene. */
+	--tur-sla-col : #4a403a;                   /* What: Turkeys Slate Color. Why: The grille's slats are slate. How: This is #4a403a. */
+	--tur-sui-col : #6a4b33;                   /* What: Turkeys Suit Color. Why: The station manager wears a brown suit. How: This is #6a4b33, read by the scene. */
+	--tur-tan-col : #f0c48a;                   /* What: Turkeys Tan Color. Why: The turkeys' feathers are tipped tan. How: This is #f0c48a, read by the scene. */
+	--tur-tar-col : #3d3633;                   /* What: Turkeys Tar Color. Why: The curb's shadow is darker tar. How: This is #3d3633, read by the scene. */
+	--tur-tea-col : #6b3f22;                   /* What: Turkeys Teak Color. Why: The cabinet's grain has a darker wood. How: This is #6b3f22. */
+	--tur-tie-col : #9c3b2a;                   /* What: Turkeys Tie Color. Why: The station manager's tie is red. How: This is #9c3b2a, read by the scene. */
+	--tur-unl-col : #4a1d14;                   /* What: Turkeys Unlit Color. Why: The ON AIR light dims between blinks. How: This is #4a1d14, read by the scene. */
+	--tur-ves-col : #9b7a55;                   /* What: Turkeys Vest Color. Why: The station manager's vest is a lighter brown. How: This is #9b7a55, read by the scene. */
+	--tur-wal-col : #6b4024;                   /* What: Turkeys Walnut Color. Why: The studio's paneling alternates two woods, the darker walnut. How: This is #6b4024, read by the scene. */
+	--tur-win-col : #7d5132;                   /* What: Turkeys Wing Color. Why: A turkey's wing is a darker brown than its body. How: This is #7d5132, read by the scene. */
+
+	background : var( --tur-roo-col ); /* Turkeys Room Color = #241c17 */
+	inset      : 0;
+	position   : fixed;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Turkeys Card Div. Why: A large screen has room for the TV set around the scene. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.turCarDiv { /* What: Set Turkeys Card Div. Why: The set stands centered, clear of the floating bar. How: This centers it in the space above the bar's margin, which its own bottom no longer needs. */
+
+
+		--tur-bot-mar : 0px; /* What: Set Bottom Margin. Why: The set already clears the bar, so its screen's lettering needs no more room. How: This zeroes the lettering's extra margin. */
+
+		display        : grid;
+		padding-bottom : var( --car-bar-mar, 0px ); /* Card Bar Margin, set by its parent, ~= 74.019px */
+		place-items    : center;
+
+
+	}
+
+
+}
+@media ( orientation : landscape ) and ( max-width : 1023.98px ) and ( max-height : 639.98px ) { /* What: Short Landscape Turkeys Card Div. Why: On a phone held sideways the screen itself stops above the floating bar. How: This applies on a landscape screen below 1,024px wide and 640px tall. */
+
+
+	.turCarDiv { /* What: Bar Cleared Turkeys Card Div. Why: The screen already clears the bar, so its lettering needs no more room. How: This zeroes the lettering's extra margin. */
+
+
+		--tur-bot-mar : 0px; /* What: Short Landscape Bottom Margin. Why: The screen ends above the bar. How: This zeroes the lettering's extra margin. */
+
+
+	}
+
+
+}
+
+
+/* #region tvsSetDiv */
+
+.tvsSetDiv { /* What: TV Set Div. Why: The set and its screen are one piece, the screen filling the card unless the set shows. How: This fills the card, its children filling it in turn. */
+
+
+	inset    : 0;
+	position : absolute;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen TV Set Div. Why: The set stands as an object in the room. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.tvsSetDiv { /* What: Standing TV Set Div. Why: The set sizes itself to its cabinet, with room above for the ears. How: This places it in the card's flow and sets the screen height every part of the set reads. */
+
+
+		--tur-scr-hei : min( calc( 100svh - var( --car-bar-mar, 0px ) - var( --ver-rhy-p10 ) * 1rem ), calc( 64vw * 9 / 16 ) ); /* Card Bar Margin, set by its parent, ~= 74.019px, Vertical Rhythm Base Plus 10 ~= 242.517px */ /* What: Turkeys Screen Height. Why: The screen has to fit the room left above the bar, with the ears and cabinet around it, and leave the cabinet's side panel room on a wide screen. How: This is the smaller of the height left over and a 16:9 screen's height at 64% of the width. */
+
+		inset       : auto;
+		padding-top : calc( var( --ver-rhy-p08 ) * 1rem ); /* Vertical Rhythm Base Plus 8 ~= 138.198px */ /* What: Ear Room Padding. Why: The rabbit ears rise above the cabinet. How: This leaves their height above it. */
+		position    : relative;
+
+
+	}
+
+
+}
+
+.earDiv { /* What: Ear Div. Why: Rabbit ears belong only to the set. How: This hides them when the screen fills the card. */
+
+
+	display : none;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Ear Div. Why: The set wears its rabbit ears. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.earDiv { /* What: Shown Ear Div. Why: A 70s set has rabbit ears on a dark base. How: This draws the base as a half dome on the cabinet's top, left of center, the two rods its pseudo-elements draw. */
+
+
+		background    : var( --tur-cha-col );                                                                  /* Turkeys Charcoal Color = #2a2522 */
+		border-radius : calc( var( --ver-rhy-p05 ) * 1rem ) calc( var( --ver-rhy-p05 ) * 1rem ) 0 0;             /* Vertical Rhythm Base Plus 5 ~= 59.447px */
+		bottom        : calc( 100% - var( --ver-rhy-p08 ) * 1rem );                                            /* Vertical Rhythm Base Plus 8 ~= 138.198px */
+		display       : block;
+		height        : calc( var( --ver-rhy-p03 ) * 1rem );                                                   /* Vertical Rhythm Base Plus 3 ~= 33.876px */
+		left          : 38%;
+		position      : absolute;
+		width         : calc( var( --ver-rhy-p06 ) * 1rem );                                                   /* Vertical Rhythm Base Plus 6 ~= 78.751px */
+
+
+	}
+
+
+	.earDiv::before,
+	.earDiv::after { /* What: Ear Div Rods. Why: Two telescoping rods spread up from the base. How: This draws each as a thin silver-to-pewter bar standing from the base's middle, turned by its own rule. */
+
+
+		background       : linear-gradient( var( --tur-sil-col ), var( --tur-pew-col ) ); /* Turkeys Silver Color = #d8d2c8, Turkeys Pewter Color = #8b8378 */
+		border-radius    : calc( var( --ver-rhy-m07 ) * 1rem );                            /* Vertical Rhythm Base Minus 7 ~= 2.035px */
+		bottom           : calc( var( --ver-rhy-p01 ) * 1rem );                            /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+		content          : '';
+		height           : calc( var( --ver-rhy-p07 ) * 1rem );                            /* Vertical Rhythm Base Plus 7 ~= 104.323px */
+		left             : calc( 50% - var( --ver-rhy-m05 ) * 1rem / 2 );                  /* Vertical Rhythm Base Minus 5 ~= 3.572px */
+		position         : absolute;
+		transform-origin : bottom center;
+		width            : calc( var( --ver-rhy-m05 ) * 1rem );                            /* Vertical Rhythm Base Minus 5 ~= 3.572px */
+
+
+	}
+
+	.earDiv::before { /* What: Ear Div Left Rod. Why: One rod leans left. How: This turns it left. */
+
+
+		transform : rotate( calc( var( --cdn-pow-012 ) * -1deg ) ); /* Core-Design-Number to the Power of 12 ~= 29.2deg */
+
+
+	}
+
+	.earDiv::after { /* What: Ear Div Right Rod. Why: The other rod leans right, a little less. How: This turns it right. */
+
+
+		transform : rotate( calc( var( --cdn-pow-011 ) * 1deg ) ); /* Core-Design-Number to the Power of 11 ~= 22.0deg */
+
+
+	}
+
+
+}
+
+
+/* #region cabDiv */
+
+.cabDiv { /* What: Cabinet Div. Why: The cabinet frames the screen only when the set shows. How: This fills the set, as the screen fills it, when the screen fills the card. */
+
+
+	height : 100%;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Cabinet Div. Why: The set's cabinet is wood grain. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.cabDiv { /* What: Wooden Cabinet Div. Why: A 70s set is a wood-grain box, the screen on the left and the controls on the right. How: This lays them side by side on a striped grain under a soft sheen, rounded and casting a shadow. */
+
+
+		background            : linear-gradient( rgb( from var( --tur-pap-col ) r g b / var( --cdn-pow-009-rec ) ), rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-005-rec ) ) ), repeating-linear-gradient( 92deg, var( --tur-tea-col ) 0 4px, var( --tur-ced-col ) 4px 11px, var( --tur-ebo-col ) 11px 13px, var( --tur-ced-col ) 13px 21px ); /* Turkeys Paper Color = #fff3dc @ 0.080 opacity, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080, Turkeys Ink Color = #2a1d17 @ 0.245 opacity, Core-Design-Number to the Power of 5 Reciprocal ~= 0.245, Turkeys Teak Color = #6b3f22, Turkeys Cedar Color = #7a4a28, Turkeys Ebony Color = #5e361c */ /* What: Wood Grain Stripes. Why: The grain's stripes are a texture drawn in pixels, not spacing. How: Their stops stay literal. */
+		border-radius         : calc( var( --ver-rhy-p02 ) * 1rem );                                               /* Vertical Rhythm Base Plus 2 ~= 25.572px */
+		box-shadow            : var( --ele-xla-sha );                                                              /* Elevation Extra Large Shadow, as the design package defines it */
+		display               : grid;
+		gap                   : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );                           /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
+		grid-template-areas   : 'bezDiv panDiv';
+		grid-template-columns : auto calc( var( --tur-scr-hei ) * var( --cdn-pow-004-rec ) );                       /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 4 Reciprocal ~= 0.325 */
+		height                : auto;
+		padding               : calc( var( --tur-scr-hei ) * var( --cdn-pow-009-rec ) );                           /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080 */
+
+
+	}
+
+
+}
+
+
+/* #region bezDiv */
+
+.bezDiv { /* What: Bezel Div. Why: The bezel frames the screen only when the set shows. How: This fills the cabinet, as the screen fills it, when the screen fills the card. */
+
+
+	grid-area : bezDiv;
+	height    : 100%;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Bezel Div. Why: The screen sits in a dark bezel. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.bezDiv { /* What: Dark Bezel Div. Why: A tube set's screen sits deep in a dark frame. How: This draws a rounded near-black frame with a rim and an inner shadow. */
+
+
+		background    : var( --tur-ink-col );                                                                                                                         /* Turkeys Ink Color = #2a1d17 */
+		border-radius : calc( var( --ver-rhy-p01 ) * 1rem );                                                                                                          /* Vertical Rhythm Base Plus 1 ~= 19.304px */
+		box-shadow    : inset 0 0 0 calc( var( --ver-rhy-m05 ) * 1rem ) var( --tur-rim-col ), inset 0 calc( var( --ver-rhy-m03 ) * 1rem ) calc( var( --ver-rhy-p01 ) * 1rem ) var( --tur-roo-col ); /* Vertical Rhythm Base Minus 5 ~= 3.572px, Turkeys Rim Color = #2c2724, Vertical Rhythm Base Minus 3 ~= 6.268px, Vertical Rhythm Base Plus 1 ~= 19.304px, Turkeys Room Color = #241c17 */
+		height        : auto;
+		padding       : calc( var( --tur-scr-hei ) * var( --cdn-pow-010-rec ) );                                                                                      /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 10 Reciprocal ~= 0.060 */
+
+
+	}
+
+
+}
+
+
+/* #region scrDiv */
+
+.scrDiv { /* What: Screen Div. Why: The pixel scenes and the lettering share one box, whose shape picks the scene's composition and whose shorter side sizes the lettering. How: This fills the card, clips to its edges, and is a size container for the lettering's units. */
+
+
+	container-name : tur-scr;
+	container-type : size;
+	height         : 100%;
+	overflow       : hidden;
+	position       : relative;
+	width          : 100%;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Screen Div. Why: In the set, the screen is a 16:9 tube. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.scrDiv { /* What: Tube Screen Div. Why: A tube screen is 16:9 with gently rounded corners. How: This sizes it from the set's screen height and rounds its corners more across than down. */
+
+
+		aspect-ratio  : 16 / 9;
+		border-radius : 5% / 8%;
+		height        : var( --tur-scr-hei ); /* Turkeys Screen Height, set by its parent */
+		width         : auto;
+
+
+	}
+
+
+}
+
+@media ( orientation : landscape ) and ( max-width : 1023.98px ) and ( max-height : 639.98px ) { /* What: Short Landscape Screen Div. Why: On a phone held sideways the floating bar would cover the lot and crowd the bulletin. How: This applies on a landscape screen below 1,024px wide and 640px tall, where the set never shows. */
+
+
+	.scrDiv { /* What: Bar Clearing Screen Div. Why: The scene ends above the bar, so the whole lot shows and the bar sits on the room's color. How: This shortens the screen by the bar's margin. */
+
+
+		height : calc( 100% - var( --car-bar-mar, 0px ) ); /* Card Bar Margin, set by its parent, ~= 74.019px */
+
+
+	}
+
+
+}
+
+.scePixCan { /* What: Scene Pixel Canvas. Why: The scenes are pixel art, drawn small and scaled up without blur. How: This fills the screen and keeps each pixel sharp as it scales. */
+
+
+	height          : 100%;
+	image-rendering : pixelated;
+	inset           : 0;
+	position        : absolute;
+	width           : 100%;
+
+
+}
+
+
+/* #region logDiv */
+
+.logDiv { /* What: Logo Div. Why: The station's WKRP lettering tops both scenes. How: This centers it across the screen's top, over the canvas, letting taps through, hidden until the timeline shows it. */
+
+
+	display        : grid;
+	inset-inline   : 0;
+	justify-items  : center;
+	pointer-events : none;
+	position       : absolute;
+	top            : 2%;
+	visibility     : hidden;
+
+
+}
+
+.logWorSpa { /* What: Logo Word Span. Why: The call letters are the station's big chunky 70s mark. How: This sets them in the soft serif's heaviest weight, cream, with a stepped orange shadow like the shirt's. */
+
+
+	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-size   : calc( var( --cdn-pow-010 ) * 1cqmin );                       /* Core-Design-Number to the Power of 10 ~= 16.643cqmin */ /* What: Screen-Sized Lettering. Why: The lettering scales with the screen box, not the page. How: This is a power of the core design number in the box's shorter side. */
+	font-weight : 900;
+	line-height : 1;
+	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-cop-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 5cqmin ) calc( var( --cdn-pow-003-rec ) * 5cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Turkeys Orange Color = #d9792b, Turkeys Copper Color = #c86a24, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
+
+
+}
+
+.logCinSpa { /* What: Logo Cincinnati Span. Why: "in Cincinnati" signs the call letters in a 70s script. How: This sets it in Yellowtail, paper colored with an ink shadow, tucked up under the letters. */
+
+
+	color       : var( --tur-pap-col );                                                             /* Turkeys Paper Color = #fff3dc */
+	font-family : 'Yellowtail', var( --fon-fam-mai );                                                /* Font Family Main, as the design package defines it */
+	font-size   : calc( var( --cdn-pow-005 ) * 1cqmin );                                             /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	line-height : 1;
+	margin-top  : calc( var( --cdn-pow-001-rec ) * -1cqmin );                                        /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
+	text-shadow : calc( var( --cdn-pow-004-rec ) * 1cqmin ) calc( var( --cdn-pow-004-rec ) * 1cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325cqmin, Turkeys Ink Color = #2a1d17 */
+
+
+}
+
+/* #endregion logDiv */
+
+
+
+/* #region livDiv */
+
+.livDiv { /* What: Live Div. Why: The broadcast is live from the mall. How: This lines the LIVE tag and the mall's name up at the screen's top left, letting taps through, hidden until the timeline shows it. */
+
+
+	align-items    : center;
+	color          : var( --tur-pap-col );                                       /* Turkeys Paper Color = #fff3dc */
+	display        : flex;
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                       /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
+	font-weight    : 800;
+	gap            : calc( var( --cdn-pow-001 ) * 1cqmin );                       /* Core-Design-Number to the Power of 1 ~= 1.325cqmin */ /* What: Row Gap. Why: A flex row that doesn't wrap only gaps across, and flexbox keeps each item its own width. How: This sets the gap from the screen box. */
+	left           : 4%;
+	pointer-events : none;
+	position       : absolute;
+	text-shadow    : calc( var( --cdn-pow-004-rec ) * 1cqmin ) calc( var( --cdn-pow-004-rec ) * 1cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 4 Reciprocal ~= 0.325cqmin, Turkeys Ink Color = #2a1d17 */
+	top            : 4.5%;
+	visibility     : hidden;
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright Live Div. Why: An upright screen's logo fills its top, so the tag moves below it. How: This applies when the screen box is taller than wide. */
+
+
+	.livDiv { /* What: Lowered Live Div. Why: The tag sits under the logo on an upright screen, and the narrower box needs larger letters. How: This lowers it and sets it a step larger. */
+
+
+		font-size : calc( var( --cdn-pow-005 ) * 1cqmin ); /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+		top       : 19%;
+
+
+	}
+
+
+}
+
+.livTagSpa { /* What: Live Tag Span. Why: The tag flashes like a live broadcast's. How: This sets LIVE in paper on a red tag, blinking in two steps. */
+
+
+	animation      : livTagSpaFlashBlink var( --dur-ani-p07 ) steps( 2 ) infinite; /* Duration Animation Base Plus 7 ~= 1,130.0ms */
+	background     : var( --tur-red-col );                                        /* Turkeys Red Color = #b8402c */
+	border-radius  : calc( var( --cdn-pow-003-rec ) * 1cqmin );                    /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin */
+	font-size      : calc( var( --cdn-pow-003 ) * 1cqmin );                        /* Core-Design-Number to the Power of 3 ~= 2.325cqmin */
+	letter-spacing : calc( var( --cdn-pow-010-rec ) * 1em );                       /* Core-Design-Number to the Power of 10 Reciprocal ~= 0.060em */
+	padding        : 0 calc( var( --cdn-pow-001 ) * 1cqmin );                      /* Core-Design-Number to the Power of 1 ~= 1.325cqmin */
+	text-shadow    : none;
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright Live Tag Span. Why: The tag grows with the line beside it. How: This applies when the screen box is taller than wide. */
+
+
+	.livTagSpa { /* What: Larger Live Tag Span. Why: The narrower box needs a larger tag. How: This sets it a step larger. */
+
+
+		font-size : calc( var( --cdn-pow-004 ) * 1cqmin ); /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
+
+
+	}
+
+
+}
+@media ( prefers-reduced-motion : reduce ) { /* What: Reduced Motion Live Tag Span. Why: Someone who asked for less motion shouldn't see it blink. How: This applies only when the reduced-motion preference is set. */
+
+
+	.livTagSpa { /* What: Steady Live Tag Span. Why: The tag stays lit. How: This turns the blink off. */
+
+
+		animation : none;
+
+
+	}
+
+
+}
+@keyframes livTagSpaFlashBlink { /* What: Live Tag Span Flash Blink. Why: A live tag flashes. How: This dims it halfway through each beat. */
+
+
+	50% {
+
+
+		opacity : var( --cdn-pow-002-rec ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570 */
+
+
+	}
+
+
+}
+
+/* #endregion livDiv */
+
+
+
+.humPar { /* What: Humanity Paragraph. Why: The reporter's cry, "Oh, the humanity!", pops up as the first turkeys fall. How: This sets it in the serif's heavy italic, ink on a cream pill with an orange edge, left of middle, letting taps through, hidden until the timeline shows it. */
+
+
+	background     : var( --tur-cre-col );                                                                  /* Turkeys Cream Color = #f6dfb6 */
+	border-radius  : 999px;
+	box-shadow     : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 var( --tur-bur-col ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Burnt Color = #b25a1c */
+	color          : var( --tur-ink-col );                                                                  /* Turkeys Ink Color = #2a1d17 */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                 /* Font Family Main, as the design package defines it */
+	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                                                  /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	font-style     : italic;
+	font-weight    : 800;
+	left           : 4%;
+	line-height    : var( --ver-rhy-bas );                                                                  /* Vertical Rhythm Base ~= 1.325 */
+	margin         : 0;
+	padding        : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-003 ) * 1cqmin );            /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 3 ~= 2.325cqmin */
+	pointer-events : none;
+	position       : absolute;
+	top            : 50%;
+	visibility     : hidden;
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright Humanity Paragraph. Why: An upright screen's sky is higher and its box narrower. How: This applies when the screen box is taller than wide. */
+
+
+	.humPar { /* What: Raised Humanity Paragraph. Why: The cry sits over the mall's sign, a step larger. How: This raises it and sets it larger. */
+
+
+		font-size : calc( var( --cdn-pow-006 ) * 1cqmin ); /* Core-Design-Number to the Power of 6 ~= 5.404cqmin */
+		top       : 39%;
+
+
+	}
+
+
+}
+
+
+
+/* #region newDiv */
+
+.newDiv { /* What: News Div. Why: The bulletin runs across the screen's bottom, clear of the floating bar. How: This stacks its tab over its bar across the bottom, letting taps through, hidden until the timeline shows it. */
+
+
+	bottom         : calc( 5% + var( --tur-bot-mar ) ); /* Turkeys Bottom Margin, about 0px - 74.019px */
+	display        : grid;
+	inset-inline   : 4%;
+	justify-items  : start;
+	pointer-events : none;
+	position       : absolute;
+	visibility     : hidden;
+
+
+}
+
+.newLabSpa { /* What: News Label Span. Why: A tab names the bulletin. How: This sets NEWS BULLETIN in paper on an orange tab, rounded on top. */
+
+
+	background     : var( --tur-ora-col );                                                                 /* Turkeys Orange Color = #d9792b */
+	border-radius  : calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ) 0 0; /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
+	color          : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                                                /* Font Family Main, as the design package defines it */
+	font-size      : calc( var( --cdn-pow-004 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 4 ~= 3.080cqmin */
+	font-weight    : 800;
+	letter-spacing : calc( var( --cdn-pow-011-rec ) * 1em );                                                /* Core-Design-Number to the Power of 11 Reciprocal ~= 0.045em */
+	padding        : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-002 ) * 1cqmin );        /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Core-Design-Number to the Power of 2 ~= 1.755cqmin */
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright News Label Span. Why: The narrower box needs a larger tab. How: This applies when the screen box is taller than wide. */
+
+
+	.newLabSpa { /* What: Larger News Label Span. Why: The tab stays readable on a phone. How: This sets it a step larger. */
+
+
+		font-size : calc( var( --cdn-pow-005 ) * 1cqmin ); /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+
+
+	}
+
+
+}
+
+.newTexPar { /* What: News Text Paragraph. Why: The bulletin types out on a dark, see-through bar, so the lot still shows behind it. How: This sets it in Pixelify Sans, paper on ink at about three quarters, with an orange edge on its left. */
+
+
+	background    : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) );                    /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	border-left   : calc( var( --cdn-pow-002-rec ) * 1cqmin ) solid var( --tur-ora-col );                 /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin, Turkeys Orange Color = #d9792b */
+	border-radius : 0 calc( var( --cdn-pow-002-rec ) * 1cqmin ) calc( var( --cdn-pow-002-rec ) * 1cqmin ); /* Core-Design-Number to the Power of 2 Reciprocal ~= 0.570cqmin */
+	color         : var( --tur-pap-col );                                                                 /* Turkeys Paper Color = #fff3dc */
+	font-family   : 'Pixelify Sans', var( --fon-fam-sec );                                                /* Font Family Secondary, as the design package defines it */
+	font-size     : calc( var( --cdn-pow-005 ) * 1cqmin );                                                 /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	font-weight   : 500;
+	line-height   : var( --ver-rhy-bas );                                                                 /* Vertical Rhythm Base ~= 1.325 */
+	margin        : 0;
+	padding       : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-002 ) * 1cqmin );           /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 2 ~= 1.755cqmin */
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright News Text Paragraph. Why: The narrower box needs larger text. How: This applies when the screen box is taller than wide. */
+
+
+	.newTexPar { /* What: Larger News Text Paragraph. Why: The bulletin stays readable on a phone. How: This sets it a step larger. */
+
+
+		font-size : calc( var( --cdn-pow-006 ) * 1cqmin ); /* Core-Design-Number to the Power of 6 ~= 5.404cqmin */
+
+
+	}
+
+
+}
+
+.bomStr { /* What: Bombed Strong. Why: "BOMBED" is the bulletin's punch. How: This sets it bold in apricot. */
+
+
+	color       : var( --tur-apr-col ); /* Turkeys Apricot Color = #f0a24a */
+	font-weight : 700;
+
+
+}
+
+.scrReaSpa { /* What: Screen Reader Span. Why: A line split into letters would be read out one letter at a time, so screen readers get a whole copy instead. How: This uses the visually hidden technique, a one-pixel clipped box with literal values since none of them is spacing. */
+
+
+	border      : 0;
+	clip-path   : inset( 50% );
+	height      : 1px;
+	margin      : -1px;
+	overflow    : hidden;
+	padding     : 0;
+	position    : absolute;
+	white-space : nowrap;
+	width       : 1px;
+
+
+}
+
+/* #endregion newDiv */
+
+
+
+.titHea { /* What: Title Heading. Why: "Merry Thanksgiving" leads the studio scene. How: This sets it in the soft serif's heaviest weight, cream with a stepped orange shadow, right of the station manager, unseen until the timeline fades it in but in the page from the start, so it names the card. */
+
+
+	color       : var( --tur-cre-col );                                       /* Turkeys Cream Color = #f6dfb6 */
+	font-family : 'Fraunces Soft', var( --fon-fam-mai );                      /* Font Family Main, as the design package defines it */
+	font-size   : calc( var( --cdn-pow-009 ) * 1cqmin );                       /* Core-Design-Number to the Power of 9 ~= 12.564cqmin */
+	font-weight : 900;
+	line-height : var( --ver-rhy-m01 );                                       /* Vertical Rhythm Base Minus 1 = 1 */
+	margin      : 0;
+	opacity     : 0;
+	position    : absolute;
+	right       : 4%;
+	text-align  : right;
+	text-shadow : calc( var( --cdn-pow-003-rec ) * 1cqmin ) calc( var( --cdn-pow-003-rec ) * 1cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 2cqmin ) calc( var( --cdn-pow-003-rec ) * 2cqmin ) 0 var( --tur-ora-col ), calc( var( --cdn-pow-003-rec ) * 3cqmin ) calc( var( --cdn-pow-003-rec ) * 3cqmin ) 0 var( --tur-bur-col ), calc( var( --cdn-pow-003-rec ) * 4cqmin ) calc( var( --cdn-pow-003-rec ) * 4cqmin ) 0 var( --tur-ink-col ); /* Core-Design-Number to the Power of 3 Reciprocal ~= 0.430cqmin, Turkeys Orange Color = #d9792b, Turkeys Burnt Color = #b25a1c, Turkeys Ink Color = #2a1d17 */
+	top         : 30%;
+	width       : 52%;
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright Title Heading. Why: On an upright screen the greeting sits under the logo, above the station manager. How: This applies when the screen box is taller than wide. */
+
+
+	.titHea { /* What: Centered Title Heading. Why: The greeting spans the narrower box, centered. How: This centers it under the logo across most of the width. */
+
+
+		inset-inline : 6%;
+		text-align   : center;
+		top          : 19%;
+		width        : auto;
+
+
+	}
+
+
+}
+
+.quoPar { /* What: Quote Paragraph. Why: The station manager's line sits in a box low on the screen, beside him. How: This sets it in the serif's italic, paper on ink at about three quarters, centered in its box, right of him and clear of the floating bar, hidden until the timeline shows it. */
+
+
+	background     : rgb( from var( --tur-ink-col ) r g b / var( --cdn-pow-001-rec ) ); /* Turkeys Ink Color = #2a1d17 @ 0.755 opacity, Core-Design-Number to the Power of 1 Reciprocal ~= 0.755 */
+	border-radius  : calc( var( --cdn-pow-001-rec ) * 1cqmin );                          /* Core-Design-Number to the Power of 1 Reciprocal ~= 0.755cqmin */
+	bottom         : calc( 6% + var( --tur-bot-mar ) );                                  /* Turkeys Bottom Margin, about 0px - 74.019px */
+	color          : var( --tur-pap-col );                                              /* Turkeys Paper Color = #fff3dc */
+	font-family    : 'Fraunces Soft', var( --fon-fam-mai );                             /* Font Family Main, as the design package defines it */
+	font-size      : calc( var( --cdn-pow-005 ) * 1cqmin );                              /* Core-Design-Number to the Power of 5 ~= 4.080cqmin */
+	font-style     : italic;
+	font-weight    : 600;
+	left           : 34%;
+	line-height    : var( --ver-rhy-bas );                                              /* Vertical Rhythm Base ~= 1.325 */
+	margin         : 0;
+	padding        : calc( var( --cdn-pow-001 ) * 1cqmin ) calc( var( --cdn-pow-003 ) * 1cqmin ); /* Core-Design-Number to the Power of 1 ~= 1.325cqmin, Core-Design-Number to the Power of 3 ~= 2.325cqmin */
+	pointer-events : none;
+	position       : absolute;
+	right          : 4%;
+	text-align     : center;
+	visibility     : hidden;
+
+
+}
+@container tur-scr ( orientation : portrait ) { /* What: Upright Quote Paragraph. Why: On an upright screen the quote runs below the station manager. How: This applies when the screen box is taller than wide. */
+
+
+	.quoPar { /* What: Full Width Quote Paragraph. Why: The quote spans the narrower box, a step larger. How: This stretches it across most of the width and sets it larger. */
+
+
+		font-size : calc( var( --cdn-pow-006 ) * 1cqmin ); /* Core-Design-Number to the Power of 6 ~= 5.404cqmin */
+		left      : 5%;
+		right     : 5%;
+
+
+	}
+
+
+}
+
+/* What: Screen Reader Span Pointer. Why: The quote's hidden copy shares the bulletin's visually hidden class, written once where the class is first used. How: Its rule is in the `newDiv` region above. */
+
+/* #endregion scrDiv */
+
+/* #endregion bezDiv */
+
+
+
+/* #region panDiv */
+
+.panDiv { /* What: Panel Div. Why: The set's controls show only when the set does. How: This hides the panel when the screen fills the card. */
+
+
+	display : none;
+
+
+}
+@media ( min-width : 1024px ) and ( min-height : 640px ) { /* What: Large Screen Panel Div. Why: The set's controls sit beside its screen. How: This applies at 1,024px wide and 640px tall and above. */
+
+
+	.panDiv { /* What: Control Panel Div. Why: Two knobs sit over a speaker grille, down the cabinet's right side. How: This stacks them centered, starting a little below the top. */
+
+
+		align-content : start;
+		display       : grid;
+		gap           : calc( var( --tur-scr-hei ) * var( --cdn-pow-008-rec ) ); /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 8 Reciprocal ~= 0.105 */
+		grid-area     : panDiv;
+		justify-items : center;
+		padding-top   : calc( var( --tur-scr-hei ) * var( --cdn-pow-009-rec ) ); /* Turkeys Screen Height, set by its parent, Core-Design-Number to the Power of 9 Reciprocal ~= 0.080 */
+
+
+	}
+
+
+}
+
+.knoDiv { /* What: Knob Div. Why: The channel and volume knobs are chrome dials, each with a pointer line. How: This draws a round knob lit from the top left, casting a shadow, its pointer drawn by its ::after. */
+
+
+	aspect-ratio  : 1;
+	background    : radial-gradient( circle at 40% 35%, var( --tur-chr-col ), var( --tur-pew-col ) 55%, var( --tur-iro-col ) ); /* Turkeys Chrome Color = #d6cfc4, Turkeys Pewter Color = #8b8378, Turkeys Iron Color = #4a453f */
+	border-radius : 50%;
+	box-shadow    : var( --ele-med-sha );                                                                                       /* Elevation Medium Shadow, as the design package defines it */
+	position      : relative;
+	width         : 70%;
+
+
+}
+
+.knoDiv::after { /* What: Knob Div Pointer. Why: A dial shows where it's turned. How: This draws a short dark line from the knob's top toward its middle. */
+
+
+	background    : var( --tur-cha-col );                   /* Turkeys Charcoal Color = #2a2522 */
+	border-radius : calc( var( --ver-rhy-m09 ) * 1rem );    /* Vertical Rhythm Base Minus 9 ~= 1.160px */
+	content       : '';
+	height        : 30%;
+	left          : 47%;
+	position      : absolute;
+	top           : 8%;
+	width         : 6%;
+
+
+}
+
+.griDiv { /* What: Grille Div. Why: The speaker sits behind a slatted grille. How: This draws rounded horizontal slats in charcoal and slate. */
+
+
+	aspect-ratio  : 1 / 1.6;
+	background    : repeating-linear-gradient( 0deg, var( --tur-cha-col ) 0 3px, var( --tur-sla-col ) 3px 6px ); /* Turkeys Charcoal Color = #2a2522, Turkeys Slate Color = #4a403a */ /* What: Grille Slats. Why: The slats are a texture, not spacing. How: Their stops stay literal. */
+	border-radius : calc( var( --ver-rhy-m03 ) * 1rem );                                                         /* Vertical Rhythm Base Minus 3 ~= 6.268px */
+	width         : 80%;
+
+
+}
+
+/* #endregion panDiv */
+
+/* #endregion cabDiv */
+
+/* #endregion tvsSetDiv */
+
+/* #endregion turCarDiv */
+
+

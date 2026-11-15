@@ -10,6 +10,7 @@ import fouPreUrl from '../assets/fourth-of-july-card-preview-image.webp';     //
 import halPreUrl from '../assets/happy-halloween-card-preview-image.webp';    // What: Halloween Preview URL. Why: The Halloween card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import motPreUrl from '../assets/mothers-day-card-preview-image.webp';        // What: Mother's Preview URL. Why: The Mother's Day card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 import thaPreUrl from '../assets/happy-thanksgiving-card-preview-image.webp'; // What: Thanksgiving Preview URL. Why: The Thanksgiving card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
+import turPreUrl from '../assets/turkeys-away-card-preview-image.webp';       // What: Turkeys Preview URL. Why: The Turkeys Away card's tile shows a still of it. How: Vite fingerprints the file and hands back its address.
 
 
 import { CAR_DAT_ARR   } from './card-data.ts'; // What: Card Data Array. Why: The catalog is built on the cards' plain data. How: Each data row gains its component and preview here.
@@ -73,7 +74,8 @@ const CAR_COM_OBJ : Record< string, LazyExoticComponent< ComponentType > > = { /
 	'happy-thanksgiving'    : lazy( () => import( '../cards/happy-thanksgiving/happy-thanksgiving-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.ThaCarCom } ) ) ),
 	'merry-christmas'       : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.ChrCarCom } ) ) ),
 	'merry-christmas-prank' : lazy( () => import( '../cards/christmas/christmas-card.tsx' ).then( ( carModObj ) => ( { default : () => createElement( carModObj.ChrCarCom, { isaPraBoo : true } ) } ) ) ),
-	'mothers-day'           : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.MotCarCom } ) ) )
+	'mothers-day'           : lazy( () => import( '../cards/mothers-day/mothers-day-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.MotCarCom } ) ) ),
+	'turkeys-away'          : lazy( () => import( '../cards/turkeys-away/turkeys-away-card.tsx' ).then( ( carModObj ) => ( { default : carModObj.TurCarCom } ) ) )
 
 
 };
@@ -106,7 +108,8 @@ const CAR_IMA_OBJ : Record< string, string > = { // What: Card Image Object. Why
 	'happy-thanksgiving'    : thaPreUrl,
 	'merry-christmas'       : chrPreUrl,
 	'merry-christmas-prank' : chrPreUrl,
-	'mothers-day'           : motPreUrl
+	'mothers-day'           : motPreUrl,
+	'turkeys-away'          : turPreUrl
 
 
 };
