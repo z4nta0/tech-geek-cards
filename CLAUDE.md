@@ -521,6 +521,14 @@ the share dialog opened from the Birthday card's floating bar at 390px.
     saved positions raise no error, and with smooth scrolling on a page
     change still lands at the top before it's drawn. `Math.random` is fixed
     at 0.5, so Home keeps its height between visits.
+    - **The hash check refuses any scroll call** (fixed 2026-11-15, from
+      TechGeek.support's audit): after the hash change it expects no
+      `window.scrollTo` call at all, since Firefox records its own jump to
+      the target as the entry's saved position before the hook runs, so the
+      older check for a call aimed at the saved position could pass a wrong
+      restore. Breaking the hook's hash guard fails it in all three engines.
+      The hook comes from Vite's dependency cache, so a test of an edit to
+      `node_modules/techgeek-design` clears `node_modules/.vite` first.
   - **Skip link**: the first Tab on every page, the 404 page, and every card
     page lands on the skip link fully in view, and its plain click focuses
     `<main>` with no hashchange.
@@ -563,3 +571,13 @@ the share dialog opened from the Birthday card's floating bar at 390px.
   tags of Home and every card's own `<address>.html`) read the build from the
   preview on 5205 (changed 2026-11-10, in the audit), since scrapers read what
   ships.
+
+## Dropdown arrow
+Done 2026-11-15, from TechGeek.support's audit, per the user-level rule "##
+Dropdown Arrows: An SVG File". The Contact topic select (`.fieTopSel`) takes
+`appearance : none` and draws the site's chevron from
+`pages/contact/select-arrow.svg`, in the muted text color written out as
+`#646482`, which also brings the select to the other fields' height. Vite
+never inlines an asset (`assetsInlineLimit : 0`), and the security suite's
+policy check, which allows only `'self'` and `'none'` in any directive, fails
+a `data:` image source, proven by adding one.
