@@ -226,7 +226,7 @@ function ConPagCom () : JSX.Element {
 
 
 
-		try {
+		try { // What: Send Attempt Block. Why: The send can fail on the network or at Netlify, and either way the visitor should see the error. How: This posts the message and shows the thank-you, leaving any failure to the catch below.
 
 
 			const senResObj = await fetch( '/', { // What: Send Response Object. Why: Netlify Forms takes a form-encoded POST on any path of the site and matches it to a detected form by its form-name field. How: This posts the fields to the site's root.
@@ -261,7 +261,7 @@ function ConPagCom () : JSX.Element {
 
 		}
 
-		catch ( errCatObj ) {
+		catch ( errCatObj ) { // What: Send Failure Block. Why: A message that didn't go out must say so, to the visitor and to anyone debugging. How: This logs the error and shows a message naming the address to write to instead.
 
 
 			console.warn( errCatObj ); // What: Error Warning Call. Why: A failed send should stay visible to anyone debugging. How: This logs the error.
