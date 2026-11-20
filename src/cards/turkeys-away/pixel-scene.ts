@@ -3,15 +3,19 @@
 
 // #region Imports
 
-import { CAR_ROW_ARR } from './pixel-art.ts'; // What: Car Row Array. Why: Parked cars fill the mall's lot. How: The scene paints the car's rows once per paint color.
-import { draTexFun   } from './pixel-art.ts'; // What: Draw Text Function. Why: Words on the backdrop are spelled in pixels. How: The scene spells them on the canvas.
-import { FEA_ROW_ARR } from './pixel-art.ts'; // What: Feather Row Array. Why: Stray feathers drift down the studio. How: The scene paints the feather's rows once.
-import { griCanFun   } from './pixel-art.ts'; // What: Grid Canvas Function. Why: Each sprite is drawn from a painted canvas. How: The scene paints every sprite when it starts.
-import { HEL_ROW_ARR } from './pixel-art.ts'; // What: Helicopter Row Array. Why: The station's helicopter crosses the sky. How: The scene paints its rows once.
-import { manGriFun   } from './pixel-art.ts'; // What: Manager Grid Function. Why: The station manager stands in the studio. How: The scene paints his grid once.
-import { rowGriFun   } from './pixel-art.ts'; // What: Row Grid Function. Why: Sprites written as rows are painted as grids. How: The scene turns each sprite's rows into a grid.
-import { texWidFun   } from './pixel-art.ts'; // What: Text Width Function. Why: The mall's sign is sized to its words. How: The scene measures them.
-import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why: Each turkey flaps between two frames. How: The scene paints both.
+import { CAR_ROW_ARR } from './pixel-art.ts';        // What: Car Row Array. Why: Parked cars fill the mall's lot. How: The scene paints the car's rows once per paint color.
+import { draTexFun   } from './pixel-art.ts';        // What: Draw Text Function. Why: Words on the backdrop are spelled in pixels. How: The scene spells them on the canvas.
+import { durSecFun   } from '../../utils/rhythm.ts'; // What: Duration Second Function. Why: The pointer's demo is timed on the duration scale. How: This returns a step's length in seconds.
+import { FEA_ROW_ARR } from './pixel-art.ts';        // What: Feather Row Array. Why: Stray feathers drift down the studio. How: The scene paints the feather's rows once.
+import { griCanFun   } from './pixel-art.ts';        // What: Grid Canvas Function. Why: Each sprite is drawn from a painted canvas. How: The scene paints every sprite when it starts.
+import { gsaEasFun   } from '../../ui/gsap-ease.ts'; // What: GSAP Easing Function. Why: The pointer arrives and leaves on the stylesheet's curves. How: This registers a curve's token as a named GSAP ease.
+import { gsap        } from 'gsap';                  // What: GSAP. Why: The scene draws its own frames, yet its pointer eases like the lettering. How: This turns an ease's name into a function of progress.
+import { HAN_ROW_ARR } from './pixel-art.ts';        // What: Hand Row Array. Why: A pointing hand shows that a tap drops a turkey. How: The scene paints its rows once.
+import { HEL_ROW_ARR } from './pixel-art.ts';        // What: Helicopter Row Array. Why: The station's helicopter crosses the sky. How: The scene paints its rows once.
+import { manGriFun   } from './pixel-art.ts';        // What: Manager Grid Function. Why: The station manager stands in the studio. How: The scene paints his grid once.
+import { rowGriFun   } from './pixel-art.ts';        // What: Row Grid Function. Why: Sprites written as rows are painted as grids. How: The scene turns each sprite's rows into a grid.
+import { texWidFun   } from './pixel-art.ts';        // What: Text Width Function. Why: The mall's sign is sized to its words. How: The scene measures them.
+import { turGriFun   } from './pixel-art.ts';        // What: Turkey Grid Function. Why: Each turkey flaps between two frames. How: The scene paints both.
 
 // #endregion Imports
 
@@ -27,10 +31,13 @@ import { turGriFun   } from './pixel-art.ts'; // What: Turkey Grid Function. Why
  * and sit dazed in the parking lot. A burst of static then changes the channel
  * to the second, the station's studio, where the station manager stands with a
  * hand raised beside a dazed turkey while feathers drift down. A tap drops
- * another turkey from above the screen, in line with where it was tapped. The
- * scene runs on the card's own clock, so its drawings and the card's lettering
- * never drift apart, and its turkeys follow a fixed seed, so their motion can
- * be replayed to the same state.
+ * another turkey from above the screen, in line with where it was tapped, and
+ * once the card has rested a while, a pointing hand taps a random spot every
+ * few seconds to show how, until the visitor taps, each of its turkeys
+ * clearing three taps later. The scene runs on the
+ * card's own clock, so its drawings and the card's lettering never drift
+ * apart, and its turkeys follow a fixed seed, so their motion can be replayed
+ * to the same state.
  *
  * The scene has a wide composition and a tall one, chosen by the canvas's
  * shape, and stretches the chosen one along a single side to match the
@@ -86,6 +93,7 @@ type LayRecTyp = { // What: Layout Record Type. Why: The parts of both scenes th
 type SceSchTyp = { // What: Scene Schedule Type. Why: The scene's events line up with the card's lettering. How: This names each event's time, in seconds from the card's start.
 
 
+	demNum : number,   // What: Demo Number. Why: Once the card has rested a while, a pointer shows that a tap drops a turkey. How: This is when the first demo starts, each next one a cycle later.
 	droArr : number[], // What: Drop Array. Why: The turkeys fall one after another. How: Each entry is when one leaves the helicopter.
 	finNum : number,   // What: Finish Number. Why: Under reduced motion the scene shows its finished state. How: This is the moment it draws.
 	hlaNum : number,   // What: Helicopter Arrival Number. Why: The helicopter enters after the card opens. How: This is when it starts across.
@@ -103,6 +111,7 @@ type SprSetTyp = { // What: Sprite Set Type. Why: Every sprite is painted once a
 
 	carArr : HTMLCanvasElement[], // What: Car Array. Why: Each car paint is its own image. How: This holds one per paint.
 	feaEle : HTMLCanvasElement,   // What: Feather Element. Why: The drifting feathers share one image. How: This holds it.
+	hanEle : HTMLCanvasElement,   // What: Hand Element. Why: The demo's pointer is one image. How: This holds it.
 	helEle : HTMLCanvasElement,   // What: Helicopter Element. Why: The helicopter is one image. How: This holds it.
 	manEle : HTMLCanvasElement,   // What: Manager Element. Why: The station manager is one image. How: This holds it.
 	tudEle : HTMLCanvasElement,   // What: Turkey-Down Element. Why: A turkey's wing is down in one frame. How: This holds that frame.
@@ -122,6 +131,7 @@ type TurStaTyp = { // What: Turkey State Type. Why: Each turkey falls, bounces, 
 
 	ageNum    : number,                    // What: Age Number. Why: A turkey flaps for its first moments, then tumbles. How: This is the seconds since the turkey appeared, restarted when it sits.
 	angNum    : number,                    // What: Angle Number. Why: A tumbling turkey turns as it falls. How: This is its angle, in radians.
+	expNum    : number,                    // What: Expiry Number. Why: The pointer's turkeys clear a few taps later, so they never pile up. How: This is when the turkey is gone, Infinity for one that stays.
 	flaNum    : number,                    // What: Flap Number. Why: The wing alternates on a steady beat. How: This is the seconds since the turkey appeared.
 	lanNum    : number,                    // What: Landing Number. Why: Each turkey lands at its own depth. How: This is the line its feet land on.
 	spiNum    : number,                    // What: Spin Number. Why: Each turkey tumbles at its own pace and way. How: This is its turning speed, in radians a second.
@@ -159,6 +169,13 @@ type SimStaTyp = { // What: Simulation State Type. Why: The scene's motion is st
 
 const CAR_TOK_ARR = [ '--tur-rus-col', '--tur-sag-col', '--tur-mus-col' ]; // What: Car Token Array. Why: The parked cars come in three 70s paints. How: Each car takes one of these tokens by its index. // Turkeys Rust Color = #a8402c, Turkeys Sage Color = #5f7f6a, Turkeys Mustard Color = #d9a441
 const DEL_TIM_NUM = 1 / 120;                                               // What: Delta Time Number. Why: The motion steps by fixed slices, so a moment rebuilds the same on every screen. How: This is one slice, in seconds.
+const DEM_ARR_NUM = durSecFun( 'p04' );                                    // What: Demo Arrival Number. Why: The pointer rises into place before it taps. How: This is a Base Plus 4 step, the length of its arrival. // Duration Animation Base Plus 4 ~= 486.1ms
+const DEM_CYC_NUM = durSecFun( 'p13' );                                    // What: Demo Cycle Number. Why: The pointer taps again at a leisurely pace until the visitor taps. How: This is a Base Plus 13 step from one demo's start to the next. // Duration Animation Base Plus 13 ~= 6,107.0ms
+const DEM_KEE_NUM = 3;                                                     // What: Demo Keep Number. Why: A few of the pointer's turkeys stay on the carpet, but no more. How: Each clears this many cycles after its tap.
+const DEM_LEA_NUM = durSecFun( 'p04' );                                    // What: Demo Leaving Number. Why: The pointer fades away once it has tapped. How: This is a Base Plus 4 step, the length of its exit. // Duration Animation Base Plus 4 ~= 486.1ms
+const DEM_MAR_NUM = 0.15;                                                  // What: Demo Margin Number. Why: The pointer taps clear of the screen's edges. How: This is the share of the width and height kept free on each side.
+const DEM_PRE_NUM = durSecFun( 'p02' );                                    // What: Demo Press Number. Why: The pointer holds its press long enough to be seen. How: This is a Base Plus 2 step, from the tap until it lifts away. // Duration Animation Base Plus 2 ~= 277.0ms
+const DEM_TAP_NUM = durSecFun( 'p06' );                                    // What: Demo Tap Number. Why: The pointer settles a moment before it taps. How: This is a Base Plus 6 step from the start of its arrival to its tap. // Duration Animation Base Plus 6 ~= 853.0ms
 const FLA_TIM_NUM = 0.12;                                                  // What: Flap Time Number. Why: A falling turkey flaps on a steady beat. How: This is each wing frame's length, in seconds.
 const RAN_SEE_NUM = 7;                                                     // What: Random Seed Number. Why: Without taps, the same turkeys fall the same way on every play. How: This seeds the scene's random numbers.
 
@@ -221,6 +238,37 @@ const WID_BAS_ARR = [ 240, 135 ]; // What: Wide Base Array. Why: The wide compos
 
 
 // #region Helpers
+
+// #region demLivFun
+
+/**
+ * demLivFun = Demo Live Function
+ *
+ * @summary
+ * Reports whether the pointer's demos still play at a moment: true while no
+ * tap came before it. A visitor who has already tapped knows how, so their
+ * first tap ends the demos, whether it came between them or partway through
+ * one's arrival.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param tapEveArr - Tap Event Array: Every tap so far, in order.
+ * @param limTimNum - Limit Time Number: The moment checked, in seconds.
+ *
+ * @returns True when no tap came before the moment.
+ *
+ * @example
+ * ```ts
+ * demLivFun([], 31.4) // => true
+ * ```
+ *
+*/
+
+const demLivFun = ( tapEveArr : TapEveTyp[], limTimNum : number ) : boolean => tapEveArr.every( ( tapCurObj ) => tapCurObj.timNum >= limTimNum ); // What: Demo Live Function. Why: The demo is only for a visitor who hasn't tapped yet. How: This checks every tap came at or after the moment.
+
+// #endregion demLivFun
+
+
 
 // #region draMalFun
 
@@ -734,6 +782,49 @@ function ranGenFun ( seeValNum : number ) : () => number {
 
 
 
+// #region demPlaFun
+
+/**
+ * demPlaFun = Demo Place Function
+ *
+ * @summary
+ * Returns where a pointer demo taps, in canvas pixels: the fingertip's left
+ * and top, at a random spot inside the screen less a margin on each side.
+ * Each demo's spot comes from a generator seeded by its cycle, so the same
+ * demo always taps the same share of the screen, and a rebuilt moment or a
+ * turned phone puts it back in place.
+ *
+ * @author z4nta0 <https://github.com/z4nta0>
+ *
+ * @param layRecObj - Layout Record Object: {@link LayRecTyp}
+ * @param demCycNum - Demo Cycle Number: Which demo, counting from 0.
+ *
+ * @returns The fingertip's left, then its top.
+ *
+ * @example
+ * ```ts
+ * demPlaFun(layRecObj, 2) // => [ 141, 63 ]
+ * ```
+ *
+*/
+
+const demPlaFun = ( layRecObj : LayRecTyp, demCycNum : number ) : [ number, number ] => { // What: Demo Place Function. Why: Each demo taps its own random spot, the same every time it's rebuilt. How: This draws two shares from a generator seeded by the demo's cycle and scales them inside the margins.
+
+
+	const plaRanFun = ranGenFun( RAN_SEE_NUM + demCycNum + 1 ); // What: Place Random Function. Why: A demo's spot is random but fixed. How: This seeds a generator with the demo's cycle, past the scene's own seed.
+	const spaShaNum = 1 - DEM_MAR_NUM * 2;                       // What: Space Share Number. Why: The spot falls between the margins. How: This is the share of each side left between them.
+
+
+
+	return [ Math.round( layRecObj.widNum * ( DEM_MAR_NUM + plaRanFun() * spaShaNum ) ), Math.round( layRecObj.heiNum * ( DEM_MAR_NUM + plaRanFun() * spaShaNum ) ) ]; // What: Place Return. Why: The pointer and its turkey use the spot. How: This scales the first share to the width and the second to the height, each inside the margins.
+
+
+};
+
+// #endregion demPlaFun
+
+
+
 // #region spaTurFun
 
 /**
@@ -741,9 +832,9 @@ function ranGenFun ( seeValNum : number ) : () => number {
  *
  * @summary
  * Adds a falling turkey to a list at a point, moving sideways at a given
- * speed. Its landing line is drawn from a band given as its top line and its
- * depth, and its spin from the seeded sequence, so it takes three numbers
- * from the sequence.
+ * speed, that clears at a given moment. Its landing line is drawn from a band
+ * given as its top line and its depth, and its spin from the seeded sequence,
+ * so it takes three numbers from the sequence.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -753,17 +844,19 @@ function ranGenFun ( seeValNum : number ) : () => number {
  * @param spaYcoNum - Spawn Y-Coordinate Number: Where it starts, down.
  * @param velXcoNum - Velocity X-Coordinate Number: Its sideways speed.
  * @param spaLanArr - Spawn Landing Array: The landing band's top and depth.
+ * @param expTimNum - Expiry Time Number: When it clears, Infinity for one
+ *                    that stays.
  *
  * @returns This function does not return anything.
  *
  * @example
  * ```ts
- * spaTurFun(simStaObj, malTurArr, 120, -10, 0, [ 93, 14 ]) // => void
+ * spaTurFun(simStaObj, malTurArr, 120, -10, 0, [93, 14], Infinity) // => void
  * ```
  *
 */
 
-const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ] ) : void => { // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
+const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : number, spaYcoNum : number, velXcoNum : number, spaLanArr : [ number, number ], expTimNum : number ) : void => { // What: Spawn Turkey Function. Why: Each dropped turkey starts falling from a point. How: This adds a falling turkey there, with a landing depth and tumble drawn from the seeded sequence.
 
 
 	lisTurArr.push({ // What: Turkey Push Call. Why: The new turkey joins the list it falls in. How: This adds it with its starting state.
@@ -773,6 +866,7 @@ const spaTurFun = ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], spaXcoNum : 
 
 		ageNum    : 0,                                                                      // What: Age Number. Why: A new turkey has just appeared. How: Its age starts at zero.
 		angNum    : 0,                                                                      // What: Angle Number. Why: A falling turkey starts upright. How: Its tumble starts at zero.
+		expNum    : expTimNum,                                                              // What: Expiry Number. Why: A turkey may clear later. How: This is the moment passed in.
 		flaNum    : 0,                                                                      // What: Flap Number. Why: Its wing beat starts fresh. How: This starts at zero.
 		lanNum    : spaLanArr[ 0 ] + simStaObj.ranFun() * spaLanArr[ 1 ],                   // What: Landing Number. Why: Turkeys land at different depths. How: This draws a line inside the landing band from the seeded sequence.
 		spiNum    : ( simStaObj.ranFun() < 0.5 ? -1 : 1 ) * ( 5 + simStaObj.ranFun() * 4 ), // What: Spin Number. Why: Each turkey tumbles its own way. How: This draws a direction and a speed from the seeded sequence.
@@ -927,10 +1021,11 @@ function steTurFun ( simStaObj : SimStaTyp, lisTurArr : TurStaTyp[], pufColArr :
  * @summary
  * Moves the whole scene forward by one slice of time: releases each turkey
  * whose drop time the slice crosses, replays each tap whose time it crosses,
- * spawning a turkey for those in the mall or the studio, sets up the studio's
- * dazed turkey and feathers when the studio starts, moves the turkeys of
- * whichever scene is showing, drifts the feathers, and moves and ages the puff
- * pixels.
+ * spawning a turkey for those in the mall or the studio, drops a turkey for
+ * a pointer demo's tap the slice crosses when no tap came first, sets up
+ * the studio's dazed turkey and feathers when the studio starts, moves the
+ * turkeys of whichever scene is showing, drifts the feathers, and moves and
+ * ages the puff pixels, clearing the studio turkeys whose time is up.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -960,7 +1055,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 
-	for ( const droTimNum of schRecObj.droArr ) if ( preTimNum < droTimNum && nexTimNum >= droTimNum ) spaTurFun( simStaObj, simStaObj.malArr, helXcoFun( layRecObj, schRecObj, droTimNum ) + 30, layRecObj.helNum + 12, ( layRecObj.widNum + 65 ) / schRecObj.hldNum * 0.3, layRecObj.lanArr ); // What: Drop Loop. Why: A turkey leaves the helicopter's door at each drop time. How: This spawns it at the door, drifting with a share of the helicopter's speed.
+	for ( const droTimNum of schRecObj.droArr ) if ( preTimNum < droTimNum && nexTimNum >= droTimNum ) spaTurFun( simStaObj, simStaObj.malArr, helXcoFun( layRecObj, schRecObj, droTimNum ) + 30, layRecObj.helNum + 12, ( layRecObj.widNum + 65 ) / schRecObj.hldNum * 0.3, layRecObj.lanArr, Infinity ); // What: Drop Loop. Why: A turkey leaves the helicopter's door at each drop time. How: This spawns it at the door, drifting with a share of the helicopter's speed.
 
 
 
@@ -971,9 +1066,9 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 		const tapXcoNum = tapCurObj.fraXcoNum * layRecObj.widNum; // What: Tap X-Coordinate Number. Why: A tap keeps its share of the width when the layout changes. How: This scales the share to the canvas.
 
 
-		if ( tapCurObj.timNum < schRecObj.staNum ) spaTurFun( simStaObj, simStaObj.malArr, tapXcoNum, -10, 0, layRecObj.lanArr ); // What: Lot Tap Branch. Why: A tap over the mall drops a turkey into the lot. How: This spawns it above the screen.
+		if ( tapCurObj.timNum < schRecObj.staNum ) spaTurFun( simStaObj, simStaObj.malArr, tapXcoNum, -10, 0, layRecObj.lanArr, Infinity ); // What: Lot Tap Branch. Why: A tap over the mall drops a turkey into the lot. How: This spawns it above the screen.
 
-		else if ( tapCurObj.timNum >= schRecObj.sceNum ) spaTurFun( simStaObj, simStaObj.stuArr, tapXcoNum, -10, 0, layRecObj.tapArr ); // What: Studio Tap Branch. Why: A tap in the studio drops a turkey onto the carpet. How: This spawns it above the screen.
+		else if ( tapCurObj.timNum >= schRecObj.sceNum ) spaTurFun( simStaObj, simStaObj.stuArr, tapXcoNum, -10, 0, layRecObj.tapArr, Infinity ); // What: Studio Tap Branch. Why: A tap in the studio drops a turkey onto the carpet. How: This spawns it above the screen.
 
 
 
@@ -981,6 +1076,15 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 	}
+
+
+
+	const demCycNum = Math.floor( ( nexTimNum - schRecObj.demNum - DEM_TAP_NUM ) / DEM_CYC_NUM ); // What: Demo Cycle Number. Why: The pointer taps once a cycle, and the slice may hold one of its taps. How: This counts the cycles whose tap comes by the slice's end, less one, below 0 before the first tap.
+	const demTapNum = schRecObj.demNum + DEM_TAP_NUM + demCycNum * DEM_CYC_NUM;                // What: Demo Tap Number. Why: The pointer's tap drops a turkey of its own. How: This is the latest demo tap's moment by the slice's end.
+	const demCroBoo = demCycNum >= 0 && preTimNum < demTapNum;                                 // What: Demo Cross Boolean. Why: A demo's turkey drops in the slice its tap falls in. How: This is true when that tap comes after the slice's start.
+
+
+	if ( demCroBoo && demLivFun( tapEveArr, demTapNum ) ) spaTurFun( simStaObj, simStaObj.stuArr, demPlaFun( layRecObj, demCycNum )[ 0 ], -10, 0, layRecObj.tapArr, demTapNum + DEM_KEE_NUM * DEM_CYC_NUM ); // What: Demo Drop Branch. Why: Each of the pointer's taps drops a turkey as a real tap would, until the visitor taps. How: This spawns it above the screen at the demo's spot, clearing three cycles after its tap.
 
 
 
@@ -992,6 +1096,7 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 			ageNum    : 9,                        // What: Age Number. Why: The dazed turkey landed long before the studio opens. How: This starts it well past its first flaps.
 			angNum    : 0,                        // What: Angle Number. Why: The dazed turkey sits upright. How: This is no tumble.
+			expNum    : Infinity,                 // What: Expiry Number. Why: The dazed turkey stays with the manager. How: It never clears.
 			flaNum    : 0,                        // What: Flap Number. Why: Its wing beat starts fresh. How: This starts at zero.
 			lanNum    : layRecObj.manArr[ 1 ],    // What: Landing Number. Why: It sits at the station manager's feet. How: This is his line.
 			spiNum    : 0,                        // What: Spin Number. Why: A sitting turkey doesn't tumble. How: This is no spin.
@@ -1051,7 +1156,8 @@ function simSteFun ( simStaObj : SimStaTyp, layRecObj : LayRecTyp, schRecObj : S
 
 
 
-	simStaObj.parArr = simStaObj.parArr.filter( ( parCurObj ) => parCurObj.lifNum > 0 ); // What: Puff Expiry Assignment. Why: A puff fades away. How: This drops the pixels whose life has run out.
+	simStaObj.parArr = simStaObj.parArr.filter( ( parCurObj ) => parCurObj.lifNum > 0 );         // What: Puff Expiry Assignment. Why: A puff fades away. How: This drops the pixels whose life has run out.
+	simStaObj.stuArr = simStaObj.stuArr.filter( ( turCurObj ) => turCurObj.expNum > nexTimNum ); // What: Turkey Expiry Assignment. Why: The pointer's turkeys clear a few taps later. How: This drops the studio turkeys whose expiry has passed.
 
 
 }
@@ -1157,6 +1263,7 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 		feaEle : griCanFun( rowGriFun( FEA_ROW_ARR ), palColObj ), // What: Feather Element. Why: The drifting feathers share one image. How: This paints it.
+		hanEle : griCanFun( rowGriFun( HAN_ROW_ARR ), palColObj ), // What: Hand Element. Why: The demo's pointer is one image. How: This paints it.
 		helEle : griCanFun( rowGriFun( HEL_ROW_ARR ), palColObj ), // What: Helicopter Element. Why: The helicopter is one image. How: This paints it.
 		manEle : griCanFun( manGriFun(), palColObj ),              // What: Manager Element. Why: The station manager is one image. How: This paints him.
 		tudEle : griCanFun( turGriFun( false ), palColObj ),       // What: Turkey-Down Element. Why: A turkey's wing is down in one frame. How: This paints that frame.
@@ -1177,6 +1284,15 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	};
 
 	// #endregion Color And Sprite Painting
+
+
+
+	// #region Pointer Easing
+
+	const accEasFun = gsap.parseEase( gsaEasFun( 'acc' ) ); // What: Accelerate Easing Function. Why: The pointer speeds up as it leaves, like anything leaving the card. How: This turns the accelerate token's curve into a function of progress.
+	const decEasFun = gsap.parseEase( gsaEasFun( 'dec' ) ); // What: Decelerate Easing Function. Why: The pointer slows as it arrives, like anything arriving on the card. How: This turns the decelerate token's curve into a function of progress.
+
+	// #endregion Pointer Easing
 
 
 
@@ -1221,7 +1337,8 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 	 * Before the static it draws the mall, its turkeys, the helicopter with
 	 * its flickering rotors while it's on screen, and the feather puffs;
 	 * during the static, random gray pixels; and after it, the studio, its
-	 * turkeys, the drifting feathers, and the puffs.
+	 * turkeys, the drifting feathers, the puffs, and the pointer's demo while
+	 * it plays.
 	 *
 	 * @author z4nta0 <https://github.com/z4nta0>
 	 *
@@ -1277,7 +1394,20 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 
-		[ ...( malShoBoo ? simStaObj.malArr : simStaObj.stuArr ) ].sort( ( turOneObj, turTwoObj ) => turOneObj.lanNum - turTwoObj.lanNum ).forEach( ( turCurObj ) => draTurFun( canCotObj, turCurObj, sprSetObj, staColStr, curTimNum ) ); // What: Turkey Draw Call. Why: Each scene shows its own turkeys, nearer ones overlapping farther ones. How: This draws the showing scene's turkeys from the farthest landing line to the nearest.
+		[ ...( malShoBoo ? simStaObj.malArr : simStaObj.stuArr ) ].sort( ( turOneObj, turTwoObj ) => turOneObj.lanNum - turTwoObj.lanNum ).forEach( ( turCurObj ) => { // What: Turkey Draw Loop. Why: Each scene shows its own turkeys, nearer ones overlapping farther ones, and a clearing turkey fades out. How: This draws the showing scene's turkeys from the farthest landing line to the nearest, each at its opacity.
+
+
+			canCotObj.globalAlpha = 1 - accEasFun( Math.min( Math.max( 1 - ( turCurObj.expNum - curTimNum ) / DEM_LEA_NUM, 0 ), 1 ) ); // What: Turkey Alpha Assignment. Why: A clearing turkey fades out, speeding up as it goes, rather than vanishing. How: This eases the share of its fade that has passed, which is 0, and the turkey opaque, until its expiry is near.
+
+
+			draTurFun( canCotObj, turCurObj, sprSetObj, staColStr, curTimNum ); // What: Turkey Draw Call. Why: The turkey appears where it is. How: This draws it, its stars included.
+
+
+		} );
+
+
+
+		canCotObj.globalAlpha = 1; // What: Turkey Alpha Reset Assignment. Why: Everything after the turkeys draws opaque. How: This restores full opacity.
 
 
 
@@ -1318,6 +1448,52 @@ function staSceFun ( canEleObj : HTMLCanvasElement, sceOptObj : SceOptTyp ) : Sc
 
 
 			canCotObj.fillRect( Math.round( parCurObj.xcoNum ), Math.round( parCurObj.ycoNum ), 1, 1 ); // What: Pixel Fill Call. Why: The pixel appears where it is. How: This fills it.
+
+
+		}
+
+
+
+		const demCycNum = Math.floor( ( curTimNum - schRecObj.demNum ) / DEM_CYC_NUM );                                         // What: Demo Cycle Number. Why: The pointer repeats its demo each cycle. How: This counts the cycles started, less one, below 0 before the first.
+		const demLivBoo = demLivFun( tapEveArr, Math.min( curTimNum, schRecObj.demNum + demCycNum * DEM_CYC_NUM + DEM_TAP_NUM ) ); // What: Demo Live Boolean. Why: A tap ends the demos, while one after this demo's tap leaves it to finish. How: This checks for taps before the moment or this demo's tap, whichever comes first.
+		const demTimNum = curTimNum - schRecObj.demNum - demCycNum * DEM_CYC_NUM;                                               // What: Demo Time Number. Why: The pointer's look follows its own demo's clock. How: This is the seconds since the current demo started.
+		const demRunBoo = demCycNum >= 0 && demTimNum < DEM_TAP_NUM + DEM_PRE_NUM + DEM_LEA_NUM;                                // What: Demo Running Boolean. Why: The pointer shows only from its arrival until it has faded away. How: This checks the demo has started and its clock is within its settling, press, and exit.
+
+
+		if ( demLivBoo && demRunBoo ) { // What: Pointer Draw Branch. Why: The pointer taps to show that a tap drops a turkey. How: This draws it rising into place, pressing with a spark as it taps, and fading away.
+
+
+			const [ demXcoNum, demYcoNum ] = demPlaFun( layRecObj, demCycNum ); // What: Demo X-Coordinate Number. Why: The pointer taps the demo's own spot. How: This is the fingertip's left. // What: Demo Y-Coordinate Number. Why: The pointer taps the demo's own spot. How: This is the fingertip's top.
+
+			const arrProNum = decEasFun( Math.min( demTimNum / DEM_ARR_NUM, 1 ) );                                                // What: Arrival Progress Number. Why: The pointer rises and fades in, slowing as it arrives. How: This eases its arrival's share of time on the decelerating curve.
+			const hanLefNum = demXcoNum - 2;                                                                                      // What: Hand Left Number. Why: The fingertip marks where the demo's turkey drops. How: This sets the hand's left two pixels before the demo's spot, the tip's own columns.
+			const leaProNum = accEasFun( Math.min( Math.max( ( demTimNum - DEM_TAP_NUM - DEM_PRE_NUM ) / DEM_LEA_NUM, 0 ), 1 ) ); // What: Leaving Progress Number. Why: The pointer fades away once it lifts from the press, speeding up as it goes. How: This eases its exit's share of time on the accelerating curve.
+			const preNowBoo = demTimNum >= DEM_TAP_NUM && demTimNum < DEM_TAP_NUM + DEM_PRE_NUM;                                  // What: Press Now Boolean. Why: The pointer holds its press for a moment after the tap. How: This is true from the tap until it lifts.
+			const hanTopNum = demYcoNum + Math.round( ( 1 - arrProNum ) * 3 ) + ( preNowBoo ? 1 : 0 );                            // What: Hand Top Number. Why: The pointer stands at the demo's spot, rising 3 pixels as it arrives and dipping 1 as it presses. How: This adds both to the spot's top.
+
+
+			canCotObj.globalAlpha = arrProNum * ( 1 - leaProNum ); // What: Pointer Alpha Assignment. Why: The pointer fades in as it arrives and out as it leaves. How: This multiplies the two progresses.
+
+
+			canCotObj.drawImage( sprSetObj.hanEle, hanLefNum, hanTopNum ); // What: Pointer Draw Call. Why: The pointer shows where the tap lands. How: This draws the hand there.
+
+
+			if ( preNowBoo ) { // What: Press Spark Branch. Why: A burst around the fingertip says the tap happened. How: This draws three gold sparks above the tip while the press holds.
+
+
+				canCotObj.fillStyle = staColStr; // What: Spark Fill Assignment. Why: The sparks match the dazed turkey's gold stars. How: This sets their color.
+
+
+				canCotObj.fillRect( hanLefNum + 2, hanTopNum - 3, 2, 1 ); // What: Top Spark Fill Call. Why: A spark flies up from the tip. How: This draws it above the tip's two columns.
+				canCotObj.fillRect( hanLefNum, hanTopNum - 2, 1, 1 );     // What: Left Spark Fill Call. Why: A spark flies up and left. How: This draws it beside the tip.
+				canCotObj.fillRect( hanLefNum + 5, hanTopNum - 2, 1, 1 ); // What: Right Spark Fill Call. Why: A spark flies up and right. How: This draws it beside the tip.
+
+
+			}
+
+
+
+			canCotObj.globalAlpha = 1; // What: Alpha Reset Assignment. Why: The next frame draws everything else opaque. How: This restores full opacity.
 
 
 		}

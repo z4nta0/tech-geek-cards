@@ -49,7 +49,7 @@ type PixGriTyp = string[][]; // What: Pixel Grid Type. Why: A sprite is edited p
  * head; T, its tan feather tips; Y, its yellow beak and legs; G and g, the
  * helicopter's paint and its shade; L, windows such as the helicopter's; Q,
  * its dark doorway; Z, its cream stripe; C, a car's paint, which each car
- * sets; and K, dark ink such as a car's tires.
+ * sets; W, the pointing hand's ivory; and K, dark ink such as a car's tires.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -76,6 +76,26 @@ const FEA_ROW_ARR = [ // What: Feather Row Array. Why: Stray feathers drift down
 	'.O',
 	'OT',
 	'T.'
+
+
+];
+
+const HAN_ROW_ARR = [ // What: Hand Row Array. Why: Once the card rests, a pointing hand shows that a tap drops a turkey. How: Each row is one line of the sprite, its fingertip in the third and fourth columns.
+
+
+	'..KK......',
+	'.KWWK.....',
+	'.KWWK.....',
+	'.KWWKKK...',
+	'.KWWKWWKK.',
+	'KKWWKWWKWK',
+	'KWKWWWWWWK',
+	'KWWWWWWWWK',
+	'.KWWWWWWWK',
+	'.KWWWWWWWK',
+	'..KWWWWWK.',
+	'..KWWWWWK.',
+	'..KKKKKKK.'
 
 
 ];
@@ -567,7 +587,7 @@ function turGriFun ( winRaiBoo : boolean ) : PixGriTyp {
 
 // #region Exports
 
-export { CAR_ROW_ARR, draTexFun, FEA_ROW_ARR, griCanFun, HEL_ROW_ARR, manGriFun, rowGriFun, texWidFun, turGriFun }; // What: Named Exports. Why: The scene draws the card's sprites and signs. How: This exports the sprite rows, the grid builders and painters, and the pixel font's helpers.
+export { CAR_ROW_ARR, draTexFun, FEA_ROW_ARR, griCanFun, HAN_ROW_ARR, HEL_ROW_ARR, manGriFun, rowGriFun, texWidFun, turGriFun }; // What: Named Exports. Why: The scene draws the card's sprites and signs. How: This exports the sprite rows, the grid builders and painters, and the pixel font's helpers.
 
 // #endregion Exports
 

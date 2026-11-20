@@ -40,11 +40,13 @@ import type { SceSchTyp  } from './pixel-scene.ts'; // What: Scene Schedule Type
  * raised beside a dazed turkey, and "Merry Thanksgiving" appears, named for
  * the recipient when the link carries one, before the station manager's line,
  * "As God is my witness, I thought turkeys could fly," types out. The card
- * then rests on the studio, where a tap drops another turkey. Every time in
- * the schedule is built from steps on the duration scale, and the pixel scene
- * runs on the timeline's clock. Under reduced motion the card opens on the
- * finished studio. Our own lettering and a station manager drawn as a type,
- * not the show's logo or an actor's likeness, keep it a fan's tribute.
+ * then rests on the studio, where a tap drops another turkey, and a pointing
+ * hand taps a random spot every few seconds to show it until the visitor
+ * taps. Every time in the schedule is built from steps on the duration scale,
+ * and the pixel scene runs on the timeline's clock. Under reduced motion the
+ * card opens on the finished studio. Our own lettering and a station manager
+ * drawn as a type, not the show's logo or an actor's likeness, keep it a
+ * fan's tribute.
  *
  * Sections:
  *  - Constants
@@ -82,9 +84,9 @@ const QUO_TEX_STR = '"As God is my witness, I thought turkeys could fly."';     
  * turkeys drop from a Base Plus 8 step on, a Base Plus 4 step apart; the
  * bulletin starts typing a Base Plus 4 step after its bar shows at a Base Plus
  * 12 step, types for a Base Plus 11 step, and holds for a Base Plus 9 step
- * before the static, which lasts a Base Plus 5 step; and the studio's
- * lettering ends a Base Plus 10 step of typing after its greeting and quote
- * box arrive.
+ * before the static, which lasts a Base Plus 5 step; the studio's lettering
+ * ends a Base Plus 10 step of typing after its greeting and quote box arrive;
+ * and the pointer's first demo starts a Base Plus 9 step after that.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -107,6 +109,7 @@ function schRecFun () : SceSchTyp & { newTypNum : number, quoTypNum : number } {
 	const staTimNum = newTypNum + durSecFun( 'p11' ) + durSecFun( 'p09' );                      // What: Static Time Number. Why: The static comes after the bulletin has typed and been read. How: This adds the typing's Base Plus 11 step and a Base Plus 9 hold. // Duration Animation Base Plus 11 ~= 3,480.0ms, Duration Animation Base Plus 9 ~= 1,983.0ms
 	const sceTimNum = staTimNum + durSecFun( 'p05' );                                           // What: Scene Time Number. Why: The studio follows a short burst of static. How: This is a Base Plus 5 step after the static starts. // Duration Animation Base Plus 5 ~= 643.9ms
 	const quoTypNum = sceTimNum + durSecFun( 'p03' ) + durSecFun( 'p06' ) + durSecFun( 'p04' ); // What: Quote Typing Number. Why: The quote types once the greeting and its box have arrived. How: This adds the greeting's Base Plus 3 wait, the box's Base Plus 6 wait, and its Base Plus 4 fade. // Duration Animation Base Plus 3 ~= 366.9ms, Duration Animation Base Plus 6 ~= 853.0ms, Duration Animation Base Plus 4 ~= 486.1ms
+	const quoEndNum = quoTypNum + durSecFun( 'p10' );                                           // What: Quote End Number. Why: The card rests once the quote has typed. How: This is a Base Plus 10 step of typing after it starts. // Duration Animation Base Plus 10 ~= 2,627.0ms
 
 
 
@@ -116,7 +119,8 @@ function schRecFun () : SceSchTyp & { newTypNum : number, quoTypNum : number } {
 		newTypNum, // What: News Typing Number. Why: The timeline types the bulletin from this moment. How: This is when the bulletin starts typing.
 		quoTypNum, // What: Quote Typing Number. Why: The timeline types the quote from this moment. How: This is when the quote starts typing.
 
-		finNum : quoTypNum + durSecFun( 'p10' ), // What: Finish Number. Why: The card rests once the quote has typed. How: This is a Base Plus 10 step of typing after it starts. // Duration Animation Base Plus 10 ~= 2,627.0ms
+		demNum : quoEndNum + durSecFun( 'p09' ), // What: Demo Number. Why: The pointer starts showing how to drop a turkey once the quote has had time to be read. How: This is a Base Plus 9 step after the quote ends. // Duration Animation Base Plus 9 ~= 1,983.0ms
+		finNum : quoEndNum,                      // What: Finish Number. Why: The card rests once the quote has typed. How: This is when the quote ends.
 		hlaNum : durSecFun( 'p02' ),             // What: Helicopter Arrival Number. Why: The helicopter enters just after the card opens. How: This is a Base Plus 2 step. // Duration Animation Base Plus 2 ~= 277.0ms
 		hldNum : durSecFun( 'p12' ),             // What: Helicopter Duration Number. Why: The helicopter crosses at an unhurried pace. How: This is a Base Plus 12 step. // Duration Animation Base Plus 12 ~= 4,610.0ms
 		sceNum : sceTimNum,                      // What: Scene Number. Why: The studio follows the static. How: This is when the studio starts.
