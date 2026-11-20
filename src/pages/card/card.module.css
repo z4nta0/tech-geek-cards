@@ -52,7 +52,7 @@
 
 
 }
-.carSkiAnc:hover { /* What: Hovered Card Skip Anchor. Why: A button should respond to the pointer. How: This darkens its orange and lifts it 1px, like the shared bar's skip link. */
+.carSkiAnc:focus:hover { /* What: Hovered Card Skip Anchor. Why: A button should respond to the pointer, but only while it's showing. How: This darkens its orange and lifts it 1px while it's focused, like the shared bar's skip link, so a pointer resting where the link slides away can't pull it back into view. */
 
 
 	background : var( --acc-hov-col ); /* Accent Hover Color ~= #e45700 */
@@ -60,7 +60,7 @@
 
 
 }
-.carSkiAnc:active { /* What: Pressed Card Skip Anchor. Why: A press should register before focus moves. How: This presses the button in slightly, which also undoes its hover lift. */
+.carSkiAnc:focus:active { /* What: Pressed Card Skip Anchor. Why: A press should register before focus moves. How: This presses the focused button in slightly, which also undoes its hover lift, matching the hover rule's weight so it comes after it and wins. */
 
 
 	transform : scale( 0.97 ); /* What: Press Scale. Why: A press should register before anything else happens. How: This shrinks the control by 3%, a literal since no scale step lands within 10%. */

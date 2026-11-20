@@ -162,7 +162,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 	const copLinFun = async () : Promise< void > => { // What: Copy Link Function. Why: Copying the link is the main way to send a card. How: This writes the link to the clipboard and sets the copy status.
 
 
-		try {
+		try { // What: Clipboard Copy Attempt Block. Why: The clipboard can refuse a write. How: This copies the link and marks it copied, leaving a refusal to the catch below.
 
 
 			await navigator.clipboard.writeText( linUrlObj.href ); // What: Clipboard Write Call. Why: The visitor pastes the link into a message. How: This writes the full link.
@@ -208,7 +208,7 @@ function ShaDiaCom ( { carRecObj, froIniStr = '', namIniStr = '', onDiaCloFun } 
 	const natShaFun = async () : Promise< void > => { // What: Native Share Function. Why: Phones can send a link straight to an app. How: This opens the share sheet with the card's title and link.
 
 
-		try {
+		try { // What: Share Sheet Attempt Block. Why: Closing the sheet without sharing rejects the share. How: This opens the sheet and waits for it to close, leaving that rejection to the catch below.
 
 
 			await navigator.share({ // What: Share Sheet Call. Why: The device's own sheet lists the apps the visitor can send with. How: This opens it with the card's message, title, and link, waiting until it closes.

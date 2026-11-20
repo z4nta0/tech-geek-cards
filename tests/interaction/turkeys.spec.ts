@@ -19,12 +19,13 @@ import type { Page } from '@playwright/test'; // What: Page. Why: The helper rea
  * @summary
  * Checks the Turkeys Away card's own behavior, in whichever engine the
  * project runs: a tap in the studio drops a turkey, and under reduced motion
- * a tap leaves the canvas as it was; turning a phone partway through the
- * bulletin switches the scene to its wide layout without restarting the card;
- * the TV set shows only on a screen at least 1,024px wide and 640px tall; and
- * on a phone held sideways the screen ends above the floating bar, while on
- * one held upright it runs under it. A turkey is found by its body's brown,
- * which nothing else in the scenes uses.
+ * a tap leaves the canvas as it was; with no tap, the pointer's demo drops a
+ * turkey of its own, which an earlier tap stops; turning a phone partway
+ * through the bulletin switches the scene to its wide layout without
+ * restarting the card; the TV set shows only on a screen at least 1,024px
+ * wide and 640px tall; and on a phone held sideways the screen ends above the
+ * floating bar, while on one held upright it runs under it. A turkey is found
+ * by its body's brown, which nothing else in the scenes uses.
  *
  * Sections:
  *  - Constants
@@ -122,6 +123,61 @@ test( 'a tap in the Turkeys Away studio drops a turkey from the top of the scree
 	await curPagObj.locator( SCR_SEL_STR ).click( { position : { x : 195, y : 200 } } ); // What: Studio Tap Call. Why: The tap is what should drop a turkey. How: This clicks the screen in the middle across, 200px down.
 
 	await expect.poll( () => broCouFun( curPagObj, true ), { intervals : [ 50 ], timeout : 2000 } ).toBeGreaterThan( 0 ); // What: Falling Turkey Poll. Why: The tapped turkey should fall from the top at once. How: This reads the top half until it holds brown.
+
+
+} );
+
+
+
+test( "with no tap, the Turkeys Away studio's pointer taps and drops a turkey", async ( { page : curPagObj } ) => { // What: Pointer Demo Test. Why: The pointer shows a visitor who hasn't tapped that a tap drops a turkey, and a demo that dropped nothing would go unnoticed. How: This plays the card to the studio without tapping and waits for a turkey's brown in the top half.
+
+
+	test.setTimeout( 60000 ); // What: Timeout Call. Why: The card plays its whole first scene, then rests a while before the demo. How: This allows a minute.
+
+	await curPagObj.setViewportSize( PHO_SIZ_OBJ ); // What: Viewport Size Call. Why: The demo is checked on a phone's full-screen layout. How: This sets the phone's size.
+
+	await curPagObj.goto( '/turkeys-away' ); // What: Card Open Call. Why: The demo is checked on the card itself. How: This opens its page with motion allowed.
+
+	await expect.poll( () => curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( titHeaEle ) => getComputedStyle( titHeaEle ).opacity ), { intervals : [ 250 ], timeout : 30000 } ).toBe( '1' ); // What: Studio Shown Poll. Why: The studio's top half holds no turkeys until one drops in. How: This reads the greeting's opacity until it has fully faded in.
+
+	expect( await broCouFun( curPagObj, true ) ).toBe( 0 ); // What: Empty Sky Assertion. Why: A turkey found before the demo would pass the check without one. How: This checks the top half holds no brown.
+
+	await expect.poll( () => broCouFun( curPagObj, true ), { intervals : [ 50 ], timeout : 12000 } ).toBeGreaterThan( 0 ); // What: Demo Turkey Poll. Why: The demo's tap should drop a turkey from the top once the card has rested. How: This reads the top half until it holds brown, allowing for the quote's typing and the rest before the demo.
+
+
+} );
+
+
+
+test( "a tap in the Turkeys Away studio stops the pointer's demo from dropping a turkey", async ( { page : curPagObj } ) => { // What: Demo Stop Test. Why: A visitor who has already tapped knows how, so the demo shouldn't drop a turkey of its own. How: This taps as the studio shows, waits for that turkey to land, and checks no other falls through the top half while the demo would have played.
+
+
+	test.setTimeout( 60000 ); // What: Timeout Call. Why: The card plays its whole first scene, then rests past the demo's moment. How: This allows a minute.
+
+	await curPagObj.setViewportSize( PHO_SIZ_OBJ ); // What: Viewport Size Call. Why: The demo is checked on a phone's full-screen layout. How: This sets the phone's size.
+
+	await curPagObj.goto( '/turkeys-away' ); // What: Card Open Call. Why: The demo is checked on the card itself. How: This opens its page with motion allowed.
+
+	await expect.poll( () => curPagObj.getByRole( 'heading', { level : 1 } ).evaluate( ( titHeaEle ) => getComputedStyle( titHeaEle ).opacity ), { intervals : [ 250 ], timeout : 30000 } ).toBe( '1' ); // What: Studio Shown Poll. Why: The tap has to come before the demo. How: This reads the greeting's opacity until it has fully faded in.
+
+
+	const shoTimNum = Date.now(); // What: Shown Time Number. Why: The demo's moment is measured from when the studio showed. How: This records the time the greeting finished fading in.
+
+
+	await curPagObj.locator( SCR_SEL_STR ).click( { position : { x : 195, y : 200 } } ); // What: Studio Tap Call. Why: A tap before the demo should stop it. How: This clicks the screen in the middle across, 200px down.
+
+	await expect.poll( () => broCouFun( curPagObj, true ), { intervals : [ 50 ], timeout : 2000 } ).toBeGreaterThan( 0 ); // What: Falling Turkey Poll. Why: The tapped turkey has to fall before it can land. How: This reads the top half until it holds brown.
+	await expect.poll( () => broCouFun( curPagObj, true ), { intervals : [ 50 ], timeout : 5000 } ).toBe( 0 );             // What: Landed Turkey Poll. Why: The tapped turkey has to be out of the top half before the demo's moment is watched. How: This reads the top half until it holds no brown.
+
+
+	let broMaxNum = 0; // What: Brown Maximum Number. Why: A turkey falling at any moment of the watch should fail the check. How: This keeps the most brown found in the top half, 0 until then.
+
+
+	while ( Date.now() < shoTimNum + 9500 ) broMaxNum = Math.max( broMaxNum, await broCouFun( curPagObj, true ) ); // What: Demo Watch Loop. Why: The first demo's turkey would fall about six seconds after the studio shows. How: This reads the top half over and over until 9.5 seconds after it showed, keeping the most brown found.
+
+
+
+	expect( broMaxNum ).toBe( 0 ); // What: No Demo Turkey Assertion. Why: The demo shouldn't drop a turkey after a tap. How: This checks no brown appeared in the top half during the watch.
 
 
 } );

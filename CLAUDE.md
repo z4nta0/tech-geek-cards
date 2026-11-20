@@ -284,6 +284,15 @@ and no sender.
 - **The heading fades its opacity only**, so "Merry Thanksgiving" stays in the
   page from the start as the card's `h1`; the rest of the lettering fades in
   and out with GSAP's autoAlpha.
+- **The tap hint** (decided by the user 2026-11-19): a Base Plus 9 step after
+  the quote has typed, a pixel pointing hand rises in, taps, and fades, and
+  its tap drops a turkey like a real one. It repeats every Base Plus 13 step
+  (about 6.1 seconds) at a random spot inside a 15% margin from each edge
+  until the visitor's first tap, and each of its turkeys fades out three
+  cycles after its tap, so no more than three stay. Each spot is seeded by
+  its cycle and kept as a share of the screen, so a rebuilt moment or a
+  turned phone puts it back in place. It's drawn on the canvas, so it never
+  shows under reduced motion, where taps do nothing.
 - **Previews**: the tile preview is the finished studio captured full screen
   at 1,920 by 1,080, and the link preview `public/social/turkeys-away.png`
   ships as a PNG (about 74 KB). The link preview script now also moves a main
@@ -291,7 +300,8 @@ and no sender.
   greeting needs.
 - **Tests**: the card's states are desktop (in the set), phone, and a phone
   held sideways (844 by 390), and `tests/interaction/turkeys.spec.ts` checks
-  a tap drops a turkey (none under reduced motion), a turn mid-play switches
+  a tap drops a turkey (none under reduced motion), the tap hint drops one
+  with no tap and none after one, a turn mid-play switches
   the layout without restarting, the set's size limits, and the sideways
   screen clearing the bar.
 
