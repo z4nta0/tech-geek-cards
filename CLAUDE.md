@@ -37,8 +37,14 @@ to the steps section (`id='how-it-works'`). It goes through the shared
 helper in `ui/section-link.ts` (`modCliFun`, `useSecLinFun`, `useSecCliFun`,
 adapted from hair-designs'), whose `modCliFun` the card page's skip link
 shares. Home's hash arrival effect jumps to the element a hash names once
-the fonts load and the page's entrance animation has ended, since a jump
-made while the page was still rising landed about 25px short in Chromium.
+the fonts load, the page's entrance animation has ended, and the window's
+load event has fired, then two more frames, since a jump made while the page
+was still rising landed about 25px short in Chromium, and one made while its
+images were still arriving was moved back 3px by Firefox's scroll anchoring
+as the layout took them in, in about one load in thirteen at 1,440px (found
+2026-11-25; the anchoring moved the scroll position, not the page's layout,
+turning it off removed the miss, and waiting only for the images to decode
+still missed 12 times in 160 where this wait missed none).
 - **Where it differs from the user-level rule**: the hash is cleared with
   `history.replaceState( history.state, '', path + query )` rather than the
   router's `navigate( { hash : '' }, { replace : true } )`, since the design
@@ -253,7 +259,9 @@ and no sender.
   lettering is our own, set in Fraunces in the show's chunky 70s style, never
   the show's logo, and the station manager is drawn as a type (a balding man
   in a three-piece suit, hand raised) rather than a likeness of the actor.
-  The episode's lines are quoted as said: "For those of you who just tuned in,
+  The lettering reads "WKRP" alone (decided by the user 2026-11-25, dropping
+  an "in Cincinnati" script and its Yellowtail font), since the plaque and
+  shirt the card is based on say only "WKRP". The episode's lines are quoted as said: "For those of you who just tuned in,
   the Pinedale Shopping Mall has just been BOMBED with live turkeys." (Johnny
   Fever's; "Mall", not the "Shopping Center" the show says once, and no "Film
   at 11"), "Oh, the humanity!", and "As God is my witness, I thought turkeys
@@ -280,7 +288,7 @@ and no sender.
   render.mts`, using `subset-font` and the `@fontsource-variable/fraunces`
   package) pins its softness, optical size, and wonkiness, narrows its
   weights, and keeps every character Fontsource covers, about 25 to 40 KB a
-  file. Yellowtail and Pixelify Sans are copied from Fontsource as usual.
+  file. Pixelify Sans is copied from Fontsource as usual.
 - **The heading fades its opacity only**, so "Merry Thanksgiving" stays in the
   page from the start as the card's `h1`; the rest of the lettering fades in
   and out with GSAP's autoAlpha.
@@ -294,8 +302,9 @@ and no sender.
   turned phone puts it back in place. It's drawn on the canvas, so it never
   shows under reduced motion, where taps do nothing.
 - **Previews**: the tile preview is the finished studio captured full screen
-  at 1,920 by 1,080, and the link preview `public/social/turkeys-away.png`
-  ships as a PNG (about 74 KB). The link preview script now also moves a main
+  at 1,920 by 1,080, and the link preview `public/social/turkeys-away-2.png`
+  ships as a PNG (about 69 KB), renamed with a `-2` when the script was
+  dropped, since apps cache previews. The link preview script now also moves a main
   line set to one side into the center square, which only this card's
   greeting needs.
 - **Tests**: the card's states are desktop (in the set), phone, and a phone

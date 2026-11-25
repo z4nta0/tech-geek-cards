@@ -358,7 +358,7 @@
 
 }
 
-.envCarIma { /* What: Envelope Card Image. Why: Each card stands in the envelope in a white border, rises out of it in turn, and fans wider on hover. How: This sizes and places the card above the pocket, pivoting from its bottom edge, plays the rise, and eases its turn and shift. */
+.envCarIma { /* What: Envelope Card Image. Why: Each card stands in the envelope in a white border, rises out of it in turn, and fans wider on hover. How: This sizes and places the card above the pocket, its picture sized inside the border so the card keeps one size as it loads, pivoting from its bottom edge, plays the rise, and eases its turn and shift. */
 
 
 	animation        : envCarImaEnterRiseIn var( --dur-ani-p04 ) var( --mot-ove-eas ) both;                                   /* Duration Animation Base Plus 4 ~= 486.1ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
@@ -366,12 +366,13 @@
 	border-radius    : var( --rad-bor-xsm );                                                                                  /* Radius Border Extra Small ~= 3.572px */
 	bottom           : 30%;
 	box-shadow       : var( --ele-med-sha );                                                                                  /* Elevation Medium Shadow ~= 0 4.732px 14.572px plus 0 1.536px 3.572px -1.160px */
+	box-sizing       : content-box;                                                                                           /* What: Content Box Sizing. Why: Until a card's image loads, the browser sizes it from its width and height attributes' ratio, which border-box sizing applies to the whole box, border included, so each card grew about 5px taller as its image arrived. How: This sizes the picture inside the border, where both the attributes' ratio and the loaded image's own apply, so the card keeps one size. */
 	height           : auto;
 	left             : 22%;
 	position         : absolute;
 	transform-origin : 50% 100%;
 	transition       : rotate var( --dur-tra-p02 ) var( --mot-ove-eas ), translate var( --dur-tra-p02 ) var( --mot-ove-eas ); /* Duration Transition Base Plus 2 ~= 277.0ms, Motion Overshoot Easing = cubic-bezier( .34, 1.2, .5, 1 ) */
-	width            : 56%;
+	width            : calc( 56% - var( --ver-rhy-m03 ) * 2rem );                                                             /* Vertical Rhythm Base Minus 3 ~= 12.536px */ /* What: Content Width. Why: With content-box sizing the border sits outside the width. How: This takes the border off both sides, so the card keeps the 56% it had. */
 
 
 }

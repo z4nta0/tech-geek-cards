@@ -335,12 +335,10 @@ function TurCarCom () : JSX.Element {
 								ref={ logDivRef }
 
 								className={ cssModObj.logStaDiv }
-							>{ /* What: Logo Station Div Element. Why: The station's lettering tops both scenes. How: This holds the call letters and their script. */ }
+							>{ /* What: Logo Station Div Element. Why: The station's lettering tops both scenes. How: This holds the call letters. */ }
 
 
 								<span className={ cssModObj.logWorSpa }>WKRP</span>{ /* What: Logo Word Span Element. Why: The call letters are the station's mark. How: This shows them in the chunky serif. */ }
-
-								<span className={ cssModObj.logCinSpa }>in Cincinnati</span>{ /* What: Logo Cincinnati Span Element. Why: The script signs the call letters. How: This shows it under them. */ }
 
 
 							</div>
