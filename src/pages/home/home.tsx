@@ -190,8 +190,9 @@ function ranPicFun< T > ( souRecArr : readonly T[], picCouNum : number ) : T[] {
  * card, keyed by the card, and the dialog's close callback unmounts it. The
  * envelope drawing is decoration, hidden from screen readers. When the address
  * arrives with a hash naming an element on the page, the page jumps to it once
- * the fonts have loaded and its entrance has ended, and then drops the hash
- * from the address through the history API, so the router sees no navigation.
+ * the fonts have loaded, its entrance has ended, and the page has finished
+ * loading, and then drops the hash from the address through the history API,
+ * so the router sees no navigation.
  *
  * @author z4nta0 <https://github.com/z4nta0>
  *
@@ -218,7 +219,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-	useEffect( () => { // What: Hash Arrival Effect. Why: A visitor arriving from a shared address or another page's section link should land on that section, with no hash left in the address. How: Once the fonts have loaded and the page's entrance has settled, this jumps to the element the hash names, then replaces the address with one without the hash.
+	useEffect( () => { // What: Hash Arrival Effect. Why: A visitor arriving from a shared address or another page's section link should land on that section, with no hash left in the address. How: Once the fonts have loaded, the page's entrance has settled, and the page has finished loading, this jumps to the element the hash names, then replaces the address with one without the hash.
 
 
 		const ancIdeStr = locCurObj.hash.slice( 1 ); // What: Anchor Identifier String. Why: The hash names the element to land on. How: This holds the hash without its #, or an empty string when there's none.
@@ -228,7 +229,7 @@ function HomPagCom () : JSX.Element {
 
 
 
-		void document.fonts.ready.then( async () => { // What: Fonts Ready Callback. Why: The jump should land where the section sits once the fonts have reflowed the page above it. How: This waits for the fonts the page uses to load, then for the target's entrance, then jumps and clears the hash; void marks the returned promise as deliberately not awaited.
+		void document.fonts.ready.then( async () => { // What: Fonts Ready Callback. Why: The jump should land where the section sits once the fonts have reflowed the page above it. How: This waits for the fonts the page uses to load, then for the target's entrance and the window's load event, then jumps and clears the hash; void marks the returned promise as deliberately not awaited.
 
 
 			const ancTarEle = document.getElementById( ancIdeStr ); // What: Anchor Target Element. Why: Only a hash naming an element on the page is a section to land on. How: This finds the element the hash names, or holds null.
@@ -245,7 +246,12 @@ function HomPagCom () : JSX.Element {
 
 
 
-			await Promise.allSettled( movAniArr.filter( ( aniCurObj ) => aniCurObj.effect?.getComputedTiming().iterations !== Infinity ).map( ( aniCurObj ) => aniCurObj.finished ) ); // What: Entrance Settle Wait. Why: The jump should land where the section rests once the entrance ends. How: This waits for every animation that ends, skipping any that loops forever, settling whether each finishes or is cancelled.
+			const pagLoaPro = document.readyState === 'complete' ? Promise.resolve() : new Promise< void >( ( resFun ) => addEventListener( 'load', () => resFun(), { once : true } ) ); // What: Page Load Promise. Why: In Firefox, a jump made while the page's images were still arriving was moved back 3px by its scroll anchoring as the layout took them in, in about one load in thirteen at 1,440px. How: This settles once the window's load event has fired, at once when it already has.
+
+
+			await Promise.allSettled( [ ...movAniArr.filter( ( aniCurObj ) => aniCurObj.effect?.getComputedTiming().iterations !== Infinity ).map( ( aniCurObj ) => aniCurObj.finished ), pagLoaPro ] ); // What: Page Settle Wait. Why: The jump should land where the section rests once the entrance ends and the page has loaded. How: This waits for every animation that ends, skipping any that loops forever, and for the window's load event, settling whether each finishes or is cancelled.
+
+			await new Promise( ( resFun ) => requestAnimationFrame( () => requestAnimationFrame( resFun ) ) ); // What: Layout Settle Wait. Why: The layout takes in what just loaded on the frame after, which is when Firefox's scroll anchoring would correct an earlier jump. How: This waits two animation frames.
 
 			ancTarEle.scrollIntoView( { behavior : 'instant' } ); // What: Arrival Scroll Call. Why: The visitor should land on the section, as a normal link arrival would. How: This jumps to the element, without the html element's smooth scrolling, since gliding down from the top of a freshly loaded page would be slow.
 

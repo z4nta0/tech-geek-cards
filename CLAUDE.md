@@ -37,8 +37,14 @@ to the steps section (`id='how-it-works'`). It goes through the shared
 helper in `ui/section-link.ts` (`modCliFun`, `useSecLinFun`, `useSecCliFun`,
 adapted from hair-designs'), whose `modCliFun` the card page's skip link
 shares. Home's hash arrival effect jumps to the element a hash names once
-the fonts load and the page's entrance animation has ended, since a jump
-made while the page was still rising landed about 25px short in Chromium.
+the fonts load, the page's entrance animation has ended, and the window's
+load event has fired, then two more frames, since a jump made while the page
+was still rising landed about 25px short in Chromium, and one made while its
+images were still arriving was moved back 3px by Firefox's scroll anchoring
+as the layout took them in, in about one load in thirteen at 1,440px (found
+2026-11-25; the anchoring moved the scroll position, not the page's layout,
+turning it off removed the miss, and waiting only for the images to decode
+still missed 12 times in 160 where this wait missed none).
 - **Where it differs from the user-level rule**: the hash is cleared with
   `history.replaceState( history.state, '', path + query )` rather than the
   router's `navigate( { hash : '' }, { replace : true } )`, since the design
