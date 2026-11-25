@@ -196,7 +196,7 @@ const CAR_DAT_ARR : CarDatTyp[] = [ // What: Card Data Array. Why: Every page th
 		lisBoo : true,
 		occStr : 'Holiday',
 		sluStr : 'turkeys-away',
-		socStr : 'turkeys-away.png',
+		socStr : 'turkeys-away-2.png',
 		titStr : 'Turkeys Away',
 
 		altStr : 'The Turkeys Away card, its station manager and a dazed turkey under a Merry Thanksgiving greeting.',

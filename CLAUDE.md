@@ -259,7 +259,9 @@ and no sender.
   lettering is our own, set in Fraunces in the show's chunky 70s style, never
   the show's logo, and the station manager is drawn as a type (a balding man
   in a three-piece suit, hand raised) rather than a likeness of the actor.
-  The episode's lines are quoted as said: "For those of you who just tuned in,
+  The lettering reads "WKRP" alone (decided by the user 2026-11-25, dropping
+  an "in Cincinnati" script and its Yellowtail font), since the plaque and
+  shirt the card is based on say only "WKRP". The episode's lines are quoted as said: "For those of you who just tuned in,
   the Pinedale Shopping Mall has just been BOMBED with live turkeys." (Johnny
   Fever's; "Mall", not the "Shopping Center" the show says once, and no "Film
   at 11"), "Oh, the humanity!", and "As God is my witness, I thought turkeys
@@ -286,7 +288,7 @@ and no sender.
   render.mts`, using `subset-font` and the `@fontsource-variable/fraunces`
   package) pins its softness, optical size, and wonkiness, narrows its
   weights, and keeps every character Fontsource covers, about 25 to 40 KB a
-  file. Yellowtail and Pixelify Sans are copied from Fontsource as usual.
+  file. Pixelify Sans is copied from Fontsource as usual.
 - **The heading fades its opacity only**, so "Merry Thanksgiving" stays in the
   page from the start as the card's `h1`; the rest of the lettering fades in
   and out with GSAP's autoAlpha.
@@ -300,8 +302,9 @@ and no sender.
   turned phone puts it back in place. It's drawn on the canvas, so it never
   shows under reduced motion, where taps do nothing.
 - **Previews**: the tile preview is the finished studio captured full screen
-  at 1,920 by 1,080, and the link preview `public/social/turkeys-away.png`
-  ships as a PNG (about 74 KB). The link preview script now also moves a main
+  at 1,920 by 1,080, and the link preview `public/social/turkeys-away-2.png`
+  ships as a PNG (about 69 KB), renamed with a `-2` when the script was
+  dropped, since apps cache previews. The link preview script now also moves a main
   line set to one side into the center square, which only this card's
   greeting needs.
 - **Tests**: the card's states are desktop (in the set), phone, and a phone
